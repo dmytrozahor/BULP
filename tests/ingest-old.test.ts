@@ -106,3 +106,26 @@ describe('izbornyk decoders and Shevchenko dates', () => {
     expect(dateRange('Датується орієнтовно жовтнем 1842 р. на підставі листа від 18 листопада 1842 р.: «Позавчора вернувся»')).toEqual([1842, 1842])
   })
 })
+
+// B3 (plan 40): corpus completeness — runs on the mined data/work (gitignored), skipped on a clean checkout
+import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { MANIFEST } from '../pipelines/manifest.ts'
+import { authorById, admissible } from '../pipelines/authors.ts'
+const work = (id: string) => JSON.parse(readFileSync(`data/work/${id}.json`, 'utf8'))
+describe.skipIf(!existsSync('data/work/vyshensky.json'))('B3 vyshensky (izbornyk old14_19)', () => {
+  const w = work('vyshensky')
+  it('mined whole: ≥ 20k tokens, located, vetted author', () => {
+    expect(w.tokens.length).toBeGreaterThan(20000); expect(w.tokens.every((t: { loc: string }) => t.loc)).toBe(true)
+    expect(w.author).toBe('vyshensky'); expect(admissible(authorById['vyshensky'])).toBe(true)
+    expect(w.date).toEqual([1588, 1600]); expect(w.dateCite.kind).toBe('Q')
+  })
+  it('no Latin leftovers; apparatus was removed and counted', () => { expect(w.tokens.some((t: { raw: string }) => /[A-Za-z]/.test(t.raw))).toBe(false); expect(w.dropped.apparatus).toBeGreaterThan(0) })
+  it('manifest entry is ruthenian with a region', () => expect(MANIFEST.find(u => u.id === 'vyshensky')).toMatchObject({ lang: 'ruthenian', region: expect.any(String) }))
+})
+describe.skipIf(!existsSync('data/raw/izbornyk/shevchenko/001.html'))('B3 Shevchenko vol. 1 discovery', () => {
+  const ids = readdirSync('data/work').filter(f => /^shevchenko_\d+\.json$/.test(f))
+  it('whole poems volume is ingested (≥ 40 pieces, not 4)', () => expect(ids.length).toBeGreaterThanOrEqual(40))
+  it('each piece has a «Датується» quote and a 1837–1861 range', () => {
+    for (const f of ids) { const w = JSON.parse(readFileSync(`data/work/${f}`, 'utf8')); expect(w.dateCite.quote, f).toMatch(/^Датується/); expect(w.date[0], f).toBeGreaterThanOrEqual(1837); expect(w.date[1], f).toBeLessThanOrEqual(1861) }
+  })
+})
