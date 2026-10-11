@@ -21,7 +21,8 @@ import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
 import { RUSYN_STATUS } from '../core/rules.ts'
 import { REGIONS, regionOf } from './regions.ts'
-import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
+import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LexIndex, PackedLexicon, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
+import { packer } from '../core/pack.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
 import { ltIndex } from './lt.ts'
@@ -322,14 +323,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lexindex: LexIndex = { generated, lt, vesum: lexV }
 
   mkdirSync(PUB, { recursive: true }); mkdirSync(ANALYSIS, { recursive: true })
-  const lexJson = JSON.stringify(budget.cards), lexIdxJson = JSON.stringify(lexindex)
+  const lexJson = JSON.stringify(budget.packed), lexIdxJson = JSON.stringify(lexindex)
   writeFileSync(resolve(PUB, 'lexicon.json'), lexJson); writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
 
   const rd2: ReportData = {
     generated, flags: { py: !opts.noPy, stress: !!stressJson, ru: Object.keys(ruJson).length > 0 }, authors: AUTHORS, witnesses: metas, routes, excluded,
     sizes, N: sizes.N, linked: NL, unresolved, topUnresolved, soundType, soundToken, detectHits, hints,
     lemmas: lemmaList.map(l => ({ lemma: l.display, tags: l.tags, f: l.f, perEpoch: l.perEpoch })), cards: budget.cards, keptCount: kept.length, allCount: lemmaList.length, spellings: lemmaList.reduce((s, l) => s + l.forms.size, 0),
-    ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { bytes: budget.bytes, tiers: budget.tiers, dropped: budget.dropped, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
+    ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { bytes: budget.bytes, tiers: budget.tiers, dropped: budget.dropped, pool: budget.packed.ev.length, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
     stressForms: stressJson ? Object.keys(stressJson.forms).length : 0, stressSource: stressJson?.source ?? '', ruForms: Object.keys(ruJson).length, fMax,
   }
   writeFileSync(resolve(ANALYSIS, 'REPORT.md'), renderReport(rd2))
@@ -349,27 +350,49 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
 const lemmaStatsInput = (la: LemmaAcc): Counts => ({ f: la.f, perW: la.perW, perEpoch: la.perEpoch, perCentury: la.perCentury })
 
-/** B-5: tier t keeps (kwic, forms) = TIERS[t]; lemmas are processed by rank, each gets the richest tier within ~6× the average remaining budget. */
+/**
+ * B-5: tier t keeps (kwic, forms) = TIERS[t]. lexicon.json is packed (core/pack.ts): every distinct Evidence is stored once in `ev`, cards carry indices, so sizes here are measured in packed form
+ * (an Evidence's pool entry is charged to the first written lemma that references it). Policy: lowest-frequency lemmas are dropped first, a pre-1400 lemma outranks a modern one of equal frequency (oldest evidence).
+ * (1) n = the longest rank-order prefix whose cheapest tier fits in (1 − RICH) of the budget; (2) that prefix is upgraded in rank order: lemma i gets the richest tier whose extra cost is within 40× the average extra budget still
+ * unspent per remaining lemma, so the most frequent lemmas get full KWIC and the share is computed against the lemmas actually written (not all kept ones). (3) the real file length is verified and, if over, re-fitted.
+ */
 const TIERS: [number, number][] = [[6, 12], [3, 8], [2, 6], [1, 4], [0, 2]]
-export function fitBudget(cards: LemmaCard[], pre1400: string[]): { cards: LemmaCard[]; bytes: number; tiers: number[]; dropped: number } {
+const RICH = 0.2   // share of the budget held back from the cheapest-tier prefix for upgrading the highest-ranked lemmas (else the prefix would use all of it)
+export function fitBudget(cards: LemmaCard[], pre1400: string[], limit = LIMIT_BYTES): { cards: LemmaCard[]; packed: PackedLexicon; bytes: number; tiers: number[]; dropped: number } {
   const slim = (c: LemmaCard, [k, n]: [number, number]): LemmaCard => ({ ...c, forms: selectForms(c.forms, n).map(f => ({ ...f, kwic: f.kwic.slice(0, k) })) })
-  const variants = cards.map(c => TIERS.map((t, i) => { const v = i === 0 ? c : slim(c, t); return { v, size: Buffer.byteLength(JSON.stringify(v)) + 1 } }))
-  const tiers = TIERS.map(() => 0); let remaining = LIMIT_BYTES, left = cards.length
-  const pick = variants.map(vs => {
-    const share = Math.max(remaining / Math.max(left, 1), 1) * 6
-    let t = vs.findIndex(x => x.size <= share); if (t < 0) t = vs.length - 1
-    remaining -= vs[t]!.size; left--; tiers[t]!++
-    return t
-  })
-  let out = cards.map((_, i) => ({ i, v: variants[i]![pick[i]!]!.v, size: variants[i]![pick[i]!]!.size }))
-  let bytes = out.reduce((s, x) => s + x.size, 2), dropped = 0
-  // over budget: drop the lowest-frequency lemmas first; a pre-1400 lemma outranks a modern one of equal frequency (it is the oldest evidence), so frequent modern words are not displaced by Old Rus' hapaxes
-  const must = new Set(pre1400)
-  const order = out.map((x, k) => k).sort((a, b) => out[a]!.v.stats.f - out[b]!.v.stats.f || Number(must.has(out[a]!.v.lemma)) - Number(must.has(out[b]!.v.lemma)) || b - a)
-  const gone = new Set<number>()
-  for (const k of order) { if (bytes <= LIMIT_BYTES) break; bytes -= out[k]!.size; gone.add(k); dropped++ }
-  out = out.filter((_, k) => !gone.has(k))
-  return { cards: out.map(x => x.v), bytes, tiers, dropped }
+  const must = new Set(pre1400), len = (x: unknown) => Buffer.byteLength(JSON.stringify(x))
+  const rank = cards.map((_, i) => i).sort((a, b) => cards[b]!.stats.f - cards[a]!.stats.f || Number(must.has(cards[b]!.lemma)) - Number(must.has(cards[a]!.lemma)) || a - b)
+  const pk = packer(), min = TIERS.length - 1
+  const variants = cards.map(c => TIERS.map((t, i) => { const v = i === 0 ? c : slim(c, t); const { card, refs } = pk.one(v); return { v, size: len(card) + 1, refs } }))
+  const evBytes = pk.ev.map(e => len(e) + 1)
+  /** cost of a variant = its packed card + the pool entries it adds to those already `seen` */
+  const cost = (x: { size: number; refs: number[] }, seen: Set<number>) => x.size + x.refs.reduce((s, r) => s + (seen.has(r) ? 0 : evBytes[r]!), 0)
+  const fit = (avail: number) => {
+    const total = avail; avail = Math.floor(avail * (1 - RICH))
+    let n = 0, seen = new Set<number>(), sumMin = 0; const minCost: number[] = []
+    for (; n < rank.length; n++) {
+      const x = variants[rank[n]!]![min]!, c = cost(x, seen)
+      if (sumMin + c > avail) break
+      sumMin += c; minCost.push(c); x.refs.forEach(r => seen.add(r))
+    }
+    let extra = total - sumMin; const tiers = TIERS.map(() => 0); seen = new Set()
+    const pick = rank.slice(0, n).map((ci, r) => {
+      const vs = variants[ci]!, cap = Math.min(Math.max(extra / (n - r), 0) * 40, extra)
+      let t = vs.findIndex(x => cost(x, seen) - minCost[r]! <= cap); if (t < 0) t = min
+      extra -= cost(vs[t]!, seen) - minCost[r]!; tiers[t]!++; vs[t]!.refs.forEach(q => seen.add(q))
+      return { ci, t }
+    })
+    return { pick, tiers, dropped: cards.length - n }
+  }
+  let avail = limit - 64
+  for (;;) {
+    const f = fit(avail), keep = f.pick.map(x => x.ci).sort((a, b) => a - b), t = new Map(f.pick.map(x => [x.ci, x.t]))
+    const final = packer(), out = keep.map(ci => variants[ci]![t.get(ci)!]!.v)
+    const packed: PackedLexicon = { format: 2, ev: final.ev, cards: out.map(c => final.one(c).card) }
+    const bytes = len(packed)
+    if (bytes <= limit || avail <= 0) return { cards: out, packed, bytes, tiers: f.tiers, dropped: f.dropped }
+    avail -= bytes - limit + 1024   // real file over the limit: shrink the budget by the overshoot and re-fit
+  }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

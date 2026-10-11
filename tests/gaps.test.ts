@@ -11,10 +11,11 @@ import { collocations } from '../pipelines/build-stats.ts'
 import { linkOptions, ROUTE_RANK, type Env } from '../pipelines/build-link.ts'
 import { fold } from '../core/orthography.ts'
 import { stressVariants } from '../pipelines/build-annotate.ts'
+import { unpack } from '../core/pack.ts'
 import type { LemmaCard } from '../core/types.ts'
 
 const has = (p: string) => existsSync(p)
-const lex = (): LemmaCard[] => JSON.parse(readFileSync('public/data/lexicon.json', 'utf8'))
+const lex = (): LemmaCard[] => unpack(JSON.parse(readFileSync('public/data/lexicon.json', 'utf8')))
 const corpus = () => JSON.parse(readFileSync('public/data/corpus.json', 'utf8'))
 
 describe('P-1.2 evidence shape', () => {

@@ -87,8 +87,10 @@ export interface WitnessMeta extends Omit<WitnessOut, 'tokens' | 'dropped'> {
   epochShev: Claim<EpochAssignment>; epochWl: Claim<EpochAssignment>
 }
 
-/** public/data/lexicon.json is a plain `LemmaCard[]` array. */
+/** In-memory lexicon: a plain `LemmaCard[]`. */
 export type Lexicon = LemmaCard[]
+/** public/data/lexicon.json (format 2): cards whose Evidence objects are replaced by indices into the shared pool `ev` (core/pack.ts). */
+export interface PackedLexicon { format: 2; ev: Evidence[]; cards: LemmaCard[] }
 
 export interface CorpusMeta {
   generated: string

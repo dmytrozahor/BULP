@@ -1,9 +1,10 @@
 /**
  * Data loading (SPEC 10 M-6): fetch ./data/{corpus,lexicon,lexindex}.json once; module-level reactive state shared by all views.
- * lexicon.json is a plain LemmaCard[]; corpus.json carries the author vetting records (CorpusMeta.authors).
+ * lexicon.json is a packed LemmaCard[] (shared evidence pool, core/pack.ts); corpus.json carries the author vetting records (CorpusMeta.authors).
  */
 import { computed, markRaw, reactive, shallowRef, toRefs } from 'vue'
 import type { CorpusMeta, LemmaCard, LexIndex, VesumHit, WitnessMeta } from '../../core/types.ts'
+import { unpack } from '../../core/pack.ts'
 import { SOURCES } from '../../core/sources.ts'
 import type { Author } from '../../core/types.ts'
 import { buildIndexAsync, emptyIndex, type SearchIndex } from '../lib/search.ts'
@@ -18,7 +19,7 @@ const state = reactive({
 })
 const searchIdx = shallowRef<SearchIndex>(emptyIndex()), paradigmMap = shallowRef(new Map<string, VesumHit[]>())
 
-export const toCards = (j: unknown) => j as LemmaCard[]   // lexicon.json is a plain Lexicon = LemmaCard[]
+export const toCards = unpack   // lexicon.json is { format: 2, ev, cards } (evidence pool); a plain LemmaCard[] is still accepted
 
 /** fetch + JSON.parse; streams the body so a large file reports download progress (Content-Length; indeterminate otherwise). */
 const get = async (name: string, onFrac?: (f: number, bytes: number) => void) => {

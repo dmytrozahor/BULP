@@ -8,6 +8,7 @@ import { authorById, type Author } from '../pipelines/authors.ts'
 import { admit, rankFirst, firstClaim, upgradeLt, selectForms, lemmaRusyn, surzhykClaim, type FirstCand } from '../pipelines/build-annotate.ts'
 import { chooseLemma, tierOf, type Option } from '../pipelines/build-link.ts'
 import { fitBudget } from '../pipelines/build.ts'
+import { pack, unpack } from '../core/pack.ts'
 import { REGIONS, regionOf } from '../pipelines/regions.ts'
 import { SURZHYK_DEF } from '../core/rules.ts'
 
@@ -120,14 +121,43 @@ describe('B-3 lemma-level claims', () => {
 })
 
 const cardOf = (lemma: string, f: number, pad: number): LemmaCard => ({ lemma, pos: 'x', paradigm: [], stress: [], forms: [], first: claim('x', Q('S', 'l', 'q')) as never, stats: { f } as never, claims: { pad: 'x'.repeat(pad) } as never })
+const kw = (n: number) => Array.from({ length: n }, (_, i) => ({ w: 'w', loc: 'l' + i, left: 'l'.repeat(100), node: 'n', right: 'r'.repeat(100), date: [1000, 1000] as [number, number] }))
+const withForms = (lemma: string, f: number): LemmaCard => ({ ...cardOf(lemma, f, 0), forms: [{ raw: lemma, norm: lemma, modern: lemma, f, date: [1000, 1000], link: claim({ lemma, form: lemma, route: 'direct', alternatives: [] }, Q('S', 'l', 'q')), derivation: [], claims: {}, hints: [], epochs: [], kwic: kw(6) }] })
 describe('B-5 size budget', () => {
+  const LIMIT = 15 * 1024 * 1024
   it('drops the lowest-frequency lemmas first; pre-1400 outranks a modern lemma of equal frequency; result fits', () => {
     const cards = [cardOf('a', 100, 4e6), cardOf('b', 50, 4e6), cardOf('c', 1, 4e6), cardOf('d', 1, 4e6), cardOf('e', 1, 4e6)]
     const r = fitBudget(cards, ['d'])
-    expect(r.bytes).toBeLessThanOrEqual(15 * 1024 * 1024)
+    expect(r.bytes).toBeLessThanOrEqual(LIMIT)
     expect(r.cards.map(c => c.lemma)).toEqual(['a', 'b', 'd'])
     expect(r.dropped).toBe(2)
   })
+  it('the share is computed against the lemmas that are written: the top-ranked keep 6 KWIC per form when the budget allows, the file fits', () => {
+    const cards = Array.from({ length: 3000 }, (_, i) => withForms('l' + String(i).padStart(4, '0'), 3000 - i))
+    const r = fitBudget(cards, [], 1e6)
+    expect(r.dropped).toBeGreaterThan(0); expect(r.cards.length).toBeGreaterThan(100)
+    expect(r.cards[0]!.lemma).toBe('l0000'); expect(r.cards[0]!.forms.every(f => f.kwic.length === 6)).toBe(true)
+    expect(r.tiers[0]).toBeGreaterThan(0)
+    expect(r.cards.map(c => c.lemma)).toEqual(cards.slice(0, r.cards.length).map(c => c.lemma))   // exactly the top-ranked prefix survives
+    expect(r.bytes).toBeLessThanOrEqual(1e6); expect(Buffer.byteLength(JSON.stringify(r.packed))).toBe(r.bytes)
+  })
+  it('the packed file is lossless and a shared Evidence is stored once', () => {
+    const r = fitBudget([withForms('a', 5), withForms('b', 4)], [])
+    expect(r.packed.ev).toHaveLength(1)   // both cards cite the same Evidence (first claim and link): one pool entry
+    expect(unpack(JSON.parse(JSON.stringify(r.packed)))).toEqual(r.cards)
+  })
+})
+describe('lexicon packing (core/pack)', () => {
+  const e = Q('S', 'loc', 'quote')
+  const cs = [withForms('x', 3), { ...cardOf('y', 2, 3), first: claim('y', [e, Q('T', 'l2', 'q2', 'note')]) as never }]
+  it('pack → unpack deep-equals the input; identical Evidence is interned once; plain arrays pass through', () => {
+    const p = pack(cs)
+    expect(p.format).toBe(2); expect(p.ev.length).toBeLessThan(JSON.stringify(cs).match(/"source"/g)!.length)
+    expect(JSON.stringify(p.cards)).not.toContain('"source"')
+    expect(unpack(JSON.parse(JSON.stringify(p)))).toEqual(cs)
+    expect(unpack(cs)).toBe(cs)
+  })
+  it('rejects an unknown object format', () => expect(() => unpack({ format: 9 })).toThrow())
 })
 
 describe('regions (research/07 §3.3, SPEC 20 B-3.6)', () => {
@@ -141,7 +171,7 @@ describe('regions (research/07 §3.3, SPEC 20 B-3.6)', () => {
 // P-1.1 over the real built data (skipped on a clean checkout without public/data)
 const DATA = 'public/data/lexicon.json'
 describe.skipIf(!existsSync(DATA))('P-1.1 every claim in the built lexicon passes claim() validation', () => {
-  const cards: LemmaCard[] = JSON.parse(readFileSync(DATA, 'utf8'))
+  const cards: LemmaCard[] = unpack(JSON.parse(readFileSync(DATA, 'utf8')))
   const isClaim = (x: unknown): x is Claim<unknown> => !!x && typeof x === 'object' && 'value' in x && 'evidence' in x && Array.isArray((x as Claim<unknown>).evidence)
   const walk = (x: unknown, path: string, out: { path: string; c: Claim<unknown> }[]) => {
     if (isClaim(x)) { out.push({ path, c: x }); return }
