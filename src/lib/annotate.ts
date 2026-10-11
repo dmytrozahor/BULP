@@ -6,7 +6,7 @@
  * SPEC 30 D-4.1: `provenance` 'derived' = the spelling is not in the lexicon but derive() maps it to a lexicon form (`derivedFrom`);
  * drawn distinctly (CSS .derived: dashed outline, italic, «реконструкція» badge) and not counted as `linked`.
  */
-import type { FormCard, LemmaCard, TraceStep, VesumHit } from '../../core/types.ts'
+import type { CoreCard, CoreForm, TraceStep, VesumHit } from '../../core/types.ts'
 import type { Claim } from '../../core/evidence.ts'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
@@ -17,14 +17,14 @@ import { type SearchIndex, type Via } from './search.ts'
 import { runDetectors, strongest, type Category, type LexData } from './analyze.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
-export interface AnnotateData extends LexData { search: SearchIndex; cards: Map<string, LemmaCard> }
+export interface AnnotateData extends LexData { search: SearchIndex; cards: Map<string, CoreCard> }
 
 export interface AnnotatedToken {
   raw: string; start: number; end: number; key: string
   status: Status
   provenance: 'attested' | 'derived'
   derivedFrom?: { form: string; trace: TraceStep[] }  // modern form + rule steps of a derived token
-  lemma?: string; card?: LemmaCard; form?: FormCard; via?: Via
+  lemma?: string; card?: CoreCard; form?: CoreForm; via?: Via
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
@@ -34,7 +34,7 @@ const OLD_LETTERS = /[ѣъыѧѫѥѵѡѿѹꙋ]|оу/
 const VIA_ORDER: Via[] = ['form', 'lemma', 'paradigm']
 
 /** Merge lemma-level claims into the claim set (form-level claims win on a label clash). */
-function claimsOf(card: LemmaCard, form?: FormCard): Record<string, Claim<true>> {
+function claimsOf(card: CoreCard, form?: CoreForm): Record<string, Claim<true>> {
   const out: Record<string, Claim<true>> = {}
   const c = card.claims
   if (isKnown(c.register)) out.colloquial = c.register as unknown as Claim<true>
@@ -46,7 +46,7 @@ function claimsOf(card: LemmaCard, form?: FormCard): Record<string, Claim<true>>
   return { ...out, ...(form?.claims ?? {}) }
 }
 
-export function shevEpochOf(card: LemmaCard): string | undefined {
+export function shevEpochOf(card: CoreCard): string | undefined {
   if (!isKnown(card.first)) return undefined
   const a = assignEpoch(card.first.value.date, 'shev')
   return isKnown(a) ? a.value.epochs[0] : undefined

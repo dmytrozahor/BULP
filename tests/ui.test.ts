@@ -19,7 +19,7 @@ import type { LemmaCard, LexIndex, VesumHit } from '../core/types.ts'
 const FIX = mkdtempSync(join(tmpdir(), 'ukr-fixture-'))
 execFileSync(process.execPath, ['--import', 'tsx', 'pipelines/fixture.ts', FIX], { stdio: 'ignore' })
 const read = (f: string) => JSON.parse(readFileSync(join(FIX, f), 'utf8'))
-const cards: LemmaCard[] = toCards(read('lexicon.json'))
+const cards = toCards(read('lexicon.json')) as LemmaCard[]   // the fixture embeds the detail (plain LemmaCard[])
 const lexindex: LexIndex = read('lexindex.json')
 const data = (): AnnotateData => {
   const paradigmMap = new Map<string, VesumHit[]>()

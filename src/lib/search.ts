@@ -3,7 +3,7 @@
  * > "Search key: NFC, no stress, lower case, one apostrophe." — core/text.ts key()
  * Old letters ѣ ъ ы ѧ are indexed as written AND via stage-N normalisation, so the user may type either.
  */
-import type { LemmaCard, VesumHit } from '../../core/types.ts'
+import type { CoreCard, VesumHit } from '../../core/types.ts'
 import { key, normalizeOld } from '../../core/text.ts'
 
 export type Via = 'lemma' | 'form' | 'paradigm'
@@ -13,7 +13,7 @@ export interface Result { lemma: string; matched: string; via: Via; rank: number
 
 const VIA_RANK: Record<Via, number> = { lemma: 0, form: 1, paradigm: 2 }
 
-export function buildIndex(cards: LemmaCard[]): SearchIndex {
+export function buildIndex(cards: CoreCard[]): SearchIndex {
   const map = new Map<string, Hit[]>()
   const add = (form: string, lemma: string, via: Via) => {
     const k = key(form); if (!k) return
@@ -55,7 +55,7 @@ export const emptyIndex = (): SearchIndex => ({ map: new Map(), keys: [] })
  * and let a progress bar paint). Chosen over a Web Worker because the annotator/analyser read the Maps synchronously and structured-cloning
  * multi-million-entry Maps back costs more than building them.
  */
-export async function buildIndexAsync(cards: LemmaCard[], onProgress?: (f: number) => void, sliceMs = 25): Promise<{ idx: SearchIndex; paradigm: Map<string, VesumHit[]> }> {
+export async function buildIndexAsync(cards: CoreCard[], onProgress?: (f: number) => void, sliceMs = 25): Promise<{ idx: SearchIndex; paradigm: Map<string, VesumHit[]> }> {
   const map = new Map<string, Hit[]>(), paradigm = new Map<string, VesumHit[]>()
   const add = (form: string, lemma: string, via: Via) => {
     const k = key(form); if (!k) return

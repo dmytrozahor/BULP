@@ -6,7 +6,7 @@
 import { ruleById, derive, type Candidate } from '../../core/phonology.ts'
 import { reverse } from '../../core/reverse.ts'
 import { key } from '../../core/text.ts'
-import type { Kwic, LemmaCard, TraceStep } from '../../core/types.ts'
+import type { CoreCard, FormCard, Kwic, TraceStep } from '../../core/types.ts'
 import type { SearchIndex } from './search.ts'
 
 /** Internal markers of core/phonology.ts: U+E001/U+E002 vocalised strong jers, '·' a lost weak jer. */
@@ -22,20 +22,21 @@ export interface DerivedCandidate extends Candidate { steps: TraceStep[] }
 // ── SPEC 30 D-2/D-4 glue: lexicon-backed paradigm + attestation lookups for core/reverse.ts ──────────
 export interface Attest { lemma: string; kwic: Kwic }
 /** Normalised old spelling (FormCard.norm / raw) → its lemma and the first KWIC line (D-2.3 "attested in any admitted witness"). */
-export function attestIndex(cards: LemmaCard[]): Map<string, Attest> {
+export function attestIndex(cards: CoreCard[]): Map<string, Attest> {
   const m = new Map<string, Attest>()
   for (const c of cards) for (const f of c.forms) {
-    const kwic = f.kwic[0] ?? { w: 'corpus', loc: f.raw, left: '', node: f.raw, right: '', date: f.date }
+    const full = f as Partial<FormCard>   // core spellings carry no KWIC/date: the placeholder only marks the form as attested; the real line comes from the lemma's shard (DeriveView)
+    const kwic = full.kwic?.[0] ?? { w: 'corpus', loc: f.raw, left: '', node: f.raw, right: '', date: full.date ?? [0, 0] }
     for (const k of [key(f.norm), key(f.raw)]) if (!m.has(k)) m.set(k, { lemma: c.lemma, kwic })
   }
   return m
 }
 /** VESUM forms of the lemma the modern word belongs to (empty when the word is not in the lexicon: nothing then licenses о/е or fleeting-vowel inversions). */
-export function paradigmOf(word: string, idx: SearchIndex, cards: Map<string, LemmaCard>): { lemma?: string; forms: string[] } {
+export function paradigmOf(word: string, idx: SearchIndex, cards: Map<string, CoreCard>): { lemma?: string; forms: string[] } {
   const h = idx.map.get(key(word))?.[0], c = h && cards.get(h.lemma)
   return c ? { lemma: c.lemma, forms: c.paradigm.map(p => p.form) } : { forms: [] }
 }
-export function reconstruct(word: string, idx: SearchIndex, cards: Map<string, LemmaCard>, att: Map<string, Attest>) {
+export function reconstruct(word: string, idx: SearchIndex, cards: Map<string, CoreCard>, att: Map<string, Attest>) {
   const p = paradigmOf(word, idx, cards)
   return { ...p, ...reverse(word, { paradigm: p.forms, attested: s => att.get(s)?.kwic ?? null }) }
 }

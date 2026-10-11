@@ -2,6 +2,8 @@
 /**
  * DWDS-like word card, research/07 §3.1 (two columns; stacked on mobile): header (lemma, POS, stress, form chips that filter every panel),
  * panels Походження · Мітки · Словозміна · Приклади, sidebar Статистика. Every label is a ClaimBadge with an evidence popover (SPEC 00 P-1.1).
+ * SPEC 20 B-5: the header, provenance, labels and paradigm render from the CORE card at once; KWIC, stress, the timeline and the statistics come from the lemma's detail shard
+ * (`full` = merged LemmaCard, undefined while the shard loads) and show a placeholder until then.
  */
 import { computed, ref, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
@@ -26,15 +28,17 @@ import RegionMap from '../components/RegionMap.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 
 const props = defineProps<{ lemma: string }>()
-const { byLemma, loaded, corpus, witnessById } = useData()
+const { byLemma, loaded, corpus, witnessById, fullOf, detailError } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
+const full = computed(() => fullOf(card.value))
+const err = computed(() => detailError.get(props.lemma))
 const active = ref<string | null>(null), nForms = ref(60)   // F2: frequent lemmas have hundreds of spellings — paged chips
 watch(() => props.lemma, () => (active.value = null))
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
-const kwic = computed(() => (card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
+const kwic = computed(() => (full.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
 /** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
 const dialects = computed(() => {
@@ -55,7 +59,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
   <template v-else>
     <header class="wordhead">
       <h1 class="lemma">{{ card.lemma }}</h1>
-      <div class="row"><span class="muted sans">{{ card.pos }}</span><StressForms :variants="card.stress" /></div>
+      <div class="row"><span class="muted sans">{{ card.pos }}</span><StressForms v-if="full" :variants="full.stress" /><span v-else-if="!err" class="muted small sans">наголос: завантаження…</span></div>
+      <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі слова (приклади, наголос, статистика): {{ err }}</p>
       <div class="chips" role="group" aria-label="Історичні написання (фільтр панелей)">
         <button v-for="f in card.forms.slice(0, nForms)" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
         <button v-if="card.forms.length > nForms" type="button" class="chip sans small" @click="nForms += 200">ще {{ card.forms.length - nForms }} написань…</button>
@@ -81,13 +86,15 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
                 <EvidencePopover v-if="firstW" :evidence="[firstW.dateCite]" heading="Датування пам’ятки" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover>
                 · <span class="muted">тип свідчення: </span>{{ WTYPE_UK[first.witnessType] ?? first.witnessType }}</li>
               <li v-if="first.coFirst.length"><span class="muted">співпершими: </span>{{ first.coFirst.join(', ') }}</li>
-              <li v-if="isKnown(card.claims.oldest)"><span class="muted">найдавніша форма: </span>
-                <ClaimBadge :claim="card.claims.oldest" :text="(card.claims.oldest.value as any).form" /></li>
+              <li v-if="full && isKnown(full.claims.oldest)"><span class="muted">найдавніша форма: </span>
+                <ClaimBadge :claim="full.claims.oldest" :text="(full.claims.oldest.value as any).form" /></li>
+              <li v-else-if="!full && !err" class="muted">найдавніша форма: завантаження…</li>
             </ul>
           </div>
           <p v-else class="sans"><span class="muted">Перша фіксація: </span><ClaimBadge :claim="card.first" /></p>
           <h3 class="sans small muted">Історичні написання за датою</h3>
-          <ProvenanceTimeline :forms="card.forms" :active="active" :card="card" />
+          <ProvenanceTimeline v-if="full" :forms="full.forms" :active="active" :card="full" />
+          <div v-else class="skeleton" style="height:6rem" />
         </section>
 
         <!-- 2. Labels -->
@@ -124,7 +131,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         <!-- 5. Examples -->
         <section class="card" aria-labelledby="h-kw">
           <h2 id="h-kw"><span>Приклади · KWIC</span><span class="small">{{ kwic.length }}</span></h2>
-          <Kwic :lines="kwic" />
+          <Kwic v-if="full" :lines="kwic" />
+          <div v-else class="skeleton" style="height:8rem" />
           <p v-if="activeForm" class="small muted">показано приклади форми «{{ activeForm.raw }}»</p>
         </section>
       </div>
@@ -137,19 +145,20 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
             <EvidencePopover :evidence="[STAT_CITES.dots!, STAT_CITES.hk!]" heading="Частотність: точки та HK"><span class="badge">ⓘ</span></EvidencePopover></div>
           <p class="small sans" style="margin:.3rem 0 .8rem">{{ fmtNum(card.stats.ipm, 1) }} ipm · HK {{ card.stats.hk }} · f = {{ card.stats.f }} · N = {{ fmtNum(corpus?.N ?? 0) }} слів<br />
             <span class="muted">ipm — на мільйон слів; HK — клас частотності; f — кількість вживань; N — розмір корпусу.</span></p>
-          <div class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - card.stats.dp, 2) }}</strong></span>
+          <div v-if="full" class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - full.stats.dp, 2) }}</strong></span>
             <EvidencePopover :evidence="[STAT_CITES.dp!]" heading="Дисперсія DP (Gries)"><span class="badge">ⓘ</span></EvidencePopover>
-            <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - card.stats.dp, 2)}`"><i :style="{ width: (1 - card.stats.dp) * 100 + '%' }"></i></div>
-            <span class="muted">у {{ card.stats.range }} із {{ corpus?.witnesses.length }} пам’яток</span></div>
+            <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - full.stats.dp, 2)}`"><i :style="{ width: (1 - full.stats.dp) * 100 + '%' }"></i></div>
+            <span class="muted">у {{ full.stats.range }} із {{ corpus?.witnesses.length }} пам’яток</span></div>
+          <div v-else class="skeleton" style="height:2.5rem" />
         </section>
         <section class="card"><h2><span>За століттями</span></h2>
-          <TimeCurve :series="card.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /></section>
+          <TimeCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></section>
         <section class="card"><h2><span>За епохами</span></h2>
-          <EpochBars :stats="card.stats" :sizes="corpus?.epochSizes ?? {}" /></section>
+          <EpochBars v-if="full" :stats="full.stats" :sizes="corpus?.epochSizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></section>
         <section class="card"><h2><span>За регіонами пам’яток</span></h2>
-          <RegionMap :card="card" /></section>
+          <RegionMap v-if="full" :card="full" /><div v-else class="skeleton" style="height:6rem" /></section>
         <section class="card"><h2><span>Типові сполучення</span></h2>
-          <Collocations :colloc="card.stats.colloc" /></section>
+          <Collocations v-if="full" :colloc="full.stats.colloc" /><div v-else class="skeleton" style="height:4rem" /></section>
       </aside>
     </div>
   </template>

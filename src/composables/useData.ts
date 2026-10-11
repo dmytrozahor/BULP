@@ -1,10 +1,13 @@
 /**
  * Data loading (SPEC 10 M-6): fetch ./data/{corpus,lexicon,lexindex}.json once; module-level reactive state shared by all views.
- * lexicon.json is a packed LemmaCard[] (shared evidence pool, core/pack.ts); corpus.json carries the author vetting records (CorpusMeta.authors).
+ * lexicon.json is the CORE (CoreCard[], shared evidence pool, core/pack.ts) of ALL lemmas; annotator/analyse/derive/lists run on it alone. The rest of a card (KWIC, stress, stats, link evidence)
+ * lives in lex/<bucket>.json shards (SPEC 20 B-5): fullOf(core) fetches the lemma's shard once, caches it and returns the merged LemmaCard (undefined while loading).
+ * corpus.json carries the author vetting records (CorpusMeta.authors).
  */
-import { computed, markRaw, reactive, shallowRef, toRefs } from 'vue'
-import type { CorpusMeta, LemmaCard, LexIndex, VesumHit, WitnessMeta } from '../../core/types.ts'
-import { unpack } from '../../core/pack.ts'
+import { computed, markRaw, reactive, shallowReactive, shallowRef, toRefs } from 'vue'
+import type { CoreCard, CorpusMeta, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta } from '../../core/types.ts'
+import { unpackCore } from '../../core/pack.ts'
+import { bucketOf, isFull, mergeCard, unpackShard } from '../../core/shard.ts'
 import { SOURCES } from '../../core/sources.ts'
 import type { Author } from '../../core/types.ts'
 import { buildIndexAsync, emptyIndex, type SearchIndex } from '../lib/search.ts'
@@ -12,14 +15,14 @@ import { attestIndex } from '../lib/derive.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
 
 const state = reactive({
-  corpus: undefined as CorpusMeta | undefined, cards: [] as LemmaCard[], lexindex: undefined as LexIndex | undefined,
+  corpus: undefined as CorpusMeta | undefined, cards: [] as CoreCard[], lexindex: undefined as LexIndex | undefined,
   loaded: false, loading: false, error: '' as string,
   /** F2: loading progress for the ~15 MB lexicon: phase + fraction 0..1 */
   progress: { phase: '', frac: 0, note: '' },
 })
 const searchIdx = shallowRef<SearchIndex>(emptyIndex()), paradigmMap = shallowRef(new Map<string, VesumHit[]>())
 
-export const toCards = unpack   // lexicon.json is { format: 2, ev, cards } (evidence pool); a plain LemmaCard[] is still accepted
+export const toCards = unpackCore   // lexicon.json is the core { format: 3, … }; a packed format 2 or a plain LemmaCard[] (fixture: detail embedded) is still accepted
 
 /** fetch + JSON.parse; streams the body so a large file reports download progress (Content-Length; indeterminate otherwise). */
 const get = async (name: string, onFrac?: (f: number, bytes: number) => void) => {
@@ -53,6 +56,31 @@ export function loadData() {
   })())
 }
 
+// ── detail shards (B-5b) ─────────────────────────────────────────────────────────────────────
+const details = shallowReactive(new Map<string, LemmaDetail>()), detailError = shallowReactive(new Map<string, string>())
+const shards = new Map<number, Promise<Map<string, LemmaDetail>>>(), merged = new Map<string, LemmaCard>()
+const loadShard = (lemma: string) => {
+  const b = bucketOf(lemma); let p = shards.get(b)
+  if (!p) shards.set(b, p = get(`lex/${b}`).then(unpackShard).catch(e => { shards.delete(b); throw e }))
+  return p
+}
+const fetchDetail = (lemma: string) => {
+  if (details.has(lemma) || detailError.has(lemma) || fetching.has(lemma)) return
+  fetching.add(lemma)
+  loadShard(lemma).then(m => { const d = m.get(lemma); d ? details.set(lemma, markRaw(d)) : detailError.set(lemma, 'немає в шарді') })
+    .catch(e => detailError.set(lemma, String((e as Error).message ?? e))).finally(() => fetching.delete(lemma))
+}
+const fetching = new Set<string>()
+/** The merged full card of a core card (SPEC 20 B-5c): undefined until its shard is loaded (reactive: computeds re-run on arrival); a card that already embeds its detail is returned as is. */
+export function fullOf(c: CoreCard | LemmaCard | undefined): LemmaCard | undefined {
+  if (!c) return undefined
+  if (isFull(c)) return c
+  const d = details.get(c.lemma)
+  if (d) { let m = merged.get(c.lemma); if (!m) merged.set(c.lemma, m = markRaw(mergeCard(c, d))); return m }
+  fetchDetail(c.lemma)
+  return undefined
+}
+
 const byLemma = computed(() => new Map(state.cards.map(c => [c.lemma, c])))
 const witnessById = computed(() => new Map((state.corpus?.witnesses ?? []).map(w => [w.id, w])))
 /** Everything the pure annotator/analyser needs. */
@@ -73,5 +101,5 @@ export function useData() {
   loadData()
   const sourceTitle = (id: string) => SOURCES[id]?.title ?? witnessById.value.get(id)?.title ?? id
   const sourceUrl = (id: string) => SOURCES[id]?.url ?? witnessById.value.get(id)?.url
-  return { ...toRefs(state), byLemma, searchIdx, att, witnessById, annData, sourceTitle, sourceUrl, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
+  return { ...toRefs(state), byLemma, fullOf, detailError, searchIdx, att, witnessById, annData, sourceTitle, sourceUrl, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
 }
