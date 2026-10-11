@@ -5,7 +5,7 @@
  *   npx tsx pipelines/data-branch.ts pull      → fetch ukr-lexicon-data and extract it into public/data/lex
  */
 import { execFileSync } from 'node:child_process'
-import { mkdirSync, mkdtempSync, rmSync } from 'node:fs'
+import { mkdirSync, mkdtempSync, renameSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 
@@ -25,10 +25,12 @@ function publish() {
 
 function pull() {
   git(['fetch', REMOTE, BRANCH])
-  rmSync(LEX, { recursive: true, force: true }); mkdirSync(LEX, { recursive: true })
-  const tmp = mkdtempSync(join(tmpdir(), 'ukr-data-'))
-  try { git(['--work-tree', LEX, 'read-tree', '-u', 'FETCH_HEAD'], { GIT_INDEX_FILE: join(tmp, 'index') }) }
+  // extract next to the target first, so a failed pull never leaves public/data/lex half-deleted
+  const tmp = mkdtempSync(join(tmpdir(), 'ukr-data-')), next = `${LEX}.next`
+  rmSync(next, { recursive: true, force: true }); mkdirSync(next, { recursive: true })
+  try { git(['--work-tree', next, 'read-tree', '--reset', '-u', 'FETCH_HEAD'], { GIT_INDEX_FILE: join(tmp, 'index') }) }
   finally { rmSync(tmp, { recursive: true, force: true }) }
+  rmSync(LEX, { recursive: true, force: true }); renameSync(next, LEX)
   console.log(`pulled ${REMOTE}/${BRANCH} → ${LEX}`)
 }
 
