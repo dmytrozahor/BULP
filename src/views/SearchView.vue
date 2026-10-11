@@ -20,6 +20,7 @@ const rows = computed(() => results.value.map(r => {
   return { r, c, fa, who: fa ? authorInfo(fa.author, witnessById.value.get(fa.witness)).name : '' }
 }))
 const go = () => rows.value[0] && router.push(`/w/${encodeURIComponent(rows.value[0].c.lemma)}`)
+const shown = ref(300)   // F2: the full lemma list is paged, never rendered at once (thousands of nodes)
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
 </script>
 
@@ -32,7 +33,7 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
     <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ cards.length }} лем у словнику.</template></p>
   </section>
 
-  <div v-if="loading && !loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
+  <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
     <li v-for="{ r, c, fa, who } in rows" :key="c.lemma">
       <RouterLink :to="`/w/${encodeURIComponent(c.lemma)}`">
@@ -50,8 +51,9 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
     <p><RouterLink :to="{ path: '/analyze', query: { q } }">Проаналізувати це слово в браузері →</RouterLink> <span class="muted small">(правила виведення, церковнослов’янські/контактні/діалектні ознаки — лише з доказами)</span></p>
   </div>
   <div v-else-if="loaded" class="card">
-    <h2>Усі леми ({{ cards.length }})</h2>
-    <div class="chips"><RouterLink v-for="c in cards" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>
+    <h2>Усі леми ({{ cards.length }}, показано {{ Math.min(shown, cards.length) }})</h2>
+    <div class="chips"><RouterLink v-for="c in cards.slice(0, shown)" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>
+    <button v-if="shown < cards.length" type="button" class="btn" style="margin-top:.6rem" @click="shown += 600">Показати ще ({{ cards.length - shown }})</button>
     <p class="small muted sans" style="margin-top:.8rem">Спробуйте <a href="#/annotate">анотатор тексту</a> на прикладах із пам’яток корпусу.</p>
   </div>
 </template>

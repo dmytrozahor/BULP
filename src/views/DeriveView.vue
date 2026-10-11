@@ -9,7 +9,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { explain, principles } from '../../core/reverse.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
-import { attestIndex, deriveWithSteps, paradigmOf, reconstruct } from '../lib/derive.ts'
+import { deriveWithSteps, paradigmOf, reconstruct } from '../lib/derive.ts'
 import DerivationSteps from '../components/DerivationSteps.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
@@ -17,14 +17,13 @@ import FormBadge from '../components/FormBadge.vue'
 import FormLegend from '../components/FormLegend.vue'
 type Dir = 'old2new' | 'new2old'
 const route = useRoute(), router = useRouter()
-const { cards, loaded, searchIdx, byLemma } = useData()
+const { att, loaded, searchIdx, byLemma } = useData()
 const q = ref(String(route.query.from ?? '')), to = ref(String(route.query.to ?? '')), dir = ref<Dir>(route.query.dir === 'new2old' ? 'new2old' : 'old2new')
 watch(() => route.query, v => { q.value = String(v.from ?? ''); to.value = String(v.to ?? ''); dir.value = v.dir === 'new2old' ? 'new2old' : 'old2new' })
 const word = computed(() => String(route.query.from ?? '').trim()), target = computed(() => String(route.query.to ?? '').trim())
 const submit = () => router.replace({ query: q.value.trim() ? { from: q.value.trim(), dir: dir.value, ...(to.value.trim() && dir.value === 'old2new' ? { to: to.value.trim() } : {}) } : {} })
 const flip = (d: Dir) => { dir.value = d; if (q.value.trim()) submit() }
 
-const att = computed(() => attestIndex(cards.value))
 const par = computed(() => (word.value && dir.value === 'new2old' && loaded.value ? paradigmOf(word.value, searchIdx.value, byLemma.value) : { forms: [] as string[] }))
 const fwd = computed(() => (word.value && dir.value === 'old2new'
   ? deriveWithSteps(word.value).candidates.map(c => ({ ...c, lemma: searchIdx.value.map.get(key(c.form))?.[0]?.lemma })) : []))

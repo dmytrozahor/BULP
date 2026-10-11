@@ -14,7 +14,7 @@ import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
 import EvidenceList from './EvidenceList.vue'
 const props = defineProps<{ forms: FormCard[]; active?: string | null; card?: LemmaCard }>()
-const open = ref<string | null>(null)
+const open = ref<string | null>(null), n = ref(40)   // F2: paged — a frequent lemma may have hundreds of spellings
 const items = computed(() => props.forms.filter(f => !props.active || f.raw === props.active)
   .map(f => ({ f, date: f.date as [number, number] | undefined, derived: (f as FormCard & { derived?: boolean }).derived === true }))
   .sort((a, b) => (a.date?.[1] ?? 9999) - (b.date?.[1] ?? 9999)))
@@ -24,7 +24,7 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
 <template>
   <div>
   <ol class="timeline">
-    <li v-for="{ f, date, derived } in items" :key="f.raw">
+    <li v-for="{ f, date, derived } in items.slice(0, n)" :key="f.raw">
       <div class="date">{{ date ? fmtDate(date) : 'дата невідома' }} </div>
       <div>
         <strong :class="['lang', derived ? 'derived' : 'attested']" style="font-size:1.25rem">{{ f.raw }}</strong><span v-if="derived" class="derived-badge">реконструкція</span>
@@ -55,6 +55,7 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
       <div v-if="f.hints.length" class="small muted">гіпотези без джерела (лише для перевірки, мітку не ставлять): {{ f.hints.join(', ') }}</div>
     </li>
   </ol>
+  <button v-if="items.length > n" type="button" class="btn" @click="n += 80">Показати ще ({{ items.length - n }})</button>
   <ReconstructedForms v-if="card && !active" :card="card" />
   </div>
 </template>

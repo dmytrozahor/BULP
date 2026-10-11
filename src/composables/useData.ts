@@ -2,48 +2,61 @@
  * Data loading (SPEC 10 M-6): fetch ./data/{corpus,lexicon,lexindex}.json once; module-level reactive state shared by all views.
  * lexicon.json is a plain LemmaCard[]; corpus.json carries the author vetting records (CorpusMeta.authors).
  */
-import { computed, reactive, toRefs } from 'vue'
+import { computed, markRaw, reactive, shallowRef, toRefs } from 'vue'
 import type { CorpusMeta, LemmaCard, LexIndex, VesumHit, WitnessMeta } from '../../core/types.ts'
-import { key } from '../../core/text.ts'
 import { SOURCES } from '../../core/sources.ts'
 import type { Author } from '../../core/types.ts'
-import { buildIndex } from '../lib/search.ts'
+import { buildIndexAsync, emptyIndex, type SearchIndex } from '../lib/search.ts'
+import { attestIndex } from '../lib/derive.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
 
 const state = reactive({
   corpus: undefined as CorpusMeta | undefined, cards: [] as LemmaCard[], lexindex: undefined as LexIndex | undefined,
   loaded: false, loading: false, error: '' as string,
+  /** F2: loading progress for the ~15 MB lexicon: phase + fraction 0..1 */
+  progress: { phase: '', frac: 0, note: '' },
 })
+const searchIdx = shallowRef<SearchIndex>(emptyIndex()), paradigmMap = shallowRef(new Map<string, VesumHit[]>())
 
 export const toCards = (j: unknown) => j as LemmaCard[]   // lexicon.json is a plain Lexicon = LemmaCard[]
 
-const get = async (name: string) => {
+/** fetch + JSON.parse; streams the body so a large file reports download progress (Content-Length; indeterminate otherwise). */
+const get = async (name: string, onFrac?: (f: number, bytes: number) => void) => {
   const r = await fetch(`./data/${name}.json`)
   if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`)
-  return r.json()
+  const total = +(r.headers.get('content-length') ?? 0)
+  if (!r.body || !onFrac) return r.json()
+  const rd = r.body.getReader(), parts: Uint8Array[] = []; let got = 0
+  for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); got += value.length; onFrac(total ? Math.min(1, got / total) : 0, got) }
+  const buf = new Uint8Array(got); let o = 0; for (const c of parts) { buf.set(c, o); o += c.length }
+  await tick()   // let the "parsing" label paint before the blocking JSON.parse
+  return JSON.parse(new TextDecoder().decode(buf))
 }
+const tick = () => new Promise<void>(r => setTimeout(r, 0))
 
 let started: Promise<void> | undefined
 export function loadData() {
   return (started ??= (async () => {
     state.loading = true
     try {
-      const [c, l, x] = await Promise.all([get('corpus'), get('lexicon'), get('lexindex').catch(() => undefined)])
-      state.corpus = c; state.cards = toCards(l); state.lexindex = x; state.loaded = true
+      const P = state.progress, mb = (b: number) => (b / 1048576).toFixed(1)
+      P.phase = 'завантаження'
+      const [c, l, x] = await Promise.all([get('corpus'), get('lexicon', (f, b) => { P.frac = f * 0.5; P.note = `${mb(b)} МБ` }), get('lexindex').catch(() => undefined)])
+      state.corpus = markRaw(c); state.cards = markRaw(toCards(l)); state.lexindex = x && markRaw(x)   // markRaw: no deep reactive proxies over 15 MB
+      P.phase = 'індексація'; P.note = `${state.cards.length} лем`
+      const built = await buildIndexAsync(state.cards, f => { P.frac = 0.5 + f * 0.5 })   // time-sliced: the UI thread never blocks > ~30 ms
+      searchIdx.value = built.idx; paradigmMap.value = built.paradigm
+      state.loaded = true
     } catch (e) { state.error = String((e as Error).message ?? e) }
     finally { state.loading = false }
   })())
 }
 
 const byLemma = computed(() => new Map(state.cards.map(c => [c.lemma, c])))
-const searchIdx = computed(() => buildIndex(state.cards))
 const witnessById = computed(() => new Map((state.corpus?.witnesses ?? []).map(w => [w.id, w])))
-const paradigmMap = computed(() => {
-  const m = new Map<string, VesumHit[]>()
-  for (const c of state.cards) for (const p of c.paradigm) { const k = key(p.form); (m.get(k) ?? m.set(k, []).get(k)!).push({ lemma: c.lemma, tags: p.tags }) }
-  return m
-})
 /** Everything the pure annotator/analyser needs. */
+/** attestation index of all forms, built once on first use (not per component) */
+const att = computed(() => attestIndex(state.cards))
 const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: byLemma.value, lexindex: state.lexindex, paradigmMap: paradigmMap.value }))
 
 export interface AuthorInfo { id: string; name: string; label?: Author['label']; status?: Author['status']; evidence: Author['evidence']; life?: string; known: boolean }
@@ -59,5 +72,5 @@ export function useData() {
   loadData()
   const sourceTitle = (id: string) => SOURCES[id]?.title ?? witnessById.value.get(id)?.title ?? id
   const sourceUrl = (id: string) => SOURCES[id]?.url ?? witnessById.value.get(id)?.url
-  return { ...toRefs(state), byLemma, searchIdx, witnessById, annData, sourceTitle, sourceUrl, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
+  return { ...toRefs(state), byLemma, searchIdx, att, witnessById, annData, sourceTitle, sourceUrl, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
 }

@@ -26,7 +26,7 @@ import TimeCurve from '../components/TimeCurve.vue'
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
-const active = ref<string | null>(null)
+const active = ref<string | null>(null), nForms = ref(60)   // F2: frequent lemmas have hundreds of spellings — paged chips
 watch(() => props.lemma, () => (active.value = null))
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 
@@ -55,7 +55,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
       <h1 class="lemma">{{ card.lemma }}</h1>
       <div class="row"><span class="muted sans">{{ card.pos }}</span><StressForms :variants="card.stress" /></div>
       <div class="chips" role="group" aria-label="Історичні написання (фільтр панелей)">
-        <button v-for="f in card.forms" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
+        <button v-for="f in card.forms.slice(0, nForms)" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
+        <button v-if="card.forms.length > nForms" type="button" class="chip sans small" @click="nForms += 200">ще {{ card.forms.length - nForms }} написань…</button>
         <button v-if="active" type="button" class="chip sans small" @click="active = null">× усі форми</button>
       </div>
       <p v-if="active" class="small sans muted">Панелі відфільтровано за написанням «{{ active }}».</p>

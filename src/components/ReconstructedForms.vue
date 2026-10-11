@@ -3,11 +3,10 @@
 import { computed } from 'vue'
 import type { LemmaCard } from '../../core/types.ts'
 import { useData } from '../composables/useData.ts'
-import { attestIndex, reconstruct } from '../lib/derive.ts'
+import { reconstruct } from '../lib/derive.ts'
 import FormBadge from './FormBadge.vue'
 const props = defineProps<{ card: LemmaCard; max?: number }>()
-const { cards, searchIdx, byLemma } = useData()
-const att = computed(() => attestIndex(cards.value))
+const { att, searchIdx, byLemma } = useData()
 const list = computed(() => reconstruct(props.card.lemma, searchIdx.value, byLemma.value, att.value).candidates.slice(0, props.max ?? 6))
 </script>
 

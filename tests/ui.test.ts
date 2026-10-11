@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
 import { buildGrids } from '../src/lib/paradigm.ts'
-import { buildIndex, search, queryKeys } from '../src/lib/search.ts'
+import { buildIndex, buildIndexAsync, search, queryKeys } from '../src/lib/search.ts'
 import { annotate, summarize, type AnnotateData } from '../src/lib/annotate.ts'
 import { runDetectors, strongest } from '../src/lib/analyze.ts'
 import { traceSteps } from '../src/lib/derive.ts'
@@ -111,4 +111,21 @@ describe('helpers', () => {
     const s = parseSpec(readFileSync('specs/00-principles.md', 'utf8'))
     expect(s.find(x => x.heading.startsWith('P-2'))!.items.map(i => i.id)).toContain('P-2.4')
   })
+})
+
+describe('F2 real-data readiness (synthetic ~15 MB lexicon, generated in memory, not committed)', () => {
+  it.skipIf(!cards.length)('indexes a 15 MB lexicon in time slices with monotone progress; search + annotate stay fast', async () => {
+    const per = JSON.stringify(cards).length, copies = Math.ceil(15e6 / per) + 1
+    const big: LemmaCard[] = []
+    for (let i = 0; i < copies; i++) for (const c of cards) big.push(i === 0 ? c : { ...c, lemma: `${c.lemma}${'абвгґдежзиклмнопрстуфхцчшщ'[i % 26]}${'абвгґдежзиклмнопрстуфхцчшщ'[(i / 26 | 0) % 26]}` })
+    expect(JSON.stringify(big).length).toBeGreaterThanOrEqual(15e6)
+    const prog: number[] = []; let slices = 0
+    const { idx, paradigm } = await buildIndexAsync(big, f => { prog.push(f); slices++ }, 5)
+    expect(prog.every((f, i) => i === 0 || f >= prog[i - 1]!)).toBe(true); expect(prog.at(-1)).toBe(1); expect(slices).toBeGreaterThan(2)   // yielded to the event loop
+    const t0 = performance.now(); const r = search(idx, big[0]!.lemma); const dt = performance.now() - t0
+    expect(r[0]!.lemma).toBe(big[0]!.lemma); expect(dt).toBeLessThan(150)
+    const byL = new Map(big.map(c => [c.lemma, c])); const t1 = performance.now()
+    annotate(('Князь видѣти ').repeat(40), { search: idx, cards: byL, lexindex, paradigmMap: paradigm })
+    expect(performance.now() - t1).toBeLessThan(1500)
+  }, 60000)
 })
