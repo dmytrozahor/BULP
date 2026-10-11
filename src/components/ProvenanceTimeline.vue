@@ -9,8 +9,9 @@ import { computed, ref } from 'vue'
 import type { FormCard, LemmaCard } from '../../core/types.ts'
 import ReconstructedForms from './ReconstructedForms.vue'
 import { ruleById } from '../../core/phonology.ts'
-import { labelUk, fmtDate, ROUTE_UK } from '../lib/format.ts'
+import { fmtDate, ROUTE_UK } from '../lib/format.ts'
 import ClaimBadge from './ClaimBadge.vue'
+import ClaimSet from './ClaimSet.vue'
 import EvidenceList from './EvidenceList.vue'
 const props = defineProps<{ forms: FormCard[]; active?: string | null; card?: LemmaCard }>()
 const open = ref<string | null>(null)
@@ -49,7 +50,7 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
         </div>
       </template>
       <div v-if="Object.keys(f.claims).length" class="row" style="margin-top:.25rem">
-        <ClaimBadge v-for="(c, l) in f.claims" :key="l" :claim="c" :text="labelUk(String(l))" />
+        <ClaimSet :claims="f.claims" />
       </div>
       <div v-if="f.hints.length" class="small muted">гіпотези без джерела (лише для перевірки, мітку не ставлять): {{ f.hints.join(', ') }}</div>
     </li>

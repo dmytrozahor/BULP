@@ -5,12 +5,11 @@
  */
 import { computed } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
-import { DIALECTS } from '../../core/rules.ts'
 import type { AnnotatedToken } from '../lib/annotate.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
-import { categoryOf } from '../lib/analyze.ts'
-import { epochName, fmtDate, labelUk } from '../lib/format.ts'
+import { epochName, fmtDate } from '../lib/format.ts'
 import ClaimBadge from './ClaimBadge.vue'
+import ClaimSet from './ClaimSet.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import ReconstructedForms from './ReconstructedForms.vue'
 import StressForms from './StressForms.vue'
@@ -19,7 +18,6 @@ const { witnessById } = useData()
 const first = computed(() => (props.t.card && isKnown(props.t.card.first) ? props.t.card.first.value : undefined))
 const who = computed(() => (first.value ? authorInfo(first.value.author, witnessById.value.get(first.value.witness)).name : ''))
 const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex: 'відомо лише з індексу ВЕСУМ/LT', rules: 'немає в словниках; спрацювали лише правила з джерелом', unknown: 'невідомо' } as const
-const name = (l: string) => DIALECTS[l] ?? labelUk(l)
 </script>
 
 <template>
@@ -55,7 +53,7 @@ const name = (l: string) => DIALECTS[l] ?? labelUk(l)
       <RouterLink :to="{ path: '/analyze', query: { q: t.raw } }">Проаналізувати →</RouterLink>
     </div>
     <div v-if="Object.keys(t.claims).length" class="row" style="margin-top:.35rem">
-      <ClaimBadge v-for="(c, l) in t.claims" :key="l" :claim="c" :text="name(String(l))" :tone="categoryOf(String(l)) ?? ''" />
+      <ClaimSet :claims="t.claims" />
     </div>
     <div v-else-if="t.status !== 'unknown'" class="small muted" style="margin-top:.3rem">міток немає — <span class="unk">не визначено</span></div>
     <div v-if="t.hints.length" class="small muted">гіпотези без джерела: {{ t.hints.map(h => h.rule).join(', ') }}</div>

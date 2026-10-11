@@ -6,15 +6,15 @@
  */
 import type { LexIndex, VesumHit } from '../../core/types.ts'
 import { detect, type Ctx, type Rule } from '../../core/detect.ts'
-import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, SURZHYK_BASIS, DIALECTS } from '../../core/rules.ts'
+import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, SURZHYK_BASIS, DIALECTS } from '../../core/rules.ts'
 import { derive } from '../../core/phonology.ts'
 import { key, normalizeOld } from '../../core/text.ts'
 import type { Claim } from '../../core/evidence.ts'
 
-export const ALL_RULES: Rule[] = [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...REGISTER_RULES]
+export const ALL_RULES: Rule[] = [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...REGISTER_RULES, ...RUSYN_RULES]
 export const ruleOf = (id: string) => ALL_RULES.find(r => r.id === id)
 /** Rules whose test is true merely because VESUM has no entry (notInVesum / !normative on an empty list) — gated when the word is unknown. */
-export const GATED_IDS = new Set(['ORT-JO', 'MOR-PART-SHCH', 'PFX-VS', 'SFX-YVA', 'PFX-RAZ', 'SFX-STVO', 'REG-H-TSIA'])
+export const GATED_IDS = new Set(['ORT-JO', 'MOR-PART-SHCH', 'PFX-VS', 'SFX-YVA', 'PFX-RAZ', 'SFX-STVO', 'REG-H-TSIA', 'PAN-INF-C'])
 const isGated = (r: Rule) => r.axis === 'dialect' || GATED_IDS.has(r.id)
 
 export interface LexData { lexindex?: LexIndex; paradigmMap: Map<string, VesumHit[]> }
@@ -46,10 +46,11 @@ export function runDetectors(word: string, d: LexData, year?: number): Analysis 
 }
 
 // ── label classification (marker colours of the annotator, filters) ────────────────────────────
-export type Category = 'cs' | 'contact' | 'dialect' | 'colloquial' | 'archaic'
-export const CATEGORIES: Category[] = ['cs', 'contact', 'dialect', 'colloquial', 'archaic']
+export type Category = 'cs' | 'contact' | 'dialect' | 'rusyn' | 'colloquial' | 'archaic'
+export const CATEGORIES: Category[] = ['cs', 'contact', 'dialect', 'rusyn', 'colloquial', 'archaic']
+export const isRusyn = (label: string) => label === 'rusyn' || label.startsWith('rusyn:')
 export const CATEGORY_UK: Record<Category, string> = {
-  cs: 'церковнослов’янське', contact: 'контактне / суржик', dialect: 'діалектне', colloquial: 'розмовне', archaic: 'архаїчний правопис',
+  cs: 'церковнослов’янське', contact: 'контактне / суржик', dialect: 'діалектне', rusyn: 'русинське (паралельне прочитання)', colloquial: 'розмовне', archaic: 'архаїчний правопис',
 }
 const CONTACT_LABELS = new Set([...SURZHYK_BASIS, 'surzhyk', 'nonnormative', 'not_recommended', 'nonstandard'])
 export function categoryOf(label: string): Category | undefined {
@@ -57,6 +58,7 @@ export function categoryOf(label: string): Category | undefined {
   if (label === 'colloquial') return 'colloquial'
   if (label === 'archaic_orthography') return 'archaic'
   if (CONTACT_LABELS.has(label)) return 'contact'
+  if (isRusyn(label)) return 'rusyn'
   if (label in DIALECTS) return 'dialect'
   return undefined
 }

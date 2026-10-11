@@ -6,13 +6,13 @@
 import { computed, ref, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
-import { DIALECTS } from '../../core/rules.ts'
+import type { Claim } from '../../core/evidence.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
-import { categoryOf } from '../lib/analyze.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
+import ClaimSet from '../components/ClaimSet.vue'
 import Collocations from '../components/Collocations.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
@@ -34,11 +34,14 @@ const first = computed(() => card.value && isKnown(card.value.first) ? card.valu
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
 const kwic = computed(() => (card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
-const dialects = computed(() => Object.entries(card.value?.claims.dialect ?? {}))
+/** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
+const dialects = computed(() => {
+  const ru = (card.value?.claims as { rusyn?: Claim<string> } | undefined)?.rusyn
+  return [...Object.entries(card.value?.claims.dialect ?? {}), ...(ru && isKnown(ru) ? [[ru.value, ru] as [string, Claim<unknown>]] : [])]
+})
 const epochClaims = computed(() => first.value ? (['shev', 'wl'] as const).map(s => ({ s, c: assignEpoch(first.value!.date, s) })) : [])
 const epText = (c: ReturnType<typeof assignEpoch>) => (isKnown(c) ? c.value.epochs.map(epochName).join(' / ') + ` · ${c.value.confidence}` : 'невідомо')
 const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).filter(f => Object.keys(f.claims).length))
-const bucket = (l: string) => categoryOf(l) ?? 'archaic'
 </script>
 
 <template>
@@ -91,7 +94,7 @@ const bucket = (l: string) => categoryOf(l) ?? 'archaic'
             <div><span class="muted">Суржик: </span><ClaimBadge :claim="card.claims.surzhyk" text="суржик" tone="contact" /></div>
             <div><span class="muted">Походження: </span><ClaimBadge :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" /></div>
             <div><span class="muted">Діалекти: </span>
-              <template v-if="dialects.length"><ClaimBadge v-for="[code, c] in dialects" :key="code" :claim="c" :text="DIALECTS[code] ?? code" tone="dialect" /></template>
+              <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>
@@ -102,7 +105,7 @@ const bucket = (l: string) => categoryOf(l) ?? 'archaic'
             <h3 class="sans small muted" style="margin-top:.9rem">Мітки окремих написань</h3>
             <ul class="sans small" style="list-style:none;padding:0;margin:0">
               <li v-for="f in formLabels" :key="f.raw" style="margin:.25rem 0"><strong style="font-family:var(--serif)">{{ f.raw }}</strong>
-                <span v-for="(c, l) in f.claims" :key="l"> <ClaimBadge :claim="c" :text="labelUk(String(l))" :tone="bucket(String(l))" /></span></li>
+                <ClaimSet :claims="f.claims" /></li>
             </ul>
           </template>
           <p class="small muted sans" style="margin-top:.6rem">Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1).</p>

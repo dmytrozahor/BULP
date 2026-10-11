@@ -44,9 +44,11 @@ export const LABEL_UK: Record<string, string> = {
   nonnormative: 'ненормативне (LT)', not_recommended: 'не рекомендоване', russianism_or_hybrid: 'русизм / покруч', nonstandard: 'нестандартне',
   russianism_orth: 'русизм (правопис)', russianism_phon: 'русизм (фонетика)', russianism_morph: 'русизм (морфологія)', calque_participle: 'калька-дієприкметник',
   archaic_orthography: 'архаїчний правопис (норма свого часу)',
+  rusyn: 'русинське (варіант не визначено)', 'rusyn:lemko': 'русинське · лемківське', 'rusyn:presov': 'русинське · пряшівське',
+  'rusyn:pannonian': 'русинське · паннонське', 'rusyn:subcarpathian': 'русинське · підкарпатське',
 }
 export const labelUk = (l: string) => LABEL_UK[l] ?? l
-export const AXIS_UK: Record<string, string> = { cs: 'церковнослов’янське', contact: 'контактний шар / суржик', dialect: 'діалектне', register: 'регістр' }
+export const AXIS_UK: Record<string, string> = { cs: 'церковнослов’янське', contact: 'контактний шар / суржик', dialect: 'діалектне', rusyn: 'русинські стандарти (паралельне прочитання)', register: 'регістр' }
 
 export const stars = (p: number) => (p <= 0.0001 ? '★★★★' : p <= 0.001 ? '★★★' : p <= 0.01 ? '★★' : p <= 0.05 ? '★' : '')
 export const fmtNum = (n: number, d = 0) => n.toLocaleString('uk-UA', { maximumFractionDigits: d, minimumFractionDigits: d })

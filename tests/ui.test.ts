@@ -73,9 +73,13 @@ describe('annotator (pure)', () => {
   })
   it.skipIf(!cards.length)('year gates rules: ы in a 1798 text is archaic orthography, not russianism', () => {
     const d = data()
-    const old = annotate('быти', d, 1798)[0]!, now = annotate('быти', d, undefined)[0]!
+    const old = annotate('быть', d, 1798)[0]!, now = annotate('быть', d, undefined)[0]!
     expect(Object.keys(old.claims)).toContain('archaic_orthography'); expect(Object.keys(old.claims)).not.toContain('russianism_orth')
-    expect(Object.keys(now.claims)).toContain('russianism_orth')
+    expect(Object.keys(now.claims)).toContain('russianism_orth')   // -ть infinitive with ы = positive Russian signal (research/10 §5)
+  })
+  it.skipIf(!cards.length)('Rusyn veto: modern быти (-ти with ы) is a Rusyn marker, not russianism_orth', () => {
+    const c = annotate('быти', data(), undefined)[0]!.claims
+    expect(Object.keys(c)).not.toContain('russianism_orth'); expect(Object.keys(c).some(l => l.startsWith('rusyn'))).toBe(true)
   })
   it.skipIf(!cards.length)('a church-slavonic form carries its evidence and wins the mark', () => {
     const t = annotate('градъ', data(), 1092)[0]!

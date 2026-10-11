@@ -41,6 +41,8 @@ function claimsOf(card: LemmaCard, form?: FormCard): Record<string, Claim<true>>
   if (isKnown(c.surzhyk)) out.surzhyk = c.surzhyk
   if (isKnown(c.origin) && c.origin.value === 'church_slavonic') out.church_slavonic = c.origin as unknown as Claim<true>
   for (const [code, cl] of Object.entries(c.dialect)) if (isKnown(cl)) out[code] = cl
+  const ru = (c as { rusyn?: Claim<string> }).rusyn   // optional (B0 contract); absent in older data
+  if (ru && isKnown(ru)) out[ru.value] = ru as unknown as Claim<true>
   return { ...out, ...(form?.claims ?? {}) }
 }
 
@@ -92,7 +94,7 @@ export interface Summary {
 }
 export function summarize(tokens: AnnotatedToken[]): Summary {
   const byStatus: Summary['byStatus'] = { attested: 0, lexindex: 0, rules: 0, unknown: 0 }
-  const byMark = { cs: 0, contact: 0, dialect: 0, colloquial: 0, archaic: 0 } as Summary['byMark']
+  const byMark = { cs: 0, contact: 0, dialect: 0, rusyn: 0, colloquial: 0, archaic: 0 } as Summary['byMark']
   const lemmas = new Map<string, string>(), unknown = new Set<string>()
   let derived = 0
   for (const t of tokens) {

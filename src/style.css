@@ -3,7 +3,7 @@
   --bg: #faf7f1; --surface: #ffffff; --surface-2: #f3eee3; --ink: #1f1c17; --muted: #675f52; --line: #d9d1bf;
   --accent: #1d4f7a; --accent-ink: #ffffff; --accent-soft: #e3edf5; --warn: #8a4b0f; --warn-soft: #fbefdb; --danger: #8e2a2a;
   --ep1: #ecdcae; --ep2: #e2bb6a; --ep3: #cf9140; --ep4: #a9622e; --ep5: #7b402b; --ep6: #4b2531;
-  --m-cs: #6b3fa0; --m-contact: #b3402a; --m-dialect: #2f7a3e; --m-colloquial: #1d4f7a; --m-archaic: #7a6a40;
+  --m-cs: #6b3fa0; --m-contact: #b3402a; --m-dialect: #2f7a3e; --m-colloquial: #1d4f7a; --m-archaic: #7a6a40; --m-rusyn: #a2652a;
   --serif: "Noto Serif", "PT Serif", Georgia, "Times New Roman", serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -14,14 +14,14 @@
     --bg: #17150f; --surface: #201d16; --surface-2: #2a261d; --ink: #ece6d8; --muted: #a79f8d; --line: #3c372b;
     --accent: #8dbbe3; --accent-ink: #10202e; --accent-soft: #1d2d3b; --warn: #e0a460; --warn-soft: #33260f; --danger: #e58a8a;
     --ep1: #5b4a28; --ep2: #8b6a2d; --ep3: #b98a3e; --ep4: #d9a864; --ep5: #ecc98f; --ep6: #f8e7c0;
-    --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; color-scheme: dark;
+    --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #17150f; --surface: #201d16; --surface-2: #2a261d; --ink: #ece6d8; --muted: #a79f8d; --line: #3c372b;
   --accent: #8dbbe3; --accent-ink: #10202e; --accent-soft: #1d2d3b; --warn: #e0a460; --warn-soft: #33260f; --danger: #e58a8a;
   --ep1: #5b4a28; --ep2: #8b6a2d; --ep3: #b98a3e; --ep4: #d9a864; --ep5: #ecc98f; --ep6: #f8e7c0;
-  --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; color-scheme: dark;
+  --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -73,6 +73,8 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 .badge { display: inline-flex; gap: .3rem; align-items: baseline; font: .82rem var(--sans); padding: .05rem .5rem; border-radius: 999px; background: var(--accent-soft); border: 1px solid var(--accent); color: var(--ink); }
 .badge .evmark { font-style: normal; font-size: .7rem; color: var(--accent); }
 .badge.cs { border-color: var(--m-cs); } .badge.contact { border-color: var(--m-contact); } .badge.dialect { border-color: var(--m-dialect); } .badge.colloquial { border-color: var(--m-colloquial); } .badge.archaic { border-color: var(--m-archaic); }
+.badge.rusyn { border-color: var(--m-rusyn); border-style: double; border-width: 3px; }   /* shape (double frame) + text «русинське», never colour only */
+.parallel { display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: baseline; border: 1px solid var(--line); border-left: 4px double var(--m-rusyn); border-radius: var(--r); padding: .3rem .5rem; margin: .3rem 0; }
 .unk { color: var(--muted); font: italic .85rem var(--sans); border-bottom: 1px dotted var(--muted); cursor: help; }
 .authlabel { font: .72rem var(--sans); border: 1px solid var(--line); border-radius: 3px; padding: 0 .35rem; background: var(--surface-2); }
 .generated { font: .78rem var(--sans); color: var(--muted); }
@@ -140,9 +142,10 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 .w.m-cs { text-decoration: underline double var(--m-cs) 2px; text-underline-offset: 4px; }
 .w.m-contact { text-decoration: underline wavy var(--m-contact) 1.5px; text-underline-offset: 4px; }
 .w.m-dialect { text-decoration: underline dotted var(--m-dialect) 3px; text-underline-offset: 4px; }
+.w.m-rusyn { text-decoration: underline overline var(--m-rusyn) 2px; text-underline-offset: 4px; }
 .w.m-colloquial { text-decoration: underline dashed var(--m-colloquial) 2px; text-underline-offset: 4px; }
 .w.m-archaic { text-decoration: underline solid var(--m-archaic) 1px; text-underline-offset: 4px; }
 .w.derived { outline: 1px dashed var(--muted); font-style: italic; }
 .wcard { white-space: normal; line-height: 1.45; font-size: .88rem; font-family: var(--sans); }
-.sw-cs { background: var(--m-cs); } .sw-contact { background: var(--m-contact); } .sw-dialect { background: var(--m-dialect); } .sw-colloquial { background: var(--m-colloquial); } .sw-archaic { background: var(--m-archaic); }
+.sw-cs { background: var(--m-cs); } .sw-contact { background: var(--m-contact); } .sw-dialect { background: var(--m-dialect); } .sw-rusyn { background: var(--m-rusyn); } .sw-colloquial { background: var(--m-colloquial); } .sw-archaic { background: var(--m-archaic); }
 textarea.src { width: 100%; min-height: 9rem; font-family: var(--serif); font-size: 1.05rem; }

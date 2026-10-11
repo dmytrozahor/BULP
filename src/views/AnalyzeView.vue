@@ -11,8 +11,9 @@ import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
 import { AXIS_UK, labelUk } from '../lib/format.ts'
-import { categoryOf, runDetectors, ruleOf, ALL_RULES } from '../lib/analyze.ts'
+import { categoryOf, isRusyn, runDetectors, ruleOf, ALL_RULES } from '../lib/analyze.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
+import ClaimSet from '../components/ClaimSet.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
@@ -23,7 +24,11 @@ const y = computed(() => (/^\d{3,4}$/.test(year.value) ? +year.value : undefined
 const d = computed(() => (word.value ? deriveWithSteps(word.value) : undefined))
 const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, annData.value, y.value) : undefined))
 const inLex = computed(() => (word.value ? searchIdx.value.map.get(key(word.value)) ?? [] : []))
-const claimList = computed(() => Object.entries(a.value?.claims ?? {}))
+const allClaims = computed(() => Object.entries(a.value?.claims ?? {}))
+const hasRusyn = computed(() => allClaims.value.some(([l]) => isRusyn(l)))
+const parallelLabel = (l: string) => isRusyn(l) || (hasRusyn.value && (l === 'ZAK' || l === 'LEM'))
+const claimList = computed(() => allClaims.value.filter(([l]) => !parallelLabel(l)))
+const parallelClaims = computed(() => Object.fromEntries(allClaims.value.filter(([l]) => parallelLabel(l))))
 const open = ref<string | null>(null)
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
@@ -63,13 +68,14 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
       </div>
       <div v-if="a.lt" class="small sans">LanguageTool: <code>{{ a.lt[0] }}</code> → «{{ a.lt[1] }}»</div>
       <div v-if="a.vesum.length" class="small sans">ВЕСУМ: <code v-for="(h, i) in a.vesum" :key="i" style="margin-right:.6rem">{{ h.lemma }} {{ h.tags }}</code></div>
+      <div v-if="hasRusyn" class="sans"><ClaimSet :claims="parallelClaims" /></div>
       <ul v-if="claimList.length" style="list-style:none;padding:0">
         <li v-for="[label, c] in claimList" :key="label" style="margin:.5rem 0" class="sans">
           <ClaimBadge :claim="c" :text="labelUk(label)" :tone="categoryOf(label) ?? ''" />
           <span class="small muted"> · {{ AXIS_UK[ALL_RULES.find(r => r.label === label)?.axis ?? ''] ?? '' }}</span>
         </li>
       </ul>
-      <p v-else class="muted sans">Жодне правило з джерелом не спрацювало — міток немає (<span class="unk">невідомо</span> ≠ «літературне»).</p>
+      <p v-else-if="!hasRusyn" class="muted sans">Жодне правило з джерелом не спрацювало — міток немає (<span class="unk">невідомо</span> ≠ «літературне»).</p>
     </section>
 
     <section v-if="a.hints.length" class="card"><h2><span>Гіпотези без джерела (лише для перевірки)</span></h2>
