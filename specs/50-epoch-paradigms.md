@@ -1,7 +1,14 @@
 # SPEC 50 — Paradigms per historical epoch (word card)
 
-Status: **draft for review**, 2026-10-11. Subordinate to SPEC 00 (P-1 evidence, P-1.7 inferred ≠ fact, P-3.1 unknown), SPEC 20 (linking B-2, delivery B-5 as amended: core + detail shards), SPEC 30 D-4 (visual classes).
+Status: **approved for MVP** (decisions below), 2026-10-11. Subordinate to SPEC 00 (P-1 evidence, P-1.7 inferred ≠ fact, P-3.1 unknown), SPEC 20 (linking B-2, delivery B-5 as amended: core + detail shards), SPEC 30 D-4 (visual classes).
 Research basis: research/11 (sources PAVL, ENC, SHEV, TOROT header; chronology MH-01…MH-30; tag decoding §4; coverage §5).
+
+**Decisions (user, 2026-10-11)** — approved for MVP implementation:
+- D1 PAVL (Павленко 2010) is the primary ending source, every ending with its page; replaced/cross-checked when Безпалько 1962 or the 1978 morphology volume is obtained.
+- D2 Stanza tags of out-of-domain Ruthenian witnesses (Samovydets, Vyshensky) are shown with a *model* badge, after the EP-3 gender/lemma consistency filter.
+- D3 Church Slavonic witnesses (Ostromir, Archangel Gospel) feed the shev.old grids; their cells carry a CS badge.
+- D4 a stem type may be assigned from a Stanza lemma when no TOROT lemma exists; such stem claims and the reconstructions built on them are marked model-based (P-1.7).
+- Defaults (coordinator, no user objection): undated changes stay «дата не встановлена»; -ц- stems stay `unknown` (ST-14); proper nouns follow the scope table; the PAVL glyph ("→я/ѧ) and long-adjective table (research/11 O-1) are checked against page images before E-B2 — if unverifiable, the affected endings are not displayed.
 
 > Goal: next to the modern VESUM paradigm the word card shows, per epoch, which forms of the lemma are **attested** in which grammatical cell, which forms a cited grammar **reconstructs**, which reconstructions an attestation **confirms**, and what the cited grammar says changed in that epoch. Every cell is evidence or `unknown`.
 
