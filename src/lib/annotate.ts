@@ -41,7 +41,7 @@ function claimsOf(card: LemmaCard, form?: FormCard): Record<string, Claim<true>>
   if (isKnown(c.surzhyk)) out.surzhyk = c.surzhyk
   if (isKnown(c.origin) && c.origin.value === 'church_slavonic') out.church_slavonic = c.origin as unknown as Claim<true>
   for (const [code, cl] of Object.entries(c.dialect)) if (isKnown(cl)) out[code] = cl
-  const ru = (c as { rusyn?: Claim<string> }).rusyn   // optional (B0 contract); absent in older data
+  const ru = c.rusyn   // optional (B0 contract); absent in older data
   if (ru && isKnown(ru)) out[ru.value] = ru as unknown as Claim<true>
   return { ...out, ...(form?.claims ?? {}) }
 }

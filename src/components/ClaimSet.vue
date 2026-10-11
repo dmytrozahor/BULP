@@ -7,7 +7,6 @@
 import { computed } from 'vue'
 import type { Claim } from '../../core/evidence.ts'
 import { DIALECTS, RUSYN_STATUS } from '../../core/rules.ts'
-import type { ContractCorpus } from '../lib/contract.ts'
 import { useData } from '../composables/useData.ts'
 import { categoryOf, isRusyn } from '../lib/analyze.ts'
 import { labelUk } from '../lib/format.ts'
@@ -15,7 +14,7 @@ import ClaimBadge from './ClaimBadge.vue'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ claims: Record<string, Claim<unknown>> }>()
 const { corpus } = useData()
-const status = computed(() => (corpus.value as ContractCorpus | undefined)?.rusynStatus ?? RUSYN_STATUS)
+const status = computed(() => corpus.value?.rusynStatus ?? RUSYN_STATUS)
 const name = (l: string) => DIALECTS[l] ?? labelUk(l)
 /** the contract key `rusyn` carries the axis label in its VALUE ('rusyn:lemko' …); other claims are keyed by their label */
 const lab = (l: string, c: Claim<unknown>) => (l === 'rusyn' && typeof c.value === 'string' ? c.value : l)

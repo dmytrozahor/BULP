@@ -2,7 +2,7 @@
  * FIXTURE generator — realistic-but-invented data so the UI can be built before the real pipelines run.
  * Everything is marked "generated": "FIXTURE"; KWIC left contexts start with "[фікстура]"; evidence of invented facts uses source FIXTURE.
  * What is REAL: all derivations (core/phonology derive), epochs (assignEpoch), detector claims (detect + rule tables), statistics (core/stats).
- *   npx tsx pipelines/fixture.ts   → public/data/{corpus,lexicon,lexindex}.json
+ *   npx tsx pipelines/fixture.ts [outDir]   → <outDir = public/data>/{corpus,lexicon,lexindex}.json (tests/ui.test.ts writes to a temp dir)
  * The real pipeline overwrites these files (SPEC 10 M-6).
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
@@ -219,9 +219,10 @@ const lexindex: LexIndex = {
   },
 }
 
-mkdirSync('public/data', { recursive: true })
-writeFileSync('public/data/corpus.json', JSON.stringify(corpus))
-writeFileSync('public/data/lexicon.json', JSON.stringify(cards))
-writeFileSync('public/data/lexindex.json', JSON.stringify(lexindex))
+const OUT = process.argv[2] ?? 'public/data'
+mkdirSync(OUT, { recursive: true })
+writeFileSync(`${OUT}/corpus.json`, JSON.stringify(corpus))
+writeFileSync(`${OUT}/lexicon.json`, JSON.stringify(cards))
+writeFileSync(`${OUT}/lexindex.json`, JSON.stringify(lexindex))
 console.log(`FIXTURE: ${cards.length} lemmas, ${witnesses.length} witnesses, N=${N}`)
 for (const c of cards) console.log(c.lemma, c.forms.map(f => `${f.raw}→${f.modern}[${f.derivation.map(d => d.rule).join(',')}] ${Object.keys(f.claims).join('|')}`).join('  '), 'origin=', c.claims.origin.value, 'reg=', c.claims.register.value)

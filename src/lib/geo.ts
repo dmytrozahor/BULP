@@ -2,7 +2,7 @@
  * Region map helpers (research/07 §3.3). public/geo/ukr-oblasts.json = Natural Earth admin-1 (public domain), ISO 3166-2:UA keys, Crimea (UA-43) and
  * Sevastopol (UA-40) included as Ukraine. A "region" is the REGION OF A WITNESS (SPEC 20 B-3.6), never a dialect claim.
  */
-import type { ByRegion, RegionDef } from './contract.ts'
+import type { CorpusMeta, LemmaStats } from '../../core/types.ts'
 
 export interface GeoFeature { properties: { code: string; name: string }; geometry: { type: 'Polygon' | 'MultiPolygon'; coordinates: number[][][] | number[][][][] } }
 export interface Geo { attribution: string; features: GeoFeature[] }
@@ -19,7 +19,7 @@ export const loadGeo = () => (geo ??= fetch('./geo/ukr-oblasts.json').then(r => 
 
 export interface RegionRow { code: string; name: string; oblasts: string[]; f: number; N: number; ipm: number | undefined }
 /** byRegion × corpus.regions → rows with ipm = f/N·10⁶ (P-1.6: N always kept); a region without tokens has ipm undefined = unknown, never 0. */
-export function regionRows(regions: RegionDef[] | undefined, by: ByRegion | undefined): RegionRow[] {
+export function regionRows(regions: CorpusMeta['regions'] | undefined, by: LemmaStats['byRegion']): RegionRow[] {
   if (!regions) return []
   const m = new Map((by ?? []).map(b => [b.code, b]))
   return regions.map(r => { const b = m.get(r.code), N = b?.N ?? r.N, f = b?.f ?? 0; return { code: r.code, name: r.name, oblasts: r.oblasts, f, N, ipm: N > 0 ? (f / N) * 1e6 : undefined } })

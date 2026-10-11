@@ -38,7 +38,7 @@ const kwic = computed(() => (card.value?.forms ?? []).filter(f => !active.value 
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
 /** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
 const dialects = computed(() => {
-  const ru = (card.value?.claims as { rusyn?: Claim<string> } | undefined)?.rusyn
+  const ru = card.value?.claims.rusyn
   return [...Object.entries(card.value?.claims.dialect ?? {}), ...(ru && isKnown(ru) ? [[ru.value, ru] as [string, Claim<unknown>]] : [])]
 })
 const epochClaims = computed(() => first.value ? (['shev', 'wl'] as const).map(s => ({ s, c: assignEpoch(first.value!.date, s) })) : [])

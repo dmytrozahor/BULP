@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { existsSync, readFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { buildGrids } from '../src/lib/paradigm.ts'
 import { buildIndex, buildIndexAsync, search, queryKeys } from '../src/lib/search.ts'
 import { annotate, summarize, type AnnotateData } from '../src/lib/annotate.ts'
@@ -12,9 +15,12 @@ import { EXAMPLES } from '../src/data/examples.ts'
 import { key } from '../core/text.ts'
 import type { LemmaCard, LexIndex, VesumHit } from '../core/types.ts'
 
-const FIX = 'public/data/lexicon.json'
-const cards: LemmaCard[] = existsSync(FIX) ? toCards(JSON.parse(readFileSync(FIX, 'utf8'))) : []
-const lexindex: LexIndex = existsSync('public/data/lexindex.json') ? JSON.parse(readFileSync('public/data/lexindex.json', 'utf8')) : { lt: {}, vesum: {} }
+// UI behaviour is pinned to the FIXTURE (known lemmas/spellings), not public/data — the real build overwrites that (tests/build.test.ts covers it)
+const FIX = mkdtempSync(join(tmpdir(), 'ukr-fixture-'))
+execFileSync(process.execPath, ['--import', 'tsx', 'pipelines/fixture.ts', FIX], { stdio: 'ignore' })
+const read = (f: string) => JSON.parse(readFileSync(join(FIX, f), 'utf8'))
+const cards: LemmaCard[] = toCards(read('lexicon.json'))
+const lexindex: LexIndex = read('lexindex.json')
 const data = (): AnnotateData => {
   const paradigmMap = new Map<string, VesumHit[]>()
   for (const c of cards) for (const p of c.paradigm) { const k = key(p.form); paradigmMap.set(k, [...(paradigmMap.get(k) ?? []), { lemma: c.lemma, tags: p.tags }]) }
