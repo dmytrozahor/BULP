@@ -1,14 +1,19 @@
 /** SPEC 20 §Tests: admission (B-1.1), ambiguity order (B-2.1), surzhyk/LT upgrade needs both conditions (B-3.2), tie-break (B-3.5), size budget (B-5), every built claim valid (P-1.1). */
 import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
-import { claim, Q, D, isKnown, type Claim } from '../core/evidence.ts'
+import { claim, Q, D, isKnown, unknown, type Claim } from '../core/evidence.ts'
 import type { Ctx } from '../core/detect.ts'
 import type { LemmaCard, VesumHit, WitnessOut } from '../core/types.ts'
 import { authorById, type Author } from '../pipelines/authors.ts'
 import { admit, rankFirst, firstClaim, upgradeLt, selectForms, lemmaRusyn, surzhykClaim, type FirstCand } from '../pipelines/build-annotate.ts'
 import { chooseLemma, tierOf, type Option } from '../pipelines/build-link.ts'
-import { fitBudget } from '../pipelines/build.ts'
-import { pack, unpack } from '../core/pack.ts'
+import { writeLexicon } from '../pipelines/build.ts'
+import { pack, packCore, unpack, unpackCore } from '../core/pack.ts'
+import { BUCKETS, bucketOf, isFull, mergeCard, packShard, splitCard, unpackShard } from '../core/shard.ts'
+import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { readFull } from './lexdata.ts'
 import { REGIONS, regionOf } from '../pipelines/regions.ts'
 import { SURZHYK_DEF } from '../core/rules.ts'
 
@@ -120,36 +125,68 @@ describe('B-3 lemma-level claims', () => {
   })
 })
 
-const cardOf = (lemma: string, f: number, pad: number): LemmaCard => ({ lemma, pos: 'x', paradigm: [], stress: [], forms: [], first: claim('x', Q('S', 'l', 'q')) as never, stats: { f } as never, claims: { pad: 'x'.repeat(pad) } as never })
-const kw = (n: number) => Array.from({ length: n }, (_, i) => ({ w: 'w', loc: 'l' + i, left: 'l'.repeat(100), node: 'n', right: 'r'.repeat(100), date: [1000, 1000] as [number, number] }))
-const withForms = (lemma: string, f: number): LemmaCard => ({ ...cardOf(lemma, f, 0), forms: [{ raw: lemma, norm: lemma, modern: lemma, f, date: [1000, 1000], link: claim({ lemma, form: lemma, route: 'direct', alternatives: [] }, Q('S', 'l', 'q')), derivation: [], claims: {}, hints: [], epochs: [], kwic: kw(6) }] })
-describe('B-5 size budget', () => {
-  const LIMIT = 15 * 1024 * 1024
-  it('drops the lowest-frequency lemmas first; pre-1400 outranks a modern lemma of equal frequency; result fits', () => {
-    const cards = [cardOf('a', 100, 4e6), cardOf('b', 50, 4e6), cardOf('c', 1, 4e6), cardOf('d', 1, 4e6), cardOf('e', 1, 4e6)]
-    const r = fitBudget(cards, ['d'])
-    expect(r.bytes).toBeLessThanOrEqual(LIMIT)
-    expect(r.cards.map(c => c.lemma)).toEqual(['a', 'b', 'd'])
-    expect(r.dropped).toBe(2)
+// ── B-5 core / detail split ──────────────────────────────────────────────────────────────────────
+const kw = (n: number) => Array.from({ length: n }, (_, i) => ({ w: 'w', loc: 'l' + i, left: 'l'.repeat(20), node: 'n', right: 'r'.repeat(20), date: [1000, 1000] as [number, number] }))
+const EV = Q('S', 'l', 'q')
+const stats = (f: number): LemmaCard['stats'] => ({ f, ipm: f / 10, hk: 3, dots: 2, dp: 0.4, range: 2, byEpoch: { 'shev.old': { f, ipm: 1 } }, byCentury: [{ c: 11, f, ipm: 1, smooth: null }], shifts: [], colloc: [{ lemma: 'x', fxy: 3, logDice: 5 }], byRegion: [{ code: 'kyiv', f, N: 100 }] })
+/** a full card: a plain spelling and one with norm/modern/claims/hints, a paradigm with repeated forms and tags, claims of every kind */
+const fullCard = (lemma: string, f: number, nk = 6): LemmaCard => ({
+  lemma, pos: 'іменник', paradigm: [{ form: lemma, tags: 'noun:m:v_naz' }, { form: lemma, tags: 'noun:m:v_zna' }, { form: lemma + 'а', tags: 'noun:m:v_rod' }, { form: lemma, tags: 'noun:m:v_kly' }],
+  stress: [{ form: lemma, positions: [0], status: 'unknown', evidence: [EV], method: 'dictionary' }],
+  forms: [
+    { raw: lemma, norm: lemma, modern: lemma, f, date: [1000, 1000], link: claim({ lemma, form: lemma, route: 'direct', alternatives: [] }, EV), derivation: [], claims: {}, hints: [], epochs: ['shev.old'], kwic: kw(nk) },
+    { raw: lemma + 'ѣ', norm: lemma + 'е', modern: lemma + 'і', f: 1, date: [1500, 1550], link: claim({ lemma, form: lemma, route: 'token', alternatives: ['z'] }, [EV, Q('T', 'l2', 'q2')]), derivation: [{ rule: 'R09', from: 'ѣ', to: 'і' }], claims: { church_slavonic: claim(true as const, [EV], { score: 0.5, method: 'X' }) }, hints: ['R1'], epochs: ['shev.middle', 'shev.modern'], kwic: kw(1) },
+  ],
+  first: claim({ author: 'a', witness: 'w', loc: 'l', date: [1000, 1000] as [number, number], witnessType: 'chronicle', form: lemma, coFirst: [] }, [EV]) as never,
+  stats: stats(f),
+  claims: { register: claim('colloquial' as const, [EV]), surzhyk: unknown() as never, origin: claim('native' as const, [EV, Q('T', 'l3', 'q3')]), oldest: claim({ form: lemma, date: [1000, 1000] as [number, number], epoch: 'shev.old' }, [EV]) as never, dialect: { ZAK: claim(true as const, [EV]) } },
+})
+describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
+  const plain = fullCard('вода', 4), cards = [fullCard('слово', 9), { ...plain, claims: { ...plain.claims, register: unknown() as never, dialect: {}, rusyn: claim('rusyn', [EV]) as never } }]
+  it('splitCard → mergeCard deep-equals the original card', () => { for (const c of cards) { const { core, detail } = splitCard(c); expect(mergeCard(core, detail)).toEqual(c) } })
+  it('the core holds no KWIC, stress, link, derivation or detail statistics', () => {
+    const { core, detail } = splitCard(cards[0]!), s = JSON.stringify(core)
+    for (const k of ['kwic', 'stress', 'link', 'derivation', 'byCentury', 'colloc', 'oldest']) expect(s, k).not.toContain(`"${k}"`)
+    expect(detail.forms[0]!.kwic).toHaveLength(6); expect(Object.keys(core.stats).sort()).toEqual(['dots', 'f', 'hk', 'ipm'])
   })
-  it('the share is computed against the lemmas that are written: the top-ranked keep 6 KWIC per form when the budget allows, the file fits', () => {
-    const cards = Array.from({ length: 3000 }, (_, i) => withForms('l' + String(i).padStart(4, '0'), 3000 - i))
-    const r = fitBudget(cards, [], 1e6)
-    expect(r.dropped).toBeGreaterThan(0); expect(r.cards.length).toBeGreaterThan(100)
-    expect(r.cards[0]!.lemma).toBe('l0000'); expect(r.cards[0]!.forms.every(f => f.kwic.length === 6)).toBe(true)
-    expect(r.tiers[0]).toBeGreaterThan(0)
-    expect(r.cards.map(c => c.lemma)).toEqual(cards.slice(0, r.cards.length).map(c => c.lemma))   // exactly the top-ranked prefix survives
-    expect(r.bytes).toBeLessThanOrEqual(1e6); expect(Buffer.byteLength(JSON.stringify(r.packed))).toBe(r.bytes)
+  it('core wire form (tag table, omitted defaults, pooled evidence) and a shard round-trip through JSON', () => {
+    const parts = cards.map(splitCard), p = packCore(parts.map(x => x.core))
+    expect(p.format).toBe(3); expect(JSON.stringify(p.cards)).not.toContain('"source"')
+    expect(unpackCore(JSON.parse(JSON.stringify(p)))).toEqual(parts.map(x => x.core))
+    const sh = packShard(parts.map(x => [x.core.lemma, x.detail])), back = unpackShard(JSON.parse(JSON.stringify(sh)))
+    expect(sh.ev.length).toBeLessThan(JSON.stringify(parts.map(x => x.detail)).match(/"source"/g)!.length)   // a shard has its own pool: shared Evidence is stored once
+    parts.forEach(x => expect(back.get(x.core.lemma)).toEqual(x.detail))
+    expect(() => unpackShard({ format: 9 })).toThrow()
   })
-  it('the packed file is lossless and a shared Evidence is stored once', () => {
-    const r = fitBudget([withForms('a', 5), withForms('b', 4)], [])
-    expect(r.packed.ev).toHaveLength(1)   // both cards cite the same Evidence (first claim and link): one pool entry
-    expect(unpack(JSON.parse(JSON.stringify(r.packed)))).toEqual(r.cards)
+  it('a plain full LemmaCard[] (fixture) passes through unpackCore and counts as already merged (no shard fetch)', () => {
+    expect(unpackCore(cards)).toBe(cards); expect(isFull(cards[0]!)).toBe(true); expect(isFull(splitCard(cards[0]!).core)).toBe(false)
+  })
+  it('bucketOf is stable: pinned values, NFC-invariant, in range; the browser imports this very function', () => {
+    expect([bucketOf('слово'), bucketOf('кънѧзь'), bucketOf('вода')]).toEqual([581, 246, 509])
+    expect(bucketOf('й')).toBe(bucketOf('й'))   // й precomposed vs и + combining breve
+    for (const l of ['а', 'слово', 'ѣ', 'ґанок', '']) { expect(bucketOf(l)).toBeGreaterThanOrEqual(0); expect(bucketOf(l)).toBeLessThan(BUCKETS) }
+    expect(readFileSync('src/composables/useData.ts', 'utf8')).toMatch(/import \{[^}]*bucketOf[^}]*\} from '\.\.\/\.\.\/core\/shard\.ts'/)
+  })
+  it('writeLexicon: every card in core, each in exactly one shard (its bucket); stale shards removed; limits are errors, not drops', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'lex-')); mkdirSync(join(dir, 'lex'))
+    writeFileSync(join(dir, 'lex', 'stale.json'), '{}')
+    try {
+      const cs = Array.from({ length: 60 }, (_, i) => fullCard('лема' + i, 100 - i, 2))
+      const st = writeLexicon(cs, dir)
+      expect(st.lemmas).toBe(60); expect(existsSync(join(dir, 'lex', 'stale.json'))).toBe(false)
+      const core = unpackCore(JSON.parse(readFileSync(join(dir, 'lexicon.json'), 'utf8')))
+      expect(core.map(c => c.lemma)).toEqual(cs.map(c => c.lemma))
+      const files = readdirSync(join(dir, 'lex')), seen = new Map<string, number>()
+      for (const f of files) for (const l of unpackShard(JSON.parse(readFileSync(join(dir, 'lex', f), 'utf8'))).keys()) { seen.set(l, (seen.get(l) ?? 0) + 1); expect(bucketOf(l), l).toBe(+f.replace('.json', '')) }
+      expect(seen.size).toBe(60); expect([...seen.values()].every(n => n === 1)).toBe(true); expect(st.shards).toBe(files.length)
+      expect(readFull(dir)).toEqual(cs)
+      expect(() => writeLexicon(cs, dir, 1000)).toThrow(/core/); expect(() => writeLexicon(cs, dir, 1e9, 100)).toThrow(/shard/)
+    } finally { rmSync(dir, { recursive: true, force: true }) }
   })
 })
 describe('lexicon packing (core/pack)', () => {
   const e = Q('S', 'loc', 'quote')
-  const cs = [withForms('x', 3), { ...cardOf('y', 2, 3), first: claim('y', [e, Q('T', 'l2', 'q2', 'note')]) as never }]
+  const cs = [fullCard('x', 3), { ...fullCard('y', 2), first: claim('y', [e, Q('T', 'l2', 'q2', 'note')]) as never }]
   it('pack → unpack deep-equals the input; identical Evidence is interned once; plain arrays pass through', () => {
     const p = pack(cs)
     expect(p.format).toBe(2); expect(p.ev.length).toBeLessThan(JSON.stringify(cs).match(/"source"/g)!.length)
@@ -171,7 +208,7 @@ describe('regions (research/07 §3.3, SPEC 20 B-3.6)', () => {
 // P-1.1 over the real built data (skipped on a clean checkout without public/data)
 const DATA = 'public/data/lexicon.json'
 describe.skipIf(!existsSync(DATA))('P-1.1 every claim in the built lexicon passes claim() validation', () => {
-  const cards: LemmaCard[] = unpack(JSON.parse(readFileSync(DATA, 'utf8')))
+  const cards: LemmaCard[] = readFull()
   const isClaim = (x: unknown): x is Claim<unknown> => !!x && typeof x === 'object' && 'value' in x && 'evidence' in x && Array.isArray((x as Claim<unknown>).evidence)
   const walk = (x: unknown, path: string, out: { path: string; c: Claim<unknown> }[]) => {
     if (isClaim(x)) { out.push({ path, c: x }); return }

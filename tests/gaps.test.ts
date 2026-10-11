@@ -1,6 +1,6 @@
 /** Tests that close the gaps found by the P-4.1 audit (specs/COVERAGE.md): one describe per requirement id. */
 import { describe, it, expect } from 'vitest'
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { claim, Q } from '../core/evidence.ts'
 import { ipm, logDice } from '../core/stats.ts'
 import { derive } from '../core/phonology.ts'
@@ -11,11 +11,13 @@ import { collocations } from '../pipelines/build-stats.ts'
 import { linkOptions, ROUTE_RANK, type Env } from '../pipelines/build-link.ts'
 import { fold } from '../core/orthography.ts'
 import { stressVariants } from '../pipelines/build-annotate.ts'
-import { unpack } from '../core/pack.ts'
+import { readFull } from './lexdata.ts'
+import { bucketOf } from '../core/shard.ts'
 import type { LemmaCard } from '../core/types.ts'
 
 const has = (p: string) => existsSync(p)
-const lex = (): LemmaCard[] => unpack(JSON.parse(readFileSync('public/data/lexicon.json', 'utf8')))
+let full: LemmaCard[] | undefined
+const lex = (): LemmaCard[] => (full ??= readFull())   // core merged with the detail shards (SPEC 20 B-5)
 const corpus = () => JSON.parse(readFileSync('public/data/corpus.json', 'utf8'))
 
 describe('P-1.2 evidence shape', () => {
@@ -112,10 +114,17 @@ describe('M-6 / B-6 outputs', () => {
     const r = readFileSync('analysis/REPORT.md', 'utf8')
     for (let i = 1; i <= 8; i++) expect(r, `## ${i}.`).toMatch(new RegExp(`^## ${i}\\. `, 'm'))
   })
-  it.skipIf(!has('public/data/lexicon.json'))('M-6 the three data files exist; the size limits of B-5 hold (lexicon ≤ 15 MB, lexindex ≤ 4 MB)', () => {
+  it.skipIf(!has('public/data/lexicon.json'))('M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB, lexindex ≤ 4 MB (B-5)', () => {
     for (const f of ['corpus', 'lexicon', 'lexindex']) expect(has(`public/data/${f}.json`)).toBe(true)
-    expect(readFileSync('public/data/lexicon.json').length).toBeLessThanOrEqual(15 * 1024 * 1024)
+    const core = readFileSync('public/data/lexicon.json')
+    expect(core.length).toBeLessThanOrEqual(15 * 1024 * 1024)
     expect(readFileSync('public/data/lexindex.json').length).toBeLessThanOrEqual(4 * 1024 * 1024)
+    const files = readdirSync('public/data/lex')
+    expect(files.length).toBeGreaterThan(100)
+    for (const f of files) expect(statSync(`public/data/lex/${f}`).size, f).toBeLessThanOrEqual(192 * 1024)
+    const lemmas = lex().map(c => c.lemma)
+    expect(lemmas.length).toBeGreaterThan(5000); expect(new Set(lemmas).size).toBe(lemmas.length)
+    expect(files.length).toBe(new Set(lemmas.map(l => bucketOf(l))).size)   // no empty or stray shard
   })
 })
 

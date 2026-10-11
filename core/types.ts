@@ -82,6 +82,18 @@ export interface LemmaCard {
   }
 }
 
+// ── B-5 delivery split: core (loaded at startup) + per-lemma detail (fetched with the word card). LemmaCard = mergeCard(core, detail) ───
+/** Core spelling: what search, the annotator and derive read (a full FormCard is assignable). */
+export type CoreForm = Pick<FormCard, 'raw' | 'norm' | 'modern' | 'claims' | 'hints'>
+export type CoreStats = Pick<LemmaStats, 'f' | 'ipm' | 'hk' | 'dots'>
+export interface CoreCard extends Omit<LemmaCard, 'stress' | 'forms' | 'stats' | 'claims'> { forms: CoreForm[]; stats: CoreStats; claims: Omit<LemmaCard['claims'], 'oldest'> }
+export type FormDetail = Omit<FormCard, keyof CoreForm>
+export interface LemmaDetail { stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats> }   // forms[i] belongs to core.forms[i]
+/** public/data/lexicon.json (format 3): CoreCard[] in the compact wire form of core/pack.ts (tag table, defaults omitted) with the shared evidence pool. */
+export interface PackedCore { format: 3; ev: Evidence[]; tags: string[]; cards: unknown[][] }
+/** public/data/lex/<bucket>.json (format 1): the details of the lemmas hashing to the bucket, own evidence pool. */
+export interface Shard { format: 1; ev: Evidence[]; lemmas: string[]; details: LemmaDetail[] }
+
 export interface WitnessMeta extends Omit<WitnessOut, 'tokens' | 'dropped'> {
   n: number; linked: number; dropped: WitnessOut['dropped']
   epochShev: Claim<EpochAssignment>; epochWl: Claim<EpochAssignment>

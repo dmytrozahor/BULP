@@ -14,6 +14,7 @@ import type { Author, LemmaCard, WitnessMeta } from '../core/types.ts'
 import { REPORT_RULES } from './build-annotate.ts'
 import { posLabel } from './build-link.ts'
 import type { Sizes } from './build-stats.ts'
+import type { LexStats } from './build.ts'
 
 export interface ReportData {
   generated: string; flags: { py: boolean; stress: boolean; ru: boolean }; authors: Author[]; witnesses: WitnessMeta[]
@@ -23,7 +24,7 @@ export interface ReportData {
   lemmas: { lemma: string; tags: string; f: number; perEpoch: Map<string, number> }[]
   cards: LemmaCard[]; keptCount: number; allCount: number; spellings: number
   ltCorpus: { form: string; f: number; file: string }[]
-  budget: { bytes: number; tiers: number[]; dropped: number; pool: number; lexindexBytes: number; lexindexAttested: number }
+  budget: LexStats & { lexindexBytes: number; lexindexAttested: number }
   stressForms: number; stressSource: string; ruForms: number; fMax: number
 }
 
@@ -138,7 +139,7 @@ export function renderReport(d: ReportData): string {
     `**Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.`,
     `**Model output vs dictionary fact (P-1.7).** The \`stanza-lemma\` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (\`ruthenian\` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from \`ukrainian-word-stress\` (ULIF-derived, licence unclear, context-free) with status \`unknown\` and method \`dictionary\`; ru.json is a dictionary-membership test.`,
     `**Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (${pct(d.unresolved, d.N)}).`,
-    `**lexicon.json (B-5)**: lemmas with f ≥ 2 or a pre-1400 attestation: ${num(d.keptCount)} of ${num(d.allCount)} lemmas; ${num(d.cards.length)} written, ${(d.budget.bytes / 1048576).toFixed(1)} MB (limit 15 MB), Evidence stored once in a shared pool (${num(d.budget.pool)} distinct objects; cards carry indices, lossless). Size tiers (kwic/forms per form/lemma: 6/12, 3/8, 2/6, 1/4, 0/2) used for ${d.budget.tiers.join(' / ')} lemmas${d.budget.dropped ? `; ${d.budget.dropped} lowest-frequency lemmas dropped to meet the limit` : ''}. lexindex.json ${(d.budget.lexindexBytes / 1048576).toFixed(2)} MB (${d.budget.lexindexAttested} corpus-attested flagged forms added).`,
+    `**lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: ${num(d.keptCount)} of ${num(d.allCount)} lemmas; ${num(d.budget.lemmas)} written, none dropped. Core lexicon.json ${(d.budget.bytes / 1048576).toFixed(2)} MiB (limit 15 MiB), Evidence stored once in a shared pool (${num(d.budget.pool)} distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in ${num(d.budget.shards)} shards lex/<bucket>.json: max ${(d.budget.shardMax / 1024).toFixed(0)} KB, median ${(d.budget.shardMedian / 1024).toFixed(0)} KB, total ${(d.budget.shardTotal / 1048576).toFixed(1)} MiB (limit 192 KiB each). lexindex.json ${(d.budget.lexindexBytes / 1048576).toFixed(2)} MB (${d.budget.lexindexAttested} corpus-attested flagged forms added).`,
     `**Origin claims** are heuristics with citations: \`church_slavonic\` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); \`native\` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise \`unknown\`. Absence of a label is not evidence of the opposite.`,
     `**Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).`,
     `**Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.`,

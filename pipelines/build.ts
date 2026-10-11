@@ -4,13 +4,13 @@
  *
  * > P-1.1 "Every label the system emits is a Claim = { value, evidence } with evidence.length ≥ 1." — every label below comes from claim()
  * > M-3.3 "Unlinked tokens are kept as unresolved and counted; nothing is guessed."
- * > B-5  "lexicon.json: lemmas with f ≥ 2 or with ≥1 pre-1400 attestation; ≤ 6 KWIC per FormCard, ≤ 12 FormCards per lemma. Target ≤ 15 MB raw."
+ * > B-5  "lexicon.json: lemmas with f ≥ 2 or with ≥1 pre-1400 attestation; ≤ 6 KWIC per FormCard, ≤ 12 FormCards per lemma." + amendment 2026-10-11: core lexicon.json ≤ 15 MiB holds ALL of them, per-lemma detail in lex/<bucket>.json shards.
  *
  * Passes over VESUM (7M lines, ~15 s each): (1) every candidate form/lemma of every token type; (2) paradigms of the kept lemmas plus every key
  * detect() asks for (found by a dry run) — so rule evaluation never needs a third lookup. (3) lexIndexVesum for lexindex.json.
  */
 import { execFile } from 'node:child_process'
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
@@ -21,8 +21,9 @@ import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
 import { RUSYN_STATUS } from '../core/rules.ts'
 import { REGIONS, regionOf } from './regions.ts'
-import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LexIndex, PackedLexicon, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
-import { packer } from '../core/pack.ts'
+import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
+import { packCore } from '../core/pack.ts'
+import { bucketOf, packShard, splitCard } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
 import { ltIndex } from './lt.ts'
@@ -36,7 +37,7 @@ import { renderReport, type ReportData } from './build-report.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
-const LIMIT_BYTES = 15 * 1024 * 1024
+const CORE_LIMIT = 15 * 1024 * 1024, SHARD_LIMIT = 192 * 1024   // SPEC 20 B-5a / B-5b
 const execP = promisify(execFile)
 
 interface NlpOut { model: string; outOfDomain?: boolean; tokens: ({ lemma?: string } | null)[] }
@@ -301,9 +302,6 @@ export async function build(opts: { noPy?: boolean } = {}) {
   cards.sort((a, b) => b.stats.f - a.stats.f || a.lemma.localeCompare(b.lemma, 'uk'))
   lap(`${cards.length} lemma cards annotated`)
 
-  // ── 7. size limits (B-5) ──────────────────────────────────────────────────────────────────────
-  const budget = fitBudget(cards, kept.filter(l => l.pre1400).map(l => l.display))
-  lap(`lexicon.json ${(budget.bytes / 1048576).toFixed(1)} MB (tiers ${JSON.stringify(budget.tiers)}, dropped ${budget.dropped})`)
 
   // ── 8. outputs ────────────────────────────────────────────────────────────────────────────────
   const generated = new Date().toISOString()
@@ -323,14 +321,16 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lexindex: LexIndex = { generated, lt, vesum: lexV }
 
   mkdirSync(PUB, { recursive: true }); mkdirSync(ANALYSIS, { recursive: true })
-  const lexJson = JSON.stringify(budget.packed), lexIdxJson = JSON.stringify(lexindex)
-  writeFileSync(resolve(PUB, 'lexicon.json'), lexJson); writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
+  const lexIdxJson = JSON.stringify(lexindex)
+  const budget = writeLexicon(cards, PUB)   // B-5: core + detail shards, nothing dropped
+  lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
+  writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
 
   const rd2: ReportData = {
     generated, flags: { py: !opts.noPy, stress: !!stressJson, ru: Object.keys(ruJson).length > 0 }, authors: AUTHORS, witnesses: metas, routes, excluded,
     sizes, N: sizes.N, linked: NL, unresolved, topUnresolved, soundType, soundToken, detectHits, hints,
-    lemmas: lemmaList.map(l => ({ lemma: l.display, tags: l.tags, f: l.f, perEpoch: l.perEpoch })), cards: budget.cards, keptCount: kept.length, allCount: lemmaList.length, spellings: lemmaList.reduce((s, l) => s + l.forms.size, 0),
-    ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { bytes: budget.bytes, tiers: budget.tiers, dropped: budget.dropped, pool: budget.packed.ev.length, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
+    lemmas: lemmaList.map(l => ({ lemma: l.display, tags: l.tags, f: l.f, perEpoch: l.perEpoch })), cards, keptCount: kept.length, allCount: lemmaList.length, spellings: lemmaList.reduce((s, l) => s + l.forms.size, 0),
+    ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { ...budget, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
     stressForms: stressJson ? Object.keys(stressJson.forms).length : 0, stressSource: stressJson?.source ?? '', ruForms: Object.keys(ruJson).length, fMax,
   }
   writeFileSync(resolve(ANALYSIS, 'REPORT.md'), renderReport(rd2))
@@ -342,57 +342,34 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const rtot: Record<string, number> = {}
   for (const r of Object.values(routes)) for (const [k, v] of Object.entries(r)) rtot[k] = (rtot[k] ?? 0) + v
   console.log('tokens linked per route:', rtot)
-  console.log(`lemmas: ${lemmaList.length} total, ${kept.length} kept, ${budget.cards.length} in lexicon.json; lexicon.json ${(Buffer.byteLength(lexJson) / 1048576).toFixed(2)} MB, lexindex.json ${(Buffer.byteLength(lexIdxJson) / 1048576).toFixed(2)} MB`)
+  console.log(`lemmas: ${lemmaList.length} total, ${kept.length} kept, ${cards.length} in lexicon.json; lexicon.json ${(budget.bytes / 1048576).toFixed(2)} MB + ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB), lexindex.json ${(Buffer.byteLength(lexIdxJson) / 1048576).toFixed(2)} MB`)
   lap('done → public/data/{corpus,lexicon,lexindex}.json, analysis/REPORT.md')
   void ruleById; void epochById; void unknown
-  return { corpus, cards: budget.cards }
+  return { corpus, cards }
 }
 
 const lemmaStatsInput = (la: LemmaAcc): Counts => ({ f: la.f, perW: la.perW, perEpoch: la.perEpoch, perCentury: la.perCentury })
 
+export interface LexStats { bytes: number; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number }
 /**
- * B-5: tier t keeps (kwic, forms) = TIERS[t]. lexicon.json is packed (core/pack.ts): every distinct Evidence is stored once in `ev`, cards carry indices, so sizes here are measured in packed form
- * (an Evidence's pool entry is charged to the first written lemma that references it). Policy: lowest-frequency lemmas are dropped first, a pre-1400 lemma outranks a modern one of equal frequency (oldest evidence).
- * (1) n = the longest rank-order prefix whose cheapest tier fits in (1 − RICH) of the budget; (2) that prefix is upgraded in rank order: lemma i gets the richest tier whose extra cost is within 40× the average extra budget still
- * unspent per remaining lemma, so the most frequent lemmas get full KWIC and the share is computed against the lemmas actually written (not all kept ones). (3) the real file length is verified and, if over, re-fitted.
+ * B-5 (amendment 2026-10-11): writes <dir>/lexicon.json (core, ALL cards, evidence pooled) and <dir>/lex/<bucket>.json (detail shards, one per non-empty bucket; each lemma in exactly one).
+ * Stale shards are removed first. Throws when core or a shard exceeds its limit — lemmas are never dropped to make it fit.
  */
-const TIERS: [number, number][] = [[6, 12], [3, 8], [2, 6], [1, 4], [0, 2]]
-const RICH = 0.2   // share of the budget held back from the cheapest-tier prefix for upgrading the highest-ranked lemmas (else the prefix would use all of it)
-export function fitBudget(cards: LemmaCard[], pre1400: string[], limit = LIMIT_BYTES): { cards: LemmaCard[]; packed: PackedLexicon; bytes: number; tiers: number[]; dropped: number } {
-  const slim = (c: LemmaCard, [k, n]: [number, number]): LemmaCard => ({ ...c, forms: selectForms(c.forms, n).map(f => ({ ...f, kwic: f.kwic.slice(0, k) })) })
-  const must = new Set(pre1400), len = (x: unknown) => Buffer.byteLength(JSON.stringify(x))
-  const rank = cards.map((_, i) => i).sort((a, b) => cards[b]!.stats.f - cards[a]!.stats.f || Number(must.has(cards[b]!.lemma)) - Number(must.has(cards[a]!.lemma)) || a - b)
-  const pk = packer(), min = TIERS.length - 1
-  const variants = cards.map(c => TIERS.map((t, i) => { const v = i === 0 ? c : slim(c, t); const { card, refs } = pk.one(v); return { v, size: len(card) + 1, refs } }))
-  const evBytes = pk.ev.map(e => len(e) + 1)
-  /** cost of a variant = its packed card + the pool entries it adds to those already `seen` */
-  const cost = (x: { size: number; refs: number[] }, seen: Set<number>) => x.size + x.refs.reduce((s, r) => s + (seen.has(r) ? 0 : evBytes[r]!), 0)
-  const fit = (avail: number) => {
-    const total = avail; avail = Math.floor(avail * (1 - RICH))
-    let n = 0, seen = new Set<number>(), sumMin = 0; const minCost: number[] = []
-    for (; n < rank.length; n++) {
-      const x = variants[rank[n]!]![min]!, c = cost(x, seen)
-      if (sumMin + c > avail) break
-      sumMin += c; minCost.push(c); x.refs.forEach(r => seen.add(r))
-    }
-    let extra = total - sumMin; const tiers = TIERS.map(() => 0); seen = new Set()
-    const pick = rank.slice(0, n).map((ci, r) => {
-      const vs = variants[ci]!, cap = Math.min(Math.max(extra / (n - r), 0) * 40, extra)
-      let t = vs.findIndex(x => cost(x, seen) - minCost[r]! <= cap); if (t < 0) t = min
-      extra -= cost(vs[t]!, seen) - minCost[r]!; tiers[t]!++; vs[t]!.refs.forEach(q => seen.add(q))
-      return { ci, t }
-    })
-    return { pick, tiers, dropped: cards.length - n }
+export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_LIMIT, shardLimit = SHARD_LIMIT): LexStats {
+  const parts = cards.map(splitCard), core = packCore(parts.map(p => p.core)), json = JSON.stringify(core), bytes = Buffer.byteLength(json)
+  if (bytes > coreLimit) throw new Error(`lexicon.json core ${bytes} B exceeds ${coreLimit} B (B-5a): move fields to LemmaDetail instead of dropping lemmas`)
+  const buckets = new Map<number, [string, LemmaDetail][]>()
+  parts.forEach(p => { const b = bucketOf(p.core.lemma); (buckets.get(b) ?? buckets.set(b, []).get(b)!).push([p.core.lemma, p.detail]) })
+  const lex = resolve(dir, 'lex'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
+  const sizes: number[] = []
+  for (const [b, es] of [...buckets].sort((x, y) => x[0] - y[0])) {
+    const s = JSON.stringify(packShard(es)), n = Buffer.byteLength(s)
+    if (n > shardLimit) throw new Error(`shard ${b} (${es.length} lemmas) is ${n} B, over ${shardLimit} B (B-5b)`)
+    writeFileSync(resolve(lex, `${b}.json`), s); sizes.push(n)
   }
-  let avail = limit - 64
-  for (;;) {
-    const f = fit(avail), keep = f.pick.map(x => x.ci).sort((a, b) => a - b), t = new Map(f.pick.map(x => [x.ci, x.t]))
-    const final = packer(), out = keep.map(ci => variants[ci]![t.get(ci)!]!.v)
-    const packed: PackedLexicon = { format: 2, ev: final.ev, cards: out.map(c => final.one(c).card) }
-    const bytes = len(packed)
-    if (bytes <= limit || avail <= 0) return { cards: out, packed, bytes, tiers: f.tiers, dropped: f.dropped }
-    avail -= bytes - limit + 1024   // real file over the limit: shrink the budget by the overshoot and re-fit
-  }
+  sizes.sort((a, b) => a - b)
+  writeFileSync(resolve(dir, 'lexicon.json'), json)
+  return { bytes, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0) }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
