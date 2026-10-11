@@ -19,6 +19,7 @@ import { derive as deriveRaw, ruleById, type Derivation } from '../core/phonolog
 import { fold as foldRaw } from '../core/orthography.ts'
 import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
+import { RUSYN_STATUS } from '../core/rules.ts'
 import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
@@ -308,7 +309,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     return { ...rest, n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))
-  const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved }
+  const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: [] /* B5 */ }
 
   const lexV = await lexIndexVesum()
   const flagged = (hs: VesumHit[]) => hs.filter(h => h.tags.split(':').some(t => (FLAG_TAGS as readonly string[]).includes(t)))

@@ -10,7 +10,9 @@ import { claim, unknown, D, isKnown, type Claim } from '../core/evidence.ts'
 import { assignEpoch, EPOCHS, epochById } from '../core/epochs.ts'
 import { compare, dispersion, dots, freqClass, ipm, logDice, smooth } from '../core/stats.ts'
 import { key, normalizeOld } from '../core/text.ts'
-import { SURZHYK_BASIS, SURZHYK_DEF } from '../core/rules.ts'
+import { RUSYN_RULES, RUSYN_STATUS, SURZHYK_BASIS, SURZHYK_DEF, rusynClaim } from '../core/rules.ts'
+import { detect } from '../core/detect.ts'
+import { REGIONS, regionOf } from './regions.ts'
 import type { CorpusMeta, FormCard, LemmaCard, LexIndex, StressVariant, VesumHit, WitnessMeta } from '../core/types.ts'
 import { MANIFEST } from './manifest.ts'
 import { AUTHORS } from './authors.ts'
@@ -47,6 +49,8 @@ for (const w of witnesses) {
 const N = witnesses.reduce((s, w) => s + w.n, 0), linked = witnesses.reduce((s, w) => s + w.linked, 0)
 const corpus: CorpusMeta = {
   generated: 'FIXTURE', authors: AUTHORS.filter(a => units.some(u => u.author === a.id)), witnesses, epochSizes, centurySizes, N, linked, unresolved: N - linked,
+  rusynStatus: RUSYN_STATUS,
+  regions: REGIONS.map(r => ({ code: r.code, name: r.name, oblasts: r.oblasts, N: witnesses.filter(w => regionOf(w.region) === r.code).reduce((s, w) => s + w.n, 0) })).filter(r => r.N > 0),
   topUnresolved: [['бѣсовьскыимъ', 7], ['идольскыимъ', 6], ['пакыбытіа', 5], ['тарадайку', 4], ['розкудкудаткалась', 3]].map(([form, f]) => ({ form: form as string, f: f as number })),
 }
 
@@ -102,6 +106,11 @@ const SPECS: Spec[] = [
     paradigm: nm(['Київ', 'Києва', 'Києву/Київові', 'Київ', 'Києвом', 'Києві', 'Києве'], [], 'inanim'),
     forms: [o('pvl_lav', 'л. 6', 'кыѥвъ', 'и приде Олегъ къ', 'горамъ', 120), o('hypatian', 'стб. 301', 'кыѥвъ', 'и сѣде Изѧславъ в', 'и ради', 210), o('shevchenko', 'Причинна', 'Київ', 'поїхав у', 'на Дніпро', 18), o('lesya1892', 'Contra spem spero', 'Київ', 'в', 'мій', 5)],
     colloc: [['князь', 14, 1500], ['Дніпро', 9, 260]] },
+  // rusyn:subcarpathian demo (invented attestation; the rusyn/ZAK claims themselves come from the real rule tables)
+  { lemma: 'гинути', pos: 'дієслово, недок.', stress: [],
+    paradigm: verb('гинути', ['гину', 'гинеш', 'гине', 'гинемо', 'гинете', 'гинуть'], ['гинув', 'гинула', 'гинуло', 'гинули'], ['гинь', 'гинімо', 'гиньте']),
+    forms: [o('franko1905', 'Мойсей, пісня II', 'гынути', 'нашому народові', 'без вісті', 2), o('shevchenko', 'Кавказ', 'гинути', 'нам', 'за волю', 3)],
+    colloc: [['народ', 3, 400]] },
   { lemma: 'що', pos: 'займенник', stress: [],
     paradigm: [['що', 'pron:int:v_naz'], ['що', 'pron:int:v_zna'], ['чого', 'pron:int:v_rod'], ['шо', 'pron:int:v_naz:subst']],
     forms: [o('monomakh', 'Поученьє', 'чьто', 'и', 'ти сътворити', 26), o('kulish1882', 'с. 90', 'шо', '[розм.] а', 'ти кажеш', 3), o('shevchenko', 'Думка', 'що', 'нащо мені', 'на світі', 400)],
@@ -128,6 +137,9 @@ function card(s: Spec): LemmaCard {
     const cand = same ? undefined : d.candidates.find(c => key(c.form) === key(target))
     const year = Math.max(...occs.map(x => W[x.w]!.date[1]))
     const det = runDetectors(raw, lex, year)
+    // Rusyn axis (research/10 §5): no year gate, so the real rule table is run with year undefined; independent of the dialect claims
+    const rc = rusynClaim(detect(RUSYN_RULES, { form: key(raw), norm: d.norm, vesum: [], inLexicon: () => [] }).claims)
+    const claims = rc ? { ...det.claims, rusyn: rc } : det.claims
     const vh: VesumHit = lex.paradigmMap.get(key(target))?.[0] ?? { lemma: target, tags: 'unknown' }
     const torot = units.find(u => u.id === w0.id)?.kind === 'torot'
     const link = claim({ lemma: target, form: modern, route: torot || (!cand && !same) ? 'torot-lemma' as const : cand && cand.trace.length ? 'token' as const : 'direct' as const,
@@ -135,7 +147,7 @@ function card(s: Spec): LemmaCard {
       [D('VESUM', 'dict_corp_vis.txt v6.8.6', `${modern} ${vh.tags} (лема: ${vh.lemma})`)], { method: cand ? cand.trace.join('+') || 'identity' : 'fixture' })
     const epochs = [...new Set(occs.flatMap(x => epochIds(W[x.w]!, 'shev')))]
     return {
-      raw, norm: d.norm, date: occs.map(x => W[x.w]!.date).sort((a, b) => a[1] - b[1] || a[0] - b[0])[0]!, modern, f: occs.reduce((a, x) => a + x.f, 0), link, derivation: cand ? cand.steps : [], claims: det.claims,
+      raw, norm: d.norm, date: occs.map(x => W[x.w]!.date).sort((a, b) => a[1] - b[1] || a[0] - b[0])[0]!, modern, f: occs.reduce((a, x) => a + x.f, 0), link, derivation: cand ? cand.steps : [], claims,
       hints: det.hints.map(h => h.rule), epochs,
       kwic: occs.map(x => ({ w: x.w, loc: x.loc, left: `[фікстура] ${x.left}`, node: x.raw, right: x.right, date: W[x.w]!.date })),
     }
@@ -168,7 +180,8 @@ function card(s: Spec): LemmaCard {
     return { a, b, g2: r.g2, logRatio: r.logRatio, p: r.p }
   }).filter(x => epochSizes[x.a] && epochSizes[x.b])
 
-  const claimsAll = Object.assign({}, ...forms.map(x => x.claims)) as Record<string, Claim<true>>
+  const claimsAll = Object.assign({}, ...forms.map(x => { const { rusyn: _r, ...rest } = x.claims; return rest })) as Record<string, Claim<true>>
+  const rusynForm = forms.find(x => x.claims.rusyn)?.claims.rusyn
   const colloq = claimsAll.colloquial
   const surzLabels = Object.keys(claimsAll).filter(l => SURZHYK_BASIS.includes(l))
   const old = forms.filter(x => key(x.raw) !== key(target))
@@ -182,13 +195,14 @@ function card(s: Spec): LemmaCard {
       f, ipm: ipm(f, N), hk, dots: dots(hk), dp: dp.dp, range: dp.range, byEpoch,
       byCentury: cs.map((c, i) => ({ c, f: cf[i]!, ipm: cipm[i]!, smooth: sm[i] ?? null })),
       shifts,
+      byRegion: REGIONS.map(r => ({ code: r.code, f: perW.filter(p => regionOf(p.w.region) === r.code).reduce((a, p) => a + p.y, 0), N: witnesses.filter(w => regionOf(w.region) === r.code).reduce((a, w) => a + w.n, 0) })).filter(r => r.N > 0),
       colloc: s.colloc.map(([lemma, fxy, fy]) => ({ lemma, fxy, logDice: logDice(fxy, f, fy) })).sort((a, b) => b.logDice - a.logDice),
     },
     claims: {
       register: colloq ? claim('colloquial' as const, colloq.evidence, { score: colloq.score, method: colloq.method }) : unknown(),
       surzhyk: surzLabels.length ? claim(true as const, [SURZHYK_DEF, ...surzLabels.flatMap(l => claimsAll[l]!.evidence)]) : unknown(),
       origin: csAll ? claim('church_slavonic' as const, old.flatMap(x => x.claims.church_slavonic!.evidence)) : unknown(),
-      oldest, dialect: Object.fromEntries(Object.entries(claimsAll).filter(([l]) => ['CHN', 'MPL', 'WPL', 'SW', 'SE', 'POD', 'NDN', 'BOY', 'LEM', 'MDN', 'NORTH'].includes(l))),
+      rusyn: rusynForm, oldest, dialect: Object.fromEntries(Object.entries(claimsAll).filter(([l]) => ['CHN', 'MPL', 'WPL', 'SW', 'SE', 'POD', 'NDN', 'BOY', 'LEM', 'MDN', 'NORTH'].includes(l))),
     },
   }
 }

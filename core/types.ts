@@ -36,7 +36,8 @@ export interface FormCard {
   date: [number, number]                       // earliest attestation of this spelling (witness composition date)
   link: Claim<{ lemma: string; form: string; route: 'torot-lemma' | 'token' | 'direct'; alternatives: string[] }>
   derivation: TraceStep[]
-  claims: Record<string, Claim<true>>          // cs / contact / dialect labels with evidence
+  /** cs / contact / dialect labels (Claim<true>) with evidence; `rusyn` (research/10 §5) is a parallel, non-competing reading whose value is the axis label. */
+  claims: Record<string, Claim<any>> & { rusyn?: Claim<string> }
   hints: string[]                              // weight-0 rule ids (P-3.1)
   epochs: string[]                             // epochs of the witnesses this spelling occurs in
   kwic: Kwic[]                                 // ≤ 6
@@ -58,6 +59,8 @@ export interface LemmaStats {
   byCentury: { c: number; f: number; ipm: number; smooth: number | null }[]   // c = century number (11 = XI ст.)
   shifts: { a: string; b: string; g2: number; logRatio: number; p: number }[]  // adjacent epochs (shev scheme)
   colloc: { lemma: string; fxy: number; logDice: number }[]
+  /** Witness-region distribution (SPEC 20 B-3.6: regions of the witnesses, NOT a dialect claim); N = tokens of that region's witnesses. */
+  byRegion?: { code: string; f: number; N: number }[]
 }
 
 export interface LemmaCard {
@@ -73,6 +76,8 @@ export interface LemmaCard {
     origin: Claim<'native' | 'church_slavonic' | 'borrowing'>
     oldest: Claim<{ form: string; date: [number, number]; epoch: string }>
     dialect: Record<string, Claim<true>>
+    /** union of the modern FormCards' rusyn claims: 'rusyn' | 'rusyn:lemko' | 'rusyn:presov' | 'rusyn:pannonian' | 'rusyn:subcarpathian' */
+    rusyn?: Claim<string>
   }
 }
 
@@ -92,6 +97,10 @@ export interface CorpusMeta {
   centurySizes: Record<string, number>
   N: number; linked: number; unresolved: number
   topUnresolved: { form: string; f: number }[]
+  /** neutral status note shown next to any rusyn:* label (core/rules.ts RUSYN_STATUS, research/10 §0) */
+  rusynStatus: { note: string; evidence: Evidence[] }
+  /** witness region → ISO 3166-2 oblast codes (`code` = region key used in LemmaStats.byRegion), N tokens of the region's witnesses */
+  regions: { code: string; name: string; oblasts: string[]; N: number }[]
 }
 
 /** Compact lexical index for analysing arbitrary user input in the browser. */

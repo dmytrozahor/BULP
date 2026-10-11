@@ -3,7 +3,7 @@
  * research/04 §1 (dialects), research/08 B3 (register). Weight-0 rows are kept on purpose: they document
  * hypotheses that lack a published source (P-1.3) and surface only as review hints.
  */
-import { Q, P, D, type Evidence } from './evidence.ts'
+import { Q, P, D, claim, type Claim, type Evidence } from './evidence.ts'
 import { TAG, normative, modern, type Ctx, type Rule } from './detect.ts'
 
 const vline = (c: Ctx, t: string) => { const h = TAG(c, t); return h ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${c.form} ${h.tags} (лема: ${h.lemma})`) : null }
@@ -171,6 +171,18 @@ export const RUSYN_STATUS = {
     UM162('один з арх. говорів карпатської групи діалектів південно-західного наріччя'),
     LON('Русинский литературный язык Закарпатской области Украины, однако, по настоящее время остаётся официально не кодифицированным'),
   ],
+}
+
+/**
+ * Collapse a detector's `rusyn*` claims into the single contract claim `{value: label}` (types.ts FormCard.claims.rusyn):
+ * a specific variant label wins over the undetermined `rusyn`, then the higher noisy-OR score (research/10 §5).
+ */
+export function rusynClaim(claims: Record<string, Claim<true>>): Claim<string> | undefined {
+  const ls = Object.keys(claims).filter(l => l.startsWith('rusyn'))
+  if (!ls.length) return undefined
+  const best = ls.sort((a, b) => Number(b !== 'rusyn') - Number(a !== 'rusyn') || (claims[b]!.score ?? 0) - (claims[a]!.score ?? 0))[0]!
+  const c = claims[best]!
+  return claim(best, c.evidence, { score: c.score, method: c.method })
 }
 
 // ── Register (research/08 B3) — literary is never inferred; only labelled colloquial or unknown ──
