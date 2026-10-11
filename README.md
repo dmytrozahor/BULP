@@ -14,7 +14,7 @@ npm test
 ```
 
 ## Rebuild the data
-The corpus inputs (`data/raw`, `data/work`) are not committed. `npm run mine` fetches and ingests them, then:
+The corpus inputs (`data/raw`, `data/work`) are not committed; `npm run mine` ingests `data/raw` into `data/work` (SPEC 10). Then:
 ```sh
 UV_BIN=<path to uv> npm run build:data   # nlp/ runs via uv; add -- --no-py to reuse existing NLP outputs
 npm run data:publish                     # replace ukr-lexicon-data with one squashed commit of the new shards
