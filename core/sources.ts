@@ -10,6 +10,7 @@ export const SOURCES: Record<string, Source> = {
   PRAV:   { title: 'Український правопис (2019), постанова КМУ № 437', url: 'https://slovnyk.ua/pravopys.php', year: '2019' },
   VESUM:  { title: 'ВЕСУМ / dict_uk v6.8.6 (brown-uk)', url: 'https://github.com/brown-uk/dict_uk', license: 'CC BY-NC-SA 4.0', year: '2026' },
   LT:     { title: 'LanguageTool, Ukrainian rules (replace.txt, grammar-barbarism.xml)', url: 'https://github.com/languagetool-org/languagetool', license: 'LGPL-2.1+' },
+  PAVL:   { title: 'Павленко Л. П. Історична граматика української мови: навч. посіб. Луцьк: Волин. нац. ун-т ім. Лесі Українки, 2010. 208 с. (морфологія — с. 61–130)', url: 'https://evnuir.vnu.edu.ua/handle/123456789/341', year: '2010' },
   TOROT:  { title: 'TOROT treebank (Eckhoff, Berdičevskis et al.), release 20200116', url: 'https://github.com/torottreebank/treebank-releases', license: 'CC BY-NC-SA 3.0' },
   IZB:    { title: 'Ізборник — Історія України IX–XVIII ст. Першоджерела та інтерпретації', url: 'http://izbornyk.org.ua/' },
   VIRA:   { title: 'Віра.Укр — Архангельське Євангеліє 1092 (онлайн-видання)', url: 'https://віра.укр/b/arch-gospel' },

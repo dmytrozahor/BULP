@@ -15,6 +15,7 @@ import { REPORT_RULES } from './build-annotate.ts'
 import { posLabel } from './build-link.ts'
 import type { Sizes } from './build-stats.ts'
 import type { LexStats } from './build.ts'
+import type { EpochStats } from './build-epochs.ts'
 
 export interface ReportData {
   generated: string; flags: { py: boolean; stress: boolean; ru: boolean }; authors: Author[]; witnesses: WitnessMeta[]
@@ -26,6 +27,7 @@ export interface ReportData {
   ltCorpus: { form: string; f: number; file: string }[]
   budget: LexStats & { lexindexBytes: number; lexindexAttested: number }
   stressForms: number; stressSource: string; ruForms: number; fMax: number
+  epochs?: EpochStats
 }
 
 const pct = (a: number, b: number) => (b ? (100 * a / b).toFixed(1) : '0.0') + '%'
@@ -65,6 +67,28 @@ export function renderReport(d: ReportData): string {
   P('**Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):')
   P(md(d.topUnresolved.slice(0, 40).map(u => [u.form, u.f, pct(u.f, d.unresolved)]), ['form', 'f', `% of unresolved (${num(d.unresolved)})`]))
   P(`The top-200 list is stored in corpus.json (\`topUnresolved\`). Typical misses: proper names and foreign words (not in VESUM), Old Rus' lexemes with no modern descendant, scribal variants and spellings that no rule maps to a VESUM form.`)
+
+  // 2.1 (SPEC 50 EP-8.1)
+  if (d.epochs) {
+    const E = d.epochs, srcs = ['torot', 'stanza', 'vesum'] as const, SRC = { torot: 'TOROT (manual)', stanza: 'Stanza (model, P-1.7)', vesum: 'VESUM (modern spelling)' }
+    P('### 2.1 Epoch paradigms (SPEC 50)',
+      'Noun lemmas of the lexicon; each token linked to such a lemma is placed in a grammatical cell of its shev epoch by the tag of its own source (EP-2.1), or dropped. **Tagged** = placed + conflict + underspecified (EP-3.7); **untagged** tokens have no tag source (no TOROT morph, no Stanza output, not a modern direct link) and are not part of N. A token with an ambiguous tag is placed in each candidate cell (≤ 4), so cell counts exceed placed tokens. A cell with no token is `unknown`, never "not used" (EP-3.8).')
+    const rows: (string | number)[][] = []
+    for (const e of EPOCHS.filter(x => x.scheme === 'shev' && !x.overlay)) {
+      const pe = E.perEpoch[e.id], n = d.sizes.epoch[e.id] ?? 0
+      if (!pe) { rows.push([e.id, num(n), '—', 0, 0, 0, 0, 0, 0, 0, 0]); continue }
+      let first = true
+      for (const s of srcs) { const c = pe.bySrc[s]; if (c.tagged) { rows.push([e.id, num(n), SRC[s], num(c.tagged), `${num(c.placed)} (${pct(c.placed, c.tagged)})`, num(c.conflict), num(c.underspecified), first ? num(pe.untagged) : '', first ? num(pe.lemmas) : '', first ? num(pe.cells) : '', first ? num(pe.cellForms) : '']); first = false } }
+      if (!srcs.some(s => pe.bySrc[s].tagged)) rows.push([e.id, num(n), '—', 0, 0, 0, 0, num(pe.untagged), 0, 0, 0])
+    }
+    P(md(rows, ['epoch', 'epoch N (corpus tokens)', 'tag source', 'tagged tokens', 'placed (% of tagged)', 'conflict', 'underspecified', 'untagged (linked, no tag)', 'lemmas with ≥ 1 cell', 'cells', 'cell spellings']))
+    P('Conflicts by reason (token × epoch; `grid:X` = the token\'s own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): ' + (Object.entries(E.conflictWhy).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k}: ${num(v)}`).join(' · ') || '—') + '.')
+    const rules = Object.entries(E.stemByRule).sort((a, b) => a[0].localeCompare(b[0]))
+    P(`**Stem types** (EP-4): ${num(E.lemmasWithEpochs)} lemmas carry epoch paradigms; stem claim known for ${num(rules.reduce((s, r) => s + r[1], 0))} (of which ${num(E.stemStanza)} from a Stanza lemma, model-based per decision D4), \`unknown\` for ${num(E.stemUnknown)}. By rule: ${rules.map(([r, n]) => `${r}: ${n}`).join(' · ') || '—'}.`)
+    const r = E.recon
+    P(`**Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): ${num(r.stems)} lemmas, ${num(r.cells)} reconstructed cells with ${num(r.forms)} forms; **confirmed** by an attested spelling of the same cell and epoch: ${num(r.confirmedCells)} cells (${pct(r.confirmedCells, r.cells)}), ${num(r.confirmed)} forms (${pct(r.confirmed, r.forms)}). Denominator = reconstructed cells/forms, not attestations; only up to ${4} spellings per cell are stored, so confirmation by a rarer spelling is not counted.`)
+    P(`**Shard bytes added by \`epochs\`**: ${d.budget.epochBytes !== undefined ? `${(d.budget.epochBytes / 1048576).toFixed(2)} MB of ${(d.budget.shardTotal / 1048576).toFixed(2)} MB shard total (${pct(d.budget.epochBytes, d.budget.shardTotal)}); shards that needed ctx dropped: ${d.budget.shrunk?.[0] ?? 0}, cell cap 2: ${d.budget.shrunk?.[1] ?? 0}` : 'n/a'}.`)
+  }
 
   // 3
   P('## 3. Rule firing statistics')

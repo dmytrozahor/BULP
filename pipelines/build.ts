@@ -34,13 +34,14 @@ import {
 } from './build-annotate.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
+import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
-const CORE_LIMIT = 15 * 1024 * 1024, SHARD_LIMIT = 192 * 1024   // SPEC 20 B-5a / B-5b
+const CORE_LIMIT = 15 * 1024 * 1024, SHARD_LIMIT = 256 * 1024   // SPEC 20 B-5a / B-5b (raised 192 → 256 KiB for SPEC 50 epoch paradigms, see B-5b)
 const execP = promisify(execFile)
 
-interface NlpOut { model: string; outOfDomain?: boolean; tokens: ({ lemma?: string } | null)[] }
+interface NlpOut { model: string; outOfDomain?: boolean; tokens: ({ lemma?: string; upos?: string; feats?: string | null } | null)[] }
 interface Loaded { w: WitnessOut; nlp?: NlpOut }
 type LinkVal = Exclude<FormCard['link']['value'], 'unknown'>
 
@@ -227,6 +228,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
   if (!stressJson) console.warn('  ! no stress.json — stress variants empty')
   const annEnv: AnnEnv = { hits: v2.hits, lt, ru: ruJson, derive: dryEnv.derive }
 
+  // ── 5b. epoch paradigms of the kept noun lemmas (SPEC 50 EP-3/EP-4) ───────────────────────────
+  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; return t.startsWith('noun') && !t.includes('&pron') ? [[l.id, { display: l.display, tags: t }] as const] : [] }))
+  const epochRes = buildEpochs({
+    adm, epochsOf: meta.map(m => (m.sh.value === 'unknown' ? [] : m.sh.value.epochs)), tix, linked, lemmas: nounLemmas, hits: hits1,
+    derive: (s, oldI) => derive(s, oldI), vesumLoc: VESUM_LOC,
+  })
+  lap(`epoch paradigms: ${epochRes.epochs.size} of ${nounLemmas.size} noun lemmas have attested cells`)
+
   // ── 6. annotations (B-3) ──────────────────────────────────────────────────────────────────────
   const witMap = new Map(adm.map(l => [l.w.id, l.w]))
   const kwicOf = (r: Ref): Kwic => {
@@ -293,7 +302,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
     cards.push({
-      lemma: la.display, pos: posLabel(lemmaPos), paradigm,
+      lemma: la.display, pos: posLabel(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
       claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)) },
@@ -305,9 +314,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
   // ── 8. outputs ────────────────────────────────────────────────────────────────────────────────
   const generated = new Date().toISOString()
-  const metas: WitnessMeta[] = adm.map(({ w }, i) => {
+  const metas: WitnessMeta[] = adm.map(({ w, nlp }, i) => {
     const { tokens: _t, dropped, ...rest } = w
-    return { ...rest, n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl }
+    return { ...rest, n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))
   const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: regionN.filter(r => r.N > 0) }
@@ -331,7 +340,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     sizes, N: sizes.N, linked: NL, unresolved, topUnresolved, soundType, soundToken, detectHits, hints,
     lemmas: lemmaList.map(l => ({ lemma: l.display, tags: l.tags, f: l.f, perEpoch: l.perEpoch })), cards, keptCount: kept.length, allCount: lemmaList.length, spellings: lemmaList.reduce((s, l) => s + l.forms.size, 0),
     ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { ...budget, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
-    stressForms: stressJson ? Object.keys(stressJson.forms).length : 0, stressSource: stressJson?.source ?? '', ruForms: Object.keys(ruJson).length, fMax,
+    stressForms: stressJson ? Object.keys(stressJson.forms).length : 0, stressSource: stressJson?.source ?? '', ruForms: Object.keys(ruJson).length, fMax, epochs: epochRes.stats,
   }
   writeFileSync(resolve(ANALYSIS, 'REPORT.md'), renderReport(rd2))
 
@@ -350,7 +359,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
 const lemmaStatsInput = (la: LemmaAcc): Counts => ({ f: la.f, perW: la.perW, perEpoch: la.perEpoch, perCentury: la.perCentury })
 
-export interface LexStats { bytes: number; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number }
+export interface LexStats { bytes: number; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number] }
 /**
  * B-5 (amendment 2026-10-11): writes <dir>/lexicon.json (core, ALL cards, evidence pooled) and <dir>/lex/<bucket>.json (detail shards, one per non-empty bucket; each lemma in exactly one).
  * Stale shards are removed first. Throws when core or a shard exceeds its limit — lemmas are never dropped to make it fit.
@@ -362,14 +371,25 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
   parts.forEach(p => { const b = bucketOf(p.core.lemma); (buckets.get(b) ?? buckets.set(b, []).get(b)!).push([p.core.lemma, p.detail]) })
   const lex = resolve(dir, 'lex'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
   const sizes: number[] = []
-  for (const [b, es] of [...buckets].sort((x, y) => x[0] - y[0])) {
-    const s = JSON.stringify(packShard(es)), n = Buffer.byteLength(s)
+  let epochBytes = 0, shrunk1 = 0, shrunk2 = 0
+  const sz = (es: [string, LemmaDetail][]) => Buffer.byteLength(JSON.stringify(packShard(es)))
+  for (const [b, es0] of [...buckets].sort((x, y) => x[0] - y[0])) {
+    let es = es0, s = JSON.stringify(packShard(es)), n = Buffer.byteLength(s)
+    const bare = sz(es.map(([l, d]) => [l, (({ epochs: _e, ...r }) => r)(d)] as [string, LemmaDetail]))
+    // EP-1.5: over budget → drop ctx in this shard, then cap cells at 2 spellings (largest lemmas first); n, ex and cells are never dropped
+    if (n > shardLimit) { es = es.map(([l, d]) => [l, d.epochs ? { ...d, epochs: shrinkEpochs(d.epochs, 1) } : d]); shrunk1++; s = JSON.stringify(packShard(es)); n = Buffer.byteLength(s) }
+    if (n > shardLimit) {
+      const order = es.map(([l, d], i) => [i, d.epochs ? JSON.stringify(d.epochs).length : 0] as const).sort((x, y) => y[1] - x[1])
+      es = [...es]; shrunk2++
+      for (const [i] of order) { const [l, d] = es[i]!; if (!d.epochs) break; es[i] = [l, { ...d, epochs: shrinkEpochs(d.epochs, 2) }]; s = JSON.stringify(packShard(es)); n = Buffer.byteLength(s); if (n <= shardLimit) break }
+    }
     if (n > shardLimit) throw new Error(`shard ${b} (${es.length} lemmas) is ${n} B, over ${shardLimit} B (B-5b)`)
+    epochBytes += Math.max(0, n - bare)
     writeFileSync(resolve(lex, `${b}.json`), s); sizes.push(n)
   }
   sizes.sort((a, b) => a - b)
   writeFileSync(resolve(dir, 'lexicon.json'), json)
-  return { bytes, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0) }
+  return { bytes, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2] }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

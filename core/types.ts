@@ -66,6 +66,7 @@ export interface LemmaStats {
 
 export interface LemmaCard {
   lemma: string; pos: string
+  epochs?: EpochParadigms                                       // SPEC 50 EP-1.1: lives in LemmaDetail (shards), never in CoreCard / lexicon.json
   paradigm: { form: string; tags: string }[]                    // VESUM forms, verbatim tags (D-evidence)
   stress: StressVariant[]
   forms: FormCard[]
@@ -86,17 +87,46 @@ export interface LemmaCard {
 /** Core spelling: what search, the annotator and derive read (a full FormCard is assignable). */
 export type CoreForm = Pick<FormCard, 'raw' | 'norm' | 'modern' | 'claims' | 'hints'>
 export type CoreStats = Pick<LemmaStats, 'f' | 'ipm' | 'hk' | 'dots'>
-export interface CoreCard extends Omit<LemmaCard, 'stress' | 'forms' | 'stats' | 'claims'> { forms: CoreForm[]; stats: CoreStats; claims: Omit<LemmaCard['claims'], 'oldest'> }
+export interface CoreCard extends Omit<LemmaCard, 'stress' | 'forms' | 'stats' | 'claims' | 'epochs'> { forms: CoreForm[]; stats: CoreStats; claims: Omit<LemmaCard['claims'], 'oldest'> }
 export type FormDetail = Omit<FormCard, keyof CoreForm>
-export interface LemmaDetail { stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats> }   // forms[i] belongs to core.forms[i]
+export interface LemmaDetail { stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats>; epochs?: EpochParadigms }   // forms[i] belongs to core.forms[i]
 /** public/data/lexicon.json (format 3): CoreCard[] in the compact wire form of core/pack.ts (tag table, defaults omitted) with the shared evidence pool. */
 export interface PackedCore { format: 3; ev: Evidence[]; tags: string[]; cards: unknown[][] }
 /** public/data/lex/<bucket>.json (format 1): the details of the lemmas hashing to the bucket, own evidence pool. */
 export interface Shard { format: 1; ev: Evidence[]; lemmas: string[]; details: LemmaDetail[] }
 
+// ── SPEC 50 EP-1.2: attested cells per epoch (detail shard). Reconstructions are NOT stored (EP-1.3): core/reconstruct.ts computes them from `stem`. ──
+/** Cell key grammar (core/cells.ts):  noun `${num}.${case}`  num ∈ sg|du|pl, case ∈ nom|gen|dat|acc|ins|loc|voc;
+ *  dual cells are merged per PAVL p. 74: du.nav (Н.З.К), du.gl (Р.М), du.di (Д.О).
+ *  adj/pron (phase 2) `${form}.${gender}.${num}.${case}` form ∈ short|long;  verb (phase 3) `${tense}.${num}.${person}` | `inf` | `sup` | `lpt.${gender}.${num}`. */
+export type CellKey = string
+export type TagSource = 'torot' | 'stanza' | 'vesum'      // manual treebank annotation | model output (P-1.7) | dictionary analysis of a modern spelling
+export interface CellForm {
+  raw: string            // spelling as attested (titlo kept, like FormCard.raw)
+  n: number              // tokens of this spelling placed in this cell in this epoch
+  src: TagSource
+  t: number              // index into EpochParadigms.tags: the verbatim tag ("Nb -d---fa--i" | UD feats | VESUM tag line)
+  amb?: number           // >1: each token was placed in `amb` candidate cells (underspecified tag / several VESUM lines)
+  ex: [w: number, loc: string]   // first attestation: index into CorpusMeta.witnesses + locator (P-1.2)
+  ctx?: string           // ≤ 60 chars context around ex (optional; dropped first when a shard is over budget)
+}
+export interface EpochCell { key: CellKey; forms: CellForm[]; more?: number }   // more = tokens of spellings beyond the per-cell cap
+export interface EpochParadigm {
+  epoch: string                                     // shev.* id (core/epochs.ts)
+  grid: 'noun' | 'adj' | 'pron' | 'verb'
+  N: number                                         // tagged tokens of this lemma in this epoch (denominator, P-1.6)
+  cells: EpochCell[]
+  dropped: { conflict: number; underspecified: number; untagged: number }   // tokens linked to the lemma but not placed, by reason
+}
+export type StemType = 'a' | 'ja' | 'o' | 'jo' | 'u' | 'i' | 'uu' | 'men' | 'nt' | 's' | 'r'   // uu = *-ū
+export interface StemValue { type: StemType; model: string; old: string; gender: 'm' | 'f' | 'n'; rule: string }  // model = PAVL model lemma; old = Old Ukrainian lemma; rule = ST-* id
+export interface EpochParadigms { tags: string[]; paradigms: EpochParadigm[]; stem: Claim<StemValue> }
+
 export interface WitnessMeta extends Omit<WitnessOut, 'tokens' | 'dropped'> {
   n: number; linked: number; dropped: WitnessOut['dropped']
   epochShev: Claim<EpochAssignment>; epochWl: Claim<EpochAssignment>
+  /** the witness's Stanza output (.nlp.json) is flagged outOfDomain (SPEC 50 EP-2.5/EP-7.7): its model tags are shown with an extra badge */
+  outOfDomain?: boolean
 }
 
 /** In-memory lexicon: a plain `LemmaCard[]`. */

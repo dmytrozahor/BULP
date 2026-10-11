@@ -114,14 +114,20 @@ describe('M-6 / B-6 outputs', () => {
     const r = readFileSync('analysis/REPORT.md', 'utf8')
     for (let i = 1; i <= 8; i++) expect(r, `## ${i}.`).toMatch(new RegExp(`^## ${i}\\. `, 'm'))
   })
-  it.skipIf(!hasData())('M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB, lexindex ≤ 4 MB (B-5)', () => {
+  it.skipIf(!has('analysis/REPORT.md'))('REPORT has the epoch-paradigm subsection with denominators (EP-8.1)', () => {
+    const r = readFileSync('analysis/REPORT.md', 'utf8')
+    expect(r).toMatch(/^### 2\.1 Epoch paradigms/m)
+    for (const s of ['tagged tokens', 'placed (% of tagged)', 'conflict', 'underspecified', 'untagged', 'lemmas with ≥ 1 cell', '**Stem types**', '**Reconstruction**', 'confirmed', '**Shard bytes added by `epochs`**', 'Conflicts by reason']) expect(r, s).toContain(s)
+    for (const e of ['shev.proto', 'shev.old', 'shev.middle', 'shev.late_middle', 'shev.modern']) expect(r, e).toMatch(new RegExp(`\\| ${e.replace('.', '\\.')} \\| [\\d ]+ \\| `))
+  })
+  it.skipIf(!hasData())('M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 256 KiB (epochs included), lexindex ≤ 4 MB (B-5)', () => {
     for (const f of ['corpus', 'lexicon', 'lexindex']) expect(has(`public/data/${f}.json`)).toBe(true)
     const core = readFileSync('public/data/lexicon.json')
     expect(core.length).toBeLessThanOrEqual(15 * 1024 * 1024)
     expect(readFileSync('public/data/lexindex.json').length).toBeLessThanOrEqual(4 * 1024 * 1024)
     const files = readdirSync('public/data/lex')
     expect(files.length).toBeGreaterThan(100)
-    for (const f of files) expect(statSync(`public/data/lex/${f}`).size, f).toBeLessThanOrEqual(192 * 1024)
+    for (const f of files) expect(statSync(`public/data/lex/${f}`).size, f).toBeLessThanOrEqual(256 * 1024)
     const lemmas = lex().map(c => c.lemma)
     expect(lemmas.length).toBeGreaterThan(5000); expect(new Set(lemmas).size).toBe(lemmas.length)
     expect(files.length).toBe(new Set(lemmas.map(l => bucketOf(l))).size)   // no empty or stray shard

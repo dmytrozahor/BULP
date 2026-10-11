@@ -1,6 +1,6 @@
 # Requirement coverage (P-4.1)
 
-Every requirement id of SPEC 00 / 10 / 20 / 30 / 40-rusyn maps to at least one test (`file › text that occurs in the test file`) or is marked `manual` with the reason.
+Every requirement id of SPEC 00 / 10 / 20 / 30 / 40-rusyn / 50 maps to at least one test (`file › text that occurs in the test file`) or is marked `manual` with the reason.
 `tests/coverage.test.ts` fails if an id is missing here, if a referenced file or test text does not exist, or if an id disappears from the specs.
 Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their heading id.
 
@@ -41,7 +41,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | M-5.4 | tests/core.test.ts › G² is symmetric and zero for equal rates |
 | M-5.5 | tests/gaps.test.ts › M-5.5 collocations |
 | M-5.6 | tests/core.test.ts › smoothing keeps nulls out |
-| M-6 | tests/gaps.test.ts › M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB |
+| M-6 | tests/gaps.test.ts › M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 256 KiB |
 | B-1.1 | tests/build.test.ts › author record without evidence needs a Q authorEvidence |
 | B-2.1 | tests/build.test.ts › B-2.1 ambiguity resolution order |
 | B-2.2 | tests/build.test.ts › nothing → undefined (unresolved tokens are never guessed, B-2.2) |
@@ -77,3 +77,42 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RU-4.1 | tests/rusyn.test.ts › renderer quotes are paraphrases (P) |
 | RU-4.2 | tests/rusyn.test.ts › every Rusyn rule cites its source (P-1.3) |
 | RU-5.1 | tests/build.test.ts › lemma rusyn = best of the forms |
+| EP-1.1 | tests/epoch-paradigm.test.ts › EP-1.1 split/merge keeps epochs; core has none |
+| EP-1.2 | tests/epoch-paradigm.test.ts › EP-1.2 contract fixture |
+| EP-1.3 | tests/epoch-paradigm.test.ts › EP-1.3 every stored form has src |
+| EP-1.4 | tests/epoch-paradigm.test.ts › EP-1.4 a cell with 6 spellings |
+| EP-1.5 | tests/build.test.ts › B-5 size budget over the built data |
+| EP-2.1 | tests/epoch-paradigm.test.ts › torot morph wins over stanza feats |
+| EP-2.2 | tests/epoch-paradigm.test.ts › EP-2.2 decoders: proiel, ud, vesum |
+| EP-2.3 | tests/epoch-paradigm.test.ts › EP-2.3 / EP-2.4 underspecified → amb or dropped |
+| EP-2.4 | tests/epoch-paradigm.test.ts › dual g and l → du.gl |
+| EP-2.5 | tests/epoch-paradigm.test.ts › EP-2.5 every cell form yields a valid claim |
+| EP-3.1 | tests/epoch-paradigm.test.ts › untagged tokens are counted, not placed |
+| EP-3.2 | tests/epoch-paradigm.test.ts › shev epoch of the witness |
+| EP-3.3 | tests/epoch-paradigm.test.ts › grid mismatch |
+| EP-3.4 | tests/epoch-paradigm.test.ts › stanza lemma and gender disagreement → conflict |
+| EP-3.5 | tests/epoch-paradigm.test.ts › modern «руки» under рука → 4 keys, amb 4, raw unfolded |
+| EP-3.6 | tests/epoch-paradigm.test.ts › first ex = earliest witness |
+| EP-3.7 | tests/epoch-paradigm.test.ts › N = placed + conflict + underspecified |
+| EP-3.8 | tests/epoch-paradigm.test.ts › no dual loss inferred from absence |
+| EP-4.1 | tests/epoch-paradigm.test.ts › EP-4.1/4.2 stem rules on old lemmas |
+| EP-4.2 | tests/epoch-paradigm.test.ts › every STEM_RULES row has a Q cite |
+| EP-4.3 | tests/epoch-paradigm.test.ts › stem claim evidence = rule cite + lemma record |
+| EP-5.1 | tests/epoch-paradigm.test.ts › no reconstruction after shev.old |
+| EP-5.2 | tests/epoch-paradigm.test.ts › рука / имя reconstructions |
+| EP-5.3 | tests/epoch-paradigm.test.ts › velar alternation нога / вълкъ |
+| EP-5.4 | tests/epoch-paradigm.test.ts › reconstructions carry method and cited trace |
+| EP-5.5 | tests/epoch-paradigm.test.ts › confirmation only in the same cell |
+| EP-5.6 | tests/epoch-paradigm.test.ts › vocative = nominative marker |
+| EP-6.1 | tests/epoch-paradigm.test.ts › every MH entry has a Q cite |
+| EP-6.2 | tests/epoch-paradigm.test.ts › dual column only where attested after shev.old |
+| EP-6.3 | tests/epoch-paradigm.test.ts › epoch without witnesses is disabled |
+| EP-6.4 | tests/ui.test.ts › EP-6.4 MH-09 is attached to pl.dat |
+| EP-7.1 | tests/ui.test.ts › EP-7.1 tabs in shev order with N |
+| EP-7.2 | tests/ui.test.ts › EP-7.2 epochGrid: 7 case rows |
+| EP-7.3 | tests/ui.test.ts › EP-7.3 three classes, each with a text badge |
+| EP-7.4 | tests/ui.test.ts › EP-7.4 an empty cell says |
+| EP-7.5 | tests/ui.test.ts › EP-7.5 cell evidence |
+| EP-7.6 | tests/ui.test.ts › EP-7.6 legend lists the epoch markers |
+| EP-7.7 | tests/ui.test.ts › EP-7.7 / D2 / D3: model badge with out-of-domain mark |
+| EP-8.1 | tests/gaps.test.ts › REPORT has the epoch-paradigm subsection with denominators |

@@ -16,6 +16,7 @@ import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import FormLegend from '../components/FormLegend.vue'
+import EpochParadigm from '../components/EpochParadigm.vue'
 import Collocations from '../components/Collocations.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
@@ -31,9 +32,12 @@ const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
 const full = computed(() => fullOf(card.value))
+const epochs = computed(() => full.value?.epochs)   // SPEC 50: LemmaDetail.epochs, carried by mergeCard
 const err = computed(() => detailError.get(props.lemma))
 const active = ref<string | null>(null), nForms = ref(60)   // F2: frequent lemmas have hundreds of spellings — paged chips
 watch(() => props.lemma, () => (active.value = null))
+const isNoun = computed(() => /іменник|noun/i.test(card.value?.pos ?? ''))   // SPEC 50 MVP: nouns only
+const showKwic = (raw: string) => { active.value = raw; document.getElementById('h-kw')?.scrollIntoView({ block: 'start' }) }
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
@@ -126,6 +130,12 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         <section class="card" aria-labelledby="h-par">
           <h2 id="h-par"><span>Словозміна · Paradigm</span></h2>
           <Paradigm :paradigm="card.paradigm" />
+        </section>
+
+        <!-- 3b. Paradigm per epoch (SPEC 50) -->
+        <section v-if="isNoun" class="card" aria-labelledby="h-ep">
+          <h2 id="h-ep"><span>Словозміна за епохами · Epoch paradigms</span></h2>
+          <EpochParadigm :epochs="epochs" :loading="!full && !err" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
         </section>
 
         <!-- 5. Examples -->

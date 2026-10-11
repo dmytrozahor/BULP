@@ -183,6 +183,37 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
       expect(() => writeLexicon(cs, dir, 1000)).toThrow(/core/); expect(() => writeLexicon(cs, dir, 1e9, 100)).toThrow(/shard/)
     } finally { rmSync(dir, { recursive: true, force: true }) }
   })
+  it('EP-1.5 an over-budget shard first drops ctx, then caps cells at 2 — n, ex and cells are never dropped', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'lexep-'))
+    const form = (raw: string, n: number) => ({ raw, n, src: 'torot' as const, t: 0, ex: [0, 'л. 1'] as [number, string], ctx: 'контекст '.repeat(6) })
+    const epochs = { tags: ['Nb -s---mn--i'], stem: unknown() as never, paradigms: [{ epoch: 'shev.old', grid: 'noun' as const, N: 99, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: ['sg.nom', 'sg.gen', 'sg.dat'].map(key => ({ key, forms: ['a', 'b', 'c', 'd'].map((s, i) => form('сл' + s + key, 9 - i)) })) }] }
+    const c = { ...fullCard('слово', 9, 1), epochs }
+    try {
+      const full = writeLexicon([c], dir).shardMax
+      const noCtx = writeLexicon([c], dir, 15 * 1024 * 1024, full - 1).shardMax
+      expect(noCtx).toBeLessThan(full)
+      const s1 = [...unpackShard(JSON.parse(readFileSync(join(dir, 'lex', readdirSync(join(dir, 'lex'))[0]!), 'utf8'))).values()][0]!.epochs!
+      expect(s1.paradigms[0]!.cells.every(x => x.forms.length === 4 && x.forms.every(f => f.ctx === undefined && f.ex[1] === 'л. 1'))).toBe(true)
+      writeLexicon([c], dir, 15 * 1024 * 1024, noCtx - 1)
+      const s2 = [...unpackShard(JSON.parse(readFileSync(join(dir, 'lex', readdirSync(join(dir, 'lex'))[0]!), 'utf8'))).values()][0]!.epochs!
+      expect(s2.paradigms[0]!.cells.map(x => [x.forms.length, x.more])).toEqual([[2, 13], [2, 13], [2, 13]])
+      expect(s2.paradigms[0]!.N).toBe(99)
+      expect(() => writeLexicon([c], dir, 15 * 1024 * 1024, 200)).toThrow(/shard/)
+    } finally { rmSync(dir, { recursive: true, force: true }) }
+  })
+})
+describe.skipIf(!hasData())('B-5 size budget over the built data (EP-1.1, EP-1.5)', () => {
+  it('every shard ≤ 256 KiB with epochs; CoreCard and lexicon.json carry no epochs; epochs round-trip through the shards', () => {
+    const files = readdirSync('public/data/lex')
+    for (const f of files) expect(readFileSync(`public/data/lex/${f}`).length, f).toBeLessThanOrEqual(256 * 1024)
+    const core = unpackCore(JSON.parse(readFileSync('public/data/lexicon.json', 'utf8')))
+    expect(core.some(c => 'epochs' in c)).toBe(false)
+    expect(readFileSync('public/data/lexicon.json', 'utf8')).not.toContain('"paradigms"')
+    const cs = readFull(), withEp = cs.filter(c => c.epochs)
+    expect(withEp.length).toBeGreaterThan(1000)
+    for (const c of withEp.slice(0, 200)) { expect(c.epochs!.paradigms.length).toBeGreaterThan(0); for (const p of c.epochs!.paradigms) expect(p.epoch).toMatch(/^shev\./) }
+    for (const c of withEp.slice(0, 50)) { const { core, detail } = splitCard(c); expect(mergeCard(core, detail)).toEqual(c) }
+  })
 })
 describe('lexicon packing (core/pack)', () => {
   const e = Q('S', 'loc', 'quote')
@@ -215,7 +246,7 @@ describe.skipIf(!hasData())('P-1.1 every claim in the built lexicon passes claim
     else if (x && typeof x === 'object') for (const [k, v] of Object.entries(x)) walk(v, `${path}.${k}`, out)
   }
   const all: { path: string; c: Claim<unknown> }[] = []
-  cards.forEach((c, i) => walk({ first: c.first, stress: c.stress, forms: c.forms, claims: c.claims }, `#${i}:${c.lemma}`, all))
+  cards.forEach((c, i) => walk({ first: c.first, stress: c.stress, forms: c.forms, claims: c.claims, epochs: c.epochs }, `#${i}:${c.lemma}`, all))
   it('has claims', () => expect(all.length).toBeGreaterThan(1000))
   it('every known claim re-constructs through claim(); unknown ones have no evidence', () => {
     for (const { path, c } of all) {

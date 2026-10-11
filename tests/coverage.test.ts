@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
 
 const rd = (p: string) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n')
-const SPECS = ['00-principles', '10-mining', '20-build', '30-derivation', '40-rusyn'].map(f => rd(`specs/${f}.md`))
+const SPECS = ['00-principles', '10-mining', '20-build', '30-derivation', '40-rusyn', '50-epoch-paradigms'].map(f => rd(`specs/${f}.md`))
 const ids = (() => {
   const out = new Set<string>()
   for (const s of SPECS) {

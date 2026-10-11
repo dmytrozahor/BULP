@@ -7,7 +7,7 @@
 export interface PForm { form: string; tags: string }
 export interface Grid { id: string; title: string; cols: string[]; rows: { label: string; cells: PForm[][] }[] }
 
-const CASES: [string, string][] = [['v_naz', 'називний'], ['v_rod', 'родовий'], ['v_dav', 'давальний'], ['v_zna', 'знахідний'], ['v_oru', 'орудний'], ['v_mis', 'місцевий'], ['v_kly', 'кличний']]
+export const CASES: [string, string][] = [['v_naz', 'називний'], ['v_rod', 'родовий'], ['v_dav', 'давальний'], ['v_zna', 'знахідний'], ['v_oru', 'орудний'], ['v_mis', 'місцевий'], ['v_kly', 'кличний']]
 const T = (p: PForm) => p.tags.split(':')
 const has = (p: PForm, ...ts: string[]) => { const t = T(p); return ts.every(x => t.includes(x)) }
 const pick = (ps: PForm[], ...ts: string[]) => ps.filter(p => has(p, ...ts))

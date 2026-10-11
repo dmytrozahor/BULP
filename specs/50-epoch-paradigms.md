@@ -212,12 +212,12 @@ Also add `'50-epoch-paradigms'` to `SPECS` in tests/coverage.test.ts (it reads a
 Contract first: backend lands **E-B0** (types EP-1.2 + `core/cells.ts` key grammar + fixture with one noun having `epochs` and a stem claim) and pushes before the frontend starts E-F1.
 
 **Backend** — owns `core/{types,cells,stem,morph-tables,morph-history,reconstruct}.ts`, `core/sources.ts` (add PAVL), `pipelines/build-epochs.ts` (+ the call in build.ts and REPORT subsection), `pipelines/fixture.ts`, `tests/epoch-paradigm.test.ts`, the B-5 budget assertion in `tests/build.test.ts`, `specs/COVERAGE.md` rows above.
-- [ ] E-B0 contract: types, CellKey grammar, fixture.
-- [ ] E-B1 `core/cells.ts`: three decoders + `cellEvidence` (EP-2.*).
-- [ ] E-B2 `core/morph-tables.ts` (PAVL pp. 74–77 models as data, each table with its Q\* cite and page; resolve research/11 O-1 first), `core/stem.ts` (STEM_RULES, EP-4), `core/reconstruct.ts` (EP-5).
-- [ ] E-B3 `core/morph-history.ts` (MH-01…30, EP-6.1).
-- [ ] E-B4 `pipelines/build-epochs.ts` (EP-3), written into LemmaDetail; budget handling EP-1.5; REPORT EP-8.1.
-- [ ] E-B5 tests + COVERAGE rows; full build; check shard sizes.
+- [x] E-B0 contract: types, CellKey grammar, fixture.
+- [x] E-B1 `core/cells.ts`: three decoders + `cellEvidence` (EP-2.*).
+- [x] E-B2 `core/morph-tables.ts` (PAVL pp. 74–77 models as data, each table with its Q\* cite and page; resolve research/11 O-1 first), `core/stem.ts` (STEM_RULES, EP-4), `core/reconstruct.ts` (EP-5).
+- [x] E-B3 `core/morph-history.ts` (MH-01…30, EP-6.1).
+- [x] E-B4 `pipelines/build-epochs.ts` (EP-3), written into LemmaDetail; budget handling EP-1.5; REPORT EP-8.1.
+- [x] E-B5 tests + COVERAGE rows; full build; check shard sizes.
 
 **Frontend** — owns `src/components/EpochParadigm.vue`, `src/lib/epochGrid.ts`, edits in `src/components/WordCard.vue` and `FormLegend.vue`, `tests/ui.test.ts`; imports `core/cells.ts`, `core/reconstruct.ts`, `core/morph-history.ts` read-only (asks backend for changes).
 - [ ] E-F1 `epochGrid.ts` (EP-7.2, EP-6.2 visibility).

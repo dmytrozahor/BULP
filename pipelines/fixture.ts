@@ -6,14 +6,14 @@
  * The real pipeline overwrites these files (SPEC 10 M-6).
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
-import { claim, unknown, D, isKnown, type Claim } from '../core/evidence.ts'
+import { claim, unknown, D, Q, isKnown, type Claim } from '../core/evidence.ts'
 import { assignEpoch, EPOCHS, epochById } from '../core/epochs.ts'
 import { compare, dispersion, dots, freqClass, ipm, logDice, smooth } from '../core/stats.ts'
 import { key, normalizeOld } from '../core/text.ts'
 import { RUSYN_STATUS, SURZHYK_BASIS, SURZHYK_DEF, detectRusyn, rusynClaim } from '../core/rules.ts'
 import { detect } from '../core/detect.ts'
 import { REGIONS, regionOf } from './regions.ts'
-import type { CorpusMeta, FormCard, LemmaCard, LexIndex, StressVariant, VesumHit, WitnessMeta } from '../core/types.ts'
+import type { CellForm, CorpusMeta, EpochParadigms, FormCard, LemmaCard, LexIndex, StressVariant, VesumHit, WitnessMeta } from '../core/types.ts'
 import { MANIFEST } from './manifest.ts'
 import { AUTHORS } from './authors.ts'
 import { deriveWithSteps } from '../src/lib/derive.ts'
@@ -35,6 +35,7 @@ const witnesses: WitnessMeta[] = units.map(u => {
     authorEvidence: a?.evidence.length ? undefined : [FX('authorEvidence', 'самоназва автора, знайдена в самому тексті')],
     n, linked: Math.round(n * (u.date[0] < 1500 ? 0.58 : 0.71)), dropped: { unmapped: Math.round(n * 0.004), apparatus: Math.round(n * 0.02) },
     epochShev: assignEpoch(u.date, 'shev'), epochWl: assignEpoch(u.date, 'wl'),
+    ...(u.id === 'samovydets' || u.id === 'vyshensky' ? { outOfDomain: true } : {}),
   }
 })
 const W = Object.fromEntries(witnesses.map(w => [w.id, w]))
@@ -208,6 +209,38 @@ function card(s: Spec): LemmaCard {
 }
 
 const cards = SPECS.map(card)
+
+// ── SPEC 50 EP-1.2 contract fixture: «кінь» carries `epochs` (attested cells in four shev epochs + a stem claim). Counts and tokens are invented; the PAVL cite is real. ──
+const wix = (id: string) => witnesses.findIndex(w => w.id === id)
+const cf = (raw: string, n: number, src: CellForm['src'], t: number, w: string, loc: string, extra: Partial<CellForm> = {}): CellForm => ({ raw, n, src, t, ex: [wix(w), loc], ...extra })
+const kinEpochs: EpochParadigms = {
+  tags: ['Nb -s---mn--i', 'Nb -s---ma--i', 'Nb -d---ma--i', 'Nb -p---mn--i', 'Case=Nom|Gender=Masc|Number=Sing', 'noun:anim:m:v_naz', 'noun:anim:p:v_naz', 'Nb -p---mg--i'],
+  paradigms: [
+    { epoch: 'shev.old', grid: 'noun', N: 31, dropped: { conflict: 1, underspecified: 2, untagged: 4 }, cells: [
+      { key: 'sg.nom', forms: [cf('конь', 22, 'torot', 0, 'pvl_lav', 'л. 12', { ctx: 'и сѣде на конь свои' })] },
+      { key: 'sg.acc', forms: [cf('конь', 3, 'torot', 1, 'pvl_lav', 'л. 14 зв.')] },
+      { key: 'du.nav', forms: [cf('коня', 1, 'torot', 2, 'pvl_lav', 'л. 31')] },
+      { key: 'pl.nom', forms: [cf('кони', 2, 'torot', 3, 'pvl_lav', 'л. 40'), cf('конье', 1, 'torot', 3, 'pvl_lav', 'л. 52')], more: 1 },
+      { key: 'pl.gen', forms: [cf('конь', 1, 'torot', 7, 'pvl_lav', 'л. 60')] },
+    ] },
+    { epoch: 'shev.middle', grid: 'noun', N: 15, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: [
+      { key: 'sg.nom', forms: [cf('конь', 15, 'stanza', 4, 'samovydets', 'ч. I')] },
+    ] },
+    { epoch: 'shev.late_middle', grid: 'noun', N: 4, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: [
+      { key: 'sg.nom', forms: [cf('конь', 4, 'vesum', 5, 'eneida1798', 'ч. I, 18')] },
+    ] },
+    { epoch: 'shev.modern', grid: 'noun', N: 9, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: [
+      { key: 'sg.loc', forms: [cf('коні', 3, 'vesum', 6, 'shevchenko', 'Причинна', { amb: 3 })] },
+      { key: 'pl.nom', forms: [cf('коні', 3, 'vesum', 6, 'shevchenko', 'Причинна', { amb: 3 })] },
+      { key: 'pl.voc', forms: [cf('коні', 3, 'vesum', 6, 'shevchenko', 'Причинна', { amb: 3 })] },
+    ] },
+  ],
+  stem: claim({ type: 'jo' as const, model: 'конь', old: 'конь', gender: 'm' as const, rule: 'ST-10' }, [
+    Q('PAVL', 'с. 71', 'Іменники чоловічого й середнього роду на *-ŏ /*-јŏ. У називному відмінку однини іменники чоловічого роду закінчувалися на -ъ чи -ь, а іменники середнього роду − на -о, -е: братъ, столъ, дворь, край, конь, вои, князь; село, поле, знание, дѣло.'),
+    D('pvl_lav', 'л. 12', 'конь → «конь»', 'лема TOROT'),
+  ]),
+}
+cards.find(c => c.lemma === 'кінь')!.epochs = kinEpochs
 void epochById; void normalizeOld
 
 const lexindex: LexIndex = {

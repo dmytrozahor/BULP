@@ -174,7 +174,7 @@ research/02 §2: cases `v_naz v_rod v_dav v_zna v_oru v_mis v_kly`, number `p` (
 TOROT lemma counts (pvl_lav): 2,251 noun, 657 adjective, 1,514 verb lemmas. Distinct (epoch, lemma, tag-cell, spelling) tuples in pre-modern witnesses: **69,601** (size estimate for SPEC 50).
 
 ## 6. Open questions
-- O-1 Verify PAVL's `"` glyph (я vs ѧ) and the long-adjective table against page images (pp. 74–77, 101–102).
+- O-1 **Resolved 2026-10-11** by rendering PDF pages 71–77 and 101–102 (pdfjs-dist + @napi-rs/canvas) and reading the images: the `"` glyph is the iotated a «ꙗ» (U+A657), neither я nor ѧ (землꙗ, конꙗ, зꙗть); core/morph-tables.ts keeps it verbatim and core/text.ts N07 folds ꙗ → ѧ. Tables pp. 74–77 re-checked cell by cell against the images (no differences from §2; PAVL prints є where е is meant, normalised to е; ū pl. voc. is blank in print). The long-adjective table p. 101–102 is legible in the image (hard group новꙑи, нового, …; soft group синии, …) and can be transcribed for phase 2.
 - O-2 Is PAVL (2010 textbook) acceptable as the primary paradigm source until Безпалько 1962 / ІУМ. Морфологія 1978 are obtained (library scan)?
 - O-3 Undated changes (MH-08, -10, -11, -13): accept "undated" or source dates later?
 - O-4 Pronoun tables (PAVL pp. 88–97) not yet excerpted; needed for SPEC 50 phase 2.

@@ -15,16 +15,16 @@ export function bucketOf(lemma: string, buckets = BUCKETS): number {
 export const shardUrl = (lemma: string) => `./data/lex/${bucketOf(lemma)}.json`
 
 export function splitCard(c: LemmaCard): { core: CoreCard; detail: LemmaDetail } {
-  const { stress, forms, stats, claims: { oldest, ...claims }, ...rest } = c, { f, ipm, hk, dots, ...more } = stats
+  const { stress, forms, stats, epochs, claims: { oldest, ...claims }, ...rest } = c, { f, ipm, hk, dots, ...more } = stats
   return {
     core: { ...rest, claims, forms: forms.map(({ raw, norm, modern, claims, hints }) => ({ raw, norm, modern, claims, hints })), stats: { f, ipm, hk, dots } satisfies CoreStats },
-    detail: { stress, oldest, forms: forms.map(({ raw: _r, norm: _n, modern: _m, claims: _c, hints: _h, ...fd }) => fd), stats: more },
+    detail: { stress, oldest, forms: forms.map(({ raw: _r, norm: _n, modern: _m, claims: _c, hints: _h, ...fd }) => fd), stats: more, ...(epochs ? { epochs } : {}) },
   }
 }
 
 export function mergeCard(core: CoreCard, d: LemmaDetail): LemmaCard {
   if (d.forms.length !== core.forms.length) throw new Error(`${core.lemma}: detail has ${d.forms.length} spellings, core ${core.forms.length}`)
-  return { ...core, stress: d.stress, claims: { ...core.claims, oldest: d.oldest }, forms: core.forms.map((f, i) => ({ ...f, ...d.forms[i]! })), stats: { ...core.stats, ...d.stats } }
+  return { ...core, stress: d.stress, claims: { ...core.claims, oldest: d.oldest }, forms: core.forms.map((f, i) => ({ ...f, ...d.forms[i]! })), stats: { ...core.stats, ...d.stats }, ...(d.epochs ? { epochs: d.epochs } : {}) }
 }
 
 /** A card that already carries its detail (fixture, pre-split data): no shard fetch needed. */

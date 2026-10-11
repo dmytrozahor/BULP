@@ -236,3 +236,112 @@ describe('F5 regional panel', () => {
     expect(await ssr(RegionMap, { card: cards[0]! })).toContain('невідомо')
   })
 })
+
+// ── SPEC 50 epoch paradigms (EP-6.4, EP-7.*): sample detail built in-test, never committed as data ────────────────────────────
+import EpochParadigm from '../src/components/EpochParadigm.vue'
+import { epochGrid, epochTabs } from '../src/lib/epochGrid.ts'
+import { cellEvidence } from '../core/cells.ts'
+import type { EpochParadigms, StemValue, CellForm } from '../core/types.ts'
+import type { WitnessMeta } from '../core/types.ts'
+import { D } from '../core/evidence.ts'
+
+const stemV: StemValue = { type: 'a', model: 'рѣка', old: 'рѣка', gender: 'f', rule: 'ST-13' }
+const cf = (raw: string, src: CellForm['src'], w: number, n = 1, extra: Partial<CellForm> = {}): CellForm => ({ raw, n, src, t: src === 'torot' ? 0 : src === 'stanza' ? 1 : 2, ex: [w, 'f.1'], ...extra })
+const epochSample = (stem: EpochParadigms['stem'] = { value: stemV, evidence: [Q('PAVL', 'с. 74', 'рѣка')], method: 'rule' }): EpochParadigms => ({
+  tags: ['Nb -s---fn--i', 'Case=Ins|Gender=Fem|Number=Sing', 'noun:inanim:f:v_naz'], stem,
+  paradigms: [
+    { epoch: 'shev.old', grid: 'noun', N: 14, dropped: { conflict: 1, underspecified: 0, untagged: 2 }, cells: [
+      { key: 'sg.nom', forms: [cf('рѣка', 'torot', 0, 6)] }, { key: 'sg.dat', forms: [cf('рѣцѣ', 'torot', 0, 3)] },
+      { key: 'sg.ins', forms: [cf('рѣкою', 'torot', 1)] },                      // CS witness
+      { key: 'pl.nom', forms: [cf('рѣкы', 'torot', 1, 2)] }, { key: 'du.nav', forms: [cf('рѣцѣ', 'torot', 0)] }, { key: 'sg.gen', forms: [cf('рѣкъ', 'torot', 0, 1)], more: 2 }] },
+    { epoch: 'shev.middle', grid: 'noun', N: 5, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: [{ key: 'pl.dat', forms: [cf('рукамъ', 'stanza', 2, 2, { amb: 2 })] }] },
+    { epoch: 'shev.modern', grid: 'noun', N: 30, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: [{ key: 'sg.nom', forms: [cf('рука', 'vesum', 3, 9)] }] },
+  ],
+})
+const wmeta = (id: string, lang: string, extra = {}) => ({ id, title: id, author: id, lang, date: [1100, 1200], epochShev: { value: { epochs: ['shev.old'], confidence: 'high', overlays: [] }, evidence: [] }, ...extra }) as unknown as WitnessMeta
+const WS = [wmeta('tor', 'orv'), wmeta('arch', 'chu-rus'), wmeta('samov', 'ruthenian', { outOfDomain: true }), wmeta('mod', 'uk')]
+const SIZES = { 'shev.proto': 100, 'shev.old': 500, 'shev.early_middle': 0, 'shev.middle': 80, 'shev.late_middle': 90, 'shev.modern': 1000 }
+const panel = async (epochs: EpochParadigms | undefined, extra: Record<string, unknown> = {}) => (await ssr(EpochParadigm, { epochs, witnesses: WS, sizes: SIZES, spellings: ['рѣка'], ...extra })).split('<details')[0]!   // without the legend, which names every marker
+
+describe('SPEC 50 epoch paradigms', () => {
+  it('EP-7.1 tabs in shev order with N; default = oldest epoch with data; loading and missing shard states', async () => {
+    const html = await panel(epochSample())
+    const at = ['протоукраїнська', 'давньоукраїнська', 'ранньосередньоукраїнська', 'середньоукраїнська', 'пізньосередньоукраїнська', 'новітня'].map(s => html.indexOf(`<strong>${s}`))
+    expect(at.every((i, k) => i > 0 && (k === 0 || i > at[k - 1]!))).toBe(true)
+    expect(html).toContain('N = 14'); expect(html).toContain('N = 30')
+    expect(html).toMatch(/aria-selected="true"[^>]*>\s*<strong>давньоукраїнська/)
+    expect(await panel(undefined)).toContain('історичні парадигми: немає даних')
+    expect(await panel(undefined, { loading: true })).toContain('skeleton')
+    expect(epochTabs(epochSample().paradigms, SIZES).default).toBe('shev.old')
+  })
+  it('EP-6.3 an epoch without witnesses is a disabled tab with the N = 0 message', async () => {
+    const html = await panel(epochSample(), { start: 'shev.early_middle' })
+    expect(html).toContain('у корпусі немає пам’яток цієї доби (N = 0)'); expect(html).toMatch(/class="etab off"[^>]*aria-disabled="true"/); expect(html).toContain('MH-02'); expect(html).not.toContain('data-cell')   // its notes stay, no cells
+    expect(epochTabs(epochSample().paradigms, SIZES).tabs.find(t => t.id === 'shev.early_middle')!.disabled).toBe(true)
+  })
+  it('EP-7.2 epochGrid: 7 case rows × sg, du, pl in shev.old; du cells merged (Н.З.К, Р.М, Д.О)', () => {
+    const g = epochGrid(epochSample().paradigms[0], 'shev.old', stemV)
+    expect(g.cols.map(c => c.id)).toEqual(['sg', 'du', 'pl']); expect(g.rows.map(r => r.label)).toEqual(['Називний', 'Родовий', 'Давальний', 'Знахідний', 'Орудний', 'Місцевий', 'Кличний'])
+    expect(g.rows.map(r => r.cells[1]?.key ?? null)).toEqual(['du.nav', 'du.gl', 'du.di', null, null, null, null])
+    expect(g.rows[0]!.cells[1]!.tag).toBe('Н. З. К.')
+  })
+  it('EP-6.2 dual column: hidden in shev.middle without an attested du cell, shown with one; absent in modern', () => {
+    const p = epochSample().paradigms[1]!
+    expect(epochGrid(p, 'shev.middle').cols.map(c => c.id)).toEqual(['sg', 'pl'])
+    expect(epochGrid({ ...p, cells: [...p.cells, { key: 'du.gl', forms: [cf('рукоу', 'torot', 0)] }] }, 'shev.middle').cols.map(c => c.id)).toEqual(['sg', 'du', 'pl'])
+    expect(epochGrid(epochSample().paradigms[2], 'shev.modern', stemV).duHidden).toBe(true)
+  })
+  it('EP-7.3 three classes, each with a text badge; attestation and a differing reconstruction side by side', async () => {
+    const html = await panel(epochSample())
+    expect(html).toContain('class="lang attested">рѣка<'); expect(html).toContain('class="lang derived">рѣку<')   // sg.acc reconstructed only
+    expect(html).toContain('реконструкція'); expect(html).toContain('✓ підтверджено пам’яткою')
+    const g = epochGrid(epochSample().paradigms[0], 'shev.old', stemV), ins = g.rows[4]!.cells[0]!
+    expect(ins.att.map(f => f.raw)).toEqual(['рѣкою']); expect(ins.rec.map(r => r.form)).toEqual(['рѣкою'])   // same spelling in the same cell confirms
+    expect(g.rows[2]!.cells[0]!.rec[0]!.confirmedBy?.[0]?.raw).toBe('рѣцѣ')
+    expect(g.rows[2]!.cells[1]!.rec[0]!.confirmedBy).toBeUndefined()   // du.di рѣкама is not attested
+  })
+  it('EP-5.5 confirmation is per cell: the same spelling elsewhere does not confirm', () => {
+    const only = { ...epochSample().paradigms[0]!, cells: [{ key: 'du.nav', forms: [cf('рѣцѣ', 'torot', 0)] }] }
+    const g = epochGrid(only, 'shev.old', stemV)
+    expect(g.rows[2]!.cells[0]!.rec[0]!.confirmedBy).toBeUndefined(); expect(g.rows[0]!.cells[1]!.rec[0]!.confirmedBy?.[0]?.raw).toBe('рѣцѣ')
+  })
+  it('EP-7.4 an empty cell says «невідомо», never «—»; no reconstruction after shev.old (EP-5.1)', async () => {
+    const html = await panel(epochSample(), { start: 'shev.middle' })
+    expect(html).toContain('невідомо'); expect(html).not.toContain('>—<'); expect(html).not.toContain('class="lang derived"')
+    expect(epochGrid(epochSample().paradigms[1], 'shev.middle', stemV).reconstructed).toBe(false)
+  })
+  it('EP-7.5 cell evidence: witness, locator, verbatim tag, source note', () => {
+    const s = epochSample(), e = cellEvidence(s.paradigms[0]!.cells[0]!.forms[0]!, s, { witnesses: WS })
+    expect(e).toMatchObject({ source: 'tor', locator: 'f.1', kind: 'D', quote: 'рѣка «Nb -s---fn--i»', note: 'ручна розмітка TOROT' })
+    expect(cellEvidence(cf('рукамъ', 'stanza', 2), s, { witnesses: WS }).note).toBe('модельна розмітка Stanza, не словниковий факт (P-1.7); текст поза доменом моделі')
+    expect(cellEvidence(cf('рука', 'vesum', 3), s, { witnesses: WS }).note).toBe('аналіз ВЕСУМ сучасного написання')
+  })
+  it('EP-7.6 legend lists the epoch markers', async () => {
+    const html = await ssr(FormLegend, { epoch: true })
+    for (const t of ['ручна розмітка TOROT', 'модельна розмітка Stanza', 'аналіз ВЕСУМ', '≈2', 'ЦС', 'невідомо', '= Н.', 'основа: модель', 'модель поза доменом']) expect(html).toContain(t)
+    expect(await ssr(FormLegend)).not.toContain('ЦС')
+  })
+  it('EP-7.7 / D2 / D3: model badge with out-of-domain mark, CS badge, ≈k, source letters', async () => {
+    const old = await panel(epochSample()); expect(old).toContain('class="sb cs"'); expect(old).toContain('>T<')
+    const mid = await panel(epochSample(), { start: 'shev.middle' })
+    expect(mid).toContain('>M<'); expect(mid).toContain('модель поза доменом'); expect(mid).toContain('≈2')
+    expect(await panel(epochSample(), { start: 'shev.modern' })).toContain('>В<')
+  })
+  it('D4: a model-based stem claim marks the stem and the reconstructions', async () => {
+    const m = epochSample({ value: stemV, evidence: [D('tor', 'f.1', 'рѣки → «рѣка»', 'stanza lemma')], method: 'ST-13+stanza' })
+    expect(((await panel(m)).match(/основа: модель/g) ?? []).length).toBeGreaterThan(3)
+    expect(((await panel(epochSample())).match(/основа: модель/g) ?? []).length).toBe(0)
+    expect(await panel(epochSample({ value: 'unknown', evidence: [] }))).toContain('невідомо')
+  })
+  it('EP-6.4 MH-09 is attached to pl.dat with its quote, date and citation; undated notes say so', async () => {
+    const g = epochGrid(epochSample().paradigms[0], 'shev.old', stemV), cell = g.rows[2]!.cells[2]!
+    expect(cell.key).toBe('pl.dat'); const n = cell.notes.find(x => x.id === 'MH-09')!
+    expect(n.cite[0]!.quote).toContain('тривалий час зберігається давнє закінчення -ом'); expect(n.dated).toBe('з 13 ст.')
+    const html = await panel(epochSample()); expect(html).toContain('MH-09'); expect(html).toContain('дата в джерелі не вказана')   // MH-11 is undated
+  })
+  it('EP-6.4 notes that speak of one gender are dropped for a stem of another gender', () => {
+    const p = epochSample().paradigms[0], ids = (st?: StemValue) => epochGrid(p, 'shev.old', st).notes.map(n => n.id)
+    expect(ids(stemV)).not.toContain('MH-13'); expect(ids(stemV)).toContain('MH-14')   // рѣка is feminine: no masculine pl.nom note, the feminine sg.ins note stays
+    expect(ids({ ...stemV, type: 'o', model: 'плодъ', old: 'плодъ', gender: 'm' })).toContain('MH-13'); expect(ids()).toContain('MH-13')   // unknown stem: nothing is hidden
+  })
+})

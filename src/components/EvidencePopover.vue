@@ -32,6 +32,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', outside))
     <div v-if="open" :id="id" ref="pop" class="evpop" role="dialog" :aria-label="heading ?? 'Докази'" :style="{ transform: `translateX(${shift}px)` }">
       <div v-if="heading || meta" class="small" style="margin-bottom:.4rem"><strong v-if="heading">{{ heading }}</strong> <span v-if="meta" class="muted">{{ meta }}</span></div>
       <EvidenceList :evidence="props.evidence" />
+      <slot name="extra" />
     </div>
   </span>
 </template>
