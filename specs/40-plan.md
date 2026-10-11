@@ -38,26 +38,26 @@ Until the real build lands, the frontend uses `pipelines/fixture.ts` output (bac
 `src/lib/annotate.ts` is frontend-owned but imports `core/rules.ts`; if a rule change is needed, the frontend asks (it doesn't edit `core/`).
 
 ## Backend tasks
-- [ ] **B0 contract** — add the type fields above; extend `pipelines/fixture.ts` (one `rusyn:subcarpathian` FormCard e.g. `гынути`, one region); regenerate fixture data; push **first**.
-- [ ] **B1 Rusyn gate per research/10 §5** — write `specs/40-rusyn.md` with `RU-*` IDs: axis labels, `!normative` gate (no year gate), shared rows count only
+- [x] **B0 contract** — add the type fields above; extend `pipelines/fixture.ts` (one `rusyn:subcarpathian` FormCard e.g. `гынути`, one region); regenerate fixture data; push **first**.
+- [x] **B1 Rusyn gate per research/10 §5** — write `specs/40-rusyn.md` with `RU-*` IDs: axis labels, `!normative` gate (no year gate), shared rows count only
       if a RUE-*/PAN-* row fires, ORT-Y veto list = RUSYN_STRONG, `ambiguous_y` (weight 0.2) for мы/ты/вы/сын/рыба/был without discriminator,
       ORT-YI veto only via RUE-PRESOV-YO (э stays a russianism signal), positive Russian evidence (ы+э, `-ть` with ы, `-ский`) keeps ORT-Y.
       `[rend]` quotes become `P()` (paraphrase kind) until browser-verified. Fix `tests/ui.test.ts` expectation? **No** — that file is frontend's:
       instead add `tests/rusyn.test.ts` (быть → russianism_orth; быти → rusyn, no russianism_orth; гынути → rusyn + dialect ZAK; синьый; every RUSYN rule has cite)
       and tell the frontend session the new expectation (F0).
-- [ ] **B2 wire Rusyn into build** — `build-annotate.ts detectCard` runs RUSYN_RULES; lemma-level `rusyn` claim = union of modern FormCard rusyn claims;
+- [x] **B2 wire Rusyn into build** — `build-annotate.ts detectCard` runs RUSYN_RULES; lemma-level `rusyn` claim = union of modern FormCard rusyn claims;
       `CorpusMeta.rusynStatus`; REPORT §7 gets Rusyn hit counts (expected ~0 in this corpus — say so).
-- [ ] **B3 corpus completeness** — mine `vyshensky`; fix Shevchenko TOC discovery so the whole volume 1 is ingested; ingest tests for both.
-- [ ] **B4 NLP plumbing** — add `pymorphy3-dicts-ru` to `nlp/pyproject.toml`; replace the hard-coded `DEFAULT_UV` with `UV_BIN` env → `uv` on PATH;
+- [x] **B3 corpus completeness** — mine `vyshensky`; fix Shevchenko TOC discovery so the whole volume 1 is ingested; ingest tests for both.
+- [x] **B4 NLP plumbing** — add `pymorphy3-dicts-ru` to `nlp/pyproject.toml`; replace the hard-coded `DEFAULT_UV` with `UV_BIN` env → `uv` on PATH;
       run `lemmatize_orv.py` for any orv/chu-rus/ruthenian witness lacking `.nlp.json` (vyshensky), `stress.py`, `russian_check.py` (selftests first).
-- [ ] **B5 full build** — `npm run build:data`; meet B-5 limits (lexicon ≤ 15 MB, lexindex ≤ 4 MB); write `public/data/report.md`;
+- [x] **B5 full build** — `npm run build:data`; meet B-5 limits (lexicon ≤ 15 MB, lexindex ≤ 4 MB); write `public/data/report.md`;
       add `regions` + `byRegion` (witness `region` → oblast codes, mapping table with citation of research/04 §1 / research/07 §3.3).
       Read REPORT.md critically: link coverage per witness, top unresolved forms → fix the 3–5 biggest systematic misses in rules/orthography folds
       (each fix cited; no uncited rule — P-1.3), rebuild.
-- [ ] **B6 `tests/build.test.ts`** per SPEC 20 §Tests (admission B-1.1, tie-break B-3.5, ambiguity B-2.1, surzhyk upgrade needs both conditions B-3.2,
+- [x] **B6 `tests/build.test.ts`** per SPEC 20 §Tests (admission B-1.1, tie-break B-3.5, ambiguity B-2.1, surzhyk upgrade needs both conditions B-3.2,
       every claim in the built fixture passes `claim()`).
-- [ ] **B7 coverage audit** — `specs/COVERAGE.md`: every requirement ID in SPEC 00/10/20/30/40-rusyn → test name or `manual`; add tests for gaps.
-- [ ] **B8 commit** the built `public/data/*` and `analysis/REPORT.md`, push, report: corpus N, coverage %, top findings.
+- [x] **B7 coverage audit** — `specs/COVERAGE.md`: every requirement ID in SPEC 00/10/20/30/40-rusyn → test name or `manual`; add tests for gaps.
+- [x] **B8 commit** the built `public/data/*` and `analysis/REPORT.md`, push, report: corpus N, coverage %, top findings.
 
 ## Frontend tasks
 - [ ] **F0 test fix** — update `tests/ui.test.ts › year gates rules` to research/10 §5: modern `быть` → `russianism_orth`; modern `быти` → no `russianism_orth`.
