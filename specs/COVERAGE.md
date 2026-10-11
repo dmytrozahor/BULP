@@ -41,7 +41,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | M-5.4 | tests/core.test.ts › G² is symmetric and zero for equal rates |
 | M-5.5 | tests/gaps.test.ts › M-5.5 collocations |
 | M-5.6 | tests/core.test.ts › smoothing keeps nulls out |
-| M-6 | tests/gaps.test.ts › M-6 the three data files exist |
+| M-6 | tests/gaps.test.ts › M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB |
 | B-1.1 | tests/build.test.ts › author record without evidence needs a Q authorEvidence |
 | B-2.1 | tests/build.test.ts › B-2.1 ambiguity resolution order |
 | B-2.2 | tests/build.test.ts › nothing → undefined (unresolved tokens are never guessed, B-2.2) |
@@ -53,7 +53,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | B-3.6 | tests/gaps.test.ts › B-3.6 region is evidence, never a dialect label |
 | B-3.7 | tests/gaps.test.ts › B-3.7 stress status is unknown |
 | B-4 | tests/gaps.test.ts › B-4 ipm = f/N·1e6 over the stored N |
-| B-5 | tests/build.test.ts › B-5 size budget |
+| B-5 | tests/build.test.ts › B-5 core / detail split |
 | B-6 | tests/gaps.test.ts › REPORT has the eight sections of B-6 |
 | D-1.1 | tests/core.test.ts › видѣти → видіти via R09 |
 | D-1.2 | manual — attested-modern vs suggested is a UI classification (src/views/DeriveView.vue, frontend F4); the data side is the derive() candidate list verified by tests/core.test.ts › M-3.1 worked derivations |

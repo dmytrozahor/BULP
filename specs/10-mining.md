@@ -33,7 +33,7 @@ Depends on SPEC 00. Research inputs: research/01, 03, 06, 06b, 09.
 - **M-5.6** Smoothing: centred moving average, window 1 (slices are centuries).
 
 ## M-6 Outputs
-- `public/data/lexicon.json` — lemma cards (forms, attestations ≤ 12 KWIC per lemma, claims, stats).
+- `public/data/lexicon.json` — core cards of ALL kept lemmas (forms, claims, paradigm, headline stats); `public/data/lex/<bucket>.json` — per-lemma detail shards (≤ 12 KWIC per lemma, stress, link evidence, full stats) — SPEC 20 B-5.
 - `public/data/corpus.json` — witnesses, authors, epoch sizes, source registry.
 - `public/data/lexindex.json` — compact VESUM `bad/subst/slang/arch` + LT replace index for arbitrary-word analysis.
 - `analysis/REPORT.md` — Phase-1 annotated statistical analysis: corpus size per epoch/witness, link coverage, top lemmas per epoch,
