@@ -53,7 +53,8 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
           <span><span class="sw" style="background:var(--surface-2)"></span>лише в індексі ВЕСУМ/LT</span>
           <span class="muted">сірий — невідомо</span>
           <span v-for="c in CATEGORIES" :key="c"><span :class="['sw', 'sw-' + c]"></span>{{ CATEGORY_UK[c] }}</span>
-          <span><span class="sw" style="border-style:dashed"></span><i>реконструкція</i> (зарезервовано)</span>
+          <span><span class="sw" style="border-style:dashed"></span><i>реконструкція (гіпотеза)</i>: виведено правилами, у корпусі не знайдено</span>
+          <RouterLink to="/derive">деривація →</RouterLink>
         </div>
       </section>
 
@@ -73,7 +74,7 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
 
       <section v-if="sum.total" class="card"><h2><span>Підсумок</span></h2>
         <p class="sans small" style="margin-top:0"><strong style="font-size:1.4rem">{{ fmtNum(sum.pct * 100, 0) }}%</strong> слів прив’язано до лем корпусу ({{ sum.linked }} із {{ sum.total }}) ·
-          лише в індексі: {{ sum.byStatus.lexindex }} · лише правила: {{ sum.byStatus.rules }} · невідомо: {{ sum.byStatus.unknown }}</p>
+          виведено правилами (гіпотези): {{ sum.derived }} · лише в індексі: {{ sum.byStatus.lexindex }} · лише правила: {{ sum.byStatus.rules }} · невідомо: {{ sum.byStatus.unknown }}</p>
         <div class="bar" role="img" :aria-label="`прив’язано ${fmtNum(sum.pct * 100, 0)}%`"><i :style="{ width: sum.pct * 100 + '%' }"></i></div>
         <h3 class="small sans muted" style="margin-top:.8rem">Мітки (кількість слів)</h3>
         <ul class="sans small" style="list-style:none;padding:0;margin:0"><li v-for="c in CATEGORIES" :key="c"><span :class="['sw', 'sw-' + c]"></span>{{ CATEGORY_UK[c] }}: <strong>{{ sum.byMark[c] }}</strong></li></ul>

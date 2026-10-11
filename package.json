@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "test": "vitest run",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:data": "tsx pipelines/build.ts"
   },
   "dependencies": {
     "vue": "^3.5.43",

@@ -80,7 +80,7 @@ const bucket = (l: string) => categoryOf(l) ?? 'archaic'
           </div>
           <p v-else class="sans"><span class="muted">Перша фіксація: </span><ClaimBadge :claim="card.first" /></p>
           <h3 class="sans small muted">Історичні написання за датою</h3>
-          <ProvenanceTimeline :forms="card.forms" :active="active" />
+          <ProvenanceTimeline :forms="card.forms" :active="active" :card="card" />
         </section>
 
         <!-- 2. Labels -->

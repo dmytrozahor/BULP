@@ -58,8 +58,8 @@ export const CONTACT_RULES: Rule[] = [
   { id: 'LEX-VESUM-BAD', axis: 'contact', label: 'russianism_or_hybrid', weight: 0.8, cite: VT('bad', 'покруч'), test: c => (modern(c) ? vline(c, 'bad') : null),
     note: 'nonstandard_items.md: bad охоплює «росіянізми - кляча»' },
   { id: 'LEX-VESUM-SUBST', axis: 'contact', label: 'nonstandard', weight: 0.6, cite: VT('subst', 'нестандартні форма'), test: c => (modern(c) ? vline(c, 'subst') : null) },
-  { id: 'ORT-YI', axis: 'contact', label: 'russianism_orth', weight: 0.9, cite: ALPHA, test: c => (modern(c) && /[эъё]/.test(c.form) ? form(c) : null) },
-  { id: 'ORT-Y', axis: 'contact', label: 'russianism_orth', weight: 0.5, cite: ALPHA, note: 'ы також у карпатських говорах (див. CARP-Y)', test: c => (modern(c) && /ы/.test(c.form) ? form(c) : null) },
+  { id: 'ORT-YI', axis: 'contact', label: 'russianism_orth', weight: 0.9, cite: ALPHA, note: 'вето: русинські ознаки (research/10 §5)', test: c => (modern(c) && /[эъё]/.test(c.form) && !rusynStrong(c.form) ? form(c) : null) },
+  { id: 'ORT-Y', axis: 'contact', label: 'russianism_orth', weight: 0.5, cite: ALPHA, note: 'ы також у карпатських говорах і русинських стандартах (див. CARP-Y, RUE-*)', test: c => (modern(c) && /ы/.test(c.form) && !rusynStrong(c.form) ? form(c) : null) },
   { id: 'ORT-OLD', axis: 'contact', label: 'archaic_orthography', weight: 0.9, note: 'до 1919: ярижка, кулішівка, руська мова — норма свого часу',
     cite: P('WUK', 'https://uk.wikipedia.org/wiki/Українська_абетка', 'дореформені правописи вживали ы, ъ, э, ё, ѣ (Котляревський писав э, Максимович ё, ѣ)'),
     test: c => (c.year !== undefined && c.year < 1919 && /[ыэъёѣ]/.test(c.norm ?? c.form) ? form(c) : null) },
@@ -90,11 +90,11 @@ export const SURZHYK_DEF = Q('ENC', 'Енциклопедія «Українсь
 const W = (art: string) => `https://uk.wikipedia.org/wiki/${art}`
 const SRC: Record<string, string> = {
   EPL: W('Східнополіський_говір'), NOR: 'http://litopys.org.ua/ukrmova/um161.htm', MDN: 'http://litopys.org.ua/ukrmova/um166.htm', SW: W('Південно-західне_наріччя_української_мови'),
-  SE: W('Південно-східне_наріччя_української_мови'), WPL: W('Західнополіський_говір'), MPL: W('Середньополіський_говір'), POD: W('Подільський_говір'), NDN: W('Наддністрянський_говір'),
+  SE: W('Південно-східне_наріччя_української_мови'), ZAK: 'http://litopys.org.ua/ukrmova/um162.htm', WPL: W('Західнополіський_говір'), MPL: W('Середньополіський_говір'), POD: W('Подільський_говір'), NDN: W('Наддністрянський_говір'),
 }
 const dialectGate = (c: Ctx) => (c.year === undefined || c.year >= 1798) && !normative(c)
 const dia = (id: string, codes: string[], re: RegExp, weight: number, src: string, quote: string): Rule[] =>
-  codes.map(code => ({ id: `${id}:${code}`, axis: 'dialect' as const, label: code, weight, cite: Q(src === 'NOR' || src === 'MDN' ? 'ENC' : 'WUK', SRC[src]!, quote),
+  codes.map(code => ({ id: `${id}:${code}`, axis: 'dialect' as const, label: code, weight, cite: Q(['NOR', 'MDN', 'ZAK'].includes(src) ? 'ENC' : 'WUK', SRC[src]!, quote),
     test: (c: Ctx) => (dialectGate(c) && re.test(c.form) ? form(c) : null) }))
 
 export const DIALECT_RULES: Rule[] = [
@@ -117,13 +117,60 @@ export const DIALECT_RULES: Rule[] = [
   ...dia('F-TO-X', ['CHN', 'MDN'], /^(хв|худбол|хабрик)/, 0.2, 'EPL', 'Ослаблення «ф» → «х/хв» (худбóл, хва́ра)'),
   ...dia('CHN-PREP', ['CHN'], /^(помеж|л'а|л'е|заза|наў|ік|дак)$/, 0.7, 'EPL', 'к(ік)+дав. в. "до" (к бра́ту, ік сталý); л\'а (л\'е)+ род. в. "біля" (л\'а ха́ти, л\'е ріечки)'),
   ...dia('MPL-YON', ['MPL'], /^(йон|юн)$/, 0.7, 'MPL', 'приставний звук й у займеннику йон, юн (він)'),
+  ...dia('ZAK-Y-VELAR', ['ZAK'], /[кгґх]ы/, 0.6, 'ZAK', '[ы] зберігається й після задньоязикових приголосних (гынути, ломаґы «ломаки» …)'),
 ]
 
 /** Dialect code → display names (research/04 §1 codes). */
 export const DIALECTS: Record<string, string> = {
   CHN: 'східнополіський (чернігівський)', MPL: 'середньополіський', WPL: 'західнополіський', NORTH: 'північне наріччя',
   MDN: 'середньонаддніпрянський (київсько-полтавський)', SE: 'південно-східне наріччя', SW: 'південно-західне наріччя',
-  POD: 'подільський', NDN: 'наддністрянський (галицький)', BOY: 'бойківський', LEM: 'лемківський',
+  POD: 'подільський', NDN: 'наддністрянський (галицький)', BOY: 'бойківський', LEM: 'лемківський', ZAK: 'закарпатський',
+}
+
+// ── Rusyn standards (research/10) — a parallel, non-competing reading next to dialect:ZAK/LEM ────
+/**
+ * > "Мітка rusyn:* означає лише «форма відповідає нормі/практиці русинського стандарту X» і не є висновком про статус."
+ * >  — research/10 §0. Quotes marked [rend] came through a renderer (Cloudflare blocks raw fetch) and await re-verification.
+ */
+const UPRS = (q: string) => Q('UPRS', 'https://rusynsociety.com/rue/sre-standard/', q, '[rend] — перевірити в браузері; стандарт адвокаційної організації, не офіційна кодифікація')
+const UM162 = (q: string) => Q('ENC', 'http://litopys.org.ua/ukrmova/um162.htm', q)
+const UM87 = (q: string) => Q('ENC', 'http://litopys.org.ua/ukrmova/um87.htm', q)
+const RUEW = (q: string) => Q('RUEWIKI', 'https://rue.wikipedia.org/wiki/Русиньскый_язык', q)
+const LON = (q: string) => Q('LONKIN', 'Ломоносов-2025, тези', q)
+const rusynGate = (c: Ctx) => modern(c)
+const rx2 = (re: RegExp) => (c: Ctx) => (rusynGate(c) && re.test(c.form) ? form(c) : null)
+const RUE = (id: string, label: string, weight: number, test: (c: Ctx) => Evidence | null, cite: Evidence): Rule => ({ id, axis: 'rusyn', label, weight, cite, test })
+
+/** Strong Rusyn ы contexts that a russianism reading cannot explain (research/10 §3: «Four contexts separate Rusyn ы from Russian»). */
+export const rusynStrong = (f: string) => /[кгґх]ы|ьы|ы\S*ти(ся)?$|(ськ|цьк|зьк)ый$/.test(f) || (/ы/.test(f) && /[іїєґ]/.test(f)) || /[ӱÿü]/.test(f)
+
+export const RUSYN_RULES: Rule[] = [
+  RUE('RUE-Y-VELAR', 'rusyn', 0.8, rx2(/[кгґх]ы/), UPRS('Буква ‹Ы› скоро фурт ся пише місто ‹И› по буквах ‹К, Ґ, Х, Г›')),
+  RUE('RUE-Y-SOFT', 'rusyn', 0.9, rx2(/ьы/), UM162('[си́н’ый — сін’і]')),
+  RUE('RUE-Y-MIX', 'rusyn', 0.8, c => (rusynGate(c) && /ы/.test(c.form) && /[іїєґ]/.test(c.form) ? form(c) : null), RUEW('є выходославяньскый язык')),
+  RUE('RUE-Y-INF', 'rusyn', 0.6, rx2(/ы\S*ти(ся)?$/), UPRS('Інфінітивна кунцьовка -ТИ ся фурт пише через ‹И›')),
+  RUE('RUE-ADJ-SKYJ', 'rusyn:subcarpathian', 0.8, rx2(/(ськ|цьк|зьк)ый$/), UPRS('Общество про русинськый розвуй')),
+  RUE('RUE-ADJ-NSKYJ', 'rusyn:presov', 0.6, rx2(/(ньск|льск)ый$/), RUEW('Руси́ньскый язы́к')),
+  RUE('RUE-UE', 'rusyn:subcarpathian', 0.9, rx2(/[ӱÿü]/), LON('в бережских говорах рефлекс /ü/ … авторы передают её либо графемой Ӱ, либо Ü')),
+  RUE('RUE-O-U', 'rusyn:subcarpathian', 0.6, rx2(/^(кунь|пуд|стул|вун|мюд)$/), LON('могут иметь формы кунь, пуд, мюд / кÿнь, пÿд, мюд / кüнь, пüд, мюд / кінь, під, мід')),
+  RUE('RUE-PRESOV-YO', 'rusyn:presov', 0.6, c => (rusynGate(c) && /ё/.test(c.form) && /[ыьі]/.test(c.form) ? form(c) : null), RUEW('в части Середнёй і Южной Европы')),
+  RUE('RUE-LEX', 'rusyn', 0.4, rx2(/^(тай|фурт|тото|сеся|сесь)$/), RUEW('ай велике паноньско-русиньске')),
+  RUE('PAN-SHE', 'rusyn:pannonian', 0.6, rx2(/^ше$/), UM87('змерка ше ‘смеркається’')),
+  RUE('PAN-INF-C', 'rusyn:pannonian', 0.3, c => (rusynGate(c) && /[аиіе]ц$/.test(c.form) && !/ы/.test(c.form) && !normative(c) ? form(c) : null), UM87('влєчиц ше ‘волочитися’')),
+  RUE('PAN-LEX', 'rusyn:pannonian', 0.6, rx2(/^(барз|слунко|єдзенє|помоц)$/), UM87('дз, ц (єдзенє ‘їжа, страва’, помоц ‘допомога’)')),
+  RUE('RUE-O-CIRC', 'rusyn:subcarpathian', 0, rx2(/ô/), LON('графемы Ô, отражавшей позиционный вариант фонемы /о/'), ),
+]
+
+/** Neutral status note shown with every rusyn:* label (research/10 §0), with both positions' sources. */
+export const RUSYN_STATUS = {
+  note: 'Русинська (ISO 639-3 rue; паннонська — rsk) у Словаччині, Польщі (як лемківська), Сербії, Угорщині та ін. визнається окремою мовою з кодифікованими стандартами; українська діалектологія і держава Україна розглядають ці ідіоми як говори південно-західного наріччя української мови (закарпатський, лемківський) або як варіант української літературної мови. Мітка rusyn:* означає лише «форма відповідає нормі/практиці русинського стандарту» і не є висновком про статус.',
+  evidence: [
+    Q('ISO', 'https://iso639-3.sil.org/code/rue', 'rue … Rusyn … Individual … Living', '[rend]'),
+    RUEW('Класіфікація русиньского языка як языка або діалекту є предметом контроверзії.'),
+    UM87('один з варіантів руської (української) літ. мови українців Закарпаття'),
+    UM162('один з арх. говорів карпатської групи діалектів південно-західного наріччя'),
+    LON('Русинский литературный язык Закарпатской области Украины, однако, по настоящее время остаётся официально не кодифицированным'),
+  ],
 }
 
 // ── Register (research/08 B3) — literary is never inferred; only labelled colloquial or unknown ──

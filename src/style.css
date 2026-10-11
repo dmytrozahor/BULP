@@ -77,7 +77,16 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 .authlabel { font: .72rem var(--sans); border: 1px solid var(--line); border-radius: 3px; padding: 0 .35rem; background: var(--surface-2); }
 .generated { font: .78rem var(--sans); color: var(--muted); }
 
-/* attested vs derived (derived is reserved for the later "reconstructed forms" feature) */
+/* SPEC 30 D-4: attested (solid) · derived (dashed, italic, badge) · confirmed reconstruction (dashed + check) */
+.derived.confirmed { outline-style: dashed; outline-color: var(--accent); }
+.derived-badge.ok { border-color: var(--accent); color: var(--ink); text-decoration: none; }
+.attested-badge { font: .68rem var(--sans); border: 1px solid var(--line); color: var(--muted); border-radius: 3px; padding: 0 .3rem; margin-left: .3rem; }
+.flegend { display: grid; gap: .4rem; margin: .8rem 0; } .fbadge { white-space: nowrap; }
+.dsteps { list-style: none; padding: 0; margin: .3rem 0; display: flex; flex-wrap: wrap; gap: .3rem; }
+.dsteps button { font: .78rem var(--sans); background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: .1rem .4rem; cursor: pointer; text-align: left; }
+.dsteps button[aria-expanded=true] { border-color: var(--accent); } .dsteps li > .card { flex-basis: 100%; }
+.seg { display: inline-flex; gap: .3rem; }
+/* attested vs derived */
 .attested { font-style: normal; }
 .derived { font-style: italic; outline: 1px dashed var(--muted); outline-offset: 2px; border-radius: 2px; }
 .derived-badge { font: .68rem var(--sans); border: 1px dashed var(--muted); color: var(--muted); border-radius: 3px; padding: 0 .3rem; margin-left: .3rem; }

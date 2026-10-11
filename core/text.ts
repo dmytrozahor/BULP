@@ -74,7 +74,8 @@ export function normalizeOld(raw: string, o: NormOpts = {}): { norm: string; tit
 export const decodeIzbornyk = (html: string) => html
   .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n))
   .replace(/&nbsp;/g, ' ').replace(/&laquo;|&raquo;/g, '"').replace(/&amp;/g, '&')
-  .replace(/Ђ/g, 'ѣ').replace(/ђ/g, 'ѣ')
+  .replace(/(?<=\p{Lu})Ђ|Ђ(?=\p{Lu})/gu, 'Ѣ')   // vyshensky «ВСЂХ ПРАВОСЛАВНЫХ» = ВСѢХ: Ђ inside a capitals run is capital ѣ
+  .replace(/[Ђђ]/g, 'ѣ')                          // ilarion «закон<small>Ђ</small>» = законѣ (research/06 §1.8)
 
 /**
  * віра.укр Archangel Gospel: UstavUCS3.ttf transliteration → Unicode (research/01 §2: "A mapping table must be built

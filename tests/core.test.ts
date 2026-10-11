@@ -6,7 +6,7 @@ import { freqClass, logDice, compare, dispersion, dots, smooth } from '../core/s
 import { key, stripStress, renderStress, stressPositions, normalizeOld, decodeVira, decodeIzbornyk } from '../core/text.ts'
 import { detect, type Ctx } from '../core/detect.ts'
 import { fold } from '../core/orthography.ts'
-import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES } from '../core/rules.ts'
+import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, RUSYN_STATUS } from '../core/rules.ts'
 
 describe('P-1.1/P-1.2 evidence invariant', () => {
   it('rejects a claim without evidence', () => expect(() => claim('x', [])).toThrow(EvidenceError))
@@ -18,7 +18,7 @@ describe('P-1.1/P-1.2 evidence invariant', () => {
 
 describe('P-1.3 every rule has a citation', () => {
   it('sound rules', () => RULES.forEach(r => expect(r.cite.quote.length, r.id).toBeGreaterThan(5)))
-  it('detector rules', () => [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...REGISTER_RULES].forEach(r => expect(r.cite.source, r.id).toBeTruthy()))
+  it('detector rules', () => [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...REGISTER_RULES, ...RUSYN_RULES].forEach(r => expect(r.cite.source, r.id).toBeTruthy()))
 })
 
 describe('M-3.1 worked derivations (research/03 §2.1)', () => {
@@ -89,4 +89,15 @@ describe('detectors', () => {
   it('unsourced rules only hint (P-3.1)', () => { const d = detect(REGISTER_RULES, ctx('тре')); expect(d.claims.colloquial).toBeUndefined(); expect(d.hints[0]?.rule).toBe('REG-H-TRE') })
   it('rule claims carry rule cite + trigger (P-1.4)', () => { const c = detect(REGISTER_RULES, ctx('шо')).claims.colloquial!; expect(c.evidence.map(e => e.kind)).toEqual(['Q', 'D']) })
   it('unused import guard', () => expect(D('a', 'b', 'c').kind).toBe('D'))
+  it('Rusyn ногы: rusyn label, ы-russianism vetoed (research/10 §3)', () => {
+    expect(detect(RUSYN_RULES, ctx('ногы')).claims.rusyn).toBeDefined()
+    expect(detect(CONTACT_RULES, ctx('ногы')).claims.russianism_orth).toBeUndefined()
+  })
+  it('русинськый → rusyn:subcarpathian; Pannonian ше → rusyn:pannonian', () => {
+    expect(detect(RUSYN_RULES, ctx('русинськый')).claims['rusyn:subcarpathian']).toBeDefined()
+    expect(detect(RUSYN_RULES, ctx('ше')).claims['rusyn:pannonian']).toBeDefined()
+  })
+  it('мы is ambiguous (Rusyn = Russian spelling): no rusyn label from the form alone', () => expect(detect(RUSYN_RULES, ctx('мы')).claims.rusyn).toBeUndefined())
+  it('rusyn rules are gated to modern texts (ы in 1113 is Old Rus\')', () => expect(detect(RUSYN_RULES, ctx('ногы', { year: 1113 })).claims.rusyn).toBeUndefined())
+  it('status note cites both positions', () => expect(RUSYN_STATUS.evidence.map(e => e.source)).toEqual(expect.arrayContaining(['ENC', 'RUEWIKI', 'ISO'])))
 })

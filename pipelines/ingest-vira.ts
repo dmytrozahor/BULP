@@ -7,7 +7,10 @@
  * >  comparing against the font, before matching forms." — research/01 §2
  *
  * discover: the index page exposes only the first chapter of each book; every chapter page links to all chapters of its
- * own book, so we read the index, then the four chapter-1 pages, and collect all `{book}-cs-ar-{N}` links.
+ * own book, so we read the index, then the four chapter-1 pages, and collect all `{book}-cs-ar-{N}` links
+ * (89 chapters: Мт 28, Мк 16, Лк 24, Ін 21 — not the "37" of research/01 §2).
+ * Editorial notes `<sup title="Описка, …">*</sup>` are apparatus (counted). Glyph slots whose value could not be fixed by
+ * comparison with the standard text (Ӑ Ҳ Ӭ Ҵ ӣ } € •) make the word "unmapped" and it is dropped.
  * parse: verse div + `.verse-body` → decodeVira (core/text.ts) → whitespace tokens; loc = "{Мт|Мк|Лк|Ін} {N}:{v}",
  * s = running verse index. A token that still contains a Latin letter is dropped and counted in `dropped.unmapped`.
  */

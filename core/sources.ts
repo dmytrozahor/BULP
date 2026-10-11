@@ -22,6 +22,10 @@ export const SOURCES: Record<string, Source> = {
   UCREL:  { title: 'UCREL Log-likelihood and effect size calculator (Rayson)', url: 'https://ucrel.lancs.ac.uk/llwizard.html' },
   GRIES:  { title: 'Gries S. Th. Dispersions and adjusted frequencies in corpora. IJCL 13(4), 2008', url: 'https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf', year: '2008' },
   WLIST:  { title: 'Wikipedia: Word list — frequency class (Leipzig convention)', url: 'https://en.wikipedia.org/wiki/Word_list' },
+  UPRS:   { title: 'УПРС — стандарт русинського письма Общества про русинськый розвуй (ОРР), Львів, липень 2025 (правозахисна/адвокаційна організація, не офіційна кодифікація)', url: 'https://rusynsociety.com/rue/sre-standard/', year: '2025' },
+  RUEWIKI: { title: 'Русиньска Вікіпедія (rue.wikipedia.org)', url: 'https://rue.wikipedia.org', license: 'CC BY-SA 4.0' },
+  LONKIN: { title: 'Лонкін С. А. Литературный письменный язык «Подкарпатской Руси» в XXI веке. Ломоносов-2025', url: 'https://lomonosov.msu.ru/archive/Lomonosov_2025/data/36581/uid1045715_bbe4cbfb94b89ee751434150fd7e625005f844e5.docx', year: '2025' },
+  ISO:    { title: 'SIL ISO 639-3: rue (Rusyn), rsk (Ruthenian/Pannonian)', url: 'https://iso639-3.sil.org/code/rue' },
   BILANIUK: { title: 'Bilaniuk L. Contested Tongues. Cornell UP, 2005 (quoted via en.wikipedia «Surzhyk»)', year: '2005' },
   MASENKO:  { title: 'Масенко Л. Суржик: між мовою і язиком. К., 2011 (quoted via Дивослово 2016 review)', year: '2011' },
 }

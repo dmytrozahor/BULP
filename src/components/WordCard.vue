@@ -11,6 +11,8 @@ import { authorInfo, useData } from '../composables/useData.ts'
 import { categoryOf } from '../lib/analyze.ts'
 import { epochName, fmtDate, labelUk } from '../lib/format.ts'
 import ClaimBadge from './ClaimBadge.vue'
+import DerivationSteps from './DerivationSteps.vue'
+import ReconstructedForms from './ReconstructedForms.vue'
 import StressForms from './StressForms.vue'
 const props = defineProps<{ t: AnnotatedToken }>()
 const { witnessById } = useData()
@@ -24,8 +26,13 @@ const name = (l: string) => DIALECTS[l] ?? labelUk(l)
   <div class="wcard" aria-live="polite">
     <div class="row" style="margin-bottom:.3rem">
       <strong :class="['lang', t.provenance]" style="font-size:1.25rem; font-family:var(--serif)">{{ t.raw }}</strong>
-      <span v-if="t.provenance === 'derived'" class="derived-badge">реконструкція</span>
-      <span class="muted small">{{ STATUS_UK[t.status] }}</span>
+      <span v-if="t.provenance === 'derived'" class="derived-badge">реконструкція (гіпотеза)</span>
+      <span class="muted small">{{ t.provenance === 'derived' ? 'не засвідчено: виведено за правилами' : STATUS_UK[t.status] }}</span>
+    </div>
+    <div v-if="t.provenance === 'derived' && t.derivedFrom" class="small" style="margin-bottom:.3rem">
+      <span class="muted">виведення:</span> {{ t.raw }} → <strong>{{ t.derivedFrom.form }}</strong>
+      <RouterLink :to="{ path: '/derive', query: { from: t.raw, dir: 'old2new', to: t.derivedFrom.form } }">покроково з цитатами →</RouterLink>
+      <DerivationSteps :steps="t.derivedFrom.trace" :uid="t.raw" />
     </div>
     <template v-if="t.status === 'attested' && t.card">
       <div>лема: <RouterLink :to="`/w/${encodeURIComponent(t.card.lemma)}`"><strong>{{ t.card.lemma }}</strong></RouterLink> <span class="muted">{{ t.card.pos }}</span></div>
@@ -36,6 +43,7 @@ const name = (l: string) => DIALECTS[l] ?? labelUk(l)
       <div v-else>перша фіксація: <ClaimBadge :claim="t.card.first" /></div>
       <div v-if="t.epoch" class="small muted">епоха першої фіксації: {{ epochName(t.epoch) }}</div>
       <div style="margin:.2rem 0"><span class="muted">наголос: </span><StressForms :variants="t.card.stress" /></div>
+      <ReconstructedForms v-if="t.provenance === 'attested'" :card="t.card" :max="3" />
     </template>
     <div v-else-if="t.status === 'lexindex'" class="small">
       <div v-if="t.vesum?.length">ВЕСУМ: <code v-for="(h, i) in t.vesum" :key="i" style="margin-right:.5rem" :title="h.tags">{{ h.lemma }} {{ h.tags }}</code></div>

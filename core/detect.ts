@@ -20,7 +20,7 @@ export interface Ctx {
 
 /** A rule's test returns null (no fire) or the data evidence that triggered it (P-1.4). */
 export interface Rule {
-  id: string; axis: 'cs' | 'contact' | 'dialect' | 'register'; label: string; weight: number
+  id: string; axis: 'cs' | 'contact' | 'dialect' | 'register' | 'rusyn'; label: string; weight: number
   cite: Evidence; test: (c: Ctx) => Evidence | null; note?: string
 }
 

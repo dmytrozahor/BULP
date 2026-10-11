@@ -44,10 +44,10 @@ export const CUTS: Record<string, Cut> = {
 
 // ── markers ──────────────────────────────────────────────────────────────────────────────────────
 const M0 = '', M1 = ''
-const marker = (k: 'Y' | 'P' | 'C', v: string | number) => `${M0}${k}${v}${M1}`
-const MARKER = new RegExp(`${M0}([YPC])([^${M1}]*)${M1}`, 'g')
+export const marker = (k: 'Y' | 'P' | 'C', v: string | number) => `${M0}${k}${v}${M1}`
+export const MARKER = new RegExp(`${M0}([YPC])([^${M1}]*)${M1}`, 'g')
 
-const NAMED: Record<string, string> = { nbsp: ' ', mdash: '—', ndash: '–', hellip: '…', lt: '<', gt: '>', quot: '"', apos: "'", laquo: '«', raquo: '»', shy: '', amp: '&' }
+const NAMED: Record<string, string> = { nbsp: ' ', mdash: '—', ndash: '–', hellip: '…', lt: '<', gt: '>', quot: '"', apos: "'", laquo: '«', raquo: '»', shy: '', amp: '&', oacute: 'ó', eacute: 'é' }
 const entities = (s: string) => s.replace(/&(\w+);/g, (m, n) => NAMED[n] ?? m)
 
 /** `[n]` footnote → removed; `[ЗАГОЛОВОК]` / `[note: …]` → editorial, removed; `[текст]` → the editor's restoration, kept unwrapped. */
@@ -88,23 +88,20 @@ export function words(text: string, dropped: { unmapped: number }): string[] {
 
 // ── page → events ────────────────────────────────────────────────────────────────────────────────
 const dec = (b: Buffer) => decodeIzbornyk(new TextDecoder('windows-1251').decode(b))
-export interface Para { text: string }
-export interface Page { html: string; paras: string[]; app: number }
 
 /** K1 paragraphs (+ Mber column markers as `C` markers) of the cut region, navigation paragraphs dropped. */
-export function pageParas(html: string, cut: Cut): { paras: string[]; app: number } {
+export function pageParas(html: string, cut: Cut): { paras: string[]; apps: number[] } {
   const a = cut.start ? html.search(cut.start) : 0
   let region = a < 0 ? '' : html.slice(a)
   if (cut.end) { const b = region.search(cut.end); if (b > 0) region = region.slice(0, b) }
-  const st: Count = { app: 0 }, paras: string[] = []
+  const paras: string[] = [], apps: number[] = []
   for (const m of region.matchAll(/<p class=(K1|Mber)\b[^>]*>([\s\S]*?)<\/p>/g)) {
-    if (m[1] === 'Mber') { const c = /\d+/.exec(m[2]!); if (c) paras.push(marker('C', c[0])); continue }
+    if (m[1] === 'Mber') { const c = /\d+/.exec(m[2]!); if (c) { paras.push(marker('C', c[0])); apps.push(0) } continue }
     if (/<a\s+href="(?!#)/.test(m[2]!)) continue                          // navigation («Попередня / Головна / Наступна»)
-    const t = cleanParagraph(m[2]!, cut, st)
-    if (/[\p{L}]/u.test(t.replace(MARKER, ''))) paras.push(t); else if (MARKER.test(t)) { MARKER.lastIndex = 0; paras.push(t) }
-    MARKER.lastIndex = 0
+    const st: Count = { app: 0 }, t = cleanParagraph(m[2]!, cut, st)
+    if (t.replace(MARKER, '').trim()) { paras.push(t); apps.push(st.app) }
   }
-  return { paras, app: st.app }
+  return { paras, apps }
 }
 
 // ── generic stream: paragraphs → tokens with locators ────────────────────────────────────────────
@@ -112,21 +109,26 @@ interface Loc { year?: number; col?: string; page?: string }
 export interface Item { rec: TokenRec; year?: number }
 
 /** Tokens of paragraphs; `locOf` builds the locator from the running state. Mutates `state` (kept across pages). */
-export function streamTokens(paras: string[], state: Loc, s0: number, dropped: { unmapped: number }, locOf: (st: Loc, para: number) => string): { items: Item[]; s: number; flat: string; snaps: Snap[] } {
+export function streamTokens(paras: string[], apps: number[], state: Loc, s0: number, tally: (st: Loc) => WitnessOut['dropped'], locOf: (st: Loc, para: number) => string): { items: Item[]; s: number; flat: string; snaps: Snap[] } {
   const items: Item[] = [], snaps: Snap[] = []
   let s = s0, flat = ''
-  for (const p of paras) {
+  for (const [i, p] of paras.entries()) {
     let pos = 0
     const flush = (chunk: string) => {
       flat += chunk
-      for (const w of words(chunk, dropped)) items.push({ rec: { raw: w, loc: locOf(state, s), s }, year: state.year })
+      for (const w of words(chunk, tally(state))) items.push({ rec: { raw: w, loc: locOf(state, s), s }, year: state.year })
     }
-    s++
+    tally(state).apparatus += apps[i]!
+    if (/\p{L}/u.test(p.replace(MARKER, ''))) s++
     for (const m of p.matchAll(MARKER)) {
-      let chunk = p.slice(pos, m.index)
-      if (m[1] === 'Y') chunk = chunk.replace(/(В[ъь]?\s+л[ѣе]то)[^\p{L}]*(?:[\p{L}\p{M}҂]{1,4}[\s.·,]*){0,4}$/u, '$1 ')  // annal numerals «. ҂ѕ҃ . у҃ . н҃г .»
+      let chunk = p.slice(pos, m.index), head = ''
+      if (m[1] === 'Y') {                                   // «В лѣто . ҂ѕ҃ . у҃ . н҃г . [6453 (945)]»: the header words open the new annal, its Cyrillic numerals are dropped
+        const h = ANNAL_HEADER.exec(chunk)
+        if (h) { head = h[1]!; chunk = chunk.slice(0, h.index) }
+      }
       flush(chunk)
       if (m[1] === 'Y') state.year = +m[2]!; else if (m[1] === 'C') state.col = m[2]; else state.page = m[2]
+      flush(head)
       snaps.push({ pos: flat.length, ...state })
       pos = m.index! + m[0].length
     }
@@ -135,6 +137,7 @@ export function streamTokens(paras: string[], state: Loc, s0: number, dropped: {
   return { items, s, flat, snaps }
 }
 interface Snap extends Loc { pos: number }
+const ANNAL_HEADER = /(В[ъь]?\s+л[ѣе]т\p{M}*о?\p{M}*)[^\p{L}]*(?:[\p{L}\p{M}҂]{1,4}[\s.·,]*){0,4}$/u
 
 const baseWitness = (u: Unit, id: string, items: Item[], extra: Partial<WitnessOut>, dropped: WitnessOut['dropped']): WitnessOut =>
   witnessOf(u, items.map(i => i.rec), { id, url: u.urls[0]!, dropped, ...extra })
@@ -153,44 +156,40 @@ const HYP: Record<Exclude<Part, 'pvl'>, Partial<WitnessOut> & { id: string }> = 
 
 /** First-person / insider mentions of «Руская земля» (research/06b §3; authors.ts kyiv_chron_12 «evidence extracted from the witness itself»). */
 export const INSIDER = [
-  /наш\S*\s+Р(?:у|оу)\S*\s+земл\S*/,       // «нашеи Руской земли»
-  /за\s+Р(?:у|оу)\S*\s+земл\S*/,           // «за Рускую землю»
+  /за\s+Р(?:у|оу)\S*\s+земл\S*/,                                  // «за Рускую землю»
+  /Р(?:у|оу)\S*\s+земл\S*(?:\s+\S+){0,9}?\s+наш\S*/,              // «по всеи Руськои земли . створи же та Мати Бж҃иӕ чюдо . паче нашеӕ надежа» (narrator's «our»)
 ]
 
-/** All INSIDER matches of a text as quotes of ≤ 30 words (8 before, the match, ≤ 10 after; whitespace normalised) with their offsets. */
-export function findInsider(text: string): { quote: string; pos: number }[] {
-  const hits: { quote: string; pos: number }[] = []
-  for (const re of INSIDER) {
-    const g = new RegExp(re.source, 'g')
-    for (const m of text.matchAll(g)) {
-      const before = text.slice(0, m.index).split(/\s+/).slice(-8), match = m[0].split(/\s+/)
-      const after = text.slice(m.index! + m[0].length).split(/\s+/).slice(0, Math.max(0, 30 - 8 - match.length))
-      hits.push({ quote: [...before, ...match, ...after].filter(Boolean).slice(0, 30).join(' '), pos: m.index! })
-    }
-  }
-  return hits.sort((a, b) => a.pos - b.pos)
+/** All matches of INSIDER[k] in a text as quotes of ≤ 30 words (8 before, the match, the rest after; whitespace normalised) with their offsets. */
+export function findInsider(text: string, k: number): { quote: string; pos: number }[] {
+  return [...text.matchAll(new RegExp(INSIDER[k]!.source, 'g'))].map(m => {
+    const before = text.slice(0, m.index).split(/\s+/).slice(-8), match = m[0].split(/\s+/)
+    const after = text.slice(m.index! + m[0].length).split(/\s+/).slice(0, Math.max(0, 30 - 8 - match.length))
+    return { quote: [...before, ...match, ...after].filter(Boolean).slice(0, 30).join(' '), pos: m.index! }
+  })
 }
 
 function parseHypatian(u: Unit, files: RawFile[]): WitnessOut[] {
   const cut = CUTS.hypatian!
-  const state: Loc = {}, dropped = { unmapped: 0 }, apparatus = { n: 0 }
+  const state: Loc = {}
   const items: Record<Part, Item[]> = { pvl: [], kievchr: [], gvl: [] }
-  const evid: Evidence[] = []
+  const dropped: Record<Part, WitnessOut['dropped']> = { pvl: { unmapped: 0, apparatus: 0 }, kievchr: { unmapped: 0, apparatus: 0 }, gvl: { unmapped: 0, apparatus: 0 } }
+  const evid: (Evidence | undefined)[] = INSIDER.map(() => undefined)
   let s = 0
   for (const f of files) {
-    const { paras, app } = pageParas(dec(f.body), cut)
-    apparatus.n += app
+    const { paras, apps } = pageParas(dec(f.body), cut)
     const at0: Loc = { ...state }
-    const page = streamTokens(paras, state, s, dropped, st => `s.a. ${st.year ?? '?'}, стб. ${st.col ?? '?'}`)
+    const page = streamTokens(paras, apps, state, s, st => dropped[partOf(st.year)], st => `s.a. ${st.year ?? '?'}, стб. ${st.col ?? '?'}`)
     s = page.s
     for (const it of page.items) items[partOf(it.year)].push(it)
     // self-reference of the Kyiv chronicler: the first insider mention inside s.a. 6626–6708, with its annal and column
     const stateAt = (pos: number): Loc => page.snaps.filter(x => x.pos <= pos).at(-1) ?? at0
-    for (const h of evid.length ? [] : findInsider(page.flat)) {
-      const st = stateAt(h.pos)
-      if (partOf(st.year) !== 'kievchr') continue
-      evid.push(Q('IZB', `${f.url}, s.a. ${st.year}, стб. ${st.col}`, h.quote)); break
-    }
+    INSIDER.forEach((_, k) => {
+      for (const h of evid[k] ? [] : findInsider(page.flat, k)) {
+        const st = stateAt(h.pos)
+        if (partOf(st.year) === 'kievchr') { evid[k] = Q('IZB', `${f.url}, s.a. ${st.year}, стб. ${st.col}`, h.quote); break }
+      }
+    })
   }
   console.log(`hypatian: ${items.pvl.length} tokens before/at s.a. 6625 (PVL, covered by TOROT Laurentian) not emitted`)
   return (['kievchr', 'gvl'] as const).map(part => {
@@ -198,13 +197,14 @@ function parseHypatian(u: Unit, files: RawFile[]): WitnessOut[] {
     const loc = items[part]
     return baseWitness(u, meta.id, loc, {
       title: meta.title!, author: meta.author!, date: meta.date!, region: meta.region,
-      ...(part === 'kievchr' && evid.length ? { authorEvidence: evid } : {}),
-    }, { unmapped: dropped.unmapped, apparatus: apparatus.n })
+      ...(part === 'kievchr' && evid.some(Boolean) ? { authorEvidence: evid.filter((e): e is Evidence => !!e) } : {}),
+    }, dropped[part])
   })
 }
 
 // ── shevchenko: one witness per poem page ────────────────────────────────────────────────────────
-const NONCANON = /^(ТВОРЧІ ЗАГОТОВКИ|РЕДАГОВАНЕ|DUBIA)\b/
+/** Sections of vol. 1 that are not Shevchenko's own finished text: creative drafts (a Bible excerpt), his edit of Pysarevsky's fable, works of doubtful attribution. */
+const NONCANON = /^(ТВОРЧІ ЗАГОТОВКИ|РЕДАГОВАНЕ|DUBIA)(?!\p{L})/u
 const norm = (s: string) => entities(s.replace(/<[^>]*>/g, '')).replace(/\/\d+\//g, '').replace(/\s+/g, ' ').trim()
 
 /** The «Датується …» statement → [minYear, maxYear]: years after the first colon that introduces a date, else before the first colon, else anywhere. */
@@ -237,15 +237,15 @@ function parseShevchenko(u: Unit, files: RawFile[]): WitnessOut[] {
     if (!num || num === '1' || !dateLine) { if (num && num !== '1') skipped.noDate++; continue }
     if (nonCanon) { skipped.nonCanon++; continue }
     const range = dateRange(dateLine)
-    const { paras, app } = pageParas(html, cut)
-    const dropped = { unmapped: 0 }
+    const { paras, apps } = pageParas(html, cut)
+    const dropped = { unmapped: 0, apparatus: 0 }
     const first = /С\.\s*(\d+)/.exec(norm(region.slice(0, 1500)))?.[1]            // «— С. 348-354; С. 737-740.»
-    const { items } = streamTokens(paras, { page: first }, 0, dropped, st => st.page ? `с. ${st.page}` : prym[0]!)
+    const { items } = streamTokens(paras, apps, { page: first }, 0, () => dropped, st => st.page ? `с. ${st.page}` : prym[0]!)
     if (!range || !items.length) { skipped.noText++; continue }
     out.push(baseWitness(u, `shevchenko_${num}`, items, {
       title: prym[0]!, date: range,
       dateCite: Q('IZB', f.url, dateLine.slice(0, 300)),
-    }, { unmapped: dropped.unmapped, apparatus: app }))
+    }, dropped))
   }
   console.log(`shevchenko: ${out.length} poems; skipped ${skipped.noDate} pages without «Датується» line, ${skipped.nonCanon} in ТВОРЧІ ЗАГОТОВКИ/РЕДАГОВАНЕ/DUBIA, ${skipped.noText} empty`)
   return out
@@ -258,16 +258,15 @@ const SAM_CITE = Q('IZB', 'http://izbornyk.org.ua/samovyd/sam01.htm',
 
 // ── single-text units ────────────────────────────────────────────────────────────────────────────
 function parseSingle(u: Unit, files: RawFile[]): WitnessOut[] {
-  const cut = CUTS[u.id]!, state: Loc = {}, dropped = { unmapped: 0 }
+  const cut = CUTS[u.id]!, state: Loc = {}, dropped = { unmapped: 0, apparatus: 0 }
   const items: Item[] = []
-  let s = 0, app = 0
+  let s = 0
   for (const f of files) {
     const p = pageParas(dec(f.body), cut)
-    app += p.app
-    const r = streamTokens(p.paras, state, s, dropped, (st, para) => st.page ? `с. ${st.page}` : `абз. ${para}`)
+    const r = streamTokens(p.paras, p.apps, state, s, () => dropped, (st, para) => st.page ? `с. ${st.page}` : `абз. ${para}`)
     s = r.s; items.push(...r.items)
   }
-  return [baseWitness(u, u.id, items, u.id === 'samovydets' ? { dateCite: SAM_CITE } : {}, { unmapped: dropped.unmapped, apparatus: app })]
+  return [baseWitness(u, u.id, items, u.id === 'samovydets' ? { dateCite: SAM_CITE } : {}, dropped)]
 }
 
 export default {

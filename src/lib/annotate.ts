@@ -3,13 +3,15 @@
  * > "Pattern hints may *queue a form for review*, never set a label (research/08 B2)" — SPEC 00 P-3.1
  * Status per token: attested (in lexicon.json: lemma or historical spelling) · lexindex (known only via VESUM/LT index) ·
  * rules (unknown to both; only ungated rules with evidence fired) · unknown (muted, no label).
- * EXTENSION POINT: `provenance` is 'attested' today; a later feature will add 'derived' (reconstructed/suggested forms) with
- * `derivedFrom`. They must be drawn distinctly (CSS .derived: dashed outline, italic, «реконструкція» badge).
+ * SPEC 30 D-4.1: `provenance` 'derived' = the spelling is not in the lexicon but derive() maps it to a lexicon form (`derivedFrom`);
+ * drawn distinctly (CSS .derived: dashed outline, italic, «реконструкція» badge) and not counted as `linked`.
  */
 import type { FormCard, LemmaCard, TraceStep, VesumHit } from '../../core/types.ts'
 import type { Claim } from '../../core/evidence.ts'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
+import { derive } from '../../core/phonology.ts'
+import { traceSteps } from './derive.ts'
 import { key, normalizeOld, tokenize } from '../../core/text.ts'
 import { type SearchIndex, type Via } from './search.ts'
 import { runDetectors, strongest, type Category, type LexData } from './analyze.ts'
@@ -20,14 +22,15 @@ export interface AnnotateData extends LexData { search: SearchIndex; cards: Map<
 export interface AnnotatedToken {
   raw: string; start: number; end: number; key: string
   status: Status
-  provenance: 'attested' | 'derived'                 // reserved: 'derived' not produced yet
-  derivedFrom?: { form: string; trace: TraceStep[] }  // reserved for reconstructed forms
+  provenance: 'attested' | 'derived'
+  derivedFrom?: { form: string; trace: TraceStep[] }  // modern form + rule steps of a derived token
   lemma?: string; card?: LemmaCard; form?: FormCard; via?: Via
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
 }
 
+const OLD_LETTERS = /[ѣъыѧѫѥѵѡѿѹꙋ]|оу/
 const VIA_ORDER: Via[] = ['form', 'lemma', 'paradigm']
 
 /** Merge lemma-level claims into the claim set (form-level claims win on a label clash). */
@@ -65,15 +68,25 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
         mark: strongest(claims), epoch: shevEpochOf(card) })
       continue
     }
+    // SPEC 30 D-4.1: an old-script spelling that is not in the lexicon but derives (core/phonology) to a lexicon form is linked as 'derived' (a hypothesis)
     const a = runDetectors(t.raw, data, year)
     const has = Object.keys(a.claims).length > 0
+    const dv = OLD_LETTERS.test(k) && !a.known && !has ? derive(t.raw) : undefined
+    const via = dv?.candidates.map(c => ({ c, h: (data.search.map.get(key(c.form)) ?? [])[0] })).find(x => x.h && key(x.c.form) !== k)
+    const dcard = via?.h && data.cards.get(via.h.lemma)
+    if (dv && via && dcard) {
+      const claims = claimsOf(dcard)
+      out.push({ ...base, provenance: 'derived', derivedFrom: { form: via.c.form, trace: traceSteps(dv.norm, via.c.trace) }, status: 'attested', lemma: dcard.lemma, card: dcard,
+        via: via.h!.via, claims, hints: [], mark: strongest(claims), epoch: shevEpochOf(dcard) })
+      continue
+    }
     out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims) })
   }
   return out
 }
 
 export interface Summary {
-  total: number; linked: number; pct: number
+  total: number; linked: number; derived: number; pct: number
   byStatus: Record<Status, number>; byMark: Record<Category, number>
   epochProfile: Record<string, number>; unknown: string[]
 }
@@ -81,7 +94,9 @@ export function summarize(tokens: AnnotatedToken[]): Summary {
   const byStatus: Summary['byStatus'] = { attested: 0, lexindex: 0, rules: 0, unknown: 0 }
   const byMark = { cs: 0, contact: 0, dialect: 0, colloquial: 0, archaic: 0 } as Summary['byMark']
   const lemmas = new Map<string, string>(), unknown = new Set<string>()
+  let derived = 0
   for (const t of tokens) {
+    if (t.provenance === 'derived') { derived++; continue }   // a hypothesis is not a corpus link
     byStatus[t.status]++
     if (t.mark) byMark[t.mark]++
     if (t.status === 'attested' && t.lemma && t.epoch) lemmas.set(t.lemma, t.epoch)
@@ -90,5 +105,5 @@ export function summarize(tokens: AnnotatedToken[]): Summary {
   const epochProfile: Record<string, number> = {}
   for (const e of lemmas.values()) epochProfile[e] = (epochProfile[e] ?? 0) + 1
   const total = tokens.length
-  return { total, linked: byStatus.attested, pct: total ? byStatus.attested / total : 0, byStatus, byMark, epochProfile, unknown: [...unknown] }
+  return { total, linked: byStatus.attested, derived, pct: total ? byStatus.attested / total : 0, byStatus, byMark, epochProfile, unknown: [...unknown] }
 }
