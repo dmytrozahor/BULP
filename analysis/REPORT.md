@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-11T08:17:05.597Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **430 833**.
+Generated 2026-10-11T08:35:02.766Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **437 687**.
 
 ## 1. Corpus
 
@@ -30,7 +30,9 @@ Generated 2026-10-11T08:17:05.597Z by `pipelines/build.ts` (SPEC 20). Every numb
 | shevchenko_118 | shevchenko | uk | 1841 | shev.modern (high) | wl.new | 77 | 0 | 0 |
 | shevchenko_119 | shevchenko | uk | 1841 | shev.modern (high) | wl.new | 1 595 | 1 | 0 |
 | shevchenko_120 | shevchenko | uk | 1841 | shev.modern (high) | wl.new | 673 | 0 | 0 |
+| shevchenko_121 | shevchenko | uk | 1842 | shev.modern (high) | wl.new | 4 519 | 0 | 0 |
 | shevchenko_122 | shevchenko | uk | 1842 | shev.modern (high) | wl.new | 716 | 0 | 0 |
+| shevchenko_123 | shevchenko | uk | 1843 | shev.modern (high) | wl.new | 2 335 | 1 | 0 |
 | shevchenko_124 | shevchenko | uk | 1843 | shev.modern (high) | wl.new | 169 | 0 | 0 |
 | shevchenko_125 | shevchenko | uk | 1844 | shev.modern (high) | wl.new | 307 | 0 | 0 |
 | shevchenko_126 | shevchenko | uk | 1844 | shev.modern (high) | wl.new | 848 | 0 | 0 |
@@ -64,32 +66,29 @@ Generated 2026-10-11T08:17:05.597Z by `pipelines/build.ts` (SPEC 20). Every numb
 | franko1905 | franko | uk | 1905 | shev.modern (high) | wl.new | 7 656 | 0 | 0 |
 | hrinchenko1908 | hrinchenko | uk | 1908 | shev.modern (high) | wl.new | 6 527 | 0 | 3414 |
 
-Admitted witnesses: 58; N = 430 833. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 60; N = 437 687. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=430 833 |
+| epoch | name | scheme | N | share of N=437 687 |
 |---|---|---|---|---|
 | shev.proto | протоукраїнська доба | shev | 6 807 | 1.6% |
-| shev.old | давньоукраїнська доба | shev | 236 845 | 55.0% |
+| shev.old | давньоукраїнська доба | shev | 236 845 | 54.1% |
 | shev.early_middle | ранньосередньоукраїнська доба | shev | 0 | 0.0% |
-| shev.middle | середньоукраїнська доба | shev | 63 594 | 14.8% |
+| shev.middle | середньоукраїнська доба | shev | 63 594 | 14.5% |
 | shev.late_middle | пізньосередньоукраїнська доба | shev | 12 638 | 2.9% |
-| shev.modern | новітня доба | shev | 110 949 | 25.8% |
-| wl.rus | давньоруська (княжа доба) | wl | 243 652 | 56.6% |
-| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 63 594 | 14.8% |
+| shev.modern | новітня доба | shev | 117 803 | 26.9% |
+| wl.rus | давньоруська (княжа доба) | wl | 243 652 | 55.7% |
+| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 63 594 | 14.5% |
 | wl.ruthenian.chancery | ділова староукраїнська | wl | 0 | 0.0% |
-| wl.new | нова українська літературна мова | wl | 123 587 | 28.7% |
+| wl.new | нова українська літературна мова | wl | 130 441 | 29.8% |
 | wl.contemporary | сучасна українська літературна мова | wl | 0 | 0.0% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 66 953 · 12 ст.: 139 131 · 13 ст.: 37 568 · 16 ст.: 25 620 · 17 ст.: 37 974 · 18 ст.: 12 638 · 19 ст.: 96 766 · 20 ст.: 14 183
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 66 953 · 12 ст.: 139 131 · 13 ст.: 37 568 · 16 ст.: 25 620 · 17 ст.: 37 974 · 18 ст.: 12 638 · 19 ст.: 103 620 · 20 ст.: 14 183
 
 ### Exclusions (B-1.1)
 
-| witness | author | N | why excluded |
-|---|---|---|---|
-| shevchenko_121 | shevchenko | 4519 | текст написано російською мовою, не українською (лексикон українських форм) — «Поэма Кого, рыдая, призову я Делить тоску, печаль мою В чужом краю, кому, тоскуя…» (http://izbornyk.org.ua/shevchenko/shev121.htm) |
-| shevchenko_123 | shevchenko | 2335 | текст написано російською мовою, не українською (лексикон українських форм) — «На память 9-го ноября 1843 года княжне Варваре Николаевне Репниной ПОСВЯЩЕНИЕ Ду…» (http://izbornyk.org.ua/shevchenko/shev123.htm) |
+No witness was excluded by the admission rule.
 Authors with a vetting record but **no admitted witness** (2): nechuy (vetted); drahomanov (vetted). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
 
 ## 2. Linking coverage (B-2)
@@ -123,7 +122,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | shevchenko_118 | 77 | 0 | 0 | 0 | 76 | 1 | 98.7% |
 | shevchenko_119 | 1 595 | 0 | 0 | 0 | 1579 | 16 | 99.0% |
 | shevchenko_120 | 673 | 0 | 0 | 0 | 662 | 11 | 98.4% |
+| shevchenko_121 | 4 519 | 0 | 0 | 0 | 2158 | 2361 | 47.8% |
 | shevchenko_122 | 716 | 0 | 0 | 0 | 690 | 26 | 96.4% |
+| shevchenko_123 | 2 335 | 0 | 0 | 0 | 926 | 1409 | 39.7% |
 | shevchenko_124 | 169 | 0 | 0 | 0 | 166 | 3 | 98.2% |
 | shevchenko_125 | 307 | 0 | 0 | 0 | 300 | 7 | 97.7% |
 | shevchenko_126 | 848 | 0 | 0 | 0 | 835 | 13 | 98.5% |
@@ -156,60 +157,60 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | franko1893 | 36 521 | 0 | 0 | 0 | 33666 | 2855 | 92.2% |
 | franko1905 | 7 656 | 0 | 0 | 0 | 7161 | 495 | 93.5% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5722 | 805 | 87.7% |
-| **total** | 430 833 | 36011 | 159381 | 29324 | 112699 | 93418 | 78.3% |
+| **total** | 437 687 | 36011 | 159381 | 29324 | 115783 | 97188 | 77.8% |
 
-Linked 337 415 of 430 833 tokens (78.3%); unresolved 93 418 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 340 499 of 437 687 tokens (77.8%); unresolved 97 188 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (93 418) |
+| form | f | % of unresolved (97 188) |
 |---|---|---|
-| к | 1379 | 1.5% |
+| к | 1397 | 1.4% |
 | къ | 1240 | 1.3% |
-| ни | 806 | 0.9% |
-| ли | 766 | 0.8% |
+| и | 1084 | 1.1% |
+| ни | 814 | 0.8% |
+| ли | 769 | 0.8% |
 | аще | 750 | 0.8% |
-| и | 712 | 0.8% |
-| своего | 542 | 0.6% |
+| своего | 545 | 0.6% |
 | приде | 472 | 0.5% |
 | ӕко | 383 | 0.4% |
-| свои | 339 | 0.4% |
+| свои | 341 | 0.4% |
 | реч̑ | 324 | 0.3% |
+| что | 324 | 0.3% |
 | реч | 312 | 0.3% |
 | поиде | 304 | 0.3% |
 | володимеръ | 300 | 0.3% |
 | нъ | 300 | 0.3% |
 | своимъ | 284 | 0.3% |
-| что | 281 | 0.3% |
-| или | 261 | 0.3% |
+| или | 266 | 0.3% |
+| где | 261 | 0.3% |
 | войска | 258 | 0.3% |
-| мои | 245 | 0.3% |
-| тогда | 245 | 0.3% |
-| где | 240 | 0.3% |
+| мои | 251 | 0.3% |
+| тогда | 249 | 0.3% |
 | ҂ѕ҃ | 228 | 0.2% |
 | бъıс̑ | 228 | 0.2% |
 | нача | 212 | 0.2% |
-| кто | 200 | 0.2% |
+| кто | 209 | 0.2% |
 | своими | 190 | 0.2% |
 | войско | 182 | 0.2% |
+| твои | 179 | 0.2% |
 | ѥгда | 179 | 0.2% |
-| твои | 177 | 0.2% |
 | сь | 174 | 0.2% |
 | придоша | 170 | 0.2% |
 | гетман | 167 | 0.2% |
 | своӕ | 167 | 0.2% |
 | своеи | 166 | 0.2% |
 | ӕ | 165 | 0.2% |
+| еще | 161 | 0.2% |
 | противу | 160 | 0.2% |
 | поидоша | 157 | 0.2% |
-| еще | 156 | 0.2% |
 | чьто | 154 | 0.2% |
 
 The top-200 list is stored in corpus.json (`topUnresolved`). Typical misses: proper names and foreign words (not in VESUM), Old Rus' lexemes with no modern descendant, scribal variants and spellings that no rule maps to a VESUM form.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 52 439), *token* = occurrences (denominator linked tokens 337 415). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 52 760), *token* = occurrences (denominator linked tokens 340 499). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
@@ -219,34 +220,34 @@ The top-200 list is stored in corpus.json (`topUnresolved`). Typical misses: pro
 | R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 482 | 0.9% | 1540 | 0.5% |
 | R13 | C + j: подовження, -ьѥ > -ття | G | 135 | 0.3% | 295 | 0.1% |
 | R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 124 | 0.2% | 202 | 0.1% |
-| R04 | Занепад єрів (закон Гавліка) | G | 7256 | 13.8% | 45628 | 13.5% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1478 | 2.8% | 6639 | 2.0% |
+| R04 | Занепад єрів (закон Гавліка) | G | 7256 | 13.8% | 45692 | 13.4% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1478 | 2.8% | 6640 | 2.0% |
 | R07 | Вставні о, е в кінцевих групах | L | 37 | 0.1% | 253 | 0.1% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 4230 | 8.1% | 19828 | 5.9% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 4230 | 8.0% | 19828 | 5.8% |
 | R12 | ѥ у новозакритому складі > ї | G | 95 | 0.2% | 988 | 0.3% |
-| R11 | Злиття і та у > и | G | 2529 | 4.8% | 40149 | 11.9% |
+| R11 | Злиття і та у > и | G | 2529 | 4.8% | 40149 | 11.8% |
 | R15 | Ствердіння губних у кінці складу | G | 890 | 1.7% | 3869 | 1.1% |
 | R16 | l > w після о, е | G | 294 | 0.6% | 1018 | 0.3% |
 | R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 208 | 0.4% | 709 | 0.2% |
 | R17 | е > о після шиплячих перед твердим | L | 270 | 0.5% | 1277 | 0.4% |
 | R18 | Ствердіння ж, ч, ш | G | 682 | 1.3% | 2434 | 0.7% |
 | R19 | Ствердіння кінцевого р' | G | 183 | 0.3% | 667 | 0.2% |
-| R21 | Протетичні в, г | L | 1188 | 2.3% | 3701 | 1.1% |
-| R23 | Стягнення прикметникових закінчень | L | 648 | 1.2% | 1985 | 0.6% |
+| R21 | Протетичні в, г | L | 1185 | 2.2% | 3698 | 1.1% |
+| R23 | Стягнення прикметникових закінчень | L | 646 | 1.2% | 2000 | 0.6% |
 
 Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-JER: 737 types / 1952 tokens · ORTH-KUL-E: 198 types / 332 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-KUL-I: 228 types / 645 tokens · ORTH-YAR-I: 181 types / 378 tokens · ORTH-YAR-Y: 363 types / 478 tokens · ORTH-YAR-YAT: 331 types / 448 tokens · ORTH-YAR-E: 55 types / 74 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-YAR-EH: 2 types / 2 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 4 095 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 5 985 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 237 | 0 |
-| CS-C3 | cs | church_slavonic | 0.7 | 91 | 0 |
-| CS-C4 | cs | church_slavonic | 0.7 | 24 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 239 | 0 |
+| CS-C3 | cs | church_slavonic | 0.7 | 93 | 0 |
+| CS-C4 | cs | church_slavonic | 0.7 | 25 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 47 | 0 |
-| CS-C11 | cs | church_slavonic | 0.6 | 88 | 0 |
+| CS-C11 | cs | church_slavonic | 0.6 | 89 | 0 |
 | CS-C12 | cs | church_slavonic | 0 | 0 | 58 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 219 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 223 |
 | LEX-LT | contact | nonnormative | 0.8 | 0 | 0 |
 | LEX-LT-SOFT | contact | not_recommended | 0.4 | 0 | 0 |
 | LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 0 | 0 |
@@ -254,7 +255,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-JER
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 7726 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 7722 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
 | MOR-PART-UCH | contact | calque_participle | 0.6 | 0 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
@@ -269,7 +270,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-JER
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 0 | 0 |
 | N-DIPH-IE:CHN | dialect | CHN | 0.8 | 3 | 0 |
 | N-DIPH-IE:MPL | dialect | MPL | 0.8 | 3 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 181 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 190 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
 | 3SG-HARD-T:POD | dialect | POD | 0.4 | 0 | 0 |
 | 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 0 | 0 |
@@ -461,43 +462,43 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 29 | хто | іменник, ч.р. | 46 | 3640 |
 | 30 | сам | прикметник | 43 | 3402 |
 
-**shev.modern** — новітня доба, N = 110 949
+**shev.modern** — новітня доба, N = 117 803
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 3047 | 27463 |
-| 2 | той | прикметник | 2534 | 22839 |
-| 3 | не | частка | 2506 | 22587 |
-| 4 | в | прийменник | 2425 | 21857 |
-| 5 | я | іменник | 1782 | 16061 |
-| 6 | що | іменник, с.р. | 1733 | 15620 |
-| 7 | на | вигук | 1692 | 15250 |
-| 8 | з | прийменник | 1241 | 11185 |
-| 9 | а | сполучник | 1240 | 11176 |
-| 10 | він | іменник, ч.р. | 1095 | 9869 |
-| 11 | сей | прикметник | 1068 | 9626 |
-| 12 | як | іменник, ч.р. | 1050 | 9464 |
-| 13 | ти | іменник | 1039 | 9365 |
-| 14 | й | сполучник | 995 | 8968 |
-| 15 | бути | дієслово | 965 | 8698 |
-| 16 | у | прийменник | 929 | 8373 |
-| 17 | до | іменник, с.р. | 782 | 7048 |
-| 18 | весь | прикметник | 758 | 6832 |
-| 19 | ми | іменник | 702 | 6327 |
-| 20 | за | прислівник | 690 | 6219 |
-| 21 | мова | іменник | 676 | 6093 |
-| 22 | мій | прикметник | 652 | 5877 |
-| 23 | свій | прикметник | 505 | 4552 |
-| 24 | то | сполучник | 475 | 4281 |
-| 25 | так | прислівник | 451 | 4065 |
-| 26 | по | прийменник | 445 | 4011 |
-| 27 | вони | іменник | 433 | 3903 |
-| 28 | серце | іменник, с.р. | 408 | 3677 |
-| 29 | ще | прислівник | 393 | 3542 |
-| 30 | ви | іменник | 392 | 3533 |
+| 1 | і | сполучник | 3047 | 25865 |
+| 2 | не | частка | 2666 | 22631 |
+| 3 | в | прийменник | 2581 | 21909 |
+| 4 | той | прикметник | 2542 | 21578 |
+| 5 | я | іменник | 1925 | 16341 |
+| 6 | на | вигук | 1763 | 14966 |
+| 7 | що | іменник, с.р. | 1733 | 14711 |
+| 8 | а | сполучник | 1313 | 11146 |
+| 9 | з | прийменник | 1241 | 10535 |
+| 10 | він | іменник, ч.р. | 1097 | 9312 |
+| 11 | сей | прикметник | 1073 | 9108 |
+| 12 | ти | іменник | 1069 | 9074 |
+| 13 | як | іменник, ч.р. | 1050 | 8913 |
+| 14 | й | сполучник | 995 | 8446 |
+| 15 | бути | дієслово | 972 | 8251 |
+| 16 | у | прийменник | 956 | 8115 |
+| 17 | весь | прикметник | 805 | 6833 |
+| 18 | до | іменник, с.р. | 789 | 6698 |
+| 19 | за | прислівник | 727 | 6171 |
+| 20 | ми | іменник | 711 | 6035 |
+| 21 | мій | прикметник | 682 | 5789 |
+| 22 | мова | іменник | 676 | 5738 |
+| 23 | свій | прикметник | 510 | 4329 |
+| 24 | то | сполучник | 488 | 4143 |
+| 25 | так | прислівник | 480 | 4075 |
+| 26 | по | прийменник | 452 | 3837 |
+| 27 | вони | іменник | 439 | 3727 |
+| 28 | серце | іменник, с.р. | 408 | 3463 |
+| 29 | ви | іменник | 400 | 3395 |
+| 30 | ще | прислівник | 393 | 3336 |
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2108 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2085 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
@@ -521,7 +522,7 @@ Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2108 shifts). Log Ratio > 0 = more freq
 |---|---|---|---|---|---|---|
 | і | shev.old → shev.middle | 27828 (117495) | 4954 (77900) | 780.1 | -0.59 | 0.0001 |
 | же | shev.old → shev.middle | 7560 (31920) | 817 (12847) | 778.4 | -1.31 | 0.0001 |
-| Еней | shev.late_middle → shev.modern | 129 (10207) | 1 (9) | 576.8 | -10.14 | 0.0001 |
+| Еней | shev.late_middle → shev.modern | 129 (10207) | 1 (8) | 590.7 | -10.23 | 0.0001 |
 | глаголати | shev.old → shev.middle | 1289 (5442) | 18 (283) | 479.0 | -4.26 | 0.0001 |
 | Ізяслав | shev.old → shev.middle | 838 (3538) | 0 (0) | 398.6 | -8.81 | 0.0001 |
 | Святослав | shev.old → shev.middle | 638 (2694) | 0 (0) | 303.5 | -8.42 | 0.0001 |
@@ -541,50 +542,50 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-62 spellings with a church_slavonic label (denominator: 4 095 stored spellings); 20 lemmas with origin = church_slavonic.
+91 spellings with a church_slavonic label (denominator: 5 985 stored spellings); 20 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
 | градъ | град | 1037–1050 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | града | град | 1037–1050 | CS-C1 | ↔ города (город: noun:inanim:m:v_rod:subst) | 1096–1117 |
+| град̑ | град | 1117–1200 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| градѣ | град | 1037–1050 | CS-C1 | ↔ городі (город: noun:inanim:m:v_mis) | 1096–1117 |
+| гл҃юще | глаголати | 1092 | CS-C11 |  | not in lexicon |
 | власть | власть | 1037–1050 | CS-C1 | ↔ волость (волость: noun:inanim:f:v_naz) | 1037–1050 |
 | плаче | плакати | 1838 | CS-C1 | ↔ полоче (полокати: verb:imperf:pres:s:3:arch) | not in lexicon |
 | брань | брань | 1092 | CS-C1 | ↔ боронь (боронити: verb:imperf:impr:s:2) | 1117–1200 |
+| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | власти | власть | 1056–1057 | CS-C1 | ↔ волости (волость: noun:inanim:f:v_rod:up19) | 1037–1050 |
+| граду | град | 1037–1050 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
+| плачу | плакати | 1798 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | not in lexicon |
+| грады | град | 1037–1050 | CS-C1 | ↔ городи (город: noun:inanim:p:v_naz) | 1096–1117 |
+| градоу | град | 1117–1200 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
 | злато | злато | 1092 | CS-C1 | ↔ золото (золото: noun:inanim:n:v_naz) | 1096–1117 |
 | главы | глава | 1092 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
 | братья | браття | 1096–1117 | CS-C1 | ↔ бороття (бороття: noun:inanim:n:v_naz:arch) | not in lexicon |
 | врагъ | враг | 1092 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
 | плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | not in lexicon |
 | врата | врата | 1092 | CS-C1 | ↔ ворота (ворота: noun:inanim:p:v_naz:ns) | 1110–1118 |
+| плакала | плакати | 1117–1200 | CS-C1 | ↔ полокала (полокати: verb:imperf:past:f:arch) | not in lexicon |
 | плъть | плоть | 1092 | CS-C9 |  | not in lexicon |
 | глас҃ | глас | 1092 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1588–1600 |
 | праці | праця | 1844 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1092 |
+| плакать | плакати | 1117–1200 | CS-C1 | ↔ полокать (полокати: verb:imperf:inf:short:arch) | not in lexicon |
 | брани | брань | 1092 | CS-C1 | ↔ борони (борона: noun:inanim:f:v_rod) | not in lexicon |
+| градомъ | град | 1092 | CS-C1 | ↔ городім (городити: verb:imperf:impr:p:1) | not in lexicon |
+| кръвь | кров | 1092 | CS-C9 |  | not in lexicon |
 | власне | власний | 1672–1702 | CS-C1 | ↔ волосне (волосний: adj:n:v_naz) | not in lexicon |
 | краще | кращий | 1845 | CS-C11 |  | not in lexicon |
+| кръве | кров | 1037–1050 | CS-C9 |  | not in lexicon |
+| плакав | плакати | 1840 | CS-C1 | ↔ полокав (полокати: verb:imperf:past:m:arch) | not in lexicon |
 | златомъ | злато | 1037–1050 | CS-C1 | ↔ золотім (золотий: adj:m:v_mis:compb) | 1110–1118 |
+| идуща | іти | 1037–1050 | CS-C11 |  | not in lexicon |
+| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | not in lexicon |
 | права | право | 1092 | CS-C1 | ↔ порова (поровий: adj:f:v_naz) | not in lexicon |
 | храмъ | храм | 1092 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | not in lexicon |
+| съмрьти | смерть | 1092 | CS-C9 |  | not in lexicon |
 | плачемь | плач | 1110–1118 | CS-C1 | ↔ полочем (полокати: verb:imperf:pres:p:1:arch:subst) | not in lexicon |
 | славѧ | славити | 1092 | CS-C1 | ↔ солов'я (соловей: noun:anim:m:v_rod) | not in lexicon |
-| стрѣлѧющимъ | стріляти | 1117–1200 | CS-C3 | ↔ стріляючим (стріляючий: adj:m:v_oru:adjp:actv:imperf:bad) | not in lexicon |
-| храм | храм | 1672–1702 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | not in lexicon |
-| плати | платити | 1672–1702 | CS-C1 | ↔ полоти (полоти: verb:imperf:inf) | 1110–1118 |
-| справа | справа | 1892 | CS-C1 | ↔ спорова (споровий: adj:f:v_naz) | not in lexicon |
-| брати | брати | 1110–1118 | CS-C1 | ↔ бороти (бороти: verb:imperf:inf) | 1110–1118 |
-| братье | браття | 1117–1200 | CS-C1 | ↔ бороття (бороття: noun:inanim:n:v_naz:arch) | not in lexicon |
-| млада | Млада | 1092 | CS-C1 | ↔ молода (молода: noun:anim:f:v_naz) | not in lexicon |
-| младъ | Млада | 1200–1292 | CS-C1 | ↔ молод (молодий: adj:m:v_naz:short) | 1096–1117 |
-| плата | плата | 1092 | CS-C1 | ↔ полота (полотий: adj:f:v_naz:adjp:pasv:imperf) | not in lexicon |
-| храминѹ | храмина | 1092 | CS-C1 | ↔ хоромину (хоромина: noun:inanim:f:v_zna) | not in lexicon |
-| храминѣ | храмина | 1092 | CS-C1 | ↔ хоромині (хоромина: noun:inanim:f:v_dav) | not in lexicon |
-| власы | Влас | 1092 | CS-C1 | ↔ волоси (волос: noun:inanim:p:v_naz) | not in lexicon |
-| справ | справа | 1588–1600 | CS-C1 | ↔ споров (спороти: verb:perf:past:m) | not in lexicon |
-| дождавъ | діждати | 1117–1200 | CS-C4 | ↔ дожав (дожати: verb:perf:past:m:xp1) | not in lexicon |
-| мьщю | мстити | 1092 | CS-C3 | ↔ мчу (мчати: verb:imperf:pres:s:1) | not in lexicon |
-| одежду | одежа | 1588–1600 | CS-C4 | ↔ одежу (одежа: noun:inanim:f:v_zna) | 1092 |
-| власти | Власта | 1893 | CS-C1 | ↔ волости (волость: noun:inanim:f:v_rod:up19) | 1037–1050 |
 
 ## 6. Earliest attestations
 
@@ -607,9 +608,9 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | от | 1037–1050 | ilarion | ilarion | абз. 1 | от | 0 |
 | по | 1037–1050 | ilarion | ilarion | абз. 8 | по | 0 |
 | у | 1037–1050 | ilarion | ilarion | абз. 12 | у | 0 |
+| я | 1037–1050 | ilarion | ilarion | абз. 50 | я | 0 |
 | сей | 1037–1050 | ilarion | ilarion | абз. 12 | сихъ | 0 |
 | бо | 1037–1050 | ilarion | ilarion | абз. 4 | бо | 0 |
-| я | 1037–1050 | ilarion | ilarion | абз. 50 | я | 0 |
 | аз | 1037–1050 | ilarion | ilarion | абз. 10 | мя | 0 |
 | яко | 1037–1050 | ilarion | ilarion | абз. 3 | яко | 0 |
 | до | 1037–1050 | ilarion | ilarion | абз. 1 | до | 0 |
@@ -623,29 +624,29 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | свій | 1037–1050 | ilarion | ilarion | абз. 12 | свою | 0 |
 | глаголати | 1037–1050 | ilarion | ilarion | абз. 10 | глагола | 0 |
 
-2005 of 2005 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+2017 of 2017 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 1908. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 39 of 2005 lexicon lemmas. Examples: ДА (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); СОТ (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); Вон (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); зостаючий (derived: russianism_or_hybrid+calque_participle)
+Surzhyk claims: 42 of 2017 lexicon lemmas. Examples: ДА (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); СОТ (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); Вон (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); зостаючий (derived: russianism_or_hybrid+calque_participle)
 
-Dialect labels (lemmas): CHN: 76 · MPL: 2 · SE: 4 · MDN: 4 · POD: 4 · BOY: 2 · LEM: 2
+Dialect labels (lemmas): CHN: 81 · MPL: 2 · SE: 4 · MDN: 4 · POD: 4 · BOY: 2 · LEM: 2
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 4095. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 5985. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
-LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 129 types (369 tokens). Top: да (57, replace), тай (46, replace), щож (29, replace), куда (9, replace), тай (9, replace), єсть (8, replace), да (8, replace), власть (8, replace), да (7, replace), тута (7, replace), могучий (7, replace), бачучи (6, replace), чуть (6, replace), єсть (5, replace), тута (4, replace), деж (4, replace), страсть (4, soft), біга (3, replace), чуть (3, replace), печатати (3, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
+LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 146 types (427 tokens). Top: да (57, replace), тай (46, replace), щож (29, replace), да (22, replace), куда (9, replace), тай (9, replace), єсть (8, replace), да (8, replace), власть (8, replace), тута (7, replace), могучий (7, replace), даже (6, replace), бачучи (6, replace), чуть (6, replace), вдруг (5, replace), єсть (5, replace), тута (4, replace), праздник (4, replace), тоска (4, replace), куда (4, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 35 032 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 3 112 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: skipped (--no-py); stress.json 35 277 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 3 170 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 58 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 60 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
-- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (21.7%).
-- **lexicon.json (B-5)**: lemmas with f ≥ 2 or a pre-1400 attestation: 9 805 of 15 556 lemmas; 2 005 written, 15.0 MB (limit 15 MB). Size tiers (kwic/forms per form/lemma: 6/12, 3/8, 2/6, 1/4, 0/2) used for 70 / 22 / 9 / 60 / 9644 lemmas; 7800 lowest-frequency lemmas dropped to meet the limit. lexindex.json 3.54 MB (2374 corpus-attested flagged forms added).
+- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (22.2%).
+- **lexicon.json (B-5)**: lemmas with f ≥ 2 or a pre-1400 attestation: 9 867 of 15 648 lemmas; 2 017 written, 15.0 MB (limit 15 MB), Evidence stored once in a shared pool (22 350 distinct objects; cards carry indices, lossless). Size tiers (kwic/forms per form/lemma: 6/12, 3/8, 2/6, 1/4, 0/2) used for 246 / 64 / 47 / 93 / 1567 lemmas; 7850 lowest-frequency lemmas dropped to meet the limit. lexindex.json 3.55 MB (2413 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
