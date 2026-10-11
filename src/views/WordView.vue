@@ -22,6 +22,7 @@ import Kwic from '../components/Kwic.vue'
 import Paradigm from '../components/Paradigm.vue'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
 import StressForms from '../components/StressForms.vue'
+import RegionMap from '../components/RegionMap.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 
 const props = defineProps<{ lemma: string }>()
@@ -145,6 +146,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <TimeCurve :series="card.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /></section>
         <section class="card"><h2><span>За епохами</span></h2>
           <EpochBars :stats="card.stats" :sizes="corpus?.epochSizes ?? {}" /></section>
+        <section class="card"><h2><span>За регіонами пам’яток</span></h2>
+          <RegionMap :card="card" /></section>
         <section class="card"><h2><span>Типові сполучення</span></h2>
           <Collocations :colloc="card.stats.colloc" /></section>
       </aside>

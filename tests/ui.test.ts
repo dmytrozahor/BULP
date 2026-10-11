@@ -143,6 +143,8 @@ import AnalyzeView from '../src/views/AnalyzeView.vue'
 import AnnotateView from '../src/views/AnnotateView.vue'
 import WordView from '../src/views/WordView.vue'
 import { renderMd } from '../src/lib/md.ts'
+import RegionMap from '../src/components/RegionMap.vue'
+import { regionRows, stepOf } from '../src/lib/geo.ts'
 import { Q, P, claim } from '../core/evidence.ts'
 
 const ev = [Q('джерело-тест', 'цитата', 'с. 1')]
@@ -208,5 +210,23 @@ describe('F3 markdown report renderer', () => {
 describe('D-4 legend on the data-dependent word page', () => {
   it('WordView mounts FormLegend (word page only renders after data load; checked at source level, screenshot-verified)', () => {
     expect(readFileSync('src/views/WordView.vue', 'utf8')).toContain('<FormLegend />')
+  })
+})
+
+describe('F5 regional panel', () => {
+  const GEO = 'public/geo/ukr-oblasts.json'
+  it('Natural Earth oblasts: ≤ 100 KB, 27 ISO 3166-2:UA divisions incl. Crimea and Sevastopol, attribution kept', () => {
+    const raw = readFileSync(GEO, 'utf8'), g = JSON.parse(raw)
+    expect(raw.length).toBeLessThan(100_000); expect(g.features).toHaveLength(27)
+    const codes = g.features.map((f: { properties: { code: string } }) => f.properties.code)
+    expect(codes).toEqual(expect.arrayContaining(['UA-43', 'UA-40', 'UA-30', 'UA-21'])); expect(g.attribution).toContain('Natural Earth (public domain)')
+  })
+  it('regionRows: ipm = f/N·1e6 with N kept; a region without tokens is unknown (undefined), never 0', () => {
+    const rows = regionRows([{ code: 'W', name: 'захід', oblasts: ['UA-46'], N: 2000 }, { code: 'S', name: 'південь', oblasts: ['UA-51'], N: 0 }], [{ code: 'W', f: 5, N: 2000 }])
+    expect(rows[0]).toMatchObject({ f: 5, N: 2000, ipm: 2500 }); expect(rows[1]!.ipm).toBeUndefined()
+    expect(stepOf(undefined, 10)).toBe(-1); expect(stepOf(0, 10)).toBe(0); expect(stepOf(10, 10)).toBe(4)
+  })
+  it.skipIf(!cards.length)('panel without region data says «невідомо» and that regions are not dialect claims', async () => {
+    expect(await ssr(RegionMap, { card: cards[0]! })).toContain('невідомо')
   })
 })
