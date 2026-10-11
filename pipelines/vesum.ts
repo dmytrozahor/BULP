@@ -24,8 +24,9 @@ export const VESUM_TXT = resolve(ROOT, 'data/raw/vesum/dict_corp_vis.txt')
 const TWISTERS_URL = 'https://raw.githubusercontent.com/brown-uk/dict_uk/master/data/dict/twisters.lst'
 
 export const FLAG_TAGS = ['bad', 'subst', 'slang', 'arch', 'short', 'vulg', 'obsc', 'alt'] as const
-/** Lists whose every form is exported; the others (bad/arch/alt) export only headwords — browser size budget. */
-const FULL = new Set(['subst', 'slang', 'short', 'vulg', 'obsc'])
+/** Lists whose every form is exported. Empty: SPEC 20 B-5 exports headword lines only (all forms of subst/slang/short/vulg/obsc measured 17.5 MB vs the 4 MB budget);
+ *  corpus-attested forms are added by build.ts. */
+const FULL = new Set<string>()
 const FLAGS = new Set<string>(FLAG_TAGS)
 
 export interface VesumEntry { lemma: string; lemmaTags: string; form: string; tags: string; head: boolean }

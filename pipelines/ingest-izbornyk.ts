@@ -21,7 +21,7 @@
 import type { Ingester, RawFile } from './ingest.ts'
 import type { Unit } from './manifest.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
-import { Q, type Evidence } from '../core/evidence.ts'
+import { Q, D, type Evidence } from '../core/evidence.ts'
 import { decodeIzbornyk, hasUnmapped } from '../core/text.ts'
 import { witnessOf } from './ingest-torot.ts'
 
@@ -221,6 +221,12 @@ export function dateRange(line: string): [number, number] | undefined {
   return ys.length ? [Math.min(...ys), Math.max(...ys)] : undefined
 }
 
+/** Pieces of vol. 1 written in RUSSIAN (their text is Russian orthography/lexicon); they would otherwise count as «russianisms» of a Ukrainian author. Evidence = the text itself, as the edition prints it. */
+const RU_PIECES: Record<string, { open: string; note: string }> = {
+  '121': { open: 'Поэма Кого, рыдая, призову я Делить тоску, печаль мою В чужом краю, кому, тоскуя, Родную песню пропою', note: 'підзаголовок «Поэма», ы/э-орфографія і російська лексика; видання зазначає вплив російської романтичної поеми' },
+  '123': { open: 'На память 9-го ноября 1843 года княжне Варваре Николаевне Репниной ПОСВЯЩЕНИЕ Душе с прекрасным назначеньем Должно любить, терпеть, страдать', note: 'російськомовний присвятний вступ і текст поеми; видання зазначає особливості російської романтичної поеми' },
+}
+
 function parseShevchenko(u: Unit, files: RawFile[]): WitnessOut[] {
   const cut = CUTS.shevchenko!, out: WitnessOut[] = []
   const skipped = { noDate: 0, nonCanon: 0, noText: 0 }
@@ -245,6 +251,7 @@ function parseShevchenko(u: Unit, files: RawFile[]): WitnessOut[] {
     out.push(baseWitness(u, `shevchenko_${num}`, items, {
       title: prym[0]!, date: range,
       dateCite: Q('IZB', f.url, dateLine.slice(0, 300)),
+      ...(RU_PIECES[num] ? { excludeReason: { why: 'текст написано російською мовою, не українською (лексикон українських форм)', evidence: [D('IZB', f.url, RU_PIECES[num]!.open, RU_PIECES[num]!.note)] } } : {}),
     }, dropped))
   }
   console.log(`shevchenko: ${out.length} poems; skipped ${skipped.noDate} pages without «Датується» line, ${skipped.nonCanon} in ТВОРЧІ ЗАГОТОВКИ/РЕДАГОВАНЕ/DUBIA, ${skipped.noText} empty`)

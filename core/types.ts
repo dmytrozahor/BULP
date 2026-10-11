@@ -21,6 +21,7 @@ export interface WitnessOut {
   lang: 'orv' | 'chu-rus' | 'ruthenian' | 'uk'; region?: string
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   authorEvidence?: Evidence[]   // self-reference found in the witness itself (e.g. Kyiv Chronicle)
+  excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
   dropped: { unmapped: number; apparatus: number }
   tokens: TokenRec[]
 }

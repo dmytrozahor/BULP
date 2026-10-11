@@ -289,7 +289,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
     cards.push({
       lemma: la.display, pos: posLabel(lemmaPos), paradigm,
-      stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))], stressJson),
+      stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
       claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)) },
     })
@@ -350,7 +350,7 @@ const lemmaStatsInput = (la: LemmaAcc): Counts => ({ f: la.f, perW: la.perW, per
 const TIERS: [number, number][] = [[6, 12], [3, 8], [2, 6], [1, 4], [0, 2]]
 export function fitBudget(cards: LemmaCard[], pre1400: string[]): { cards: LemmaCard[]; bytes: number; tiers: number[]; dropped: number } {
   const slim = (c: LemmaCard, [k, n]: [number, number]): LemmaCard => ({ ...c, forms: selectForms(c.forms, n).map(f => ({ ...f, kwic: f.kwic.slice(0, k) })) })
-  const variants = cards.map(c => TIERS.map((t, i) => { const v = i === 0 ? c : slim(c, t); return { v, size: JSON.stringify(v).length + 1 } }))
+  const variants = cards.map(c => TIERS.map((t, i) => { const v = i === 0 ? c : slim(c, t); return { v, size: Buffer.byteLength(JSON.stringify(v)) + 1 } }))
   const tiers = TIERS.map(() => 0); let remaining = LIMIT_BYTES, left = cards.length
   const pick = variants.map(vs => {
     const share = Math.max(remaining / Math.max(left, 1), 1) * 6
@@ -360,9 +360,12 @@ export function fitBudget(cards: LemmaCard[], pre1400: string[]): { cards: Lemma
   })
   let out = cards.map((_, i) => ({ i, v: variants[i]![pick[i]!]!.v, size: variants[i]![pick[i]!]!.size }))
   let bytes = out.reduce((s, x) => s + x.size, 2), dropped = 0
+  // over budget: drop the lowest-frequency lemmas first; a pre-1400 lemma outranks a modern one of equal frequency (it is the oldest evidence), so frequent modern words are not displaced by Old Rus' hapaxes
   const must = new Set(pre1400)
-  for (let k = out.length - 1; k >= 0 && bytes > LIMIT_BYTES; k--) { const x = out[k]!; if (must.has(x.v.lemma)) continue; bytes -= x.size; out[k] = undefined as never; dropped++ }
-  out = out.filter(Boolean)
+  const order = out.map((x, k) => k).sort((a, b) => out[a]!.v.stats.f - out[b]!.v.stats.f || Number(must.has(out[a]!.v.lemma)) - Number(must.has(out[b]!.v.lemma)) || b - a)
+  const gone = new Set<number>()
+  for (const k of order) { if (bytes <= LIMIT_BYTES) break; bytes -= out[k]!.size; gone.add(k); dropped++ }
+  out = out.filter((_, k) => !gone.has(k))
   return { cards: out.map(x => x.v), bytes, tiers, dropped }
 }
 

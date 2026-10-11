@@ -28,15 +28,16 @@ describe('vesum', () => {
     expect(r.paradigms.get('писати')!.map(p => p.form)).toEqual(['писати', 'писать', 'пиши'])
     expect(r.lemmaTags.get('писати')).toBe('verb:imperf:inf')
   })
-  it('lex index: headwords of bad/arch, all forms of slang/short', async () => {
+  it('lex index: headwords only for every flag tag (SPEC 20 B-5 size budget)', async () => {
     const lex = await lexLines(VESUM)
     expect(lex['аа']).toBeTruthy()
     expect(lex['співпадати']).toBeTruthy()
     expect(lex['співпадає']).toBeUndefined()          // bad: headword only
     expect(lex['стародавнього']).toBeUndefined()      // arch: headword only
     expect(lex['стародавній']).toBeTruthy()
-    expect(lex['абізяни']).toBeTruthy()               // slang: all forms
-    expect(lex['писать']).toBeTruthy()                // short: all forms
+    expect(lex['абізяна']).toBeTruthy()               // slang headword
+    expect(lex['абізяни']).toBeUndefined()            // slang inflection: corpus-attested forms are added by build.ts
+    expect(lex['писать']).toBeUndefined()
     expect(lex['заавансованости']).toBeUndefined()    // alt form: not a headword
     expect(lex['а']).toBeUndefined()
   })

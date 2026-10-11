@@ -23,7 +23,8 @@ export const VESUM_LOC = 'dict_corp_vis.txt v6.8.6'
 // ── B-1.1 admission ─────────────────────────────────────────────────────────────────────────────
 export type Admission = { ok: true } | { ok: false; why: string }
 /** B-1.1: author admissible, and — when the author record has no evidence of its own — the witness must carry authorEvidence (≥1 Q). */
-export function admit(w: Pick<WitnessOut, 'id' | 'author' | 'authorEvidence'>, author: Author | undefined): Admission {
+export function admit(w: Pick<WitnessOut, 'id' | 'author' | 'authorEvidence'> & { excludeReason?: WitnessOut['excludeReason'] }, author: Author | undefined): Admission {
+  if (w.excludeReason) return { ok: false, why: w.excludeReason.why + ' — ' + w.excludeReason.evidence.map(e => `«${e.quote.slice(0, 80)}…» (${e.locator})`).join('; ') }
   if (!author) return { ok: false, why: `автор «${w.author}» не має запису верифікації (P-2.2)` }
   if (!admissible(author)) return { ok: false, why: `статус автора «${author.status}» (P-2.2)` }
   if (author.evidence.length === 0 && !(w.authorEvidence ?? []).some(e => e.kind === 'Q'))
@@ -203,7 +204,7 @@ export function stressVariants(forms: string[], sj: StressJson | undefined): Str
   for (const form of forms) for (const v of sj.forms[form] ?? []) {
     const k = v.stressed; if (seen.has(k)) continue; seen.add(k)
     out.push({ form, positions: v.positions, status: 'unknown', method: 'dictionary',
-      evidence: [D('ukrainian-word-stress', 'ULIF-derived', v.stressed, `${sj.source ?? 'ukrainian-word-stress'}; контекстно-незалежний словниковий запис${v.ambiguous ? '; омограф (кілька записів)' : ''}; статус невідомий (не нормативний словник, research/08 A3)`)] })
+      evidence: [D('ukrainian-word-stress', 'ULIF-derived', v.stressed, `${sj.source ?? 'ukrainian-word-stress'}; словниковий запис без контексту${v.ambiguous ? '; омограф' : ''}; статус невідомий (research/08 A3)`)] })
   }
   return out
 }
