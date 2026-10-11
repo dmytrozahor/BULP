@@ -1,0 +1,5 @@
+.venv/
+stanza_resources/
+__pycache__/
+*.pyc
+.pytest_cache/

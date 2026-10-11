@@ -1,0 +1,17 @@
+[project]
+name = "ukr-lexicon-nlp"
+version = "0.1.0"
+description = "NLP stages of the Ukrainian word-form provenance lexicon: Old East Slavic lemmatisation (Stanza/TOROT), modern morphology, stress candidates"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+  "stanza>=1.9",
+  "pymorphy3>=2.0",
+  "pymorphy3-dicts-uk>=2.4",
+  "pymorphy3-dicts-ru>=2.4",
+  "ukrainian-word-stress>=1.1",
+]
+
+[tool.uv]
+# CPU-only torch keeps the install small enough for a laptop
+index-strategy = "unsafe-best-match"
+extra-index-url = ["https://download.pytorch.org/whl/cpu"]
