@@ -22,6 +22,8 @@ export const FOLDS: Fold[] = [
   { id: 'ORTH-YAR-YAT', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ѣ/g, 'і') },
   { id: 'ORTH-YAR-Y', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ы/g, 'и') },
   { id: 'ORTH-YAR-I', era: ['ярижка'], branch: true, cite: YAR, apply: R(/(?<=[бвгджзклмнпрстфхцчшщ])и(?=[бвгджзклмнпрстфхцчшщ]ъ?$|[вй]ъ?$)/g, 'і') },
+  // the conjunction і is the bare letter и (Енеида 1798: «И хлопець хоть куды»); the context-bound ORTH-YAR-I cannot see a one-letter word
+  { id: 'ORTH-YAR-CONJ', era: ['ярижка'], branch: false, cite: YAR, apply: R(/^и$/, 'і') },
   { id: 'ORTH-YAR-E', era: ['ярижка'], branch: true, cite: YAR, apply: R(/^е|(?<=[аеиіоуюя])е/g, 'є') },
   { id: 'ORTH-YAR-EH', era: ['ярижка'], branch: false, cite: YAR, apply: R(/э/g, 'е') },
   { id: 'ORTH-YAR-JO', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ё/g, 'ьо') },

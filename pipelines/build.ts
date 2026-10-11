@@ -20,6 +20,7 @@ import { fold as foldRaw } from '../core/orthography.ts'
 import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
 import { RUSYN_STATUS } from '../core/rules.ts'
+import { REGIONS, regionOf } from './regions.ts'
 import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
@@ -248,6 +249,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   for (const l of lemmaList) for (const fa of l.forms.values()) for (const id of fa.chosen.own.trace) { soundType[id] = (soundType[id] ?? 0) + 1; soundToken[id] = (soundToken[id] ?? 0) + fa.f }
   const detectHits: Record<string, number> = {}, hints: Record<string, number> = {}
 
+  const regionN = REGIONS.map(r => ({ code: r.code, name: r.name, oblasts: r.oblasts, N: adm.filter(({ w }) => regionOf(w.region) === r.code).reduce((s, { w }) => s + w.tokens.length, 0) }))
   const cards: LemmaCard[] = []
   for (const la of kept) {
     const accs = sel.get(la.id)!
@@ -257,7 +259,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       for (const c of Object.values(det.claims)) for (const r of (c.method ?? '').split('+')) detectHits[r] = (detectHits[r] ?? 0) + 1
       for (const h of det.hints) hints[h] = (hints[h] ?? 0) + 1
       const c = fa.chosen
-      const link: FormCard['link'] = claim<LinkVal>({ lemma: c.lemma, form: c.form, route: fa.route as LinkVal['route'], alternatives: c.alternatives }, linkEvidence(fa),
+      const link: FormCard['link'] = claim<LinkVal>({ lemma: c.lemma, form: c.form, route: fa.route, alternatives: c.alternatives }, linkEvidence(fa),
         { method: `${fa.route}${c.own.trace.length ? '[' + c.own.trace.join('+') + ']' : ''}${c.alternatives.length ? `;tie=${c.decidedBy}` : ''}` })
       const card: FormCard = {
         raw: fa.raw, norm: fa.norm, modern: fa.modern, f: fa.f, date: fa.date, link,
@@ -286,6 +288,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     for (const [l, c] of Object.entries(dia)) dia[l] = claim(true as const, [...c.evidence, ...regionEv], { score: c.score, method: c.method })
     const order = lemmaStatsInput(la)
     const stats = lemmaStats(order, fMax, sizes, coll.get(la.idx) ?? [])
+    stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
     cards.push({
       lemma: la.display, pos: posLabel(lemmaPos), paradigm,
@@ -308,7 +311,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     return { ...rest, n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))
-  const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: [] /* B5 */ }
+  const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: regionN.filter(r => r.N > 0) }
 
   const lexV = await lexIndexVesum()
   const flagged = (hs: VesumHit[]) => hs.filter(h => h.tags.split(':').some(t => (FLAG_TAGS as readonly string[]).includes(t)))

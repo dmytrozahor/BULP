@@ -13,7 +13,7 @@ For each token, in order (first success wins; all evidence kept):
 2. **stanza-lemma** (orv/chu-rus witnesses with `.nlp.json`): Stanza lemma → derive → VESUM lemma. Evidence `D('stanza …', model, lemma)`; method `stanza` (model output, not a dictionary fact — P-1.7).
 3. **token**: `derive(raw)` candidates → VESUM *forms* → their lemma.
 4. **direct** (modern witnesses, lang=uk): `key(raw)`, plus orthography folding for pre-1919 editions — ярижка/кулішівка/желехівка: `ѣ→і, ы→и, ъ#→∅, э→е, ё→ьо/йо`, kulishivka `е` for /є/ after vowel is not folded (ambiguous) — each fold step recorded as a `TraceStep` with rule id `ORTH-<era>` and citation of the era (research/09 §3 quotes).
-- **B-2.1** Ambiguity: several VESUM lemmas → choose by (a) fewest branch rules (`Candidate.branches`), then (b) highest frequency of that lemma among *modern* witnesses (direct links), then (c) keep the first and list the others in `link.value.alternatives`. The method string records which tie-breaker decided.
+- **B-2.1** Ambiguity: several VESUM lemmas → choose by (a) frequency *class* of the lemma among *modern* witnesses (direct links; class = number of decimal digits of f, 0 = unattested) — because ikavism R10 is a rule with lexical exceptions and its "applied" branch always has fewer branches (богъ → біг, отъ → іт, скотъ → скіт in the first full build); then (b) fewest branch rules (`Candidate.branches`), then (c) higher frequency, then (d) keep the first and list the others in `link.value.alternatives`. The method string records which tie-breaker decided.
 - **B-2.2** Unresolved tokens are counted (`CorpusMeta.unresolved`, top 200 by frequency) — never guessed.
 
 ## B-3 Annotations

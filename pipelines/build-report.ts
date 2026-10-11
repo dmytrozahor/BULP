@@ -123,7 +123,11 @@ export function renderReport(d: ReportData): string {
   const latest = Math.max(...d.witnesses.map(w => w.date[1]))
   P(`This is a literary corpus; the latest admitted witness is dated ${latest}. Contact-layer rules are gated to attestations ≥ 1919 (\`modern(ctx)\`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).`)
   P(`Surzhyk claims: ${sur.length} of ${d.cards.length} lexicon lemmas. ` + (sur.length ? 'Examples: ' + sur.slice(0, 25).map(c => `${c.lemma} (${c.claims.surzhyk.method})`).join('; ') : ''))
-  P(`Dialect/Rusyn labels (lemmas): ` + (Object.keys(dia).length ? Object.entries(dia).map(([k, v]) => `${k}: ${v}`).join(' · ') : 'none'))
+  P(`Dialect labels (lemmas): ` + (Object.keys(dia).length ? Object.entries(dia).map(([k, v]) => `${k}: ${v}`).join(' · ') : 'none'))
+  const rLem: Record<string, number> = {}, rForm: Record<string, number> = {}
+  for (const c of d.cards) { const r = c.claims.rusyn; if (r && isKnown(r)) rLem[r.value] = (rLem[r.value] ?? 0) + 1; for (const f of c.forms) { const x = f.claims.rusyn; if (x && isKnown(x)) rForm[x.value] = (rForm[x.value] ?? 0) + 1 } }
+  const rHits = Object.entries(d.detectHits).filter(([id]) => /^(RUE|PAN)-|>rusyn$/.test(id)).sort((a, b) => b[1] - a[1])
+  P(`**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see \`rusynStatus\` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: ${Object.keys(rLem).length ? Object.entries(rLem).map(([k, v]) => `${k}: ${v}`).join(' · ') : 'none'}; stored spellings with a rusyn claim: ${Object.values(rForm).reduce((s, n) => s + n, 0)} of ${d.cards.reduce((s, c) => s + c.forms.length, 0)}. Rule hits (forms): ${rHits.length ? rHits.map(([id, n]) => `${id} ${n}`).join(', ') : 'none'}. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.`)
   P(`LanguageTool \`replace\`/\`soft\` keys found among modern (lang=uk) corpus tokens: ${d.ltCorpus.length} types (${num(d.ltCorpus.reduce((s, x) => s + x.f, 0))} tokens). Top: ` + d.ltCorpus.slice(0, 20).map(x => `${x.form} (${x.f}, ${x.file})`).join(', ') + '. These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.')
   P(`Python stages: ${d.flags.py ? 'run by this build' : 'skipped (--no-py)'}; stress.json ${d.flags.stress ? `${num(d.stressForms)} forms (${d.stressSource})` : 'absent'}; ru.json ${d.flags.ru ? num(d.ruForms) + ' forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”)' : 'absent'}.`)
 
@@ -139,7 +143,6 @@ export function renderReport(d: ReportData): string {
     `**Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).`,
     `**Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.`,
     `**Licences.** VESUM and Brown-UK: CC BY-NC-SA 4.0; TOROT: CC BY-NC-SA 3.0; LanguageTool: LGPL-2.1; pymorphy3-dicts-ru: CC BY-SA; the derived dataset is non-commercial, share-alike (P-4.4).`,
-    `**Types.** \`FormCard.link.value.route\` may be \`stanza-lemma\` although core/types.ts lists only torot-lemma|token|direct (core change requested).`,
   ]
   P(bullets.map(b => '- ' + b).join('\n'))
   return out.join('\n') + '\n'

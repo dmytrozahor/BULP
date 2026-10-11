@@ -14,12 +14,12 @@ const form = (c: Ctx, src = 'attestation') => D(src, c.year ? `рік ${c.year}`
 const SHEV_BULG = Q('SHEV', 'http://izbornyk.org.ua/shevelov/shev04.htm, 14.5', 'містять žd, št < dj, tj, написання типу СrъС… повноголос у них ніколи не трапляється', 'Шевельов про болгарські (церковнослов\'янські) тексти')
 const SHEV_SCRIBES = Q('SHEV', 'http://izbornyk.org.ua/shevelov/shev04.htm, 14.4', 'Деякі риси церковнослов\'янського письма відкинуто (Ж, СrěС, жд), інші частково або повністю пристосовано до місцевої вимови')
 
-/** CS doublet: the form shows a South-Slavic reflex AND VESUM attests the East-Slavic counterpart. */
+/** CS doublet: the form shows a South-Slavic reflex AND VESUM attests the East-Slavic counterpart. A proper name (:prop) is not a lexical counterpart (first full build: слава ↔ Солова, бракъ ↔ Борок). */
 const doublet = (re: RegExp, swap: (m: string) => string) => (c: Ctx): Evidence | null => {
   const src = c.norm ?? c.form; if (!re.test(src)) return null
   const vern = src.replace(re, swap)
   for (const cand of [vern, ...(c.derive?.(vern) ?? [])]) {
-    const h = c.inLexicon(cand)[0]
+    const h = c.inLexicon(cand).find(x => !x.tags.split(':').includes('prop'))
     if (h) return D('VESUM', 'dict_corp_vis.txt v6.8.6', `${src} ↔ ${cand} (${h.lemma}: ${h.tags})`, 'східнослов\'янський відповідник засвідчений у ВЕСУМ')
   }
   return null

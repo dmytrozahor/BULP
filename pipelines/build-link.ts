@@ -2,9 +2,10 @@
  * BUILD stage, linking (SPEC 20 B-2, SPEC 10 M-3): token → modern VESUM lemma. Pure functions over a VESUM hit table.
  *
  * > B-2: "For each token, in order (first success wins; all evidence kept): torot-lemma, stanza-lemma, token, direct."
- * > B-2.1: "Ambiguity: several VESUM lemmas → choose by (a) fewest branch rules (Candidate.branches), then (b) highest frequency
- * >  of that lemma among modern witnesses (direct links), then (c) keep the first and list the others in link.value.alternatives.
- * >  The method string records which tie-breaker decided."
+ * > B-2.1: "Ambiguity: several VESUM lemmas → choose by (a) the lemma's frequency CLASS among modern witnesses (direct links; class = number of decimal digits of f, 0 if unattested),
+ * >  then (b) fewest branch rules (Candidate.branches), then (c) higher frequency, then (d) keep the first and list the others in link.value.alternatives.
+ * >  The method string records which tie-breaker decided."  (a) precedes (b) because ikavism (R10) is a rule WITH lexical exceptions: богъ → біг/бог, отъ → іт/от,
+ * >  скотъ → скіт/скот are all VESUM words and 'applied' always has fewer branches (REPORT 2025-10: «богъ → БіГ»).
  * > M-3.2: "A candidate becomes a link only if it is a VESUM form (D-evidence: the VESUM line)."
  */
 import { ruleById, type Candidate } from '../core/phonology.ts'
@@ -35,16 +36,20 @@ function toOption(k: string, h: VesumHit, cand: Candidate, own: Candidate, ownCo
 }
 
 /** B-2.1 — pure, tested. Options are deduplicated by lemma id (best tier, then fewest branches). */
+const fclass = (n: number) => (n > 0 ? String(Math.floor(n)).length : 0)
 export function chooseLemma(opts: Option[], freq: ReadonlyMap<string, number>): Chosen | undefined {
   const best = new Map<string, Option>()
-  for (const o of opts) { const p = best.get(o.id); if (!p || o.tier < p.tier || (o.tier === p.tier && o.cand.branches < p.cand.branches)) best.set(o.id, o) }
+  // same id = same lemma up to case (VESUM lists «Князь» surname and «князь» noun): the common-noun spelling is the display form
+  const lower = (o: Option) => (o.lemma === o.lemma.toLowerCase() ? 0 : 1)
+  for (const o of opts) { const p = best.get(o.id); if (!p || o.tier < p.tier || (o.tier === p.tier && (o.cand.branches < p.cand.branches || (o.cand.branches === p.cand.branches && lower(o) < lower(p))))) best.set(o.id, o) }
   const all = [...best.values()]
   if (!all.length) return undefined
   const minTier = Math.min(...all.map(o => o.tier))
   const pool = all.filter(o => o.tier === minTier)
-  const sorted = pool.map((o, i) => ({ o, i })).sort((a, b) => a.o.cand.branches - b.o.cand.branches || (freq.get(b.o.id) ?? 0) - (freq.get(a.o.id) ?? 0) || a.i - b.i).map(x => x.o)
+  const sorted = pool.map((o, i) => ({ o, i })).sort((a, b) => fclass(freq.get(b.o.id) ?? 0) - fclass(freq.get(a.o.id) ?? 0) || a.o.cand.branches - b.o.cand.branches || (freq.get(b.o.id) ?? 0) - (freq.get(a.o.id) ?? 0) || a.i - b.i).map(x => x.o)
   const [top, second] = sorted as [Option, Option | undefined]
   const decidedBy: Chosen['decidedBy'] = !second ? (all.length > 1 ? 'tier' : 'unique')
+    : fclass(freq.get(top.id) ?? 0) > fclass(freq.get(second.id) ?? 0) ? 'frequency'
     : top.cand.branches < second.cand.branches ? 'branches'
     : (freq.get(top.id) ?? 0) > (freq.get(second.id) ?? 0) ? 'frequency' : 'first'
   const alternatives = [...sorted.slice(1), ...all.filter(o => o.tier !== minTier)].map(o => o.lemma)

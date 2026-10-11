@@ -132,14 +132,13 @@ export function firstClaim(cands: FirstCand[], ws: Map<string, WitnessOut | Pick
 }
 
 // ── B-5 form selection ──────────────────────────────────────────────────────────────────────────
-/** ≤ max forms: 3 oldest, 2 most frequent modern-epoch (≥1818), then by frequency. */
+/** ≤ max forms (B-5, "most frequent + oldest"): oldest, most frequent, most frequent modern-epoch (≥1818), then 2 more oldest, 1 more modern, then by frequency — so even a 2-form card shows the oldest AND the commonest spelling. */
 export function selectForms<T extends { f: number; date: [number, number] }>(all: T[], max: number): T[] {
   if (all.length <= max) return [...all]
   const out = new Set<T>()
   const add = (xs: T[], n: number) => { for (const x of xs) { if (n <= 0 || out.size >= max) break; if (!out.has(x)) { out.add(x); n-- } } }
-  add([...all].sort((a, b) => a.date[1] - b.date[1] || b.f - a.f), Math.min(3, max))
-  add([...all].filter(x => x.date[1] >= 1818).sort((a, b) => b.f - a.f), 2)
-  add([...all].sort((a, b) => b.f - a.f), max)
+  const old = [...all].sort((a, b) => a.date[1] - b.date[1] || b.f - a.f), byF = [...all].sort((a, b) => b.f - a.f), mod = byF.filter(x => x.date[1] >= 1818)
+  add(old, 1); add(byF, 1); add(mod, 1); add(old, 3); add(mod, 2); add(byF, max)
   return [...out]
 }
 
