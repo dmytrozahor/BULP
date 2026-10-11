@@ -13,6 +13,7 @@ import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
+import FormLegend from '../components/FormLegend.vue'
 import Collocations from '../components/Collocations.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
@@ -62,6 +63,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
       <p v-if="active" class="small sans muted">Панелі відфільтровано за написанням «{{ active }}».</p>
     </header>
 
+    <FormLegend />
     <div class="cols">
       <div>
         <!-- 1. Provenance -->

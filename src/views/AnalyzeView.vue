@@ -14,6 +14,8 @@ import { AXIS_UK, labelUk } from '../lib/format.ts'
 import { categoryOf, isRusyn, runDetectors, ruleOf, ALL_RULES } from '../lib/analyze.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
+import FormBadge from '../components/FormBadge.vue'
+import FormLegend from '../components/FormLegend.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
@@ -43,13 +45,15 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
   </form>
   <p id="yh" class="small muted sans">Рік потрібен для хронологічних умов правил (наприклад, «ы» у тексті 1798 р. — архаїчний правопис, а не русизм).</p>
 
+  <FormLegend />
   <div v-if="!word" class="card muted">Введіть слово.</div>
   <template v-else-if="d && a">
     <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: {{ d.norm }}</span></h2>
       <p v-if="inLex.length" class="sans small">У словнику: <span v-for="h in inLex" :key="h.lemma" style="margin-right:.6rem"><RouterLink :to="`/w/${encodeURIComponent(h.lemma)}`">{{ h.lemma }}</RouterLink> ({{ h.via }})</span></p>
       <ul style="list-style:none;padding:0;margin:0">
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
-          <strong style="font-size:1.2rem">{{ c.form }}</strong>
+          <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
+          <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
           <RouterLink v-if="byLemma.has(c.form)" :to="`/w/${encodeURIComponent(c.form)}`" class="small sans"> → картка</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>

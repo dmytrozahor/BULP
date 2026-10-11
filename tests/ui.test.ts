@@ -129,3 +129,84 @@ describe('F2 real-data readiness (synthetic ~15 MB lexicon, generated in memory,
     expect(performance.now() - t1).toBeLessThan(1500)
   }, 60000)
 })
+
+// ── SSR component tests (no DOM needed): render to string and assert the visible text / structure ──────────────────────────────
+import { createSSRApp, h, type Component } from 'vue'
+import { renderToString } from 'vue/server-renderer'
+import { createMemoryHistory, createRouter } from 'vue-router'
+import FormLegend from '../src/components/FormLegend.vue'
+import FormBadge from '../src/components/FormBadge.vue'
+import ClaimSet from '../src/components/ClaimSet.vue'
+import StressForms from '../src/components/StressForms.vue'
+import DeriveView from '../src/views/DeriveView.vue'
+import AnalyzeView from '../src/views/AnalyzeView.vue'
+import AnnotateView from '../src/views/AnnotateView.vue'
+import WordView from '../src/views/WordView.vue'
+import { renderMd } from '../src/lib/md.ts'
+import { Q, P, claim } from '../core/evidence.ts'
+
+const ev = [Q('джерело-тест', 'цитата', 'с. 1')]
+async function ssr(comp: Component, props: Record<string, unknown> = {}, path = '/') {
+  const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/:p(.*)*', component: { render: () => null } }] })
+  router.push(path); await router.isReady()
+  return renderToString(createSSRApp({ render: () => h(comp, props) }).use(router))
+}
+
+describe('D-4 three visual classes (shape + text, never colour only)', () => {
+  it('legend names all three classes', async () => {
+    const html = await ssr(FormLegend)
+    expect(html).toContain('засвідчено'); expect(html).toContain('реконструкція (гіпотеза)'); expect(html).toContain('підтверджено пам’яткою')
+  })
+  it('FormBadge: attested = no dashed class; derived = badge text; confirmed = check text', async () => {
+    expect(await ssr(FormBadge, { kind: 'attested', form: 'вѣра', label: 'є в словнику' })).not.toContain('class="lang derived')
+    expect(await ssr(FormBadge, { kind: 'derived', form: 'вѣра' })).toContain('реконструкція (гіпотеза)')
+    expect(await ssr(FormBadge, { kind: 'confirmed', form: 'вѣра' })).toContain('✓ підтверджено пам’яткою')
+  })
+  it.each([['derive', DeriveView, '/derive?from=кінь&dir=new2old'], ['analyze', AnalyzeView, '/analyze?q=вѣра'], ['annotate', AnnotateView, '/annotate']] as const)(
+    'legend present on %s page', async (_n, comp, path) => {
+      const html = await ssr(comp as Component, {}, path)
+      expect(html).toContain('Легенда: засвідчені та реконструйовані форми')
+    })
+  it('/derive deep-link round-trips from/dir/to into the form', async () => {
+    const html = await ssr(DeriveView, {}, '/derive?from=кінь&dir=new2old')
+    expect(html).toContain('value="кінь"'); expect(html).toMatch(/aria-pressed="true"[^>]*>сучасна → давня/)
+    const h2 = await ssr(DeriveView, {}, '/derive?from=ходилъ&dir=old2new&to=ходив')
+    expect(h2).toContain('value="ходилъ"'); expect(h2).toContain('value="ходив"'); expect(h2).toMatch(/aria-pressed="true"[^>]*>давня → сучасна/)
+  })
+})
+
+describe('Rusyn display: parallel, neutral, with status note', () => {
+  const rus = claim('rusyn:subcarpathian', ev), zak = claim(true as const, ev)
+  it('rusyn claim keyed `rusyn` (contract) renders both readings + neutral status popover; badge not colour-only', async () => {
+    const html = await ssr(ClaimSet, { claims: { rusyn: rus, ZAK: zak } })
+    expect(html).toContain('жодне не переважає'); expect(html).toContain('русинське · підкарпатське'); expect(html).toContain('закарпатський')
+    expect(html).toContain('мова чи говір — питання відкрите'); expect(html).toContain('badge rusyn')
+  })
+  it('missing dialect side is shown as «не встановлено», not dropped', async () => {
+    expect(await ssr(ClaimSet, { claims: { rusyn: rus } })).toContain('не встановлено')
+  })
+  it('without a rusyn claim, dialect badges stay ordinary', async () => {
+    const html = await ssr(ClaimSet, { claims: { ZAK: zak } }); expect(html).not.toContain('жодне не переважає')
+  })
+})
+
+describe('F6 stress & register unknown', () => {
+  it('stress variant shows its source and the unknown-status note; empty = explicit unknown', async () => {
+    const v = [{ form: 'вода', positions: [1], status: 'unknown' as const, evidence: [P('ukrainian-word-stress', 'ULIF-derived', 'вода')], method: 'dictionary' as const }]
+    const html = await ssr(StressForms, { variants: v }); expect(html).toContain('джерело: ukrainian-word-stress'); expect(html).toContain('статус невідомий')
+    expect(await ssr(StressForms, { variants: [] })).toContain('наголос невідомий')
+  })
+})
+
+describe('F3 markdown report renderer', () => {
+  it('headings get anchors, tables/lists/code render, html is escaped', () => {
+    const { html, toc } = renderMd('# Звіт\n\n## Покриття <b>\n\n| a | b |\n|---|---|\n| 1 | `x` |\n\n- один\n- **два**\n\n```\n<raw>\n```\n\n[l](https://e.org/x)')
+    expect(toc.map(t => t.id)).toEqual(['звіт', 'покриття']); expect(html).toContain('<table>'); expect(html).toContain('<td><code>x</code></td>')
+    expect(html).toContain('<li><strong>два</strong></li>'); expect(html).toContain('&lt;raw&gt;'); expect(html).not.toContain('<b>'); expect(html).toContain('href="https://e.org/x"')
+  })
+})
+describe('D-4 legend on the data-dependent word page', () => {
+  it('WordView mounts FormLegend (word page only renders after data load; checked at source level, screenshot-verified)', () => {
+    expect(readFileSync('src/views/WordView.vue', 'utf8')).toContain('<FormLegend />')
+  })
+})

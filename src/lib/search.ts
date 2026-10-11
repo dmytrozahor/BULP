@@ -69,7 +69,6 @@ export async function buildIndexAsync(cards: LemmaCard[], onProgress?: (f: numbe
     for (const p of c.paradigm) { add(p.form, c.lemma, 'paradigm'); const k = key(p.form); if (k) { const l = paradigm.get(k); l ? l.push({ lemma: c.lemma, tags: p.tags }) : paradigm.set(k, [{ lemma: c.lemma, tags: p.tags }]) } }
     if (performance.now() - t0 > sliceMs) { onProgress?.(i / cards.length); await new Promise<void>(r => setTimeout(r, 0)); t0 = performance.now() }
   }
-  onProgress?.(0.98)
   const keys = [...map.keys()].sort()
   onProgress?.(1)
   return { idx: { map, keys }, paradigm }

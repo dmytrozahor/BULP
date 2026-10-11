@@ -12,6 +12,7 @@ import { annotate, summarize, type AnnotatedToken } from '../lib/annotate.ts'
 import { CATEGORIES, CATEGORY_UK } from '../lib/analyze.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
+import FormLegend from '../components/FormLegend.vue'
 import WordCard from '../components/WordCard.vue'
 const { annData, loaded } = useData()
 const exId = ref(''), text = ref(''), year = ref('')
@@ -56,13 +57,14 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
           <span><span class="sw" style="border-style:dashed"></span><i>реконструкція (гіпотеза)</i>: виведено правилами, у корпусі не знайдено</span>
           <RouterLink to="/derive">деривація →</RouterLink>
         </div>
+        <FormLegend />
       </section>
 
       <section v-if="!loaded" class="card"><div class="skeleton" v-for="i in 3" :key="i" /></section>
       <section v-else-if="tokens.length" class="card" aria-label="Анотований текст">
         <div class="ann"><template v-for="(p, k) in parts" :key="k"><template v-if="'gap' in p">{{ p.gap }}</template>
           <RouterLink v-else-if="p.t.status === 'attested' && p.t.card" :to="`/w/${encodeURIComponent(p.t.card.lemma)}`" :class="cls(p.t)" :aria-label="label(p.t)"
-            @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</RouterLink>
+            @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.provenance === 'derived'" class="derived-badge">реконстр.</sup></RouterLink>
           <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</span></template></div>
       </section>
     </div>
