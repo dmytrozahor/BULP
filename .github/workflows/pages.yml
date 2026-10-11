@@ -1,0 +1,45 @@
+# Build the Vue app with the real data and deploy it to GitHub Pages.
+# Core data (public/data/*.json) is on this branch; the detail shards come from the orphan branch ukr-lexicon-data (SPEC 20 B-5e).
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [mvp]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run data:pull
+      - run: npx vitest run
+      - run: npm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
