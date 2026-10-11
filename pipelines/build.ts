@@ -26,7 +26,7 @@ import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
 import { ltIndex } from './lt.ts'
 import { chooseLemma, linkOptions, posLabel, traceSteps, wantedKeys, ROUTE_RANK, type Chosen, type Env, type Route, type TypeCtx } from './build-link.ts'
 import {
-  admit, detectCard, firstClaim, lemmaContact, lookupKeys, mergeClaims, originClaim, primaryEpoch, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
+  admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
   type AnnEnv, type FirstCand, type FormAcc, type Ref, type StressJson,
 } from './build-annotate.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
@@ -280,7 +280,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     // dialect (B-3.6)
     let dia: Record<string, Claim<true>> = {}; const regionWs = new Set<string>()
     for (const p of pairs) {
-      const sub = Object.fromEntries(Object.entries(p.card.claims).filter(([l]) => ['dialect', 'rusyn'].includes(RULE_AXIS.get(l) ?? '')))
+      const sub = Object.fromEntries(Object.entries(p.card.claims).filter(([l]) => l !== 'rusyn' && RULE_AXIS.get(l) === 'dialect')) as Record<string, Claim<true>>
       if (Object.keys(sub).length) { dia = mergeClaims(dia, sub); p.acc.regions.forEach(r => regionWs.add(r)) }
     }
     const regionEv = [...regionWs].slice(0, 3).map(wid => D(wid, 'region', witMap.get(wid)!.region ?? ''))
@@ -292,7 +292,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       lemma: la.display, pos: posLabel(lemmaPos), paradigm,
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))], stressJson),
       forms: pairs.map(p => p.card), first, stats,
-      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia },
+      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)) },
     })
   }
   cards.sort((a, b) => b.stats.f - a.stats.f || a.lemma.localeCompare(b.lemma, 'uk'))

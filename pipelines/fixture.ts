@@ -10,7 +10,7 @@ import { claim, unknown, D, isKnown, type Claim } from '../core/evidence.ts'
 import { assignEpoch, EPOCHS, epochById } from '../core/epochs.ts'
 import { compare, dispersion, dots, freqClass, ipm, logDice, smooth } from '../core/stats.ts'
 import { key, normalizeOld } from '../core/text.ts'
-import { RUSYN_RULES, RUSYN_STATUS, SURZHYK_BASIS, SURZHYK_DEF, rusynClaim } from '../core/rules.ts'
+import { RUSYN_STATUS, SURZHYK_BASIS, SURZHYK_DEF, detectRusyn, rusynClaim } from '../core/rules.ts'
 import { detect } from '../core/detect.ts'
 import { REGIONS, regionOf } from './regions.ts'
 import type { CorpusMeta, FormCard, LemmaCard, LexIndex, StressVariant, VesumHit, WitnessMeta } from '../core/types.ts'
@@ -138,7 +138,7 @@ function card(s: Spec): LemmaCard {
     const year = Math.max(...occs.map(x => W[x.w]!.date[1]))
     const det = runDetectors(raw, lex, year)
     // Rusyn axis (research/10 §5): no year gate, so the real rule table is run with year undefined; independent of the dialect claims
-    const rc = rusynClaim(detect(RUSYN_RULES, { form: key(raw), norm: d.norm, vesum: [], inLexicon: () => [] }).claims)
+    const rc = rusynClaim(detectRusyn({ form: key(raw), norm: d.norm, vesum: [], inLexicon: () => [] }).claims)
     const claims = rc ? { ...det.claims, rusyn: rc } : det.claims
     const vh: VesumHit = lex.paradigmMap.get(key(target))?.[0] ?? { lemma: target, tags: 'unknown' }
     const torot = units.find(u => u.id === w0.id)?.kind === 'torot'

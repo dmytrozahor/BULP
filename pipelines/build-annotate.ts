@@ -10,7 +10,7 @@
  */
 import { claim, unknown, D, type Claim, type Evidence } from '../core/evidence.ts'
 import { detect, normative, type Ctx, type Rule } from '../core/detect.ts'
-import { CS_RULES, CONTACT_RULES, DIALECT_RULES, RUSYN_RULES, REGISTER_RULES, SURZHYK_BASIS, SURZHYK_DEF } from '../core/rules.ts'
+import { CS_RULES, CONTACT_RULES, DIALECT_RULES, RUSYN_RULES, RUSYN_SHARED, REGISTER_RULES, SURZHYK_BASIS, SURZHYK_DEF, detectRusyn, rusynClaim } from '../core/rules.ts'
 import { ruleById } from '../core/phonology.ts'
 import { key } from '../core/text.ts'
 import { assignEpoch } from '../core/epochs.ts'
@@ -42,11 +42,18 @@ export interface FormAcc {
 }
 
 // ── detection (B-3.1) ───────────────────────────────────────────────────────────────────────────
-export const DETECT_RULES: Rule[] = [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...RUSYN_RULES]
-export const RULE_AXIS = new Map(DETECT_RULES.map(r => [r.label, r.axis]))
+export const DETECT_RULES: Rule[] = [...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES]
+/** All rule tables for reporting; the Rusyn axis runs through detectRusyn() (shared rows only count once a RUE-/PAN- row fired, research/10 §5). */
+export const REPORT_RULES: Rule[] = [...DETECT_RULES, ...RUSYN_RULES, ...RUSYN_SHARED]
+export const RULE_AXIS = new Map(REPORT_RULES.map(r => [r.label, r.axis]))
+/** One detection pass: general tables + the Rusyn axis collapsed into the contract claim `rusyn` (value = axis label, types.ts). */
+function runDetect(c: Ctx): { claims: Record<string, Claim<any>>; hints: { rule: string; label: string }[] } {
+  const d = detect(DETECT_RULES, c), r = detectRusyn(c), rc = rusynClaim(r.claims)
+  return { claims: rc ? { ...d.claims, rusyn: rc } : d.claims, hints: [...d.hints, ...r.hints] }
+}
 const dedupe = (ev: Evidence[]) => { const s = new Set<string>(); return ev.filter(e => { const k = JSON.stringify(e); return s.has(k) ? false : (s.add(k), true) }) }
 
-export function mergeClaims(a: Record<string, Claim<true>>, b: Record<string, Claim<true>>): Record<string, Claim<true>> {
+export function mergeClaims(a: Record<string, Claim<any>>, b: Record<string, Claim<any>>): Record<string, Claim<any>> {
   const out = { ...a }
   for (const [l, c] of Object.entries(b)) {
     const p = out[l]
@@ -83,10 +90,10 @@ export function upgradeLt(claims: Record<string, Claim<true>>, c: Ctx, ru: AnnEn
   return { ...claims, russianism_or_hybrid: claim(true as const, dedupe([...lt.evidence, rev]), { score: lt.score, method: 'LEX-LT+ru-dict' }) }
 }
 
-export function detectCard(f: FormAcc, env: AnnEnv): { claims: Record<string, Claim<true>>; hints: string[] } {
-  let claims: Record<string, Claim<true>> = {}; const hints = new Set<string>()
+export function detectCard(f: FormAcc, env: AnnEnv): { claims: Record<string, Claim<any>>; hints: string[] } {
+  let claims: Record<string, Claim<any>> = {}; const hints = new Set<string>()
   for (const y of new Set([f.date[1], f.latest[1]])) {
-    const c = cardCtx(f, y, env), d = detect(DETECT_RULES, c)
+    const c = cardCtx(f, y, env), d = runDetect(c)
     claims = mergeClaims(claims, upgradeLt(d.claims, c, env.ru)); d.hints.forEach(h => hints.add(h.rule))
   }
   return { claims, hints: [...hints] }
@@ -95,7 +102,7 @@ export function detectCard(f: FormAcc, env: AnnEnv): { claims: Record<string, Cl
 /** Dry run: which VESUM keys will detect() ask for? (lets ONE extra VESUM pass serve all lookups). */
 export function lookupKeys(f: Pick<FormAcc, 'raw' | 'norm' | 'modern' | 'oldI' | 'date' | 'latest'>, env: AnnEnv): Set<string> {
   const s = new Set<string>([key(f.modern)])
-  for (const y of new Set([f.date[1], f.latest[1]])) detect(DETECT_RULES, cardCtx(f, y, env, s))
+  for (const y of new Set([f.date[1], f.latest[1]])) runDetect(cardCtx(f, y, env, s))
   return s
 }
 
@@ -152,6 +159,16 @@ export function registerClaim(paradigm: { form: string; tags: string }[], lemma:
 export function lemmaContact(lemma: string, env: AnnEnv): Record<string, Claim<true>> {
   const k = key(lemma), c: Ctx = { form: k, vesum: env.hits.get(k) ?? [], lt: ltOf(env, k), inLexicon: x => env.hits.get(key(x)) ?? [] }
   return upgradeLt(detect(CONTACT_RULES, c).claims, c, env.ru)
+}
+
+/** Lemma-level `rusyn` (plan 40 B2): union of the modern FormCards' rusyn claims; a specific variant outranks the undetermined `rusyn`, then the higher score. */
+export function lemmaRusyn(cards: { claims: Record<string, Claim<any>> }[]): Claim<string> | undefined {
+  const cs = cards.map(c => c.claims.rusyn as Claim<string> | undefined).filter((c): c is Claim<string> => !!c)
+  if (!cs.length) return undefined
+  const rank = (c: Claim<string>) => [c.value === 'rusyn' ? 0 : 1, c.score ?? 0]
+  const best = [...cs].sort((a, b) => rank(b)[0]! - rank(a)[0]! || rank(b)[1]! - rank(a)[1]!)[0]!
+  const same = cs.filter(c => c.value === best.value)
+  return claim(best.value as string, dedupe(same.flatMap(c => c.evidence)).slice(0, 8), { score: best.score, method: [...new Set(same.flatMap(c => (c.method ?? '').split('+')))].join('+') })
 }
 
 export function surzhykClaim(cardClaims: Record<string, Claim<true>>[], lemmaClaims: Record<string, Claim<true>>): Claim<true> {

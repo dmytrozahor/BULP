@@ -4,7 +4,7 @@
  * hypotheses that lack a published source (P-1.3) and surface only as review hints.
  */
 import { Q, P, D, claim, type Claim, type Evidence } from './evidence.ts'
-import { TAG, normative, modern, type Ctx, type Rule } from './detect.ts'
+import { TAG, normative, modern, detect, type Ctx, type Rule, type Detection } from './detect.ts'
 
 const vline = (c: Ctx, t: string) => { const h = TAG(c, t); return h ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${c.form} ${h.tags} (лема: ${h.lemma})`) : null }
 const match = (re: RegExp, s?: string) => (s && re.test(s) ? s : null)
@@ -49,6 +49,9 @@ const VT = (tag: string, gloss: string) => Q('VESUM', 'doc/tags.txt (dict_uk)', 
 const LTD = (q: string) => D('LT', 'rules/uk/replace.txt (LanguageTool)', q)
 const ALPHA = P('WUK', 'https://uk.wikipedia.org/wiki/Українська_абетка', 'сучасна українська абетка (33 літери) не має ы, э, ъ, ё', 'research/05: Півторак, енц. «Українська мова» 2004; правила 1919 р. «стали основою всіх наступних правописів» (ENC um77)')
 const notInVesum = (c: Ctx) => c.vesum.length === 0
+/** ы-forms identical in Russian, Rusyn and Carpathian spelling (research/10 §5): no discriminator ⇒ ambiguous, not russianism. */
+const AMBIG_Y = /^(мы|ты|вы|сын[а-яё]*|рыб[а-яё]*|был[а-яё]*)$/
+const presovYo = (f: string) => /ё/.test(f) && /[ыьі]/.test(f)
 
 export const CONTACT_RULES: Rule[] = [
   { id: 'LEX-LT', axis: 'contact', label: 'nonnormative', weight: 0.8, cite: Q('LT', 'UK_SIMPLE_REPLACE', '«X» - помилкове слово, виправлення: …'),
@@ -58,8 +61,12 @@ export const CONTACT_RULES: Rule[] = [
   { id: 'LEX-VESUM-BAD', axis: 'contact', label: 'russianism_or_hybrid', weight: 0.8, cite: VT('bad', 'покруч'), test: c => (modern(c) ? vline(c, 'bad') : null),
     note: 'nonstandard_items.md: bad охоплює «росіянізми - кляча»' },
   { id: 'LEX-VESUM-SUBST', axis: 'contact', label: 'nonstandard', weight: 0.6, cite: VT('subst', 'нестандартні форма'), test: c => (modern(c) ? vline(c, 'subst') : null) },
-  { id: 'ORT-YI', axis: 'contact', label: 'russianism_orth', weight: 0.9, cite: ALPHA, note: 'вето: русинські ознаки (research/10 §5)', test: c => (modern(c) && /[эъё]/.test(c.form) && !rusynStrong(c.form) ? form(c) : null) },
-  { id: 'ORT-Y', axis: 'contact', label: 'russianism_orth', weight: 0.5, cite: ALPHA, note: 'ы також у карпатських говорах і русинських стандартах (див. CARP-Y, RUE-*)', test: c => (modern(c) && /ы/.test(c.form) && !rusynStrong(c.form) ? form(c) : null) },
+  { id: 'ORT-YI', axis: 'contact', label: 'russianism_orth', weight: 0.9, cite: ALPHA, note: 'ъ/ё: вето лише за RUE-PRESOV-YO або RUSYN_STRONG; э лишається російською ознакою (research/10 §5)',
+    test: c => (modern(c) && (/э/.test(c.form) || (/[ъё]/.test(c.form) && !rusynStrong(c.form) && !presovYo(c.form))) ? form(c) : null) },
+  { id: 'ORT-Y', axis: 'contact', label: 'russianism_orth', weight: 0.5, cite: ALPHA, note: 'ы також у карпатських говорах і русинських стандартах (див. CARP-Y, RUE-*); вето RUSYN_STRONG, двозначні форми → ORT-Y-AMB',
+    test: c => (modern(c) && /ы/.test(c.form) && !rusynStrong(c.form) && !presovYo(c.form) && !AMBIG_Y.test(c.form) ? form(c) : null) },
+  { id: 'ORT-Y-AMB', axis: 'contact', label: 'ambiguous_y', weight: 0.2, cite: ALPHA, note: 'ы без русинського дискримінатора: російське / русинське / карпатське (research/10 §5); вирішувати за контекстом документа',
+    test: c => (modern(c) && AMBIG_Y.test(c.form) && !rusynStrong(c.form) ? form(c) : null) },
   { id: 'ORT-OLD', axis: 'contact', label: 'archaic_orthography', weight: 0.9, note: 'до 1919: ярижка, кулішівка, руська мова — норма свого часу',
     cite: P('WUK', 'https://uk.wikipedia.org/wiki/Українська_абетка', 'дореформені правописи вживали ы, ъ, э, ё, ѣ (Котляревський писав э, Максимович ё, ѣ)'),
     test: c => (c.year !== undefined && c.year < 1919 && /[ыэъёѣ]/.test(c.norm ?? c.form) ? form(c) : null) },
@@ -132,12 +139,13 @@ export const DIALECTS: Record<string, string> = {
  * > "Мітка rusyn:* означає лише «форма відповідає нормі/практиці русинського стандарту X» і не є висновком про статус."
  * >  — research/10 §0. Quotes marked [rend] came through a renderer (Cloudflare blocks raw fetch) and await re-verification.
  */
-const UPRS = (q: string) => Q('UPRS', 'https://rusynsociety.com/rue/sre-standard/', q, '[rend] — перевірити в браузері; стандарт адвокаційної організації, не офіційна кодифікація')
+const UPRS = (q: string) => P('UPRS', 'https://rusynsociety.com/rue/sre-standard/', q, '[rend] — не перевірено в браузері (перефразування); стандарт адвокаційної організації, не офіційна кодифікація')
 const UM162 = (q: string) => Q('ENC', 'http://litopys.org.ua/ukrmova/um162.htm', q)
 const UM87 = (q: string) => Q('ENC', 'http://litopys.org.ua/ukrmova/um87.htm', q)
 const RUEW = (q: string) => Q('RUEWIKI', 'https://rue.wikipedia.org/wiki/Русиньскый_язык', q)
 const LON = (q: string) => Q('LONKIN', 'Ломоносов-2025, тези', q)
-const rusynGate = (c: Ctx) => modern(c)
+/** research/10 §5: only non-normative forms, no 1919 gate; year ≥ 1850 because the standards (Dukhnovych-era, Kostelnik 1904/1923) are not older. */
+const rusynGate = (c: Ctx) => (c.year === undefined || c.year >= 1850) && !normative(c)
 const rx2 = (re: RegExp) => (c: Ctx) => (rusynGate(c) && re.test(c.form) ? form(c) : null)
 const RUE = (id: string, label: string, weight: number, test: (c: Ctx) => Evidence | null, cite: Evidence): Rule => ({ id, axis: 'rusyn', label, weight, cite, test })
 
@@ -161,11 +169,22 @@ export const RUSYN_RULES: Rule[] = [
   RUE('RUE-O-CIRC', 'rusyn:subcarpathian', 0, rx2(/ô/), LON('графемы Ô, отражавшей позиционный вариант фонемы /о/'), ),
 ]
 
+/** Shared rows (research/10 §3, «Shared with existing rules»): not Rusyn-specific, so they count toward `rusyn` only if a RUE-/PAN- row fired. */
+const RUSYN_SHARED_IDS = ['SW-DAT-OVY', 'SW-INSTR-OW', 'CARP-Y', 'HARD-C-FINAL']
+export const RUSYN_SHARED: Rule[] = DIALECT_RULES.filter(r => RUSYN_SHARED_IDS.includes(r.id.split(':')[0]!) && ['WPL', 'SW', 'BOY', 'NDN'].includes(r.label))
+  .map(r => ({ ...r, id: `${r.id}>rusyn`, axis: 'rusyn' as const, label: 'rusyn' }))
+
+/** Rusyn axis for one form (research/10 §5): RUE-/PAN- rows decide; shared rows only add evidence once one fired. */
+export function detectRusyn(c: Ctx): Detection {
+  const base = detect(RUSYN_RULES, c)
+  return Object.keys(base.claims).length ? detect([...RUSYN_RULES, ...RUSYN_SHARED], c) : base
+}
+
 /** Neutral status note shown with every rusyn:* label (research/10 §0), with both positions' sources. */
 export const RUSYN_STATUS = {
   note: 'Русинська (ISO 639-3 rue; паннонська — rsk) у Словаччині, Польщі (як лемківська), Сербії, Угорщині та ін. визнається окремою мовою з кодифікованими стандартами; українська діалектологія і держава Україна розглядають ці ідіоми як говори південно-західного наріччя української мови (закарпатський, лемківський) або як варіант української літературної мови. Мітка rusyn:* означає лише «форма відповідає нормі/практиці русинського стандарту» і не є висновком про статус.',
   evidence: [
-    Q('ISO', 'https://iso639-3.sil.org/code/rue', 'rue … Rusyn … Individual … Living', '[rend]'),
+    P('ISO', 'https://iso639-3.sil.org/code/rue', 'rue … Rusyn … Individual … Living', '[rend] — не перевірено в браузері'),
     RUEW('Класіфікація русиньского языка як языка або діалекту є предметом контроверзії.'),
     UM87('один з варіантів руської (української) літ. мови українців Закарпаття'),
     UM162('один з арх. говорів карпатської групи діалектів південно-західного наріччя'),

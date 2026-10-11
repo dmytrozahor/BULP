@@ -11,7 +11,7 @@ import { STAT_CITES } from '../core/stats.ts'
 import { ipm } from '../core/stats.ts'
 import { isKnown } from '../core/evidence.ts'
 import type { Author, LemmaCard, WitnessMeta } from '../core/types.ts'
-import { DETECT_RULES } from './build-annotate.ts'
+import { REPORT_RULES } from './build-annotate.ts'
 import { posLabel } from './build-link.ts'
 import type { Sizes } from './build-stats.ts'
 
@@ -72,7 +72,7 @@ export function renderReport(d: ReportData): string {
   const orth = Object.keys(d.soundType).filter(k => k.startsWith('ORTH-'))
   if (orth.length) P('Orthography folds (core/orthography.ts) in successful direct links: ' + orth.map(k => `${k}: ${d.soundType[k]} types / ${d.soundToken[k]} tokens`).join(' · '))
   P(`**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the ${num(d.cards.reduce((s, c) => s + c.forms.length, 0))} stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).`)
-  P(md(DETECT_RULES.map(r => [r.id, r.axis, r.label, r.weight, d.detectHits[r.id] ?? 0, d.hints[r.id] ?? 0]), ['rule', 'axis', 'label', 'weight', 'label hits', 'hint hits']))
+  P(md(REPORT_RULES.map(r => [r.id, r.axis, r.label, r.weight, d.detectHits[r.id] ?? 0, d.hints[r.id] ?? 0]), ['rule', 'axis', 'label', 'weight', 'label hits', 'hint hits']))
 
   // 4
   P('## 4. Lexical statistics (M-5)')
