@@ -161,3 +161,17 @@ export const MODELS: Model[] = PAVL_TABLES.flatMap(t => t.cols.map(([lemma, type
 }))
 export const modelByLemma = Object.fromEntries(MODELS.map(m => [m.lemma, m])) as Record<string, Model>
 void NOUN_KEYS
+
+/** Павленко 2010, «Зразки відмінювання іменників» (pp. 74–77): the table titles give the stem types as «основа на *-ā/-jā», «*-ŏ/-jŏ», «*-ŭ», «*-ū», «*-ĭ», «приголосний»; the Ukrainian short names follow. */
+export const STEM_LABEL: Record<StemType, { proto: string; uk: string }> = {
+  a: { proto: '*-ā', uk: 'а-основа' }, ja: { proto: '*-jā', uk: 'ја-основа' },
+  o: { proto: '*-ŏ', uk: 'о-основа' }, jo: { proto: '*-jŏ', uk: 'јо-основа' },
+  u: { proto: '*-ŭ', uk: 'у-основа (ŭ)' }, uu: { proto: '*-ū', uk: 'у-основа (ū)' }, i: { proto: '*-ĭ', uk: 'і-основа' },
+  s: { proto: '*-s', uk: 'основа на приголосний (*-s)' }, r: { proto: '*-r', uk: 'основа на приголосний (*-r)' },
+  men: { proto: '*-n', uk: 'основа на приголосний (*-n)' }, nt: { proto: '*-nt', uk: 'основа на приголосний (*-nt)' },
+}
+/** «с. 74» etc.: the page of the PAVL table that holds the model word (undefined for a model PAVL does not print). */
+export const stemSample = (type: StemType, model: string) => {
+  const m = modelByLemma[model], t = m && PAVL_TABLES.find(x => x.id === m.table)
+  return { ...STEM_LABEL[type], model, page: t ? `с. ${t.page}` : undefined }
+}

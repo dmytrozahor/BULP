@@ -327,6 +327,14 @@ describe('SPEC 50 epoch paradigms', () => {
     expect(mid).toContain('>M<'); expect(mid).toContain('модель поза доменом'); expect(mid).toContain('≈2')
     expect(await panel(epochSample(), { start: 'shev.modern' })).toContain('>В<')
   })
+  it('the stem line labels the model word as a declension sample, never as a form of the lemma', async () => {
+    const cut = (h: string) => h.slice(h.indexOf('тип основи'), h.indexOf('etabs'))
+    const line = cut(await panel(epochSample()))
+    expect(line).toContain('*-ā (а-основа)'); expect(line).toContain('зразок відмінювання: <i lang="cu">рѣка</i>'); expect(line).toContain('Павленко, с. 74'); expect(line).toContain('ST-13')
+    expect(line).not.toContain('а · рѣка')
+    const ruka = cut(await panel(epochSample({ value: { ...stemV, old: 'роука' }, evidence: [Q('PAVL', 'с. 74', 'рѣка')], method: 'rule' })))
+    expect(ruka.replace('зразок відмінювання: <i lang="cu">рѣка</i>', '')).not.toContain('рѣка')
+  })
   it('D4: a model-based stem claim marks the stem and the reconstructions', async () => {
     const m = epochSample({ value: stemV, evidence: [D('tor', 'f.1', 'рѣки → «рѣка»', 'stanza lemma')], method: 'ST-13+stanza' })
     expect(((await panel(m)).match(/основа: модель/g) ?? []).length).toBeGreaterThan(3)

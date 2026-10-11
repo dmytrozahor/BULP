@@ -12,6 +12,7 @@ import type { CellForm, EpochParadigms, StemValue, WitnessMeta } from '../../cor
 import { useData } from '../composables/useData.ts'
 import { epochGrid, epochTabs, type GCell } from '../lib/epochGrid.ts'
 import { epochName, epochShort, fmtDate } from '../lib/format.ts'
+import { stemSample } from '../../core/morph-tables.ts'
 import { epochById } from '../../core/epochs.ts'
 import AuthorBadge from './AuthorBadge.vue'
 import ClaimBadge from './ClaimBadge.vue'
@@ -27,6 +28,7 @@ const sel = computed(() => chosen.value || tabs.value.default)
 const cur = computed(() => tabs.value.tabs.find(t => t.id === sel.value))
 const stem = computed(() => (props.epochs && props.epochs.stem.value !== 'unknown' ? (props.epochs.stem.value as StemValue) : undefined))
 /** D4 / P-1.7: a stem assigned from a Stanza lemma is model-based, and so is every reconstruction built on it */
+const sample = computed(() => stem.value ? stemSample(stem.value.type, stem.value.model) : undefined)
 const modelStem = computed(() => !!props.epochs && (!!props.epochs.stem.method?.includes('stanza')))
 const grid = computed(() => epochGrid(cur.value?.p, sel.value, stem.value))
 const years = (id: string) => { const e = epochById[id]!; return `${e.start}${e.end >= 9999 ? '–…' : '–' + e.end}` }
@@ -50,7 +52,9 @@ const cellId = (c: GCell) => c.key
       <div class="row small sans" style="margin-bottom:.4rem">
         <span class="muted">тип основи:</span>
         <template v-if="stem">
-          <ClaimBadge :claim="epochs.stem as Claim<unknown>" :text="`${stem.type} · ${stem.model} (${stem.rule})`" />
+          <ClaimBadge :claim="epochs.stem as Claim<unknown>" :text="`${sample!.proto} (${sample!.uk})`" />
+          <span class="stem-sample">зразок відмінювання: <i lang="cu">{{ sample!.model }}</i><template v-if="sample!.page"> (Павленко, {{ sample!.page }})</template></span>
+          <span class="muted">· {{ stem.rule }}</span>
           <span v-if="modelStem" class="derived-badge" title="тип основи визначено за лемою моделі Stanza, не за ручною розміткою (P-1.7)">основа: модель</span>
         </template>
         <span v-else class="unk" tabindex="0" title="жодне правило не спрацювало — реконструкції немає (P-3.1)">невідомо</span>
