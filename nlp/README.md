@@ -28,7 +28,7 @@ Output `forms: { form: [ {stressed, positions, ambiguous} ] }`. Context-free: no
 `pymorphy3` `MorphAnalyzer(lang='ru')` and `lang='uk'`; `known` = dictionary word (`word_is_known`, parse with `is_known`), never a predictor guess.
 Output `forms: { form: {known, normal_form, tag, uk:{known, normal_form, tag}} }` plus `source`, `sourceUk`, `pymorphy3` versions.
 Note: OpenCorpora also lists some colloquial forms (e.g. `шо`), so `known` means "attested in the Russian dictionary", not "standard Russian".
-`pymorphy3-dicts-ru` must be installed (it is not yet listed in `pyproject.toml` dependencies — add it there).
+`pymorphy3-dicts-ru` is a declared dependency in `pyproject.toml`.
 
 ## Licences
 - Stanza: Apache-2.0. Stanza `orv` models are trained on TOROT (CC BY-NC-SA 3.0) — non-commercial / share-alike applies to the trained data; cite TOROT.

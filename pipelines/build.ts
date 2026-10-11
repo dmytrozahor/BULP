@@ -34,7 +34,6 @@ import { renderReport, type ReportData } from './build-report.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
-const DEFAULT_UV = 'C:\\Users\\User\\.claude\\jobs\\293095c9\\tmp\\uv\\uv.exe'
 const LIMIT_BYTES = 15 * 1024 * 1024
 const execP = promisify(execFile)
 
@@ -72,7 +71,7 @@ interface LemmaAcc {
 }
 
 async function runPy(script: string): Promise<void> {
-  const uv = process.env['UV_BIN'] ?? (existsSync(DEFAULT_UV) ? DEFAULT_UV : 'uv')
+  const uv = process.env['UV_BIN'] || 'uv'   // UV_BIN override, else uv on PATH (plan 40 B4)
   await execP(uv, ['run', '--project', 'nlp', 'python', `nlp/${script}`], { cwd: ROOT, maxBuffer: 1 << 26, env: { ...process.env, PYTHONIOENCODING: 'utf-8' } })
 }
 
