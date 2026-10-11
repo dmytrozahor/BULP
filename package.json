@@ -4,7 +4,7 @@
   "type": "module",
   "version": "0.1.0",
   "scripts": {
-    "mine": "tsx pipelines/run.ts",
+    "mine": "tsx pipelines/ingest.ts",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "test": "vitest run",
