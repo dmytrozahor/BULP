@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-11T08:35:02.766Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **437 687**.
+Generated 2026-10-11T14:27:40.225Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **437 687**.
 
 ## 1. Corpus
 
@@ -237,7 +237,7 @@ The top-200 list is stored in corpus.json (`topUnresolved`). Typical misses: pro
 
 Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-JER: 737 types / 1952 tokens · ORTH-KUL-E: 198 types / 332 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-KUL-I: 228 types / 645 tokens · ORTH-YAR-I: 181 types / 378 tokens · ORTH-YAR-Y: 363 types / 478 tokens · ORTH-YAR-YAT: 331 types / 448 tokens · ORTH-YAR-E: 55 types / 74 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-YAR-EH: 2 types / 2 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 5 985 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 37 078 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
@@ -498,7 +498,7 @@ Function words dominate the top of any frequency list; this is the expected shap
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2085 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2241 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
@@ -542,7 +542,7 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-91 spellings with a church_slavonic label (denominator: 5 985 stored spellings); 20 lemmas with origin = church_slavonic.
+478 spellings with a church_slavonic label (denominator: 37 078 stored spellings); 91 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
@@ -564,28 +564,28 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | главы | глава | 1092 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
 | братья | браття | 1096–1117 | CS-C1 | ↔ бороття (бороття: noun:inanim:n:v_naz:arch) | not in lexicon |
 | врагъ | враг | 1092 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
-| плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | not in lexicon |
+| плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | 1110–1118 |
 | врата | врата | 1092 | CS-C1 | ↔ ворота (ворота: noun:inanim:p:v_naz:ns) | 1110–1118 |
 | плакала | плакати | 1117–1200 | CS-C1 | ↔ полокала (полокати: verb:imperf:past:f:arch) | not in lexicon |
+| главу | глава | 1092 | CS-C1 | ↔ голову (голова: noun:anim:m:v_zna) | 1096–1117 |
+| врагы | враг | 1092 | CS-C1 | ↔ вороги (ворог: noun:anim:p:v_naz) | 1110–1118 |
+| злата | злато | 1092 | CS-C1 | ↔ золота (золотий: adj:f:v_naz:compb) | 1110–1118 |
 | плъть | плоть | 1092 | CS-C9 |  | not in lexicon |
 | глас҃ | глас | 1092 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1588–1600 |
 | праці | праця | 1844 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1092 |
 | плакать | плакати | 1117–1200 | CS-C1 | ↔ полокать (полокати: verb:imperf:inf:short:arch) | not in lexicon |
 | брани | брань | 1092 | CS-C1 | ↔ борони (борона: noun:inanim:f:v_rod) | not in lexicon |
-| градомъ | град | 1092 | CS-C1 | ↔ городім (городити: verb:imperf:impr:p:1) | not in lexicon |
+| мрьтвыихъ | мертвий | 1092 | CS-C9 |  | not in lexicon |
+| глас | глас | 1110–1118 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1588–1600 |
+| градомъ | град | 1092 | CS-C1 | ↔ городім (городити: verb:imperf:impr:p:1) | 1117–1200 |
 | кръвь | кров | 1092 | CS-C9 |  | not in lexicon |
+| гласъмь | глас | 1092 | CS-C1 | ↔ голосом (голос: noun:inanim:m:v_oru) | 1588–1600 |
+| гласъ | глас | 1092 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1588–1600 |
 | власне | власний | 1672–1702 | CS-C1 | ↔ волосне (волосний: adj:n:v_naz) | not in lexicon |
 | краще | кращий | 1845 | CS-C11 |  | not in lexicon |
 | кръве | кров | 1037–1050 | CS-C9 |  | not in lexicon |
 | плакав | плакати | 1840 | CS-C1 | ↔ полокав (полокати: verb:imperf:past:m:arch) | not in lexicon |
-| златомъ | злато | 1037–1050 | CS-C1 | ↔ золотім (золотий: adj:m:v_mis:compb) | 1110–1118 |
-| идуща | іти | 1037–1050 | CS-C11 |  | not in lexicon |
-| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | not in lexicon |
-| права | право | 1092 | CS-C1 | ↔ порова (поровий: adj:f:v_naz) | not in lexicon |
-| храмъ | храм | 1092 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | not in lexicon |
-| съмрьти | смерть | 1092 | CS-C9 |  | not in lexicon |
-| плачемь | плач | 1110–1118 | CS-C1 | ↔ полочем (полокати: verb:imperf:pres:p:1:arch:subst) | not in lexicon |
-| славѧ | славити | 1092 | CS-C1 | ↔ солов'я (соловей: noun:anim:m:v_rod) | not in lexicon |
+| главѣ | глава | 1092 | CS-C1 | ↔ голові (гол: noun:inanim:m:v_dav) | not in lexicon |
 
 ## 6. Earliest attestations
 
@@ -624,17 +624,17 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | свій | 1037–1050 | ilarion | ilarion | абз. 12 | свою | 0 |
 | глаголати | 1037–1050 | ilarion | ilarion | абз. 10 | глагола | 0 |
 
-2017 of 2017 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+9867 of 9867 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 1908. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 42 of 2017 lexicon lemmas. Examples: ДА (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); СОТ (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); Вон (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); зостаючий (derived: russianism_or_hybrid+calque_participle)
+Surzhyk claims: 318 of 9867 lexicon lemmas. Examples: ДА (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); СОТ (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); Вон (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); зостаючий (derived: russianism_or_hybrid+calque_participle)
 
-Dialect labels (lemmas): CHN: 81 · MPL: 2 · SE: 4 · MDN: 4 · POD: 4 · BOY: 2 · LEM: 2
+Dialect labels (lemmas): CHN: 188 · MPL: 3 · SE: 5 · MDN: 10 · POD: 10 · BOY: 14 · LEM: 14
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 5985. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 37078. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 146 types (427 tokens). Top: да (57, replace), тай (46, replace), щож (29, replace), да (22, replace), куда (9, replace), тай (9, replace), єсть (8, replace), да (8, replace), власть (8, replace), тута (7, replace), могучий (7, replace), даже (6, replace), бачучи (6, replace), чуть (6, replace), вдруг (5, replace), єсть (5, replace), тута (4, replace), праздник (4, replace), тоска (4, replace), куда (4, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
@@ -646,7 +646,7 @@ Python stages: skipped (--no-py); stress.json 35 277 forms (ukrainian-word-stres
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
 - **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (22.2%).
-- **lexicon.json (B-5)**: lemmas with f ≥ 2 or a pre-1400 attestation: 9 867 of 15 648 lemmas; 2 017 written, 15.0 MB (limit 15 MB), Evidence stored once in a shared pool (22 350 distinct objects; cards carry indices, lossless). Size tiers (kwic/forms per form/lemma: 6/12, 3/8, 2/6, 1/4, 0/2) used for 246 / 64 / 47 / 93 / 1567 lemmas; 7850 lowest-frequency lemmas dropped to meet the limit. lexindex.json 3.55 MB (2413 corpus-attested flagged forms added).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 9 867 of 15 648 lemmas; 9 867 written, none dropped. Core lexicon.json 14.24 MiB (limit 15 MiB), Evidence stored once in a shared pool (32 686 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 1 024 shards lex/<bucket>.json: max 156 KB, median 54 KB, total 56.4 MiB (limit 256 KiB each). lexindex.json 3.55 MB (2413 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
