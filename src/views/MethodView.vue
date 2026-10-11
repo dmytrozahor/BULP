@@ -6,13 +6,13 @@
 import { RULES } from '../../core/phonology.ts'
 import { EPOCHS } from '../../core/epochs.ts'
 import { STAT_CITES } from '../../core/stats.ts'
-import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, REGISTER_DEF, SURZHYK_DEF } from '../../core/rules.ts'
+import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, REGISTER_DEF, SURZHYK_DEF, RUSYN_STATUS } from '../../core/rules.ts'
 import spec from '../../specs/00-principles.md?raw'
 import { inlineMd, parseSpec } from '../lib/md.ts'
 import { AXIS_UK, labelUk } from '../lib/format.ts'
 import EvidencePopover from '../components/EvidencePopover.vue'
 const sections = parseSpec(spec)
-const tables = [['cs', CS_RULES], ['contact', CONTACT_RULES], ['dialect', DIALECT_RULES], ['register', REGISTER_RULES]] as const
+const tables = [['cs', CS_RULES], ['contact', CONTACT_RULES], ['dialect', DIALECT_RULES], ['rusyn', RUSYN_RULES], ['register', REGISTER_RULES]] as const
 const formulas: [string, string, string][] = [
   ['ipm', 'ipm = f / N · 10⁶', 'ipm'], ['hk', 'HK = round(log₂(f_max / f))', 'hk'], ['dots', 'крапки = clamp(6 − ⌊HK / 3⌋, 0, 6)', 'dots'],
   ['logDice', 'logDice = 14 + log₂(2·f_xy / (f_x + f_y))', 'logDice'], ['g2', 'G² = 2·(a·ln(a/E₁) + b·ln(b/E₂)); Log Ratio = log₂((a/c)/(b/d)), 0 → 0,5', 'g2'],
@@ -22,7 +22,7 @@ const formulas: [string, string, string][] = [
 
 <template>
   <h1>Метод</h1>
-  <p class="muted">Усі правила — це дані з цитатою. Правило без опублікованого джерела має вагу 0 і не може поставити мітку.</p>
+  <p class="muted">Усі правила — це дані з цитатою. Правило без опублікованого джерела має вагу 0 і не може поставити мітку. Результати збірки: <RouterLink to="/report">звіт збірки</RouterLink>.</p>
 
   <section class="card"><h2><span>Принципи (SPEC 00, дослівно)</span></h2>
     <div v-for="s in sections" :key="s.heading">
@@ -52,6 +52,7 @@ const formulas: [string, string, string][] = [
         <td><EvidencePopover v-if="r.weight > 0" :evidence="[r.cite]" :heading="r.id" :label="r.id"><span class="badge">{{ r.cite.kind }} ⓘ {{ r.cite.source }}</span></EvidencePopover><span v-else class="small">гіпотеза: лише підказка для перевірки</span></td></tr></tbody></table></div>
     <template v-if="axis === 'contact'"><p class="small sans">Суржик — похідна мітка, ніколи не первинна: <EvidencePopover :evidence="[SURZHYK_DEF]" heading="Визначення суржику"><span class="badge">визначення ⓘ</span></EvidencePopover></p></template>
     <template v-if="axis === 'register'"><p class="small sans">«Розмовне» ≠ нелітературне: <EvidencePopover :evidence="[REGISTER_DEF]" heading="Позначка розм."><span class="badge">визначення ⓘ</span></EvidencePopover> Літературний регістр ніколи не виводиться.</p></template>
+    <p v-if="axis === 'rusyn'" class="small sans">{{ RUSYN_STATUS.note }} <EvidencePopover :evidence="RUSYN_STATUS.evidence" heading="Статус русинської" label="статус русинської"><span class="badge">обидві позиції ⓘ</span></EvidencePopover></p>
     <p v-if="axis === 'dialect'" class="small muted sans">Діалектні правила спрацьовують лише для ненормативних форм після 1798 р. (інакше — історична форма, а не діалектизм).</p>
   </section>
 

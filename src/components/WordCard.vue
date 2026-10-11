@@ -41,6 +41,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
       <div v-else>перша фіксація: <ClaimBadge :claim="t.card.first" /></div>
       <div v-if="t.epoch" class="small muted">епоха першої фіксації: {{ epochName(t.epoch) }}</div>
       <div style="margin:.2rem 0"><span class="muted">наголос: </span><StressForms :variants="t.card.stress" /></div>
+      <div class="small"><span class="muted">регістр: </span><ClaimBadge :claim="t.card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
       <ReconstructedForms v-if="t.provenance === 'attested'" :card="t.card" :max="3" />
     </template>
     <div v-else-if="t.status === 'lexindex'" class="small">

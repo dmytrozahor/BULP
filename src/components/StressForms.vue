@@ -16,6 +16,8 @@ defineProps<{ variants: StressVariant[] }>()
     <EvidencePopover :evidence="v.evidence" :heading="`Наголос: ${renderStress(v.form, v.positions)}`" :meta="`метод: ${v.method}`" :label="renderStress(v.form, v.positions)">
       <strong style="font-size:1.15rem">{{ renderStress(v.form, v.positions) }}</strong>
     </EvidencePopover>
-    <span class="st">{{ STRESS_STATUS_UK[v.status] }} · {{ METHOD_UK[v.method] }}<template v-if="v.period"> · {{ v.period }}</template></span>
-  </span></template>
+    <span class="st">{{ STRESS_STATUS_UK[v.status] }} · {{ METHOD_UK[v.method] }}<template v-if="v.period"> · {{ v.period }}</template>
+      · джерело: {{ v.evidence[0]?.source ?? 'немає' }}<template v-if="!v.evidence.length"> (<span class="unk">без доказів</span>)</template></span>
+  </span>
+  <span v-if="variants.some(v => v.status === 'unknown')" class="small muted" style="display:block">статус невідомий: джерело наголосу не є нормативним словником (SPEC 20 B-3.7), тому «нормативний» не заявляється{{ variants.length > 1 ? '; варіантів кілька — показано всі' : '' }}.</span></template>
 </template>
