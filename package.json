@@ -9,7 +9,9 @@
     "build": "vue-tsc --noEmit && vite build",
     "test": "vitest run",
     "preview": "vite preview",
-    "build:data": "tsx pipelines/build.ts"
+    "build:data": "tsx pipelines/build.ts",
+    "data:publish": "tsx pipelines/data-branch.ts publish",
+    "data:pull": "tsx pipelines/data-branch.ts pull"
   },
   "dependencies": {
     "vue": "^3.5.43",

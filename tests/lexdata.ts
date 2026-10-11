@@ -4,8 +4,10 @@ import { unpackCore } from '../core/pack.ts'
 import { bucketOf, mergeCard, unpackShard } from '../core/shard.ts'
 import type { LemmaCard, LemmaDetail } from '../core/types.ts'
 
-export const hasData = (dir = 'public/data') => existsSync(`${dir}/lexicon.json`)
+/** Shards are not on the code branch (SPEC 20 B-5e: ukr-lexicon-data branch, `npm run data:pull`) — real-data tests skip without them. */
+export const hasData = (dir = 'public/data') => existsSync(`${dir}/lexicon.json`) && existsSync(`${dir}/lex`)
 export function readFull(dir = 'public/data'): LemmaCard[] {
+  if (!hasData(dir)) return []   // skipped describes still run their body at collection time
   const core = unpackCore(JSON.parse(readFileSync(`${dir}/lexicon.json`, 'utf8'))), shards = new Map<number, Map<string, LemmaDetail>>()
   return core.map(c => {
     const b = bucketOf(c.lemma); let s = shards.get(b)

@@ -11,7 +11,7 @@ import { collocations } from '../pipelines/build-stats.ts'
 import { linkOptions, ROUTE_RANK, type Env } from '../pipelines/build-link.ts'
 import { fold } from '../core/orthography.ts'
 import { stressVariants } from '../pipelines/build-annotate.ts'
-import { readFull } from './lexdata.ts'
+import { hasData, readFull } from './lexdata.ts'
 import { bucketOf } from '../core/shard.ts'
 import type { LemmaCard } from '../core/types.ts'
 
@@ -37,7 +37,7 @@ describe('P-1.6 statistics carry denominators', () => {
     const r = readFileSync('analysis/REPORT.md', 'utf8')
     expect(r).toMatch(/Denominator convention/); expect(r).toMatch(/share of N=/); expect(r).toMatch(/denominator/)
   })
-  it.skipIf(!has('public/data/lexicon.json'))('every card carries byEpoch/byRegion N next to f', () => {
+  it.skipIf(!hasData())('every card carries byEpoch/byRegion N next to f', () => {
     const c = corpus()
     for (const l of lex().slice(0, 300)) for (const r of l.stats.byRegion ?? []) expect(r.N).toBeGreaterThan(0)
     expect(c.N).toBeGreaterThan(0)
@@ -45,7 +45,7 @@ describe('P-1.6 statistics carry denominators', () => {
 })
 
 describe('P-1.7 inferred ≠ fact', () => {
-  it.skipIf(!has('public/data/lexicon.json'))('a Stanza-lemma link says it is a model prediction', () => {
+  it.skipIf(!hasData())('a Stanza-lemma link says it is a model prediction', () => {
     let n = 0
     for (const c of lex()) for (const f of c.forms) if (f.link.value !== 'unknown' && f.link.value.route === 'stanza-lemma') {
       n++; expect(f.link.evidence.some(e => /stanza/.test(e.source) && /модельна лематизація/.test(e.note ?? '')), c.lemma).toBe(true)
@@ -114,7 +114,7 @@ describe('M-6 / B-6 outputs', () => {
     const r = readFileSync('analysis/REPORT.md', 'utf8')
     for (let i = 1; i <= 8; i++) expect(r, `## ${i}.`).toMatch(new RegExp(`^## ${i}\\. `, 'm'))
   })
-  it.skipIf(!has('public/data/lexicon.json'))('M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB, lexindex ≤ 4 MB (B-5)', () => {
+  it.skipIf(!hasData())('M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 192 KiB, lexindex ≤ 4 MB (B-5)', () => {
     for (const f of ['corpus', 'lexicon', 'lexindex']) expect(has(`public/data/${f}.json`)).toBe(true)
     const core = readFileSync('public/data/lexicon.json')
     expect(core.length).toBeLessThanOrEqual(15 * 1024 * 1024)
@@ -128,7 +128,7 @@ describe('M-6 / B-6 outputs', () => {
   })
 })
 
-describe.skipIf(!has('public/data/lexicon.json'))('B-3 / B-4 properties of the built lexicon', () => {
+describe.skipIf(!hasData())('B-3 / B-4 properties of the built lexicon', () => {
   const cards = lex(), c = corpus()
   it('B-2.2 / B-1.1 corpus meta: rusynStatus note with evidence, regions with N', () => { expect(c.rusynStatus.evidence.length).toBeGreaterThan(3); expect(c.regions.length).toBeGreaterThan(0) })
   it('B-3.4 oldest is no younger than any stored spelling', () => {
@@ -156,7 +156,7 @@ describe.skipIf(!has('public/data/lexicon.json'))('B-3 / B-4 properties of the b
 })
 
 describe('P-1.4 triggered labels carry the rule citation and the trigger', () => {
-  it.skipIf(!has('public/data/lexicon.json'))('in the built lexicon', () => {
+  it.skipIf(!hasData())('in the built lexicon', () => {
     let n = 0
     for (const l of lex()) for (const f of l.forms) for (const [k, cl] of Object.entries(f.claims)) {
       if (!cl.method || k === 'rusyn' && !cl.method) continue

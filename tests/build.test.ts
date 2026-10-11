@@ -13,7 +13,7 @@ import { BUCKETS, bucketOf, isFull, mergeCard, packShard, splitCard, unpackShard
 import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { readFull } from './lexdata.ts'
+import { hasData, readFull } from './lexdata.ts'
 import { REGIONS, regionOf } from '../pipelines/regions.ts'
 import { SURZHYK_DEF } from '../core/rules.ts'
 
@@ -206,8 +206,7 @@ describe('regions (research/07 §3.3, SPEC 20 B-3.6)', () => {
 })
 
 // P-1.1 over the real built data (skipped on a clean checkout without public/data)
-const DATA = 'public/data/lexicon.json'
-describe.skipIf(!existsSync(DATA))('P-1.1 every claim in the built lexicon passes claim() validation', () => {
+describe.skipIf(!hasData())('P-1.1 every claim in the built lexicon passes claim() validation', () => {
   const cards: LemmaCard[] = readFull()
   const isClaim = (x: unknown): x is Claim<unknown> => !!x && typeof x === 'object' && 'value' in x && 'evidence' in x && Array.isArray((x as Claim<unknown>).evidence)
   const walk = (x: unknown, path: string, out: { path: string; c: Claim<unknown> }[]) => {
