@@ -152,6 +152,7 @@ import { renderMd } from '../src/lib/md.ts'
 import Kwic from '../src/components/Kwic.vue'
 import { sourceLink } from '../src/lib/source.ts'
 import StatsExplainer from '../src/components/StatsExplainer.vue'
+import TextsView from '../src/views/TextsView.vue'
 import RegionMap from '../src/components/RegionMap.vue'
 import { regionRows, stepOf } from '../src/lib/geo.ts'
 import { Q, P, claim } from '../core/evidence.ts'
@@ -388,5 +389,15 @@ describe('W1-4 statistics explainer (U-24)', () => {
   it.skipIf(!cards.length)('names every measure with its formula and the corpus bias caveat', async () => {
     const html = await ssr(StatsExplainer, { card: cards[0]! })
     for (const s of ['Як читати статистику', 'ipm = f / N', 'HK = round', 'DP =', 'G² =', 'Log Ratio', 'logDice =', 'research/06 §3.5']) expect(html).toContain(s)
+  })
+})
+
+describe('W1-5 /texts reader (U-8)', () => {
+  it('route and nav exist; the view reads public/data/texts/<witness>.json and links words to /w/:lemma', () => {
+    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/texts"')
+    const v = readFileSync('src/views/TextsView.vue', 'utf8'); expect(v).toContain('./data/texts/'); expect(v).toContain('/w/${encodeURIComponent(t.lemma)}'); expect(v).toContain('annotate(')
+  })
+  it('SSR before data load shows the skeleton, not a crash', async () => {
+    expect(await ssr(TextsView, {}, '/texts')).toContain('Тексти корпусу')
   })
 })

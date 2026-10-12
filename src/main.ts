@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+﻿import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 import './style.css'
@@ -12,6 +12,7 @@ const router = createRouter({
     { path: '/analyze', component: () => import('./views/AnalyzeView.vue') },
     { path: '/derive', component: () => import('./views/DeriveView.vue') },
     { path: '/annotate', component: () => import('./views/AnnotateView.vue') },
+    { path: '/texts', component: () => import('./views/TextsView.vue') },
     { path: '/corpus', component: () => import('./views/CorpusView.vue') },
     { path: '/report', component: () => import('./views/ReportView.vue') },
     { path: '/method', component: () => import('./views/MethodView.vue') },

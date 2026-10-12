@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 /** Shell: navigation + FIXTURE banner (data/*.json carry "generated": "FIXTURE" until the real pipeline overwrites them). */
 import { useData } from './composables/useData.ts'
 const { isFixture, error, loading, progress } = useData()
@@ -13,6 +13,7 @@ const { isFixture, error, loading, progress } = useData()
       <RouterLink to="/annotate">Анотатор</RouterLink>
       <RouterLink to="/analyze">Аналіз слова</RouterLink>
       <RouterLink to="/derive">Деривація</RouterLink>
+      <RouterLink to="/texts">Тексти</RouterLink>
       <RouterLink to="/corpus">Корпус</RouterLink>
       <RouterLink to="/report">Звіт</RouterLink>
       <RouterLink to="/method">Метод</RouterLink>
