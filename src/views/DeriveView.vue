@@ -8,7 +8,8 @@ import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { explain, principles } from '../../core/reverse.ts'
 import { derivatives } from '../../core/derivation.ts'
-import { lexHas } from '../lib/lexhas.ts'
+import { modernize } from '../../core/modernize.ts'
+import { lexHas, lexHasBool } from '../lib/lexhas.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps, paradigmOf, reconstruct } from '../lib/derive.ts'
@@ -16,6 +17,7 @@ import DerivationSteps from '../components/DerivationSteps.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
 import FormBadge from '../components/FormBadge.vue'
+import ModernForms from '../components/ModernForms.vue'
 import FormLegend from '../components/FormLegend.vue'
 import SourceCite from '../components/SourceCite.vue'
 type Dir = 'old2new' | 'new2old' | 'prefix'
@@ -31,7 +33,7 @@ const flip = (d: Dir) => { dir.value = d; if (q.value.trim()) submit() }
 const par = computed(() => (word.value && dir.value === 'new2old' && loaded.value ? paradigmOf(word.value, searchIdx.value, byLemma.value) : { forms: [] as string[] }))
 /** MO-2: modern orthography is the last step; a form the lexicon attests is never rewritten (core/modernize.ts) */
 const fwd = computed(() => (word.value && dir.value === 'old2new'
-  ? deriveWithSteps(word.value).candidates.map(c => ({ ...c, lemma: searchIdx.value.map.get(key(c.form))?.[0]?.lemma })) : []))
+  ? deriveWithSteps(word.value).candidates.map(c => ({ ...c, lemma: searchIdx.value.map.get(key(c.form))?.[0]?.lemma, mod: loaded.value ? modernize(c.form, lexHasBool(annData.value)) : [] })) : []))
 /** DV-3: prefix mode — the input is a lemma, e.g. ділати */
 const pfx = computed(() => (word.value && dir.value === 'prefix' && loaded.value ? derivatives(word.value, lexHas(annData.value)) : []))
 const pfxAtt = computed(() => pfx.value.filter(d => d.status !== 'suggestion')), pfxSug = computed(() => pfx.value.filter(d => d.status === 'suggestion'))
@@ -103,6 +105,7 @@ const path = computed(() => (word.value && target.value && dir.value === 'old2ne
           <RouterLink v-if="c.lemma" :to="`/w/${encodeURIComponent(c.lemma)}`" class="small sans"> → картка «{{ c.lemma }}»</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з винятками: {{ c.branches }}</span>
           <DerivationSteps :steps="c.steps" :uid="c.form" />
+          <ModernForms :mods="c.mod" />
         </li>
         <li v-if="!fwd.length" class="muted">Кандидатів немає.</li>
       </ul></section>

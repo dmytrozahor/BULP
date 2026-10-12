@@ -14,6 +14,9 @@ import { AXIS_UK, labelUk } from '../lib/format.ts'
 import { categoryOf, isRusyn, runDetectors, ruleOf, ALL_RULES } from '../lib/analyze.ts'
 import { annotateSyntax } from '../lib/annotate.ts'
 import SyntaxSpans from '../components/SyntaxSpans.vue'
+import { modernize } from '../../core/modernize.ts'
+import { lexHasBool } from '../lib/lexhas.ts'
+import ModernForms from '../components/ModernForms.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import FormBadge from '../components/FormBadge.vue'
@@ -27,6 +30,9 @@ const submit = () => { word.value = q.value.trim(); router.replace({ query: word
 const y = computed(() => (/^\d{3,4}$/.test(year.value) ? +year.value : undefined))
 const d = computed(() => (word.value ? deriveWithSteps(word.value) : undefined))
 const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, annData.value, y.value) : undefined))
+/** MO-2: last step of the old → modern derivation — «сучасний правопис: …», never over a form the lexicon attests */
+const hasForm = computed(() => lexHasBool(annData.value))
+const modOf = (form: string) => (loaded.value ? modernize(form, hasForm.value) : [])
 const inLex = computed(() => (word.value ? searchIdx.value.map.get(key(word.value)) ?? [] : []))
 const allClaims = computed(() => Object.entries(a.value?.claims ?? {}))
 const hasRusyn = computed(() => allClaims.value.some(([l]) => isRusyn(l)))
@@ -61,6 +67,7 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>
           <div v-else class="small muted sans">без змін (форма вже сучасна за цими правилами)</div>
+          <ModernForms :mods="modOf(c.form)" />
           <template v-for="(s, i) in c.steps" :key="'e' + i"><div v-if="open === c.form + i" class="card" style="margin:.3rem 0"><EvidenceList :evidence="[ruleById[s.rule]!.cite]" /></div></template>
         </li>
       </ul>
