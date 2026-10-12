@@ -4,6 +4,8 @@
  */
 import { D, type Evidence } from './evidence.ts'
 import type { CellForm, CellKey, CorpusMeta, EpochParadigms } from './types.ts'
+import { isPronTags } from './pos-gate.ts'
+const l0 = (t: string[]) => t.join(':')
 
 export const CASES = ['nom', 'gen', 'dat', 'acc', 'ins', 'loc', 'voc'] as const
 export type Case = (typeof CASES)[number]
@@ -75,11 +77,11 @@ const VPOS: Record<string, Grid> = { noun: 'noun', adj: 'adj', verb: 'verb' }
 /** VESUM tag lines of the lemma that list the attested spelling (research/02 §2): singular lines carry gender m/f/n, plural lines `p`; every line gives one (number, case) key. The first line decides the grid. */
 export function cellsFromVesum(tagLines: string[]): Decoded {
   const lines = tagLines.map(l => l.split(':')), first = lines[0]
-  const grid = !first ? undefined : first.includes('&pron') ? 'pron' : VPOS[first[0] ?? '']
+  const grid = !first ? undefined : isPronTags(first.join(':')) ? 'pron' : VPOS[first[0] ?? '']
   if (grid !== 'noun') return other(grid)
   const keys: CellKey[] = [], genders = new Set<'m' | 'f' | 'n'>()
   for (const t of lines) {
-    if (t[0] !== 'noun' || t.includes('&pron')) continue
+    if (t[0] !== 'noun' || isPronTags(l0(t))) continue
     const num: Num = t.includes('p') ? 'pl' : 'sg'
     for (const c of t.flatMap(x => x.split('/')).map(x => VCASE[x]).filter((x): x is Case => !!x)) keys.push(nounKey(num, c))
     for (const g of ['m', 'f', 'n'] as const) if (t.includes(g)) genders.add(g)

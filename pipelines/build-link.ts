@@ -12,19 +12,21 @@ import { ruleById, type Candidate } from '../core/phonology.ts'
 import { foldById } from '../core/orthography.ts'
 import { key } from '../core/text.ts'
 import type { TraceStep, VesumHit } from '../core/types.ts'
+import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
+import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string }
+export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
   fold: (s: string, orth?: string) => Candidate[]
 }
-export interface Option { id: string; lemma: string; form: string; hit: VesumHit; cand: Candidate; tier: number; own: Candidate; ownConfirmed: boolean }
+export interface Option { id: string; lemma: string; form: string; hit: VesumHit; cand: Candidate; tier: number; own: Candidate; ownConfirmed: boolean; cls: VClass; corr?: { row: Correspondence; old: string } }
 export interface Chosen extends Option { alternatives: string[]; decidedBy: 'unique' | 'tier' | 'branches' | 'frequency' | 'first' }
 
 /** 0 = unflagged, 1 = arch/alt/short (historical or variant but not substandard), 2 = bad/err/subst/slang/vulg/obsc. */
@@ -32,7 +34,7 @@ export const tierOf = (tags: string) => /:(bad|err|subst|slang|vulg|obsc)\b/.tes
 const isHead = (h: VesumHit, k: string) => key(h.lemma) === k
 
 function toOption(k: string, h: VesumHit, cand: Candidate, own: Candidate, ownConfirmed: boolean): Option {
-  return { id: key(h.lemma), lemma: h.lemma, form: key(h.lemma) === k ? h.lemma : k, hit: h, cand, tier: tierOf(h.tags), own, ownConfirmed }
+  return { id: key(h.lemma), lemma: h.lemma, form: key(h.lemma) === k ? h.lemma : k, hit: h, cand, tier: tierOf(h.tags), own, ownConfirmed, cls: vesumClass(h.tags) }
 }
 
 /** B-2.1 — pure, tested. Options are deduplicated by lemma id (best tier, then fewest branches). */
@@ -41,7 +43,9 @@ export function chooseLemma(opts: Option[], freq: ReadonlyMap<string, number>): 
   const best = new Map<string, Option>()
   // same id = same lemma up to case (VESUM lists «Князь» surname and «князь» noun): the common-noun spelling is the display form
   const lower = (o: Option) => (o.lemma === o.lemma.toLowerCase() ? 0 : 1)
-  for (const o of opts) { const p = best.get(o.id); if (!p || o.tier < p.tier || (o.tier === p.tier && (o.cand.branches < p.cand.branches || (o.cand.branches === p.cand.branches && lower(o) < lower(p))))) best.set(o.id, o) }
+  // FX-3: homonyms of different POS class (VESUM «да» particle vs «ДА» noun) are distinct options even though key() makes them one id
+  const bk = (o: Option) => o.id + '|' + o.cls
+  for (const o of opts) { const p = best.get(bk(o)); if (!p || o.tier < p.tier || (o.tier === p.tier && (o.cand.branches < p.cand.branches || (o.cand.branches === p.cand.branches && lower(o) < lower(p))))) best.set(bk(o), o) }
   const all = [...best.values()]
   if (!all.length) return undefined
   const minTier = Math.min(...all.map(o => o.tier))
@@ -65,17 +69,24 @@ function ownFor(id: string, cands: Candidate[], hits: Env['hits']): { own: Candi
 
 /** First successful route for one token type (B-2). Returns the route with ALL its options (disambiguated later by chooseLemma). */
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
+  // FX-1: every route keeps only analyses whose POS class is compatible with the token's own POS annotation; an empty route falls through to the next
+  const gated = (os: Option[]) => os.filter(o => compatible(t.gate, o.hit.tags))
   const viaLemma = (lemma: string): Option[] => {
     const raw = env.derive(t.raw, t.oldI).candidates
-    return env.derive(lemma, t.oldI).candidates.flatMap(c => {
+    // FX-2: a cited suppletive correspondence (азъ → я, …) replaces the lemma; only VESUM analyses of the stated POS class count
+    const row = correspondenceFor(lemma)
+    const corr = row ? { row, old: lemma } : undefined
+    const via = (l: string, c0?: typeof corr): Option[] => env.derive(l, t.oldI).candidates.flatMap(c => {
       const k = key(c.form)
-      return (env.hits.get(k) ?? []).filter(h => isHead(h, k)).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return toOption(k, h, c, o.own, o.ok) })
+      return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || vesumClass(h.tags) === c0.row.cls)).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
     })
+    const viaCorr = corr ? gated(via(corr.row.modern, corr)) : []
+    return viaCorr.length ? viaCorr : gated(via(lemma))
   }
   if (t.lemma) { const opts = viaLemma(t.lemma); if (opts.length) return { route: 'torot-lemma', opts } }
   if (t.stanza) { const opts = viaLemma(t.stanza); if (opts.length) return { route: 'stanza-lemma', opts } }
   if (t.lang !== 'uk') {
-    const opts = env.derive(t.raw, t.oldI).candidates.flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true)))
+    const opts = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true))))
     if (opts.length) return { route: 'token', opts }
   } else {
     const opts = env.fold(key(t.raw), t.orth).flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true)))
@@ -87,7 +98,10 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
 /** Candidate keys a token type may need from VESUM (collected before the single pass). */
 export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): string[] {
   const out: string[] = []
-  for (const l of [t.lemma, t.stanza]) if (l) for (const c of env.derive(l, t.oldI).candidates) out.push(key(c.form))
+  for (const l of [t.lemma, t.stanza]) if (l) {
+    for (const c of env.derive(l, t.oldI).candidates) out.push(key(c.form))
+    const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form))
+  }
   if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) out.push(key(c.form))
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   return out
@@ -113,7 +127,7 @@ const GENDER: Record<string, string> = { m: 'ч.р.', f: 'ж.р.', n: 'с.р.' }
 /** Ukrainian POS label from VESUM lemma tags (verbatim tags stay in the paradigm). */
 export function posLabel(tags: string): string {
   const t = tags.split(':')
-  const base = t.includes('&pron') ? 'займенник' : (POS[t[0] ?? ''] ?? (t[0] || 'невідомо'))
+  const base = t.includes('pron') || t.includes('&pron') ? 'займенник' : (POS[t[0] ?? ''] ?? (t[0] || 'невідомо'))
   const g = t[0] === 'noun' ? t.find(x => x in GENDER) : undefined
   return g ? `${base}, ${GENDER[g]}` : base
 }

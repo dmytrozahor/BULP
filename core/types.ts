@@ -71,6 +71,8 @@ export interface LemmaStats {
 
 export interface LemmaCard {
   lemma: string; pos: string
+  /** SPEC 61 FX-5: paradigm kind by the lemma's VESUM POS (core/pos-gate.ts); absent in pre-FX data (readers infer from `paradigm` tags) */
+  paradigmKind?: 'noun' | 'pron' | 'adj' | 'verb' | 'numr' | 'uninflected'
   epochs?: EpochParadigms                                       // SPEC 50 EP-1.1: lives in LemmaDetail (shards), never in CoreCard / lexicon.json
   paradigm: { form: string; tags: string }[]                    // VESUM forms, verbatim tags (D-evidence)
   stress: StressVariant[]

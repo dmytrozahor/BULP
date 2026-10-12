@@ -83,6 +83,10 @@ export function renderReport(d: ReportData): string {
     }
     P(md(rows, ['epoch', 'epoch N (corpus tokens)', 'tag source', 'tagged tokens', 'placed (% of tagged)', 'conflict', 'underspecified', 'untagged (linked, no tag)', 'lemmas with ≥ 1 cell', 'cells', 'cell spellings']))
     P('Conflicts by reason (token × epoch; `grid:X` = the token\'s own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): ' + (Object.entries(E.conflictWhy).sort((a, b) => b[1] - a[1]).map(([k, v]) => `${k}: ${num(v)}`).join(' · ') || '—') + '.')
+    if (E.probe && Object.keys(E.probe).length) {   // FX-6
+      P('**Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns and other non-noun lemmas have no noun grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:pron` etc. until the pronominal grid (SPEC 50 phase 2) exists; this is not a linking error.')
+      P(md(Object.entries(E.probe).map(([id, p]) => [id, p.kind || '—', num(p.tokens), num(p.placed), num(p.conflict), num(p.underspecified), num(p.untagged), Object.entries(p.why).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, v]) => `${k} ${v}`).join(', ') || '—']), ['lemma', 'kind', 'tokens', 'placed', 'conflict', 'underspecified', 'untagged', 'main conflict reasons']))
+    }
     const rules = Object.entries(E.stemByRule).sort((a, b) => a[0].localeCompare(b[0]))
     P(`**Stem types** (EP-4): ${num(E.lemmasWithEpochs)} lemmas carry epoch paradigms; stem claim known for ${num(rules.reduce((s, r) => s + r[1], 0))} (of which ${num(E.stemStanza)} from a Stanza lemma, model-based per decision D4), \`unknown\` for ${num(E.stemUnknown)}. By rule: ${rules.map(([r, n]) => `${r}: ${n}`).join(' · ') || '—'}.`)
     const r = E.recon

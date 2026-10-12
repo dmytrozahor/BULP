@@ -23,6 +23,8 @@ export interface EpochEnv {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { candidates: { form: string }[] }
   vesumLoc: string
+  /** FX-6: lemma ids whose per-token outcome is tallied in stats.probe even when they are not noun lemmas */
+  probe?: ReadonlySet<string>; kindOf?: (id: string) => string
 }
 export interface SrcCount { tagged: number; placed: number; conflict: number; underspecified: number }
 export interface EpochStats {
@@ -30,6 +32,8 @@ export interface EpochStats {
   conflictWhy: Record<string, number>   // `${source}:${reason}` → tokens (a token in k epochs counts k times)
   stemByRule: Record<string, number>; stemStanza: number; stemUnknown: number; lemmasWithEpochs: number
   recon: { stems: number; cells: number; forms: number; confirmed: number; confirmedCells: number }
+  /** FX-6: per test lemma, tokens by outcome (a token counted once, not per epoch); `why` = `${source}:${reason}` of the conflicts */
+  probe: Record<string, { kind: string; tokens: number; untagged: number; placed: number; conflict: number; underspecified: number; why: Record<string, number> }>
 }
 
 const rawKey = (s: string) => s.normalize('NFC').toLowerCase()
@@ -43,7 +47,7 @@ interface LemAcc { id: string; eps: Map<string, EpAcc>; obs: Map<string, Obs>; g
 
 export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay).map(e => e.id)) {
   const accs = new Map<string, LemAcc>()
-  const stats: EpochStats = { perEpoch: {}, conflictWhy: {}, stemByRule: {}, stemStanza: 0, stemUnknown: 0, lemmasWithEpochs: 0, recon: { stems: 0, cells: 0, forms: 0, confirmed: 0, confirmedCells: 0 } }
+  const stats: EpochStats = { perEpoch: {}, conflictWhy: {}, stemByRule: {}, stemStanza: 0, stemUnknown: 0, lemmasWithEpochs: 0, recon: { stems: 0, cells: 0, forms: 0, confirmed: 0, confirmedCells: 0 }, probe: {} }
   const st = (e: string) => (stats.perEpoch[e] ??= { bySrc: { torot: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 }, stanza: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 }, vesum: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 } }, untagged: 0, lemmas: 0, cells: 0, cellForms: 0 })
   const pcache = new Map<string, Decoded>(), ucache = new Map<string, Decoded>()
   const proiel = (m: string) => pcache.get(m) ?? (pcache.set(m, cellsFromProiel(m)), pcache.get(m)!)
@@ -55,7 +59,8 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
     if (!eps.length) return
     w.tokens.forEach((tok, ti) => {
       const L = env.linked[env.tix[wi]![ti]!]
-      if (!L || !env.lemmas.has(L.c.id)) return
+      const isProbe = !!L && !!env.probe?.has(L.c.id)
+      if (!L || (!env.lemmas.has(L.c.id) && !isProbe)) return
       // ── EP-3.1 / EP-2.1: one tag source per token ──
       let src: TagSource | undefined, tag = '', dec: Decoded | undefined, conflict = '', oldLemma: string | undefined
       const nt = nlp?.tokens[ti]
@@ -70,6 +75,16 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
         const lines = (env.hits.get(key(L.c.own.form)) ?? []).filter(h => key(h.lemma) === L.c.id).map(h => h.tags)
         if (lines.length) { src = 'vesum'; tag = lines.join(' | '); dec = cellsFromVesum(lines) }
       }
+      const why = !src || !dec ? '' : conflict || (dec.grid !== 'noun' ? 'grid:' + (dec.grid ?? 'none') : '')
+      if (isProbe) {   // FX-6 diagnostics: one outcome per token for the named test lemmas (also non-noun ones, which have no noun grid by design)
+        const p = (stats.probe[L.c.id] ??= { kind: env.kindOf?.(L.c.id) ?? '', tokens: 0, untagged: 0, placed: 0, conflict: 0, underspecified: 0, why: {} })
+        p.tokens++
+        if (!src || !dec) p.untagged++
+        else if (why) { p.conflict++; const k = src + ':' + why; p.why[k] = (p.why[k] ?? 0) + 1 }
+        else if (dec.under || !dec.keys.length) p.underspecified++
+        else p.placed++
+      }
+      if (!env.lemmas.has(L.c.id)) return
       for (const e of eps) {
         let la = accs.get(L.c.id)
         if (!la) accs.set(L.c.id, la = { id: L.c.id, eps: new Map(), obs: new Map(), genders: new Map(), sources: new Map() })
@@ -77,7 +92,6 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
         if (!ea) la.eps.set(e, ea = { N: 0, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: new Map() })
         if (!src || !dec) { ea.dropped.untagged++; st(e).untagged++; continue }
         const c = st(e).bySrc[src]; c.tagged++; ea.N++
-        const why = conflict || (dec.grid !== 'noun' ? 'grid:' + (dec.grid ?? 'none') : '')
         if (why) { ea.dropped.conflict++; c.conflict++; stats.conflictWhy[src + ':' + why] = (stats.conflictWhy[src + ':' + why] ?? 0) + 1; continue }   // EP-3.3 grid mismatch / EP-3.4
         if (dec.under || !dec.keys.length) { ea.dropped.underspecified++; c.underspecified++; continue }
         c.placed++

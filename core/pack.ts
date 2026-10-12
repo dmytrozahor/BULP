@@ -65,7 +65,7 @@ export function packCore(cards: CoreCard[]): PackedCore {
     const { f, ipm, hk, dots } = c.stats
     const fv = c.first.value as Partial<CoreFirst['value']> | string, ft = typeof fv === 'object' && !c.first.evidence.length && Object.keys(c.first).length === 2 && Object.keys(fv).length === 4
     const first = ft ? [fv.author, fv.witness, fv.date![0], fv.date![1], fv.form] : p.one(c.first).card
-    return [c.lemma, c.pos, par, forms, first, p.one(k).card, [f, ipm, hk, dots]]
+    return [c.lemma, c.pos, par, forms, first, p.one(k).card, [f, ipm, hk, dots], ...(c.paradigmKind ? [c.paradigmKind] : [])]   // 8th element (FX-5) optional
   })
   return { format: 3, ev: p.ev, tags: table, cards: wire }
 }
@@ -74,11 +74,11 @@ export function unpackCore(j: unknown): CoreCard[] {
   if (!(p && !Array.isArray(p) && p.format === 3 && Array.isArray(p.ev) && Array.isArray(p.tags) && Array.isArray(p.cards))) return unpack(j)
   const R = <T>(x: T) => restore(p.ev, x)
   return p.cards.map(w => {
-    const [lemma, pos, par, forms, first, claims, st] = w as [string, string, (string | number)[], (string | unknown[])[], CoreCard['first'] | (string | number)[], Record<string, unknown>, number[]]
+    const [lemma, pos, par, forms, first, claims, st, pk] = w as [string, string, (string | number)[], (string | unknown[])[], CoreCard['first'] | (string | number)[], Record<string, unknown>, number[], CoreCard['paradigmKind']?]
     const paradigm: CoreCard['paradigm'] = []; let form = ''
     for (const x of par) typeof x === 'string' ? (form = x) : paradigm.push({ form, tags: p.tags[x]! })
     return {
-      lemma, pos, paradigm,
+      lemma, pos, ...(pk ? { paradigmKind: pk } : {}), paradigm,
       forms: forms.map(f => (typeof f === 'string' ? { raw: f, norm: f, modern: f, claims: {}, hints: [] } : { raw: f[0], norm: f[1], modern: f[2], claims: R(f[3]), hints: f[4] }) as CoreCard['forms'][number]),
       first: Array.isArray(first) ? { value: { author: first[0], witness: first[1], date: [first[2], first[3]], form: first[4] }, evidence: [] } as CoreCard['first'] : R(first as CoreCard['first']),
       claims: { register: JSON.parse(UNKNOWN), surzhyk: JSON.parse(UNKNOWN), dialect: {}, ...R(claims) } as CoreCard['claims'],

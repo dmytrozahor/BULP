@@ -152,3 +152,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LW-3 | tests/loanwords.test.ts › екстремітет: hypothesis only — no claim, no label, flagged as a hypothetical form |
 | UL-1 | tests/usage.test.ts › UL-1 VESUM slang/arch/vulg/obsc and Wiktionary categories give claims; each carries D evidence with a locator and the CC BY-SA note |
 | NW-7 | tests/songs.test.ts › NW-7 lyrics policy: authored songs carry at most 2 quoted lines, never audio; the licence tag matches |
+| FX-1 | tests/fx.test.ts › a pronoun / conjunction never links to a common noun; a noun does |
+| FX-2 | tests/fx.test.ts › азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я |
+| FX-3 | tests/fx.test.ts › same witness and date: the commoner spelling is the first attestation (мя vs ми case) |
+| FX-4 | manual — build, data:publish and push are release steps (build:data budgets are enforced by tests/gaps.test.ts › M-6; data branch by tests/data-branch.test.ts) |
+| FX-5 | tests/fx.test.ts › paradigm kind by POS |
+| FX-6 | tests/fx.test.ts › FX-6: real nouns place most tagged tokens in cells |

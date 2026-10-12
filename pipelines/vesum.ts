@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { createInterface } from 'node:readline'
 import type { VesumHit } from '../core/types.ts'
 import { key } from '../core/text.ts'
+import { vesumClass } from '../core/pos-gate.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const VESUM_TXT = resolve(ROOT, 'data/raw/vesum/dict_corp_vis.txt')
@@ -59,12 +60,14 @@ export interface VesumIndex {
 }
 
 /** Pure core of vesumIndex over any line source (tests feed fixtures). */
-export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<string>): Promise<VesumIndex> {
-  const wantF = new Set([...forms].map(key)), wantL = new Set([...lemmas].map(key))
+export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<string> | Map<string, string>): Promise<VesumIndex> {
+  const wantF = new Set([...forms].map(key))
+  // FX-3: a Map id → VClass restricts the paradigm/lemmaTags of an id to the lemma line of that POS class (VESUM «да» particle vs «ДА» noun are different lemmas under one key)
+  const wantL = new Map<string, string | undefined>((lemmas instanceof Map ? [...lemmas] : [...lemmas].map(l => [l, undefined] as [string, undefined])).map(([l, c]) => [key(l), c]))
   const hits = new Map<string, VesumHit[]>(), paradigms = new Map<string, { form: string; tags: string }[]>(), lemmaTags = new Map<string, string>()
   let lk = '', lWanted = false
   await scanVesum(lines, e => {
-    if (e.head) { lk = key(e.lemma); lWanted = wantL.has(lk); if (lWanted && !lemmaTags.has(lk)) lemmaTags.set(lk, e.lemmaTags) }
+    if (e.head) { lk = key(e.lemma); lWanted = wantL.has(lk) && (wantL.get(lk) === undefined || wantL.get(lk) === vesumClass(e.lemmaTags)); if (lWanted && !lemmaTags.has(lk)) lemmaTags.set(lk, e.lemmaTags) }
     const fk = key(e.form)
     if (wantF.has(fk)) {
       const a = hits.get(fk) ?? []
@@ -76,7 +79,7 @@ export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<s
 }
 
 /** ONE streaming pass over the unpacked VESUM: analyses of `forms` (by key) and full paradigms of `lemmas` (by key). */
-export const vesumIndex = (forms: Set<string>, lemmas: Set<string>) => indexLines(fileLines(), forms, lemmas)
+export const vesumIndex = (forms: Set<string>, lemmas: Set<string> | Map<string, string>) => indexLines(fileLines(), forms, lemmas)
 
 /** Pure core of lexIndexVesum. Keeps headwords carrying any flag tag, plus all forms carrying a FULL-list tag. */
 export async function lexLines(lines: Lines): Promise<Record<string, VesumHit[]>> {

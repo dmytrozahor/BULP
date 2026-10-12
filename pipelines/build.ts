@@ -29,13 +29,15 @@ import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
 import { ltIndex } from './lt.ts'
 import { chooseLemma, linkOptions, posLabel, traceSteps, wantedKeys, ROUTE_RANK, type Chosen, type Env, type Route, type TypeCtx } from './build-link.ts'
 import {
-  admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
+  admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, rankFirst, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
   type AnnEnv, type FirstCand, type FormAcc, type Ref, type StressJson,
 } from './build-annotate.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
+import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
+import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
 import { writeUsage } from './build-usage.ts'
@@ -72,10 +74,10 @@ export function loadWitnesses(dir = WORK): Loaded[] {
 const century = (d: [number, number]) => Math.floor((Math.round((d[0] + d[1]) / 2) - 1) / 100) + 1
 
 interface LemmaAcc {
-  id: string; display: string; tags: string; idx: number; f: number
+  id: string; display: string; tags: string; cls: string; idx: number; f: number
   perW: Map<string, number>; perEpoch: Map<string, number>; perCentury: Map<number, number>
   forms: Map<string, FormAcc>
-  firstByW: Map<string, { ref: Ref; raw: string; route: Route; loc: string }>
+  firstByW: Map<string, { wid: string; ref: Ref; raw: string; route: Route; loc: string; n: number }>   // FX-3: key = witness id + spelling
   pre1400: boolean
   nm: { torot?: NameEvidence['torot']; stanza?: NameEvidence['stanza']; nMorph: number; nNlp: number }   // NP-1 counters
 }
@@ -121,9 +123,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const a = new Int32Array(w.tokens.length)
     w.tokens.forEach((t, i) => {
       const raw = rawKey(t.raw), lemma = t.lemma || undefined, stanza = !lemma ? nlp?.tokens[i]?.lemma || undefined : undefined
-      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${raw}`
+      const gate = w.lang === 'uk' ? undefined : gateKey(t.morph, nlp?.tokens[i]?.upos)   // FX-1: the token's own POS (TOROT manual, else Stanza)
+      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${raw}`
       let x = typeIdx.get(k)
-      if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza }); typeCount.push(0) }
+      if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate }); typeCount.push(0) }
       typeCount[x]!++; a[i] = x
     })
     return a
@@ -145,6 +148,30 @@ export async function build(opts: { noPy?: boolean } = {}) {
     if (c && (c.decidedBy === 'unique' || c.decidedBy === 'tier')) bump(freq, c.id, typeCount[x]!)
   })
   const linked = opts1.map(o => { const c = o ? chooseLemma(o.opts, freq) : undefined; return c && o ? { c, route: o.route } : undefined })
+  {   // FX-1 diagnostics: token types that would link without the gate but have no compatible analysis (they stay unresolved, B-2.2)
+    const lost = new Map<string, { tokens: number; ex: Map<string, number> }>()
+    types.forEach((t, x) => {
+      if (opts1[x] || !t.gate) return
+      const u = linkOptions({ ...t, gate: undefined }, env); if (!u) return
+      const l = lost.get(t.gate) ?? lost.set(t.gate, { tokens: 0, ex: new Map() }).get(t.gate)!
+      l.tokens += typeCount[x]!; l.ex.set(`${t.raw}→${chooseLemma(u.opts, freq)?.lemma}`, typeCount[x]!)
+    })
+    for (const [g, l] of [...lost].sort((a, b) => b[1].tokens - a[1].tokens)) lap(`gate ${g}: ${l.tokens} tokens unresolved by POS (e.g. ${[...l.ex].sort((a, b) => b[1] - a[1]).slice(0, 6).map(e => e[0]).join(', ')})`)
+  }
+  {   // FX-3: one lemma = one POS class. Where tokens of one lemma id were linked to analyses of different classes, the class carrying most tokens wins and the others re-choose among
+    // the remaining options of their route (an option of another id is fine; the same id in the losing class is not); nothing left → unresolved (B-2.2).
+    const votes = new Map<string, Map<string, number>>()
+    linked.forEach((L, x) => { if (!L) return; const m = votes.get(L.c.id) ?? votes.set(L.c.id, new Map()).get(L.c.id)!; m.set(L.c.cls, (m.get(L.c.cls) ?? 0) + typeCount[x]!) })
+    const major = new Map([...votes].map(([id, m]) => [id, [...m].sort((a, b) => b[1] - a[1])[0]![0]]))
+    let moved = 0, dropped = 0
+    linked.forEach((L, x) => {
+      if (!L || major.get(L.c.id) === L.c.cls) return
+      const o = opts1[x]!, rest = o.opts.filter(p => p.id !== L.c.id || p.cls === major.get(p.id))
+      const c = chooseLemma(rest, freq)
+      if (c && (major.get(c.id) ?? c.cls) === c.cls) { linked[x] = { c, route: o.route }; moved++ } else { linked[x] = undefined; dropped++ }
+    })
+    lap(`POS agreement (FX-3): ${moved} token types re-linked, ${dropped} left unresolved`)
+  }
 
   // ── 4. aggregate tokens into lemmas / spellings ────────────────────────────────────────────────
   const lemmas = new Map<string, LemmaAcc>(), lemmaList: LemmaAcc[] = []
@@ -162,7 +189,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       nl++; rt[route] = (rt[route] ?? 0) + 1
       let la = lemmas.get(c.id)
       if (!la) {
-        la = { id: c.id, display: c.lemma, tags: c.hit.tags, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, nm: { nMorph: 0, nNlp: 0 } }
+        la = { id: c.id, display: c.lemma, tags: c.hit.tags, cls: c.cls, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, nm: { nMorph: 0, nNlp: 0 } }
         lemmas.set(c.id, la); lemmaList.push(la)
       }
       la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e)
@@ -173,7 +200,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
         if (tok.morph) { nm.nMorph++; if (/^Ne/.test(tok.morph)) { const t = (nm.torot ??= { w: w.id, loc: tok.loc, raw: tok.raw, morph: tok.morph, n: 0, of: 0 }); t.n++ } }
         if (up) { nm.nNlp++; if (up === 'PROPN') { const s = (nm.stanza ??= { w: w.id, loc: tok.loc, raw: tok.raw, n: 0, of: 0 }); s.n++ } }
       }
-      if (!la.firstByW.has(w.id)) la.firstByW.set(w.id, { ref, raw: tok.raw, route, loc: tok.loc })
+      { const fk = w.id + '\0' + raw, fb = la.firstByW.get(fk); if (fb) fb.n++; else la.firstByW.set(fk, { wid: w.id, ref, raw: tok.raw, route, loc: tok.loc, n: 1 }) }
       let fa = la.forms.get(raw)
       if (!fa) {
         la.forms.set(raw, fa = {
@@ -232,7 +259,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     try { await runPy('stress.py'); await runPy('russian_check.py') } catch (e) { console.warn('  ! python stage failed, using existing outputs if any:', String((e as Error).message).slice(0, 300)) }
   }
   lap(`VESUM pass 2 (${keys2.size} keys, ${kept.length} paradigms) + python stages`)
-  const [v2] = await Promise.all([vesumIndex(keys2, new Set(kept.map(l => l.id))), py()])
+  const [v2] = await Promise.all([vesumIndex(keys2, new Map(kept.map(l => [l.id, l.cls] as const))), py()])
   lap('pass 2 done')
   const stressJson = existsSync(resolve(WORK, 'stress.json')) ? rd<StressJson>(resolve(WORK, 'stress.json')) : undefined
   const ruJson = existsSync(resolve(WORK, 'ru.json')) ? rd<{ forms: AnnEnv['ru'] }>(resolve(WORK, 'ru.json')).forms : {}
@@ -240,8 +267,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const annEnv: AnnEnv = { hits: v2.hits, lt, ru: ruJson, derive: dryEnv.derive }
 
   // ── 5b. epoch paradigms of the kept noun lemmas (SPEC 50 EP-3/EP-4) ───────────────────────────
-  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; return t.startsWith('noun') && !t.includes('&pron') ? [[l.id, { display: l.display, tags: t }] as const] : [] }))
+  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; return paradigmKindOf(t) === 'noun' ? [[l.id, { display: l.display, tags: t }] as const] : [] }))   // FX-5: pronouns (VESUM `pron` segment) and other POS have no noun grid
+  const PROBE = ['рука', 'земля', 'князь', 'город', 'син', 'я', 'ти', 'себе', 'аз', 'да']   // FX-6 test lemmas
   const epochRes = buildEpochs({
+    probe: new Set(PROBE), kindOf: id => { const l = lemmas.get(id); return l ? paradigmKindOf(v2.lemmaTags.get(id) ?? l.tags) : '' },
     adm, epochsOf: meta.map(m => (m.sh.value === 'unknown' ? [] : m.sh.value.epochs)), tix, linked, lemmas: nounLemmas, hits: hits1,
     derive: (s, oldI) => derive(s, oldI), vesumLoc: VESUM_LOC,
   })
@@ -261,6 +290,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const linkEvidence = (fa: FormAcc): Evidence[] => {
     const c = fa.chosen, { w, nlp } = adm[fa.ref.wi]!, tok = w.tokens[fa.ref.ti]!
     const ev = [D('VESUM', VESUM_LOC, `${c.form} ${c.hit.tags} (лема: ${c.hit.lemma})`)]
+    if (c.corr) ev.push(corrEvidence(c.corr.row, c.corr.old))   // FX-2
     if (fa.route === 'torot-lemma') ev.push(D('TOROT', `${w.id}: ${tok.loc}`, `${tok.raw} ← лема «${tok.lemma}»${tok.morph ? ' · ' + tok.morph : ''}`, 'наукова анотація TOROT'))
     else if (fa.route === 'stanza-lemma') ev.push(D('stanza orv', nlp?.model ?? 'stanza orv', `${tok.raw} → «${nlp?.tokens[fa.ref.ti]?.lemma}»`, `модельна лематизація, не словниковий факт (P-1.7)${nlp?.outOfDomain ? '; текст поза доменом моделі' : ''}`))
     else ev.push(D(w.id, tok.loc, `${tok.raw} → ${c.own.form}${c.own.trace.length ? ' [' + c.own.trace.join('→') + ']' : ''}`))
@@ -291,15 +321,20 @@ export async function build(opts: { noPy?: boolean } = {}) {
     })
     const lc = lemmaContact(la.display, annEnv)
     const modernCards = pairs.filter(p => p.card.epochs.includes('shev.modern'))
-    // oldest (B-3.4): over ALL spellings of the lemma, not only the selected ones
-    const old = [...la.forms.values()].sort((a, b) => a.date[1] - b.date[1] || b.f - a.f)[0]!
-    const oldW = witMap.get(old.firstW)!
-    const oldest: LemmaCard['claims']['oldest'] = claim({ form: old.raw, date: old.date, epoch: primaryEpoch(old.date, 'shev') ?? 'unknown' },
-      [D(old.firstW, old.firstLoc, kline(old.first)), oldW.dateCite], { method: 'min date.to' })
-    // first (B-3.5)
-    const cands: FirstCand[] = [...la.firstByW].map(([wid, x]) => ({ witness: wid, author: authorById[witMap.get(wid)!.author]!, date: witMap.get(wid)!.date, witnessType: witMap.get(wid)!.witnessType, loc: x.loc, form: x.raw, route: x.route }))
-    const refOf = new Map(cands.map(c => [c, la.firstByW.get(c.witness)!.ref]))
+    // first (B-3.5): one candidate per (witness, spelling) over ALL spellings of the lemma, ranked by rankFirst
+    const cands: FirstCand[] = [...la.firstByW.values()].map(x => ({ witness: x.wid, author: authorById[witMap.get(x.wid)!.author]!, date: witMap.get(x.wid)!.date, witnessType: witMap.get(x.wid)!.witnessType, loc: x.loc, form: x.raw, route: x.route, n: x.n }))
+    const refOf = new Map(cands.map((c, i) => [c, [...la.firstByW.values()][i]!.ref]))
     const first = firstClaim(cands, witMap, c => kline(refOf.get(c)!))
+    // oldest (B-3.4) and first attestation use ONE tie-break (FX-3): the oldest spelling IS the spelling of the ranked first attestation. Fallback (no vetted first): min date.to, commoner spelling.
+    const ranked = rankFirst(cands)
+    let oldest: LemmaCard['claims']['oldest']
+    if (ranked && first.value !== 'unknown') {
+      const fc = ranked.first, fw = witMap.get(fc.witness)!
+      oldest = claim({ form: rawKey(fc.form), date: fc.date, epoch: primaryEpoch(fc.date, 'shev') ?? 'unknown' }, [D(fc.witness, fc.loc, kline(refOf.get(fc)!)), fw.dateCite], { method: 'min date.to; same tie-break as first (B-3.5)' })
+    } else {
+      const old = [...la.forms.values()].sort((a, b) => a.date[1] - b.date[1] || b.f - a.f)[0]!
+      oldest = claim({ form: old.raw, date: old.date, epoch: primaryEpoch(old.date, 'shev') ?? 'unknown' }, [D(old.firstW, old.firstLoc, kline(old.first)), witMap.get(old.firstW)!.dateCite], { method: 'min date.to' })
+    }
     // dialect (B-3.6)
     let dia: Record<string, Claim<true>> = {}; const regionWs = new Set<string>()
     for (const p of pairs) {
@@ -317,7 +352,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       vesum: lemmaPos, ...(la.nm.torot ? { torot: { ...la.nm.torot, of: la.nm.nMorph } } : {}), ...(la.nm.stanza ? { stanza: { ...la.nm.stanza, of: la.nm.nNlp } } : {}),
     }, VESUM_LOC)   // NP-1
     cards.push({
-      lemma: la.display, pos: posLabel(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
+      lemma: la.display, pos: posLabel(lemmaPos), paradigmKind: paradigmKindOf(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
       claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}) },

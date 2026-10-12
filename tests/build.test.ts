@@ -8,6 +8,7 @@ import { authorById, type Author } from '../pipelines/authors.ts'
 import { admit, rankFirst, firstClaim, upgradeLt, selectForms, lemmaRusyn, surzhykClaim, type FirstCand } from '../pipelines/build-annotate.ts'
 import { chooseLemma, tierOf, type Option } from '../pipelines/build-link.ts'
 import { writeLexicon } from '../pipelines/build.ts'
+import { vesumClass } from '../core/pos-gate.ts'
 import { pack, packCore, unpack, unpackCore } from '../core/pack.ts'
 import { BUCKETS, bucketOf, isFull, mergeCard, packShard, splitCard, unpackShard } from '../core/shard.ts'
 import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -66,7 +67,7 @@ describe('B-3.5 first-attestation tie-breaks', () => {
 
 const opt = (lemma: string, branches: number, tags = 'noun:inanim:m:v_naz', form = lemma): Option => {
   const c = { form, trace: [] as string[], branches }
-  return { id: lemma.toLowerCase(), lemma, form, hit: { lemma, tags }, cand: c, tier: tierOf(tags), own: c, ownConfirmed: true }
+  return { id: lemma.toLowerCase(), lemma, form, hit: { lemma, tags }, cand: c, tier: tierOf(tags), own: c, ownConfirmed: true, cls: vesumClass(tags) }
 }
 describe('B-2.1 ambiguity resolution order', () => {
   it('(tier) an unflagged lemma beats a bad/slang one regardless of branches', () => {
