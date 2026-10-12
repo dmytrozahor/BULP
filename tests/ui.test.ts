@@ -15,6 +15,17 @@ import { EXAMPLES } from '../src/data/examples.ts'
 import { key } from '../core/text.ts'
 import type { LemmaCard, LexIndex, VesumHit } from '../core/types.ts'
 
+describe('UX defect: text panels never overflow their container (etymology, KWIC, evidence, provenance)', () => {
+  const css = readFileSync('src/ux.css', 'utf8')
+  it('card/evidence/KWIC wrap long tokens and shrink inside their box', () => {
+    const rule = css.split('\n').find(l => l.startsWith('.card, .evpop, .ev, .kwic'))!
+    expect(rule).toMatch(/overflow-wrap:\s*anywhere/)
+    expect(rule).toMatch(/min-width:\s*0/)
+    expect(rule).toMatch(/max-width:\s*100%/)
+    expect(css).toMatch(/\.card pre[^{]*\{[^}]*max-width:\s*100%/)
+  })
+})
+
 // UI behaviour is pinned to the FIXTURE (known lemmas/spellings), not public/data — the real build overwrites that (tests/build.test.ts covers it)
 const FIX = mkdtempSync(join(tmpdir(), 'ukr-fixture-'))
 execFileSync(process.execPath, ['--import', 'tsx', 'pipelines/fixture.ts', FIX], { stdio: 'ignore' })

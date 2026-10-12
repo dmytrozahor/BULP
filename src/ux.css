@@ -1,0 +1,11 @@
+/* SPEC 61 UX styles (loaded after style.css). */
+
+/* UX defect (user, 2026-10-12): the etymology panel overflowed its container on desktop — long unbroken Wiktionary/ЕСУМ strings, transliterations,
+   URLs and cognate chains. Every text-heavy panel wraps inside its box: long tokens break, flex/grid children may shrink, tables/pre never exceed the panel. */
+.card, .evpop, .ev, .kwic, .results a, .wordhead, .panel { overflow-wrap: anywhere; word-break: normal; min-width: 0; max-width: 100%; }
+.card > *, .panel > *, .ev > *, .evpop > * { min-width: 0; max-width: 100%; }
+.card pre, .panel pre, .evpop pre { white-space: pre-wrap; overflow-x: auto; max-width: 100%; }
+.card table { max-width: 100%; }
+.card img, .card svg, .card video, .card iframe { max-width: 100%; }
+.card a, .panel a { overflow-wrap: anywhere; }
+.row > *, .claimset > *, .chips > * { min-width: 0; }
