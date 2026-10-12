@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-12T18:24:27.853Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **607 189**.
+Generated 2026-10-12T18:34:00.745Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **607 189**.
 
 ## 1. Corpus
 
@@ -3295,17 +3295,17 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 
 | epoch | epoch N (corpus tokens) | tag source | tagged tokens | placed (% of tagged) | conflict | underspecified | untagged (linked, no tag) | lemmas with ≥ 1 cell | cells | cell spellings |
 |---|---|---|---|---|---|---|---|---|---|---|
-| shev.proto | 7 178 | TOROT (manual) | 74 | 74 (100.0%) | 0 | 0 | 0 | 246 | 513 | 586 |
-| shev.proto | 7 178 | Stanza (model, P-1.7) | 1 293 | 1 083 (83.8%) | 208 | 2 |  |  |  |  |
-| shev.old | 241 590 | TOROT (manual) | 11 601 | 11 401 (98.3%) | 195 | 5 | 0 | 1 662 | 4 734 | 8 038 |
-| shev.old | 241 590 | Stanza (model, P-1.7) | 31 333 | 26 656 (85.1%) | 4 673 | 4 |  |  |  |  |
-| shev.early_middle | 14 171 | Stanza (model, P-1.7) | 3 095 | 2 207 (71.3%) | 885 | 3 | 0 | 379 | 782 | 895 |
-| shev.middle | 152 701 | Stanza (model, P-1.7) | 20 512 | 13 181 (64.3%) | 7 331 | 0 | 0 | 1 946 | 6 519 | 8 364 |
-| shev.middle | 152 701 | VESUM (modern spelling) | 6 223 | 5 638 (90.6%) | 23 | 562 |  |  |  |  |
-| shev.late_middle | 73 665 | VESUM (modern spelling) | 15 710 | 14 237 (90.6%) | 28 | 1 445 | 0 | 2 401 | 8 627 | 9 450 |
-| shev.modern | 117 884 | VESUM (modern spelling) | 28 426 | 26 171 (92.1%) | 68 | 2 187 | 0 | 2 855 | 11 480 | 14 106 |
+| shev.proto | 7 178 | TOROT (manual) | 125 | 125 (100.0%) | 0 | 0 | 0 | 259 | 574 | 700 |
+| shev.proto | 7 178 | Stanza (model, P-1.7) | 1 705 | 1 449 (85.0%) | 254 | 2 |  |  |  |  |
+| shev.old | 241 590 | TOROT (manual) | 15 514 | 15 275 (98.5%) | 233 | 6 | 0 | 1 683 | 4 902 | 8 473 |
+| shev.old | 241 590 | Stanza (model, P-1.7) | 42 009 | 34 692 (82.6%) | 7 313 | 4 |  |  |  |  |
+| shev.early_middle | 14 171 | Stanza (model, P-1.7) | 4 032 | 2 806 (69.6%) | 1 223 | 3 | 0 | 392 | 857 | 1 034 |
+| shev.middle | 152 701 | Stanza (model, P-1.7) | 29 608 | 18 806 (63.5%) | 10 802 | 0 | 0 | 1 991 | 6 801 | 8 982 |
+| shev.middle | 152 701 | VESUM (modern spelling) | 8 627 | 7 788 (90.3%) | 23 | 816 |  |  |  |  |
+| shev.late_middle | 73 665 | VESUM (modern spelling) | 24 495 | 21 307 (87.0%) | 28 | 3 160 | 0 | 2 455 | 8 946 | 10 032 |
+| shev.modern | 117 884 | VESUM (modern spelling) | 46 214 | 41 028 (88.8%) | 68 | 5 118 | 0 | 2 917 | 11 869 | 14 980 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 8 646 · stanza:gender: 4 412 · torot:grid:none: 195 · vesum:grid:none: 119 · stanza:grid:none: 39.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 15 133 · stanza:gender: 4 412 · torot:grid:none: 195 · vesum:grid:none: 119 · stanza:grid:none: 39 · torot:grid:adj: 38 · stanza:grid:adj: 8.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns and other non-noun lemmas have no noun grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:pron` etc. until the pronominal grid (SPEC 50 phase 2) exists; this is not a linking error.
 
@@ -3314,19 +3314,22 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 | земля | noun | 1 494 | 1 387 | 3 | 104 | 0 | stanza:gender 2, stanza:lemma 1 |
 | син | noun | 1 381 | 1 301 | 80 | 0 | 0 | stanza:gender 51, stanza:lemma 29 |
 | да | uninflected | 1 787 | 0 | 1 460 | 327 | 0 | stanza:grid:none 1157, torot:grid:none 303 |
-| себе | pron | 5 032 | 0 | 5 032 | 0 | 0 | stanza:grid:pron 3196, torot:grid:pron 1315, vesum:grid:pron 521 |
-| ти | pron | 3 606 | 0 | 3 606 | 0 | 0 | vesum:grid:pron 1694, stanza:grid:pron 1609, torot:grid:pron 280, stanza:lemma 23 |
-| я | pron | 5 170 | 0 | 5 170 | 0 | 0 | vesum:grid:pron 2793, stanza:grid:pron 2012, torot:grid:pron 365 |
+| ми | pron | 2 425 | 2 423 | 2 | 0 | 0 | stanza:lemma 2 |
+| себе | pron | 5 032 | 5 032 | 0 | 0 | 0 | — |
+| ви | pron | 2 139 | 2 137 | 2 | 0 | 0 | stanza:lemma 2 |
+| ти | pron | 3 606 | 3 583 | 23 | 0 | 0 | stanza:lemma 23 |
+| я | pron | 5 170 | 5 170 | 0 | 0 | 0 | — |
 | рука | noun | 771 | 750 | 21 | 0 | 0 | stanza:gender 16, stanza:lemma 5 |
 | князь | noun | 1 802 | 1 774 | 28 | 0 | 0 | stanza:gender 21, stanza:lemma 7 |
 | город | noun | 853 | 752 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
+| він | pron | 1 902 | 1 799 | 103 | 0 | 0 | stanza:lemma 103 |
 | аз | noun | 62 | 62 | 0 | 0 | 0 | — |
 
-**Stem types** (EP-4): 5 329 lemmas carry epoch paradigms; stem claim known for 1 607 (of which 418 from a Stanza lemma, model-based per decision D4), `unknown` for 3 722. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-05: 1 · ST-06: 6 · ST-07: 22 · ST-08: 101 · ST-09: 681 · ST-10: 257 · ST-11: 75 · ST-12: 92 · ST-13: 282 · ST-14: 67.
+**Stem types** (EP-4): 5 446 lemmas carry epoch paradigms; stem claim known for 1 607 (of which 418 from a Stanza lemma, model-based per decision D4), `unknown` for 3 722. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-05: 1 · ST-06: 6 · ST-07: 22 · ST-08: 101 · ST-09: 681 · ST-10: 257 · ST-11: 75 · ST-12: 92 · ST-13: 282 · ST-14: 67.
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 544 lemmas, 49 054 reconstructed cells with 51 918 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 158 cells (6.4%), 3 174 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 10.76 MB of 87.33 MB shard total (12.3%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 11.29 MB of 87.86 MB shard total (12.9%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
@@ -3800,7 +3803,7 @@ Python stages: run by this build; stress.json 44 077 forms (ukrainian-word-stres
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
 - **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (28.7%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 11 776 of 19 028 lemmas; 11 776 written, none dropped. Core lexicon.json 12.81 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 667 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 040 shards lex/<bucket>.json: max 206 KB, median 40 KB, total 87.3 MiB (limit 192 KiB each). lexindex.json 3.65 MB (3319 corpus-attested flagged forms added).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 11 776 of 19 028 lemmas; 11 776 written, none dropped. Core lexicon.json 12.81 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 667 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 040 shards lex/<bucket>.json: max 206 KB, median 40 KB, total 87.9 MiB (limit 192 KiB each). lexindex.json 3.65 MB (3319 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
