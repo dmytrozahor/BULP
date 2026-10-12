@@ -60,7 +60,23 @@ One commit per witness; each passes P-2 vetting with a Q quote or stays out.
 ## UL — usage labels (U-5) · research/14 (after FU-14)
 - **UL-1** `usage` axis: taxonomy (stylistic, sociolect, territorial incl. діаспорне, chronological, thematic/ritual) from VESUM tags + Wiktionary categories (harvested, CC BY-SA); highlight chips + annotator legend.
 
+## DX — reinforced deictics (U-25) · research/24
+- **DX-1** `core/deictics.ts`: component inventory (prefixes о-, от-, он-, ось-/оз(ь)-, ге-; suffixes -о/-во/-го, -ки/-ка/-ек/-ечк; bases тут/там/сьде/де/туди…) as cited data; `segment(form)` → parts with meaning (proximal/distal/emphatic/diminutive) + region codes + standard counterpart.
+- **DX-2** attested forms (e.g. озьдо = о + сьде + о «ось тут», ЕСУМ; отутечки Грінченко) are claims; unattested compounds (отуточки, онтамека, осьтамека) are shown as segmented **reconstructions** (SPEC 30 D-4 style) built from attested parts, each part cited.
+- **DX-3** surfaces: `/analyze`, annotator popover, word card «Будова».
+
+## HT — heteronyms vs stress variants (U-26) · research/25
+- **HT-1** `Heteronym` record {form, readings: [{positions, lemma, gloss?, pos/aspect, kind: 'lexeme'|'aspect-partner'|'inflected-form', evidence}]} kept apart from free `StressVariant`s (за́вжди́); sources: СУМ-20-verified pairs (Q) and uk.wikipedia «Омографи» (P until checked); ukrainian-word-stress ambiguous output as `method: 'dictionary'` candidates.
+- **HT-2** card shows each stress with its meaning and source; annotator flags heteronyms as «наголос розрізняє значення» with both readings.
+- **HT-3** «послуха́тися ≠ послу́хатися» (U-26) stays [U] — dictionaries list only послу́хатися (research/25); add a reading only when the user supplies a source.
+
+## LW — loanword source-language paths (U-27) · research/26
+- **LW-1** `core/loanwords.ts`: rule table (≈70 rows; pattern, donor/intermediary, Wiktionary validation counts, weight, source+quote). Only near-deterministic rows (‑інг→en, ‑унок→pl, ‑дло→pl, ‑аж→fr, ґ-/шл-/дз-→pl …) may produce a claim; the rest are hints. The rule-feature classifier (37% top-1) is shown only as ranked hypotheses with its CV accuracy.
+- **LW-2** Wiktionary donor labels (CC BY-SA, attributed) as D-evidence where present (538 core lemmas); conflicts between rule and label are shown, not resolved.
+- **LW-3** U-27 example: ‑ітет ↔ German/Polish/Russian mediation (університет, менталітет) vs English ‑ity → ‑іті (inference from Правопис §129, [U]); екстремітет / екстремі‑ті unattested → hypothesis only.
+
 ## Work packages (Sonnet), waves
+- **Wave B streams (after the W5 rebuild):** (1) **build stream** — one agent, sequential commits: NP (W4) → ET (W7) → UL (W8) → NW-7 songs (W9) → one rebuild; (2) **W6 media views** (src only; uses public/data/sophia.json and later song media); (3) **W10 = DX + HT + LW** (new core files + src components; consumes stress.json / lexicon at runtime, no build edits — if build data is needed, request it from the build stream in the report).
 - **Wave A (now, low file overlap):** W3a = DV + MO (core/derivation.ts, core/modernize.ts, src block + derive mode) · W3b = SX (core/syntax.ts, annotate/analyze spans) · W3c = IP (core/ipa.ts, word-card row) · W3d = DD + BK (core/rules.ts dialect section + new core/banks.ts, chips).
 - **Wave B (after A, touches build):** W4 = NP + map · W5 = NW-1…NW-6 (one commit per witness, then full data rebuild + data:publish) · W6 = MV · W7 = ET · W8 = UL · W9 = NW-7 songs.
 - **W5 detail (starts in parallel with Wave A — it only touches `pipelines/manifest.ts`, `pipelines/authors.ts`, new `pipelines/ingest-*.ts`, tests):** NW-1…NW-6 in this order — Слово (TOROT spi; author record `slovo_author` institutional with the cit. 32 quote), Кочубей (archive.org `bantueshkam2` djvu pp. 97–99; author `kochubei` vetted only with a Q self-identification quote from those pages, else excluded and listed), Приповісти (izbornyk klyment/kly08.htm; author `zinoviiv` with «Іеромонах Климентій Зіновієв син»), izbornyk XIV–XVI originals per research/19 manifest table (skip translations: 02, 03, 08, 22, 23, 24), XVIII texts per research/21 (`orth: 'modernised'` → lexical witness only; skip translations 03, 05–08 and Russian 09, 31, 34), Sophia graffiti metadata + IIIF links (no inscription texts until the text licence is confirmed), Київські глаголичні листки (TOROT kiev-mis, lang chu, provenance disputed) last. One commit per witness/group; then `npm run build:data` once and commit data.
