@@ -38,6 +38,7 @@ import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
+import { writeUsage } from './build-usage.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
@@ -270,7 +271,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const detectHits: Record<string, number> = {}, hints: Record<string, number> = {}
 
   const regionN = REGIONS.map(r => ({ code: r.code, name: r.name, oblasts: r.oblasts, N: adm.filter(({ w }) => regionOf(w.region) === r.code).reduce((s, { w }) => s + w.tokens.length, 0) }))
-  const cards: LemmaCard[] = []
+  const cards: LemmaCard[] = [], lemTags = new Map<string, string>()   // lemTags: UL-1 input
   for (const la of kept) {
     const accs = sel.get(la.id)!
     const paradigm = (() => { const seen = new Set<string>(); return (v2.paradigms.get(la.id) ?? []).filter(p => { const k = p.form + '\0' + p.tags; return seen.has(k) ? false : (seen.add(k), true) }) })()
@@ -310,6 +311,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const stats = lemmaStats(order, fMax, sizes, coll.get(la.idx) ?? [])
     stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
+    lemTags.set(la.display, lemmaPos)
     const proper = properClaim(la.display, {
       vesum: lemmaPos, ...(la.nm.torot ? { torot: { ...la.nm.torot, of: la.nm.nMorph } } : {}), ...(la.nm.stanza ? { stanza: { ...la.nm.stanza, of: la.nm.nNlp } } : {}),
     }, VESUM_LOC)   // NP-1
@@ -356,6 +358,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     }
     writeFileSync(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
   }
+  { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
 
   const rd2: ReportData = {

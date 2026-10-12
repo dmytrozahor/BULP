@@ -182,3 +182,9 @@ textarea.src { width: 100%; min-height: 9rem; font-family: var(--serif); font-si
 .syn.syn-hint { border-style: dashed; border-color: var(--muted); border-top-color: transparent; }
 .syn-list { list-style: none; padding: 0; margin: .3rem 0; }
 .syn-list li { margin: .45rem 0; }
+
+/* UL-1 usage chips: the axis is told by border shape as well as by the text, never colour only */
+.badge.usage, .badge[class*="usage-"] { background: var(--surface-2); }
+.badge.usage-stylistic, .badge.usage-sociolect { border-style: dashed; } .badge.usage-territorial { border-style: dotted; border-width: 2px; }
+.badge.usage-chronological { border-style: double; border-width: 3px; } .badge.usage-thematic { border-radius: 3px; }
+.usage-chips { display: inline-flex; gap: .3rem; flex-wrap: wrap; align-items: baseline; }

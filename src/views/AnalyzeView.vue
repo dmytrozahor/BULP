@@ -23,6 +23,8 @@ import FormBadge from '../components/FormBadge.vue'
 import FormLegend from '../components/FormLegend.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
+import LoanChip from '../components/LoanChip.vue'
+import { analyzeLoan } from '../../core/loanwords.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
 const q = ref(String(route.query.q ?? '')), word = ref(q.value.trim()), year = ref('')
@@ -35,6 +37,7 @@ const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, 
 const hasForm = computed(() => lexHasBool(annData.value))
 const modOf = (form: string) => (loaded.value ? modernize(form, hasForm.value) : [])
 const inLex = computed(() => (word.value ? searchIdx.value.map.get(key(word.value)) ?? [] : []))
+const loan = computed(() => analyzeLoan(word.value))
 const allClaims = computed(() => Object.entries(a.value?.claims ?? {}))
 const hasRusyn = computed(() => allClaims.value.some(([l]) => isRusyn(l)))
 const parallelLabel = (l: string) => isRusyn(l) || (hasRusyn.value && (l === 'ZAK' || l === 'LEM'))
@@ -76,6 +79,11 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
     </section>
 
     <DeicticStructure :word="word" />
+
+    <section v-if="loan.foreign" class="card"><h2><span>Мова-джерело (гіпотези)</span><span class="small">правила з джерелами · research/26</span></h2>
+      <p class="sans"><LoanChip :word="word" :attested="a.known || inLex.length > 0" /></p>
+      <p class="small muted sans">Розпізнавання запозичення виведене з суфіксів і написання; мітка Вікісловника (якщо є) важить більше за правила. Твердження робить лише правило класу A.</p>
+    </section>
 
     <section class="card"><h2><span>Ознаки з доказами</span></h2>
       <div v-if="!a.known" class="card" style="background:var(--warn-soft);border-color:var(--warn)" role="note">

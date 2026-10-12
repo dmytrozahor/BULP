@@ -31,10 +31,12 @@ import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
+import UsageChips from '../components/UsageChips.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
+import LoanChip from '../components/LoanChip.vue'
 
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
@@ -142,6 +144,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
               <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
             <div v-if="bankForms.length"><BankChip :forms="bankForms" /></div>
+            <div><UsageChips :lemma="card.lemma" label /></div>
+            <div><LoanChip :word="card.lemma" /></div>
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>
           <div class="grid2 sans">

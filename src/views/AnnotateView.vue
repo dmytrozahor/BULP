@@ -15,6 +15,7 @@ import { CATEGORIES, CATEGORY_UK } from '../lib/analyze.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
 import FormLegend from '../components/FormLegend.vue'
+import UsageLegend from '../components/UsageLegend.vue'
 import WordCard from '../components/WordCard.vue'
 import { HETERONYM_FLAG, heteronymOf } from '../../core/heteronyms.ts'
 const { annData, loaded } = useData()
@@ -70,6 +71,7 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
           <RouterLink to="/derive">деривація →</RouterLink>
         </div>
         <FormLegend />
+        <UsageLegend />
       </section>
 
       <section v-if="!loaded" class="card"><div class="skeleton" v-for="i in 3" :key="i" /></section>
