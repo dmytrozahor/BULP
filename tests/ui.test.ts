@@ -151,6 +151,7 @@ import WordView from '../src/views/WordView.vue'
 import { renderMd } from '../src/lib/md.ts'
 import Kwic from '../src/components/Kwic.vue'
 import { sourceLink } from '../src/lib/source.ts'
+import StatsExplainer from '../src/components/StatsExplainer.vue'
 import RegionMap from '../src/components/RegionMap.vue'
 import { regionRows, stepOf } from '../src/lib/geo.ts'
 import { Q, P, claim } from '../core/evidence.ts'
@@ -380,5 +381,12 @@ describe('W1-3 legend: collapsed, once, own forms', () => {
   it('is a collapsed <details> that uses the lemma samples instead of the fixed вѣра', async () => {
     const html = await ssr(FormLegend, { attested: 'пожегъ', derived: 'пожогъ', confirmed: 'пожогъ' })
     expect(html).toContain('<details'); expect(html).not.toContain(' open'); expect(html).toContain('пожегъ'); expect(html).not.toContain('вѣра')
+  })
+})
+
+describe('W1-4 statistics explainer (U-24)', () => {
+  it.skipIf(!cards.length)('names every measure with its formula and the corpus bias caveat', async () => {
+    const html = await ssr(StatsExplainer, { card: cards[0]! })
+    for (const s of ['Як читати статистику', 'ipm = f / N', 'HK = round', 'DP =', 'G² =', 'Log Ratio', 'logDice =', 'research/06 §3.5']) expect(html).toContain(s)
   })
 })

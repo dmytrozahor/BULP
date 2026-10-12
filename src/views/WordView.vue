@@ -23,6 +23,7 @@ import Collocations from '../components/Collocations.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
+import StatsExplainer from '../components/StatsExplainer.vue'
 import Kwic from '../components/Kwic.vue'
 import Paradigm from '../components/Paradigm.vue'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
@@ -178,6 +179,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
             <span class="muted">у {{ full.stats.range }} із {{ corpus?.witnesses.length }} пам’яток</span></div>
           <div v-else class="skeleton" style="height:2.5rem" />
         </section>
+        <section class="card"><StatsExplainer :card="card" /></section>
         <section class="card"><h2><span>За століттями</span></h2>
           <TimeCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></section>
         <section class="card"><h2><span>За епохами</span></h2>
