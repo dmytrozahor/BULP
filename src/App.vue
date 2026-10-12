@@ -14,6 +14,7 @@ const { isFixture, error, loading, progress } = useData()
       <RouterLink to="/analyze">Аналіз слова</RouterLink>
       <RouterLink to="/derive">Деривація</RouterLink>
       <RouterLink to="/texts">Тексти</RouterLink>
+      <RouterLink to="/songs">Пісні</RouterLink>
       <RouterLink to="/sophia">Софія</RouterLink>
       <RouterLink to="/map">Мапа</RouterLink>
       <RouterLink to="/corpus">Корпус</RouterLink>

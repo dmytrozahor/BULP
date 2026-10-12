@@ -542,3 +542,19 @@ describe('LW-2 loanlabels.json replaces the seed labels', () => {
     expect(lk('нема-такого-слова')).toBeUndefined(); expect(makeLabelLookup(undefined)('абрикоса')).toBeUndefined()
   })
 })
+describe('NW-7 songs UI (songs.json)', () => {
+  const d = pub<SongsData>('songs')
+  it('quotations are cut to <= 2 lines; a song witness resolves to its song (KWIC link)', () => {
+    for (const s of d.songs) for (const q of s.quotes) expect(songLines(q.text).length).toBeLessThanOrEqual(2)
+    expect(songLines('а / б / в')).toEqual(['а', 'б'])
+    expect(songOfWitness(d, 'song_zhentsi')?.id).toBe('oy-na-hori'); expect(songOfWitness(d, 'nope')).toBeUndefined()
+  })
+  it('route /songs/:id? exists, the list renders without data, the view uses MediaPanel and Kwic links to songs', async () => {
+    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/songs/:id?'")
+    expect(readFileSync('src/components/Kwic.vue', 'utf8')).toContain('/songs/')
+    expect(readFileSync('src/views/SongsView.vue', 'utf8')).toContain('MediaPanel')
+    const SongsView = (await import('../src/views/SongsView.vue')).default
+    expect(await ssr(SongsView, {}, '/songs')).toContain('Пісні')
+    expect(await ssr(SongsView, { id: 'oy-na-hori' }, '/songs/oy-na-hori')).toContain('усі пісні')
+  })
+})

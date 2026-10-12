@@ -13,7 +13,9 @@ import MediaPanel from './MediaPanel.vue'
 import { hasMedia, resolveMedia } from '../lib/sophiaData.ts'
 import type { WitnessMedia } from '../lib/media.ts'
 import { useData } from '../composables/useData.ts'
+import { songOfWitness, useSongs } from '../lib/datasets.ts'
 const { witnessById } = useData()
+const songs = useSongs()   // lazy songs.json: a witness that is a song links to /songs/:id
 const wm = (w: string) => witnessById.value.get(w) as { media?: WitnessMedia; licenceNote?: string } | undefined
 const mediaOpen = ref<number>(), media = ref<WitnessMedia>(), mediaErr = ref(false)   // MV-1: «переглянути» opens the media panel under the row
 const showMedia = async (i: number, w: string) => {
@@ -38,6 +40,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
     <div v-for="(k, i) in view" :key="i" class="kwic">
       <span class="l"><span>{{ k.left }}</span></span>{{ ' ' }}<span class="n">{{ k.node }}</span>{{ ' ' }}<span class="r">{{ k.right }}</span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
+        <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>
       <template v-if="mediaOpen === i">
         <MediaPanel v-if="media" :media="media" :licence-note="wm(k.w)?.licenceNote" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
