@@ -164,6 +164,7 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 .w.m-colloquial { text-decoration: underline dashed var(--m-colloquial) 2px; text-underline-offset: 4px; }
 .w.m-archaic { text-decoration: underline solid var(--m-archaic) 1px; text-underline-offset: 4px; }
 .w.derived { outline: 1px dashed var(--muted); font-style: italic; }
+.w.het::after { content: 'ˊ'; color: var(--accent); font-weight: 700; margin-left: 1px; }   /* HT-2: heteronym — the stress distinguishes meaning (shape + tooltip, not colour only) */
 .wcard { white-space: normal; line-height: 1.45; font-size: .88rem; font-family: var(--sans); }
 .sw-cs { background: var(--m-cs); } .sw-contact { background: var(--m-contact); } .sw-dialect { background: var(--m-dialect); } .sw-rusyn { background: var(--m-rusyn); } .sw-colloquial { background: var(--m-colloquial); } .sw-archaic { background: var(--m-archaic); }
 textarea.src { width: 100%; min-height: 9rem; font-family: var(--serif); font-size: 1.05rem; }

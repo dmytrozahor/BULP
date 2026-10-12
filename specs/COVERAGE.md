@@ -141,3 +141,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NP-1 | tests/places.test.ts › NP-1 VESUM prop/geo/fname/lname/patr give a D-evidence claim; Stanza alone is a flagged model claim |
 | NP-2 | tests/places.test.ts › NP-2 PlaceScan clusters spellings with earliest witness, adds reconstructions, and the claim has two evidences |
 | NP-3 | tests/places.test.ts › NP-3 route and nav exist; Leaflet is imported dynamically (lazy chunk) with OSM attribution; word card has «на мапі» |
+| HT-1 | tests/heteronyms.test.ts › every heteronym has ≥ 2 readings with distinct stress, a vowel at each position, and evidence on each reading |
+| HT-2 | tests/heteronyms.test.ts › HeteronymReadings is in the word card, the word view, and the annotator flags heteronyms «наголос розрізняє значення» |
+| HT-3 | tests/heteronyms.test.ts › is not a heteronym and not a reading; the unverified assertion and the one dictionary stress are both recorded |

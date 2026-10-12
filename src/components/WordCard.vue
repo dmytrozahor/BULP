@@ -17,6 +17,7 @@ import ReconstructedForms from './ReconstructedForms.vue'
 import StressForms from './StressForms.vue'
 import IpaRow from './IpaRow.vue'
 import DeicticStructure from './DeicticStructure.vue'
+import HeteronymReadings from './HeteronymReadings.vue'
 const props = defineProps<{ t: AnnotatedToken; year?: number }>()
 const { witnessById, fullOf } = useData()
 /** SPEC 20 B-5: stress and the derivation trace live in the lemma's detail shard (merged card, undefined while loading) */
@@ -67,6 +68,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
     </div>
     <div v-else-if="t.status !== 'unknown'" class="small muted" style="margin-top:.3rem">міток немає — <span class="unk">не визначено</span></div>
     <DeicticStructure bare :word="t.raw" />
+    <HeteronymReadings bare :form="t.raw" />
     <div v-if="t.status !== 'unknown'" style="margin-top:.3rem"><BankChip :forms="[{ form: t.raw, norm: t.form?.norm, year, scribal: !!t.claims.church_slavonic }]" /></div>
     <div v-if="t.hints.length" class="small muted">гіпотези без джерела: {{ t.hints.map(h => h.rule).join(', ') }}</div>
     <RouterLink v-if="t.status === 'attested' && t.card" :to="`/w/${encodeURIComponent(t.card.lemma)}`" class="small">Відкрити картку слова →</RouterLink>

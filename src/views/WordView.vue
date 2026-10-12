@@ -33,6 +33,7 @@ import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
+import HeteronymReadings from '../components/HeteronymReadings.vue'
 
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
@@ -155,6 +156,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         </section>
 
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
+        <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
 
         <!-- 3. Paradigm -->
         <section class="card" aria-labelledby="h-par">

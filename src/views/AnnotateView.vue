@@ -16,6 +16,7 @@ import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
 import FormLegend from '../components/FormLegend.vue'
 import WordCard from '../components/WordCard.vue'
+import { HETERONYM_FLAG, heteronymOf } from '../../core/heteronyms.ts'
 const { annData, loaded } = useData()
 const exId = ref(''), text = ref(''), year = ref('')
 const ex = computed(() => EXAMPLES.find(e => e.id === exId.value))
@@ -41,8 +42,8 @@ const groups = computed(() => {
 })
 const shev = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay)
 const maxEp = computed(() => Math.max(1, ...Object.values(sum.value.epochProfile)))
-const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : ''].join(' ')
-const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CATEGORY_UK[t.mark] : ''}`
+const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : '', heteronymOf(t.key) ? 'het' : ''].join(' ')
+const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CATEGORY_UK[t.mark] : ''}${heteronymOf(t.key) ? ', ' + HETERONYM_FLAG : ''}`
 </script>
 
 <template>
