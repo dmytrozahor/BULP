@@ -10,6 +10,7 @@ import { search } from '../lib/search.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
+import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
 const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
@@ -46,10 +47,13 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
       </RouterLink>
     </li>
   </ul>
-  <div v-else-if="q.trim() && loaded" class="card">
-    <p>У словнику немає «<strong>{{ q }}</strong>».</p>
-    <p><RouterLink :to="{ path: '/analyze', query: { q } }">Проаналізувати це слово в браузері →</RouterLink> <span class="muted small">(правила виведення, церковнослов’янські/контактні/діалектні ознаки — лише з доказами)</span></p>
-  </div>
+  <template v-else-if="q.trim() && loaded">
+    <div class="card" role="status">
+      <p><strong>«{{ q.trim() }}» — немає в корпусі, аналіз за правилами.</strong> Це не словникова стаття: нижче лише розбір за правилами з джерелами (будова, деривація, шлях запозичення, омографи, русинська, IPA); «невідомо» ≠ «літературне».</p>
+      <p class="small sans"><RouterLink :to="{ path: '/analyze', query: { q: q.trim() } }">Відкрити в «Аналізі слова» →</RouterLink></p>
+    </div>
+    <AnalyzeView :embed="q.trim()" />
+  </template>
   <div v-else-if="loaded" class="card">
     <h2>Усі леми ({{ cards.length }}, показано {{ Math.min(shown, cards.length) }})</h2>
     <div class="chips"><RouterLink v-for="c in cards.slice(0, shown)" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>

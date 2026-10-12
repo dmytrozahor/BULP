@@ -24,11 +24,16 @@ import FormLegend from '../components/FormLegend.vue'
 import EvidenceList from '../components/EvidenceList.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import LoanChip from '../components/LoanChip.vue'
+import HeteronymReadings from '../components/HeteronymReadings.vue'
+import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
-const q = ref(String(route.query.q ?? '')), word = ref(q.value.trim()), year = ref('')
-watch(() => route.query.q, v => { q.value = String(v ?? ''); word.value = q.value.trim() })
+/** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
+const props = defineProps<{ embed?: string }>()
+const q = ref(props.embed ?? String(route.query.q ?? '')), word = ref(q.value.trim()), year = ref('')
+watch(() => route.query.q, v => { if (props.embed !== undefined) return; q.value = String(v ?? ''); word.value = q.value.trim() })
+watch(() => props.embed, v => { if (v !== undefined) { q.value = v; word.value = v.trim() } })
 const submit = () => { word.value = q.value.trim(); router.replace({ query: word.value ? { q: word.value } : {} }) }
 const y = computed(() => (/^\d{3,4}$/.test(year.value) ? +year.value : undefined))
 const d = computed(() => (word.value ? deriveWithSteps(word.value) : undefined))
@@ -49,6 +54,7 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
 </script>
 
 <template>
+  <template v-if="!embed">
   <h1>Аналіз слова</h1>
   <p class="muted">Працює у браузері: виводить сучасні кандидати з трасою правил і шукає церковнослов’янські, контактні, діалектні та розмовні ознаки — лише з посиланням на джерело правила й на дані, що його спрацювали.</p>
   <form class="row" @submit.prevent="submit">
@@ -59,6 +65,7 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
   <p id="yh" class="small muted sans">Рік потрібен для хронологічних умов правил (наприклад, «ы» у тексті 1798 р. — архаїчний правопис, а не русизм).</p>
 
   <FormLegend />
+  </template>
   <div v-if="!word" class="card muted">Введіть слово.</div>
   <template v-else-if="d && a">
     <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: {{ d.norm }}</span></h2>
@@ -79,6 +86,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
     </section>
 
     <DeicticStructure :word="word" />
+    <HeteronymReadings :form="word" />   <!-- SPEC 60 HT-2: renders only for known heteronyms -->
+    <section class="card"><h2><span>Вимова · IPA</span></h2><IpaRow :variants="[]" :lemma="word" /></section>
 
     <section v-if="loan.foreign" class="card"><h2><span>Мова-джерело (гіпотези)</span><span class="small">правила з джерелами · research/26</span></h2>
       <p class="sans"><LoanChip :word="word" :attested="a.known || inLex.length > 0" /></p>
