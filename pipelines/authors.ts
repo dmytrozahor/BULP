@@ -35,6 +35,10 @@ export const AUTHORS: Author[] = [
   { id: 'slovo_author', name: 'Автор «Слова о полку Ігоревім» (анонім)', life: 'текст бл. 1185–1200', label: 'institutional', status: 'vetted', confidence: 'implicit', region: 'Русь',
     evidence: [Q('TOROT', 'spi.xml, citation-part 32 (sentence 211031)', 'О Руская земле! Уже за шеломянемъ еси!')],
     note: 'анонім; говорить зсередини («О Руская земле!») — інституційний автор; автентичність і датування дискусійні (research/16 §3), свідок = видання 1800 р., рукопис втрачено' },
+  // W5 NW-3: not admitted — see note (P-2.1: no self-identification quote ⇒ no witness; the Бантыш-Каменский text is NOT ingested)
+  { id: 'kochubei', name: 'Василь Кочубей (Рѣчь і Доношеніе 1708)', life: '1640–1708', label: 'malorossian', status: 'excluded', confidence: 'implicit', region: 'Полтавщина',
+    evidence: [],
+    note: 'Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., 1859, с. 97–99; archive.org/details/bantueshkam2) прочитано (djvu-текст, сторінки 97–99): підписано «Василій Кочюбей, Судіа, Иванъ Искра, Полковникъ», але самоідентифікації як русин/малорос/українець там немає — «Малороссійскій край» названо краєм Царя, «мы, подліи» — підданими; отже Q-цитати самоназви немає (P-2.1). Мова — руська канцелярська з полонізмами; OCR потребує ручної вичитки. Виключено, текст не внесено (research/18 R2-2).' },
   { id: 'vyshensky', name: 'Іван Вишенський', life: 'бл. 1550 – бл. 1621', label: 'ruthenian', status: 'vetted', confidence: 'explicit', region: 'Галичина / Афон',
     evidence: [Q(IZ('old14_16/old14_19.htm'), 'Книжка', '…болгаре, словяне, арабанаши, мултяне, богданци, москва и наша русь…'), Q(IZ('old14_16/old14_19.htm'), 'Книжка', 'простою же нашею пѣснию рускою поюще')] },
   { id: 'samovydets', name: 'Самовидець (Літопис Самовидця)', life: 'текст 1672–1702', label: 'institutional', status: 'vetted', confidence: 'implicit', region: 'Лівобережжя',

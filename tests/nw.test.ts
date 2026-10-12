@@ -40,3 +40,18 @@ describe('NW-1 Слово (TOROT spi)', () => {
     expect(u).toMatchObject({ kind: 'torot', lang: 'orv', witnessType: 'first_ed', msDate: 1800, license: 'CC BY-NC-SA 3.0' })
   })
 })
+
+describe('NW-3 Кочубей — excluded without a self-identification quote (P-2.1)', () => {
+  it('author record is excluded, carries no evidence and has no manifest unit', () => {
+    const a = authorById['kochubei']!
+    expect(a.status).toBe('excluded'); expect(a.evidence).toEqual([]); expect(admissible(a)).toBe(false)
+    expect(MANIFEST.some(u => u.author === 'kochubei')).toBe(false)
+  })
+  const txt = rawText('archive', 'kochubei')
+  it.skipIf(!txt)('the cached pp. 97–99 carry the signature and no «малороссиянин»-type self-name', () => {
+    const i = txt!.indexOf('Нынѣ убо мы, подліи'), j = txt!.indexOf('Василій Кочюбей, Судіа', i)
+    expect(i).toBeGreaterThan(0); expect(j).toBeGreaterThan(i)
+    const pp = txt!.slice(txt!.lastIndexOf('РѢЧЬ КОЧУБЕЯ КЪ ГОСУДАРЮ', i), j)
+    expect(/малороссіянин|малоросс?іяне|мы\s+(?:русс|малорус)/i.test(pp)).toBe(false)
+  })
+})
