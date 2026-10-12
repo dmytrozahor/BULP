@@ -18,7 +18,7 @@ import AuthorBadge from './AuthorBadge.vue'
 import ClaimBadge from './ClaimBadge.vue'
 import EvidencePopover from './EvidencePopover.vue'
 import FormLegend from './FormLegend.vue'
-const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number> }>()
+const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean }>()
 const emit = defineEmits<{ kwic: [raw: string] }>()
 const { corpus } = useData()
 
@@ -133,7 +133,7 @@ const cellId = (c: GCell) => c.key
             </li>
           </ul>
       </div>
-      <details class="small sans"><summary>Легенда історичної парадигми</summary><FormLegend epoch /></details>
+      <FormLegend v-if="!noLegend" epoch />
     </template>
   </div>
 </template>

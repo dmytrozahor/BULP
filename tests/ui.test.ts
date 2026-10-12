@@ -217,7 +217,7 @@ describe('F3 markdown report renderer', () => {
 })
 describe('D-4 legend on the data-dependent word page', () => {
   it('WordView mounts FormLegend (word page only renders after data load; checked at source level, screenshot-verified)', () => {
-    expect(readFileSync('src/views/WordView.vue', 'utf8')).toContain('<FormLegend />')
+    expect(readFileSync('src/views/WordView.vue', 'utf8')).toContain('<FormLegend ')
   })
 })
 
@@ -373,5 +373,12 @@ describe('W1-2/6 source links (U-10, U-16)', () => {
   it('KWIC citation shows the witness, the locator and the date', async () => {
     const html = await ssr(Kwic, { lines: [{ w: 'monomakh', loc: 'абз. 22', left: 'а', node: 'б', right: 'в', date: [1096, 1117] }] })
     expect(html).toContain('локатор:'); expect(html).toContain('абз. 22'); expect(html).toContain('1096–1117')
+  })
+})
+
+describe('W1-3 legend: collapsed, once, own forms', () => {
+  it('is a collapsed <details> that uses the lemma samples instead of the fixed вѣра', async () => {
+    const html = await ssr(FormLegend, { attested: 'пожегъ', derived: 'пожогъ', confirmed: 'пожогъ' })
+    expect(html).toContain('<details'); expect(html).not.toContain(' open'); expect(html).toContain('пожегъ'); expect(html).not.toContain('вѣра')
   })
 })

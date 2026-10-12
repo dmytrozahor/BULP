@@ -1,14 +1,17 @@
 <script setup lang="ts">
 /** SPEC 30 D-4.2: legend of the three visual classes. SPEC 50 EP-7.6: with `epoch` it also lists the markers of the epoch-paradigm panel. */
 import FormBadge from './FormBadge.vue'
-defineProps<{ epoch?: boolean }>()
+/** Shown once per page, collapsed; the samples are the current lemma's own forms when the page has them (attested/derived/confirmed props), else a neutral «вѣра». */
+const props = defineProps<{ epoch?: boolean; attested?: string; derived?: string; confirmed?: string; open?: boolean }>()
+const a = props.attested ?? 'вѣра', d = props.derived ?? props.confirmed ?? a, c = props.confirmed ?? props.derived ?? a
 </script>
 
 <template>
-  <div class="card flegend" role="note" aria-label="Легенда: засвідчені та реконструйовані форми">
-    <div><FormBadge kind="attested" form="вѣра" label="засвідчено" /> <span class="small muted">суцільна, пряма: написання є в пам’ятці корпусу або форма є в словнику (ВЕСУМ)</span></div>
-    <div><FormBadge kind="derived" form="вѣра" /> <span class="small muted">пунктирна рамка, курсив: виведено за правилами історичної фонетики (Шевельов); у корпусі не знайдено; це гіпотеза, не факт</span></div>
-    <div><FormBadge kind="confirmed" form="вѣра" /> <span class="small muted">пунктирна + галочка: реконструкція, що збіглася з написанням у пам’ятці — посилання веде до прикладів</span></div>
+  <details class="card flegend" role="note" aria-label="Легенда: засвідчені та реконструйовані форми" :open="open">
+    <summary class="small sans">Легенда: засвідчені та реконструйовані форми</summary>
+    <div><FormBadge kind="attested" :form="a" label="засвідчено" /> <span class="small muted">суцільна, пряма: написання є в пам’ятці корпусу або форма є в словнику (ВЕСУМ)</span></div>
+    <div><FormBadge kind="derived" :form="d" /> <span class="small muted">пунктирна рамка, курсив: виведено за правилами історичної фонетики (Шевельов); у корпусі не знайдено; це гіпотеза, не факт</span></div>
+    <div><FormBadge kind="confirmed" :form="c" /> <span class="small muted">пунктирна + галочка: реконструкція, що збіглася з написанням у пам’ятці — посилання веде до прикладів</span></div>
     <template v-if="epoch">
       <div><span class="sb">T</span> <span class="small muted">ручна розмітка TOROT</span></div>
       <div><span class="sb">M</span> <span class="small muted">модельна розмітка Stanza, не словниковий факт (P-1.7); <span class="sb">модель поза доменом</span> — текст поза доменом моделі</span></div>
@@ -20,5 +23,5 @@ defineProps<{ epoch?: boolean }>()
       <div><span class="unk">невідомо</span> <span class="small muted">у корпусі немає свідчень цієї клітинки; відсутність не доводить, що форми не було</span></div>
       <div><span class="sb note">MH-09</span> <span class="small muted">зміна, описана в граматиці: відкриває цитату й дату (або «дата в джерелі не вказана»)</span></div>
     </template>
-  </div>
+  </details>
 </template>

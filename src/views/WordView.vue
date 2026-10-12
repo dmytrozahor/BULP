@@ -13,6 +13,7 @@ import { STAT_CITES } from '../../core/stats.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
+import { reconstruct } from '../lib/derive.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
@@ -30,7 +31,7 @@ import RegionMap from '../components/RegionMap.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 
 const props = defineProps<{ lemma: string }>()
-const { byLemma, loaded, corpus, witnessById, fullOf, detailError } = useData()
+const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
 const full = computed(() => fullOf(card.value))
 const epochs = computed(() => full.value?.epochs)   // SPEC 50: LemmaDetail.epochs, carried by mergeCard
@@ -43,7 +44,20 @@ const toggle = (raw: string) => (active.value = active.value === raw ? null : ra
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
-const firstLink = computed(() => first.value ? sourceLink(firstW.value, first.value.loc) : undefined)
+/** Legend samples from this lemma's own data: an attested spelling, plus the reverse() reconstructions of the lemma (confirmed by a spelling in the corpus / hypothesis only). */
+const legendSample = computed(() => {
+  const c = card.value, out: { attested?: string; derived?: string; confirmed?: string } = { attested: c?.forms[0]?.raw }
+  if (c && loaded.value) {
+    try {
+      for (const r of reconstruct(c.lemma, searchIdx.value, byLemma.value, att.value).candidates) {
+        if (r.status === 'confirmed-by-attestation') out.confirmed ??= r.form; else out.derived ??= r.form
+        if (out.confirmed && out.derived) break
+      }
+    } catch { /* legend falls back to the neutral sample */ }
+  }
+  return out
+})
+const firstLink =computed(() => first.value ? sourceLink(firstW.value, first.value.loc) : undefined)
 const kwic = computed(() => (full.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
 /** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
@@ -75,7 +89,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
       <p v-if="active" class="small sans muted">Панелі відфільтровано за написанням «{{ active }}».</p>
     </header>
 
-    <FormLegend />
+    <FormLegend :epoch="isNoun" :attested="legendSample.attested" :derived="legendSample.derived" :confirmed="legendSample.confirmed" />
     <div class="cols">
       <div>
         <!-- 1. Provenance -->
@@ -138,7 +152,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         <!-- 3b. Paradigm per epoch (SPEC 50) -->
         <section v-if="isNoun" class="card" aria-labelledby="h-ep">
           <h2 id="h-ep"><span>Словозміна за епохами · Epoch paradigms</span></h2>
-          <EpochParadigm :epochs="epochs" :loading="!full && !err" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
+          <EpochParadigm no-legend :epochs="epochs" :loading="!full && !err" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
         </section>
 
         <!-- 5. Examples -->
