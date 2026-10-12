@@ -6,6 +6,7 @@ import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { MANIFEST } from '../pipelines/manifest.ts'
 import { AUTHORS, authorById, admissible } from '../pipelines/authors.ts'
+import { toItem, catalogue } from '../pipelines/ingest-sophia.ts'
 
 describe('NW manifest/author consistency (P-2)', () => {
   it('every unit has a vetted/provisional author record', () => {
@@ -38,6 +39,31 @@ describe('NW-1 Слово (TOROT spi)', () => {
   it('manifest unit: orv, first_ed 1800 flag, CC BY-NC-SA licence shown (P-4.4)', () => {
     const u = MANIFEST.find(x => x.id === 'spi')!
     expect(u).toMatchObject({ kind: 'torot', lang: 'orv', witnessType: 'first_ed', msDate: 1800, license: 'CC BY-NC-SA 3.0' })
+  })
+})
+
+describe('NW-6 Sophia graffiti — metadata + IIIF links only (text licence unconfirmed)', () => {
+  const row = {
+    published: true, id: 3859, title: '6140', position_on_surface: 'pct:79.77,24.15,8.66,4.19', panel: { title: '109-14', room: '109' },
+    type_of_inscription: { text: 'Textual graffiti' }, language: { text: 'Polish' }, writing_system: { text: 'Latin' }, min_year: 1629, max_year: 1629,
+    transcription: '<p>Ja byl 1629 Waw(rzyniec) Berezecki lowczy kyiowski.</p>', translation_ukr: '<p>Я був, Вавринець Бережецький, ловчий київський.</p>', comments_ukr: 'коментар',
+    inscription_iiif_url: 'https://img.dh.gu.se/saintsophia/static/inscriptions/iiif/3372fd6b-2dff-42cd-b047-2f387d0e58c0.tif/pct:79.77,24.15,8.66,4.19/',
+    author: [{ firstname: 'Viacheslav', lastname: 'Korniienko' }],
+  }
+  it('keeps descriptive fields, the IIIF link and the portal viewer link', () => {
+    expect(toItem(row)).toEqual({
+      id: 3859, title: '6140', panel: '109-14', room: '109', type: 'Textual graffiti', lang: 'Polish', script: 'Latin', from: 1629, to: 1629,
+      iiif: row.inscription_iiif_url, viewer: 'https://saintsophia.dh.gu.se/viewer/?q=109-14/3859', author: 'Viacheslav Korniienko',
+    })
+  })
+  it('never carries transcription / translation / comment text', () => {
+    expect(JSON.stringify(toItem(row))).not.toMatch(/Waw|Вавринець|коментар/)
+    expect(toItem({ ...row, published: false })).toBeUndefined()
+  })
+  it('catalogue states the licence situation', () => {
+    const c = catalogue([[row, { ...row, id: 1 }]], '2026-10-12')
+    expect(c.items.map(i => i.id)).toEqual([1, 3859])
+    expect(c.licence.images).toMatch(/CC BY-NC/); expect(c.licence.text).toMatch(/не підтверджено/)
   })
 })
 
