@@ -50,7 +50,8 @@ One commit per witness; each passes P-2 vetting with a Q quote or stays out.
 - **NW-3** Кочубей «Рѣчь» + «Доношеніе» — Бантыш-Каменский 1859 ч.2 pp. 97–99 (archive.org djvu), page locators.
 - **NW-4** Климентій Зиновіїв «Приповісти посполиті» — izbornyk klyment/kly08.htm, 1700–09.
 - **NW-5** izbornyk XIV–XVI originals (research/19 table) and XVIII texts (research/21; modernised orthography → `orth: 'modernised'`, lexical witness only, no spelling evidence; Russian-orthography texts excluded by language gate).
-- **NW-6** Sophia graffiti — `/api/inscriptions/inscription/?depth=2` (4272), one witness per inscription, IIIF image links (CC BY-NC, attributed); text licence to confirm before shipping texts (until then metadata + links only).
+- **NW-6** Sophia graffiti — `/api/inscriptions/inscription/?depth=2` (4272), one witness per inscription, IIIF image links (CC BY-NC, attributed).
+  **Amendment 2026-10-12** (user: *"I need also in scripts of Sophia for text analysis no matter the license"*): transcriptions ARE ingested as running text for analysis. Each witness carries `licenceNote: "Transcription licence not stated by the portal; included for non-commercial research with attribution by the project owner's decision (2026-10-12)"`, attribution «Saint Sophia, University of Gothenburg» + inscription URL. Author `sophia_graffiti` = institutional, provisional (identity via the cathedral's Kyivan provenance, cited from the portal/research/16); a signed inscription gets a named author only if its own text supports it. Date per inscription from the portal (range); undated → excluded from dating stats but kept for analysis. Script/language per portal metadata (Cyrillic/Glagolitic/Greek…); non-East-Slavic-language inscriptions are excluded by the P-2 language gate.
 - **NW-7** songs (after research/17 round 3): kind `song`, folk = institutional «народна пісня (регіон)», ≤4 lines quotation, YouTube ids.
 
 ## MV — media views (U-9) · research/16, 17
