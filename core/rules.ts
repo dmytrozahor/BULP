@@ -93,16 +93,43 @@ export const SURZHYK_BASIS = ['russianism_or_hybrid', 'russianism_orth', 'russia
 export const SURZHYK_DEF = Q('ENC', 'Енциклопедія «Українська мова», 2000, с. 616 (через: Бузько, Філологічні студії, 2010, с. 63)',
   'Уживається переважно щодо українського просторіччя, засміченого невмотивовано запозиченими (унаслідок українсько-російської інтерференції) російськими елементами', 'вторинне цитування')
 
-// ── Dialects (research/04 §1) — fire only on non-normative forms from 1798 on ────────────────────
+// ── Dialects (research/04 §1) — fire only on non-normative forms, from the feature's dated first attestation (else 1798) ────────────────────
 const W = (art: string) => `https://uk.wikipedia.org/wiki/${art}`
 const SRC: Record<string, string> = {
   EPL: W('Східнополіський_говір'), NOR: 'http://litopys.org.ua/ukrmova/um161.htm', MDN: 'http://litopys.org.ua/ukrmova/um166.htm', SW: W('Південно-західне_наріччя_української_мови'),
   SE: W('Південно-східне_наріччя_української_мови'), ZAK: 'http://litopys.org.ua/ukrmova/um162.htm', WPL: W('Західнополіський_говір'), MPL: W('Середньополіський_говір'), POD: W('Подільський_говір'), NDN: W('Наддністрянський_говір'),
 }
-const dialectGate = (c: Ctx) => (c.year === undefined || c.year >= 1798) && !normative(c)
-const dia = (id: string, codes: string[], re: RegExp, weight: number, src: string, quote: string): Rule[] =>
-  codes.map(code => ({ id: `${id}:${code}`, axis: 'dialect' as const, label: code, weight, cite: Q(['NOR', 'MDN', 'ZAK'].includes(src) ? 'ENC' : 'WUK', SRC[src]!, quote),
-    test: (c: Ctx) => (dialectGate(c) && re.test(c.form) ? form(c) : null) }))
+/**
+ * SPEC 60 DD-1/DD-2 (research/23 Round 2). Blanket gate = 1798 for rules without a dated Q source; a rule with `earliest` fires from that year,
+ * but never before its dialect GROUP existed (Shevelov's chronology, DIALECT_GROUP_FROM): the gate is max(rule.earliest ?? 1798, group.from).
+ */
+export const DIALECT_BLANKET_GATE = 1798
+const SHEV08 = 'http://izbornyk.org.ua/shevelov/shev08.htm, «Загальний огляд хронології постання українських діалектів»'
+const GROUP = (from: number, quote: string) => ({ from, cite: Q('SHEV', SHEV08, quote) })
+/** Dialect group → year from which the group can be named (research/23 Round 2, Shevelov ch. 8). Codes absent here (NORTH, SW) are umbrella regions with no group gate. */
+export const DIALECT_GROUP_FROM: Record<string, { from: number; cite: Evidence }> = {
+  NDN: GROUP(1201, 'Існування наддністрянських, надсянських, лемківських і бойківських говірок простежується від XIII ст.'),
+  LEM: GROUP(1201, 'Існування наддністрянських, надсянських, лемківських і бойківських говірок простежується від XIII ст.'),
+  BOY: GROUP(1201, 'Існування наддністрянських, надсянських, лемківських і бойківських говірок простежується від XIII ст.'),
+  WPL: GROUP(1301, 'Імовірним часом постання … є XIV ст.'),
+  ZAK: GROUP(1500, 'закарпатських — до початку XVI ст.'),
+  POD: GROUP(1501, 'подільських — щойно в XVI ст.'),
+  CHN: GROUP(1501, 'діалектна диференціація ледве чи могла статися раніше, ніж у XVI ст.'),
+  MPL: GROUP(1501, 'щойно починаючи з XVI ст.'),
+  SE: GROUP(1501, 'формування … припадає головно на XVI -XVII ст.'),
+  MDN: GROUP(1501, 'формування … припадає головно на XVI -XVII ст.'),
+}
+/** The year from which a rule may fire: its own dated `earliest`, else the blanket 1798, never before the rule's group formed. */
+export const ruleGate = (r: Pick<Rule, 'earliest' | 'label'>) => Math.max(r.earliest ?? DIALECT_BLANKET_GATE, DIALECT_GROUP_FROM[r.label]?.from ?? 0)
+const dialectGate = (c: Ctx, gate: number) => (c.year === undefined || c.year >= gate) && !normative(c)
+interface Dated { earliest: number; cite: Evidence }
+const dia = (id: string, codes: string[], re: RegExp, weight: number, src: string, quote: string, dated?: Dated): Rule[] =>
+  codes.map(code => {
+    const r: Rule = { id: `${id}:${code}`, axis: 'dialect' as const, label: code, weight, cite: Q(['NOR', 'MDN', 'ZAK'].includes(src) ? 'ENC' : 'WUK', SRC[src]!, quote),
+      test: (c: Ctx) => (dialectGate(c, ruleGate(r)) && re.test(c.form) ? form(c) : null) }
+    if (dated) { r.earliest = dated.earliest; r.earliestCite = dated.cite }
+    return r
+  })
 
 export const DIALECT_RULES: Rule[] = [
   ...dia('N-DIPH-UO', ['CHN', 'MPL', 'WPL'], /(уо|уô|уê|уі)/, 0.8, 'EPL', 'Дифтонги на місці старих «о», «е», «ě» (вуол, піеч, діед)'),
@@ -114,7 +141,9 @@ export const DIALECT_RULES: Rule[] = [
   ...dia('SE-1SG-NOALT', ['SE', 'POD'], /[дтзс]ю$/, 0.5, 'SE', 'дієслова 1-ї особи однини — форми типу вóз\'у, кóс\'у, сид’ý, крут’ý'),
   ...dia('SW-DAT-OVY', ['WPL', 'NDN'], /\S{2,}(ови|еви)$/, 0.5, 'WPL', 'Поширеність закінчення -ови, -еви в давальному відмінку однини іменників чоловічого роду (си́нови, брáтови …)'),
   ...dia('NORTH-ADJ-UNCONTR', ['CHN', 'NORTH'], /(айа|ейе|ийе)$/, 0.6, 'EPL', 'членних нестягнених форм ж. та с. р. (дóўгайа, жóўтейе …)'),
-  ...dia('NDN-ADJ-KIJ', ['NDN'], /(кій|хій|кєй|хєй)$/, 0.6, 'NDN', 'на місці давніх сполук ки, хи в ненаголошеній позиції розвинулися сполуки кі, хі (глибóкій «глибокий»)'),
+  ...dia('NDN-ADJ-KIJ', ['NDN'], /(кій|хій|кєй|хєй)$/, 0.6, 'NDN', 'на місці давніх сполук ки, хи в ненаголошеній позиції розвинулися сполуки кі, хі (глибóкій «глибокий»)',
+    // DD-1: the southern (Galician-Podillian) ky,gy,xy > k'i,g'i,x'i is dated by Shevelov; [P] mapping of that change onto the NDN adjective ending
+    { earliest: 1290, cite: Q('SHEV', 'http://izbornyk.org.ua/shevelov/shev08.htm, «Формування діалектних груп (північної та південної)»', 'натомість на півдні аналогічний процес відбувся приблизно двома з половиною сторіччями пізніше, тобто наприкінці XIII ст.', 'наприкінці XIII ст. → 1290; віднесення до наддністрянського -кій/-хій — [P]') }),
   ...dia('CHN-INSTR-SHORT', ['CHN'], /\S{2,}ой$/, 0.4, 'EPL', 'Паралелізм іменних форм в ор. в. (рукóйу — рукóй, шóстайу — шóстай, мнóйу — мнóй)'),
   ...dia('SW-INSTR-OW', ['SW'], /(оў|еў)$/, 0.7, 'SW', 'наявність флексії -оў, -еў на місці давніх -оју, -еју … (рукóју > рукóў, рукóм …)'),
   ...dia('CARP-Y', ['BOY', 'LEM'], /ы/, 0.5, 'SW', 'у карпатських говорах наявний голосний заднього ряду [ы] (сыны, былы)'),

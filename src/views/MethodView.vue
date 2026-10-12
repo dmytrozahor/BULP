@@ -6,7 +6,7 @@
 import { RULES } from '../../core/phonology.ts'
 import { EPOCHS } from '../../core/epochs.ts'
 import { STAT_CITES } from '../../core/stats.ts'
-import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, REGISTER_DEF, SURZHYK_DEF, RUSYN_STATUS } from '../../core/rules.ts'
+import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, REGISTER_DEF, SURZHYK_DEF, RUSYN_STATUS, ruleGate } from '../../core/rules.ts'
 import spec from '../../specs/00-principles.md?raw'
 import { inlineMd, parseSpec } from '../lib/md.ts'
 import { AXIS_UK, labelUk } from '../lib/format.ts'
@@ -45,15 +45,16 @@ const formulas: [string, string, string][] = [
   </section>
 
   <section v-for="[axis, rules] in tables" :key="axis" class="card"><h2><span>Детектор — {{ AXIS_UK[axis] }} ({{ rules.length }})</span></h2>
-    <div class="tablewrap"><table><thead><tr><th>id</th><th>вісь</th><th>мітка</th><th class="num">вага</th><th>джерело</th></tr></thead>
+    <div class="tablewrap"><table><thead><tr><th>id</th><th>вісь</th><th>мітка</th><th class="num">вага</th><th v-if="axis === 'dialect'" class="num">від</th><th>джерело</th></tr></thead>
       <tbody><tr v-for="r in rules" :key="r.id" :class="{ muted: r.weight <= 0 }">
         <td><code>{{ r.id }}</code></td><td>{{ r.axis }}</td><td>{{ labelUk(r.label) }}<div class="small muted">{{ r.note }}</div></td>
         <td class="num">{{ r.weight }}<div v-if="r.weight <= 0" class="small unk">без джерела</div></td>
+        <td v-if="axis === 'dialect'" class="num">{{ ruleGate(r) }}<div v-if="r.earliestCite" class="small"><EvidencePopover :evidence="[r.earliestCite]" :heading="r.id + ': перша фіксація ознаки'" :label="r.id + ' датування'"><span class="badge">датовано ⓘ</span></EvidencePopover></div></td>
         <td><EvidencePopover v-if="r.weight > 0" :evidence="[r.cite]" :heading="r.id" :label="r.id"><span class="badge">{{ r.cite.kind }} ⓘ {{ r.cite.source }}</span></EvidencePopover><span v-else class="small">гіпотеза: лише підказка для перевірки</span></td></tr></tbody></table></div>
     <template v-if="axis === 'contact'"><p class="small sans">Суржик — похідна мітка, ніколи не первинна: <EvidencePopover :evidence="[SURZHYK_DEF]" heading="Визначення суржику"><span class="badge">визначення ⓘ</span></EvidencePopover></p></template>
     <template v-if="axis === 'register'"><p class="small sans">«Розмовне» ≠ нелітературне: <EvidencePopover :evidence="[REGISTER_DEF]" heading="Позначка розм."><span class="badge">визначення ⓘ</span></EvidencePopover> Літературний регістр ніколи не виводиться.</p></template>
     <p v-if="axis === 'rusyn'" class="small sans">{{ RUSYN_STATUS.note }} <EvidencePopover :evidence="RUSYN_STATUS.evidence" heading="Статус русинської" label="статус русинської"><span class="badge">обидві позиції ⓘ</span></EvidencePopover></p>
-    <p v-if="axis === 'dialect'" class="small muted sans">Діалектні правила спрацьовують лише для ненормативних форм після 1798 р. (інакше — історична форма, а не діалектизм).</p>
+    <p v-if="axis === 'dialect'" class="small muted sans">Діалектні правила спрацьовують лише для ненормативних форм і не раніше за колонку «від»: першу фіксацію ознаки (датований Q-матеріал, Шевельов), але не раніше за час постання говору; правила без датованого джерела лишаються під загальним порогом 1798 р. (інакше — історична форма, а не діалектизм). Ознаки в твердженні подано від найдавнішої.</p>
   </section>
 
   <section class="card"><h2><span>Епохи (дві схеми, не зливаються)</span></h2>

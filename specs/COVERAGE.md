@@ -116,3 +116,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | EP-7.6 | tests/ui.test.ts › EP-7.6 legend lists the epoch markers |
 | EP-7.7 | tests/ui.test.ts › EP-7.7 / D2 / D3: model badge with out-of-domain mark |
 | EP-8.1 | tests/gaps.test.ts › REPORT has the epoch-paradigm subsection with denominators |
+| DD-1 | tests/dialect-dating.test.ts › a dated rule does not fire before its first attestation, and fires from it |
+| DD-2 | tests/dialect-dating.test.ts › claim evidence and method list the oldest feature first, undated last |
+| DD-3 | tests/dialect-dating.test.ts › the detector context carries no region |

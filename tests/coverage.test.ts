@@ -21,7 +21,9 @@ const rows = rd('specs/COVERAGE.md').split('\n').filter(l => /^\| [A-Z]/.test(l)
 describe('P-4.1 every requirement id is covered', () => {
   it('collects ids from all specs', () => { expect(ids.size).toBeGreaterThan(50); for (const id of ['P-1.1', 'RU-3.2', 'B-5', 'M-6', 'D-4.3']) expect(ids.has(id), id).toBe(true) })
   it('every id has a row', () => { const have = new Set(rows.map(r => r.id)); for (const id of ids) expect(have.has(id), `${id} missing in specs/COVERAGE.md`).toBe(true) })
-  it('every row names an id that still exists in the specs', () => { for (const r of rows) expect(ids.has(r.id), `${r.id} not in any spec`).toBe(true) })
+  // SPEC 60 phase-3 ids (DD-1, BK-2 …): rows are checked against the spec as they are added; a phase-3 id without a row is not yet an error (waves land separately)
+  const ids60 = new Set([...rd('specs/60-features.md').matchAll(/\*\*([A-Z]{2}-\d+)\*\*/g)].map(m => m[1]!))
+  it('every row names an id that still exists in the specs', () => { for (const r of rows) expect(ids.has(r.id) || ids60.has(r.id), `${r.id} not in any spec`).toBe(true) })
   it('every non-manual row points at an existing test file and test text', () => {
     for (const r of rows) {
       if (r.ref.startsWith('manual')) { expect(r.ref.length, r.id).toBeGreaterThan(20); continue }

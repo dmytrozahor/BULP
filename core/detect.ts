@@ -22,22 +22,30 @@ export interface Ctx {
 export interface Rule {
   id: string; axis: 'cs' | 'contact' | 'dialect' | 'register' | 'rusyn'; label: string; weight: number
   cite: Evidence; test: (c: Ctx) => Evidence | null; note?: string
+  /** SPEC 60 DD-1: first attestation of the feature (year, from a dated Q source). Absent = undated; the rule keeps its own blanket gate. */
+  earliest?: number
+  /** the dated source for `earliest`; added to the claim's evidence when the rule fires (P-1.4) */
+  earliestCite?: Evidence
 }
 
 export interface Detection { claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[] }
 
 export function detect(rules: Rule[], c: Ctx): Detection {
-  const fired: Record<string, { w: number[]; ev: Evidence[]; rules: string[] }> = {}
+  const fired: Record<string, { r: Rule; trig: Evidence }[]> = {}
   const hints: Detection['hints'] = []
   for (const r of rules) {
     const trig = r.test(c)
     if (!trig) continue
     if (r.weight <= 0) { hints.push({ rule: r.id, label: r.label }); continue }
-    const f = (fired[r.label] ??= { w: [], ev: [], rules: [] })
-    f.w.push(r.weight); f.ev.push(r.cite, trig); f.rules.push(r.id)
+    ;(fired[r.label] ??= []).push({ r, trig })
   }
-  const claims = Object.fromEntries(Object.entries(fired).map(([label, f]) =>
-    [label, claim(true as const, f.ev, { score: +noisyOr(f.w).toFixed(3), method: f.rules.join('+') })]))
+  // SPEC 60 DD-2: features are listed oldest first; undated rules keep table order after the dated ones (Array.sort is stable)
+  const age = (r: Rule) => r.earliest ?? 1e9
+  const claims = Object.fromEntries(Object.entries(fired).map(([label, hits]) => {
+    const ord = [...hits].sort((a, b) => age(a.r) - age(b.r))
+    const ev = ord.flatMap(h => [h.r.cite, ...(h.r.earliestCite ? [h.r.earliestCite] : []), h.trig])
+    return [label, claim(true as const, ev, { score: +noisyOr(ord.map(h => h.r.weight)).toFixed(3), method: ord.map(h => h.r.id).join('+') })]
+  }))
   return { claims, hints }
 }
 
