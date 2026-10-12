@@ -42,6 +42,19 @@ describe('NW-1 Слово (TOROT spi)', () => {
   })
 })
 
+describe('NW-2 Київські глаголичні листки (TOROT kiev-mis) — chu, provenance disputed, last', () => {
+  const u = MANIFEST.find(x => x.id === 'kiev-mis')!, a = authorById['kiev_missal_scribes']!
+  it('unit is Church Slavonic (not the Rus\' redaction), CC BY-NC-SA, dated by a paraphrase', () => {
+    expect(u).toMatchObject({ kind: 'torot', lang: 'chu', license: 'CC BY-NC-SA 3.0' }); expect(u.dateCite.kind).toBe('P')
+  })
+  it('author: provisional, disputed, both positions cited, Kyiv = depository only', () => {
+    expect(a).toMatchObject({ status: 'provisional', confidence: 'disputed', label: 'institutional' })
+    expect(a.evidence.filter(e => e.kind === 'Q')).toHaveLength(1)
+    expect(a.evidence.map(e => e.quote).join(' ')).toMatch(/South Croatia[\s\S]*Czech patriots/)
+    expect(a.evidence[0]!.quote).toMatch(/undetermined origin/); expect(a.note).toMatch(/місце зберігання/)
+  })
+})
+
 describe('NW-6 Sophia graffiti — metadata + IIIF links only (text licence unconfirmed)', () => {
   const row = {
     published: true, id: 3859, title: '6140', position_on_surface: 'pct:79.77,24.15,8.66,4.19', panel: { title: '109-14', room: '109' },

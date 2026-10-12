@@ -13,6 +13,8 @@ export const SOURCES: Record<string, Source> = {
   PAVL:   { title: 'Павленко Л. П. Історична граматика української мови: навч. посіб. Луцьк: Волин. нац. ун-т ім. Лесі Українки, 2010. 208 с. (морфологія — с. 61–130)', url: 'https://evnuir.vnu.edu.ua/handle/123456789/341', year: '2010' },
   TOROT:  { title: 'TOROT treebank (Eckhoff, Berdičevskis et al.), release 20200116', url: 'https://github.com/torottreebank/treebank-releases', license: 'CC BY-NC-SA 3.0' },
   IZB:    { title: 'Ізборник — Історія України IX–XVIII ст. Першоджерела та інтерпретації', url: 'http://izbornyk.org.ua/' },
+  EOU:    { title: 'Encyclopedia of Ukraine (CIUS), статті «Kyiv Missal» тощо', url: 'https://www.encyclopediaofukraine.com/' },
+  WPEN:   { title: 'Wikipedia (en), стаття «Kiev Missal»', url: 'https://en.wikipedia.org/wiki/Kiev_Missal', license: 'CC BY-SA 4.0' },
   VIRA:   { title: 'Віра.Укр — Архангельське Євангеліє 1092 (онлайн-видання)', url: 'https://віра.укр/b/arch-gospel' },
   WS:     { title: 'Українські Вікіджерела', url: 'https://uk.wikisource.org', license: 'PD / CC BY-SA 4.0' },
   WIKT:   { title: 'Вікісловник (uk.wiktionary)', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },

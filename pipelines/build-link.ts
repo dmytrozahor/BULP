@@ -18,7 +18,7 @@ export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'ruthenian' | 'uk'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string }
+export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string }
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }

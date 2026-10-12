@@ -27,7 +27,7 @@ export const STATUS_UK: Record<string, string> = { vetted: 'перевірени
 export const WTYPE_UK: Record<string, string> = {
   autograph: 'автограф', ms_copy: 'рукописна копія', first_ed: 'перше видання', later_ed: 'пізніше видання', scholarly_ed: 'наукове видання', edition: 'видання',
 }
-export const LANG_UK: Record<string, string> = { orv: 'давньоруська', 'chu-rus': 'церк.-слов. руської редакції', ruthenian: 'староукраїнська (руська)', uk: 'українська' }
+export const LANG_UK: Record<string, string> = { orv: 'давньоруська', 'chu-rus': 'церк.-слов. руської редакції', chu: 'церковнослов’янська (не руської редакції)', ruthenian: 'староукраїнська (руська)', uk: 'українська' }
 export const KIND_UK: Record<string, string> = { Q: 'цитата', P: 'переказ', D: 'дані' }
 export const KIND_LONG: Record<string, string> = {
   Q: 'дослівна цитата джерела', P: 'переказ (не дослівно)', D: 'запис даних (рядок словника, вживання в контексті)',

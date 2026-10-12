@@ -18,7 +18,7 @@ export interface TokenRec {
 export interface WitnessOut {
   id: string; unit: string; title: string; author: string; url: string
   date: [number, number]; dateCite: Evidence; msDate?: number
-  lang: 'orv' | 'chu-rus' | 'ruthenian' | 'uk'; region?: string
+  lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; region?: string
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   authorEvidence?: Evidence[]   // self-reference found in the witness itself (e.g. Kyiv Chronicle)
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it

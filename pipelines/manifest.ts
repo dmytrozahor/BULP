@@ -13,7 +13,7 @@ import { UNITS_18A } from './nw-izb18a.ts'
 import { UNITS_18B } from './nw-izb18b.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
-export type Lang = 'orv' | 'chu-rus' | 'ruthenian' | 'uk'
+export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed'
 
 export interface Unit {
@@ -57,6 +57,11 @@ export const MANIFEST: Unit[] = [
     date: [1185, 1200], dateCite: P('TOROT', 'https://raw.githubusercontent.com/torottreebank/treebank-releases/master/spi.xml', 'кінець XII ст. (Пріцак: після 1190–1192 рр.)',
       'research/16 §3: датування — [P] за gazeta.ua/articles/history/_comu-slovo-o-polku-igorevim-ne-falsifikat/676501 і library.bdpu.org.ua; автентичність оспорювана, рукопис втрачено — свідок = видання 1800 р. (electronic-text-version: «a slightly corrected version of the first edition from 1800»)'),
     msDate: 1800, lang: 'orv', witnessType: 'first_ed', edition: 'TOROT spi (Majer, Sykes); текст Б. Орехова за 1-м виданням 1800 р.', license: 'CC BY-NC-SA 3.0', oldI: true },
+  { id: 'kiev-mis', title: 'Київські глаголичні листки (Kiev Missal, TOROT kiev-mis)', author: 'kiev_missal_scribes', kind: 'torot',
+    urls: ['https://raw.githubusercontent.com/torottreebank/treebank-releases/master/kiev-mis.xml'],
+    date: [950, 1100], dateCite: P('WPEN', 'https://en.wikipedia.org/wiki/Kiev_Missal', 'dated at no later than the latter half of the 10th century; first page of folio 1 written probably at the boundary of the 11th and 12th centuries',
+      'переказ статті; джерело статті — Damjanović 2003, p. 15–16 (research/16 §2)'),
+    lang: 'chu', witnessType: 'ms_copy', edition: 'TOROT kiev-mis (Sykes, Eckhoff); не київська редакція: походження дискусійне (disputed)', license: 'CC BY-NC-SA 3.0' },
   { id: 'pripovisti', title: 'Климентій Зіновіїв. Приповісті посполиті', author: 'zinoviiv', kind: 'izbornyk-page',
     urls: [IZ('klyment/kly08.htm'), IZ('klyment/kly01.htm')],   // kly01 = editors' introduction: dating + the author's self-naming (read for evidence only, not ingested)
     date: [1700, 1709], dateCite: Q('IZB', IZ('klyment/kly01.htm') + ', вступна стаття, с. 16–17', 'Уважне вивчення віршів Климентія дозволяє датувати рукопис періодом між 1700 і 1709 рр.'),

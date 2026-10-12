@@ -3,7 +3,7 @@
  * > "An author counts as vetted only with one fetched self-identification quote or self-chosen act" — research/06 §2.2
  * > "Never fabricate or reconstruct quotes from memory" — brief to the vetting agents
  */
-import { Q, type Evidence } from '../core/evidence.ts'
+import { Q, P, type Evidence } from '../core/evidence.ts'
 import { AUTHORS_14A } from './nw-izb14a.ts'
 import { AUTHORS_14B } from './nw-izb14b.ts'
 import { AUTHORS_18A } from './nw-izb18a.ts'
@@ -43,6 +43,14 @@ export const AUTHORS: Author[] = [
   { id: 'kochubei', name: 'Василь Кочубей (Рѣчь і Доношеніе 1708)', life: '1640–1708', label: 'malorossian', status: 'excluded', confidence: 'implicit', region: 'Полтавщина',
     evidence: [],
     note: 'Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., 1859, с. 97–99; archive.org/details/bantueshkam2) прочитано (djvu-текст, сторінки 97–99): підписано «Василій Кочюбей, Судіа, Иванъ Искра, Полковникъ», але самоідентифікації як русин/малорос/українець там немає — «Малороссійскій край» названо краєм Царя, «мы, подліи» — підданими; отже Q-цитати самоназви немає (P-2.1). Мова — руська канцелярська з полонізмами; OCR потребує ручної вичитки. Виключено, текст не внесено (research/18 R2-2).' },
+  // W5 NW-2 (last): provenance DISPUTED — both positions cited; the depository (Kyiv) is not the place of writing
+  { id: 'kiev_missal_scribes', name: 'Писарі Київських глаголичних листків (Kiev Missal)', life: 'X ст. (1-ша сторінка: межа XI–XII ст.)', label: 'institutional', status: 'provisional', confidence: 'disputed',
+    evidence: [
+      Q('EOU', 'https://www.encyclopediaofukraine.com/pages%5CK%5CY%5CKyivMissal.htm', 'consisting of seven parchment sheets of undetermined origin. In 1872 it was deposited in the library of the Kyiv Theological Academy (hence its name).'),
+      P('WPEN', 'https://en.wikipedia.org/wiki/Kiev_Missal', 'Linguistic, paleographic and graphic features indicate South Croatia as its place of origin.', 'позиція 1: південнохорватське походження (Damjanović 2003, p. 16)'),
+      P('WPEN', 'https://en.wikipedia.org/wiki/Kiev_Missal#Czech_forgery_hypothesis', 'the Kiev Folios are a 19th-century fake by Czech patriots in order to prove the antiquity of Czech literary culture.', 'позиція 2: гіпотеза чеської підробки (Hamm 1979); Енциклопедія України такої позиції не підтримує'),
+    ],
+    note: 'походження невизначене: Київ — лише місце зберігання з 1872 р. (Київська духовна академія), не місце написання; мова — церковнослов’янська (lang=chu), не руська редакція. Provenance «disputed»: обидві позиції показуються; статус provisional (лише вторинні свідчення, P-2.1). Східнообродритська теза Пуканця не перевірена (research/16 §2 [U])' },
   { id: 'zinoviiv', name: 'Климентій Зіновіїв (єромонах)', life: 'кін. 1640-х/поч. 1650-х – після 1712', label: 'ruthenian', status: 'vetted', confidence: 'explicit', region: 'Лівобережжя',
     evidence: [Q(IZ('klyment/kly01.htm'), 'вступна стаття вид. 1971, про мезовірш рукопису-автографа', 'Иεромонах Климεнтіи Зѣновіεв син')],
     note: 'самоназва з мезовірша автографа (у передруку редакторів); народжений, ймовірно, на Правобережжі, жив на Лівобережжі (research/20 §1)' },
