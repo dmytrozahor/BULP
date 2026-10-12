@@ -35,6 +35,7 @@ import {
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
+import { writeTexts } from './build-texts.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
@@ -333,6 +334,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lexIdxJson = JSON.stringify(lexindex)
   const budget = writeLexicon(cards, PUB)   // B-5: core + detail shards, nothing dropped
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
+  lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
   writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
 
   const rd2: ReportData = {

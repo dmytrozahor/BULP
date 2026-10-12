@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "build:data": "tsx pipelines/build.ts",
     "data:publish": "tsx pipelines/data-branch.ts publish",
+    "data:texts": "tsx pipelines/emit-texts.ts",
     "data:pull": "tsx pipelines/data-branch.ts pull"
   },
   "dependencies": {

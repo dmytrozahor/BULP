@@ -72,7 +72,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
   <template v-else>
     <p><RouterLink to="/texts">← усі пам’ятки</RouterLink></p>
     <h2>{{ cur.title }}</h2>
-    <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }} · <a :href="cur.url" target="_blank" rel="noopener">відкрити джерело ↗</a></p>
+    <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }}<template v-if="cur.license"> ({{ cur.license }})</template> · <a :href="cur.url" target="_blank" rel="noopener">відкрити джерело ↗</a></p>
     <div v-if="toks === 'loading'" class="skeleton" style="height:8rem" />
     <div v-else-if="!toks" class="card" role="status">
       <p>Тексту цієї пам’ятки ще немає в даних: <code>public/data/texts/{{ cur.id }}.json</code> (<code>{ tokens: [raw, loc, s][] }</code>) створює збірка корпусу. Читач відкриє його без змін у коді.</p>
