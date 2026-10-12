@@ -80,6 +80,8 @@ export interface LemmaCard {
     dialect: Record<string, Claim<true>>
     /** union of the modern FormCards' rusyn claims: 'rusyn' | 'rusyn:lemko' | 'rusyn:presov' | 'rusyn:pannonian' | 'rusyn:subcarpathian' */
     rusyn?: Claim<string>
+    /** SPEC 60 NP-1: proper-name kind (VESUM prop/geo/fname/lname/patr, PROIEL Ne, Stanza PROPN = model); absent when nothing supports it */
+    proper?: Claim<import('./places.ts').NameKind>
   }
 }
 

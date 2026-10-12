@@ -36,6 +36,7 @@ import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
+import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
@@ -73,6 +74,7 @@ interface LemmaAcc {
   forms: Map<string, FormAcc>
   firstByW: Map<string, { ref: Ref; raw: string; route: Route; loc: string }>
   pre1400: boolean
+  nm: { torot?: NameEvidence['torot']; stanza?: NameEvidence['stanza']; nMorph: number; nNlp: number }   // NP-1 counters
 }
 
 async function runPy(script: string): Promise<void> {
@@ -157,12 +159,17 @@ export async function build(opts: { noPy?: boolean } = {}) {
       nl++; rt[route] = (rt[route] ?? 0) + 1
       let la = lemmas.get(c.id)
       if (!la) {
-        la = { id: c.id, display: c.lemma, tags: c.hit.tags, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false }
+        la = { id: c.id, display: c.lemma, tags: c.hit.tags, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, nm: { nMorph: 0, nNlp: 0 } }
         lemmas.set(c.id, la); lemmaList.push(la)
       }
       la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e)
       if (w.date[1] < 1400) la.pre1400 = true
       ids[ti] = la.idx
+      {   // NP-1: PROIEL Ne (TOROT morph) and Stanza PROPN, counted per lemma
+        const nm = la.nm, up = nlp?.tokens[ti]?.upos
+        if (tok.morph) { nm.nMorph++; if (/^Ne/.test(tok.morph)) { const t = (nm.torot ??= { w: w.id, loc: tok.loc, raw: tok.raw, morph: tok.morph, n: 0, of: 0 }); t.n++ } }
+        if (up) { nm.nNlp++; if (up === 'PROPN') { const s = (nm.stanza ??= { w: w.id, loc: tok.loc, raw: tok.raw, n: 0, of: 0 }); s.n++ } }
+      }
       if (!la.firstByW.has(w.id)) la.firstByW.set(w.id, { ref, raw: tok.raw, route, loc: tok.loc })
       let fa = la.forms.get(raw)
       if (!fa) {
@@ -302,11 +309,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const stats = lemmaStats(order, fMax, sizes, coll.get(la.idx) ?? [])
     stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
+    const proper = properClaim(la.display, {
+      vesum: lemmaPos, ...(la.nm.torot ? { torot: { ...la.nm.torot, of: la.nm.nMorph } } : {}), ...(la.nm.stanza ? { stanza: { ...la.nm.stanza, of: la.nm.nNlp } } : {}),
+    }, VESUM_LOC)   // NP-1
     cards.push({
       lemma: la.display, pos: posLabel(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
-      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)) },
+      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}) },
     })
   }
   cards.sort((a, b) => b.stats.f - a.stats.f || a.lemma.localeCompare(b.lemma, 'uk'))
@@ -336,6 +346,15 @@ export async function build(opts: { noPy?: boolean } = {}) {
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
   lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
   writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
+  {   // NP-2: toponym gazetteer + spelling-variant clusters over every capitalised token of the admitted witnesses
+    const scan = new PlaceScan(); for (const { w } of adm) for (const t of w.tokens) scan.add(w, t)
+    const places: PlacesFile = {
+      format: 1, generated, N: sizes.N,
+      source: { coords: 'Wikidata P625 (query.wikidata.org, 2026-10-12)', licence: 'CC0', tiles: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© учасники OpenStreetMap (ODbL)' },
+      places: scan.result(),
+    }
+    writeFileSync(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
+  }
 
   const rd2: ReportData = {
     generated, flags: { py: !opts.noPy, stress: !!stressJson, ru: Object.keys(ruJson).length > 0 }, authors: AUTHORS, witnesses: metas, routes, excluded,

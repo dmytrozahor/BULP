@@ -138,3 +138,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DX-1 | tests/deictics.test.ts › segments the generic shape prefix + base + reinforcement + pointing |
 | DX-2 | tests/deictics.test.ts › озьдо = о + сьде + о «ось тут» with the ЕСУМ quote (attested claim, no method) |
 | DX-3 | tests/deictics.test.ts › DeicticStructure «Будова» is in the word card, the annotator popover and /analyze |
+| NP-1 | tests/places.test.ts › NP-1 VESUM prop/geo/fname/lname/patr give a D-evidence claim; Stanza alone is a flagged model claim |
+| NP-2 | tests/places.test.ts › NP-2 PlaceScan clusters spellings with earliest witness, adds reconstructions, and the claim has two evidences |
+| NP-3 | tests/places.test.ts › NP-3 route and nav exist; Leaflet is imported dynamically (lazy chunk) with OSM attribution; word card has «на мапі» |

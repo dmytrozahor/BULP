@@ -14,6 +14,7 @@ const router = createRouter({
     { path: '/annotate', component: () => import('./views/AnnotateView.vue') },
     { path: '/texts', component: () => import('./views/TextsView.vue') },
     { path: '/sophia', component: () => import('./views/SophiaView.vue') },
+    { path: '/map', component: () => import('./views/MapView.vue') },
     { path: '/corpus', component: () => import('./views/CorpusView.vue') },
     { path: '/report', component: () => import('./views/ReportView.vue') },
     { path: '/method', component: () => import('./views/MethodView.vue') },

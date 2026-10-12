@@ -38,4 +38,10 @@ export const SOURCES: Record<string, Source> = {
   WKEN:   { title: 'Wiktionary (en), етимологічні рядки українських слів', url: 'https://en.wiktionary.org', license: 'CC BY-SA 4.0' },
   WPUK:   { title: 'Українська Вікіпедія (статті «Омографи», «Полонізм», «Англіцизм», «Германізм» тощо)', url: 'https://uk.wikipedia.org', license: 'CC BY-SA 4.0' },
   MASENKO:  { title: 'Масенко Л. Суржик: між мовою і язиком. К., 2011 (quoted via Дивослово 2016 review)', year: '2011' },
+  WIKIDATA: { title: 'Wikidata (координати P625, QID)', url: 'https://www.wikidata.org', license: 'CC0' },
+  OSM:    { title: 'OpenStreetMap — плитки мапи', url: 'https://www.openstreetmap.org/copyright', license: 'ODbL (© учасники OpenStreetMap)' },
+  KAIKKI: { title: 'Wiktextract / kaikki.org — Ukrainian (витяг з англійського Вікісловника; цитувати: Tatu Ylönen)', url: 'https://kaikki.org/dictionary/Ukrainian/', license: 'CC BY-SA 4.0' },
+  WIKTUK: { title: 'Вікісловник (uk.wiktionary): шаблони позначок і категорії, зібрані через API', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
+  YT:     { title: 'YouTube (відео лише як вбудований програвач; аудіо не зберігається)', url: 'https://www.youtube.com' },
+  MAKSYM1834: { title: 'Максимович М. Украинскія народныя пѣсни. Москва, 1834 (Вікіджерела)', url: 'https://uk.wikisource.org', license: 'PD' },
 }

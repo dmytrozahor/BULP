@@ -30,9 +30,10 @@ import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
 import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
+import PlaceBlock from '../components/PlaceBlock.vue'
 import TimeCurve from '../components/TimeCurve.vue'
-
 import DeicticStructure from '../components/DeicticStructure.vue'
+
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
@@ -125,6 +126,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <div v-else class="skeleton" style="height:6rem" />
         </section>
 
+        <PlaceBlock :card="card" />   <!-- SPEC 60 NP-1/NP-3 «Власна назва · на мапі» (renders only for proper names / gazetteer places) -->
+
         <!-- 2. Labels -->
         <section class="card" aria-labelledby="h-lab">
           <h2 id="h-lab"><span>Мітки · Labels</span></h2>
@@ -151,11 +154,11 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <p class="small muted sans" style="margin-top:.6rem">Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1).</p>
         </section>
 
+        <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
+
         <!-- 3. Paradigm -->
         <section class="card" aria-labelledby="h-par">
           <h2 id="h-par"><span>Словозміна · Paradigm</span></h2>
-        <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
-
           <Paradigm :paradigm="card.paradigm" />
         </section>
 
