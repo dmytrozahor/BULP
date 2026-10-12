@@ -175,3 +175,9 @@ textarea.src { width: 100%; min-height: 9rem; font-family: var(--serif); font-si
 .rm-svg { width: 100%; height: auto; } .rm-o { stroke: var(--bg); stroke-width: .8; }
 .rm-o:focus { outline: 2px solid var(--accent); } .rm-o:hover { stroke: var(--ink); }
 .rm-s0 { fill: var(--surface-2); } .rm-s1 { fill: var(--ep1); } .rm-s2 { fill: var(--ep2); } .rm-s3 { fill: var(--ep4); } .rm-s4 { fill: var(--ep6); }
+
+/* SPEC 60 SX-4: multi-token span = bracket underline (sourced: solid, dialect colour; hint without source: dashed grey) */
+.syn { border: 1.5px solid var(--m-dialect); border-top-color: transparent; border-radius: 0 0 6px 6px; padding: 0 2px 1px; }
+.syn.syn-hint { border-style: dashed; border-color: var(--muted); border-top-color: transparent; }
+.syn-list { list-style: none; padding: 0; margin: .3rem 0; }
+.syn-list li { margin: .45rem 0; }

@@ -1,6 +1,24 @@
 /** SPEC 60 SX-1…SX-3: multi-token detectors (core/syntax.ts). Claims need the ЕУМ um159 Q cite; unsourced rows only hint (P-1.3, P-3.1). */
 import { describe, it, expect } from 'vitest'
 import { detectSyntax, SYNTAX_ROWS, UNDATED } from '../core/syntax.ts'
+import { annotateSyntax } from '../src/lib/annotate.ts'
+import { emptyLex } from '../src/lib/analyze.ts'
+
+describe('SX-4 annotator / analyze helper', () => {
+  it('annotateSyntax uses VESUM tags: «к столу» is a k+dative claim only when столу is tagged v_dav', () => {
+    const d = emptyLex()
+    expect(annotateSyntax('к столу', d)[0]!.id).toBe('SX-PREP-RED')                 // -у is not decisive without tags → hint only
+    d.paradigmMap.set('столу', [{ lemma: 'стіл', tags: 'noun:inanim:m:v_rod' }])
+    expect(annotateSyntax('к столу', d)[0]!.id).toBe('SX-PREP-RED')                 // … tagged genitive-only → just the reduced-preposition hint
+    d.paradigmMap.set('столу', [{ lemma: 'стіл', tags: 'noun:inanim:m:v_dav' }])
+    expect(annotateSyntax('к столу', d)[0]!.id).toBe('SX-K-DAT')
+  })
+  it('spans are char ranges into the input (for the bracket underline)', () => {
+    const t = 'ну, я би-м зробив'
+    const s = annotateSyntax(t, emptyLex())[0]!
+    expect(t.slice(s.start, s.end)).toBe('би-м')
+  })
+})
 
 const one = (t: string, o = {}) => detectSyntax(t, o)
 const by = (t: string, id: string, o = {}) => one(t, o).find(s => s.id === id)

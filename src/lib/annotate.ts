@@ -14,7 +14,8 @@ import { derive } from '../../core/phonology.ts'
 import { traceSteps } from './derive.ts'
 import { key, normalizeOld, tokenize } from '../../core/text.ts'
 import { type SearchIndex, type Via } from './search.ts'
-import { runDetectors, strongest, type Category, type LexData } from './analyze.ts'
+import { hitsOf, runDetectors, strongest, type Category, type LexData } from './analyze.ts'
+import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
 export interface AnnotateData extends LexData { search: SearchIndex; cards: Map<string, CoreCard> }
@@ -85,6 +86,25 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
     out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims) })
   }
   return out
+}
+
+/**
+ * SPEC 60 SX-4: multi-token spans (core/syntax.ts) over the whole text, with lexicon callbacks so that ambiguous endings
+ * (feminine l-participle vs. noun in -ла, dative vs. genitive) are decided by VESUM tags / lemma POS, never guessed.
+ */
+export function annotateSyntax(text: string, data: LexData & Partial<AnnotateData>, year?: number): SyntaxSpan[] {
+  const tagsOf = (k: string) => hitsOf(data, k).map(h => h.tags)
+  const posOf = (k: string) => (data.search?.map.get(k) ?? []).map(h => data.cards?.get(h.lemma)?.pos ?? '')
+  return detectSyntax(text, {
+    year,
+    isDative: k => { const t = tagsOf(k); return t.length ? t.some(x => x.includes('v_dav')) : undefined },
+    verbness: k => {
+      const t = [...tagsOf(k), ...posOf(k)]
+      if (!t.length) return undefined
+      return t.some(x => /verb|дієсл/.test(x)) ? 'verb' : 'other'
+    },
+    isKnown: k => (data.search?.map.has(k) ?? false) || tagsOf(k).length > 0,
+  })
 }
 
 export interface Summary {

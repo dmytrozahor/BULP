@@ -8,7 +8,9 @@
 import { computed, ref, watch } from 'vue'
 import { EPOCHS } from '../../core/epochs.ts'
 import { useData } from '../composables/useData.ts'
-import { annotate, summarize, type AnnotatedToken } from '../lib/annotate.ts'
+import { annotate, annotateSyntax, summarize, type AnnotatedToken } from '../lib/annotate.ts'
+import type { SyntaxSpan } from '../../core/syntax.ts'
+import SyntaxSpans from '../components/SyntaxSpans.vue'
 import { CATEGORIES, CATEGORY_UK } from '../lib/analyze.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
@@ -22,10 +24,19 @@ const y = computed(() => (/^\d{3,4}$/.test(year.value.trim()) ? +year.value : un
 const tokens = computed(() => (loaded.value ? annotate(text.value.slice(0, 20000), annData.value, y.value) : []))
 const sum = computed(() => summarize(tokens.value))
 const hot = ref<AnnotatedToken | null>(null)
-const parts = computed(() => {
-  const out: ({ gap: string } | { t: AnnotatedToken; i: number })[] = []; let at = 0
-  tokens.value.forEach((t, i) => { if (t.start > at) out.push({ gap: text.value.slice(at, t.start) }); out.push({ t, i }); at = t.end })
-  if (at < text.value.length) out.push({ gap: text.value.slice(at, 20000) })
+// SPEC 60 SX-4: multi-token spans (core/syntax.ts) are drawn as a bracket underline around their tokens
+const spans = computed(() => (loaded.value ? annotateSyntax(text.value.slice(0, 20000), annData.value, y.value) : []))
+const hotSpan = ref<SyntaxSpan | null>(null)
+type Part = { gap: string } | { t: AnnotatedToken; i: number }
+const groups = computed(() => {
+  const out: { span?: SyntaxSpan; parts: Part[] }[] = []; let at = 0, cur: (typeof out)[number] | undefined
+  tokens.value.forEach((t, i) => {
+    const s = spans.value.find(sp => t.start < sp.end && sp.start < t.end), gap = t.start > at ? text.value.slice(at, t.start) : ''
+    if (s && cur?.span === s) { if (gap) cur.parts.push({ gap }); cur.parts.push({ t, i }) }
+    else { if (gap) out.push({ parts: [{ gap }] }); cur = { span: s, parts: [{ t, i }] }; out.push(cur) }
+    at = t.end
+  })
+  if (at < text.value.length) out.push({ parts: [{ gap: text.value.slice(at, 20000) }] })
   return out
 })
 const shev = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay)
@@ -62,10 +73,11 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
 
       <section v-if="!loaded" class="card"><div class="skeleton" v-for="i in 3" :key="i" /></section>
       <section v-else-if="tokens.length" class="card" aria-label="Анотований текст">
-        <div class="ann"><template v-for="(p, k) in parts" :key="k"><template v-if="'gap' in p">{{ p.gap }}</template>
+        <div class="ann"><span v-for="(g, gi) in groups" :key="gi" :class="g.span ? ['syn', g.span.hint ? 'syn-hint' : ''] : undefined"
+            :title="g.span ? `${g.span.modern} · ${g.span.note}` : undefined" @mouseenter="g.span && (hotSpan = g.span)"><template v-for="(p, k) in g.parts" :key="k"><template v-if="'gap' in p">{{ p.gap }}</template>
           <RouterLink v-else-if="p.t.status === 'attested' && p.t.card" :to="`/w/${encodeURIComponent(p.t.card.lemma)}`" :class="cls(p.t)" :aria-label="label(p.t)"
             @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.provenance === 'derived'" class="derived-badge">реконстр.</sup></RouterLink>
-          <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</span></template></div>
+          <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</span></template></span></div>
       </section>
     </div>
 
@@ -73,6 +85,11 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
       <section class="card"><h2><span>Слово</span></h2>
         <WordCard v-if="hot" :t="hot" />
         <p v-else class="small muted sans">Наведіть курсор або перейдіть Tab на слово.</p></section>
+
+      <section v-if="spans.length" class="card"><h2><span>Багатослівні конструкції ({{ spans.length }})</span></h2>
+        <p class="small muted sans">Дужка під кількома словами — аналітична форма, енклітик або скорочений прийменник (SPEC 60 SX). Мітка лише з джерелом (ЕУМ, um159); правила без джерела — «гіпотеза».</p>
+        <SyntaxSpans v-if="hotSpan" :spans="[hotSpan]" />
+        <details><summary class="small sans">усі конструкції тексту</summary><SyntaxSpans :spans="spans" /></details></section>
 
       <section v-if="sum.total" class="card"><h2><span>Підсумок</span></h2>
         <p class="sans small" style="margin-top:0"><strong style="font-size:1.4rem">{{ fmtNum(sum.pct * 100, 0) }}%</strong> слів прив’язано до лем корпусу ({{ sum.linked }} із {{ sum.total }}) ·
