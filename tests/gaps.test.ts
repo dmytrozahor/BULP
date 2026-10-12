@@ -124,6 +124,7 @@ describe('M-6 / B-6 outputs', () => {
     for (const f of ['corpus', 'lexicon', 'lexindex']) expect(has(`public/data/${f}.json`)).toBe(true)
     const core = readFileSync('public/data/lexicon.json')
     expect(core.length).toBeLessThanOrEqual(15 * 1024 * 1024)
+    expect(core.length, 'B-5a amendment 2026-10-12: keep ~10 % headroom under the 15 MiB limit (move fields to detail, do not raise it)').toBeLessThanOrEqual(13.5 * 1024 * 1024)
     expect(readFileSync('public/data/lexindex.json').length).toBeLessThanOrEqual(4 * 1024 * 1024)
     const files = readdirSync('public/data/lex')
     expect(files.length).toBeGreaterThan(100)

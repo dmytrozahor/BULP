@@ -87,9 +87,13 @@ export interface LemmaCard {
 /** Core spelling: what search, the annotator and derive read (a full FormCard is assignable). */
 export type CoreForm = Pick<FormCard, 'raw' | 'norm' | 'modern' | 'claims' | 'hints'>
 export type CoreStats = Pick<LemmaStats, 'f' | 'ipm' | 'hk' | 'dots'>
-export interface CoreCard extends Omit<LemmaCard, 'stress' | 'forms' | 'stats' | 'claims' | 'epochs'> { forms: CoreForm[]; stats: CoreStats; claims: Omit<LemmaCard['claims'], 'oldest'> }
+/** B-5a (amendment 2026-10-12): core keeps only author / witness / date / form of the first attestation and an EMPTY evidence list; locator, witness type, coFirst, evidence and method are detail. */
+export type CoreFirst = Claim<Pick<FirstAttestation, 'author' | 'witness' | 'date' | 'form'>>
+export interface CoreCard extends Omit<LemmaCard, 'stress' | 'forms' | 'stats' | 'claims' | 'epochs' | 'first'> { first: CoreFirst; forms: CoreForm[]; stats: CoreStats; claims: Omit<LemmaCard['claims'], 'oldest'> }
+/** The rest of a known first attestation: the claim without core's value fields (value = loc, witnessType, coFirst). Absent when the claim is unknown or kept whole in core. */
+export type FirstDetail = Omit<Claim<FirstAttestation>, 'value'> & { value: Pick<FirstAttestation, 'loc' | 'witnessType' | 'coFirst'> }
 export type FormDetail = Omit<FormCard, keyof CoreForm>
-export interface LemmaDetail { stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats>; epochs?: EpochParadigms }   // forms[i] belongs to core.forms[i]
+export interface LemmaDetail { first?: FirstDetail; stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats>; epochs?: EpochParadigms }   // forms[i] belongs to core.forms[i]
 /** public/data/lexicon.json (format 3): CoreCard[] in the compact wire form of core/pack.ts (tag table, defaults omitted) with the shared evidence pool. */
 export interface PackedCore { format: 3; ev: Evidence[]; tags: string[]; cards: unknown[][] }
 /** public/data/lex/<bucket>.json (format 1): the details of the lemmas hashing to the bucket, own evidence pool. */

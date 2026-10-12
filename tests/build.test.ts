@@ -149,6 +149,15 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
     for (const k of ['kwic', 'stress', 'link', 'derivation', 'byCentury', 'colloc', 'oldest']) expect(s, k).not.toContain(`"${k}"`)
     expect(detail.forms[0]!.kwic).toHaveLength(6); expect(Object.keys(core.stats).sort()).toEqual(['dots', 'f', 'hk', 'ipm'])
   })
+  it('B-5a amendment 2026-10-12: core first = author / witness / date / form, no evidence; locator, witnessType, coFirst, evidence and method are detail; unknown first stays whole', () => {
+    const { core, detail } = splitCard(cards[0]!)
+    expect(Object.keys(core.first.value as object).sort()).toEqual(['author', 'date', 'form', 'witness']); expect(core.first.evidence).toEqual([])
+    expect(detail.first!.evidence.length).toBeGreaterThan(0); expect(Object.keys(detail.first!.value).sort()).toEqual(['coFirst', 'loc', 'witnessType'])
+    expect(JSON.stringify(packCore([core]).cards[0]![4])).toBe(JSON.stringify(['a', 'w', 1000, 1000, 'слово']))
+    const un = { ...cards[0]!, first: unknown() as never }, s = splitCard(un)
+    expect(s.detail.first).toBeUndefined(); expect(s.core.first).toEqual(un.first); expect(mergeCard(s.core, s.detail)).toEqual(un)
+    expect(unpackCore(JSON.parse(JSON.stringify(packCore([s.core]))))[0]!.first).toEqual(un.first)
+  })
   it('core wire form (tag table, omitted defaults, pooled evidence) and a shard round-trip through JSON', () => {
     const parts = cards.map(splitCard), p = packCore(parts.map(x => x.core))
     expect(p.format).toBe(3); expect(JSON.stringify(p.cards)).not.toContain('"source"')

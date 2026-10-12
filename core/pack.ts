@@ -3,7 +3,7 @@
  * pack() interns each distinct Evidence once in `ev` and replaces it inside the cards' `evidence` arrays by its integer index; unpack() restores the cards (shared objects). Lossless.
  */
 import type { Evidence } from './evidence.ts'
-import type { CoreCard, LemmaCard, PackedCore, PackedLexicon } from './types.ts'
+import type { CoreCard, CoreFirst, LemmaCard, PackedCore, PackedLexicon } from './types.ts'
 
 /** Cards hold Evidence only in arrays under these keys (Claim.evidence, StressVariant.evidence). */
 const EV_KEYS = new Set(['evidence', 'authorEvidence'])
@@ -63,7 +63,9 @@ export function packCore(cards: CoreCard[]): PackedCore {
     if (!isDef(surzhyk, JSON.parse(UNKNOWN))) k['surzhyk'] = surzhyk
     if (Object.keys(dialect).length) k['dialect'] = dialect
     const { f, ipm, hk, dots } = c.stats
-    return [c.lemma, c.pos, par, forms, c.first, k, [f, ipm, hk, dots]].map((x, i) => (i === 4 || i === 5 ? p.one(x).card : x))
+    const fv = c.first.value as Partial<CoreFirst['value']> | string, ft = typeof fv === 'object' && !c.first.evidence.length && Object.keys(c.first).length === 2 && Object.keys(fv).length === 4
+    const first = ft ? [fv.author, fv.witness, fv.date![0], fv.date![1], fv.form] : p.one(c.first).card
+    return [c.lemma, c.pos, par, forms, first, p.one(k).card, [f, ipm, hk, dots]]
   })
   return { format: 3, ev: p.ev, tags: table, cards: wire }
 }
@@ -72,13 +74,13 @@ export function unpackCore(j: unknown): CoreCard[] {
   if (!(p && !Array.isArray(p) && p.format === 3 && Array.isArray(p.ev) && Array.isArray(p.tags) && Array.isArray(p.cards))) return unpack(j)
   const R = <T>(x: T) => restore(p.ev, x)
   return p.cards.map(w => {
-    const [lemma, pos, par, forms, first, claims, st] = w as [string, string, (string | number)[], (string | unknown[])[], CoreCard['first'], Record<string, unknown>, number[]]
+    const [lemma, pos, par, forms, first, claims, st] = w as [string, string, (string | number)[], (string | unknown[])[], CoreCard['first'] | (string | number)[], Record<string, unknown>, number[]]
     const paradigm: CoreCard['paradigm'] = []; let form = ''
     for (const x of par) typeof x === 'string' ? (form = x) : paradigm.push({ form, tags: p.tags[x]! })
     return {
       lemma, pos, paradigm,
       forms: forms.map(f => (typeof f === 'string' ? { raw: f, norm: f, modern: f, claims: {}, hints: [] } : { raw: f[0], norm: f[1], modern: f[2], claims: R(f[3]), hints: f[4] }) as CoreCard['forms'][number]),
-      first: R(first),
+      first: Array.isArray(first) ? { value: { author: first[0], witness: first[1], date: [first[2], first[3]], form: first[4] }, evidence: [] } as CoreCard['first'] : R(first as CoreCard['first']),
       claims: { register: JSON.parse(UNKNOWN), surzhyk: JSON.parse(UNKNOWN), dialect: {}, ...R(claims) } as CoreCard['claims'],
       stats: { f: st[0]!, ipm: st[1]!, hk: st[2]!, dots: st[3]! },
     }

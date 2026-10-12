@@ -59,7 +59,9 @@ const legendSample = computed(() => {
   }
   return out
 })
-const firstLink =computed(() => first.value ? sourceLink(firstW.value, first.value.loc) : undefined)
+/** locator, witness type, coFirst and the evidence live in the detail shard (B-5a amendment 2026-10-12) */
+const firstF = computed(() => full.value && isKnown(full.value.first) ? full.value.first.value : undefined)
+const firstLink = computed(() => firstF.value ? sourceLink(firstW.value, firstF.value.loc) : undefined)
 const kwic = computed(() => (full.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
 /** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
@@ -101,16 +103,16 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <h2 id="h-prov"><span>Походження · Provenance</span></h2>
           <div v-if="first && card.first.value !== 'unknown'">
             <p class="sans"><span class="muted">Перша фіксація: </span>
-              <ClaimBadge :claim="card.first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
+              <ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
             <ul class="sans small" style="list-style:none;padding:0;margin:0 0 .8rem">
               <li><span class="muted">автор: </span><AuthorBadge :author="first.author" :witness="first.witness" /></li>
               <li><span class="muted">пам’ятка: </span><a v-if="firstW" :href="firstW.url" target="_blank" rel="noopener">{{ firstW.title }}</a><template v-else>{{ first.witness }}</template>
-                · <span class="muted">локатор:</span> {{ first.loc }}
+                · <span class="muted">локатор:</span> <template v-if="firstF">{{ firstF.loc }}</template><template v-else-if="!err">…</template>
                 <template v-if="firstLink"> · <a class="srclink" :href="firstLink.url" target="_blank" rel="noopener">{{ firstLink.label }} ↗</a></template></li>
               <li><span class="muted">дата: </span>{{ fmtDate(first.date) }}
                 <EvidencePopover v-if="firstW" :evidence="[firstW.dateCite]" heading="Датування пам’ятки" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover>
-                · <span class="muted">тип свідчення: </span>{{ WTYPE_UK[first.witnessType] ?? first.witnessType }}</li>
-              <li v-if="first.coFirst.length"><span class="muted">співпершими: </span>{{ first.coFirst.join(', ') }}</li>
+                <template v-if="firstF"> · <span class="muted">тип свідчення: </span>{{ WTYPE_UK[firstF.witnessType] ?? firstF.witnessType }}</template></li>
+              <li v-if="firstF?.coFirst.length"><span class="muted">співпершими: </span>{{ firstF.coFirst.join(', ') }}</li>
               <li v-if="full && isKnown(full.claims.oldest)"><span class="muted">найдавніша форма: </span>
                 <ClaimBadge :claim="full.claims.oldest" :text="(full.claims.oldest.value as any).form" /></li>
               <li v-else-if="!full && !err" class="muted">найдавніша форма: завантаження…</li>
