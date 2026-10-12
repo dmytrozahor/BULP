@@ -11,6 +11,7 @@ import type { MorphChange } from '../../core/morph-history.ts'
 import type { CellForm, EpochParadigms, StemValue, WitnessMeta } from '../../core/types.ts'
 import { useData } from '../composables/useData.ts'
 import { epochGrid, epochTabs, type GCell } from '../lib/epochGrid.ts'
+import { placedCells } from '../lib/ux.ts'
 import { epochName, epochShort, fmtDate } from '../lib/format.ts'
 import { stemSample } from '../../core/morph-tables.ts'
 import { epochById } from '../../core/epochs.ts'
@@ -42,6 +43,13 @@ const SRC_LET = { torot: 'T', stanza: 'M', vesum: 'В' } as const
 const multi = (f: CellForm) => { const e = wOf(f)?.epochShev.value; return e && e !== 'unknown' && e.epochs.length > 1 ? e.epochs.map(epochShort).join(', ') : '' }
 const noteTitle = (n: MorphChange) => `${n.id} · ${n.what}`
 const cellId = (c: GCell) => c.key
+/** UX-3: nothing placed in any cell → only the summary line (N, conflicts); the grid stays behind «показати таблицю» (nothing removed) */
+const placed = computed(() => placedCells(props.epochs))
+const totalN = computed(() => (props.epochs?.paradigms ?? []).reduce((n, p) => n + p.N, 0))
+const dropped = computed(() => (props.epochs?.paradigms ?? []).reduce((a, p) => ({ conflict: a.conflict + p.dropped.conflict, underspecified: a.underspecified + p.dropped.underspecified, untagged: a.untagged + p.dropped.untagged }), { conflict: 0, underspecified: 0, untagged: 0 }))
+const dropTxtAll = computed(() => dropTxt({ dropped: dropped.value } as any))
+const forceGrid = ref(false)
+const gridOn = computed(() => placed.value > 0 || forceGrid.value)
 </script>
 
 <template>
@@ -49,6 +57,10 @@ const cellId = (c: GCell) => c.key
     <div v-if="loading" class="skeleton" style="height:9rem" aria-label="завантаження історичних парадигм" />
     <p v-else-if="!epochs" class="muted small sans">історичні парадигми: немає даних</p>
     <template v-else>
+      <p v-if="!placed" class="small sans epsum" role="status">Жодної форми не розміщено в клітинках: N = {{ totalN }}<template v-if="dropTxtAll"> · {{ dropTxtAll }}</template>.
+        <span class="unk">невідомо</span> ≠ «форми не було».
+        <button v-if="!forceGrid" type="button" class="chip small sans" @click="forceGrid = true">показати порожню таблицю</button></p>
+      <template v-if="gridOn">
       <div class="row small sans" style="margin-bottom:.4rem">
         <span class="muted">тип основи:</span>
         <template v-if="stem">
@@ -80,7 +92,7 @@ const cellId = (c: GCell) => c.key
               <tbody>
                 <tr v-for="r in grid.rows" :key="r.label">
                   <th scope="row">{{ r.label }}</th>
-                  <td v-for="(c, i) in r.cells" :key="i" :class="{ na: !c }" :data-cell="c && cellId(c)">
+                  <td v-for="(c, i) in r.cells" :key="i" :class="{ na: !c }" :data-cell="c && cellId(c)" :data-col="grid.cols[i]?.label">
                     <template v-if="c">
                       <span v-if="c.tag" class="small muted dutag">{{ c.tag }}</span>
                       <!-- attested: solid -->
@@ -134,6 +146,7 @@ const cellId = (c: GCell) => c.key
           </ul>
       </div>
       <FormLegend v-if="!noLegend" epoch />
+      </template>
     </template>
   </div>
 </template>
