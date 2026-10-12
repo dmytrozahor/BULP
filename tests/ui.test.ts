@@ -401,3 +401,54 @@ describe('W1-5 /texts reader (U-8)', () => {
     expect(await ssr(TextsView, {}, '/texts')).toContain('Тексти корпусу')
   })
 })
+
+// ── MV-1: media panel + /sophia browse (SPEC 60) ──
+import * as MEDIA from '../src/lib/media.ts'
+import MediaPanel from '../src/components/MediaPanel.vue'
+import SophiaView from '../src/views/SophiaView.vue'
+import { MEDIA_FIXTURE } from '../src/data/media-fixture.ts'
+import { hasMedia } from '../src/lib/sophiaData.ts'
+describe('MV-1 media panel', () => {
+  const sophia = JSON.parse(readFileSync('public/data/sophia.json', 'utf8')) as MEDIA.SophiaData
+  it('MV-1 IIIF image API URL is built from the portal crop base; panel photo and info.json derive from it', () => {
+    const it0 = sophia.items[0]!
+    const u = MEDIA.iiifImageUrl(it0.iiif, 640)
+    expect(u.startsWith('https://img.dh.gu.se/saintsophia/static/inscriptions/iiif/')).toBe(true)
+    expect(u.endsWith('/!640,640/0/default.jpg')).toBe(true)
+    expect(MEDIA.iiifFullUrl(it0.iiif)).toMatch(/\.tif\/full\/!1600,1600\/0\/default\.jpg$/)
+    expect(MEDIA.iiifInfoUrl(it0.iiif)).toMatch(/\.tif\/info\.json$/)
+  })
+  it('MV-1 YouTube ids are validated and embedded through youtube-nocookie.com only', () => {
+    expect(MEDIA.youtubeEmbedUrl('ojtOxnv8CL0')).toBe('https://www.youtube-nocookie.com/embed/ojtOxnv8CL0?rel=0')
+    expect(MEDIA.youtubeId('https://youtu.be/CGxJMG-W-LY')).toBe('CGxJMG-W-LY')
+    expect(MEDIA.youtubeId('https://www.youtube.com/watch?v=ojtOxnv8CL0&t=3')).toBe('ojtOxnv8CL0')
+    expect(MEDIA.youtubeEmbedUrl('"><script>')).toBeUndefined()
+  })
+  it('MV-1 /sophia filter: date overlap, type and text; sorted by start year', () => {
+    const r = MEDIA.filterSophia(sophia.items, { from: 1100, to: 1200 })
+    expect(r.length).toBeGreaterThan(0)
+    for (const i of r) expect(i.to >= 1100 && i.from <= 1200).toBe(true)
+    expect(r.map(i => i.from)).toEqual([...r.map(i => i.from)].sort((a, b) => a - b))
+    expect(MEDIA.filterSophia(sophia.items, { text: sophia.items[0]!.panel }).length).toBeGreaterThan(0)
+    expect(MEDIA.filterSophia(sophia.items, { type: 'no-such-type' })).toEqual([])
+  })
+  it('MV-1 Sophia witness ids resolve to media; the song fixture has media; others do not', () => {
+    expect(MEDIA.sophiaIdOf('sophia-28')).toBe(28); expect(MEDIA.sophiaIdOf('spi')).toBeUndefined()
+    expect(hasMedia('sophia-28')).toBe(true); expect(hasMedia('fixture-song-zhnetsi')).toBe(true); expect(hasMedia('spi')).toBe(false)
+  })
+  it('MV-1 IIIF panel shows the attribution «Saint Sophia, University of Gothenburg — CC BY-NC», lazy image, no transcription', async () => {
+    const html = await ssr(MediaPanel, { media: MEDIA.mediaOfSophia(sophia.items[0]!) })
+    expect(html).toContain('Saint Sophia, University of Gothenburg — CC BY-NC'); expect(html).toContain('loading="lazy"'); expect(html).toContain('img.dh.gu.se')
+    expect(html).not.toMatch(/transcription|транскрипці/i)
+  })
+  it('MV-1 YouTube panel is a click-to-load facade: no iframe (and no third-party request) before play, nocookie host after', async () => {
+    const html = await ssr(MediaPanel, { media: MEDIA_FIXTURE['fixture-song-zhnetsi'] })
+    expect(html).not.toContain('<iframe'); expect(html).toContain('Відтворити')
+    expect(readFileSync('src/components/MediaPanel.vue', 'utf8')).toContain('youtubeEmbedUrl')
+  })
+  it('MV-1 Kwic offers «переглянути» for media witnesses; /sophia is routed and in the nav', async () => {
+    expect(readFileSync('src/components/Kwic.vue', 'utf8')).toContain('переглянути')
+    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/sophia'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/sophia"')
+    expect(await ssr(SophiaView, {}, '/sophia')).toContain('Софія Київська')
+  })
+})
