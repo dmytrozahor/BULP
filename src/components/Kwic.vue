@@ -26,7 +26,7 @@ const cite = (k: Kwic) => { const w = witnessById.value.get(k.w); return { autho
       <button v-for="e in epochs" :key="e" type="button" class="chip" :aria-pressed="sel === e" @click="sel = e">{{ epochShort(e) }}</button>
     </div>
     <div v-for="(k, i) in view" :key="i" class="kwic">
-      <span class="l"><span>{{ k.left }}</span></span><span class="n">{{ k.node }}</span><span class="r">{{ k.right }}</span>
+      <span class="l"><span>{{ k.left }}</span></span>{{ ' ' }}<span class="n">{{ k.node }}</span>{{ ' ' }}<span class="r">{{ k.right }}</span>
       <span class="cite">{{ cite(k).author }} · <a v-if="cite(k).url" :href="cite(k).url" target="_blank" rel="noopener">{{ cite(k).title }}</a><template v-else>{{ cite(k).title }}</template> · {{ k.loc }} · {{ fmtDate(k.date) }}</span>
     </div>
     <p v-if="!view.length" class="muted">Прикладів немає.</p>

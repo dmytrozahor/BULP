@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+﻿import { describe, it, expect } from 'vitest'
 import { mkdtempSync, readFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
@@ -149,6 +149,7 @@ import AnalyzeView from '../src/views/AnalyzeView.vue'
 import AnnotateView from '../src/views/AnnotateView.vue'
 import WordView from '../src/views/WordView.vue'
 import { renderMd } from '../src/lib/md.ts'
+import Kwic from '../src/components/Kwic.vue'
 import RegionMap from '../src/components/RegionMap.vue'
 import { regionRows, stepOf } from '../src/lib/geo.ts'
 import { Q, P, claim } from '../core/evidence.ts'
@@ -351,5 +352,12 @@ describe('SPEC 50 epoch paradigms', () => {
     const p = epochSample().paradigms[0], ids = (st?: StemValue) => epochGrid(p, 'shev.old', st).notes.map(n => n.id)
     expect(ids(stemV)).not.toContain('MH-13'); expect(ids(stemV)).toContain('MH-14')   // рѣка is feminine: no masculine pl.nom note, the feminine sg.ins note stays
     expect(ids({ ...stemV, type: 'o', model: 'плодъ', old: 'плодъ', gender: 'm' })).toContain('MH-13'); expect(ids()).toContain('MH-13')   // unknown stem: nothing is hidden
+  })
+})
+
+describe('W1-1 KWIC spacing', () => {
+  it('left, node and right are separated by spaces; the citation is its own element', async () => {
+    const html = await ssr(Kwic, { lines: [{ w: 'x', loc: 'абз. 1', left: 'по Всеславѣ', node: 'пожегъ', right: 'землю', date: [1096, 1117] }] })
+    expect(html).toMatch(/<\/span> <span class="n">пожегъ<\/span> <span class="r">/); expect(html).toContain('class="cite"')
   })
 })

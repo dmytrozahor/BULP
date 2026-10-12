@@ -130,7 +130,7 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 .kwic .l { direction: rtl; text-align: left; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .kwic .l > span { direction: ltr; unicode-bidi: isolate; }
 .kwic .r { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; } .kwic .n { font-weight: 700; color: var(--accent); }
 .kwic .cite { grid-column: 1 / -1; font: .75rem var(--sans); color: var(--muted); padding-top: .15rem; }
-@media (max-width: 600px) { .kwic { display: block; } .kwic .l, .kwic .r { direction: ltr; display: inline; white-space: normal; } }
+@media (max-width: 600px) { .kwic { display: block; } .kwic .l, .kwic .r { direction: ltr; display: inline; white-space: normal; } .kwic .cite { display: block; margin-top: .25rem; } }
 
 /* charts */
 .chart { width: 100%; height: auto; display: block; font-family: var(--sans); }
