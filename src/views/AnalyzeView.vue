@@ -12,6 +12,8 @@ import { useData } from '../composables/useData.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
 import { AXIS_UK, labelUk } from '../lib/format.ts'
 import { categoryOf, isRusyn, runDetectors, ruleOf, ALL_RULES } from '../lib/analyze.ts'
+import { annotateSyntax } from '../lib/annotate.ts'
+import SyntaxSpans from '../components/SyntaxSpans.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import FormBadge from '../components/FormBadge.vue'
@@ -31,6 +33,7 @@ const hasRusyn = computed(() => allClaims.value.some(([l]) => isRusyn(l)))
 const parallelLabel = (l: string) => isRusyn(l) || (hasRusyn.value && (l === 'ZAK' || l === 'LEM'))
 const claimList = computed(() => allClaims.value.filter(([l]) => !parallelLabel(l)))
 const parallelClaims = computed(() => Object.fromEntries(allClaims.value.filter(([l]) => parallelLabel(l))))
+const spans = computed(() => (word.value && loaded.value ? annotateSyntax(word.value, annData.value, y.value) : []))   // SPEC 60 SX-4
 const open = ref<string | null>(null)
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
@@ -80,6 +83,11 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
         </li>
       </ul>
       <p v-else-if="!hasRusyn" class="muted sans">Жодне правило з джерелом не спрацювало — міток немає (<span class="unk">невідомо</span> ≠ «літературне»).</p>
+    </section>
+
+    <section v-if="spans.length" class="card"><h2><span>Багатослівні конструкції</span></h2>
+      <p class="small muted sans">Введіть фразу («я би-м зробив», «к тобі», «д місту»), щоб побачити аналітичні форми, енклітики та скорочені прийменники. Датування джерела не наводять.</p>
+      <SyntaxSpans :spans="spans" />
     </section>
 
     <section v-if="a.hints.length" class="card"><h2><span>Гіпотези без джерела (лише для перевірки)</span></h2>

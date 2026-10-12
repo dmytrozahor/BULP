@@ -1,5 +1,6 @@
 /** SPEC 60 IP-1…IP-3: grapheme -> IPA, dialect override rows, word-card row. */
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
 import { toIpa, IPA_DIALECT_ROWS } from '../core/ipa.ts'
 
 describe('IP-1 standard grapheme -> IPA', () => {
@@ -42,5 +43,12 @@ describe('IP-2 dialect override rows (research/04 codes)', () => {
   })
   it('Lemko ш -> [ʂ]; Carpathian ы -> [ɨ]', () => {
     expect(toIpa('шия', [1], 'LEM').ipa).toContain('ʂ'); expect(toIpa('сыр', [1], 'BOY').ipa).toContain('ɨ')
+  })
+})
+
+describe('IP-3 word card IPA row', () => {
+  it('IP-3 WordCard includes IpaRow, one IPA per stress variant with a dialect toggle', () => {
+    expect(readFileSync('src/components/WordCard.vue', 'utf8')).toContain('<IpaRow ')
+    const v = readFileSync('src/components/IpaRow.vue', 'utf8'); expect(v).toContain('v-for="(it, i) in items"'); expect(v).toContain('IPA_DIALECTS')
   })
 })
