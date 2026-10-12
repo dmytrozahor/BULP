@@ -38,6 +38,6 @@ for (const u of MANIFEST.filter(u => !only || u.id === only)) {
     const out = rawPath(u, i)
     if (await exists(out)) continue
     try { await writeFile(out, await get(url)); console.log(`✓ ${u.id}[${i}] ${url}`) } catch (e) { console.warn(`✗ ${(e as Error).message}`) }
-    await sleep(350) // politeness
+    await sleep(1100) // politeness (W5: ≥ 1 s between requests)
   }
 }

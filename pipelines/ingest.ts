@@ -17,6 +17,7 @@ export interface Ingester {
 
 export const INGESTERS: Partial<Record<Kind, () => Promise<Ingester>>> = {
   izbornyk: () => import('./ingest-izbornyk.ts').then(m => m.default),
+  'izbornyk-page': () => import('./ingest-izbornyk-pages.ts').then(m => m.default),
   torot: () => import('./ingest-torot.ts').then(m => m.default),
   vira: () => import('./ingest-vira.ts').then(m => m.default),
   wikisource: () => import('./ingest-wikisource.ts').then(m => m.default),

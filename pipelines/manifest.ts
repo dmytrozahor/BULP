@@ -8,7 +8,7 @@
  */
 import { Q, P, type Evidence } from '../core/evidence.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'wikisource' | 'vira'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
 export type Lang = 'orv' | 'chu-rus' | 'ruthenian' | 'uk'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed'
 
@@ -53,6 +53,10 @@ export const MANIFEST: Unit[] = [
     date: [1185, 1200], dateCite: P('TOROT', 'https://raw.githubusercontent.com/torottreebank/treebank-releases/master/spi.xml', 'кінець XII ст. (Пріцак: після 1190–1192 рр.)',
       'research/16 §3: датування — [P] за gazeta.ua/articles/history/_comu-slovo-o-polku-igorevim-ne-falsifikat/676501 і library.bdpu.org.ua; автентичність оспорювана, рукопис втрачено — свідок = видання 1800 р. (electronic-text-version: «a slightly corrected version of the first edition from 1800»)'),
     msDate: 1800, lang: 'orv', witnessType: 'first_ed', edition: 'TOROT spi (Majer, Sykes); текст Б. Орехова за 1-м виданням 1800 р.', license: 'CC BY-NC-SA 3.0', oldI: true },
+  { id: 'pripovisti', title: 'Климентій Зіновіїв. Приповісті посполиті', author: 'zinoviiv', kind: 'izbornyk-page',
+    urls: [IZ('klyment/kly08.htm'), IZ('klyment/kly01.htm')],   // kly01 = editors' introduction: dating + the author's self-naming (read for evidence only, not ingested)
+    date: [1700, 1709], dateCite: Q('IZB', IZ('klyment/kly01.htm') + ', вступна стаття, с. 16–17', 'Уважне вивчення віршів Климентія дозволяє датувати рукопис періодом між 1700 і 1709 рр.'),
+    lang: 'ruthenian', region: 'Лівобережжя', witnessType: 'autograph', edition: 'Зіновіїв К. Вірші. Приповісті посполиті, підг. І. П. Чепіга, К.: Наукова думка, 1971, с. 211–266 (автограф; правопис рукопису)', orth: 'рукопис (диякритики)' },
   { id: 'vyshensky', title: 'Іван Вишенський. Книжка', author: 'vyshensky', kind: 'izbornyk', urls: [IZ('old14_16/old14_19.htm')],
     date: [1588, 1600], dateCite: Q('IZB', IZ('old14_16/old14_19.htm'), 'Ще у 1599 — 1600 рр. Іван Вишенський частину своїх творів переписав у спеціальну «Книжку»'),
     lang: 'ruthenian', region: 'Галичина / Афон', witnessType: 'scholarly_ed', edition: 'Ізборник' },
