@@ -48,7 +48,7 @@ describe('NW izbornyk-page units: dating and vetting quotes are verbatim in the 
     const ps = pages('izbornyk-page', u.id)
     const quotes = [
       ['dateCite', u.dateCite] as const,
-      ...(authorById[u.author]?.evidence ?? []).map((e, i) => [`author ${u.author}[${i}]`, e] as const),
+      ...(authorById[u.author]?.evidence ?? []).filter(e => u.urls.some(x => e.locator.startsWith(x))).map((e, i) => [`author ${u.author}[${i}]`, e] as const),   // the quote lives on one page of the author's units
     ].filter(([, e]) => e.kind === 'Q')
     for (const [what, e] of quotes) {
       it.skipIf(!ps.length)(`${u.id}: ${what} quote occurs in the page text`, () => {

@@ -4,6 +4,7 @@
  * > "Never fabricate or reconstruct quotes from memory" — brief to the vetting agents
  */
 import { Q, type Evidence } from '../core/evidence.ts'
+import { AUTHORS_14A } from './nw-izb14a.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -65,6 +66,7 @@ export const AUTHORS: Author[] = [
     evidence: [Q(WS('Непотрібність_великоруської_літератури_для_України_і_для_слов\'янщини/Частина_1'), '1878 (передрук 1998)', 'Великоруська журналістика знущалась над нашим язиком та літературою. Трудно й до сього часу розвиватись українській літературі')] },
   { id: 'drahomanov', name: 'Михайло Драгоманов', life: '1841–1895', label: 'ukrainian', status: 'vetted', confidence: 'explicit',
     evidence: [Q(IZ('drag/drag19.htm'), 'Чудацькі думки… (1891), вид. 1991', 'та увага … зовсім не шкідлива для нас, українців, а навіть могла б бути дуже корисною')] },
+  ...AUTHORS_14A,
 ]
 
 export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
