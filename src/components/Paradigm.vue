@@ -5,12 +5,13 @@
  */
 import { computed } from 'vue'
 import { buildGrids, nonNormative, type PForm } from '../lib/paradigm.ts'
-const props = defineProps<{ paradigm: PForm[] }>()
-const grids = computed(() => buildGrids(props.paradigm))
+const props = defineProps<{ paradigm: PForm[]; kind?: string }>()
+const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(props.paradigm))
 </script>
 
 <template>
-  <div v-if="!paradigm.length" class="unk">парадигма відсутня у ВЕСУМ</div>
+  <p v-if="kind === 'uninflected'" class="sans">незмінне слово <span class="muted small">— не відмінюється, окремої парадигми немає (SPEC 61 FX-5)</span></p>
+  <div v-else-if="!paradigm.length" class="unk">парадигма відсутня у ВЕСУМ</div>
   <div v-for="g in grids" :key="g.id" class="tablewrap" style="margin-bottom:.8rem">
     <table>
       <caption v-if="grids.length > 1" class="small muted" style="text-align:left">{{ g.title }}</caption>
@@ -27,5 +28,5 @@ const grids = computed(() => buildGrids(props.paradigm))
       </tbody>
     </table>
   </div>
-  <p class="small muted">джерело: ВЕСУМ v6.8.6, CC BY-NC-SA 4.0 · теги дослівно при наведенні (D-докази) · <span class="nonnorm">помаранчевим</span> — позначені як нестандартні/короткі форми. Наголосу у ВЕСУМ немає.</p>
+  <p v-if="kind !== 'uninflected'" class="small muted"><span class="nonnorm">помаранчевим</span> — нестандартні/короткі форми (джерело й ліцензія — у ⓘ панелі).</p>
 </template>

@@ -10,6 +10,7 @@ import type { FormCard, LemmaCard } from '../../core/types.ts'
 import ReconstructedForms from './ReconstructedForms.vue'
 import { ruleById } from '../../core/phonology.ts'
 import { fmtDate, ROUTE_UK } from '../lib/format.ts'
+import { claimSignature } from '../lib/ux.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
 import EvidenceList from './EvidenceList.vue'
@@ -18,6 +19,10 @@ const open = ref<string | null>(null), n = ref(40)   // F2: paged — a frequent
 const items = computed(() => props.forms.filter(f => !props.active || f.raw === props.active)
   .map(f => ({ f, date: f.date as [number, number] | undefined, derived: (f as FormCard & { derived?: boolean }).derived === true }))
   .sort((a, b) => (a.date?.[1] ?? 9999) - (b.date?.[1] ?? 9999)))
+/** SPEC 61 UX-4: identical claim sets over several spellings render once («у N формах») on the first (oldest) spelling; the others only point to it */
+const sameN = computed(() => { const m = new Map<string, number>(); for (const { f } of items.value) if (Object.keys(f.claims).length) { const s = claimSignature(f.claims); m.set(s, (m.get(s) ?? 0) + 1) } return m })
+const firstOf = computed(() => { const m = new Map<string, string>(); for (const { f } of items.value) if (Object.keys(f.claims).length) { const s = claimSignature(f.claims); if (!m.has(s)) m.set(s, f.raw) } return m })
+const claimsInfo = (f: FormCard) => { const s = claimSignature(f.claims); return { n: sameN.value.get(s) ?? 1, first: firstOf.value.get(s) === f.raw, head: firstOf.value.get(s) } }
 const toggle = (k: string) => (open.value = open.value === k ? null : k)
 </script>
 
@@ -49,9 +54,10 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
           <EvidenceList :evidence="[ruleById[s.rule]!.cite]" />
         </div>
       </template>
-      <div v-if="Object.keys(f.claims).length" class="row" style="margin-top:.25rem">
-        <ClaimSet :claims="f.claims" />
+      <div v-if="Object.keys(f.claims).length && claimsInfo(f).first" class="row" style="margin-top:.25rem">
+        <ClaimSet :claims="f.claims" /><span v-if="claimsInfo(f).n > 1" class="small muted sans">у {{ claimsInfo(f).n }} формах</span>
       </div>
+      <div v-else-if="Object.keys(f.claims).length" class="small muted sans">ті самі мітки, що й у «{{ claimsInfo(f).head }}» (докази — там)</div>
       <div v-if="f.hints.length" class="small muted">гіпотези без джерела (лише для перевірки, мітку не ставлять): {{ f.hints.join(', ') }}</div>
     </li>
   </ol>

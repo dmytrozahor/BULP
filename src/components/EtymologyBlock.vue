@@ -7,6 +7,7 @@ import { onMounted, ref, watch } from 'vue'
 import { CONFLICT_UK, LANG_UK, goroh, type Etymology, type EtymologyFile } from '../../core/etymology.ts'
 import { etymologyOf } from '../lib/etymologyData.ts'
 import EvidenceList from './EvidenceList.vue'
+import Panel from './Panel.vue'
 const props = defineProps<{ lemma: string }>()
 const entry = ref<Etymology>(), file = ref<EtymologyFile>(), done = ref(false)
 const load = () => { done.value = false; etymologyOf(props.lemma).then(r => { entry.value = r.entry; file.value = r.file; done.value = true }) }
@@ -15,8 +16,9 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
 </script>
 
 <template>
-  <section class="card" aria-labelledby="h-ety">
-    <h2 id="h-ety"><span>Етимологія · Etymology</span></h2>
+  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? (entry.text ?? entry.chain?.[0]?.text ?? 'є запис у словниках').slice(0, 90) : 'завантаження…'"
+    :info="entry ? `Вікісловник — ${file?.attribution.licence ?? 'CC BY-SA 4.0'}; витяг Wiktextract/kaikki.org. ЕСУМ цитується коротко, повний текст — на goroh.pp.ua.` : undefined">
+
     <template v-if="entry">
       <p v-if="entry.conflict" class="sans small" role="note" style="border-left:3px solid #b8860b;padding-left:.5rem">
         <strong>Розбіжність датувань ({{ entry.conflict }}).</strong> {{ CONFLICT_UK[entry.conflict] }}. <span class="muted">{{ entry.conflictNote }}</span></p>
@@ -26,7 +28,7 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
         <li v-for="(s, i) in entry.chain" :key="i"><span class="muted">{{ LANG_UK[s.rel] ?? s.rel }}: </span>{{ s.text }}</li>
       </ul>
       <EvidenceList :evidence="entry.sources" />
-      <p class="small muted sans">Вікісловник — {{ file?.attribution.licence ?? 'CC BY-SA 4.0' }}; витяг Wiktextract/kaikki.org. ЕСУМ цитується коротко, повний текст — на <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua</a>.</p>
+      <p class="small muted sans">Повний ЕСУМ — на <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua ↗</a></p>
     </template>
     <p v-else-if="done" class="sans small muted">У зібраних словниках етимології цього слова немає. ЕСУМ: <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua ↗</a>.</p>
     <p v-else class="muted small">завантаження…</p>
@@ -35,5 +37,5 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
       <li v-for="(h, i) in entry.hypotheses" :key="i"><strong>{{ h.author }}</strong> · {{ STATUS_UK[h.status] }} · {{ h.date }}<br />{{ h.text }}<EvidenceList :evidence="h.evidence" /></li>
     </ul>
     <p v-else class="sans small muted">Гіпотез проєкту для цього слова ще немає; їх можна додати окремо від словникового змісту.</p>
-  </section>
+  </Panel>
 </template>

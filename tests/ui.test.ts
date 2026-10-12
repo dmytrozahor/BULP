@@ -13,6 +13,7 @@ import { centuryLabel, fmtDate, stars } from '../src/lib/format.ts'
 import { toCards } from '../src/composables/useData.ts'
 import { EXAMPLES } from '../src/data/examples.ts'
 import { key } from '../core/text.ts'
+import { groupFormClaims, paradigmKindOf, placedCells, topForms } from '../src/lib/ux.ts'
 import type { LemmaCard, LexIndex, VesumHit } from '../core/types.ts'
 
 describe('UX defect: text panels never overflow their container (etymology, KWIC, evidence, provenance)', () => {
@@ -23,6 +24,37 @@ describe('UX defect: text panels never overflow their container (etymology, KWIC
     expect(rule).toMatch(/min-width:\s*0/)
     expect(rule).toMatch(/max-width:\s*100%/)
     expect(css).toMatch(/\.card pre[^{]*\{[^}]*max-width:\s*100%/)
+  })
+})
+
+describe('SPEC 61 UX helpers (FX-5 kind, UX-4 grouping, UX-5 top-N, UX-3 placed)', () => {
+  const ev = [{ source: 's', quote: 'q', locator: 'l', kind: 'Q' as const }]
+  const cl = (v: unknown) => ({ value: v, evidence: ev })
+  it('FX-5 paradigmKindOf: data field first, else VESUM tags, else POS text', () => {
+    expect(paradigmKindOf({ pos: 'x', paradigm: [], paradigmKind: 'indeclinable' } as any)).toBe('uninflected')
+    expect(paradigmKindOf({ pos: 'x', paradigm: [{ form: 'я', tags: 'noun:unanim:v_naz:&pron:pers:1' }] })).toBe('pron')
+    expect(paradigmKindOf({ pos: 'x', paradigm: [{ form: 'рука', tags: 'noun:inanim:f:v_naz' }] })).toBe('noun')
+    expect(paradigmKindOf({ pos: 'x', paradigm: [{ form: 'зелений', tags: 'adj:m:v_naz:compb' }] })).toBe('adj')
+    expect(paradigmKindOf({ pos: 'x', paradigm: [{ form: 'писати', tags: 'verb:imperf:inf' }] })).toBe('verb')
+    expect(paradigmKindOf({ pos: 'x', paradigm: [{ form: 'і', tags: 'conj:coord' }] })).toBe('uninflected')
+    expect(paradigmKindOf({ pos: 'сполучник', paradigm: [] })).toBe('uninflected')
+    expect(paradigmKindOf({ pos: 'займенник', paradigm: [] })).toBe('pron')
+    expect(paradigmKindOf(undefined)).toBe('unknown')
+  })
+  it('UX-4 identical claim sets across spellings collapse into one group with the spelling count', () => {
+    const forms = [{ raw: 'а', claims: { cs: cl(true) } }, { raw: 'б', claims: { cs: cl(true) } }, { raw: 'в', claims: { cs: cl(true), x: cl(1) } }, { raw: 'г', claims: {} }]
+    const g = groupFormClaims(forms as any)
+    expect(g.map(x => x.forms)).toEqual([['а', 'б'], ['в']])
+  })
+  it('UX-5 the 6 most frequent spellings + «+N»', () => {
+    const forms = 'abcdefghij'.split('').map(raw => ({ raw }))
+    const f = new Map(forms.map((x, i) => [x.raw, i]))
+    const t = topForms(forms, f, 6)
+    expect(t.shown.map(x => x.raw)).toEqual(['j', 'i', 'h', 'g', 'f', 'e']); expect(t.rest).toBe(4)
+  })
+  it('UX-3 placedCells counts cells with attested forms only', () => {
+    expect(placedCells(undefined)).toBe(0)
+    expect(placedCells({ paradigms: [{ cells: [{ forms: [] }, { forms: [1] }] }] })).toBe(1)
   })
 })
 

@@ -1,19 +1,23 @@
 <script setup lang="ts">
 /**
- * DWDS-like word card, research/07 §3.1 (two columns; stacked on mobile): header (lemma, POS, stress, form chips that filter every panel),
- * panels Походження · Мітки · Словозміна · Приклади, sidebar Статистика. Every label is a ClaimBadge with an evidence popover (SPEC 00 P-1.1).
+ * DWDS-like word card, research/07 §3.1 (two columns; stacked on mobile). SPEC 61 UX: summary first, evidence on demand — a headline (lemma · POS · stress · IPA ·
+ * first attestation · ≤ 5 key chips), then collapsible panels with one-line summaries (Panel.vue). Nothing is removed (Evidence Invariant): every claim is still one tap away.
  * SPEC 20 B-5: the header, provenance, labels and paradigm render from the CORE card at once; KWIC, stress, the timeline and the statistics come from the lemma's detail shard
  * (`full` = merged LemmaCard, undefined while the shard loads) and show a placeholder until then.
+ * SPEC 61 FX-5: the paradigm panels follow the lemma's paradigm kind (lib/ux.ts paradigmKindOf — data field if present, else VESUM tags).
  */
-import { computed, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
 import type { Claim } from '../../core/evidence.ts'
 import { STAT_CITES } from '../../core/stats.ts'
+import { toIpa } from '../../core/ipa.ts'
+import { renderStress } from '../../core/text.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { reconstruct } from '../lib/derive.ts'
+import { groupFormClaims, KIND_UK, paradigmKindOf, placedCells, topForms } from '../lib/ux.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
@@ -26,6 +30,7 @@ import EvidencePopover from '../components/EvidencePopover.vue'
 import StatsExplainer from '../components/StatsExplainer.vue'
 import Kwic from '../components/Kwic.vue'
 import Paradigm from '../components/Paradigm.vue'
+import Panel from '../components/Panel.vue'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
 import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
@@ -37,6 +42,7 @@ import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
 import LoanChip from '../components/LoanChip.vue'
+const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
@@ -44,14 +50,19 @@ const card = computed(() => byLemma.value.get(props.lemma))
 const full = computed(() => fullOf(card.value))
 const epochs = computed(() => full.value?.epochs)   // SPEC 50: LemmaDetail.epochs, carried by mergeCard
 const err = computed(() => detailError.get(props.lemma))
-const active = ref<string | null>(null), nForms = ref(60)   // F2: frequent lemmas have hundreds of spellings — paged chips
-watch(() => props.lemma, () => (active.value = null))
-const isNoun = computed(() => /іменник|noun/i.test(card.value?.pos ?? ''))   // SPEC 50 MVP: nouns only
-const showKwic = (raw: string) => { active.value = raw; document.getElementById('h-kw')?.scrollIntoView({ block: 'start' }) }
+const active = ref<string | null>(null), nForms = ref(60), allForms = ref(false)   // F2: frequent lemmas have hundreds of spellings — paged chips
+/** which panels are open: Provenance by default; the rest collapsed behind their one-line summary (UX-2) */
+const ui = reactive({ prov: true, lab: false, par: false, ep: false, kw: false, st: false })
+watch(() => props.lemma, () => { active.value = null; allForms.value = false; Object.assign(ui, { prov: true, lab: false, par: false, ep: false, kw: false, st: false }) })
+const kind = computed(() => paradigmKindOf(card.value))
+const isNoun = computed(() => kind.value === 'noun')
+const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron')   // SPEC 50: epoch grids are built for nouns (pronouns phase 2)
+const showKwic = (raw: string) => { active.value = raw; ui.kw = true; nextTick(() => document.getElementById('h-kw')?.scrollIntoView({ block: 'start' })) }
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
+const firstWho = computed(() => first.value ? authorInfo(first.value.author, firstW.value).name : '')
 /** Legend samples from this lemma's own data: an attested spelling, plus the reverse() reconstructions of the lemma (confirmed by a spelling in the corpus / hypothesis only). */
 const legendSample = computed(() => {
   const c = card.value, out: { attested?: string; derived?: string; confirmed?: string } = { attested: c?.forms[0]?.raw }
@@ -79,34 +90,107 @@ const dialects = computed(() => {
 const bankForms = computed(() => (full.value?.forms ?? []).map(f => ({ form: f.raw, norm: f.norm, year: f.date[0], scribal: !!f.claims.church_slavonic })))
 const epochClaims = computed(() => first.value ? (['shev', 'wl'] as const).map(s => ({ s, c: assignEpoch(first.value!.date, s) })) : [])
 const epText = (c: ReturnType<typeof assignEpoch>) => (isKnown(c) ? c.value.epochs.map(epochName).join(' / ') + ` · ${c.value.confidence}` : 'невідомо')
-const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).filter(f => Object.keys(f.claims).length))
+/** UX-4: identical per-spelling label sets are shown once with «у N формах» */
+const formLabelGroups = computed(() => groupFormClaims((card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value)))
+
+// ── UX-5 form chips: the 6 most frequent + «+N»; expanded view grouped by epoch ──
+const freq = computed(() => full.value ? new Map(full.value.forms.map(f => [f.raw, f.f])) : undefined)
+const top = computed(() => topForms(card.value?.forms ?? [], freq.value, 6))
+const chipForms = computed(() => {
+  const t = top.value.shown
+  return active.value && !t.some(f => f.raw === active.value) && activeForm.value ? [...t, activeForm.value] : t
+})
+const epochGroups = computed(() => {
+  const g = new Map<string, string[]>()
+  ;(card.value?.forms ?? []).slice(0, nForms.value).forEach((f, i) => {
+    const e = full.value?.forms[i]?.epochs?.[0], k = e ? epochName(e) : 'епоха невідома'
+    g.set(k, [...(g.get(k) ?? []), f.raw])
+  })
+  return [...g.entries()]
+})
+
+// ── UX-1 headline ──
+const stress1 = computed(() => full.value?.stress[0])
+const ipa1 = computed(() => { try { const v = stress1.value; return toIpa(v ? v.form : card.value!.lemma, v ? v.positions : null).ipa } catch { return '' } })
+const keyChips = computed(() => {
+  const c = card.value!.claims
+  return { origin: isKnown(c.origin), register: isKnown(c.register), surzhyk: isKnown(c.surzhyk), dialect: dialects.value.length > 0 }
+})
+const nKnownChips = computed(() => Object.values(keyChips.value).filter(Boolean).length)
+
+// ── UX-2 one-line summaries ──
+const labParts = computed(() => {
+  const c = card.value!.claims, p: string[] = []
+  if (isKnown(c.origin)) p.push(labelUk(String(c.origin.value)))
+  if (isKnown(c.register)) p.push('розмовне')
+  if (isKnown(c.surzhyk)) p.push('суржик')
+  if (dialects.value.length) p.push(`діалекти: ${dialects.value.length}`)
+  const ec = epochClaims.value[0]
+  if (ec && isKnown(ec.c)) p.push(`епоха: ${ec.c.value.epochs.map(epochName).join(' / ')}`)
+  if (formLabelGroups.value.length) p.push(`мітки написань: ${formLabelGroups.value.length} груп`)
+  return p
+})
+const provSummary = computed(() => first.value ? `${fmtDate(first.value.date)} · ${first.value.form} · ${card.value!.forms.length} написань` : '')
+const parSummary = computed(() => kind.value === 'uninflected' ? 'незмінне слово' : `${KIND_UK[kind.value]} · ${card.value!.paradigm.length} форм ВЕСУМ`)
+const placed = computed(() => placedCells(epochs.value))
+const epLoading = computed(() => !full.value && !err.value)
+const epSummary = computed(() => epLoading.value ? 'завантаження…' : !epochKinds.value ? `для частини мови «${KIND_UK[kind.value]}» історичні парадигми ще не побудовано` : placed.value ? `розміщено клітинок: ${placed.value} · N = ${(epochs.value?.paradigms ?? []).reduce((n, p) => n + p.N, 0)}` : '')
+const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs.value || placed.value === 0))
 </script>
 
 <template>
   <div v-if="!loaded"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 5" :key="i" /></div>
-  <div v-else-if="!card" class="card">
-    <h1>«{{ lemma }}» — немає в словнику</h1>
-    <p><RouterLink :to="{ path: '/analyze', query: { q: lemma } }">Проаналізувати «{{ lemma }}» у браузері →</RouterLink> · <RouterLink to="/">до пошуку</RouterLink></p>
-  </div>
+  <template v-else-if="!card">
+    <div class="card" role="status">
+      <h1>«{{ lemma }}» — немає в корпусі</h1>
+      <p class="sans">Немає в корпусі — аналіз за правилами. Нижче — розбір у браузері (будова, деривація, шлях запозичення, омографи, русинська, IPA), лише за правилами з джерелами.
+        <RouterLink :to="{ path: '/analyze', query: { q: lemma } }">Відкрити в «Аналізі слова» →</RouterLink> · <RouterLink to="/">до пошуку</RouterLink></p>
+    </div>
+    <AnalyzeView :embed="lemma" />
+  </template>
   <template v-else>
-    <header class="wordhead">
+    <header class="wordhead headline">
       <h1 class="lemma">{{ card.lemma }}</h1>
-      <div class="row"><span class="muted sans">{{ card.pos }}</span><StressForms v-if="full" :variants="full.stress" /><span v-else-if="!err" class="muted small sans">наголос: завантаження…</span></div>
+      <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
+        <template v-if="stress1"><span class="muted sans">·</span>
+          <EvidencePopover :evidence="stress1.evidence" :heading="`Наголос: ${renderStress(stress1.form, stress1.positions)}`" :meta="`метод: ${stress1.method}`" :label="renderStress(stress1.form, stress1.positions)">
+            <strong style="font-size:1.1rem">{{ renderStress(stress1.form, stress1.positions) }}</strong></EvidencePopover>
+          <span v-if="(full?.stress.length ?? 0) > 1" class="small muted sans">+{{ full!.stress.length - 1 }} варіанти</span></template>
+        <span v-else-if="full" class="unk small sans" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос невідомий</span>
+        <span v-else-if="!err" class="muted small sans">наголос: завантаження…</span>
+        <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
+      <p class="hl-line sans"><span class="muted">Перша фіксація: </span>
+        <ClaimBadge v-if="first" :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${firstWho}`" />
+        <ClaimBadge v-else :claim="card.first" /></p>
+      <div class="hl-chips sans">
+        <ClaimBadge v-if="keyChips.origin" :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" />
+        <ClaimBadge v-if="keyChips.register" :claim="card.claims.register" text="розмовне" tone="colloquial" />
+        <ClaimBadge v-if="keyChips.surzhyk" :claim="card.claims.surzhyk" text="суржик" tone="contact" />
+        <ClaimSet v-if="keyChips.dialect" :claims="Object.fromEntries(dialects)" />
+        <LoanChip :word="card.lemma" />
+        <span v-if="!nKnownChips" class="muted small">міток із доказами немає</span>
+        <button type="button" class="chip small sans" :aria-expanded="ui.lab && ui.prov" @click="ui.lab = true; ui.prov = true">докладніше ▾</button>
+      </div>
       <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі слова (приклади, наголос, статистика): {{ err }}</p>
       <div class="chips" role="group" aria-label="Історичні написання (фільтр панелей)">
-        <button v-for="f in card.forms.slice(0, nForms)" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
-        <button v-if="card.forms.length > nForms" type="button" class="chip sans small" @click="nForms += 200">ще {{ card.forms.length - nForms }} написань…</button>
+        <button v-for="f in chipForms" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
+        <button v-if="top.rest" type="button" class="chip sans small" :aria-expanded="allForms" @click="allForms = !allForms">{{ allForms ? 'згорнути' : `+${top.rest}` }}</button>
         <button v-if="active" type="button" class="chip sans small" @click="active = null">× усі форми</button>
+      </div>
+      <div v-if="allForms" class="allforms">
+        <div v-for="[ep, raws] in epochGroups" :key="ep" class="fgroup"><span class="count-n">{{ ep }}:</span>
+          <button v-for="r in raws" :key="r" type="button" class="chip" :aria-pressed="active === r" @click="toggle(r)">{{ r }}</button></div>
+        <button v-if="card.forms.length > nForms" type="button" class="chip sans small" @click="nForms += 200">ще {{ card.forms.length - nForms }} написань…</button>
       </div>
       <p v-if="active" class="small sans muted">Панелі відфільтровано за написанням «{{ active }}».</p>
     </header>
 
-    <FormLegend :epoch="isNoun" :attested="legendSample.attested" :derived="legendSample.derived" :confirmed="legendSample.confirmed" />
+    <details class="legendbox"><summary class="small sans muted">Умовні позначення форм</summary>
+      <FormLegend :epoch="isNoun" :attested="legendSample.attested" :derived="legendSample.derived" :confirmed="legendSample.confirmed" /></details>
     <div class="cols">
       <div>
         <!-- 1. Provenance -->
-        <section class="card" aria-labelledby="h-prov">
-          <h2 id="h-prov"><span>Походження · Provenance</span></h2>
+        <Panel id="h-prov" v-model:open="ui.prov" title="Походження · Provenance" :summary="provSummary" :empty="!first">
           <div v-if="first && card.first.value !== 'unknown'">
             <p class="sans"><span class="muted">Перша фіксація: </span>
               <ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
@@ -128,14 +212,14 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <h3 class="sans small muted">Історичні написання за датою</h3>
           <ProvenanceTimeline v-if="full" :forms="full.forms" :active="active" :card="full" />
           <div v-else class="skeleton" style="height:6rem" />
-        </section>
+        </Panel>
 
         <PlaceBlock :card="card" />   <!-- SPEC 60 NP-1/NP-3 «Власна назва · на мапі» (renders only for proper names / gazetteer places) -->
-        <EtymologyBlock :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (extracted dictionary content apart from project hypotheses) -->
+        <EtymologyBlock :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (collapsible Panel inside) -->
 
         <!-- 2. Labels -->
-        <section class="card" aria-labelledby="h-lab">
-          <h2 id="h-lab"><span>Мітки · Labels</span></h2>
+        <Panel id="h-lab" v-model:open="ui.lab" title="Мітки · Labels" :summary="labParts.join(' · ')" :empty="!labParts.length"
+          info="Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1). «Невідомо» означає відсутність доказів, а не «літературне». Тверді мітки з ⓘ відкривають цитату й локатор.">
           <div class="grid2 sans">
             <div><span class="muted">Регістр: </span><ClaimBadge :claim="card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
             <div><span class="muted">Суржик: </span><ClaimBadge :claim="card.claims.surzhyk" text="суржик" tone="contact" /></div>
@@ -151,63 +235,64 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
           <div class="grid2 sans">
             <div v-for="{ s, c } in epochClaims" :key="s"><span class="muted">{{ s === 'shev' ? 'Шевельов' : 'Історія літ. мови (WL)' }}: </span><ClaimBadge :claim="c" :text="epText(c)" /></div>
           </div>
-          <template v-if="formLabels.length">
+          <template v-if="formLabelGroups.length">
             <h3 class="sans small muted" style="margin-top:.9rem">Мітки окремих написань</h3>
             <ul class="sans small" style="list-style:none;padding:0;margin:0">
-              <li v-for="f in formLabels" :key="f.raw" style="margin:.25rem 0"><strong style="font-family:var(--serif)">{{ f.raw }}</strong>
-                <ClaimSet :claims="f.claims" /></li>
+              <li v-for="(g, i) in formLabelGroups" :key="i" style="margin:.25rem 0">
+                <strong style="font-family:var(--serif)">{{ g.forms.slice(0, 3).join(', ') }}</strong>
+                <span v-if="g.forms.length > 1" class="count-n"> у {{ g.forms.length }} формах</span>
+                <ClaimSet :claims="g.claims" />
+                <details v-if="g.forms.length > 3"><summary class="small muted">усі {{ g.forms.length }} написань</summary>{{ g.forms.join(', ') }}</details></li>
             </ul>
           </template>
-          <p class="small muted sans" style="margin-top:.6rem">Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1).</p>
-        </section>
+        </Panel>
 
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
 
-        <!-- 3. Paradigm -->
-        <section class="card" aria-labelledby="h-par">
-          <h2 id="h-par"><span>Словозміна · Paradigm</span></h2>
-          <Paradigm :paradigm="card.paradigm" />
-        </section>
+        <!-- 3. Paradigm, by the lemma's paradigm kind (FX-5) -->
+        <Panel id="h-par" v-model:open="ui.par" title="Словозміна · Paradigm" :summary="parSummary" :empty="kind !== 'uninflected' && !card.paradigm.length"
+          info="Джерело: ВЕСУМ v6.8.6, CC BY-NC-SA 4.0. Теги дослівно при наведенні (D-докази). Наголосу у ВЕСУМ немає.">
+          <Paradigm :paradigm="card.paradigm" :kind="kind" />
+        </Panel>
 
-        <!-- 3b. Paradigm per epoch (SPEC 50) -->
-        <section v-if="isNoun" class="card" aria-labelledby="h-ep">
-          <h2 id="h-ep"><span>Словозміна за епохами · Epoch paradigms</span></h2>
-          <EpochParadigm no-legend :epochs="epochs" :loading="!full && !err" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
-        </section>
+        <!-- 3b. Paradigm per epoch (SPEC 50); uninflected POS have none (FX-5) -->
+        <Panel v-if="kind !== 'uninflected'" id="h-ep" v-model:open="ui.ep" title="Словозміна за епохами · Epoch paradigms" :summary="epSummary" :empty="epEmpty"
+          info="Клітинки — лише засвідчені написання (Т — розмітка TOROT, М — модель, В — ВЕСУМ); реконструкції пунктиром виведено за таблицею парадигм і не є словниковим фактом (P-1.7). «Невідомо» ≠ «форми не було» (P-3.1).">
+          <EpochParadigm v-if="epochKinds" no-legend :epochs="epochs" :loading="epLoading" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
+          <p v-else class="small sans muted">Історичні парадигми для частини мови «{{ KIND_UK[kind] }}» ще не побудовано (SPEC 50: спершу іменники й займенники).</p>
+        </Panel>
 
         <!-- 5. Examples -->
-        <section class="card" aria-labelledby="h-kw">
-          <h2 id="h-kw"><span>Приклади · KWIC</span><span class="small">{{ kwic.length }}</span></h2>
+        <Panel id="h-kw" v-model:open="ui.kw" title="Приклади · KWIC" :summary="`${kwic.length} прикладів`" :empty="!!full && !kwic.length">
           <Kwic v-if="full" :lines="kwic" />
           <div v-else class="skeleton" style="height:8rem" />
           <p v-if="activeForm" class="small muted">показано приклади форми «{{ activeForm.raw }}»</p>
-        </section>
+        </Panel>
       </div>
 
       <!-- 4. Statistics sidebar -->
       <aside aria-label="Статистика">
-        <section class="card">
-          <h2><span>Статистика</span><span class="generated">автоматично згенеровано <RouterLink to="/method" title="Як це обчислюється">ⓘ</RouterLink></span></h2>
+        <Panel id="h-st" v-model:open="ui.st" title="Статистика" :summary="`${fmtNum(card.stats.ipm, 1)} ipm · HK ${card.stats.hk} · f = ${card.stats.f}`">
+          <template #info>автоматично згенеровано · ipm — на мільйон слів; HK — клас частотності; f — кількість вживань; N — розмір корпусу. <RouterLink to="/method">Як це обчислюється →</RouterLink></template>
           <div class="row sans"><Dots :dots="card.stats.dots" :ipm="card.stats.ipm" :hk="card.stats.hk" :f="card.stats.f" :N="corpus?.N" />
             <EvidencePopover :evidence="[STAT_CITES.dots!, STAT_CITES.hk!]" heading="Частотність: точки та HK"><span class="badge">ⓘ</span></EvidencePopover></div>
-          <p class="small sans" style="margin:.3rem 0 .8rem">{{ fmtNum(card.stats.ipm, 1) }} ipm · HK {{ card.stats.hk }} · f = {{ card.stats.f }} · N = {{ fmtNum(corpus?.N ?? 0) }} слів<br />
-            <span class="muted">ipm — на мільйон слів; HK — клас частотності; f — кількість вживань; N — розмір корпусу.</span></p>
+          <p class="small sans" style="margin:.3rem 0 .8rem">{{ fmtNum(card.stats.ipm, 1) }} ipm · HK {{ card.stats.hk }} · f = {{ card.stats.f }} · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
           <div v-if="full" class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - full.stats.dp, 2) }}</strong></span>
             <EvidencePopover :evidence="[STAT_CITES.dp!]" heading="Дисперсія DP (Gries)"><span class="badge">ⓘ</span></EvidencePopover>
             <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - full.stats.dp, 2)}`"><i :style="{ width: (1 - full.stats.dp) * 100 + '%' }"></i></div>
             <span class="muted">у {{ full.stats.range }} із {{ corpus?.witnesses.length }} пам’яток</span></div>
           <div v-else class="skeleton" style="height:2.5rem" />
-        </section>
-        <section class="card"><StatsExplainer :card="card" /></section>
-        <section class="card"><h2><span>За століттями</span></h2>
-          <TimeCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></section>
-        <section class="card"><h2><span>За епохами</span></h2>
-          <EpochBars v-if="full" :stats="full.stats" :sizes="corpus?.epochSizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></section>
-        <section class="card"><h2><span>За регіонами пам’яток</span></h2>
-          <RegionMap v-if="full" :card="full" /><div v-else class="skeleton" style="height:6rem" /></section>
-        <section class="card"><h2><span>Типові сполучення</span></h2>
-          <Collocations v-if="full" :colloc="full.stats.colloc" /><div v-else class="skeleton" style="height:4rem" /></section>
+        </Panel>
+        <Panel id="h-stx" :open="false" title="Як читати статистику" summary="пояснення показників"><StatsExplainer :card="card" /></Panel>
+        <Panel id="h-tc" :open="false" title="За століттями" :summary="full ? `${full.stats.byCentury.length} століть` : 'завантаження…'" :empty="!!full && !full.stats.byCentury.length">
+          <TimeCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
+        <Panel id="h-eb" :open="false" title="За епохами" summary="частота за добами (шкала Шевельова)">
+          <EpochBars v-if="full" :stats="full.stats" :sizes="corpus?.epochSizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
+        <Panel id="h-map" :open="false" title="За регіонами пам’яток" summary="карта регіонів пам’яток (не діалектна мітка)">
+          <RegionMap v-if="full" :card="full" /><div v-else class="skeleton" style="height:6rem" /></Panel>
+        <Panel id="h-col" :open="false" title="Типові сполучення" :summary="full ? `${full.stats.colloc.length} сполучень` : 'завантаження…'" :empty="!!full && !full.stats.colloc.length">
+          <Collocations v-if="full" :colloc="full.stats.colloc" /><div v-else class="skeleton" style="height:4rem" /></Panel>
       </aside>
     </div>
   </template>
