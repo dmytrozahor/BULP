@@ -43,5 +43,6 @@ export const SOURCES: Record<string, Source> = {
   KAIKKI: { title: 'Wiktextract / kaikki.org — Ukrainian (витяг з англійського Вікісловника; цитувати: Tatu Ylönen)', url: 'https://kaikki.org/dictionary/Ukrainian/', license: 'CC BY-SA 4.0' },
   WIKTUK: { title: 'Вікісловник (uk.wiktionary): шаблони позначок і категорії, зібрані через API', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
   YT:     { title: 'YouTube (відео лише як вбудований програвач; аудіо не зберігається)', url: 'https://www.youtube.com' },
+  WIKISPIV: { title: 'WikiSpiv (wikispiv.com) — пісенний вікі-довідник', url: 'https://wikispiv.com' },
   MAKSYM1834: { title: 'Максимович М. Украинскія народныя пѣсни. Москва, 1834 (Вікіджерела)', url: 'https://uk.wikisource.org', license: 'PD' },
 }

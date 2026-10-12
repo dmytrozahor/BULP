@@ -11,6 +11,8 @@ import { UNITS_14A } from './nw-izb14a.ts'
 import { UNITS_14B } from './nw-izb14b.ts'
 import { UNITS_18A } from './nw-izb18a.ts'
 import { UNITS_18B } from './nw-izb18b.ts'
+import { UNITS_SONGS } from './nw-songs.ts'
+import type { WitnessMedia } from '../core/types.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'
@@ -24,6 +26,7 @@ export interface Unit {
   date: [number, number]; dateCite: Evidence; datePerPage?: boolean
   msDate?: number; lang: Lang; region?: string; witnessType: WitnessType; edition: string; orth?: string; license?: string
   oldI?: boolean                         // N06: Old Rus' і = и (pre-1400 texts)
+  media?: WitnessMedia                   // NW-7: a song's video (YouTube id), carried to WitnessOut.media
 }
 
 const IZ = (p: string) => `http://izbornyk.org.ua/${p}`
@@ -92,6 +95,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_14B,
   ...UNITS_18A,
   ...UNITS_18B,
+  ...UNITS_SONGS,
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */

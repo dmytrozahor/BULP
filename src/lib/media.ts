@@ -4,8 +4,9 @@
  * image licence CC BY-NC on every sampled image row; the licence of the inscription TEXT is unconfirmed, so no transcription is ever shown here.
  * research/17 R3 [Q]: YouTube is used by embed iframe only (per-video ids), never by downloading audio.
  */
-export type MediaKind = 'iiif' | 'youtube' | 'image'
-export interface WitnessMedia { kind: MediaKind; url: string; attribution: string; licence: string; title?: string }
+import type { WitnessMedia } from '../../core/types.ts'   // shared contract (NW-7): WitnessOut.media / WitnessMeta.media
+export type { WitnessMedia }
+export type MediaKind = WitnessMedia['kind']
 
 export interface SophiaItem { id: number; title: string; panel: string; room: string; type: string; from: number; to: number; iiif: string; viewer: string; author?: string }
 export interface SophiaData { generated: string; source: string; count: number; licence: { images: string; text: string }; attribution: string; items: SophiaItem[] }

@@ -61,6 +61,8 @@ const SKIP_PAGE: Record<string, RegExp> = {
  * hrinchenko1908: Krymsky's appendices start with the centred line «Додаток до статі Б. Д. Грінченка» followed by
  * «Чи справді важко вивчити правопис з ї?» (research/06b §3: "Includes Krymsky's appendices: exclude those sections").
  */
+/** Single lines that are not the primary text: a work's heading and the 19th-c. editor's own (Russian) footnote above a song (NW-7). */
+const DROP_LINE: Record<string, RegExp> = { song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/ }
 const CUT: Record<string, RegExp> = {
   hrinchenko1908: /^Додаток до статі Б\. Д\. Грінченка/,
   // tables of contents / errata of the 1882, 1892, 1893 volumes duplicate the poem titles: «Реєстрик», «ЗМІСТ», «ПОМИЛКИ»
@@ -90,7 +92,7 @@ export function parsePage(html: string, title: string, unitId = '', authorId = '
       const pg = page
       if (cutRe?.test(stripStress(text))) cut = true
       const toks = tokenize(text)
-      if (cut) apparatus += toks.length
+      if (cut || DROP_LINE[unitId]?.test(stripStress(text))) apparatus += toks.length
       else { for (const t of toks) out.push({ raw: t.raw, loc: pg ? `${title}, с. ${pg}` : title, s }); if (toks.length) s++ }
     }
     line = ''
@@ -145,9 +147,9 @@ function parse(u: Unit, files: RawFile[]): WitnessOut[] {
     tokens.push(...r.tokens); apparatus += r.apparatus; s = (r.tokens.at(-1)?.s ?? s - 1) + 1
   }
   return [{
-    id: u.id, unit: u.id, title: u.title, author: u.author, url: u.urls[0]!, date: u.date, dateCite: u.dateCite, msDate: u.msDate,
+    id: u.id, unit: u.id, title: u.title, author: u.author, url: u.urls[0]!.replace('&action=render', ''), date: u.date, dateCite: u.dateCite, msDate: u.msDate,
     lang: u.lang, region: u.region, witnessType: u.witnessType, edition: u.edition, orth: u.orth, license: u.license,
-    dropped: { unmapped: 0, apparatus }, tokens,
+    ...(u.media ? { media: u.media } : {}), dropped: { unmapped: 0, apparatus }, tokens,
   }]
 }
 

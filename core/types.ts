@@ -22,9 +22,12 @@ export interface WitnessOut {
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   authorEvidence?: Evidence[]   // self-reference found in the witness itself (e.g. Kyiv Chronicle)
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
+  /** SPEC 60 MV-1 / NW-7: the witness's media (a song's YouTube video; Sophia IIIF image). `id` = video id for youtube. Inherited by WitnessMeta. */
+  media?: WitnessMedia
   dropped: { unmapped: number; apparatus: number }
   tokens: TokenRec[]
 }
+export interface WitnessMedia { kind: 'iiif' | 'youtube' | 'image'; url: string; attribution: string; licence: string; id?: string; title?: string }
 
 // ── Output: public/data/*.json ───────────────────────────────────────────────────────────────────
 export interface VesumHit { lemma: string; tags: string }
