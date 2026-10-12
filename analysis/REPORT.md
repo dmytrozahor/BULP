@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-12T13:04:03.976Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **603 917**.
+Generated 2026-10-12T13:07:43.916Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **603 917**.
 
 ## 1. Corpus
 
@@ -303,7 +303,7 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 523 lemmas, 48 388 reconstructed cells with 51 200 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 108 cells (6.4%), 3 123 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 10.10 MB of 87.16 MB shard total (11.6%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 10.18 MB of 87.89 MB shard total (11.6%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
@@ -777,7 +777,7 @@ Python stages: run by this build; stress.json 44 100 forms (ukrainian-word-stres
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
 - **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (24.2%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 12 136 of 19 422 lemmas; 12 136 written, none dropped. Core lexicon.json 12.69 MiB (limit 15 MiB), Evidence stored once in a shared pool (26 292 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 1 024 shards lex/<bucket>.json: max 249 KB, median 84 KB, total 87.2 MiB (limit 192 KiB each). lexindex.json 3.67 MB (3460 corpus-attested flagged forms added).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 12 136 of 19 422 lemmas; 12 136 written, none dropped. Core lexicon.json 12.69 MiB (limit 15 MiB), Evidence stored once in a shared pool (26 298 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 042 shards lex/<bucket>.json: max 199 KB, median 41 KB, total 87.9 MiB (limit 192 KiB each). lexindex.json 3.67 MB (3460 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
