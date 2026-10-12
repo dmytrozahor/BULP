@@ -32,5 +32,10 @@ export const SOURCES: Record<string, Source> = {
   BILANIUK: { title: 'Bilaniuk L. Contested Tongues. Cornell UP, 2005 (quoted via en.wikipedia «Surzhyk»)', year: '2005' },
   INPUT:  { title: 'Введене слово / дані проєкту (вхід правила, SPEC 60 DV/MO)' },
   CORPUS: { title: 'Корпус пам’яток проєкту (лема або форма в словнику)' },
+  HRINCH: { title: 'Грінченко Б. Словарь української мови, 1907–09 (hrinchenko.com)', url: 'https://hrinchenko.com', year: '1907' },
+  ESUM:   { title: 'Етимологічний словник української мови (Мельничук ред., 1982–2012; картки через goroh.pp.ua, лише цитування)', url: 'https://goroh.pp.ua/Етимологія' },
+  HROMYK: { title: 'Громик Ю. Західнополіські прислівники (Наук. вісник УжНУ, Сер. Філологія, вип. 24; Східноєвроп. нац. ун-т ім. Лесі Українки)', url: 'https://evnuir.vnu.edu.ua' },
+  WKEN:   { title: 'Wiktionary (en), етимологічні рядки українських слів', url: 'https://en.wiktionary.org', license: 'CC BY-SA 4.0' },
+  WPUK:   { title: 'Українська Вікіпедія (статті «Омографи», «Полонізм», «Англіцизм», «Германізм» тощо)', url: 'https://uk.wikipedia.org', license: 'CC BY-SA 4.0' },
   MASENKO:  { title: 'Масенко Л. Суржик: між мовою і язиком. К., 2011 (quoted via Дивослово 2016 review)', year: '2011' },
 }

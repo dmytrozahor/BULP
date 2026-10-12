@@ -32,6 +32,7 @@ import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 
+import DeicticStructure from '../components/DeicticStructure.vue'
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
@@ -153,6 +154,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         <!-- 3. Paradigm -->
         <section class="card" aria-labelledby="h-par">
           <h2 id="h-par"><span>Словозміна · Paradigm</span></h2>
+        <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
+
           <Paradigm :paradigm="card.paradigm" />
         </section>
 

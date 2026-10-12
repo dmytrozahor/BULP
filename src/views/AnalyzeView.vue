@@ -22,6 +22,7 @@ import ClaimSet from '../components/ClaimSet.vue'
 import FormBadge from '../components/FormBadge.vue'
 import FormLegend from '../components/FormLegend.vue'
 import EvidenceList from '../components/EvidenceList.vue'
+import DeicticStructure from '../components/DeicticStructure.vue'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
 const q = ref(String(route.query.q ?? '')), word = ref(q.value.trim()), year = ref('')
@@ -73,6 +74,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
       </ul>
       <p class="small muted sans">Кандидат — лише гіпотеза за правилами Шевельова; він стає зв’язком лише після збігу з формою ВЕСУМ (SPEC 10 M-3.2).</p>
     </section>
+
+    <DeicticStructure :word="word" />
 
     <section class="card"><h2><span>Ознаки з доказами</span></h2>
       <div v-if="!a.known" class="card" style="background:var(--warn-soft);border-color:var(--warn)" role="note">

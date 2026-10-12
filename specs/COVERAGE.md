@@ -135,3 +135,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BK-2 | tests/banks.test.ts › BankChip is wired into the word card and the annotator popover |
 | MV-1 | tests/ui.test.ts › MV-1 IIIF panel shows the attribution «Saint Sophia, University of Gothenburg — CC BY-NC», lazy image, no transcription |
 | MV-2 | tests/ui.test.ts › MV-2 chips link out with rel=noopener and the «джерело/проєкт» label; nothing renders without a match |
+| DX-1 | tests/deictics.test.ts › segments the generic shape prefix + base + reinforcement + pointing |
+| DX-2 | tests/deictics.test.ts › озьдо = о + сьде + о «ось тут» with the ЕСУМ quote (attested claim, no method) |
+| DX-3 | tests/deictics.test.ts › DeicticStructure «Будова» is in the word card, the annotator popover and /analyze |
