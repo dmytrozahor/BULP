@@ -518,3 +518,27 @@ describe('MV-2 affiliation chips «джерело/проєкт»', () => {
     expect(readFileSync('src/components/MediaPanel.vue', 'utf8')).toContain('AffiliationChips')
   })
 })
+
+// ── lazily loaded data sets (HT-1 candidates, LW-2 labels, NW-7 songs) ──
+import { candidatesIn, makeLabelLookup, songLines, songOfWitness, type HeteronymCandidates, type LoanLabelData, type SongsData } from '../src/lib/datasets.ts'
+import { analyzeLoan } from '../core/loanwords.ts'
+const pub = <T>(n: string) => JSON.parse(readFileSync(`public/data/${n}.json`, 'utf8')) as T
+describe('HT-1 dictionary stress candidates (heteronyms.json)', () => {
+  it('are method dictionary / status unknown and need >= 2 stresses', () => {
+    const d = pub<HeteronymCandidates>('heteronyms')
+    expect(d.method).toBe('dictionary'); expect(d.status).toBe('unknown')
+    const c = candidatesIn(d, 'спасти')!
+    expect(c).toMatchObject({ method: 'dictionary', status: 'unknown' }); expect(c.stresses.length).toBeGreaterThan(1)
+    expect(candidatesIn(d, 'нема-такого-слова')).toBeUndefined(); expect(candidatesIn(undefined, 'спасти')).toBeUndefined()
+  })
+})
+describe('LW-2 loanlabels.json replaces the seed labels', () => {
+  it('a Wiktionary label (D-evidence, CC BY-SA) drives analyzeLoan, a word without one gets no label', () => {
+    const lk = makeLabelLookup(pub<LoanLabelData>('loanlabels'))
+    const c = lk('абрикоса')!
+    expect(c.evidence[0]!.kind).toBe('D'); expect(c.evidence[0]!.note).toContain('CC BY-SA')
+    const a = analyzeLoan('абрикоса', { labels: lk })
+    expect(a.status).toBe('label'); expect(a.label && a.label.value !== 'unknown' && a.label.value.donor).toBe('pl')
+    expect(lk('нема-такого-слова')).toBeUndefined(); expect(makeLabelLookup(undefined)('абрикоса')).toBeUndefined()
+  })
+})

@@ -7,15 +7,23 @@
  */
 import { computed } from 'vue'
 import { HETERONYM_FLAG, READING_KIND_UK, heteronymOf, unverifiedOf } from '../../core/heteronyms.ts'
+import { dictCandidates } from '../lib/datasets.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ form: string; bare?: boolean }>()
 const h = computed(() => heteronymOf(props.form))
 const u = computed(() => unverifiedOf(props.form))
+/** HT-1 candidates from heteronyms.json (lazy): method «dictionary», status «unknown»: shown apart, never as verified readings; hidden when a verified entry already lists every stress */
+const cand = computed(() => {
+  const c = dictCandidates(props.form)
+  if (!c) return undefined
+  const known = new Set(h.value?.readings.map(r => r.stressed.normalize('NFC')) ?? [])
+  return c.stresses.every(x => known.has(x.normalize('NFC'))) ? undefined : c
+})
 const ASPECT = { pf: 'док.', ipf: 'недок.' } as const
 </script>
 
 <template>
-  <div v-if="h || u" :class="bare ? 'het' : 'card'" aria-label="Наголос і значення">
+  <div v-if="h || u || cand" :class="bare ? 'het' : 'card'" aria-label="Наголос і значення">
     <h2 v-if="!bare"><span>Наголос і значення</span><span class="small">омографи</span></h2>
     <template v-if="h">
       <p class="sans" :style="bare ? 'margin:.3rem 0' : ''"><span class="badge dialect" title="СУМ-20 / Вікіпедія «Омографи»">{{ HETERONYM_FLAG }}</span>
@@ -34,6 +42,11 @@ const ASPECT = { pf: 'док.', ipf: 'недок.' } as const
       </ul>
       <p v-if="!bare" class="small muted sans">Це окремі записи, а не вільні варіанти наголосу одного слова (як за́вжди́). У тексті без наголосів прочитання не обирається: показано всі.</p>
     </template>
+    <div v-if="cand" class="small sans" style="margin:.4rem 0">
+      <span class="unk" tabindex="0" title="метод: словник · статус: невідомо (P-1.7)">кандидати з наголосом: <strong style="font-family:var(--serif)">{{ cand.stresses.join(' / ') }}</strong></span>
+      <span class="derived-badge" title="method: dictionary · status: unknown">не підтверджено</span>
+      <div class="muted">{{ cand.note }} Джерело: {{ cand.source }}.</div>
+    </div>
     <div v-if="u" class="small sans" style="margin:.4rem 0">
       <span class="unk" tabindex="0" title="немає джерела — значення не встановлено (P-3.1)">[U] не підтверджено: {{ u.asserted }}</span>
       <EvidencePopover :evidence="u.known" heading="У словнику є лише один наголос" :label="u.form"><span class="badge">ⓘ що є в словнику</span></EvidencePopover>
