@@ -10,12 +10,13 @@ import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate } from '../lib/format.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
+import BankChip from './BankChip.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import DerivativesBlock from './DerivativesBlock.vue'
 import ReconstructedForms from './ReconstructedForms.vue'
 import StressForms from './StressForms.vue'
 import IpaRow from './IpaRow.vue'
-const props = defineProps<{ t: AnnotatedToken }>()
+const props = defineProps<{ t: AnnotatedToken; year?: number }>()
 const { witnessById, fullOf } = useData()
 /** SPEC 20 B-5: stress and the derivation trace live in the lemma's detail shard (merged card, undefined while loading) */
 const full = computed(() => fullOf(props.t.card))
@@ -64,6 +65,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
       <ClaimSet :claims="t.claims" />
     </div>
     <div v-else-if="t.status !== 'unknown'" class="small muted" style="margin-top:.3rem">міток немає — <span class="unk">не визначено</span></div>
+    <div v-if="t.status !== 'unknown'" style="margin-top:.3rem"><BankChip :forms="[{ form: t.raw, norm: t.form?.norm, year, scribal: !!t.claims.church_slavonic }]" /></div>
     <div v-if="t.hints.length" class="small muted">гіпотези без джерела: {{ t.hints.map(h => h.rule).join(', ') }}</div>
     <RouterLink v-if="t.status === 'attested' && t.card" :to="`/w/${encodeURIComponent(t.card.lemma)}`" class="small">Відкрити картку слова →</RouterLink>
   </div>

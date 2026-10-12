@@ -83,7 +83,7 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
 
     <aside aria-label="Підсумок">
       <section class="card"><h2><span>Слово</span></h2>
-        <WordCard v-if="hot" :t="hot" />
+        <WordCard v-if="hot" :t="hot" :year="y" />
         <p v-else class="small muted sans">Наведіть курсор або перейдіть Tab на слово.</p></section>
 
       <section v-if="spans.length" class="card"><h2><span>Багатослівні конструкції ({{ spans.length }})</span></h2>

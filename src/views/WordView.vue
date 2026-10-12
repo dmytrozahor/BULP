@@ -29,6 +29,7 @@ import Paradigm from '../components/Paradigm.vue'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
 import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
+import BankChip from '../components/BankChip.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 
 const props = defineProps<{ lemma: string }>()
@@ -66,6 +67,8 @@ const dialects = computed(() => {
   const ru = card.value?.claims.rusyn
   return [...Object.entries(card.value?.claims.dialect ?? {}), ...(ru && isKnown(ru) ? [[ru.value, ru] as [string, Claim<unknown>]] : [])]
 })
+/** SPEC 60 BK-2: every spelling with its attestation year (detail shard); without dates the date gate cannot be applied, so no chip */
+const bankForms = computed(() => (full.value?.forms ?? []).map(f => ({ form: f.raw, norm: f.norm, year: f.date[0], scribal: !!f.claims.church_slavonic })))
 const epochClaims = computed(() => first.value ? (['shev', 'wl'] as const).map(s => ({ s, c: assignEpoch(first.value!.date, s) })) : [])
 const epText = (c: ReturnType<typeof assignEpoch>) => (isKnown(c) ? c.value.epochs.map(epochName).join(' / ') + ` · ${c.value.confidence}` : 'невідомо')
 const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).filter(f => Object.keys(f.claims).length))
@@ -129,6 +132,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
             <div><span class="muted">Діалекти: </span>
               <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
+            <div v-if="bankForms.length"><BankChip :forms="bankForms" /></div>
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>
           <div class="grid2 sans">
