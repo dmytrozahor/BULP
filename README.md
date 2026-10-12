@@ -22,3 +22,7 @@ npm run data:publish                     # replace ukr-lexicon-data with one squ
 
 Layout: `research/` (sources) → `specs/` (requirements) → `core/` (pure rules, evidence) → `pipelines/` (mining, build) → `src/` (Vue 3 app) → `tests/`.
 Data licences: VESUM, Brown-UK CC BY-NC-SA 4.0; TOROT CC BY-NC-SA 3.0; LanguageTool LGPL — derived data under the same terms.
+
+<img width="1265" height="689" alt="image" src="https://github.com/user-attachments/assets/46981b00-060f-4557-aace-0a7f208f4a73" />
+<img width="376" height="695" alt="image" src="https://github.com/user-attachments/assets/0a6f7942-1c15-4590-b6c7-c1a24d61fa6b" />
+
