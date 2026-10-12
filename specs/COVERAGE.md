@@ -119,3 +119,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DD-1 | tests/dialect-dating.test.ts › a dated rule does not fire before its first attestation, and fires from it |
 | DD-2 | tests/dialect-dating.test.ts › claim evidence and method list the oldest feature first, undated last |
 | DD-3 | tests/dialect-dating.test.ts › the detector context carries no region |
+| IP-1 | tests/ipa.test.ts › вовк: в = [w] initially before /ɔ/, [u̯] after a vowel before a consonant |
+| IP-2 | tests/ipa.test.ts › Polissian (CHN): вуол -> diphthong [u̯ɔ], derived; standard is unchanged |
