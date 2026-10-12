@@ -8,6 +8,7 @@
  */
 import { Q, P, type Evidence } from '../core/evidence.ts'
 import { UNITS_14A } from './nw-izb14a.ts'
+import { UNITS_14B } from './nw-izb14b.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
 export type Lang = 'orv' | 'chu-rus' | 'ruthenian' | 'uk'
@@ -81,6 +82,7 @@ export const MANIFEST: Unit[] = [
   { id: 'hrinchenko1908', title: 'Грінченко. Три питання нашого правопису', author: 'hrinchenko', kind: 'wikisource', urls: [WS('Три_питання_нашого_правопису')], discover: 'wikisource-prefix',
     date: [1908, 1908], dateCite: Q('WS', WS('Три_питання_нашого_правопису'), 'Київ: Електр. друкарня К. Н. Милевського, 1908'), lang: 'uk', witnessType: 'first_ed', edition: 'Київ 1908', license: 'PD' },
   ...UNITS_14A,
+  ...UNITS_14B,
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */

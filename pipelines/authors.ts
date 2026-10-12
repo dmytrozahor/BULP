@@ -5,6 +5,7 @@
  */
 import { Q, type Evidence } from '../core/evidence.ts'
 import { AUTHORS_14A } from './nw-izb14a.ts'
+import { AUTHORS_14B } from './nw-izb14b.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -67,6 +68,7 @@ export const AUTHORS: Author[] = [
   { id: 'drahomanov', name: 'Михайло Драгоманов', life: '1841–1895', label: 'ukrainian', status: 'vetted', confidence: 'explicit',
     evidence: [Q(IZ('drag/drag19.htm'), 'Чудацькі думки… (1891), вид. 1991', 'та увага … зовсім не шкідлива для нас, українців, а навіть могла б бути дуже корисною')] },
   ...AUTHORS_14A,
+  ...AUTHORS_14B,
 ]
 
 export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
