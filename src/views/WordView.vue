@@ -42,6 +42,8 @@ import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
 import LoanChip from '../components/LoanChip.vue'
+import IpaRow from '../components/IpaRow.vue'
+import DerivativesBlock from '../components/DerivativesBlock.vue'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
 const props = defineProps<{ lemma: string }>()
@@ -247,6 +249,12 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           </template>
         </Panel>
 
+        <!-- SPEC 60 IP-3 / DV-3 on the word card (not only the annotator): collapsed, one-line summaries -->
+        <Panel id="h-ipa" :open="false" title="Вимова · IPA" :summary="ipa1 ? `${ipa1} · виведено за правилами` : 'виведено за правилами (P-1.7)'"
+          info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Перемикач: літературна / говір (IP-2).">
+          <IpaRow :variants="full?.stress ?? []" :lemma="card.lemma" />
+        </Panel>
+        <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
 

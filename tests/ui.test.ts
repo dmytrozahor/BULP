@@ -542,6 +542,16 @@ describe('LW-2 loanlabels.json replaces the seed labels', () => {
     expect(lk('нема-такого-слова')).toBeUndefined(); expect(makeLabelLookup(undefined)('абрикоса')).toBeUndefined()
   })
 })
+describe('DV-3 / IP-3 on the word card', () => {
+  it('/w/:lemma renders the IPA row and «Похідні» inside collapsed panels', async () => {
+    const wv = readFileSync('src/views/WordView.vue', 'utf8')
+    expect(wv).toMatch(/<Panel id="h-ipa" :open="false"[\s\S]*<IpaRow /); expect(wv).toContain('<DerivativesBlock panel')
+    const db = readFileSync('src/components/DerivativesBlock.vue', 'utf8')
+    expect(db).toContain("open: false"); expect(db).toContain('summary: summary')
+    const DerivativesBlock = (await import('../src/components/DerivativesBlock.vue')).default
+    await expect(ssr(DerivativesBlock, { lemma: 'писати', panel: true })).resolves.toBeTypeOf('string')   // no data loaded: renders nothing, does not throw
+  })
+})
 describe('NW-7 songs UI (songs.json)', () => {
   const d = pub<SongsData>('songs')
   it('quotations are cut to <= 2 lines; a song witness resolves to its song (KWIC link)', () => {

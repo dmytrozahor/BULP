@@ -8,17 +8,20 @@ import { derivatives } from '../../core/derivation.ts'
 import { useData } from '../composables/useData.ts'
 import { lexHas } from '../lib/lexhas.ts'
 import EvidencePopover from './EvidencePopover.vue'
-const props = defineProps<{ lemma: string }>()
+import Panel from './Panel.vue'
+const props = defineProps<{ lemma: string; panel?: boolean }>()   // panel: collapsible Panel with a one-line summary (word card /w/:lemma)
 const { annData, loaded, byLemma } = useData()
 const all = computed(() => (loaded.value ? derivatives(props.lemma, lexHas(annData.value)) : []))
 const attested = computed(() => all.value.filter(d => d.status !== 'suggestion'))
 const suggested = computed(() => all.value.filter(d => d.status === 'suggestion'))
+const summary = computed(() => `${attested.value.length} засвідчених` + (suggested.value.length ? ` · ${suggested.value.length} пропозицій` : '') + (attested.value[0] ? ` · напр. ${attested.value[0].form}` : ''))
 const link = (form: string) => (byLemma.value.has(form) ? `/w/${encodeURIComponent(form)}` : '')
 </script>
 
 <template>
-  <section v-if="attested.length || suggested.length" class="card" aria-label="Похідні">
-    <h2><span>Похідні</span><span class="small">префіксальні · метод: деривація</span></h2>
+  <component :is="panel ? Panel : 'section'" v-if="attested.length || suggested.length"
+    v-bind="panel ? { id: 'h-der', title: 'Похідні · Derivatives', open: false, summary: summary, info: 'префіксальні · метод: деривація; ✓ — засвідчено, пропозиції — реконструкція (P-1.7)' } : { class: 'card', 'aria-label': 'Похідні' }">
+    <h2 v-if="!panel"><span>Похідні</span><span class="small">префіксальні · метод: деривація</span></h2>
     <ul v-if="attested.length" class="sans" style="list-style:none;padding:0;margin:0">
       <li v-for="d in attested" :key="d.form" style="margin:.3rem 0">
         <span class="muted small">{{ d.prefix }}</span> →
@@ -39,5 +42,5 @@ const link = (form: string) => (byLemma.value.has(form) ? `/w/${encodeURICompone
         </li>
       </ul>
     </details>
-  </section>
+  </component>
 </template>
