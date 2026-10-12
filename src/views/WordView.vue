@@ -31,6 +31,7 @@ import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
+import EtymologyBlock from '../components/EtymologyBlock.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
@@ -128,6 +129,7 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
         </section>
 
         <PlaceBlock :card="card" />   <!-- SPEC 60 NP-1/NP-3 «Власна назва · на мапі» (renders only for proper names / gazetteer places) -->
+        <EtymologyBlock :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (extracted dictionary content apart from project hypotheses) -->
 
         <!-- 2. Labels -->
         <section class="card" aria-labelledby="h-lab">
