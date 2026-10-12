@@ -65,7 +65,8 @@ input[type=search], input[type=text], input[type=number], textarea, select { fon
 /* evidence */
 .evwrap { position: relative; display: inline-block; max-width: 100%; }
 .evtrig { background: none; border: 0; padding: 0; cursor: pointer; text-align: left; max-width: 100%; }
-.evpop { position: absolute; z-index: 40; top: calc(100% + 4px); left: 0; width: min(34rem, calc(100vw - 2rem)); max-height: 70vh; overflow: auto; background: var(--surface); border: 1px solid var(--accent); border-radius: var(--r); box-shadow: 0 8px 24px rgba(0,0,0,.25); padding: .7rem .8rem; font: .86rem/1.45 var(--sans); color: var(--ink); text-align: left; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.evpop { position: fixed; z-index: 40; width: min(34rem, calc(100vw - 1rem)); overflow: auto; overscroll-behavior: contain; background: var(--surface); border: 1px solid var(--accent); border-radius: var(--r); box-shadow: 0 8px 24px rgba(0,0,0,.25); padding: .7rem .8rem; font: .86rem/1.45 var(--sans); color: var(--ink); text-align: left; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.evclose { float: right; margin: -.3rem -.4rem .2rem .4rem; min-width: 2rem; min-height: 2rem; background: none; border: 1px solid var(--rule, currentColor); border-radius: var(--r); color: var(--ink); cursor: pointer; font: inherit; line-height: 1; }
 .ev { padding: .5rem 0; border-top: 1px solid var(--line); } .ev:first-child { border-top: 0; padding-top: 0; }
 .ev blockquote { margin: .3rem 0 .2rem; padding: .2rem .7rem; border-left: 3px solid var(--line); font-family: var(--serif); font-size: .95rem; overflow-wrap: anywhere; }
 .kind { display: inline-block; font: 700 .7rem var(--sans); padding: 0 .4rem; border-radius: 3px; border: 1px solid currentColor; margin-right: .3rem; }
