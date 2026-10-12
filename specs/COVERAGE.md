@@ -158,3 +158,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | FX-4 | manual — build, data:publish and push are release steps (build:data budgets are enforced by tests/gaps.test.ts › M-6; data branch by tests/data-branch.test.ts) |
 | FX-5 | tests/fx.test.ts › paradigm kind by POS |
 | FX-6 | tests/fx.test.ts › FX-6: real nouns place most tagged tokens in cells |
+| FX-8 | tests/epoch-pron.test.ts › tokens are PLACED in the pron grid, not conflicted |
+| FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |

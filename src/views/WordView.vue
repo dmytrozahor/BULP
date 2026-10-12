@@ -267,7 +267,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <!-- 3b. Paradigm per epoch (SPEC 50); uninflected POS have none (FX-5) -->
         <Panel v-if="kind !== 'uninflected'" id="h-ep" v-model:open="ui.ep" title="Словозміна за епохами · Epoch paradigms" :summary="epSummary" :empty="epEmpty"
           info="Клітинки — лише засвідчені написання (Т — розмітка TOROT, М — модель, В — ВЕСУМ); реконструкції пунктиром виведено за таблицею парадигм і не є словниковим фактом (P-1.7). «Невідомо» ≠ «форми не було» (P-3.1).">
-          <EpochParadigm v-if="epochKinds" no-legend :epochs="epochs" :loading="epLoading" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
+          <EpochParadigm v-if="epochKinds" no-legend :kind="kind" :epochs="epochs" :loading="epLoading" :spellings="card.forms.map(f => f.raw)" @kwic="showKwic" />
           <p v-else class="small sans muted">Історичні парадигми для частини мови «{{ KIND_UK[kind] }}» ще не побудовано (SPEC 50: спершу іменники й займенники).</p>
         </Panel>
 

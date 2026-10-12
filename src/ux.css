@@ -45,3 +45,6 @@
   .top nav::-webkit-scrollbar { display: none; }
   .top nav a { flex: 0 0 auto; padding: .45rem 0; font-size: .92rem; }
 }
+
+/* FX-5 pronoun grid: enclitic sub-row of a cell */
+.encrow { margin-top: .15rem; padding-top: .1rem; border-top: 1px dotted var(--line); }

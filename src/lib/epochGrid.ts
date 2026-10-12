@@ -4,7 +4,7 @@
  * A cell with neither is `unknown` (EP-7.4, EP-3.8: absence is not evidence).
  */
 import { EPOCHS } from '../../core/epochs.ts'
-import { CASES, CASE_UK, DUAL_OF, DUAL_UK, dualShown, epochDisabled, nounKey, type Case } from '../../core/cells.ts'
+import { CASES, CASE_UK, DUAL_OF, DUAL_UK, dualShown, epochDisabled, nounKey, PRON_CASES, pronDualShown, type Case } from '../../core/cells.ts'
 import { generalNotes, notesFor, type MorphChange } from '../../core/morph-history.ts'
 import { confirm, reconstruct, type ReconCell, type ReconForm } from '../../core/reconstruct.ts'
 import type { CellForm, CellKey, EpochParadigm, StemValue } from '../../core/types.ts'
@@ -12,7 +12,7 @@ import type { CellForm, CellKey, EpochParadigm, StemValue } from '../../core/typ
 export const SHEV_EPOCHS = EPOCHS.filter(e => e.scheme === 'shev')
 
 export interface GCell {
-  key: CellKey; tag?: string; att: CellForm[]; more: number; rec: ReconForm[]; eq?: ReconCell['eq']; notes: MorphChange[]; unknown: boolean
+  key: CellKey; tag?: string; att: CellForm[]; enc?: CellForm[]; more: number; rec: ReconForm[]; eq?: ReconCell['eq']; notes: MorphChange[]; unknown: boolean
 }
 export interface EGrid {
   epoch: string; cols: { id: 'sg' | 'du' | 'pl'; label: string }[]; rows: { label: string; cells: (GCell | null)[] }[]
@@ -22,7 +22,21 @@ export interface EGrid {
 const ord = (id: string) => EPOCHS.findIndex(e => e.id === id)
 const active = (n: MorphChange, epoch: string, gender?: StemValue['gender']) => (!n.gender || !gender || n.gender.includes(gender)) && (!n.from || ord(n.from) <= ord(epoch)) && (!n.to || ord(epoch) <= ord(n.to))
 
-export function epochGrid(p: EpochParadigm | undefined, epoch: string, stem?: StemValue): EGrid {
+/** FX-5 pronoun follow-up: case × number, no stem type, no reconstruction, no noun-cell notes (MH entries are keyed to noun cells); the dual column only where a dual cell is attested;
+ *  enclitic forms (CellForm.enc) go to `enc` of the same cell, rendered as a marked sub-row. */
+export function pronGrid(p: EpochParadigm | undefined, epoch: string): EGrid {
+  const att = new Map((p?.cells ?? []).map(c => [c.key, c])), du = pronDualShown(p)
+  const cell = (key: CellKey): GCell => {
+    const a = att.get(key), forms = a?.forms ?? []
+    return { key, att: forms.filter(f => !f.enc), enc: forms.filter(f => f.enc), more: a?.more ?? 0, rec: [], notes: [], unknown: !forms.length }
+  }
+  const cols: EGrid['cols'] = [{ id: 'sg', label: 'однина' }, ...(du ? [{ id: 'du' as const, label: 'двоїна' }] : []), { id: 'pl', label: 'множина' }]
+  return { epoch, cols, duHidden: !du, notes: [], reconstructed: false,
+    rows: PRON_CASES.map(c => ({ label: CASE_UK[c], cells: [cell(`sg.${c}`), ...(du ? [cell(`du.${c}`)] : []), cell(`pl.${c}`)] })) }
+}
+
+export function epochGrid(p: EpochParadigm | undefined, epoch: string, stem?: StemValue, kind?: string): EGrid {
+  if (kind === 'pron') return pronGrid(p, epoch)
   const att = new Map((p?.cells ?? []).map(c => [c.key, c]))
   const rec = new Map((stem ? confirm(reconstruct(stem, epoch), p) : []).map(c => [c.key, c]))
   const du = dualShown(epoch, p)

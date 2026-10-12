@@ -3,7 +3,8 @@
  * using the tag of its own source (TOROT manual morph > Stanza UD feats > VESUM lines of a modern direct link, EP-2.1) — or counted as dropped; a stem claim is derived from the Old Ukrainian lemma.
  * Absence is never evidence (EP-3.8): a cell with no token simply does not exist here. Reconstructions are not computed into the data (EP-1.3); the REPORT counts them.
  */
-import { cellsFromProiel, cellsFromUd, cellsFromVesum, NOUN_KEYS, type Decoded } from '../core/cells.ts'
+import { cellsFromProiel, cellsFromUd, cellsFromVesum, isEnclitic, NOUN_KEYS, PRON_KEYS, type Decoded } from '../core/cells.ts'
+import { paradigmKindOf } from '../core/pos-gate.ts'
 import { D, unknown, type Evidence } from '../core/evidence.ts'
 import { EPOCHS } from '../core/epochs.ts'
 import { confirm, reconstruct } from '../core/reconstruct.ts'
@@ -30,7 +31,7 @@ export interface SrcCount { tagged: number; placed: number; conflict: number; un
 export interface EpochStats {
   perEpoch: Record<string, { bySrc: Record<TagSource, SrcCount>; untagged: number; lemmas: number; cells: number; cellForms: number }>
   conflictWhy: Record<string, number>   // `${source}:${reason}` → tokens (a token in k epochs counts k times)
-  stemByRule: Record<string, number>; stemStanza: number; stemUnknown: number; lemmasWithEpochs: number
+  stemByRule: Record<string, number>; stemStanza: number; stemUnknown: number; pronLemmas: number; lemmasWithEpochs: number
   recon: { stems: number; cells: number; forms: number; confirmed: number; confirmedCells: number }
   /** FX-6: per test lemma, tokens by outcome (a token counted once, not per epoch); `why` = `${source}:${reason}` of the conflicts */
   probe: Record<string, { kind: string; tokens: number; untagged: number; placed: number; conflict: number; underspecified: number; why: Record<string, number> }>
@@ -47,12 +48,14 @@ interface LemAcc { id: string; eps: Map<string, EpAcc>; obs: Map<string, Obs>; g
 
 export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay).map(e => e.id)) {
   const accs = new Map<string, LemAcc>()
-  const stats: EpochStats = { perEpoch: {}, conflictWhy: {}, stemByRule: {}, stemStanza: 0, stemUnknown: 0, lemmasWithEpochs: 0, recon: { stems: 0, cells: 0, forms: 0, confirmed: 0, confirmedCells: 0 }, probe: {} }
+  const stats: EpochStats = { perEpoch: {}, conflictWhy: {}, stemByRule: {}, stemStanza: 0, stemUnknown: 0, pronLemmas: 0, lemmasWithEpochs: 0, recon: { stems: 0, cells: 0, forms: 0, confirmed: 0, confirmedCells: 0 }, probe: {} }
   const st = (e: string) => (stats.perEpoch[e] ??= { bySrc: { torot: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 }, stanza: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 }, vesum: { tagged: 0, placed: 0, conflict: 0, underspecified: 0 } }, untagged: 0, lemmas: 0, cells: 0, cellForms: 0 })
   const pcache = new Map<string, Decoded>(), ucache = new Map<string, Decoded>()
   const proiel = (m: string) => pcache.get(m) ?? (pcache.set(m, cellsFromProiel(m)), pcache.get(m)!)
   const ud = (u: string, f: string | null | undefined) => { const k = u + '|' + (f ?? ''); return ucache.get(k) ?? (ucache.set(k, cellsFromUd(u, f)), ucache.get(k)!) }
   const lg = new Map([...env.lemmas].map(([id, l]) => [id, lemmaGender(l.tags)]))
+  /** FX-5: the grid of a kept lemma — pronouns (VESUM `pron` segment) get the pronominal grid (no stem type), everything else here is a noun */
+  const gridOfLemma = new Map([...env.lemmas].map(([id, l]) => [id, paradigmKindOf(l.tags) === 'pron' ? 'pron' as const : 'noun' as const]))
 
   env.adm.forEach(({ w, nlp }, wi) => {
     const eps = env.epochsOf[wi]!
@@ -70,12 +73,12 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
         // EP-3.4: the model's analysis must be the one the link followed
         const same = L.route === 'stanza-lemma' || (!!nt.lemma && env.derive(nt.lemma, !!w.oldI).candidates.some(c => key(c.form) === L.c.id))
         const g = lg.get(L.c.id)
-        if (!same) conflict = 'lemma'; else if (dec.gender && g && dec.gender !== g) conflict = 'gender'
+        if (!same) conflict = 'lemma'; else if (dec.gender && g && dec.gender !== g && gridOfLemma.get(L.c.id) !== 'pron') conflict = 'gender'   // personal pronouns: the VESUM lemma line's gender is one of several
       } else if (w.lang === 'uk' && L.route === 'direct') {
         const lines = (env.hits.get(key(L.c.own.form)) ?? []).filter(h => key(h.lemma) === L.c.id).map(h => h.tags)
         if (lines.length) { src = 'vesum'; tag = lines.join(' | '); dec = cellsFromVesum(lines) }
       }
-      const why = !src || !dec ? '' : conflict || (dec.grid !== 'noun' ? 'grid:' + (dec.grid ?? 'none') : '')
+      const why = !src || !dec ? '' : conflict || (dec.grid !== (gridOfLemma.get(L.c.id) ?? (env.kindOf?.(L.c.id) === 'pron' ? 'pron' : 'noun')) ? 'grid:' + (dec.grid ?? 'none') : '')
       if (isProbe) {   // FX-6 diagnostics: one outcome per token for the named test lemmas (also non-noun ones, which have no noun grid by design)
         const p = (stats.probe[L.c.id] ??= { kind: env.kindOf?.(L.c.id) ?? '', tokens: 0, untagged: 0, placed: 0, conflict: 0, underspecified: 0, why: {} })
         p.tokens++
@@ -106,7 +109,7 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
         if ((e === 'shev.proto' || e === 'shev.old') && (src === 'torot' || src === 'stanza') && oldLemma) {
           const ok = `${src}|${oldLemma}`, o = la.obs.get(ok)
           if (o) o.n++; else la.obs.set(ok, { old: oldLemma, src, n: 1, w: wi, ti })
-          if (dec.gender) { const gk = `${src}|${dec.gender}`, g = la.genders.get(gk); if (g) g.n++; else la.genders.set(gk, { g: dec.gender, n: 1, w: wi, ti, src, tag }) }
+          if (dec.gender && gridOfLemma.get(L.c.id) !== 'pron') { const gk = `${src}|${dec.gender}`, g = la.genders.get(gk); if (g) g.n++; else la.genders.set(gk, { g: dec.gender, n: 1, w: wi, ti, src, tag }) }
         }
       }
     })
@@ -130,17 +133,21 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
     for (const e of shevOrder) {
       const ea = la.eps.get(e)
       if (!ea) continue
-      const cells: EpochCell[] = []
-      for (const k of NOUN_KEYS) {
+      const cells: EpochCell[] = [], grid = gridOfLemma.get(la.id) ?? 'noun'
+      for (const k of grid === 'pron' ? PRON_KEYS : NOUN_KEYS) {
         const m = ea.cells.get(k)
         if (!m) continue
-        const all = [...m.values()].sort((x, y) => y.n - x.n || x.date - y.date || x.w - y.w || x.ti - y.ti)
-        const forms: CellForm[] = all.slice(0, CELL_CAP).map(a => ({ raw: a.raw, n: a.n, src: a.src, t: t(a.tag), ...(a.amb ? { amb: a.amb } : {}), ex: [a.w, a.loc] as [number, string], ctx: ctxOf(a.w, a.ti) }))
-        const more = all.slice(CELL_CAP).reduce((s, a) => s + a.n, 0)
+        // pronoun grid: enclitic forms form a marked sub-row — they are sorted after the tonic forms and are exempt from the cap competition (own cap)
+        const sorted = [...m.values()].sort((x, y) => y.n - x.n || x.date - y.date || x.w - y.w || x.ti - y.ti)
+        const encOf = (a: Agg) => grid === 'pron' && isEnclitic(k, a.raw)
+        const all = [...sorted.filter(a => !encOf(a)), ...sorted.filter(encOf)]
+        const forms: CellForm[] = [...all.filter(a => !encOf(a)).slice(0, CELL_CAP), ...all.filter(encOf).slice(0, CELL_CAP)]
+          .map(a => ({ raw: a.raw, n: a.n, src: a.src, t: t(a.tag), ...(encOf(a) ? { enc: true as const } : {}), ...(a.amb ? { amb: a.amb } : {}), ex: [a.w, a.loc] as [number, string], ctx: ctxOf(a.w, a.ti) }))
+        const more = all.length > forms.length ? all.filter(a => !forms.some(f => f.raw === a.raw && f.src === a.src)).reduce((s, a) => s + a.n, 0) : 0
         cells.push({ key: k, forms, ...(more ? { more } : {}) })
       }
       if (!cells.length && !ea.N) continue
-      paradigms.push({ epoch: e, grid: 'noun', N: ea.N, cells, dropped: ea.dropped })
+      paradigms.push({ epoch: e, grid, N: ea.N, cells, dropped: ea.dropped })
       const s = st(e); s.lemmas += cells.length ? 1 : 0; s.cells += cells.length; s.cellForms += cells.reduce((x, c) => x + c.forms.length, 0)
     }
     if (!paradigms.length) continue
@@ -148,7 +155,8 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
     const pick = <T extends { n: number; w: number; ti: number }>(xs: T[]) => xs.sort((x, y) => y.n - x.n || x.w - y.w || x.ti - y.ti)[0]
     const tor = [...la.obs.values()].filter(o => o.src === 'torot'), obs = pick(tor.length ? tor : [...la.obs.values()])
     let stem = unknown<StemValue>()
-    if (obs) {
+    const isPron = gridOfLemma.get(la.id) === 'pron'   // pronouns have no stem type (FX-5): stem stays unknown, no reconstruction, not counted in the stem stats
+    if (obs && !isPron) {
       const gs = [...la.genders.values()].filter(g => g.src === obs.src), best = pick(gs.reduce<typeof gs>((acc, g) => { const x = acc.find(y => y.g === g.g); x ? (x.n += g.n) : acc.push({ ...g }); return acc }, []))
       const lemma = env.lemmas.get(la.id)!, vg = lg.get(la.id), tok = env.adm[obs.w]!.w.tokens[obs.ti]!, wid = env.adm[obs.w]!.w.id
       const lemmaEv: Evidence = D(wid, tok.loc, `${tok.raw} → «${obs.old}»`, obs.src === 'torot' ? 'TOROT lemma' : 'stanza lemma; модельна лематизація, не словниковий факт (P-1.7)')
@@ -157,7 +165,8 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
       else if (vg) { g = vg; gev = [D('VESUM', env.vesumLoc, `${lemma.display} ${lemma.tags}`, 'рід леми за ВЕСУМ')] }
       stem = stemClaim(obs.old, g, lemmaEv, gev, obs.src === 'stanza')
     }
-    if (stem.value === 'unknown') stats.stemUnknown++
+    if (isPron) stats.pronLemmas++
+    else if (stem.value === 'unknown') stats.stemUnknown++
     else { stats.stemByRule[stem.value.rule] = (stats.stemByRule[stem.value.rule] ?? 0) + 1; if (obs?.src === 'stanza') stats.stemStanza++ }
     out.set(la.id, { tags, paradigms, stem })
     stats.lemmasWithEpochs++

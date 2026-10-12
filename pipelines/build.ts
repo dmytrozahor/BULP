@@ -264,11 +264,16 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const stressJson = existsSync(resolve(WORK, 'stress.json')) ? rd<StressJson>(resolve(WORK, 'stress.json')) : undefined
   const ruJson = existsSync(resolve(WORK, 'ru.json')) ? rd<{ forms: AnnEnv['ru'] }>(resolve(WORK, 'ru.json')).forms : {}
   if (!stressJson) console.warn('  ! no stress.json — stress variants empty')
+  else {   // GAPS #5: a stale stress.json (python stage skipped/failed, UV_BIN unset) silently loses stress for new lemmas — say so
+    const miss = [...stressReq].filter(f => !(f in stressJson.forms)).length
+    if (miss) console.warn(`  ! stress.json lacks ${miss} of ${stressReq.size} requested forms (stale: run without --no-py, set UV_BIN)`)
+    lap(`stress: ${stressReq.size - miss}/${stressReq.size} requested forms answered, ${[...stressReq].filter(f => stressJson.forms[f]?.length).length} with a dictionary stress`)
+  }
   const annEnv: AnnEnv = { hits: v2.hits, lt, ru: ruJson, derive: dryEnv.derive }
 
   // ── 5b. epoch paradigms of the kept noun lemmas (SPEC 50 EP-3/EP-4) ───────────────────────────
-  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; return paradigmKindOf(t) === 'noun' ? [[l.id, { display: l.display, tags: t }] as const] : [] }))   // FX-5: pronouns (VESUM `pron` segment) and other POS have no noun grid
-  const PROBE = ['рука', 'земля', 'князь', 'город', 'син', 'я', 'ти', 'себе', 'аз', 'да']   // FX-6 test lemmas
+  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; const k = paradigmKindOf(t); return k === 'noun' || k === 'pron' ? [[l.id, { display: l.display, tags: t }] as const] : [] }))   // FX-5: nouns get the noun grid, pronouns (VESUM `pron` segment) the pronominal grid; other POS none
+  const PROBE = ['рука', 'земля', 'князь', 'город', 'син', 'я', 'ти', 'себе', 'ми', 'ви', 'він', 'аз', 'да']   // FX-6 test lemmas
   const epochRes = buildEpochs({
     probe: new Set(PROBE), kindOf: id => { const l = lemmas.get(id); return l ? paradigmKindOf(v2.lemmaTags.get(id) ?? l.tags) : '' },
     adm, epochsOf: meta.map(m => (m.sh.value === 'unknown' ? [] : m.sh.value.epochs)), tix, linked, lemmas: nounLemmas, hits: hits1,

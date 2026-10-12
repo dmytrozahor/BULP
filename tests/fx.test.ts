@@ -96,7 +96,7 @@ describe.skipIf(!hasData())('FX on the built data', () => {
   })
   it('да is not a noun; uninflected words carry kind uninflected and no epoch paradigm', () => {
     const da = by.get('да'); if (da) { expect(da.paradigmKind).toBe('uninflected'); expect(da.epochs).toBeUndefined() }
-    for (const x of cards) if (x.paradigmKind && x.paradigmKind !== 'noun') expect(x.epochs, x.lemma).toBeUndefined()
+    for (const x of cards) if (x.paradigmKind && x.paradigmKind !== 'noun' && x.paradigmKind !== 'pron') expect(x.epochs, x.lemma).toBeUndefined()   // pronouns have their own grid (FX-5 follow-up)
   })
   it('FX-3: first-attestation form = oldest form for every lemma; every lemma card has a kind', () => {
     for (const x of cards) {
@@ -109,6 +109,15 @@ describe.skipIf(!hasData())('FX on the built data', () => {
     for (const l of ['рука', 'земля', 'князь', 'город', 'син']) {
       const ps = by.get(l)!.epochs!.paradigms, N = ps.reduce((s, p) => s + p.N, 0), bad = ps.reduce((s, p) => s + p.dropped.conflict + p.dropped.underspecified, 0)
       expect(ps.some(p => p.cells.length > 0), l).toBe(true); expect(bad / N, l).toBeLessThan(0.5)
+    }
+  })
+  it('FX-5 pronouns: я / ти / себе / ми / ви / він are placed in the pronominal grid (case × number, no stem type)', () => {
+    for (const l of ['я', 'ти', 'себе', 'ми', 'ви', 'він']) {
+      const e = by.get(l)?.epochs
+      if (!e) continue   // lemma not in this (possibly partial) data set
+      const ps = e.paradigms, N = ps.reduce((s, p) => s + p.N, 0), bad = ps.reduce((s, p) => s + p.dropped.conflict + p.dropped.underspecified, 0)
+      expect(ps.every(p => p.grid === 'pron'), l).toBe(true); expect(e.stem.value, l).toBe('unknown')
+      expect(ps.some(p => p.cells.length > 0), l).toBe(true); expect(bad / N, l).toBeLessThan(0.2)
     }
   })
 })

@@ -111,7 +111,7 @@ export interface Shard { format: 1; ev: Evidence[]; lemmas: string[]; details: L
 // ── SPEC 50 EP-1.2: attested cells per epoch (detail shard). Reconstructions are NOT stored (EP-1.3): core/reconstruct.ts computes them from `stem`. ──
 /** Cell key grammar (core/cells.ts):  noun `${num}.${case}`  num ∈ sg|du|pl, case ∈ nom|gen|dat|acc|ins|loc|voc;
  *  dual cells are merged per PAVL p. 74: du.nav (Н.З.К), du.gl (Р.М), du.di (Д.О).
- *  adj/pron (phase 2) `${form}.${gender}.${num}.${case}` form ∈ short|long;  verb (phase 3) `${tense}.${num}.${person}` | `inf` | `sup` | `lpt.${gender}.${num}`. */
+ *  pron (grid 'pron'): `${num}.${case}`, case without voc, dual unmerged (`du.nom` …); adj (phase 2) `${form}.${gender}.${num}.${case}` form ∈ short|long;  verb (phase 3) `${tense}.${num}.${person}` | `inf` | `sup` | `lpt.${gender}.${num}`. */
 export type CellKey = string
 export type TagSource = 'torot' | 'stanza' | 'vesum'      // manual treebank annotation | model output (P-1.7) | dictionary analysis of a modern spelling
 export interface CellForm {
@@ -119,6 +119,7 @@ export interface CellForm {
   n: number              // tokens of this spelling placed in this cell in this epoch
   src: TagSource
   t: number              // index into EpochParadigms.tags: the verbatim tag ("Nb -d---fa--i" | UD feats | VESUM tag line)
+  enc?: true             // pronoun grid: enclitic (short) form мя/ми/тя/ти/ся/си/ны/вы, recognised by spelling in its cell (core/cells.ts isEnclitic; our classification, not a source claim)
   amb?: number           // >1: each token was placed in `amb` candidate cells (underspecified tag / several VESUM lines)
   ex: [w: number, loc: string]   // first attestation: index into CorpusMeta.witnesses + locator (P-1.2)
   ctx?: string           // ≤ 60 chars context around ex (optional; dropped first when a shard is over budget)

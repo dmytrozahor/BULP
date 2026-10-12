@@ -19,7 +19,7 @@ import AuthorBadge from './AuthorBadge.vue'
 import ClaimBadge from './ClaimBadge.vue'
 import EvidencePopover from './EvidencePopover.vue'
 import FormLegend from './FormLegend.vue'
-const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean }>()
+const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean; kind?: string }>()
 const emit = defineEmits<{ kwic: [raw: string] }>()
 const { corpus } = useData()
 
@@ -31,7 +31,8 @@ const stem = computed(() => (props.epochs && props.epochs.stem.value !== 'unknow
 /** D4 / P-1.7: a stem assigned from a Stanza lemma is model-based, and so is every reconstruction built on it */
 const sample = computed(() => stem.value ? stemSample(stem.value.type, stem.value.model) : undefined)
 const modelStem = computed(() => !!props.epochs && (!!props.epochs.stem.method?.includes('stanza')))
-const grid = computed(() => epochGrid(cur.value?.p, sel.value, stem.value))
+const isPron = computed(() => props.kind === 'pron')   // FX-5: pronominal grid — no stem type, attested cells only
+const grid = computed(() => epochGrid(cur.value?.p, sel.value, stem.value, props.kind))
 const years = (id: string) => { const e = epochById[id]!; return `${e.start}${e.end >= 9999 ? '–…' : '–' + e.end}` }
 const dropTxt = (p: NonNullable<typeof cur.value>['p']) => p && [p.dropped.conflict && `${p.dropped.conflict} з конфліктом міток`, p.dropped.underspecified && `${p.dropped.underspecified} з неповною міткою`, p.dropped.untagged && `${p.dropped.untagged} без розмітки`].filter(Boolean).join(', ')
 
@@ -61,7 +62,8 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
         <span class="unk">невідомо</span> ≠ «форми не було».
         <button v-if="!forceGrid" type="button" class="chip small sans" @click="forceGrid = true">показати порожню таблицю</button></p>
       <template v-if="gridOn">
-      <div class="row small sans" style="margin-bottom:.4rem">
+      <p v-if="isPron" class="small sans muted" style="margin:.2rem 0 .4rem">займенникова сітка: відмінок × число, без типу основи; лише засвідчені форми (реконструкції займенників немає: таблиці не процитовано).</p>
+      <div v-else class="row small sans" style="margin-bottom:.4rem">
         <span class="muted">тип основи:</span>
         <template v-if="stem">
           <ClaimBadge :claim="epochs.stem as Claim<unknown>" :text="`${sample!.proto} (${sample!.uk})`" />
@@ -84,6 +86,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
             <template v-if="dropTxt(cur?.p)"> · не розміщено в клітинках: {{ dropTxt(cur?.p) }}</template>
             <template v-if="!cur?.p"> · лему в цій добі не знайдено: усі клітинки невідомі</template></p>
           <p v-if="sel === 'shev.modern'" class="small sans muted" style="margin:.2rem 0">повна парадигма ВЕСУМ — у таблиці вище; тут — написання з пам’яток у клітинках.</p>
+          <template v-else-if="isPron" />
           <p v-else-if="!grid.reconstructed && (sel === 'shev.proto' || sel === 'shev.old')" class="small sans muted" style="margin:.2rem 0">реконструкції немає: <span class="unk">невідомо</span> (тип основи не визначено або немає таблиці).</p>
           <p v-else-if="!['shev.proto', 'shev.old'].includes(sel)" class="small sans muted" style="margin:.2rem 0">реконструкції для цієї доби немає: цитованої таблиці парадигм немає (EP-5.1).</p>
           <div class="tablewrap">
@@ -110,6 +113,14 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                           <button v-if="spellings?.includes(f.raw)" type="button" class="chip small sans" @click="emit('kwic', f.raw)">приклади «{{ f.raw }}» (KWIC) →</button>
                         </template>
                       </EvidencePopover>
+                      <!-- pronoun grid: enclitic (short) forms as a marked sub-row of the cell -->
+                      <div v-if="c.enc?.length" class="encrow small">
+                        <EvidencePopover v-for="f in c.enc" :key="'e' + f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key} · енклітична форма`" :label="`${f.raw}, ${c.key}, енклітична форма`"
+                          :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
+                          <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong class="lang attested">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
+                            <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30)">ЦС</span></span>
+                        </EvidencePopover>
+                      </div>
                       <!-- reconstruction: dashed -->
                       <EvidencePopover v-for="r in c.rec" :key="'r' + r.form" :evidence="[...r.trace.flatMap(s => s.cite), ...(r.confirmedBy ?? []).map(evOf)]"
                         :heading="`${r.form} · реконструкція · ${c.key}`" :label="`реконструкція ${r.form}, ${c.key}`" meta="не засвідчено: виведено за таблицею парадигм (P-1.7)">

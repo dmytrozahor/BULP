@@ -30,6 +30,24 @@ export function parseNounKey(k: CellKey): { num: Num; cell: Case | DualCell } | 
   return (n === 'sg' || n === 'pl') && (CASES as readonly string[]).includes(c ?? '') ? { num: n, cell: c as Case } : undefined
 }
 
+// ── pronominal grid (SPEC 61 FX-5/FX-6 follow-up): case × number, NO stem type, NO vocative; the dual cells are NOT merged (the PAVL p. 74 merge is a noun table
+//    and no pronoun table is excerpted yet — research/11 O-4), so the pronoun grid is attested-only: no reconstruction anywhere. Key = `${num}.${case}`. ──
+export const PRON_CASES = ['nom', 'gen', 'dat', 'acc', 'ins', 'loc'] as const
+export type PronCase = (typeof PRON_CASES)[number]
+export const PRON_KEYS: CellKey[] = NUMS.flatMap(n => PRON_CASES.map(c => `${n}.${c}`))
+export const isPronKey = (k: CellKey): boolean => PRON_KEYS.includes(k)
+/** True if any dual pronoun cell has an attested spelling (the dual column of the pronoun grid is shown only then: never assumed). */
+export const pronDualShown = (p?: { cells: { key: CellKey; forms: unknown[] }[] }): boolean => !!p?.cells.some(c => c.key.startsWith('du.') && c.forms.length > 0)
+/**
+ * Enclitic (short) pronoun forms, recognised by spelling in the cell where they stand: acc.sg мя/тя/ся, dat.sg ми/ти/си, acc./dat.pl ны/вы. A nominative «ти»/«ми»/«вы» is
+ * NOT a clitic (the cell decides). This is OUR spelling classification of an attested form, not a quote: the cell evidence says so (cellEvidence).
+ */
+const CLITIC: Record<string, ReadonlySet<string>> = {
+  'sg.acc': new Set(['мя', 'мѧ', 'тя', 'тѧ', 'ся', 'сѧ']), 'sg.dat': new Set(['ми', 'ти', 'си']),
+  'pl.acc': new Set(['ны', 'вы']), 'pl.dat': new Set(['ны', 'вы']),
+}
+export const isEnclitic = (key: CellKey, raw: string): boolean => !!CLITIC[key]?.has(raw.normalize('NFC').toLowerCase())
+
 // ── decoders (EP-2.2): tag source → grid + cell keys. Tables = research/11 §4 (PROIEL = TOROT header lines 60–160; UD values as observed; VESUM per research/02 §2). ──
 export type Grid = 'noun' | 'adj' | 'pron' | 'verb'
 /** `grid` undefined = the tag belongs to no grid we place (conjunction, numeral …); `under` = too vague to place (EP-2.3: value x/z, or more than 4 candidate cells).
@@ -37,11 +55,13 @@ export type Grid = 'noun' | 'adj' | 'pron' | 'verb'
 export interface Decoded { grid?: Grid; keys: CellKey[]; amb: number; under?: boolean; gender?: 'm' | 'f' | 'n' }
 export const MAX_AMB = 4
 
-const placed = (keys: CellKey[], gender?: Decoded['gender']): Decoded => {
-  const u = [...new Set(keys)]
-  return !u.length || u.length > MAX_AMB ? { grid: 'noun', keys: [], amb: 0, under: true, gender } : { grid: 'noun', keys: NOUN_KEYS.filter(k => u.includes(k)), amb: u.length, gender }
+const placed = (keys: CellKey[], gender?: Decoded['gender'], grid: 'noun' | 'pron' = 'noun'): Decoded => {
+  const u = [...new Set(keys)], all = grid === 'pron' ? PRON_KEYS : NOUN_KEYS
+  return !u.length || u.length > MAX_AMB ? { grid, keys: [], amb: 0, under: true, gender } : { grid, keys: all.filter(k => u.includes(k)), amb: u.length, gender }
 }
 const cross = (nums: Num[], cases: Case[]) => nums.flatMap(n => cases.map(c => nounKey(n, c)))
+/** pronoun cells: no vocative, dual unmerged */
+const crossP = (nums: Num[], cases: Case[]) => nums.flatMap(n => cases.filter(c => c !== 'voc').map(c => `${n}.${c}`))
 const other = (grid?: Grid): Decoded => ({ grid, keys: [], amb: 0 })
 
 /** PROIEL case letters → compatible cases. `o` (oblique) = every non-nominative case: 5 candidates, so dropped as underspecified (but 3 in the dual after merging). */
@@ -53,6 +73,7 @@ const PPOS: Record<string, Grid | undefined> = { Nb: 'noun', Ne: 'noun', 'A-': '
 /** TOROT / PROIEL positional tag `"<pos> <person><number><tense><mood><voice><gender><case><degree><strength><inflection>"`, e.g. `"Nb -d---fa--i"` → du.nav. */
 export function cellsFromProiel(morph: string): Decoded {
   const [pos = '', f = ''] = morph.trim().split(/\s+/), grid = PPOS[pos]
+  if (grid === 'pron') { const num = PNUM[f[1] ?? '']; return placed(num ? crossP([num], PCASE[f[6] ?? ''] ?? []) : [], PGEN[f[5] ?? ''], 'pron') }
   if (grid !== 'noun') return other(grid)
   const num = PNUM[f[1] ?? '']
   return placed(num ? cross([num], PCASE[f[6] ?? ''] ?? []) : [], PGEN[f[5] ?? ''])
@@ -65,10 +86,11 @@ const UGEN: Record<string, 'm' | 'f' | 'n'> = { Masc: 'm', Fem: 'f', Neut: 'n' }
 /** Stanza UD output (model, P-1.7): `cellsFromUd('NOUN', 'Case=Ins|Gender=Fem|Number=Dual')` → du.di. Comma lists (`Case=Acc,Nom`) are ambiguity. */
 export function cellsFromUd(upos: string, feats: string | null | undefined): Decoded {
   const grid = UPOS[upos]
-  if (grid !== 'noun') return other(grid)
+  if (grid !== 'noun' && grid !== 'pron') return other(grid)
   const f = Object.fromEntries((feats ?? '').split('|').filter(Boolean).map(p => { const i = p.indexOf('='); return [p.slice(0, i), p.slice(i + 1)] as [string, string] }))
   const list = <T>(k: string, m: Record<string, T>) => (f[k] ?? '').split(',').map(v => m[v]).filter((x): x is T => x !== undefined)
   const g = list('Gender', UGEN)
+  if (grid === 'pron') return placed(crossP(list('Number', UNUM), list('Case', UCASE)), g.length === 1 ? g[0] : undefined, 'pron')
   return placed(cross(list('Number', UNUM), list('Case', UCASE)), g.length === 1 ? g[0] : undefined)
 }
 
@@ -78,6 +100,15 @@ const VPOS: Record<string, Grid> = { noun: 'noun', adj: 'adj', verb: 'verb' }
 export function cellsFromVesum(tagLines: string[]): Decoded {
   const lines = tagLines.map(l => l.split(':')), first = lines[0]
   const grid = !first ? undefined : isPronTags(first.join(':')) ? 'pron' : VPOS[first[0] ?? '']
+  if (grid === 'pron') {   // pronoun lines: `noun:anim:s:v_dav:pron:pers:1` — number s|p, one case each; no gender column
+    const keys: CellKey[] = []
+    for (const t of lines) {
+      if (!isPronTags(l0(t))) continue
+      const num: Num = t.includes('p') ? 'pl' : 'sg'
+      for (const c of t.flatMap(x => x.split('/')).map(x => VCASE[x]).filter((x): x is Case => !!x && x !== 'voc')) keys.push(`${num}.${c}`)
+    }
+    return placed(keys, undefined, 'pron')
+  }
   if (grid !== 'noun') return other(grid)
   const keys: CellKey[] = [], genders = new Set<'m' | 'f' | 'n'>()
   for (const t of lines) {
@@ -109,6 +140,6 @@ export const SRC_NOTE: Record<CellForm['src'], string> = {
 export function cellEvidence(f: CellForm, ep: Pick<EpochParadigms, 'tags'>, corpus: Pick<CorpusMeta, 'witnesses'>): Evidence {
   const w = corpus.witnesses[f.ex[0]]
   if (!w) throw new Error(`cellEvidence: no witness #${f.ex[0]}`)
-  const note = SRC_NOTE[f.src] + (f.src === 'stanza' && w.outOfDomain ? '; текст поза доменом моделі' : '') + (f.amb && f.amb > 1 ? `; розміщено у ${f.amb} можливих клітинках` : '')
+  const note = SRC_NOTE[f.src] + (f.enc ? '; коротка (енклітична) форма — визначено за написанням у клітинці, це наша класифікація, не цитата' : '') +(f.src === 'stanza' && w.outOfDomain ? '; текст поза доменом моделі' : '') + (f.amb && f.amb > 1 ? `; розміщено у ${f.amb} можливих клітинках` : '')
   return D(w.id, f.ex[1], `${f.raw} «${ep.tags[f.t] ?? ''}»`, note)
 }
