@@ -12,6 +12,7 @@ import type { Claim } from '../../core/evidence.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
+import { sourceLink } from '../lib/source.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
@@ -42,6 +43,7 @@ const toggle = (raw: string) => (active.value = active.value === raw ? null : ra
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
+const firstLink = computed(() => first.value ? sourceLink(firstW.value, first.value.loc) : undefined)
 const kwic = computed(() => (full.value?.forms ?? []).filter(f => !active.value || f.raw === active.value).flatMap(f => f.kwic))
 const activeForm = computed(() => card.value?.forms.find(f => f.raw === active.value))
 /** dialect claims + the optional lemma-level rusyn claim (B0 contract), shown as parallel readings by ClaimSet */
@@ -85,7 +87,8 @@ const formLabels = computed(() => (card.value?.forms ?? []).filter(f => !active.
             <ul class="sans small" style="list-style:none;padding:0;margin:0 0 .8rem">
               <li><span class="muted">автор: </span><AuthorBadge :author="first.author" :witness="first.witness" /></li>
               <li><span class="muted">пам’ятка: </span><a v-if="firstW" :href="firstW.url" target="_blank" rel="noopener">{{ firstW.title }}</a><template v-else>{{ first.witness }}</template>
-                · <span class="muted">локатор:</span> {{ first.loc }}</li>
+                · <span class="muted">локатор:</span> {{ first.loc }}
+                <template v-if="firstLink"> · <a class="srclink" :href="firstLink.url" target="_blank" rel="noopener">{{ firstLink.label }} ↗</a></template></li>
               <li><span class="muted">дата: </span>{{ fmtDate(first.date) }}
                 <EvidencePopover v-if="firstW" :evidence="[firstW.dateCite]" heading="Датування пам’ятки" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover>
                 · <span class="muted">тип свідчення: </span>{{ WTYPE_UK[first.witnessType] ?? first.witnessType }}</li>
