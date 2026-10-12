@@ -452,3 +452,19 @@ describe('MV-1 media panel', () => {
     expect(await ssr(SophiaView, {}, '/sophia')).toContain('Софія Київська')
   })
 })
+
+import AffiliationChips from '../src/components/AffiliationChips.vue'
+describe('MV-2 affiliation chips «джерело/проєкт»', () => {
+  it('MV-2 projects are matched by URL host or Sophia witness id', () => {
+    expect(MEDIA.affiliationsFor('http://izbornyk.org.ua/slovo/slovo.htm').map(a => a.id)).toEqual(['izbornyk'])
+    expect(MEDIA.affiliationsFor('https://uk.wikisource.org/wiki/X', 'https://polyphonyproject.com/en').map(a => a.id)).toEqual(['polyphony', 'wikisource'])
+    expect(MEDIA.affiliationsFor('sophia-28').map(a => a.id)).toEqual(['sophia'])
+    expect(MEDIA.affiliationsFor('https://evil-izbornyk.org.ua.example.com/', 'spi', undefined)).toEqual([])
+  })
+  it('MV-2 chips link out with rel=noopener and the «джерело/проєкт» label; nothing renders without a match', async () => {
+    const html = await ssr(AffiliationChips, { refs: ['http://izbornyk.org.ua/x', 'https://saintsophia.dh.gu.se/'] })
+    expect(html).toContain('джерело/проєкт'); expect(html).toContain('rel="noopener"'); expect(html).toContain('izbornyk.org.ua'); expect(html).toContain('saintsophia.dh.gu.se')
+    expect(await ssr(AffiliationChips, { refs: ['https://example.com/'] })).not.toContain('джерело/проєкт')
+    expect(readFileSync('src/components/MediaPanel.vue', 'utf8')).toContain('AffiliationChips')
+  })
+})

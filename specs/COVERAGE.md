@@ -134,3 +134,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BK-1 | tests/banks.test.ts › Zynoviiv 1705: hard ц + marked soft р give SE |
 | BK-2 | tests/banks.test.ts › BankChip is wired into the word card and the annotator popover |
 | MV-1 | tests/ui.test.ts › MV-1 IIIF panel shows the attribution «Saint Sophia, University of Gothenburg — CC BY-NC», lazy image, no transcription |
+| MV-2 | tests/ui.test.ts › MV-2 chips link out with rel=noopener and the «джерело/проєкт» label; nothing renders without a match |

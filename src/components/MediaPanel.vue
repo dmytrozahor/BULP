@@ -7,7 +7,8 @@
 import { computed, ref } from 'vue'
 import type { WitnessMedia } from '../lib/media.ts'
 import { iiifFullUrl, iiifImageUrl, safeHttp, youtubeEmbedUrl, youtubeWatchUrl } from '../lib/media.ts'
-const props = defineProps<{ media: WitnessMedia }>()
+import AffiliationChips from './AffiliationChips.vue'
+const props = defineProps<{ media: WitnessMedia; refs?: (string | undefined)[] }>()
 defineEmits<{ close: [] }>()
 const zoom = ref(false), play = ref(false), failed = ref(false)
 const src = computed(() => {
@@ -46,6 +47,7 @@ const title = computed(() => props.media.title ?? (props.media.kind === 'youtube
       </div>
     </template>
     <p class="small muted mp-attr">{{ media.attribution }} · ліцензія: {{ media.licence }}</p>
+    <AffiliationChips :refs="[media.url, ...(refs ?? [])]" />
   </aside>
 </template>
 

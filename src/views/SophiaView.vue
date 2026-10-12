@@ -4,9 +4,10 @@
  * Filter by date (overlapping years), type and free text; each row links to the portal page and the IIIF image; «переглянути» opens the media panel.
  */
 import { computed, onMounted, ref } from 'vue'
-import { filterSophia, mediaOfSophia, SOPHIA_ATTRIBUTION, iiifImageUrl, type SophiaData, type SophiaItem } from '../lib/media.ts'
+import { filterSophia, mediaOfSophia, SOPHIA_ATTRIBUTION, SOPHIA_PORTAL, iiifImageUrl, type SophiaData, type SophiaItem } from '../lib/media.ts'
 import { loadSophia } from '../lib/sophiaData.ts'
 import MediaPanel from '../components/MediaPanel.vue'
+import AffiliationChips from '../components/AffiliationChips.vue'
 const data = ref<SophiaData>(), err = ref('')
 const from = ref(''), to = ref(''), text = ref(''), type = ref(''), open = ref<number>(), page = ref(1)
 const PAGE = 50
@@ -23,6 +24,7 @@ const yrs = (i: SophiaItem) => (i.from === i.to ? `${i.from}` : `${i.from}–${i
   <section>
     <h1>Софія Київська: графіті</h1>
     <p class="muted sans small">Метадані й посилання на зображення порталу <a href="https://saintsophia.dh.gu.se/" target="_blank" rel="noopener">saintsophia.dh.gu.se</a>. {{ SOPHIA_ATTRIBUTION }}. Ліцензію на тексти транскрипцій не підтверджено, тому тексти тут не показано.</p>
+    <p><AffiliationChips :refs="[SOPHIA_PORTAL]" /></p>
     <p v-if="err" class="fixture err" role="alert">{{ err }}</p>
     <p v-else-if="!data" class="muted" role="status">Завантаження…</p>
     <template v-else>

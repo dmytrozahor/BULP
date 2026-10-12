@@ -40,7 +40,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>
       <template v-if="mediaOpen === i">
-        <MediaPanel v-if="media" :media="media" @close="mediaOpen = undefined" />
+        <MediaPanel v-if="media" :media="media" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
         <p v-else class="muted small sans" role="status">{{ mediaErr ? 'Медіа недоступне.' : 'Завантаження…' }}</p>
       </template>
     </div>
