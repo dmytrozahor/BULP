@@ -5,7 +5,7 @@
 import { packer, restore } from './pack.ts'
 import type { CoreCard, CoreStats, FirstAttestation, LemmaCard, LemmaDetail, Shard } from './types.ts'
 
-export const BUCKETS = 1024
+export const BUCKETS = 2048
 /** FNV-1a (32 bit) over the UTF-16 code units of the NFC lemma, modulo the bucket count. */
 export function bucketOf(lemma: string, buckets = BUCKETS): number {
   let h = 0x811c9dc5

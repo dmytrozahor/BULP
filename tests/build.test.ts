@@ -171,7 +171,7 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
     expect(unpackCore(cards)).toBe(cards); expect(isFull(cards[0]!)).toBe(true); expect(isFull(splitCard(cards[0]!).core)).toBe(false)
   })
   it('bucketOf is stable: pinned values, NFC-invariant, in range; the browser imports this very function', () => {
-    expect([bucketOf('слово'), bucketOf('кънѧзь'), bucketOf('вода')]).toEqual([581, 246, 509])
+    expect([bucketOf('слово'), bucketOf('кънѧзь'), bucketOf('вода')]).toEqual([1605, 1270, 1533])
     expect(bucketOf('й')).toBe(bucketOf('й'))   // й precomposed vs и + combining breve
     for (const l of ['а', 'слово', 'ѣ', 'ґанок', '']) { expect(bucketOf(l)).toBeGreaterThanOrEqual(0); expect(bucketOf(l)).toBeLessThan(BUCKETS) }
     expect(readFileSync('src/composables/useData.ts', 'utf8')).toMatch(/import \{[^}]*bucketOf[^}]*\} from '\.\.\/\.\.\/core\/shard\.ts'/)

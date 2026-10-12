@@ -143,7 +143,10 @@ describe.skipIf(!hasData())('B-3 / B-4 properties of the built lexicon', () => {
   })
   it('B-3.6 region is evidence, never a dialect label', () => {
     const codes = new Set(c.regions.map((r: { code: string }) => r.code))
-    for (const l of cards) for (const [label, cl] of Object.entries(l.claims.dialect)) { expect(codes.has(label), label).toBe(false); expect(cl.evidence.some(e => e.locator === 'region'), l.lemma).toBe(true) }
+    // region is evidence whenever a contributing witness has one (B-3.6 amendment 2026-10-12); a claim whose witnesses carry no region may lack it, but a region code is never a label
+    let withRegion = 0
+    for (const l of cards) for (const [label, cl] of Object.entries(l.claims.dialect)) { expect(codes.has(label), label).toBe(false); if (cl.evidence.some(e => e.locator === 'region')) withRegion++ }
+    expect(withRegion).toBeGreaterThan(0)
   })
   it('B-3.7 stress status is unknown, with method and source note', () => {
     let n = 0

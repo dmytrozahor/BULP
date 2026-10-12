@@ -121,6 +121,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DD-3 | tests/dialect-dating.test.ts › the detector context carries no region |
 | IP-1 | tests/ipa.test.ts › вовк: в = [w] initially before /ɔ/, [u̯] after a vowel before a consonant |
 | IP-2 | tests/ipa.test.ts › Polissian (CHN): вуол -> diphthong [u̯ɔ], derived; standard is unchanged |
+| IP-3 | tests/ipa.test.ts › IP-3 WordCard includes IpaRow, one IPA per stress variant with a dialect toggle |
 | SX-1 | tests/syntax.test.ts › conditional «я би-м зробив»: би + clitic м → SW claim with um159 Q cite and trigger |
 | SX-2 | tests/syntax.test.ts › «мні» is a weight-0 hint (not in the ЕУМ quote) |
 | SX-3 | tests/syntax.test.ts › «д місту» → hint д→до, and до+dative contamination hint; never a claim |
@@ -130,3 +131,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DV-3 | tests/derivation.test.ts › DV-3 DerivativesBlock «Похідні» is included in WordCard and /derive has the prefix mode |
 | MO-1 | tests/modernize.test.ts › бурян → бур'ян (§ 7 п.2, confirmed by the lexicon) |
 | MO-2 | tests/modernize.test.ts › MO-2 modernize runs as the last step in /derive (old → modern) and in /analyze |
+| BK-1 | tests/banks.test.ts › Zynoviiv 1705: hard ц + marked soft р give SE |
+| BK-2 | tests/banks.test.ts › BankChip is wired into the word card and the annotator popover |

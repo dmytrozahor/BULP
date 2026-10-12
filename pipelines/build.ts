@@ -176,7 +176,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       if (w.date[1] > fa.latest[1]) fa.latest = w.date
       if (m.pe) fa.epochs.add(m.pe)
       if (w.lang === 'orv') fa.orvVernacular = true
-      if (w.region && w.date[1] >= 1798) fa.regions.add(w.id)
+      if (w.region) fa.regions.add(w.id)   // B-3.6: region is provenance evidence for every admitted witness, any date
       if (fa.kwic.length < 6 && (fa.perW.get(w.id) ?? 0) < 2) fa.kwic.push(ref)
       bump(fa.perW, w.id)
     })
