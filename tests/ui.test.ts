@@ -26,6 +26,13 @@ describe('UX defect: text panels never overflow their container (etymology, KWIC
   })
 })
 
+describe('UX-6 compact mobile nav', () => {
+  it('nav is a single non-wrapping scroll row under 700px', () => {
+    const css = readFileSync('src/ux.css', 'utf8')
+    expect(css).toMatch(/max-width:\s*700px[\s\S]*\.top nav\s*\{[^}]*flex-wrap:\s*nowrap[^}]*overflow-x:\s*auto/)
+  })
+})
+
 // UI behaviour is pinned to the FIXTURE (known lemmas/spellings), not public/data — the real build overwrites that (tests/build.test.ts covers it)
 const FIX = mkdtempSync(join(tmpdir(), 'ukr-fixture-'))
 execFileSync(process.execPath, ['--import', 'tsx', 'pipelines/fixture.ts', FIX], { stdio: 'ignore' })

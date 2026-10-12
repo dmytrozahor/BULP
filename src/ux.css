@@ -9,3 +9,12 @@
 .card img, .card svg, .card video, .card iframe { max-width: 100%; }
 .card a, .panel a { overflow-wrap: anywhere; }
 .row > *, .claimset > *, .chips > * { min-width: 0; }
+
+/* UX-6 compact mobile nav: one horizontally scrollable row (no wrapped 2-line nav), brand on its own line */
+@media (max-width: 700px) {
+  .top { flex-wrap: nowrap; flex-direction: column; align-items: stretch; gap: .1rem; padding-bottom: 0; }
+  .top .brand small { display: none; }
+  .top nav { flex-wrap: nowrap; overflow-x: auto; gap: 0 .9rem; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 calc(var(--gut) * -1); padding: 0 var(--gut); }
+  .top nav::-webkit-scrollbar { display: none; }
+  .top nav a { flex: 0 0 auto; padding: .45rem 0; font-size: .92rem; }
+}
