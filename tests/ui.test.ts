@@ -150,6 +150,7 @@ import AnnotateView from '../src/views/AnnotateView.vue'
 import WordView from '../src/views/WordView.vue'
 import { renderMd } from '../src/lib/md.ts'
 import Kwic from '../src/components/Kwic.vue'
+import { sourceLink } from '../src/lib/source.ts'
 import RegionMap from '../src/components/RegionMap.vue'
 import { regionRows, stepOf } from '../src/lib/geo.ts'
 import { Q, P, claim } from '../core/evidence.ts'
@@ -359,5 +360,18 @@ describe('W1-1 KWIC spacing', () => {
   it('left, node and right are separated by spaces; the citation is its own element', async () => {
     const html = await ssr(Kwic, { lines: [{ w: 'x', loc: 'абз. 1', left: 'по Всеславѣ', node: 'пожегъ', right: 'землю', date: [1096, 1117] }] })
     expect(html).toMatch(/<\/span> <span class="n">пожегъ<\/span> <span class="r">/); expect(html).toContain('class="cite"')
+  })
+})
+
+describe('W1-2/6 source links (U-10, U-16)', () => {
+  it('TOROT raw XML is browsed on GitHub; HTML editions get a text fragment; no url = no link', () => {
+    expect(sourceLink({ url: 'https://raw.githubusercontent.com/torottreebank/treebank-releases/master/lav.xml' }, '27.18')).toMatchObject({ url: 'https://github.com/torottreebank/treebank-releases/blob/master/lav.xml', exact: false })
+    const l = sourceLink({ url: 'http://izbornyk.org.ua/oldukr/pouch.htm' }, 'абз. 22', { left: 'по Всеславѣ', node: 'пожегъ' })!
+    expect(l.url).toBe('http://izbornyk.org.ua/oldukr/pouch.htm#:~:text=%D0%92%D1%81%D0%B5%D1%81%D0%BB%D0%B0%D0%B2%D1%A3-,%D0%BF%D0%BE%D0%B6%D0%B5%D0%B3%D1%8A'); expect(l.exact).toBe(true); expect(l.label).toContain('абз. 22')
+    expect(sourceLink(undefined, 'x')).toBeUndefined()
+  })
+  it('KWIC citation shows the witness, the locator and the date', async () => {
+    const html = await ssr(Kwic, { lines: [{ w: 'monomakh', loc: 'абз. 22', left: 'а', node: 'б', right: 'в', date: [1096, 1117] }] })
+    expect(html).toContain('локатор:'); expect(html).toContain('абз. 22'); expect(html).toContain('1096–1117')
   })
 })

@@ -15,6 +15,7 @@ import EvidenceList from '../components/EvidenceList.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
 import FormBadge from '../components/FormBadge.vue'
 import FormLegend from '../components/FormLegend.vue'
+import SourceCite from '../components/SourceCite.vue'
 type Dir = 'old2new' | 'new2old'
 const route = useRoute(), router = useRouter()
 const { att, loaded, searchIdx, byLemma, fullOf } = useData()
@@ -86,8 +87,9 @@ const path = computed(() => (word.value && target.value && dir.value === 'old2ne
             <span class="muted small sans"> · гілок: {{ c.branches }}</span>
             <EvidencePopover :evidence="c.evidence" heading="Докази реконструкції" :label="c.form"><span class="badge">ⓘ докази</span></EvidencePopover>
             <template v-if="c.attestation">
-              <p v-if="attLine(c.form).kwic" class="small sans" style="margin:.2rem 0">Пам’ятка: <i>{{ attLine(c.form).kwic!.left }} <mark>{{ attLine(c.form).kwic!.node }}</mark> {{ attLine(c.form).kwic!.right }}</i>
-                <span class="muted"> · {{ attLine(c.form).kwic!.loc }}</span></p>
+              <div v-if="attLine(c.form).kwic" class="small sans" style="margin:.2rem 0">
+                <div>Пам’ятка: <i>{{ attLine(c.form).kwic!.left }} <mark>{{ attLine(c.form).kwic!.node }}</mark> {{ attLine(c.form).kwic!.right }}</i></div>
+                <div class="muted"><SourceCite :w="attLine(c.form).kwic!.w" :loc="attLine(c.form).kwic!.loc" :date="attLine(c.form).kwic!.date" :kwic="attLine(c.form).kwic" /></div></div>
               <p v-else-if="attLine(c.form).loading" class="small sans muted" style="margin:.2rem 0">Пам’ятка: завантаження…</p>
             </template>
             <DerivationSteps :steps="c.trace" :extra="c.stepEvidence" :uid="c.form" />
