@@ -37,7 +37,7 @@ export const PAGE_CFG: Record<string, PageCfg> = {
   // old14_09: Загоровський «Духовное завѣщаніе» only; the next work («СЛОВО ЄДНОГО СТАРОГО КАРПАТОРУСКОГО БОЯРА ИМЕНЕМ ГОРЗОВА», XVI–XVIII [U]) is held back (research/19)
   i14_09: { end: /<h1[^>]*>\s*(?:<[^>]*>\s*)*СЛОВО\s/ },
   // old18_01: the vernacular poems dated by the edition; «Плачет пастушок» is Russian-leaning [U], the Latin/Polish pieces are modern translations (research/21 §2)
-  o18_01: { sections: [/^ЕПІНІКІОН/, /^ЗА МОГИЛОЮ РЯБОЮ/] },
+  o18_01: { sections: [/^ЕПІНІКІОН/, /^СІЄСТЬ ПІСНЬ ПОБІДНАЯ/, /^ЗА МОГИЛОЮ РЯБОЮ/] },
   // old18_18: stop before the «Додаток для сайту «Ізборник»» (1848 print in old spelling)
   o18_18: { end: /Додаток для сайту/ },
 }

@@ -6,6 +6,7 @@
 import { Q, type Evidence } from '../core/evidence.ts'
 import { AUTHORS_14A } from './nw-izb14a.ts'
 import { AUTHORS_14B } from './nw-izb14b.ts'
+import { AUTHORS_18A } from './nw-izb18a.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -69,6 +70,7 @@ export const AUTHORS: Author[] = [
     evidence: [Q(IZ('drag/drag19.htm'), 'Чудацькі думки… (1891), вид. 1991', 'та увага … зовсім не шкідлива для нас, українців, а навіть могла б бути дуже корисною')] },
   ...AUTHORS_14A,
   ...AUTHORS_14B,
+  ...AUTHORS_18A,
 ]
 
 export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
