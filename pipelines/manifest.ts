@@ -10,6 +10,7 @@ import { Q, P, type Evidence } from '../core/evidence.ts'
 import { UNITS_14A } from './nw-izb14a.ts'
 import { UNITS_14B } from './nw-izb14b.ts'
 import { UNITS_18A } from './nw-izb18a.ts'
+import { UNITS_18B } from './nw-izb18b.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
 export type Lang = 'orv' | 'chu-rus' | 'ruthenian' | 'uk'
@@ -85,6 +86,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_14A,
   ...UNITS_14B,
   ...UNITS_18A,
+  ...UNITS_18B,
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */

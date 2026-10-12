@@ -1,0 +1,75 @@
+/**
+ * SPEC 60 NW-5 (W5) — izbornyk XVIII (old18, research/21) units, group 18b. Data table: every dating quote and every vetting quote is a verbatim
+ * fragment of the cached page (tests/nw-izbornyk.test.ts re-checks them). Authors are vetted by (1) a self-identification quote from research/19, else (2) an insider sentence
+ * of the text itself («руськ-», «наш-»), else (3) the edition's own biography (→ provisional); with none of these the author is excluded and the page is not ingested.
+ */
+import { Q } from '../core/evidence.ts'
+import type { Unit } from './manifest.ts'
+import type { Author } from './authors.ts'
+
+export const UNITS_18B: Unit[] = [
+  { id: "o18_20", title: "Пісні та вірші невідомих авторів", author: "anon_o18_20", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_20.htm"],
+    date: [1700, 1799], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_20.htm", "за текстом рукописного пісенника початку XVIII ст."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_23", title: "Сатирично-гумористичні вірші та віршовані оповідання", author: "anon_o18_23", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_23.htm"],
+    date: [1700, 1799], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_23.htm", "за рукописом середини XVIII ст."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_24", title: "Іван Пастелій. Пастирю душевний", author: "pastelii", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_24.htm"],
+    date: [1741, 1799], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_24.htm", "Пастелій Іван (1741 — 1799)"),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_25", title: "Іван Некрашевич. Ярмарок; Ісповідь; Замисл на попа", author: "nekrashevych", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_25.htm"],
+    date: [1750, 1799], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_25.htm", "Зберігся рукописний збірник кінця XVIII ст."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_26", title: "Феофан Прокопович. Владимир (трагедокомедія, 1705)", author: "prokopovych", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_26.htm"],
+    date: [1705, 1705], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_26.htm", "Трагедокомедія «Владимир» написана у 1705 р."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_27", title: "Милость божія (драма, 1728)", author: "anon_o18_27", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_27.htm"],
+    date: [1728, 1728], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_27.htm", "написана і поставлена на сцені в Київській академії 1728 р."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_29", title: "Георгій Кониський. Воскресеніє мертвих", author: "konysky", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_29.htm"],
+    date: [1746, 1747], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_29.htm", "написана у 1746 — 1747 рр."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_30", title: "Інтермедії та інтерлюдії", author: "anon_o18_30", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_30.htm"],
+    date: [1670, 1770], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_30.htm", "укладеному між 1670 — 1770 рр."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_33", title: "Самійло Величко. Літопис (уривки)", author: "velychko", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_33.htm"],
+    date: [1720, 1720], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_33.htm", "Року 1720"),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_35", title: "Ілля Турчиновський. Автобіографія", author: "turchynovsky", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_35.htm"],
+    date: [1700, 1750], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_35.htm", "южнорусского священика 1-й половины XVIII ст."),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+  { id: "o18_37", title: "Григорій Грабянка. Літопис (уривки)", author: "hrabianka", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_37.htm"],
+    date: [1710, 1710], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_37.htm", "Року 1710"),
+    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+]
+
+export const AUTHORS_18B: Author[] = [
+  { id: "anon_o18_20", name: "Анонім: Пісні та вірші невідомих авторів", life: "—", label: 'institutional', status: 'provisional', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_20.htm", "Приспівують: гоп, гоп, гоп, Каждий русин добри хлоп.", "мова автора про «Русь/руський» без займенника першої особи")] },
+  { id: "anon_o18_21", name: "Анонім: Бурлескна поезія. Вірші-орації", life: "—", label: 'institutional', status: 'excluded', confidence: 'implicit', evidence: [],
+    note: 'у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифікації (Русь/руський/малоросійський/український у голосі автора) і редакторська довідка її не дає (P-2.1); пам’ятку не внесено до корпусу' },
+  { id: "anon_o18_22", name: "Анонім: Бурлескна поезія. Вірші-травестії", life: "—", label: 'institutional', status: 'excluded', confidence: 'implicit', evidence: [],
+    note: 'у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифікації (Русь/руський/малоросійський/український у голосі автора) і редакторська довідка її не дає (P-2.1); пам’ятку не внесено до корпусу' },
+  { id: "anon_o18_23", name: "Анонім: Сатирично-гумористичні вірші та віршовані оповідання", life: "—", label: 'institutional', status: 'vetted', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_23.htm", "Українці з степів і славні слобожани, З суплікою ідем до вас, своїх батьків, Козацької старшини й зацних козаків, Щоб ви таки дали і нам якую раду — Без пастуха ж не буть і нам таки, як стаду.")] },
+  { id: "pastelii", name: "Іван Пастелій", life: "1741–1799", label: 'malorossian', status: 'provisional', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_24.htm (коментар видання)", "Пастелій Іван (1741 — 1799) — закарпатський український історик, поет і культурно-освітній діяч. Освіту здобув в Ужгороді, Будині і Ягру. Був професором Мукачівської богословської школи, священиком, каноніком. Автор кількох", "редакторська довідка видання (вторинне свідчення), не самоназва")] },
+  { id: "nekrashevych", name: "Іван Некрашевич", life: "бл. 1742 – кін. XVIII ст.", label: 'malorossian', status: 'provisional', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_25.htm (коментар видання)", "Некрашевич Іван Георгійович — поет і проповідник другої половини XVIII ст. Народився близько 1742 р. у селі Вишеньки (нині Бориспільського району на Київщині) в родині священика. Закінчив Києво-Могилянську академію, був священиком", "редакторська довідка видання (вторинне свідчення), не самоназва")] },
+  { id: "anon_o18_27", name: "Анонім: Милость божія (драма, 1728)", life: "—", label: 'institutional', status: 'vetted', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_27.htm", "Но что ж? Видите, як нам за сія платили І платять услуги; коль тяжко угнітили Бідную Україну тими очковими, Поемщизнами тими, тако ж роговими.")] },
+  { id: "dovhalevsky", name: "Митрофан Довгалевський", life: "XVIII ст.", label: 'malorossian', status: 'excluded', confidence: 'implicit', evidence: [],
+    note: 'у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифікації (Русь/руський/малоросійський/український у голосі автора) і редакторська довідка її не дає (P-2.1); пам’ятку не внесено до корпусу' },
+  { id: "konysky", name: "Георгій Кониський", life: "нар. 1717", label: 'malorossian', status: 'provisional', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_29.htm (коментар видання)", "Кониський Георгій (світське ім’я Григорій) — народився 20 листопада 1717 р. в Ніжині в сім’ї бургомістра, у 1743 р. закінчив Київську академію, став ченцем Києво-Печерської лаври в 1744 р., з 1745 р. почав працювати в академії", "редакторська довідка видання (вторинне свідчення), не самоназва")] },
+  { id: "anon_o18_30", name: "Анонім: Інтермедії та інтерлюдії", life: "—", label: 'institutional', status: 'vetted', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_30.htm", "тільки шляхту свою підійму, — По наших тут кордонах не мешкають люди, — Але не тільки в межах, а також і на Україні, — Нехай же по всіх краях польська слава лине! І мої ті піддані в Києві бувалу.")] },
+  { id: "velychko", name: "Самійло Величко", life: "XVII–XVIII ст.", label: 'malorossian', status: 'vetted', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_33.htm", "А претож, єсли би поляки, на Україні господствующії, своїм ходячи упором, не слухали нашего королевського заказу і не повстягнулися от чинення малоросіянам і вам, козакам, кривд і прикростей; то яко воєнніє єсьте люде, так, маючи")] },
+  { id: "turchynovsky", name: "Ілля Турчиновський", life: "1695–", label: 'malorossian', status: 'provisional', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_35.htm (коментар видання)", "Турчиновський Ілля Михайлович — народився 20 липня 1695 р. в містечку Березані на Полтавщині в родині сотника. Вчився спочатку вдома, потім у Києво-Могилянській академії, мандрував по Україні, Білорусії, перепробував багато", "редакторська довідка видання (вторинне свідчення), не самоназва")] },
+  { id: "anon_o18_36", name: "Анонім: Скарга дидаскала", life: "—", label: 'institutional', status: 'excluded', confidence: 'implicit', evidence: [],
+    note: 'у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифікації (Русь/руський/малоросійський/український у голосі автора) і редакторська довідка її не дає (P-2.1); пам’ятку не внесено до корпусу' },
+  { id: "hrabianka", name: "Григорій Грабянка", life: "XVII–XVIII ст.", label: 'malorossian', status: 'vetted', confidence: 'implicit',
+    evidence: [Q('IZB', "http://izbornyk.org.ua/old18/old18_37.htm", "в примір Лисянку воспом’яну, которая не єдиножди і сильним войськам отпор давала; потом і Чернецькому, земель руських воєводі, з Тетерою-гетьманом, з польськими і козацькими пішими і кінними великими войськами і з сильними ордами")] },
+]
