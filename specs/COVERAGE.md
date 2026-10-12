@@ -125,5 +125,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SX-2 | tests/syntax.test.ts › «мні» is a weight-0 hint (not in the ЕУМ quote) |
 | SX-3 | tests/syntax.test.ts › «д місту» → hint д→до, and до+dative contamination hint; never a claim |
 | SX-4 | tests/syntax.test.ts › spans are char ranges into the input (for the bracket underline) |
-| BK-1 | tests/banks.test.ts › Zynoviiv 1705: hard ц + marked soft р give SE |
-| BK-2 | tests/banks.test.ts › BankChip is wired into the word card and the annotator popover |
+| DV-1 | tests/derivation.test.ts › lists the prefixes of SPEC 60 DV-1 |
+| DV-2 | tests/derivation.test.ts › ділати → зділати, переділати, відділати, відділатися (U-1) |
+| DV-3 | tests/derivation.test.ts › DV-3 DerivativesBlock «Похідні» is included in WordCard and /derive has the prefix mode |

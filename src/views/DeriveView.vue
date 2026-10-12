@@ -7,6 +7,8 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { explain, principles } from '../../core/reverse.ts'
+import { derivatives } from '../../core/derivation.ts'
+import { lexHas } from '../lib/lexhas.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps, paradigmOf, reconstruct } from '../lib/derive.ts'
@@ -16,18 +18,23 @@ import EvidencePopover from '../components/EvidencePopover.vue'
 import FormBadge from '../components/FormBadge.vue'
 import FormLegend from '../components/FormLegend.vue'
 import SourceCite from '../components/SourceCite.vue'
-type Dir = 'old2new' | 'new2old'
+type Dir = 'old2new' | 'new2old' | 'prefix'
+const asDir = (d: unknown): Dir => (d === 'new2old' || d === 'prefix' ? d : 'old2new')
 const route = useRoute(), router = useRouter()
-const { att, loaded, searchIdx, byLemma, fullOf } = useData()
-const q = ref(String(route.query.from ?? '')), to = ref(String(route.query.to ?? '')), dir = ref<Dir>(route.query.dir === 'new2old' ? 'new2old' : 'old2new')
-watch(() => route.query, v => { q.value = String(v.from ?? ''); to.value = String(v.to ?? ''); dir.value = v.dir === 'new2old' ? 'new2old' : 'old2new' })
+const { att, loaded, searchIdx, byLemma, fullOf, annData } = useData()
+const q = ref(String(route.query.from ?? '')), to = ref(String(route.query.to ?? '')), dir = ref<Dir>(asDir(route.query.dir))
+watch(() => route.query, v => { q.value = String(v.from ?? ''); to.value = String(v.to ?? ''); dir.value = asDir(v.dir) })
 const word = computed(() => String(route.query.from ?? '').trim()), target = computed(() => String(route.query.to ?? '').trim())
 const submit = () => router.replace({ query: q.value.trim() ? { from: q.value.trim(), dir: dir.value, ...(to.value.trim() && dir.value === 'old2new' ? { to: to.value.trim() } : {}) } : {} })
 const flip = (d: Dir) => { dir.value = d; if (q.value.trim()) submit() }
 
 const par = computed(() => (word.value && dir.value === 'new2old' && loaded.value ? paradigmOf(word.value, searchIdx.value, byLemma.value) : { forms: [] as string[] }))
+/** MO-2: modern orthography is the last step; a form the lexicon attests is never rewritten (core/modernize.ts) */
 const fwd = computed(() => (word.value && dir.value === 'old2new'
   ? deriveWithSteps(word.value).candidates.map(c => ({ ...c, lemma: searchIdx.value.map.get(key(c.form))?.[0]?.lemma })) : []))
+/** DV-3: prefix mode — the input is a lemma, e.g. ділати */
+const pfx = computed(() => (word.value && dir.value === 'prefix' && loaded.value ? derivatives(word.value, lexHas(annData.value)) : []))
+const pfxAtt = computed(() => pfx.value.filter(d => d.status !== 'suggestion')), pfxSug = computed(() => pfx.value.filter(d => d.status === 'suggestion'))
 const back = computed(() => (word.value && dir.value === 'new2old' && loaded.value ? reconstruct(word.value, searchIdx.value, byLemma.value, att.value).candidates : []))
 /** The attestation line of a confirmed candidate: the first KWIC of that spelling, from the lemma's detail shard (SPEC 20 B-5; core keeps no KWIC). loading = shard not there yet. */
 const attLine = (form: string) => {
@@ -46,6 +53,7 @@ const path = computed(() => (word.value && target.value && dir.value === 'old2ne
     <div class="seg" role="group" aria-label="Напрям">
       <button type="button" class="chip" :aria-pressed="dir === 'old2new'" @click="flip('old2new')">давня → сучасна</button>
       <button type="button" class="chip" :aria-pressed="dir === 'new2old'" @click="flip('new2old')">сучасна → давня</button>
+      <button type="button" class="chip" :aria-pressed="dir === 'prefix'" @click="flip('prefix')">префікси</button>
     </div>
     <input v-if="dir === 'old2new'" v-model="to" type="search" placeholder="сучасна форма (необов’язково)" aria-label="Сучасна форма для пояснення шляху" style="flex:1 1 10rem" spellcheck="false" />
     <button class="btn" type="submit">Вивести</button>
@@ -55,7 +63,32 @@ const path = computed(() => (word.value && target.value && dir.value === 'old2ne
   <div v-if="!word" class="card muted">Введіть слово. Приклади: <RouterLink :to="{ path: '/derive', query: { from: 'кінь', dir: 'new2old' } }">кінь</RouterLink> ·
     <RouterLink :to="{ path: '/derive', query: { from: 'піч', dir: 'new2old' } }">піч</RouterLink> ·
     <RouterLink :to="{ path: '/derive', query: { from: 'вѣра', dir: 'old2new' } }">вѣра</RouterLink> ·
-    <RouterLink :to="{ path: '/derive', query: { from: 'ходилъ', dir: 'old2new', to: 'ходив' } }">ходилъ → ходив</RouterLink></div>
+    <RouterLink :to="{ path: '/derive', query: { from: 'ходилъ', dir: 'old2new', to: 'ходив' } }">ходилъ → ходив</RouterLink> ·
+    <RouterLink :to="{ path: '/derive', query: { from: 'ділати', dir: 'prefix' } }">ділати + префікси</RouterLink> ·
+    <RouterLink :to="{ path: '/derive', query: { from: 'бурян', dir: 'old2new' } }">бурян → бур’ян</RouterLink></div>
+
+  <template v-else-if="dir === 'prefix'">
+    <p v-if="!loaded" class="muted">Завантаження словника…</p>
+    <section v-else class="card"><h2><span>Префіксальні похідні «{{ word }}»</span><span class="small">метод: деривація · Правопис 2019 § 31</span></h2>
+      <ul style="list-style:none;padding:0;margin:0">
+        <li v-for="d in pfxAtt" :key="d.form" style="margin:.5rem 0">
+          <span class="muted small sans">{{ d.prefix }}</span> →
+          <FormBadge kind="attested" :form="d.form" :label="d.status === 'vesum' ? '✓ ВЕСУМ' : '✓ корпус'" />
+          <RouterLink v-if="byLemma.has(d.form)" :to="`/w/${encodeURIComponent(d.form)}`" class="small sans"> → картка</RouterLink>
+          <span v-if="d.hint" class="derived-badge" title="префікс без прямої цитати з Правопису: вага 0">префікс без цитати</span>
+          <EvidencePopover :evidence="d.claim.evidence" heading="Докази похідного" :label="d.form"><span class="badge">ⓘ докази</span></EvidencePopover>
+        </li>
+        <li v-if="!pfxAtt.length" class="muted">Жодного засвідченого похідного (ВЕСУМ / корпус) немає.</li>
+      </ul>
+      <h3 v-if="pfxSug.length" class="small sans">Пропозиції (не засвідчено)</h3>
+      <ul v-if="pfxSug.length" style="list-style:none;padding:0;margin:0">
+        <li v-for="d in pfxSug" :key="d.form" style="display:inline-block;margin:.3rem 1rem .3rem 0">
+          <span class="muted small sans">{{ d.prefix }}</span> → <FormBadge kind="derived" :form="d.form" label="пропозиція (гіпотеза)" />
+          <EvidencePopover :evidence="d.claim.evidence" heading="Правило префікса" :label="d.form"><span class="badge">ⓘ</span></EvidencePopover>
+        </li>
+      </ul>
+      <p class="small muted sans">Є = форма є у ВЕСУМ або корпусі (браузер бачить парадигми лем корпусу та lexindex). Пропозиція — реконструкція за правилом, а не факт (P-1.7).</p></section>
+  </template>
 
   <template v-else-if="dir === 'old2new'">
     <section v-if="target" class="card"><h2><span>Шлях «{{ word }}» → «{{ target }}»</span></h2>

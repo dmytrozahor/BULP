@@ -28,5 +28,7 @@ export const SOURCES: Record<string, Source> = {
   LONKIN: { title: 'Лонкін С. А. Литературный письменный язык «Подкарпатской Руси» в XXI веке. Ломоносов-2025', url: 'https://lomonosov.msu.ru/archive/Lomonosov_2025/data/36581/uid1045715_bbe4cbfb94b89ee751434150fd7e625005f844e5.docx', year: '2025' },
   ISO:    { title: 'SIL ISO 639-3: rue (Rusyn), rsk (Ruthenian/Pannonian)', url: 'https://iso639-3.sil.org/code/rue' },
   BILANIUK: { title: 'Bilaniuk L. Contested Tongues. Cornell UP, 2005 (quoted via en.wikipedia «Surzhyk»)', year: '2005' },
+  INPUT:  { title: 'Введене слово / дані проєкту (вхід правила, SPEC 60 DV/MO)' },
+  CORPUS: { title: 'Корпус пам’яток проєкту (лема або форма в словнику)' },
   MASENKO:  { title: 'Масенко Л. Суржик: між мовою і язиком. К., 2011 (quoted via Дивослово 2016 review)', year: '2011' },
 }
