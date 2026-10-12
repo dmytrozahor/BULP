@@ -45,4 +45,6 @@ export const SOURCES: Record<string, Source> = {
   YT:     { title: 'YouTube (відео лише як вбудований програвач; аудіо не зберігається)', url: 'https://www.youtube.com' },
   WIKISPIV: { title: 'WikiSpiv (wikispiv.com) — пісенний вікі-довідник', url: 'https://wikispiv.com' },
   MAKSYM1834: { title: 'Максимович М. Украинскія народныя пѣсни. Москва, 1834 (Вікіджерела)', url: 'https://uk.wikisource.org', license: 'PD' },
+  SOPHIA: { title: 'Saint Sophia’s Inscriptions — University of Gothenburg & НЗ «Софія Київська» (saintsophia.dh.gu.se, API)', url: 'https://saintsophia.dh.gu.se/', license: 'зображення CC BY-NC; ліцензія тексту транскрипцій порталом не вказана (див. licenceNote)' },
+  GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
 }

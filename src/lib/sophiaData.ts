@@ -1,4 +1,4 @@
-/** Lazy, cached loader for public/data/sophia.json (metadata + IIIF links only; no inscription texts — SPEC 60 NW-6), and media resolution per witness. */
+/** Sophia graffiti catalogue + inscription ids (MV-1). Texts are separate witnesses sophia-<id> since the NW-6 amendment (metadata + IIIF links here). */
 import { MEDIA_FIXTURE } from '../data/media-fixture.ts'
 import { mediaOfSophia, sophiaIdOf, type SophiaData, type WitnessMedia } from './media.ts'
 

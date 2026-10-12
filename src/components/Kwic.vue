@@ -14,7 +14,7 @@ import { hasMedia, resolveMedia } from '../lib/sophiaData.ts'
 import type { WitnessMedia } from '../lib/media.ts'
 import { useData } from '../composables/useData.ts'
 const { witnessById } = useData()
-const wm = (w: string) => witnessById.value.get(w) as { media?: WitnessMedia } | undefined
+const wm = (w: string) => witnessById.value.get(w) as { media?: WitnessMedia; licenceNote?: string } | undefined
 const mediaOpen = ref<number>(), media = ref<WitnessMedia>(), mediaErr = ref(false)   // MV-1: «переглянути» opens the media panel under the row
 const showMedia = async (i: number, w: string) => {
   if (mediaOpen.value === i) { mediaOpen.value = undefined; return }
@@ -40,7 +40,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>
       <template v-if="mediaOpen === i">
-        <MediaPanel v-if="media" :media="media" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
+        <MediaPanel v-if="media" :media="media" :licence-note="wm(k.w)?.licenceNote" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
         <p v-else class="muted small sans" role="status">{{ mediaErr ? 'Медіа недоступне.' : 'Завантаження…' }}</p>
       </template>
     </div>

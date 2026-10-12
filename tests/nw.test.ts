@@ -55,7 +55,7 @@ describe('NW-2 Київські глаголичні листки (TOROT kiev-mi
   })
 })
 
-describe('NW-6 Sophia graffiti — metadata + IIIF links only (text licence unconfirmed)', () => {
+describe('NW-6 Sophia graffiti — catalogue (metadata + IIIF links; texts are separate witnesses, tests/ingest-sophia.test.ts)', () => {
   const row = {
     published: true, id: 3859, title: '6140', position_on_surface: 'pct:79.77,24.15,8.66,4.19', panel: { title: '109-14', room: '109' },
     type_of_inscription: { text: 'Textual graffiti' }, language: { text: 'Polish' }, writing_system: { text: 'Latin' }, min_year: 1629, max_year: 1629,
@@ -76,7 +76,7 @@ describe('NW-6 Sophia graffiti — metadata + IIIF links only (text licence unco
   it('catalogue states the licence situation', () => {
     const c = catalogue([[row, { ...row, id: 1 }]], '2026-10-12')
     expect(c.items.map(i => i.id)).toEqual([1, 3859])
-    expect(c.licence.images).toMatch(/CC BY-NC/); expect(c.licence.text).toMatch(/не підтверджено/)
+    expect(c.licence.images).toMatch(/CC BY-NC/); expect(c.licence.text).toMatch(/не вказано/)
   })
 })
 

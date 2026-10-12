@@ -66,6 +66,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
         <button type="button" class="chip" @click="open(w.id)"><strong>{{ w.title }}</strong></button>
         <div class="small sans"><AuthorBadge :author="w.author" :witness="w.id" /> · {{ fmtDate(w.date) }} · {{ epochShort(epochOf(w)) }}<template v-if="w.region"> · {{ w.region }}</template> · {{ LANG_UK[w.lang] }} · {{ fmtNum(w.n) }} слів
           · <a :href="w.url" target="_blank" rel="noopener">відкрити джерело ↗</a></div>
+        <div v-if="w.licenceNote" class="small sans muted" role="note">{{ w.licenceNote }}</div>
       </li>
     </ul>
   </template>
@@ -73,6 +74,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
     <p><RouterLink to="/texts">← усі пам’ятки</RouterLink></p>
     <h2>{{ cur.title }}</h2>
     <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }}<template v-if="cur.license"> ({{ cur.license }})</template> · <a :href="cur.url" target="_blank" rel="noopener">відкрити джерело ↗</a></p>
+    <p v-if="cur.licenceNote" class="small sans muted licence-note" role="note">{{ cur.licenceNote }}</p>
     <div v-if="toks === 'loading'" class="skeleton" style="height:8rem" />
     <div v-else-if="!toks" class="card" role="status">
       <p>Тексту цієї пам’ятки ще немає в даних: <code>public/data/texts/{{ cur.id }}.json</code> (<code>{ tokens: [raw, loc, s][] }</code>) створює збірка корпусу. Читач відкриє його без змін у коді.</p>

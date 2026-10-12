@@ -9,6 +9,7 @@ import { AUTHORS_14B } from './nw-izb14b.ts'
 import { AUTHORS_18A } from './nw-izb18a.ts'
 import { AUTHORS_18B } from './nw-izb18b.ts'
 import { AUTHORS_SONGS } from './nw-songs.ts'
+import { AUTHORS_SOPHIA } from './nw-sophia.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -83,6 +84,7 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_18A,
   ...AUTHORS_18B,
   ...AUTHORS_SONGS,
+  ...AUTHORS_SOPHIA,
 ]
 
 export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>

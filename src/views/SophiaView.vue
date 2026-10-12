@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * MV-1 / NW-6: browse the Saint Sophia graffiti (metadata + IIIF image links; transcription text is NOT shown until the portal's text licence is confirmed).
+ * MV-1 / NW-6: browse the Saint Sophia graffiti (metadata + IIIF image links; the inscription texts live in the /texts witnesses sophia-<id> (licenceNote), not on this browse page).
  * Filter by date (overlapping years), type and free text; each row links to the portal page and the IIIF image; «переглянути» opens the media panel.
  */
 import { computed, onMounted, ref } from 'vue'

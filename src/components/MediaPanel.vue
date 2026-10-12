@@ -1,14 +1,14 @@
 <script setup lang="ts">
 /**
- * MV-1: media panel next to annotated text / KWIC. IIIF image (Sophia graffiti; image licence CC BY-NC, attribution always shown; NO transcription
- * text until the text licence is confirmed — research/16), YouTube via the privacy-enhanced youtube-nocookie.com iframe (loaded only on click),
+ * MV-1: media panel next to annotated text / KWIC. IIIF image (Sophia graffiti; image licence CC BY-NC, attribution always shown; the transcription licence note comes from the caller: witness.licenceNote, NW-6 amendment 2026-10-12),
+ * YouTube via the privacy-enhanced youtube-nocookie.com iframe (loaded only on click),
  * or a plain image. Images are lazy-loaded; only http(s) URLs render.
  */
 import { computed, ref } from 'vue'
 import type { WitnessMedia } from '../lib/media.ts'
 import { iiifFullUrl, iiifImageUrl, safeHttp, youtubeEmbedUrl, youtubeWatchUrl } from '../lib/media.ts'
 import AffiliationChips from './AffiliationChips.vue'
-const props = defineProps<{ media: WitnessMedia; refs?: (string | undefined)[] }>()
+const props = defineProps<{ media: WitnessMedia; refs?: (string | undefined)[]; licenceNote?: string }>()
 defineEmits<{ close: [] }>()
 const zoom = ref(false), play = ref(false), failed = ref(false)
 const src = computed(() => {
@@ -47,6 +47,7 @@ const title = computed(() => props.media.title ?? (props.media.kind === 'youtube
       </div>
     </template>
     <p class="small muted mp-attr">{{ media.attribution }} · ліцензія: {{ media.licence }}</p>
+    <p v-if="licenceNote" class="small muted mp-attr" role="note">{{ licenceNote }}</p>
     <AffiliationChips :refs="[media.url, ...(refs ?? [])]" />
   </aside>
 </template>
