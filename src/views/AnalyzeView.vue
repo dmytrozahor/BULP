@@ -27,6 +27,7 @@ import LoanChip from '../components/LoanChip.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
 import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
+import { loanLabels } from '../lib/datasets.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -42,7 +43,7 @@ const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, 
 const hasForm = computed(() => lexHasBool(annData.value))
 const modOf = (form: string) => (loaded.value ? modernize(form, hasForm.value) : [])
 const inLex = computed(() => (word.value ? searchIdx.value.map.get(key(word.value)) ?? [] : []))
-const loan = computed(() => analyzeLoan(word.value))
+const loan = computed(() => analyzeLoan(word.value, { labels: loanLabels }))
 const allClaims = computed(() => Object.entries(a.value?.claims ?? {}))
 const hasRusyn = computed(() => allClaims.value.some(([l]) => isRusyn(l)))
 const parallelLabel = (l: string) => isRusyn(l) || (hasRusyn.value && (l === 'ZAK' || l === 'LEM'))

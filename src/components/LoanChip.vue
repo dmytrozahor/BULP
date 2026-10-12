@@ -8,9 +8,10 @@
 import { computed } from 'vue'
 import { DONOR_UK, LOAN_CV_NOTE, analyzeLoan, type Donor } from '../../core/loanwords.ts'
 import type { Evidence } from '../../core/evidence.ts'
+import { loanLabels } from '../lib/datasets.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ word: string; attested?: boolean }>()
-const a = computed(() => analyzeLoan(props.word, { attested: props.attested ?? true }))
+const a = computed(() => analyzeLoan(props.word, { attested: props.attested ?? true, labels: loanLabels }))   // labels: loanlabels.json (lazy, reactive), not the 13 seed labels
 const pct = (p: number) => `${Math.round(p * 100)} %`
 const d = (x: Donor) => DONOR_UK[x]
 const text = computed(() => {
