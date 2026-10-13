@@ -1,201 +1,228 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **607 421**.
+Generated 2026-10-13T22:36:29.714Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **609 189**.
 
 ## 1. Corpus
 
 | witness | author | lang | composition date | shev epoch | wl epoch | N tokens | dropped (unmapped Latin) | dropped (apparatus) |
 |---|---|---|---|---|---|---|---|---|
-| sophia-112 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 3 | 0 | 0 |
-| sophia-150 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 2 | 0 | 1 |
-| sophia-347 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 2 | 1 | 0 |
+| sophia-112 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 12 | 0 | 0 |
+| sophia-150 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 5 | 0 | 0 |
+| sophia-347 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 5 | 0 | 0 |
 | sophia-89 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 2 | 0 | 0 |
 | sophia-99 | sophia_graffiti | chu-rus | 1019 | shev.proto (high) | wl.rus | 3 | 0 | 0 |
-| sophia-2070 | sophia_graffiti | chu-rus | 1022 | shev.proto (high) | wl.rus | 1 | 1 | 0 |
+| sophia-2070 | sophia_graffiti | chu-rus | 1022 | shev.proto (high) | wl.rus | 3 | 1 | 0 |
+| sophia-275 | sophia_graffiti | chu-rus | 1022 | shev.proto (high) | wl.rus | 5 | 2 | 0 |
 | sophia-3816 | sophia_graffiti | chu-rus | 1023 | shev.proto (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1309 | sophia_graffiti | chu-rus | 1015–1025 | shev.proto (high) | wl.rus | 1 | 0 | 0 |
-| sophia-298 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 1 | 1 | 0 |
-| sophia-291 | sophia_graffiti | chu-rus | 1030–1039 | shev.proto (high) | wl.rus | 2 | 2 | 0 |
-| sophia-292 | sophia_graffiti | chu-rus | 1030–1039 | shev.proto (high) | wl.rus | 1 | 1 | 0 |
+| sophia-279 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 1 | 1 | 0 |
+| sophia-297 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 4 | 1 | 0 |
+| sophia-298 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 1 | 0 | 0 |
+| sophia-458 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 1 | 0 | 2 |
+| sophia-459 | sophia_graffiti | chu-rus | 1020–1025 | shev.proto (high) | wl.rus | 2 | 1 | 0 |
+| sophia-269 | sophia_graffiti | undetermined | 1036 | shev.proto (high) | wl.rus | 1 | 0 | 0 |
+| sophia-286 | sophia_graffiti | undetermined | 1030–1039 | shev.proto (high) | wl.rus | 1 | 0 | 0 |
+| sophia-291 | sophia_graffiti | chu-rus | 1030–1039 | shev.proto (high) | wl.rus | 3 | 2 | 0 |
+| sophia-292 | sophia_graffiti | chu-rus | 1030–1039 | shev.proto (high) | wl.rus | 4 | 1 | 0 |
 | ilarion | ilarion | orv | 1037–1050 | shev.proto (medium) | wl.rus | 6 807 | 2 | 207 |
 | ostromir | ostromir_scribe | chu-rus | 1056–1057 | shev.old (high) | wl.rus | 193 | 0 | 0 |
-| sophia-147 | sophia_graffiti | chu-rus | 1060–1078 | shev.old (high) | wl.rus | 5 | 0 | 1 |
-| sophia-67 | sophia_graffiti | chu-rus | 1089–1091 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-147 | sophia_graffiti | chu-rus | 1060–1078 | shev.old (high) | wl.rus | 14 | 0 | 0 |
+| sophia-67 | sophia_graffiti | chu-rus | 1089–1091 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-90 | sophia_graffiti | chu-rus | 1025–1091 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | arch | arch_scribes | chu-rus | 1092 | shev.old (high) | wl.rus | 59 953 | 14 | 10 |
 | sophia-85 | sophia_graffiti | chu-rus | 1093 | shev.old (high) | wl.rus | 3 | 0 | 1 |
-| sophia-2148 | sophia_graffiti | undetermined | 1097 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-879 | sophia_graffiti | chu-rus | 1080–1099 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | kiev-mis | kiev_missal_scribes | chu | 950–1100 | shev.proto (medium) | wl.rus | 352 | 0 | 0 |
-| sophia-1534 | sophia_graffiti | chu-rus | 1025–1100 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-1821 | sophia_graffiti | chu-rus | 1085–1100 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-364 | sophia_graffiti | chu-rus | 1050–1100 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-1534 | sophia_graffiti | chu-rus | 1025–1100 | shev.old (medium) | wl.rus | 5 | 1 | 0 |
+| sophia-1821 | sophia_graffiti | chu-rus | 1085–1100 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-364 | sophia_graffiti | chu-rus | 1050–1100 | shev.old (high) | wl.rus | 18 | 1 | 0 |
 | sophia-3788 | sophia_graffiti | undetermined | 1025–1100 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-420 | sophia_graffiti | chu-rus | 1085–1100 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-87 | sophia_graffiti | chu-rus | 1025–1100 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
-| sophia-84 | sophia_graffiti | chu-rus | 1104–1107 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-420 | sophia_graffiti | chu-rus | 1085–1100 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-87 | sophia_graffiti | chu-rus | 1025–1100 | shev.old (medium) | wl.rus | 15 | 0 | 0 |
+| sophia-84 | sophia_graffiti | chu-rus | 1104–1107 | shev.old (high) | wl.rus | 11 | 1 | 0 |
 | sophia-86 | sophia_graffiti | chu-rus | 1093–1113 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-116 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-117 | sophia_graffiti | chu-rus | 1050–1115 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-118 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-116 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 10 | 0 | 0 |
+| sophia-117 | sophia_graffiti | chu-rus | 1050–1115 | shev.old (high) | wl.rus | 18 | 1 | 0 |
+| sophia-118 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 16 | 0 | 0 |
 | sophia-1773 | sophia_graffiti | undetermined | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1787 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-1788 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-1787 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-1788 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-1792 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1837 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1863 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1863 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-1864 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1867 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1870 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1876 | sophia_graffiti | undetermined | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1878 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-1878 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 5 | 0 | 1 |
 | sophia-1884 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1885 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1889 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-1889 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-1890 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-1980 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
-| sophia-3425 | sophia_graffiti | chu-rus | 1075–1115 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-4249 | sophia_graffiti | chu-rus | 1050–1115 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-88 | sophia_graffiti | chu-rus | 1075–1115 | shev.old (high) | wl.rus | 16 | 0 | 1 |
-| sophia-96 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 6 | 1 | 0 |
+| sophia-1980 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
+| sophia-260 | sophia_graffiti | chu-rus | 1090–1115 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-2765 | sophia_graffiti | chu-rus | 1085–1115 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3425 | sophia_graffiti | chu-rus | 1075–1115 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-4249 | sophia_graffiti | chu-rus | 1050–1115 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-88 | sophia_graffiti | chu-rus | 1075–1115 | shev.old (high) | wl.rus | 59 | 4 | 0 |
+| sophia-96 | sophia_graffiti | chu-rus | 1025–1115 | shev.old (medium) | wl.rus | 10 | 0 | 0 |
 | monomakh | monomakh | orv | 1096–1117 | shev.old (high) | wl.rus | 4 585 | 0 | 102 |
 | pvl_lav | kyiv_chron | orv | 1110–1118 | shev.old (high) | wl.rus | 55 088 | 0 | 0 |
 | sophia-1256 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-1259 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-1262 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 3 | 0 | 2 |
-| sophia-1263 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1264 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-1257 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1259 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
+| sophia-1260 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-1262 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 15 | 0 | 0 |
+| sophia-1263 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-1264 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-1266 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1268 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1269 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1270 | sophia_graffiti | undetermined | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1272 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1295 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1300 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1302 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 2 | 1 | 1 |
-| sophia-1303 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 1 | 1 |
-| sophia-1304 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-1306 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
+| sophia-1301 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 6 | 0 | 1 |
+| sophia-1302 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1303 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-1304 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-1305 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-1306 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1308 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1314 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-1316 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1319 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-1323 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1329 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1334 | sophia_graffiti | undetermined | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1346 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1397 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 2 | 2 | 0 |
-| sophia-1718 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-1397 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1718 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1719 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1720 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1721 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 1 | 0 | 3 |
-| sophia-1722 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-1721 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 8 | 1 | 0 |
+| sophia-1722 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-1723 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1725 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1724 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1725 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-1727 | sophia_graffiti | undetermined | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1956 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-2549 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1956 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-2549 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
+| sophia-2583 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-2736 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-282 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-3451 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-3501 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-3511 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 3 | 1 | 0 |
-| sophia-4217 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-477 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 1 | 2 | 1 |
-| sophia-791 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-875 | sophia_graffiti | chu-rus | 1050–1125 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3451 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-3501 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-3511 | sophia_graffiti | chu-rus | 1085–1125 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-4217 | sophia_graffiti | chu-rus | 1101–1125 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-477 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 2 | 2 | 1 |
+| sophia-791 | sophia_graffiti | chu-rus | 1025–1125 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
 | sophia-3512 | sophia_graffiti | chu-rus | 1025–1130 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-2695 | sophia_graffiti | chu-rus | 1120–1139 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-999 | sophia_graffiti | chu-rus | 1139 | shev.old (high) | wl.rus | 1 | 2 | 0 |
+| sophia-4181 | sophia_graffiti | chu-rus | 1085–1130 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-2695 | sophia_graffiti | chu-rus | 1120–1139 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-999 | sophia_graffiti | chu-rus | 1139 | shev.old (high) | wl.rus | 2 | 2 | 0 |
 | sophia-287 | sophia_graffiti | chu-rus | 1125–1149 | shev.old (high) | wl.rus | 7 | 0 | 0 |
-| sophia-102 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-102 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 16 | 0 | 0 |
 | sophia-1095 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-119 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-120 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-1200 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-1224 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 4 |
-| sophia-126 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-127 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-120 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-1200 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1224 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-126 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-127 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 6 | 1 | 0 |
 | sophia-1317 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-1377 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-145 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 8 | 0 | 0 |
-| sophia-1565 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1566 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1581 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-1377 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-145 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 12 | 1 | 0 |
+| sophia-1565 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-1566 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-1581 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-1639 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1737 | sophia_graffiti | undetermined | 1085–1150 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-1737 | sophia_graffiti | undetermined | 1085–1150 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-1741 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-1748 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
-| sophia-1803 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
+| sophia-1748 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 10 | 0 | 0 |
+| sophia-1803 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1817 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1820 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-1820 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1822 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1849 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1850 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-1851 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 3 | 1 | 2 |
-| sophia-188 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-1892 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-1963 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-1850 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-1851 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 8 | 0 | 1 |
+| sophia-188 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1892 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-1963 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 2 | 1 | 0 |
 | sophia-1964 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2032 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 3 | 0 | 2 |
-| sophia-2038 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-2032 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-2038 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-205 | sophia_graffiti | chu-rus | 1015–1150 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
 | sophia-2411 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-2424 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-254 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2571 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-2571 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-2577 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 1 | 0 | 6 |
 | sophia-2590 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-2641 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-2680 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2685 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-2709 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-2774 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 4 |
-| sophia-2810 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2858 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-2685 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-2709 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-277 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-2774 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-2810 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-2858 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-3017 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3208 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-3228 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 4 | 0 | 9 |
-| sophia-328 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-3397 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
-| sophia-348 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 2 |
-| sophia-3605 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-368 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 4 | 0 | 2 |
-| sophia-4137 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3179 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-3208 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-3228 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 24 | 0 | 1 |
+| sophia-328 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 10 | 1 | 0 |
+| sophia-3397 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-348 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 20 | 4 | 0 |
+| sophia-3605 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-368 | sophia_graffiti | chu-rus | 1085–1150 | shev.old (high) | wl.rus | 19 | 0 | 1 |
 | sophia-4151 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4175 | sophia_graffiti | undetermined | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4190 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-4219 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-4219 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 6 | 1 | 0 |
 | sophia-4326 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-510 | sophia_graffiti | chu-rus | 1100–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-493 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 3 | 1 | 1 |
+| sophia-510 | sophia_graffiti | chu-rus | 1100–1150 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-533 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-591 | sophia_graffiti | undetermined | 1025–1150 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-66 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-780 | sophia_graffiti | chu-rus | 1150 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-784 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 1 | 1 | 1 |
-| sophia-80 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-887 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 6 | 1 | 0 |
-| sophia-928 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-1232 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-1735 | sophia_graffiti | undetermined | 1145–1155 | shev.old (high) | wl.rus | 6 | 1 | 0 |
-| sophia-1916 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2152 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-66 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-780 | sophia_graffiti | chu-rus | 1150 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-782 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-784 | sophia_graffiti | chu-rus | 1050–1150 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-80 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-887 | sophia_graffiti | chu-rus | 1125–1150 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-928 | sophia_graffiti | chu-rus | 1025–1150 | shev.old (medium) | wl.rus | 9 | 0 | 0 |
+| sophia-1232 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1735 | sophia_graffiti | undetermined | 1145–1155 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-1916 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-2037 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-2152 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 7 | 0 | 0 |
 | sophia-2522 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 1 | 1 | 2 |
-| sophia-3435 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-3780 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-3786 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-2815 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-2957 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-3435 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-3780 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3786 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-4075 | sophia_graffiti | chu-rus | 1145–1155 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1832 | sophia_graffiti | chu-rus | 1130–1159 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-2139 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 8 | 0 | 2 |
-| sophia-3291 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 2 | 1 | 1 |
-| sophia-3381 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 10 | 0 | 0 |
-| sophia-900 | sophia_graffiti | chu-rus | 1140–1160 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-912 | sophia_graffiti | chu-rus | 1040–1160 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-2139 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 27 | 1 | 0 |
+| sophia-2437 | sophia_graffiti | chu-rus | 1140–1160 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-3291 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-3381 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-3718 | sophia_graffiti | chu-rus | 1130–1160 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-900 | sophia_graffiti | chu-rus | 1140–1160 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-912 | sophia_graffiti | chu-rus | 1040–1160 | shev.old (medium) | wl.rus | 21 | 0 | 0 |
 | sophia-972 | sophia_graffiti | chu-rus | 1125–1160 | shev.old (high) | wl.rus | 9 | 2 | 0 |
-| sophia-1807 | sophia_graffiti | undetermined | 1085–1170 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1807 | sophia_graffiti | undetermined | 1085–1170 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-1887 | sophia_graffiti | chu-rus | 1130–1170 | shev.old (high) | wl.rus | 5 | 1 | 0 |
-| sophia-1082 | sophia_graffiti | chu-rus | 1150–1175 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-1297 | sophia_graffiti | chu-rus | 1125–1175 | shev.old (high) | wl.rus | 3 | 3 | 0 |
-| sophia-1856 | sophia_graffiti | chu-rus | 1150–1175 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2100 | sophia_graffiti | chu-rus | 1169–1179 | shev.old (high) | wl.rus | 5 | 0 | 2 |
-| sophia-724 | sophia_graffiti | chu-rus | 1182–1183 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-244 | sophia_graffiti | chu-rus | 1090–1190 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-1001 | sophia_graffiti | chu-rus | 1165–1199 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-1082 | sophia_graffiti | chu-rus | 1150–1175 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1297 | sophia_graffiti | chu-rus | 1125–1175 | shev.old (high) | wl.rus | 6 | 3 | 0 |
+| sophia-1856 | sophia_graffiti | chu-rus | 1150–1175 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-2100 | sophia_graffiti | chu-rus | 1169–1179 | shev.old (high) | wl.rus | 21 | 0 | 0 |
+| sophia-244 | sophia_graffiti | chu-rus | 1090–1190 | shev.old (high) | wl.rus | 13 | 0 | 0 |
+| sophia-1001 | sophia_graffiti | chu-rus | 1165–1199 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1004 | sophia_graffiti | chu-rus | 1165–1199 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-392 | sophia_graffiti | chu-rus | 1100–1199 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-418 | sophia_graffiti | chu-rus | 1125–1199 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-880 | sophia_graffiti | chu-rus | 1025–1199 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-418 | sophia_graffiti | chu-rus | 1125–1199 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-880 | sophia_graffiti | chu-rus | 1025–1199 | shev.old (medium) | wl.rus | 5 | 0 | 1 |
 | sophia-985 | sophia_graffiti | chu-rus | 1025–1199 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-986 | sophia_graffiti | chu-rus | 1025–1199 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-988 | sophia_graffiti | chu-rus | 1025–1199 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
@@ -203,269 +230,297 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-992 | sophia_graffiti | chu-rus | 1080–1199 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-993 | sophia_graffiti | chu-rus | 1080–1199 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | kievchr | kyiv_chron_12 | orv | 1117–1200 | shev.old (high) | wl.rus | 79 458 | 17 | 18512 |
-| sophia-103 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-1037 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-105 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-103 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 1 |
+| sophia-1037 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-105 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-1051 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1069 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-1094 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 1 | 1 |
-| sophia-1100 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-1094 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-1100 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-1133 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-115 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 10 | 0 | 2 |
+| sophia-115 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 35 | 0 | 0 |
 | sophia-1152 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1157 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1177 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-1177 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 10 | 1 | 0 |
 | sophia-1178 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1179 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-1179 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 10 | 0 | 0 |
 | sophia-1191 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
 | sophia-1197 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-1228 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1228 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 5 | 1 | 0 |
 | sophia-1275 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-1285 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-1376 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-1418 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1514 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1516 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1615 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 1 | 1 |
+| sophia-1538 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1615 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1620 | sophia_graffiti | undetermined | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-1663 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 4 | 0 | 1 |
 | sophia-1710 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1742 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1760 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1761 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-1764 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1767 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
-| sophia-1786 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-1767 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 9 | 3 | 0 |
+| sophia-1783 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1785 | sophia_graffiti | undetermined | 1125–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-1786 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-1799 | sophia_graffiti | undetermined | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-1808 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1809 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1824 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-1824 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-1828 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1841 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1865 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-1871 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1907 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1922 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-1928 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1922 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1928 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-193 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 1 | 1 |
 | sophia-1962 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1968 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-1971 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-1972 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 4 |
-| sophia-1974 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 4 | 1 | 0 |
-| sophia-1981 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 3 | 0 | 1 |
-| sophia-1983 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1968 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-1971 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 1 | 1 |
+| sophia-1972 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 6 | 1 | 0 |
+| sophia-1974 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-1981 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 6 | 1 | 1 |
+| sophia-1983 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
 | sophia-2014 | sophia_graffiti | undetermined | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2035 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-2069 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 3 |
+| sophia-2040 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-2069 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 2 | 3 |
 | sophia-2076 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 1 |
 | sophia-2088 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-224 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2313 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2326 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 6 | 2 | 0 |
+| sophia-2146 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 16 | 1 | 0 |
+| sophia-224 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 2 | 0 |
+| sophia-2313 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-2326 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 9 | 1 | 0 |
 | sophia-2346 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2417 | sophia_graffiti | chu-rus | 1150–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-2417 | sophia_graffiti | chu-rus | 1150–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-2426 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2455 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-2460 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-2455 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 9 | 0 | 0 |
+| sophia-2460 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-2467 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-2573 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 3 | 1 |
+| sophia-2555 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 1 | 1 |
+| sophia-2573 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 2 | 0 |
+| sophia-2578 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 1 | 1 |
+| sophia-2586 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2606 | sophia_graffiti | undetermined | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2626 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 2 |
+| sophia-2626 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2628 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-264 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
+| sophia-264 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 10 | 0 | 0 |
 | sophia-2677 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2700 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 1 | 0 | 6 |
+| sophia-2700 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-2731 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2764 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-281 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-2764 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-281 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-3197 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-3205 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-3210 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-3234 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-3243 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3275 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-3210 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-3234 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-3243 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-3275 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-33 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-3321 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3325 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-3341 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-3351 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3358 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3374 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 8 | 1 | 1 |
+| sophia-3321 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-3325 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-3341 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3351 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3358 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-3374 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 12 | 0 | 0 |
 | sophia-3394 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3423 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 4 | 1 | 0 |
-| sophia-3433 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-3434 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 1 | 1 |
-| sophia-3485 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 1 | 1 |
-| sophia-3487 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 5 | 1 | 0 |
-| sophia-3509 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 2 |
+| sophia-3405 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3423 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-3433 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-3434 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 27 | 0 | 0 |
+| sophia-3466 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-3483 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-3485 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-3487 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-3509 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 11 | 0 | 0 |
 | sophia-3523 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-3524 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-3570 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3573 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3573 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 8 | 0 | 0 |
 | sophia-3574 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3577 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 4 | 0 | 2 |
-| sophia-3589 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 2 |
-| sophia-3606 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-3577 | sophia_graffiti | chu-rus | 1160–1200 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-3589 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
+| sophia-3606 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 3 | 1 | 0 |
 | sophia-3618 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-365 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-3627 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-365 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-367 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3671 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3745 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3770 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 7 | 0 | 8 |
+| sophia-3770 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
 | sophia-3804 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4082 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4127 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 4 | 1 | 1 |
 | sophia-4128 | sophia_graffiti | undetermined | 1050–1200 | shev.old (high) | wl.rus | 4 | 1 | 1 |
-| sophia-4168 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-4169 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-4182 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-4168 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 8 | 2 | 0 |
+| sophia-4169 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-4182 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-4184 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-4191 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4199 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-4202 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-4211 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4233 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-4234 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-4237 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-4255 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 1 | 1 |
+| sophia-4255 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
 | sophia-4264 | sophia_graffiti | undetermined | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4295 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 2 | 0 |
-| sophia-451 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-452 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-503 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-547 | sophia_graffiti | chu-rus | 1170–1200 | shev.old (high) | wl.rus | 1 | 1 | 2 |
-| sophia-653 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-4304 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-451 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-452 | sophia_graffiti | chu-rus | 1175–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-503 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-547 | sophia_graffiti | chu-rus | 1170–1200 | shev.old (high) | wl.rus | 1 | 6 | 0 |
+| sophia-653 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
 | sophia-758 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-779 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-803 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-794 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-803 | sophia_graffiti | chu-rus | 1085–1200 | shev.old (high) | wl.rus | 6 | 1 | 0 |
 | sophia-813 | sophia_graffiti | chu-rus | 1050–1200 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-93 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-94 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 7 | 0 | 0 |
-| sophia-956 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 3 | 1 | 1 |
-| sophia-963 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-93 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-94 | sophia_graffiti | chu-rus | 1125–1200 | shev.old (high) | wl.rus | 13 | 0 | 0 |
+| sophia-956 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-963 | sophia_graffiti | chu-rus | 1025–1200 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | spi | slovo_author | orv | 1185–1200 | shev.old (high) | wl.rus | 2 778 | 0 | 0 |
-| sophia-730 | sophia_graffiti | chu-rus | 1125–1201 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-947 | sophia_graffiti | chu-rus | 1150–1201 | shev.old (high) | wl.rus | 2 | 0 | 2 |
-| sophia-952 | sophia_graffiti | chu-rus | 1175–1201 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1223 | sophia_graffiti | chu-rus | 1207 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-825 | sophia_graffiti | chu-rus | 1125–1201 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-947 | sophia_graffiti | chu-rus | 1150–1201 | shev.old (high) | wl.rus | 1 | 1 | 2 |
+| sophia-952 | sophia_graffiti | chu-rus | 1175–1201 | shev.old (high) | wl.rus | 10 | 0 | 0 |
+| sophia-1223 | sophia_graffiti | chu-rus | 1207 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-394 | sophia_graffiti | chu-rus | 1025–1210 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-409 | sophia_graffiti | undetermined | 1190–1210 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-419 | sophia_graffiti | chu-rus | 1167–1210 | shev.old (high) | wl.rus | 9 | 0 | 0 |
-| sophia-100 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 13 | 1 | 0 |
-| sophia-1033 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 1 |
-| sophia-106 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 1 | 0 |
-| sophia-1075 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-111 | sophia_graffiti | chu-rus | 1101–1215 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-419 | sophia_graffiti | chu-rus | 1167–1210 | shev.old (high) | wl.rus | 10 | 0 | 0 |
+| sophia-100 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 15 | 1 | 0 |
+| sophia-1033 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 11 | 0 | 0 |
+| sophia-106 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1075 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-111 | sophia_graffiti | chu-rus | 1101–1215 | shev.old (high) | wl.rus | 12 | 0 | 0 |
 | sophia-1137 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1183 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
-| sophia-121 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1230 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
-| sophia-1355 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-1357 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 3 | 1 | 0 |
-| sophia-1401 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-144 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1544 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1555 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-1158 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-1183 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1208 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-121 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-1230 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-1355 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 10 | 0 | 0 |
+| sophia-1357 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-1401 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-144 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-1544 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-1555 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-160 | sophia_graffiti | chu-rus | 1101–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-1605 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1626 | sophia_graffiti | undetermined | 1150–1215 | shev.old (high) | wl.rus | 3 | 1 | 2 |
+| sophia-1605 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-1606 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
+| sophia-1626 | sophia_graffiti | undetermined | 1150–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-1637 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-164 | sophia_graffiti | chu-rus | 1015–1215 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1734 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1734 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-1736 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1746 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1759 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 7 | 0 | 0 |
-| sophia-1780 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1791 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1812 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-1838 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 3 |
+| sophia-1759 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-1780 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1791 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-1812 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1840 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1845 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1855 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-1855 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-1862 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
 | sophia-1875 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1896 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-1897 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 2 | 0 |
-| sophia-1899 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1900 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-1909 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1896 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 8 | 0 | 0 |
+| sophia-1897 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1899 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-1900 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-1902 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-1909 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
 | sophia-1914 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1921 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-1923 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-1955 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1957 | sophia_graffiti | chu-rus | 1160–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-1958 | sophia_graffiti | chu-rus | 1160–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-1960 | sophia_graffiti | chu-rus | 1130–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1973 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 1 | 0 |
-| sophia-1975 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-1976 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-1977 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1978 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 2 |
-| sophia-1984 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-1921 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-1923 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-1955 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 8 | 1 | 0 |
+| sophia-1957 | sophia_graffiti | chu-rus | 1160–1215 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-1958 | sophia_graffiti | chu-rus | 1160–1215 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-1960 | sophia_graffiti | chu-rus | 1130–1215 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-1973 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-1975 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-1976 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-1977 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 8 | 1 | 0 |
+| sophia-1978 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 7 | 1 | 0 |
+| sophia-1984 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 8 | 0 | 1 |
 | sophia-2011 | sophia_graffiti | chu-rus | 1101–1215 | shev.old (high) | wl.rus | 2 | 0 | 2 |
 | sophia-2068 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2074 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 3 |
-| sophia-2099 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 0 | 2 |
-| sophia-2121 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-2131 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 6 | 1 | 0 |
+| sophia-2074 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 1 | 1 |
+| sophia-2099 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 23 | 1 | 0 |
+| sophia-2121 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-2131 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-2153 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2192 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 2 |
+| sophia-2192 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 1 |
 | sophia-2199 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-2200 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-226 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-226 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 7 | 1 | 0 |
 | sophia-2325 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 4 | 0 |
 | sophia-2429 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2453 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2454 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-2453 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-2454 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-2496 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-261 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-265 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-261 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-265 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-2702 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-272 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-2722 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-2762 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 1 | 3 |
-| sophia-2808 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-272 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-2722 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-2762 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-2766 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-2808 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 8 | 0 | 0 |
 | sophia-2811 | sophia_graffiti | chu-rus | 1050–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2842 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-2846 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 1 | 1 |
-| sophia-3021 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 6 | 0 | 2 |
+| sophia-2842 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-2846 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-3021 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
 | sophia-3027 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3229 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 11 | 0 | 0 |
-| sophia-3264 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 1 | 1 |
-| sophia-329 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3229 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 14 | 0 | 0 |
+| sophia-3264 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
+| sophia-3276 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 4 | 2 | 0 |
+| sophia-329 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 4 | 3 | 0 |
 | sophia-3339 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3396 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-3400 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-3396 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-3400 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 1 | 0 |
 | sophia-3402 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 2 | 2 | 0 |
-| sophia-3436 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
-| sophia-3444 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3448 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-3462 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-3467 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3513 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 1 |
-| sophia-3518 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3546 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-3602 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-3604 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3607 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3771 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 3 |
-| sophia-3779 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 7 | 1 | 0 |
+| sophia-3436 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-3443 | sophia_graffiti | chu-rus | 1085–1215 | shev.old (high) | wl.rus | 10 | 0 | 0 |
+| sophia-3444 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3448 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-3467 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3513 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-3518 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3546 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
+| sophia-3602 | sophia_graffiti | chu-rus | 1185–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3604 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3607 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-3771 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3772 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3779 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 4 | 4 | 0 |
+| sophia-40 | sophia_graffiti | chu-rus | 1170–1215 | shev.old (high) | wl.rus | 2 | 2 | 0 |
 | sophia-4089 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-4092 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 1 |
 | sophia-4134 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-4144 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-4148 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-4148 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-4167 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-421 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-421 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-4225 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 1 | 0 |
 | sophia-4250 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-4254 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-460 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 2 | 0 |
-| sophia-480 | sophia_graffiti | undetermined | 1130–1215 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-497 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-507 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-546 | sophia_graffiti | chu-rus | 1170–1215 | shev.old (high) | wl.rus | 4 | 2 | 4 |
-| sophia-586 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-618 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 1 | 0 | 3 |
+| sophia-4254 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 5 | 2 | 0 |
+| sophia-4310 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-460 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 1 | 1 |
+| sophia-480 | sophia_graffiti | undetermined | 1130–1215 | shev.old (high) | wl.rus | 10 | 1 | 0 |
+| sophia-499 | sophia_graffiti | chu-rus | 1025–1215 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-507 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-546 | sophia_graffiti | chu-rus | 1170–1215 | shev.old (high) | wl.rus | 4 | 1 | 2 |
+| sophia-618 | sophia_graffiti | chu-rus | 1175–1215 | shev.old (high) | wl.rus | 9 | 0 | 0 |
 | sophia-761 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 8 | 0 | 0 |
-| sophia-796 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 6 | 1 | 0 |
+| sophia-796 | sophia_graffiti | chu-rus | 1150–1215 | shev.old (high) | wl.rus | 8 | 1 | 0 |
 | sophia-91 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-92 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-95 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-893 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 3 | 0 | 2 |
-| sophia-898 | sophia_graffiti | chu-rus | 1175–1220 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-92 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-95 | sophia_graffiti | chu-rus | 1125–1215 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-893 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 6 | 0 | 1 |
+| sophia-898 | sophia_graffiti | chu-rus | 1175–1220 | shev.old (high) | wl.rus | 4 | 1 | 0 |
 | sophia-975 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-976 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 3 | 1 | 0 |
 | sophia-977 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 1 | 0 | 0 |
@@ -474,232 +529,259 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-981 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 3 | 1 | 0 |
 | sophia-982 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-983 | sophia_graffiti | chu-rus | 1150–1220 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-899 | sophia_graffiti | chu-rus | 1221 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1002 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1092 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 1 | 0 | 3 |
-| sophia-1368 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-899 | sophia_graffiti | chu-rus | 1221 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-1002 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 13 | 0 | 0 |
+| sophia-1027 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
+| sophia-1092 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 12 | 0 | 0 |
+| sophia-1368 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1462 | sophia_graffiti | chu-rus | 1050–1225 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1563 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-1564 | sophia_graffiti | chu-rus | 1101–1225 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-1578 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-1563 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-1564 | sophia_graffiti | chu-rus | 1101–1225 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-1578 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
 | sophia-1810 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1898 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-2046 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 1 | 0 | 3 |
 | sophia-2616 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2800 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 5 | 2 | 0 |
-| sophia-3373 | sophia_graffiti | chu-rus | 1101–1225 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-3489 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3520 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-3628 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3675 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-4095 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-4117 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-4147 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-756 | sophia_graffiti | chu-rus | 1150–1225 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3164 | sophia_graffiti | chu-rus | 1025–1225 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3373 | sophia_graffiti | chu-rus | 1101–1225 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-3520 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-3628 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3675 | sophia_graffiti | chu-rus | 1175–1225 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-4095 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-4117 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-4147 | sophia_graffiti | chu-rus | 1125–1225 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-756 | sophia_graffiti | chu-rus | 1150–1225 | shev.old (high) | wl.rus | 11 | 0 | 0 |
 | sophia-1193 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
-| sophia-131 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-131 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
 | sophia-2053 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 1 | 0 | 5 |
 | sophia-2449 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-306 | sophia_graffiti | chu-rus | 1125–1230 | shev.old (high) | wl.rus | 5 | 0 | 0 |
-| sophia-3201 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-344 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
-| sophia-3440 | sophia_graffiti | chu-rus | 1160–1230 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-306 | sophia_graffiti | chu-rus | 1125–1230 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-344 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 7 | 0 | 0 |
+| sophia-3440 | sophia_graffiti | chu-rus | 1160–1230 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-3496 | sophia_graffiti | chu-rus | 1125–1230 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-357 | sophia_graffiti | chu-rus | 1150–1230 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-350 | sophia_graffiti | chu-rus | 1170–1230 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-357 | sophia_graffiti | chu-rus | 1150–1230 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-3582 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-3783 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-438 | sophia_graffiti | chu-rus | 1025–1230 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-3424 | sophia_graffiti | chu-rus | 1233 | shev.old (high) | wl.rus | 10 | 0 | 1 |
-| sophia-101 | sophia_graffiti | chu-rus | 1175–1250 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-3424 | sophia_graffiti | chu-rus | 1233 | shev.old (high) | wl.rus | 10 | 0 | 0 |
+| sophia-101 | sophia_graffiti | chu-rus | 1175–1250 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-1096 | sophia_graffiti | chu-rus | 1125–1250 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1211 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 2 |
-| sophia-1246 | sophia_graffiti | chu-rus | 1050–1250 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-1211 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-1246 | sophia_graffiti | chu-rus | 1050–1250 | shev.old (high) | wl.rus | 9 | 0 | 0 |
 | sophia-1674 | sophia_graffiti | undetermined | 1025–1250 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1818 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2461 | sophia_graffiti | chu-rus | 1225–1250 | shev.old (high) | wl.rus | 3 | 1 | 1 |
-| sophia-2698 | sophia_graffiti | chu-rus | 1185–1250 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-2461 | sophia_graffiti | chu-rus | 1225–1250 | shev.old (high) | wl.rus | 9 | 1 | 0 |
+| sophia-2698 | sophia_graffiti | chu-rus | 1185–1250 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-2718 | sophia_graffiti | chu-rus | 1185–1250 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3380 | sophia_graffiti | chu-rus | 1150–1250 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3165 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3380 | sophia_graffiti | chu-rus | 1150–1250 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-3382 | sophia_graffiti | chu-rus | 1150–1250 | shev.old (high) | wl.rus | 6 | 0 | 0 |
-| sophia-3437 | sophia_graffiti | chu-rus | 1101–1250 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3508 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3782 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3437 | sophia_graffiti | chu-rus | 1101–1250 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-3508 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3782 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-428 | sophia_graffiti | chu-rus | 1070–1250 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-4289 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4374 | sophia_graffiti | chu-rus | 1125–1250 | shev.old (high) | wl.rus | 1 | 1 | 0 |
-| sophia-504 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-588 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-504 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 1 | 2 |
+| sophia-505 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
+| sophia-588 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-700 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-81 | sophia_graffiti | chu-rus | 1125–1250 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-81 | sophia_graffiti | chu-rus | 1125–1250 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-863 | sophia_graffiti | chu-rus | 1125–1250 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-98 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 10 | 1 | 0 |
+| sophia-98 | sophia_graffiti | chu-rus | 1025–1250 | shev.old (medium) | wl.rus | 14 | 2 | 0 |
 | sophia-3271 | sophia_graffiti | chu-rus | 1245–1255 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-146 | sophia_graffiti | chu-rus | 1258–1259 | shev.old (high) | wl.rus | 2 | 3 | 0 |
 | sophia-1273 | sophia_graffiti | chu-rus | 1250–1260 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-1982 | sophia_graffiti | chu-rus | 1230–1260 | shev.old (high) | wl.rus | 3 | 1 | 1 |
 | sophia-1112 | sophia_graffiti | chu-rus | 1025–1275 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1209 | sophia_graffiti | chu-rus | 1085–1275 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2539 | sophia_graffiti | chu-rus | 1185–1275 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-2539 | sophia_graffiti | chu-rus | 1185–1275 | shev.old (high) | wl.rus | 7 | 0 | 0 |
 | sophia-4189 | sophia_graffiti | chu-rus | 1025–1275 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-757 | sophia_graffiti | chu-rus | 1150–1275 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-760 | sophia_graffiti | chu-rus | 1150–1275 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-757 | sophia_graffiti | chu-rus | 1150–1275 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-760 | sophia_graffiti | chu-rus | 1150–1275 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-882 | sophia_graffiti | chu-rus | 1025–1275 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1074 | sophia_graffiti | chu-rus | 1285 | shev.old (high) | wl.rus | 11 | 3 | 2 |
-| sophia-148 | sophia_graffiti | chu-rus | 1025–1290 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1074 | sophia_graffiti | chu-rus | 1285 | shev.old (high) | wl.rus | 17 | 6 | 1 |
+| sophia-148 | sophia_graffiti | chu-rus | 1025–1290 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-155 | sophia_graffiti | chu-rus | 1025–1290 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | gvl | volyn_chron | orv | 1200–1292 | shev.old (high) | wl.rus | 37 568 | 3 | 9693 |
 | sophia-397 | sophia_graffiti | chu-rus | 1125–1299 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-881 | sophia_graffiti | chu-rus | 1025–1299 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-990 | sophia_graffiti | chu-rus | 1025–1299 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1000 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-1088 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 2 |
+| sophia-1000 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-1088 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
+| sophia-1093 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1159 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-1169 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1181 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 4 | 0 | 1 |
-| sophia-1199 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1210 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1181 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-1199 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1210 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1229 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1598 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1669 | sophia_graffiti | undetermined | 1150–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1701 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1830 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1701 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1830 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-1833 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1877 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
-| sophia-1906 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1967 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 3 | 0 |
-| sophia-1994 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 3 |
-| sophia-2055 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 2 | 0 |
-| sophia-2064 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2140 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 3 | 1 | 0 |
-| sophia-2150 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-2151 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-2427 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-2459 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1877 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
+| sophia-1906 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1994 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 5 | 1 | 0 |
+| sophia-2055 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
+| sophia-2064 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-2140 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-2150 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 4 | 1 | 1 |
+| sophia-2151 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 1 |
+| sophia-234 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-235 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-2427 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 6 | 0 | 0 |
 | sophia-2502 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-266 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2712 | sophia_graffiti | chu-rus | 1160–1300 | shev.old (high) | wl.rus | 1 | 0 | 3 |
+| sophia-2712 | sophia_graffiti | chu-rus | 1160–1300 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-278 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2856 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
-| sophia-2863 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-2856 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 13 | 1 | 0 |
+| sophia-2863 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-2865 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2873 | sophia_graffiti | undetermined | 1125–1300 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-2873 | sophia_graffiti | undetermined | 1125–1300 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-3160 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-3217 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 11 | 5 | 0 |
-| sophia-3367 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-3217 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 2 | 0 | 2 |
+| sophia-3273 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 5 | 0 | 1 |
+| sophia-3304 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3367 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-3388 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-3389 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3392 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3413 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-3413 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-3420 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-346 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3482 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-3482 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-3536 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 2 | 0 |
-| sophia-3540 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 2 | 0 | 4 |
-| sophia-3584 | sophia_graffiti | chu-rus | 1101–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-3613 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-3781 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3540 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 8 | 0 | 1 |
+| sophia-3584 | sophia_graffiti | chu-rus | 1101–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3613 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3781 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-4091 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-4116 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-4123 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-42 | sophia_graffiti | chu-rus | 1101–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-4292 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-501 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 1 | 0 | 4 |
+| sophia-4116 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-4123 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-42 | sophia_graffiti | chu-rus | 1101–1300 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-4292 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-494 | sophia_graffiti | chu-rus | 1101–1300 | shev.old (high) | wl.rus | 4 | 0 | 1 |
+| sophia-501 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 3 | 2 | 0 |
+| sophia-517 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 4 | 1 | 1 |
+| sophia-522 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 1 | 1 | 1 |
 | sophia-537 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-552 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
 | sophia-582 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-62 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| sophia-62 | sophia_graffiti | chu-rus | 1150–1300 | shev.old (high) | wl.rus | 1 | 0 | 2 |
 | sophia-701 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-789 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-793 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 4 | 1 | 0 |
-| sophia-795 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-801 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-805 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-808 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-789 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-793 | sophia_graffiti | chu-rus | 1050–1300 | shev.old (high) | wl.rus | 5 | 0 | 1 |
+| sophia-795 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-801 | sophia_graffiti | chu-rus | 1025–1300 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-805 | sophia_graffiti | chu-rus | 1175–1300 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-808 | sophia_graffiti | chu-rus | 1125–1300 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-1440 | sophia_graffiti | chu-rus | 1125–1301 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2792 | sophia_graffiti | chu-rus | 1150–1301 | shev.old (high) | wl.rus | 4 | 2 | 0 |
-| sophia-740 | sophia_graffiti | chu-rus | 1025–1301 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-2792 | sophia_graffiti | chu-rus | 1150–1301 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-719 | sophia_graffiti | chu-rus | 1250–1301 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-740 | sophia_graffiti | chu-rus | 1025–1301 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-763 | sophia_graffiti | chu-rus | 1025–1301 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1192 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-833 | sophia_graffiti | chu-rus | 1125–1301 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-1185 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-1192 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1201 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1225 | sophia_graffiti | ruthenian | 1285–1315 | shev.old (high) | wl.rus | 1 | 2 | 0 |
 | sophia-1353 | sophia_graffiti | chu-rus | 1250–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1372 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 2 | 1 | 0 |
 | sophia-1466 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1528 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-1539 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 2 |
-| sophia-1577 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-1539 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-1577 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-1590 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1611 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1612 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1632 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1657 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1657 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1661 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1675 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1679 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1679 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1704 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-1714 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1730 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-1731 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1749 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1752 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 16 | 17 | 0 |
-| sophia-1754 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-1752 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-1754 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-1781 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-1790 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-1811 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-1844 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-1811 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 9 | 0 | 0 |
+| sophia-1844 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-1879 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-1880 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-1880 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 6 | 1 | 0 |
 | sophia-1894 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1895 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-1924 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-1926 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 3 | 1 | 1 |
+| sophia-1895 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 9 | 1 | 0 |
+| sophia-1924 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 6 | 0 | 0 |
+| sophia-1925 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-1926 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 6 | 0 | 0 |
 | sophia-2078 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-2080 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-2080 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 8 | 0 | 0 |
+| sophia-2169 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2347 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-2438 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-2574 | sophia_graffiti | chu-rus | 1285–1315 | shev.old (high) | wl.rus | 1 | 0 | 2 |
+| sophia-2405 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 1 | 1 |
+| sophia-2438 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 4 | 0 | 0 |
+| sophia-2574 | sophia_graffiti | chu-rus | 1285–1315 | shev.old (high) | wl.rus | 3 | 0 | 1 |
 | sophia-2619 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 3 | 0 | 2 |
 | sophia-262 | sophia_graffiti | chu-rus | 1275–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2814 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 1 | 0 | 2 |
-| sophia-2860 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-2814 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 5 | 1 | 0 |
+| sophia-2860 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-2958 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-3022 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3026 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3026 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-3033 | sophia_graffiti | undetermined | 1150–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3196 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-3199 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3211 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3216 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3216 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-3259 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3301 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 2 |
-| sophia-3368 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
-| sophia-3383 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 5 | 2 | 1 |
-| sophia-3395 | sophia_graffiti | chu-rus | 1285–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-3465 | sophia_graffiti | chu-rus | 1250–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3301 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
+| sophia-3368 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3383 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-3395 | sophia_graffiti | chu-rus | 1285–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-3469 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-3519 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-3519 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-3521 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 1 | 0 | 1 |
-| sophia-3522 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-3522 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-3525 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-3548 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-3784 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-4149 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-4215 | sophia_graffiti | chu-rus | 1050–1315 | shev.old (high) | wl.rus | 1 | 0 | 3 |
-| sophia-495 | sophia_graffiti | chu-rus | 1250–1315 | shev.old (high) | wl.rus | 8 | 1 | 1 |
-| sophia-654 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-3548 | sophia_graffiti | chu-rus | 1150–1315 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-3784 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-4149 | sophia_graffiti | chu-rus | 1125–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-4215 | sophia_graffiti | chu-rus | 1050–1315 | shev.old (high) | wl.rus | 4 | 1 | 0 |
+| sophia-495 | sophia_graffiti | chu-rus | 1250–1315 | shev.old (high) | wl.rus | 10 | 1 | 1 |
+| sophia-623 | sophia_graffiti | undetermined | 1025–1315 | shev.old (medium) | wl.rus | 4 | 0 | 1 |
+| sophia-654 | sophia_graffiti | chu-rus | 1085–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-655 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-661 | sophia_graffiti | chu-rus | 1175–1315 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-668 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-764 | sophia_graffiti | chu-rus | 1025–1315 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1025 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-1059 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1136 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1138 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 3 | 2 | 0 |
-| sophia-1150 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 3 | 3 | 0 |
-| sophia-122 | sophia_graffiti | chu-rus | 1175–1325 | shev.old (high) | wl.rus | 1 | 1 | 1 |
+| sophia-1150 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 2 | 0 | 1 |
+| sophia-122 | sophia_graffiti | chu-rus | 1175–1325 | shev.old (high) | wl.rus | 6 | 2 | 0 |
+| sophia-167 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-197 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
-| sophia-2061 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1998 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-2007 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-2061 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-2067 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2118 | sophia_graffiti | ruthenian | 1285–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2267 | sophia_graffiti | chu-rus | 1301–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-2327 | sophia_graffiti | chu-rus | 1150–1325 | shev.old (high) | wl.rus | 4 | 0 | 1 |
-| sophia-2465 | sophia_graffiti | chu-rus | 1285–1325 | shev.old (high) | wl.rus | 2 | 0 | 2 |
-| sophia-2505 | sophia_graffiti | chu-rus | 1285–1325 | shev.old (high) | wl.rus | 6 | 4 | 1 |
-| sophia-2724 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 3 | 0 | 1 |
-| sophia-3300 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 3 | 1 | 0 |
+| sophia-2267 | sophia_graffiti | chu-rus | 1301–1325 | shev.old (high) | wl.rus | 9 | 0 | 0 |
+| sophia-231 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
+| sophia-2327 | sophia_graffiti | chu-rus | 1150–1325 | shev.old (high) | wl.rus | 7 | 3 | 1 |
+| sophia-236 | sophia_graffiti | chu-rus | 1101–1325 | shev.old (high) | wl.rus | 1 | 1 | 1 |
+| sophia-2465 | sophia_graffiti | chu-rus | 1285–1325 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-2505 | sophia_graffiti | chu-rus | 1285–1325 | shev.old (high) | wl.rus | 4 | 1 | 1 |
+| sophia-2724 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 1 | 1 | 1 |
+| sophia-3300 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 5 | 0 | 0 |
 | sophia-3404 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 3 | 3 | 0 |
-| sophia-3442 | sophia_graffiti | chu-rus | 1150–1325 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-3418 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3458 | sophia_graffiti | chu-rus | 1260–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-3486 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-3661 | sophia_graffiti | ruthenian | 1301–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
@@ -707,30 +789,34 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-4074 | sophia_graffiti | undetermined | 1150–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-408 | sophia_graffiti | undetermined | 1050–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-4104 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 1 | 2 | 0 |
-| sophia-4105 | sophia_graffiti | chu-rus | 1150–1325 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-447 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-828 | sophia_graffiti | ruthenian | 1285–1325 | shev.old (high) | wl.rus | 2 | 1 | 7 |
+| sophia-4105 | sophia_graffiti | chu-rus | 1150–1325 | shev.old (high) | wl.rus | 3 | 0 | 0 |
+| sophia-4187 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-4188 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 4 | 1 | 1 |
+| sophia-828 | sophia_graffiti | ruthenian | 1285–1325 | shev.old (high) | wl.rus | 9 | 1 | 1 |
 | sophia-878 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-957 | sophia_graffiti | chu-rus | 1275–1325 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-957 | sophia_graffiti | chu-rus | 1275–1325 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-984 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-361 | sophia_graffiti | chu-rus | 1175–1330 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-901 | sophia_graffiti | chu-rus | 1329–1333 | shev.old (high) | wl.rus | 3 | 0 | 0 |
-| sophia-1234 | sophia_graffiti | chu-rus | 1170–1350 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-901 | sophia_graffiti | chu-rus | 1329–1333 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| sophia-3427 | sophia_graffiti | ruthenian | 1347 | shev.old (high) | wl.rus | 3 | 1 | 1 |
+| sophia-1234 | sophia_graffiti | chu-rus | 1170–1350 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-149 | sophia_graffiti | chu-rus | 1025–1350 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-1920 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-1920 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-2086 | sophia_graffiti | ruthenian | 1325–1350 | shev.old (high) | wl.rus | 4 | 2 | 0 |
 | sophia-2499 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| sophia-2817 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 0 | 1 |
+| sophia-3306 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-3495 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-3547 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 0 | 0 |
-| sophia-4186 | sophia_graffiti | chu-rus | 1285–1350 | shev.old (high) | wl.rus | 4 | 0 | 0 |
-| sophia-4196 | sophia_graffiti | chu-rus | 1025–1350 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-4223 | sophia_graffiti | chu-rus | 1101–1350 | shev.old (high) | wl.rus | 2 | 0 | 0 |
+| sophia-4186 | sophia_graffiti | chu-rus | 1285–1350 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-4196 | sophia_graffiti | chu-rus | 1025–1350 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-4223 | sophia_graffiti | chu-rus | 1101–1350 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-4293 | sophia_graffiti | chu-rus | 1285–1350 | shev.old (high) | wl.rus | 2 | 0 | 0 |
-| sophia-473 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 2 | 0 | 1 |
-| sophia-506 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-473 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 3 | 0 | 1 |
+| sophia-474 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 1 | 0 |
+| sophia-528 | sophia_graffiti | chu-rus | 1150–1350 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-2376 | sophia_graffiti | ruthenian | 1330–1360 | shev.old (high) | wl.rus | 2 | 1 | 0 |
-| sophia-2943 | sophia_graffiti | undetermined | 1359–1360 | shev.old (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-924 | sophia_graffiti | chu-rus | 1330–1370 | shev.old (high) | wl.rus | 5 | 0 | 0 |
+| sophia-924 | sophia_graffiti | chu-rus | 1330–1370 | shev.old (high) | wl.rus | 19 | 0 | 0 |
 | sophia-1145 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-1146 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1147 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 1 | 0 | 0 |
@@ -740,8 +826,6 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-909 | sophia_graffiti | chu-rus | 1125–1399 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-914 | sophia_graffiti | chu-rus | 1125–1399 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-989 | sophia_graffiti | chu-rus | 1025–1399 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1022 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-1031 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1036 | sophia_graffiti | undetermined | 1285–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-1043 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1049 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
@@ -751,47 +835,52 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-1066 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1067 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1105 | sophia_graffiti | chu-rus | 1130–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-114 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1168 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1194 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-1194 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-1195 | sophia_graffiti | undetermined | 1085–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1221 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1233 | sophia_graffiti | chu-rus | 1085–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
-| sophia-1388 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-1388 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1532 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1533 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1570 | sophia_graffiti | ruthenian | 1285–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-1580 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1576 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-1580 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1583 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-1610 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
 | sophia-1660 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1668 | sophia_graffiti | undetermined | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1915 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1917 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 1 | 1 | 1 |
+| sophia-1917 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-1992 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1993 | sophia_graffiti | undetermined | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-1995 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-1995 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-1999 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-2052 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
 | sophia-2161 | sophia_graffiti | undetermined | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-232 | sophia_graffiti | chu-rus | 1101–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-2443 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2488 | sophia_graffiti | undetermined | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-2548 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-2625 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-2710 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 2 | 0 | 4 |
+| sophia-2710 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 12 | 0 | 0 |
 | sophia-2726 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2837 | sophia_graffiti | chu-rus | 1185–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-2839 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3206 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
 | sophia-3213 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3277 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-3303 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3315 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-3315 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-3369 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3370 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-3370 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 5 | 0 | 0 |
 | sophia-3384 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3439 | sophia_graffiti | ruthenian | 1325–1400 | shev.old (medium) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-3403 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-3439 | sophia_graffiti | ruthenian | 1325–1400 | shev.old (medium) | wl.ruthenian | 8 | 0 | 0 |
+| sophia-3450 | sophia_graffiti | chu-rus | 1175–1400 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
 | sophia-3514 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-3535 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 3 | 0 |
-| sophia-3545 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3549 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-3571 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3549 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3571 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-3581 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
 | sophia-3586 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3596 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
@@ -799,41 +888,45 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3656 | sophia_graffiti | chu-rus | 1101–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3708 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3709 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-3737 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 3 | 0 | 1 |
 | sophia-3801 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-3802 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3817 | sophia_graffiti | chu-rus | 1285–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-4183 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-4183 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4222 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-4236 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-4280 | sophia_graffiti | chu-rus | 1085–1400 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-4308 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
-| sophia-498 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 4 | 2 | 1 |
-| sophia-536 | sophia_graffiti | chu-rus | 1260–1400 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-589 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-590 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-498 | sophia_graffiti | chu-rus | 1150–1400 | shev.old (medium) | wl.rus | 4 | 1 | 0 |
+| sophia-500 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-536 | sophia_graffiti | chu-rus | 1260–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-540 | sophia_graffiti | chu-rus | 1125–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-589 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-590 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| sophia-614 | sophia_graffiti | chu-rus | 1175–1400 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-640 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-755 | sophia_graffiti | chu-rus | 1250–1400 | shev.old (medium) | wl.rus | 3 | 1 | 0 |
-| sophia-783 | sophia_graffiti | chu-rus | 1285–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-786 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | i14_04 | tsamblak | ruthenian | 1408–1410 | shev.early_middle (high) | wl.ruthenian | 2 239 | 1 | 18 |
-| sophia-2711 | sophia_graffiti | ruthenian | 1350–1415 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 8 |
+| sophia-2711 | sophia_graffiti | ruthenian | 1350–1415 | shev.old+shev.early_middle (low) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-2714 | sophia_graffiti | ruthenian | 1385–1415 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 1 |
 | sophia-2715 | sophia_graffiti | ruthenian | 1385–1415 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2778 | sophia_graffiti | ruthenian | 1350–1415 | shev.old+shev.early_middle (low) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-456 | sophia_graffiti | chu-rus | 1025–1415 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
-| sophia-110 | sophia_graffiti | chu-rus | 1250–1425 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
-| sophia-199 | sophia_graffiti | chu-rus | 1175–1425 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
-| sophia-2363 | sophia_graffiti | chu-rus | 1150–1425 | shev.old (medium) | wl.rus | 1 | 1 | 0 |
+| sophia-456 | sophia_graffiti | chu-rus | 1025–1415 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| sophia-110 | sophia_graffiti | chu-rus | 1250–1425 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
+| sophia-199 | sophia_graffiti | chu-rus | 1175–1425 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-2363 | sophia_graffiti | chu-rus | 1150–1425 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-237 | sophia_graffiti | chu-rus | 1390–1425 | shev.early_middle (high) | wl.ruthenian | 9 | 0 | 0 |
 | sophia-2554 | sophia_graffiti | undetermined | 1201–1425 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-3815 | sophia_graffiti | ruthenian | 1301–1425 | shev.old (medium) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-3815 | sophia_graffiti | ruthenian | 1301–1425 | shev.old (medium) | wl.ruthenian | 2 | 1 | 1 |
 | sophia-457 | sophia_graffiti | chu-rus | 1025–1425 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-342 | sophia_graffiti | ruthenian | 1350–1430 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-257 | sophia_graffiti | ruthenian | 1325–1450 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-2813 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 1 | 0 | 1 |
+| sophia-2813 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-417 | sophia_graffiti | chu-rus | 1125–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-579 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
+| sophia-466 | sophia_graffiti | chu-rus | 1150–1450 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
+| sophia-579 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-602 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
-| sophia-472 | sophia_graffiti | undetermined | 1480–1489 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-472 | sophia_graffiti | undetermined | 1480–1489 | shev.early_middle (high) | wl.ruthenian | 3 | 1 | 1 |
 | sophia-229 | sophia_graffiti | chu-rus | 1025–1490 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-345 | sophia_graffiti | chu-rus | 1025–1490 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-390 | sophia_graffiti | chu-rus | 1025–1499 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
@@ -842,150 +935,169 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-406 | sophia_graffiti | chu-rus | 1025–1499 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
 | sophia-1021 | sophia_graffiti | ruthenian | 1325–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1030 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
-| sophia-1032 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1032 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1091 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1144 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
-| sophia-1163 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 1 |
-| sophia-1196 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1203 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1156 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1163 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-1214 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1215 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1216 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1219 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1235 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1240 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1235 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1240 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-1243 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1247 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1364 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1249 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
+| sophia-1250 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
+| sophia-1364 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-1374 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1382 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 1 | 0 |
+| sophia-1382 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-1455 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1499 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1500 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1505 | sophia_graffiti | ruthenian | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1508 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1508 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1509 | sophia_graffiti | ruthenian | 1450–1500 | shev.early_middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-1527 | sophia_graffiti | chu-rus | 1350–1500 | shev.early_middle (medium) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-157 | sophia_graffiti | chu-rus | 1175–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
-| sophia-1572 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
-| sophia-1579 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1572 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1579 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1582 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1592 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1673 | sophia_graffiti | undetermined | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1687 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
-| sophia-1729 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1744 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1766 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1769 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1766 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1769 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1776 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
-| sophia-1782 | sophia_graffiti | chu-rus | 1085–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1823 | sophia_graffiti | ruthenian | 1325–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 | 1 | 0 |
+| sophia-1782 | sophia_graffiti | chu-rus | 1085–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1823 | sophia_graffiti | ruthenian | 1325–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-1835 | sophia_graffiti | ruthenian | 1385–1500 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1836 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1852 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1854 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1881 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1888 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
+| sophia-1904 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1918 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1961 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1970 | sophia_graffiti | ruthenian | 1425–1500 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-1970 | sophia_graffiti | ruthenian | 1425–1500 | shev.early_middle (high) | wl.ruthenian | 9 | 0 | 0 |
 | sophia-2033 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2041 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2168 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2318 | sophia_graffiti | ruthenian | 1150–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
+| sophia-2083 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-2168 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-2173 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-2318 | sophia_graffiti | ruthenian | 1150–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 5 | 0 | 0 |
 | sophia-2383 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2423 | sophia_graffiti | undetermined | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2463 | sophia_graffiti | undetermined | 1285–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-2463 | sophia_graffiti | undetermined | 1285–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2475 | sophia_graffiti | undetermined | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 4 | 0 | 0 |
 | sophia-2476 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
-| sophia-2543 | sophia_graffiti | ruthenian | 1330–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 3 | 1 | 0 |
+| sophia-2543 | sophia_graffiti | ruthenian | 1330–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-2544 | sophia_graffiti | ruthenian | 1330–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2572 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
+| sophia-2575 | sophia_graffiti | chu-rus | 1175–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 2 | 0 |
 | sophia-2581 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 3 | 0 |
-| sophia-2582 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2585 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 2 | 0 |
 | sophia-2588 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2589 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 1 | 0 |
 | sophia-2605 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2655 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
-| sophia-2674 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 2 |
-| sophia-2675 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 1 |
+| sophia-2674 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
+| sophia-2675 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2703 | sophia_graffiti | undetermined | 1085–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2708 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2723 | sophia_graffiti | chu-rus | 1175–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
-| sophia-2738 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-2738 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2741 | sophia_graffiti | chu-rus | 1175–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2760 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2801 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 3 |
 | sophia-2821 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2852 | sophia_graffiti | chu-rus | 1050–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-2976 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-2978 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3020 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
+| sophia-3103 | sophia_graffiti | chu-rus | 1085–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3174 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-3176 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3193 | sophia_graffiti | chu-rus | 1150–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3198 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3198 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
 | sophia-3207 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-3209 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3212 | sophia_graffiti | undetermined | 1150–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3241 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3274 | sophia_graffiti | ruthenian | 1385–1500 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-3241 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3274 | sophia_graffiti | ruthenian | 1385–1500 | shev.early_middle (medium) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-3297 | sophia_graffiti | undetermined | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3316 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3317 | sophia_graffiti | chu-rus | 1015–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
+| sophia-3317 | sophia_graffiti | chu-rus | 1015–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-3329 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3357 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3359 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-3387 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
+| sophia-3414 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
 | sophia-3454 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3455 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3455 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-3481 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3526 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3493 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3526 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3527 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3533 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3551 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3590 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3551 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3553 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3578 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3579 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3600 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-3655 | sophia_graffiti | ruthenian | 1301–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3768 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3774 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3775 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3787 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3792 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3795 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3795 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-4097 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-4139 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-4140 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-4170 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-4170 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
+| sophia-4180 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
 | sophia-4197 | sophia_graffiti | undetermined | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-4200 | sophia_graffiti | ruthenian | 1301–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-427 | sophia_graffiti | chu-rus | 1101–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-430 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-4316 | sophia_graffiti | chu-rus | 1150–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-4317 | sophia_graffiti | undetermined | 1085–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-4396 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
+| sophia-4396 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 1 | 0 |
 | sophia-657 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-662 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-658 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-662 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-663 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-681 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-682 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-717 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-718 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-737 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-737 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-738 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-743 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-802 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
+| sophia-811 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-3658 | sophia_graffiti | ruthenian | 1510 | shev.early_middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | sophia-1423 | sophia_graffiti | ruthenian | 1425–1514 | shev.early_middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1117 | sophia_graffiti | ruthenian | 1425–1515 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2166 | sophia_graffiti | ruthenian | 1425–1515 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3225 | sophia_graffiti | ruthenian | 1450–1515 | shev.early_middle (high) | wl.ruthenian | 6 | 0 | 1 |
-| sophia-3226 | sophia_graffiti | ruthenian | 1450–1515 | shev.early_middle (high) | wl.ruthenian | 8 | 1 | 0 |
+| sophia-3225 | sophia_graffiti | ruthenian | 1450–1515 | shev.early_middle (high) | wl.ruthenian | 9 | 2 | 0 |
+| sophia-3226 | sophia_graffiti | ruthenian | 1450–1515 | shev.early_middle (high) | wl.ruthenian | 26 | 0 | 0 |
 | sophia-596 | sophia_graffiti | ruthenian | 1401–1515 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-617 | sophia_graffiti | ruthenian | 1425–1515 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-617 | sophia_graffiti | ruthenian | 1425–1515 | shev.early_middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | i14_07 | anon_i14_07 | ruthenian | 1516–1543 | shev.early_middle (high) | wl.ruthenian | 896 | 0 | 11 |
 | sophia-321 | sophia_graffiti | ruthenian | 1450–1550 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-322 | sophia_graffiti | ruthenian | 1450–1550 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | i14_10 | isaiah | ruthenian | 1566–1567 | shev.early_middle (high) | wl.ruthenian | 1 243 | 0 | 10 |
 | i14_06 | anon_i14_06 | ruthenian | 1440–1569 | shev.early_middle (high) | wl.ruthenian | 3 558 | 0 | 68 |
 | i14_09 | zahorovsky | ruthenian | 1577 | shev.middle (high) | wl.ruthenian | 7 151 | 0 | 1 |
-| sophia-1476 | sophia_graffiti | ruthenian | 1577 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
+| sophia-1476 | sophia_graffiti | ruthenian | 1577 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | i14_13 | anon_i14_13 | ruthenian | 1578 | shev.middle (high) | wl.ruthenian | 109 | 0 | 0 |
 | i14_27 | smotrytsky | ruthenian | 1581 | shev.middle (high) | wl.ruthenian | 733 | 0 | 5 |
 | i14_14 | smotrytsky | ruthenian | 1581–1587 | shev.middle (high) | wl.ruthenian | 12 813 | 0 | 40 |
 | i14_15 | surazky | ruthenian | 1588 | shev.middle (high) | wl.ruthenian | 4 594 | 0 | 2 |
 | sophia-341 | sophia_graffiti | ruthenian | 1450–1590 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 0 |
 | i14_29 | rymsha | ruthenian | 1581–1591 | shev.middle (high) | wl.ruthenian | 816 | 0 | 6 |
-| sophia-455 | sophia_graffiti | ruthenian | 1591 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-461 | sophia_graffiti | ruthenian | 1591 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-461 | sophia_graffiti | ruthenian | 1591 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | i14_16 | zyzanii_s | ruthenian | 1596 | shev.middle (high) | wl.ruthenian | 1 525 | 0 | 3 |
 | i14_18 | filalet | ruthenian | 1597–1598 | shev.middle (high) | wl.ruthenian | 6 037 | 1 | 9 |
 | i14_36 | filalet | ruthenian | 1598 | shev.middle (high) | wl.ruthenian | 86 | 0 | 0 |
@@ -995,27 +1107,27 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-302 | sophia_graffiti | chu-rus | 1025–1599 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 14 | 1 | 0 |
 | sophia-894 | sophia_graffiti | chu-rus | 1025–1599 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-1047 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-107 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
+| sophia-107 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1097 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1130 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 2 | 0 |
 | sophia-1135 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 5 | 0 |
 | sophia-1139 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 3 | 0 |
 | sophia-1142 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1182 | sophia_graffiti | ruthenian | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-1182 | sophia_graffiti | ruthenian | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 8 | 0 | 0 |
 | sophia-1184 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1198 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1202 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1206 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1218 | sophia_graffiti | ruthenian | 1350–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-1218 | sophia_graffiti | ruthenian | 1350–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1227 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1241 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 3 | 0 |
 | sophia-125 | sophia_graffiti | undetermined | 1275–1600 | shev.old+shev.early_middle+shev.middle (low) | wl.ruthenian | 1 | 3 | 0 |
 | sophia-1251 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-1276 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1430 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1464 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1477 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1510 | sophia_graffiti | ruthenian | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-152 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-152 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
 | sophia-1550 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1593 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1603 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
@@ -1028,29 +1140,29 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-1813 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1826 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1853 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1860 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-1860 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1891 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1910 | sophia_graffiti | chu-rus | 1050–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1919 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1932 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1952 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-1965 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-1966 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1979 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-2000 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-1965 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-1966 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1979 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 7 | 0 | 0 |
+| sophia-2000 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2004 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2006 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2049 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 1 |
+| sophia-2049 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-2063 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2072 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2353 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2369 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2370 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2386 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-2386 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-2398 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 2 | 0 |
 | sophia-2445 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2479 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-2498 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 1 | 0 |
+| sophia-2498 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2517 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2552 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-2563 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
@@ -1069,17 +1181,17 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3157 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3175 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3191 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-3200 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3253 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3286 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 2 |
+| sophia-3286 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 3 | 2 | 0 |
 | sophia-3307 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3350 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3355 | sophia_graffiti | ruthenian | 1350–1600 | shev.early_middle (medium) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-3363 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-3430 | sophia_graffiti | chu-rus | 1085–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| sophia-3430 | sophia_graffiti | chu-rus | 1085–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 5 | 0 | 0 |
 | sophia-3510 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3530 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3565 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
-| sophia-358 | sophia_graffiti | ruthenian | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3583 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3585 | sophia_graffiti | undetermined | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3587 | sophia_graffiti | ruthenian | 1350–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
@@ -1107,28 +1219,24 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-4299 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-4306 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-4319 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
-| sophia-4325 | sophia_graffiti | ruthenian | 1425–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-4360 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-4360 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-4372 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-485 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-489 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-49 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-502 | sophia_graffiti | chu-rus | 1085–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
-| sophia-508 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
-| sophia-509 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-502 | sophia_graffiti | chu-rus | 1085–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-509 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-534 | sophia_graffiti | chu-rus | 1350–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 1 |
-| sophia-545 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-620 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-63 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 20 | 1 | 0 |
-| sophia-696 | sophia_graffiti | ruthenian | 1600 | shev.middle (high) | wl.ruthenian | 1 | 0 | 6 |
-| sophia-699 | sophia_graffiti | ruthenian | 1600 | shev.middle (high) | wl.ruthenian | 3 | 2 | 0 |
-| sophia-716 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 1 |
+| sophia-696 | sophia_graffiti | ruthenian | 1600 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
+| sophia-699 | sophia_graffiti | ruthenian | 1600 | shev.middle (high) | wl.ruthenian | 3 | 3 | 0 |
+| sophia-716 | sophia_graffiti | ruthenian | 1401–1600 | shev.early_middle (medium) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-785 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-788 | sophia_graffiti | undetermined | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-792 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-806 | sophia_graffiti | ruthenian | 1485–1600 | shev.early_middle (medium) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-82 | sophia_graffiti | chu-rus | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-83 | sophia_graffiti | chu-rus | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-82 | sophia_graffiti | chu-rus | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-83 | sophia_graffiti | chu-rus | 1450–1600 | shev.early_middle (medium) | wl.ruthenian | 6 | 0 | 0 |
 | vyshensky | vyshensky | ruthenian | 1588–1600 | shev.middle (high) | wl.ruthenian | 25 620 | 0 | 60 |
 | sophia-173 | sophia_graffiti | chu-rus | 1601 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | i14_38 | biloborodsky | ruthenian | 1604 | shev.middle (high) | wl.ruthenian | 61 | 0 | 0 |
@@ -1136,7 +1244,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3847 | sophia_graffiti | ruthenian | 1605 | shev.middle (high) | wl.ruthenian | 3 | 1 | 1 |
 | sophia-4023 | sophia_graffiti | undetermined | 1605 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2982 | sophia_graffiti | ruthenian | 1606 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3342 | sophia_graffiti | ruthenian | 1608 | shev.middle (high) | wl.ruthenian | 8 | 2 | 0 |
+| sophia-3342 | sophia_graffiti | ruthenian | 1608 | shev.middle (high) | wl.ruthenian | 3 | 4 | 0 |
 | sophia-3346 | sophia_graffiti | ruthenian | 1608 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | i14_39 | anon_i14_39 | ruthenian | 1609 | shev.middle (high) | wl.ruthenian | 436 | 0 | 0 |
 | i14_20 | vyshensky | ruthenian | 1605–1610 | shev.middle (high) | wl.ruthenian | 3 230 | 0 | 19 |
@@ -1150,54 +1258,54 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2215 | sophia_graffiti | ruthenian | 1617 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
 | sophia-1938 | sophia_graffiti | ruthenian | 1610–1618 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2229 | sophia_graffiti | ruthenian | 1610–1618 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-4053 | sophia_graffiti | ruthenian | 1619 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
+| sophia-4053 | sophia_graffiti | ruthenian | 1619 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
 | sophia-1003 | sophia_graffiti | ruthenian | 1620 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-437 | sophia_graffiti | ruthenian | 1620 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-2183 | sophia_graffiti | ruthenian | 1621 | shev.middle (high) | wl.ruthenian | 2 | 0 | 3 |
+| sophia-2183 | sophia_graffiti | ruthenian | 1621 | shev.middle (high) | wl.ruthenian | 4 | 0 | 1 |
 | sophia-3619 | sophia_graffiti | ruthenian | 1624 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-4034 | sophia_graffiti | ruthenian | 1626 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3863 | sophia_graffiti | ruthenian | 1585–1629 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3864 | sophia_graffiti | undetermined | 1585–1629 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2775 | sophia_graffiti | ruthenian | 1585–1630 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
+| sophia-2775 | sophia_graffiti | ruthenian | 1585–1630 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
 | sophia-3889 | sophia_graffiti | ruthenian | 1630 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-239 | sophia_graffiti | chu-rus | 1631 | shev.middle (high) | wl.ruthenian | 8 | 1 | 0 |
-| sophia-1908 | sophia_graffiti | ruthenian | 1634 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-865 | sophia_graffiti | ruthenian | 1585–1634 | shev.middle (high) | wl.ruthenian | 5 | 8 | 0 |
+| sophia-239 | sophia_graffiti | chu-rus | 1631 | shev.middle (high) | wl.ruthenian | 9 | 1 | 0 |
+| sophia-1908 | sophia_graffiti | ruthenian | 1634 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
+| sophia-865 | sophia_graffiti | ruthenian | 1585–1634 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-870 | sophia_graffiti | ruthenian | 1634 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
 | sophia-3973 | sophia_graffiti | ruthenian | 1635 | shev.middle (high) | wl.ruthenian | 4 | 0 | 1 |
 | sophia-2132 | sophia_graffiti | ruthenian | 1640 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-3647 | sophia_graffiti | undetermined | 1640 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3648 | sophia_graffiti | ruthenian | 1585–1640 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
 | sophia-3857 | sophia_graffiti | ruthenian | 1640 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
-| sophia-1245 | sophia_graffiti | undetermined | 1641 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-446 | sophia_graffiti | ruthenian | 1649 | shev.middle (high) | wl.ruthenian | 12 | 1 | 0 |
+| sophia-1245 | sophia_graffiti | undetermined | 1641 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-446 | sophia_graffiti | ruthenian | 1649 | shev.middle (high) | wl.ruthenian | 11 | 2 | 0 |
 | sophia-182 | sophia_graffiti | chu-rus | 1590–1650 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3866 | sophia_graffiti | ruthenian | 1650 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
-| sophia-180 | sophia_graffiti | chu-rus | 1655 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-2019 | sophia_graffiti | ruthenian | 1655 | shev.middle (high) | wl.ruthenian | 1 | 1 | 2 |
-| sophia-3902 | sophia_graffiti | ruthenian | 1655 | shev.middle (high) | wl.ruthenian | 7 | 1 | 0 |
+| sophia-3866 | sophia_graffiti | ruthenian | 1650 | shev.middle (high) | wl.ruthenian | 1 | 3 | 0 |
+| sophia-180 | sophia_graffiti | chu-rus | 1655 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-2019 | sophia_graffiti | ruthenian | 1655 | shev.middle (high) | wl.ruthenian | 6 | 1 | 1 |
+| sophia-3902 | sophia_graffiti | ruthenian | 1655 | shev.middle (high) | wl.ruthenian | 6 | 2 | 0 |
 | sophia-283 | sophia_graffiti | chu-rus | 1659 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-129 | sophia_graffiti | ruthenian | 1660 | shev.middle (high) | wl.ruthenian | 11 | 1 | 0 |
-| sophia-725 | sophia_graffiti | ruthenian | 1660 | shev.middle (high) | wl.ruthenian | 2 | 2 | 1 |
-| sophia-2713 | sophia_graffiti | undetermined | 1664 | shev.middle (high) | wl.ruthenian | 1 | 2 | 1 |
+| sophia-725 | sophia_graffiti | ruthenian | 1660 | shev.middle (high) | wl.ruthenian | 6 | 2 | 0 |
+| sophia-2713 | sophia_graffiti | undetermined | 1664 | shev.middle (high) | wl.ruthenian | 4 | 4 | 0 |
 | sophia-128 | sophia_graffiti | ruthenian | 1670 | shev.middle (high) | wl.ruthenian | 9 | 0 | 0 |
-| sophia-2017 | sophia_graffiti | ruthenian | 1670 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2017 | sophia_graffiti | ruthenian | 1670 | shev.middle (high) | wl.ruthenian | 8 | 0 | 0 |
 | sophia-2806 | sophia_graffiti | ruthenian | 1671 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-163 | sophia_graffiti | chu-rus | 1675 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
-| sophia-204 | sophia_graffiti | chu-rus | 1675 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-163 | sophia_graffiti | chu-rus | 1675 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-208 | sophia_graffiti | chu-rus | 1590–1675 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-4066 | sophia_graffiti | undetermined | 1679 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-4066 | sophia_graffiti | undetermined | 1679 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-135 | sophia_graffiti | chu-rus | 1687 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-384 | sophia_graffiti | ruthenian | 1687 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-384 | sophia_graffiti | ruthenian | 1687 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-44 | sophia_graffiti | ruthenian | 1688 | shev.middle (high) | wl.ruthenian | 10 | 0 | 0 |
 | sophia-136 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-153 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-156 | sophia_graffiti | chu-rus | 1616–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-162 | sophia_graffiti | chu-rus | 1675–1690 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-166 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-166 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 3 | 0 |
 | sophia-168 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-170 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-175 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-177 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
+| sophia-177 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 1 | 1 |
 | sophia-184 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-185 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-186 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
@@ -1206,18 +1314,18 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-192 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 4 | 0 | 2 |
 | sophia-195 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-196 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
-| sophia-206 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-206 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-209 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-212 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-213 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 5 | 0 | 1 |
+| sophia-213 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 4 | 1 | 1 |
 | sophia-215 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-217 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 6 | 1 | 0 |
+| sophia-217 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-219 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-220 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-240 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-241 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-243 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-251 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-251 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-253 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-256 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-308 | sophia_graffiti | chu-rus | 1590–1690 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
@@ -1232,51 +1340,50 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-334 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-338 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-339 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-1383 | sophia_graffiti | ruthenian | 1691 | shev.middle (high) | wl.ruthenian | 2 | 0 | 1 |
+| sophia-1383 | sophia_graffiti | ruthenian | 1691 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | i14_32 | anon_i14_32 | ruthenian | 1600–1699 | shev.middle (high) | wl.ruthenian | 6 164 | 0 | 0 |
-| sophia-902 | sophia_graffiti | chu-rus | 1500–1699 | shev.early_middle+shev.middle (low) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-902 | sophia_graffiti | chu-rus | 1500–1699 | shev.early_middle+shev.middle (low) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-1014 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1038 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-1077 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1077 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-1080 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1164 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-1164 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-1170 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1172 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1175 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1242 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1244 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1290 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-1291 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 2 |
-| sophia-1293 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1291 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-1293 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-1298 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-130 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-130 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-1339 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-1341 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1341 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-1354 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1358 | sophia_graffiti | chu-rus | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-1361 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1362 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1370 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 2 | 0 |
-| sophia-1384 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-1384 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-1391 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1392 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-1392 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-1393 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-1398 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1398 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 2 | 0 |
 | sophia-1402 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-1410 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-1410 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-1439 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1441 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 1 |
-| sophia-1442 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-1442 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-1473 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1475 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1480 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-1482 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1485 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1489 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-1493 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 1 |
+| sophia-1493 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
 | sophia-1502 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1503 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
-| sophia-1542 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-1503 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-1513 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
 | sophia-1543 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1546 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1547 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1286,7 +1393,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-1557 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-1558 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1567 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
-| sophia-1569 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-1569 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-1591 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1595 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1599 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1305,26 +1412,29 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-1986 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
 | sophia-1987 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1988 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-1989 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-201 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
+| sophia-1989 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-201 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2015 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2016 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-202 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2020 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-2021 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 2 |
-| sophia-2022 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 2 |
-| sophia-2028 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 6 | 1 | 0 |
+| sophia-2021 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
+| sophia-2022 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
+| sophia-2023 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-2027 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-2028 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 6 | 0 | 0 |
 | sophia-2101 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2105 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-2110 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2113 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2116 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2130 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2143 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 2 |
-| sophia-2147 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-2143 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 1 |
+| sophia-2147 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2154 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2167 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
-| sophia-2171 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2157 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2167 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-2171 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2182 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2184 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2185 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1352,11 +1462,13 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2247 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2252 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2256 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2257 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2258 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2260 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-2264 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-2265 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
-| sophia-2266 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 2 |
+| sophia-2262 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
+| sophia-2263 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-2264 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-2265 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-2266 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
 | sophia-2269 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2271 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2272 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
@@ -1365,7 +1477,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2276 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2277 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-2278 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-228 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-228 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2280 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2285 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2286 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1376,17 +1488,17 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2305 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-2311 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2321 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-247 | sophia_graffiti | chu-rus | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
+| sophia-247 | sophia_graffiti | chu-rus | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-2546 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2547 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2551 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2560 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-267 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-268 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-2693 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-268 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-2693 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-2697 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2699 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-2704 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2704 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2716 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2717 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2719 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1404,11 +1516,10 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2796 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2798 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2799 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 2 | 0 |
-| sophia-2802 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-2802 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-2804 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2805 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2807 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2818 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2824 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2832 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
 | sophia-2841 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1420,18 +1531,18 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2912 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2913 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2915 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2917 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-2917 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | sophia-2924 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2929 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2945 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2959 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-2977 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-2959 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2979 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-2981 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2986 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2990 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2991 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2992 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-2993 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 1 |
+| sophia-2993 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-2994 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2995 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2997 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1445,7 +1556,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3127 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-3128 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3130 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3139 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-3139 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-3144 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-3145 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3146 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1461,16 +1572,16 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3215 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
 | sophia-3219 | sophia_graffiti | ruthenian | 1601–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3224 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
-| sophia-3242 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-3242 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-3278 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3285 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 6 | 1 | 0 |
-| sophia-3324 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-3279 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-3285 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 2 | 0 |
 | sophia-3331 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3348 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-3372 | sophia_graffiti | undetermined | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-3475 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3476 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3478 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-3478 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-3479 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3480 | sophia_graffiti | chu-rus | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-352 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 9 | 0 | 0 |
@@ -1484,7 +1595,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3624 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3625 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3629 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-363 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 2 | 0 | 1 |
+| sophia-363 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-3634 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3635 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3636 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1499,7 +1610,6 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3679 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3681 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3686 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3687 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-369 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3691 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3693 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1518,35 +1628,36 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3766 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3767 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3796 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
-| sophia-381 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-381 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-3813 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-3818 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3819 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-382 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-3820 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
+| sophia-3821 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-3822 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3826 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3827 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3829 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-383 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 5 | 0 | 1 |
+| sophia-383 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-3831 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3832 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3836 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3839 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3842 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-3842 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-3849 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-385 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 5 | 1 | 1 |
+| sophia-385 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 6 | 1 | 0 |
 | sophia-3851 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3852 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3853 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-387 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-3873 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-3876 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
+| sophia-3873 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
+| sophia-3876 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
 | sophia-3880 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3883 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3884 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-3884 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-3886 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3888 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3891 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-3891 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-3897 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3900 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3901 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 1 |
@@ -1555,18 +1666,16 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3907 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3909 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3910 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3913 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3915 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3916 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3917 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3918 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3919 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3925 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-3925 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-3926 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3927 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3933 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3935 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 0 |
-| sophia-3936 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3937 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3939 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3941 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1575,10 +1684,10 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3944 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3945 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 1 |
 | sophia-3948 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-3954 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-3954 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-3955 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3959 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-396 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 3 | 2 | 0 |
+| sophia-396 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-3960 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3962 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 1 |
 | sophia-3964 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1593,7 +1702,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3984 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-3987 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-3991 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-3992 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-3992 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | sophia-3996 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4002 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4007 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1601,7 +1710,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-4014 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-4018 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4025 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-4028 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| sophia-4028 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | sophia-4039 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4041 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-4042 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1618,19 +1727,19 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-4064 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4065 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-4171 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
-| sophia-4173 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-4174 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-4172 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 1 |
+| sophia-4173 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-4174 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-4206 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-425 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-4257 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 2 |
+| sophia-4257 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-4258 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4268 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
-| sophia-4269 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-4269 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-4284 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-4285 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-4287 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-4294 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-43 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-4285 | sophia_graffiti | ruthenian | 1650–1700 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
+| sophia-4294 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-43 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-4303 | sophia_graffiti | undetermined | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-4309 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-4321 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1641,25 +1750,27 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-450 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-601 | sophia_graffiti | chu-rus | 1025–1700 | shev.old+shev.early_middle+shev.middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
 | sophia-603 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-608 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-608 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-612 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-644 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-651 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-688 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-694 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 5 | 0 | 1 |
 | sophia-695 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-703 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-705 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-710 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-705 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-710 | sophia_graffiti | chu-rus | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-721 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-726 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-731 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-736 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-736 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-748 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
-| sophia-817 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 2 |
+| sophia-750 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-817 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-818 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
-| sophia-819 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
-| sophia-827 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-836 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-819 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-826 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
+| sophia-827 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-837 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-839 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-840 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1667,15 +1778,15 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-843 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-844 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-848 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-849 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-849 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-850 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
+| sophia-851 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-852 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-853 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
-| sophia-854 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-853 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
+| sophia-854 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-856 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-858 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
-| sophia-864 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
-| sophia-866 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-864 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 1 |
+| sophia-866 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-915 | sophia_graffiti | ruthenian | 1575–1700 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-916 | sophia_graffiti | ruthenian | 1575–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-917 | sophia_graffiti | ruthenian | 1550–1700 | shev.middle (medium) | wl.ruthenian | 2 | 0 | 0 |
@@ -1687,7 +1798,7 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-950 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-953 | sophia_graffiti | undetermined | 1585–1700 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-962 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 1 | 0 |
-| sophia-965 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 2 | 0 | 0 |
+| sophia-965 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-968 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-971 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-997 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 2 | 0 | 0 |
@@ -1764,25 +1875,25 @@ Generated 2026-10-13T22:16:24.324Z by `pipelines/build.ts` (SPEC 20). Every numb
 | franko1905 | franko | uk | 1905 | shev.modern (high) | wl.new | 7 656 | 0 | 0 |
 | hrinchenko1908 | hrinchenko | uk | 1908 | shev.modern (high) | wl.new | 6 527 | 0 | 3414 |
 
-Admitted witnesses: 1758; N = 607 421. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 1869; N = 609 189. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=607 421 |
+| epoch | name | scheme | N | share of N=609 189 |
 |---|---|---|---|---|
-| shev.proto | протоукраїнська доба | shev | 7 178 | 1.2% |
-| shev.old | давньоукраїнська доба | shev | 241 747 | 39.8% |
-| shev.early_middle | ранньосередньоукраїнська доба | shev | 14 178 | 2.3% |
-| shev.middle | середньоукраїнська доба | shev | 152 769 | 25.2% |
+| shev.proto | протоукраїнська доба | shev | 7 214 | 1.2% |
+| shev.old | давньоукраїнська доба | shev | 243 331 | 39.9% |
+| shev.early_middle | ранньосередньоукраїнська доба | shev | 14 238 | 2.3% |
+| shev.middle | середньоукраїнська доба | shev | 152 857 | 25.1% |
 | shev.late_middle | пізньосередньоукраїнська доба | shev | 73 665 | 12.1% |
 | shev.modern | новітня доба | shev | 117 884 | 19.4% |
-| wl.rus | давньоруська (княжа доба) | wl | 248 906 | 41.0% |
-| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 227 993 | 37.5% |
-| wl.ruthenian.chancery | ділова староукраїнська | wl | 12 953 | 2.1% |
-| wl.new | нова українська літературна мова | wl | 130 522 | 21.5% |
+| wl.rus | давньоруська (княжа доба) | wl | 250 516 | 41.1% |
+| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 228 151 | 37.5% |
+| wl.ruthenian.chancery | ділова староукраїнська | wl | 13 036 | 2.1% |
+| wl.new | нова українська літературна мова | wl | 130 522 | 21.4% |
 | wl.contemporary | сучасна українська літературна мова | wl | 0 | 0.0% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 544 · 12 ст.: 143 103 · 13 ст.: 38 012 · 14 ст.: 280 · 15 ст.: 2 298 · 16 ст.: 83 927 · 17 ст.: 49 034 · 18 ст.: 105 339 · 19 ст.: 103 701 · 20 ст.: 14 183
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 885 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 332 · 15 ст.: 2 344 · 16 ст.: 83 947 · 17 ст.: 49 116 · 18 ст.: 105 339 · 19 ст.: 103 701 · 20 ст.: 14 183
 
 ### Exclusions (B-1.1)
 
@@ -1795,133 +1906,153 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 
 | witness | N | torot-lemma | stanza-lemma | token | direct | unresolved | coverage |
 |---|---|---|---|---|---|---|---|
-| sophia-112 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-150 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-347 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-89 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-112 | 12 | 0 | 0 | 7 | 0 | 5 | 58.3% |
+| sophia-150 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-347 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-89 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-99 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2070 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2070 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-275 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3816 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1309 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-279 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-297 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-298 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-291 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-292 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-458 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-459 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-286 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-291 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-292 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | ilarion | 6 807 | 0 | 4052 | 271 | 0 | 2484 | 63.5% |
 | ostromir | 193 | 113 | 0 | 11 | 0 | 69 | 64.2% |
-| sophia-147 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-67 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
+| sophia-147 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
+| sophia-67 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
+| sophia-90 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | arch | 59 953 | 0 | 35522 | 3173 | 0 | 21258 | 64.5% |
 | sophia-85 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2148 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-879 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | kiev-mis | 352 | 220 | 0 | 10 | 0 | 122 | 65.3% |
-| sophia-1534 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1821 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-364 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1534 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1821 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-364 | 18 | 0 | 0 | 11 | 0 | 7 | 61.1% |
 | sophia-3788 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-420 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-87 | 7 | 0 | 0 | 1 | 0 | 6 | 14.3% |
-| sophia-84 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-420 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-87 | 15 | 0 | 0 | 8 | 0 | 7 | 53.3% |
+| sophia-84 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
 | sophia-86 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-116 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-117 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-118 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-116 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
+| sophia-117 | 18 | 0 | 0 | 11 | 0 | 7 | 61.1% |
+| sophia-118 | 16 | 0 | 0 | 8 | 0 | 8 | 50.0% |
 | sophia-1773 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1787 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1788 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1787 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
+| sophia-1788 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1837 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1863 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1863 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1864 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1867 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1870 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1870 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1876 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1878 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1878 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1884 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1885 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1889 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1889 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1890 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1980 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3425 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-4249 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-88 | 16 | 0 | 0 | 0 | 0 | 16 | 0.0% |
-| sophia-96 | 6 | 0 | 0 | 1 | 0 | 5 | 16.7% |
+| sophia-1980 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-260 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2765 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3425 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-4249 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-88 | 59 | 0 | 0 | 36 | 0 | 23 | 61.0% |
+| sophia-96 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
 | monomakh | 4 585 | 0 | 2859 | 353 | 0 | 1373 | 70.1% |
 | pvl_lav | 55 088 | 33352 | 0 | 3397 | 0 | 18339 | 66.7% |
 | sophia-1256 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1259 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1262 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1263 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1264 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1257 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1259 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1260 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1262 | 15 | 0 | 0 | 11 | 0 | 4 | 73.3% |
+| sophia-1263 | 11 | 0 | 0 | 7 | 0 | 4 | 63.6% |
+| sophia-1264 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1266 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1268 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1270 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1272 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1295 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1300 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1302 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1303 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1304 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1306 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1301 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-1302 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1303 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1304 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
+| sophia-1305 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1306 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-1308 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1314 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1316 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1319 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1323 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1329 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1334 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1346 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1397 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1397 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1718 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1719 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1720 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1721 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1722 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1721 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
+| sophia-1722 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1723 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1725 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1724 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1725 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1727 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1956 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2549 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1956 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2549 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2583 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-282 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3451 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3501 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3511 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-4217 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-477 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-791 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-875 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3451 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3501 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3511 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-4217 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-477 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-791 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-3512 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2695 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-999 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-287 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-102 | 11 | 0 | 0 | 1 | 0 | 10 | 9.1% |
+| sophia-4181 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2695 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-999 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-287 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
+| sophia-102 | 16 | 0 | 0 | 13 | 0 | 3 | 81.3% |
 | sophia-1095 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-119 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-120 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-1200 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1224 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-126 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-127 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-120 | 11 | 0 | 0 | 8 | 0 | 3 | 72.7% |
+| sophia-1200 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1224 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-126 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
+| sophia-127 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
 | sophia-1317 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1377 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-145 | 8 | 0 | 0 | 0 | 0 | 8 | 0.0% |
-| sophia-1565 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1566 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1581 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1377 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-145 | 12 | 0 | 0 | 5 | 0 | 7 | 41.7% |
+| sophia-1565 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1566 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1581 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-1639 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1737 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1737 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-1741 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1748 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-1803 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1748 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
+| sophia-1803 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1817 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1820 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1820 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1822 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1849 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1850 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1851 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-188 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1892 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-1963 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1850 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-1851 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
+| sophia-188 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1892 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-1963 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1964 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2032 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2038 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2411 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2032 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2038 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-205 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-2411 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2424 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-254 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2571 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
@@ -1929,63 +2060,70 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2590 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-2641 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-2680 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2685 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2709 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2774 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2810 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2858 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2685 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2709 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-277 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-2774 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-2810 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2858 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3017 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3208 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3228 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-328 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3397 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
-| sophia-348 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3605 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-368 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-4137 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3179 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-3208 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3228 | 24 | 0 | 0 | 18 | 0 | 6 | 75.0% |
+| sophia-328 | 10 | 0 | 0 | 5 | 0 | 5 | 50.0% |
+| sophia-3397 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-348 | 20 | 0 | 0 | 12 | 0 | 8 | 60.0% |
+| sophia-3605 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-368 | 19 | 0 | 0 | 11 | 0 | 8 | 57.9% |
 | sophia-4151 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4175 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4190 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4219 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-4219 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
 | sophia-4326 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-510 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-493 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-510 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-533 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-591 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-66 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-780 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-784 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-80 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-66 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-780 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-782 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-784 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-80 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
 | sophia-887 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-928 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1232 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1735 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-1916 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2152 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-928 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
+| sophia-1232 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1735 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-1916 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-2037 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-2152 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
 | sophia-2522 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3435 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3780 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2815 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2957 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3435 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
+| sophia-3780 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-3786 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4075 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1832 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2139 | 8 | 0 | 0 | 0 | 0 | 8 | 0.0% |
-| sophia-3291 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3381 | 10 | 0 | 0 | 2 | 0 | 8 | 20.0% |
-| sophia-900 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-912 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-2139 | 27 | 0 | 0 | 15 | 0 | 12 | 55.6% |
+| sophia-2437 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3291 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-3381 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-3718 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-900 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
+| sophia-912 | 21 | 0 | 0 | 18 | 0 | 3 | 85.7% |
 | sophia-972 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-1807 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1807 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-1887 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1082 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1297 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1856 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2100 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-724 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-244 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1001 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1082 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1297 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-1856 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-2100 | 21 | 0 | 0 | 10 | 0 | 11 | 47.6% |
+| sophia-244 | 13 | 0 | 0 | 7 | 0 | 6 | 53.8% |
+| sophia-1001 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1004 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-392 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-418 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-880 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-392 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-418 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-880 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
 | sophia-985 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-986 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-988 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -1993,269 +2131,297 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | kievchr | 79 458 | 0 | 45064 | 4342 | 0 | 30052 | 62.2% |
-| sophia-103 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1037 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-105 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-103 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1037 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-105 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1051 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1069 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1094 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1100 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1094 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1100 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1133 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-115 | 10 | 0 | 0 | 0 | 0 | 10 | 0.0% |
+| sophia-115 | 35 | 0 | 0 | 18 | 0 | 17 | 51.4% |
 | sophia-1152 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1157 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1177 | 7 | 0 | 0 | 0 | 0 | 7 | 0.0% |
+| sophia-1177 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
 | sophia-1178 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1179 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1191 | 7 | 0 | 0 | 1 | 0 | 6 | 14.3% |
+| sophia-1179 | 10 | 0 | 0 | 7 | 0 | 3 | 70.0% |
+| sophia-1191 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
 | sophia-1197 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1228 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1228 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1275 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1285 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1376 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1418 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1514 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1516 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1615 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1538 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1615 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-1620 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1663 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-1710 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1742 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1760 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1761 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1764 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1767 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-1786 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1767 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
+| sophia-1783 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1785 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1786 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1799 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1808 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1809 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1824 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1824 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1828 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1841 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1865 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1871 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1871 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1907 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1922 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1928 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1922 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1928 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-193 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-1962 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1968 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1972 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1974 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1981 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1983 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1968 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-1971 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1972 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-1974 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-1981 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1983 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2014 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2035 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2069 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2040 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2069 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2076 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2088 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-224 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2313 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2326 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-2146 | 16 | 0 | 0 | 8 | 0 | 8 | 50.0% |
+| sophia-224 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2313 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2326 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
 | sophia-2346 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2417 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2417 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-2426 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2455 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-2460 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2455 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
+| sophia-2460 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2467 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2573 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2555 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2573 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-2578 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2586 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2606 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2626 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2626 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2628 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-264 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-264 | 10 | 0 | 0 | 6 | 0 | 4 | 60.0% |
 | sophia-2677 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2700 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2700 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2731 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2764 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-281 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-2764 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-281 | 9 | 0 | 0 | 3 | 0 | 6 | 33.3% |
+| sophia-3197 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3205 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-3210 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3234 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3243 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3275 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3210 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-3234 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3243 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3275 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-33 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3321 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3325 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3341 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3351 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3358 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3374 | 8 | 0 | 0 | 2 | 0 | 6 | 25.0% |
+| sophia-3321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3325 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3341 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3351 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3358 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3374 | 12 | 0 | 0 | 4 | 0 | 8 | 33.3% |
 | sophia-3394 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3423 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3433 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-3434 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-3485 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-3487 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
-| sophia-3509 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3405 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3423 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3433 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3434 | 27 | 0 | 0 | 18 | 0 | 9 | 66.7% |
+| sophia-3466 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3483 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3485 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3487 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-3509 | 11 | 0 | 0 | 4 | 0 | 7 | 36.4% |
 | sophia-3523 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3524 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3570 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3573 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3573 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
 | sophia-3574 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3577 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3589 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3606 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3577 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-3589 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3606 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3618 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-365 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3627 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-365 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
 | sophia-367 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3671 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3745 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3770 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
+| sophia-3770 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3804 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4082 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4127 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-4128 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-4168 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4169 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4168 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
+| sophia-4169 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
+| sophia-4182 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-4184 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-4191 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4199 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4202 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4211 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4233 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4234 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4237 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4255 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4255 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-4264 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4295 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-451 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-452 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-503 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4304 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-451 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-452 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-503 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-547 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-653 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-758 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-779 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-803 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-653 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-758 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-794 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-803 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | sophia-813 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-93 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-94 | 7 | 0 | 0 | 0 | 0 | 7 | 0.0% |
-| sophia-956 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-963 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-93 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-94 | 13 | 0 | 0 | 10 | 0 | 3 | 76.9% |
+| sophia-956 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-963 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | spi | 2 778 | 1672 | 0 | 190 | 0 | 916 | 67.0% |
-| sophia-730 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-947 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-952 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1223 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-394 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-825 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-947 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-952 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
+| sophia-1223 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-394 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
 | sophia-409 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-419 | 9 | 0 | 0 | 3 | 0 | 6 | 33.3% |
-| sophia-100 | 13 | 0 | 0 | 1 | 0 | 12 | 7.7% |
-| sophia-1033 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-106 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1075 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-111 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-419 | 10 | 0 | 0 | 9 | 0 | 1 | 90.0% |
+| sophia-100 | 15 | 0 | 0 | 10 | 0 | 5 | 66.7% |
+| sophia-1033 | 11 | 0 | 0 | 8 | 0 | 3 | 72.7% |
+| sophia-106 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1075 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-111 | 12 | 0 | 0 | 5 | 0 | 7 | 41.7% |
 | sophia-1137 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1183 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-121 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1230 | 6 | 0 | 0 | 1 | 0 | 5 | 16.7% |
-| sophia-1355 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1357 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1401 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-144 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1544 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1555 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1158 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-1183 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1208 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-121 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
+| sophia-1230 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1355 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
+| sophia-1357 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-1401 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-144 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
+| sophia-1544 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1555 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-160 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1605 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1626 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1605 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1606 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1626 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-1637 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-164 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1734 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1734 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1746 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1759 | 7 | 0 | 0 | 0 | 0 | 7 | 0.0% |
-| sophia-1780 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1791 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1812 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1838 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1759 | 9 | 0 | 0 | 2 | 0 | 7 | 22.2% |
+| sophia-1780 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1791 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
+| sophia-1812 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-1840 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1845 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1855 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1855 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1862 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1875 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1896 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1897 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1899 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1900 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1909 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-1896 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
+| sophia-1897 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1899 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1900 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1902 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1909 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
 | sophia-1914 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1921 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1923 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1955 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1957 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
-| sophia-1958 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-1960 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1973 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1975 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
-| sophia-1976 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-1977 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1978 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1984 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1921 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-1923 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1955 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
+| sophia-1957 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1958 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1960 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1973 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-1975 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
+| sophia-1976 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-1977 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
+| sophia-1978 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1984 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
 | sophia-2011 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2068 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2074 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2099 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2121 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2131 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-2153 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2192 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2074 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2099 | 23 | 0 | 0 | 13 | 0 | 10 | 56.5% |
+| sophia-2121 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2131 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2153 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2192 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2199 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2200 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-226 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2325 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-226 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
+| sophia-2325 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2429 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2453 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2454 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2453 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-2454 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-2496 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-261 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-265 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-261 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-265 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
 | sophia-2702 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-272 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2722 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2762 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2808 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-272 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
+| sophia-2722 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2762 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-2766 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2808 | 8 | 0 | 0 | 2 | 0 | 6 | 25.0% |
 | sophia-2811 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2842 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2846 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3021 | 6 | 0 | 0 | 1 | 0 | 5 | 16.7% |
+| sophia-2842 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2846 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3021 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
 | sophia-3027 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3229 | 11 | 0 | 0 | 2 | 0 | 9 | 18.2% |
-| sophia-3264 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-329 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3229 | 14 | 0 | 0 | 8 | 0 | 6 | 57.1% |
+| sophia-3264 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3276 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-329 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | sophia-3339 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3396 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3400 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3396 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3400 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-3402 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3436 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3444 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3448 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-3462 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3467 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3513 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3518 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3546 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3602 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3604 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3607 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3771 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3779 | 7 | 0 | 0 | 1 | 0 | 6 | 14.3% |
+| sophia-3436 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3443 | 10 | 0 | 0 | 7 | 0 | 3 | 70.0% |
+| sophia-3444 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-3448 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-3467 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3513 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3518 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3546 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-3602 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3604 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-3607 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3771 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3772 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3779 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-40 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4089 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-4092 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-4134 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4144 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4148 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4148 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-4167 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-421 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-421 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-4225 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4250 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4254 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-460 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-480 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-497 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-507 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-4254 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-4310 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-460 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-480 | 10 | 0 | 0 | 5 | 0 | 5 | 50.0% |
+| sophia-499 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-507 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-546 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-586 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-618 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-761 | 8 | 0 | 0 | 1 | 0 | 7 | 12.5% |
-| sophia-796 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-91 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-92 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-95 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-893 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-898 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-618 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-761 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-796 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
+| sophia-91 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-92 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-95 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-893 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-898 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-975 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-976 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-977 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2264,232 +2430,259 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-981 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-982 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-983 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-899 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1002 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1092 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1368 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-899 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-1002 | 13 | 0 | 0 | 10 | 0 | 3 | 76.9% |
+| sophia-1027 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1092 | 12 | 0 | 0 | 10 | 0 | 2 | 83.3% |
+| sophia-1368 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1462 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1563 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1564 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1578 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1563 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1564 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-1578 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-1810 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1898 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-2046 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2616 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2800 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-3373 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3489 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3520 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3628 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3675 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-4095 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4117 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4147 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-756 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-1193 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-131 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3164 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3373 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3520 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3628 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3675 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-4095 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4117 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4147 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-756 | 11 | 0 | 0 | 4 | 0 | 7 | 36.4% |
+| sophia-1193 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-131 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2053 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2449 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-306 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-3201 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-344 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3440 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-306 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
+| sophia-344 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-3440 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-3496 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-357 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-350 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-357 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3582 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3783 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-438 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3424 | 10 | 0 | 0 | 2 | 0 | 8 | 20.0% |
-| sophia-101 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3424 | 10 | 0 | 0 | 6 | 0 | 4 | 60.0% |
+| sophia-101 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
 | sophia-1096 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1211 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1246 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1211 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-1246 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
 | sophia-1674 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1818 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2461 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2698 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2718 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3380 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3382 | 6 | 0 | 0 | 1 | 0 | 5 | 16.7% |
+| sophia-2461 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-2698 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2718 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3165 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3380 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-3382 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
 | sophia-3437 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3508 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3782 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3508 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3782 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-428 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4289 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4289 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4374 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-504 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-588 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-504 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-505 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-588 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-700 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-81 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-81 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | sophia-863 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-98 | 10 | 0 | 0 | 1 | 0 | 9 | 10.0% |
+| sophia-98 | 14 | 0 | 0 | 10 | 0 | 4 | 71.4% |
 | sophia-3271 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-146 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1273 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1982 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1112 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1209 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2539 | 9 | 0 | 0 | 0 | 0 | 9 | 0.0% |
+| sophia-2539 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
 | sophia-4189 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-757 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-760 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-757 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-760 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-882 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1074 | 11 | 0 | 0 | 0 | 0 | 11 | 0.0% |
-| sophia-148 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1074 | 17 | 0 | 0 | 11 | 0 | 6 | 64.7% |
+| sophia-148 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-155 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | gvl | 37 568 | 0 | 20837 | 2412 | 0 | 14319 | 61.9% |
-| sophia-397 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-397 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-881 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-990 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1000 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1088 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1000 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-1088 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1093 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1159 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
 | sophia-1169 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1181 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1199 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1210 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1181 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-1199 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1210 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1229 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1598 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1669 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1701 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1830 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1701 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1830 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
 | sophia-1833 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1877 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1906 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1967 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1994 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2055 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2064 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2140 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2150 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2151 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2427 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2459 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1877 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1906 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1994 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-2055 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2064 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2140 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-2150 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2151 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-234 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-235 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2427 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-2502 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-266 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2712 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2712 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
 | sophia-278 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2856 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-2863 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2856 | 13 | 0 | 0 | 10 | 0 | 3 | 76.9% |
+| sophia-2863 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
 | sophia-2865 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2873 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3160 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3217 | 11 | 0 | 0 | 6 | 0 | 5 | 54.5% |
-| sophia-3367 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2873 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3160 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3217 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3273 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-3304 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3367 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3388 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-3389 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3392 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3413 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3413 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3420 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-346 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3482 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3482 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-3536 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3540 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3584 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3613 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3781 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3540 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
+| sophia-3584 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3613 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3781 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4091 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-4116 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4123 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-42 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4116 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-4123 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-42 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
 | sophia-4292 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-501 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-537 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-494 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-501 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-517 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-522 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-537 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-552 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-582 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-62 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-701 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-789 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-793 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-795 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-801 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-805 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-808 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-62 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-701 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-789 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-793 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-795 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-801 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-805 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-808 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1440 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2792 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-740 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2792 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-719 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-740 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-763 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1192 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-833 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1185 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-1192 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1201 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1225 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1353 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1372 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1466 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1528 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1539 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1577 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1539 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1577 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1590 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1611 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1612 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1632 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1657 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1657 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1661 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1675 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1679 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1679 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1704 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1714 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1714 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1730 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1731 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1731 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1749 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1752 | 16 | 0 | 0 | 16 | 0 | 0 | 100.0% |
-| sophia-1754 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1781 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1752 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-1754 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1781 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1790 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1811 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-1844 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1811 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
+| sophia-1844 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1879 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1880 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1880 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-1894 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1895 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1924 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1926 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1895 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
+| sophia-1924 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-1925 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-1926 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-2078 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2080 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2080 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
+| sophia-2169 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2347 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2438 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2574 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2405 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2438 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-2574 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2619 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-262 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2814 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2860 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2814 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2860 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-2958 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3022 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3026 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3026 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3033 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3196 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3199 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3211 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3216 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3216 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3259 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3301 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3368 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3383 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
-| sophia-3395 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3465 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3301 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3368 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3383 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3395 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3469 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3519 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3519 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-3521 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3522 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3522 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-3525 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3548 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3784 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-4149 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4215 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-495 | 8 | 0 | 0 | 1 | 0 | 7 | 12.5% |
-| sophia-654 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3548 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3784 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-4149 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4215 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-495 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
+| sophia-623 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-654 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-655 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-661 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-668 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-764 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1025 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1059 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1136 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1138 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1150 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-122 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1150 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-122 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
+| sophia-167 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-197 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2061 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1998 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2007 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2061 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2067 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2118 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2267 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2327 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-2267 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
+| sophia-231 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-2327 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-236 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2465 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2505 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-2724 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3300 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2505 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2724 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3300 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-3404 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3442 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3418 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3458 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3486 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3661 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -2497,91 +2690,98 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4074 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-408 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4104 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4105 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-447 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-828 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-4105 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4187 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-4188 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-828 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
 | sophia-878 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-957 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-957 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-984 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-361 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-901 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1234 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-149 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1920 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-901 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-3427 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1234 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-149 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1920 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2086 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2499 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2817 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3306 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3495 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3547 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4186 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-4196 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4223 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-4186 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-4196 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-4223 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4293 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-473 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-506 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-473 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-474 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-528 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2376 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2943 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-924 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-924 | 19 | 0 | 0 | 14 | 0 | 5 | 73.7% |
 | sophia-1145 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-1146 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1212 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2012 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2012 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1015 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-909 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-914 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-989 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1022 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1031 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1036 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1043 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1049 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1050 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1054 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1054 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1060 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1066 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1067 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1105 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1168 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1194 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-114 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1168 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1194 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-1195 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1221 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1233 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1388 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1388 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1532 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1533 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1570 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1580 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1583 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1660 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1576 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1580 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1583 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1610 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1660 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1668 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1915 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1917 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1917 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1995 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1995 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1999 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2052 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2161 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-232 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2443 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2488 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2548 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2625 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2710 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2726 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2710 | 12 | 0 | 0 | 7 | 0 | 5 | 58.3% |
+| sophia-2726 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2837 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2839 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3206 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3213 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3213 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3277 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3303 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3315 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3315 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3369 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3370 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3370 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3384 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3439 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
-| sophia-3514 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3403 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3439 | 8 | 0 | 0 | 8 | 0 | 0 | 100.0% |
+| sophia-3450 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3514 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3535 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3545 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3549 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3571 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3549 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3571 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3581 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3586 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3596 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -2589,41 +2789,45 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3656 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3708 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3709 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3737 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-3801 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-3802 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3817 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4183 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-4183 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4222 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4236 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4280 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4308 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-498 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-500 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-536 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-589 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-590 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-540 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-589 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-590 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-614 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-640 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-755 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-783 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-786 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | i14_04 | 2 239 | 0 | 1246 | 143 | 0 | 850 | 62.0% |
-| sophia-2711 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2711 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | sophia-2714 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2715 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2778 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-456 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-110 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-199 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2363 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-110 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-199 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2363 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-237 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
 | sophia-2554 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3815 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3815 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-457 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-342 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-257 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2813 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-257 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2813 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-417 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-579 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-466 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-579 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-602 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-472 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-472 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-229 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-345 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-390 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2631,150 +2835,169 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-398 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-406 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1021 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1030 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1032 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1091 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1030 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1032 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1091 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1144 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1163 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1196 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1203 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1156 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1163 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1214 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1215 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1216 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1219 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1235 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1240 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1235 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1240 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1243 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1247 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1364 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1249 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1250 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1364 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1374 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1382 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1382 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1455 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1499 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1499 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1500 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1505 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1508 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1508 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1509 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1527 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-157 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1572 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1579 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1572 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1579 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1582 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1592 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1673 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1687 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1729 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1744 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1766 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1769 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1744 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1766 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1769 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1776 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1782 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1823 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1782 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1823 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-1835 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1836 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1852 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1854 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1854 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1881 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1888 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1904 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1918 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1961 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1970 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1970 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
 | sophia-2033 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2041 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2168 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2318 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2083 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2168 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2173 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2318 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-2383 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2423 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2463 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2463 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2475 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-2476 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2543 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2543 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2544 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2572 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2575 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2581 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2582 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2585 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2588 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2589 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2605 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2655 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2674 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2675 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2674 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2675 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2703 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2708 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2723 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2738 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2738 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2741 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2760 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2801 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2821 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2821 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2976 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2978 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3020 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3103 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3174 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3176 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3193 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3198 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3198 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3207 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3209 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3212 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3241 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3274 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3241 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3274 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
 | sophia-3297 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3316 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3317 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3329 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3317 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3329 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3357 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3359 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-3387 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3454 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3455 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3414 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3454 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3455 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3481 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3526 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3493 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3526 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3527 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3533 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3551 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3590 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3551 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3553 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3578 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3579 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3600 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-3655 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3768 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3774 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3775 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3787 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3792 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3795 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4097 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4139 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4140 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4170 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4170 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4180 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4197 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4200 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-427 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-430 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4316 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4317 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4396 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-4396 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-657 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-662 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-658 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-662 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-663 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-681 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-682 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-717 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-718 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-737 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-737 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-738 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-743 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-802 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-811 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3658 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1423 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1117 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2166 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3225 | 6 | 0 | 0 | 0 | 0 | 6 | 0.0% |
-| sophia-3226 | 8 | 0 | 0 | 1 | 0 | 7 | 12.5% |
+| sophia-3225 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-3226 | 26 | 0 | 0 | 13 | 0 | 13 | 50.0% |
 | sophia-596 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-617 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-617 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | i14_07 | 896 | 0 | 509 | 69 | 0 | 318 | 64.5% |
 | sophia-321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-322 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-322 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | i14_10 | 1 243 | 0 | 664 | 120 | 0 | 459 | 63.1% |
 | i14_06 | 3 558 | 0 | 2007 | 353 | 0 | 1198 | 66.3% |
 | i14_09 | 7 151 | 0 | 3675 | 940 | 0 | 2536 | 64.5% |
-| sophia-1476 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-1476 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | i14_13 | 109 | 0 | 61 | 7 | 0 | 41 | 62.4% |
 | i14_27 | 733 | 0 | 369 | 76 | 0 | 288 | 60.7% |
 | i14_14 | 12 813 | 0 | 7113 | 1407 | 0 | 4293 | 66.5% |
 | i14_15 | 4 594 | 0 | 2396 | 414 | 0 | 1784 | 61.2% |
 | sophia-341 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | i14_29 | 816 | 0 | 380 | 126 | 0 | 310 | 62.0% |
-| sophia-455 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-461 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | i14_16 | 1 525 | 0 | 903 | 172 | 0 | 450 | 70.5% |
 | i14_18 | 6 037 | 0 | 3159 | 753 | 0 | 2125 | 64.8% |
@@ -2785,27 +3008,27 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-302 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
 | sophia-894 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1047 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-107 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-107 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1097 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1130 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1135 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1139 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1142 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1182 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-1182 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
 | sophia-1184 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1198 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1202 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1206 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1218 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1218 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1227 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1241 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-125 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1251 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1276 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1430 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1464 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1477 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1510 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-152 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-152 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1550 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1593 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1603 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2818,19 +3041,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1813 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1826 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1853 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1860 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1860 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1891 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1910 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1919 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1932 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1952 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1965 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1966 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1979 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2000 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1965 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1966 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1979 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-2000 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2004 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2006 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2049 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2049 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2063 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2072 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2353 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2859,17 +3082,17 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3157 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3175 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3191 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3200 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3253 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3286 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3286 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-3307 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3350 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3355 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
 | sophia-3363 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3430 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3430 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-3510 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3530 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3565 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-358 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3583 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3585 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3587 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2897,37 +3120,33 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4299 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4306 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4319 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4325 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4360 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4360 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-4372 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-485 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-489 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-49 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-502 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-508 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-509 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-502 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-509 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-534 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-545 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-620 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-63 | 20 | 0 | 0 | 20 | 0 | 0 | 100.0% |
-| sophia-696 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-699 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-716 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-785 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-696 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-699 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-716 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-785 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-788 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-806 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-82 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-83 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-82 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-83 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | vyshensky | 25 620 | 0 | 15186 | 2514 | 0 | 7920 | 69.1% |
 | sophia-173 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | i14_38 | 61 | 0 | 44 | 3 | 0 | 14 | 77.0% |
 | sophia-2980 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3847 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-4023 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2982 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3342 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
-| sophia-3346 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2982 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3342 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3346 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | i14_39 | 436 | 0 | 234 | 47 | 0 | 155 | 64.4% |
 | i14_20 | 3 230 | 0 | 1748 | 271 | 0 | 1211 | 62.5% |
 | i14_40 | 38 | 0 | 29 | 1 | 0 | 8 | 78.9% |
@@ -2940,74 +3159,74 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2215 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
 | sophia-1938 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2229 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4053 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-4053 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-1003 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-437 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2183 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2183 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-3619 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4034 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3863 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3864 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2775 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
+| sophia-2775 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
 | sophia-3889 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-239 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-1908 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-239 | 9 | 0 | 0 | 8 | 0 | 1 | 88.9% |
+| sophia-1908 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-865 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
+| sophia-870 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3973 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2132 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-3647 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3648 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3857 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1245 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-446 | 12 | 0 | 0 | 9 | 0 | 3 | 75.0% |
-| sophia-182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3866 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-180 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2019 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3902 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-1245 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-446 | 11 | 0 | 0 | 9 | 0 | 2 | 81.8% |
+| sophia-182 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3866 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-180 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2019 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
+| sophia-3902 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | sophia-283 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
 | sophia-129 | 11 | 0 | 0 | 7 | 0 | 4 | 63.6% |
-| sophia-725 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2713 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-725 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-2713 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-128 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-2017 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2017 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
 | sophia-2806 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-163 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-204 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-163 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-208 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4066 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-135 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-384 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4066 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-135 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-384 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-44 | 10 | 0 | 0 | 5 | 0 | 5 | 50.0% |
 | sophia-136 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-153 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-156 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-162 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-166 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-156 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-162 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-166 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-168 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-170 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-175 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-177 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-177 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-184 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-185 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-186 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-187 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-189 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-189 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
 | sophia-192 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-195 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-196 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-206 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-206 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-209 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-212 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-213 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-215 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-217 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-213 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-215 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-217 | 7 | 0 | 0 | 7 | 0 | 0 | 100.0% |
 | sophia-219 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | sophia-220 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-240 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-241 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-243 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-251 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-251 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-253 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-256 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-308 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
@@ -3022,51 +3241,50 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-334 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-338 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-339 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1383 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1383 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | i14_32 | 6 164 | 0 | 3964 | 618 | 0 | 1582 | 74.3% |
-| sophia-902 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-902 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
 | sophia-1014 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1038 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1077 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1077 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1080 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1164 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1164 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1170 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1172 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1175 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1242 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1244 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1290 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1291 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1293 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1291 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-1293 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1298 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-130 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-130 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1339 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1341 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1341 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1354 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1358 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1361 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1362 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1370 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1384 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1384 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1391 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1392 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1392 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1393 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1398 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-1398 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1402 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1410 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1410 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | sophia-1439 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1441 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1442 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1442 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1473 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1475 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1480 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1482 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1485 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1489 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1493 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1493 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | sophia-1502 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1503 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1542 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1503 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1513 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1543 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1546 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1547 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -3076,7 +3294,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1557 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1558 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1567 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-1569 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1569 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-1591 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1595 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1599 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3092,29 +3310,32 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1941 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1953 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1954 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1986 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1986 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1987 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1988 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1989 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-201 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1989 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-201 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2015 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2016 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-202 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-202 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2020 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2021 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2022 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2028 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-2021 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-2022 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-2023 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2027 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2028 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
 | sophia-2101 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2105 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-2110 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-2113 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2116 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2130 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2143 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2147 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2143 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2154 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2167 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2171 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2157 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2167 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2171 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2184 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2185 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -3142,11 +3363,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2247 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2252 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2256 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2257 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2258 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2260 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2264 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2265 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2266 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2262 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2263 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2264 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2265 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2266 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-2269 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2271 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2272 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
@@ -3155,7 +3378,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2276 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2277 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
 | sophia-2278 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-228 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-228 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2280 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2285 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2286 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -3166,20 +3389,20 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2305 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2311 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-247 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-247 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2546 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2547 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2551 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2551 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2560 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-267 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-268 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2693 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-2697 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2699 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-2704 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-268 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-2693 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-2697 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2699 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2704 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2716 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2717 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2719 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2719 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2727 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2728 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2729 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3194,11 +3417,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2796 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2798 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2799 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2802 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2802 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
 | sophia-2804 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2805 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2807 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2818 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2824 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2832 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-2841 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3210,18 +3432,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2912 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2913 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-2915 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2917 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2917 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-2924 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2929 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2945 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2959 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2977 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2959 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2979 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2981 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2986 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2990 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2991 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2992 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2993 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2993 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-2994 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2995 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2997 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3235,7 +3457,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3127 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-3128 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3130 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3139 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3139 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-3144 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3145 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3146 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3251,16 +3473,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3215 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-3219 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3224 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3242 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3242 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-3278 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3285 | 6 | 0 | 0 | 1 | 0 | 5 | 16.7% |
-| sophia-3324 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3279 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-3285 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-3331 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3348 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3348 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3372 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3475 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3476 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3478 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3478 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3479 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3480 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-352 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
@@ -3274,7 +3496,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3624 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3625 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3629 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-363 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-363 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3634 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3635 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3636 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
@@ -3289,7 +3511,6 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3679 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3681 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3686 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3687 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-369 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3691 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3693 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3308,35 +3529,36 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3766 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3767 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3796 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-381 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-381 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3813 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3818 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3819 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-382 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-382 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3820 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3821 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-3822 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3826 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3827 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3829 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-383 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-383 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
 | sophia-3831 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3832 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3836 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3836 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3839 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3842 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3842 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-3849 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-385 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-385 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
 | sophia-3851 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3853 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-387 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3873 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3876 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-3873 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3876 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-3880 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3883 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3884 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3884 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3886 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3888 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3891 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3891 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3897 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3900 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3901 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -3345,30 +3567,28 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3907 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3909 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3910 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3913 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3915 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3916 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3917 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3918 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3919 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3925 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3925 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3926 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3927 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3933 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3935 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3936 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3937 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3939 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3941 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3942 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3943 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3944 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3944 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3945 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-3948 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3954 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3954 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3955 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3959 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-396 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-396 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-3960 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3962 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3964 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
@@ -3383,7 +3603,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3984 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3987 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3991 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3992 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3992 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3996 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4002 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4007 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3391,7 +3611,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4014 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-4018 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4025 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4028 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-4028 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-4039 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4041 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-4042 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -3408,19 +3628,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4064 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4065 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4171 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4173 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-4174 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4172 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4173 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4174 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-4206 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-425 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-4257 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4257 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-4258 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4268 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-4269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4284 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4285 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-4287 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4294 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-43 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-4285 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-4294 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-43 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4303 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4309 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3431,41 +3651,43 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-450 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-601 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-603 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-608 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-608 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
 | sophia-612 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-644 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-651 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-688 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-694 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-695 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-703 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-705 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-710 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-705 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-710 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-721 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-726 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-731 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-736 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-748 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-817 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-818 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-819 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-827 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-836 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-837 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-748 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-750 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-817 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-818 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-819 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-826 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-827 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-837 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-839 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-840 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-842 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-843 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-844 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-848 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-849 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-849 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-850 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-852 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-853 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-854 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-851 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-853 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-854 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-856 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-858 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-864 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-866 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-864 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-866 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-915 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-916 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-917 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
@@ -3477,9 +3699,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-950 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-953 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-962 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-965 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-965 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-968 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-971 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-997 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | samovydets | 37 974 | 0 | 19644 | 5448 | 0 | 12882 | 66.1% |
 | o18_26 | 9 404 | 0 | 0 | 0 | 6014 | 3390 | 64.0% |
@@ -3553,46 +3775,46 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | franko1893 | 36 521 | 0 | 0 | 0 | 33618 | 2903 | 92.1% |
 | franko1905 | 7 656 | 0 | 0 | 0 | 7155 | 501 | 93.5% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5707 | 820 | 87.4% |
-| **total** | 607 421 | 35357 | 186860 | 33211 | 178172 | 173821 | 71.4% |
+| **total** | 609 189 | 35357 | 186860 | 34939 | 178172 | 173861 | 71.5% |
 
-Linked 433 600 of 607 421 tokens (71.4%); unresolved 173 821 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 435 328 of 609 189 tokens (71.5%); unresolved 173 861 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (173 821) |
+| form | f | % of unresolved (173 861) |
 |---|---|---|
 | с | 2260 | 1.3% |
-| к | 1844 | 1.1% |
+| к | 1845 | 1.1% |
 | и | 1820 | 1.0% |
 | его | 1480 | 0.9% |
-| къ | 1264 | 0.7% |
+| къ | 1268 | 0.7% |
 | съ | 1028 | 0.6% |
-| ни | 1004 | 0.6% |
+| ни | 1005 | 0.6% |
 | аще | 921 | 0.5% |
-| ли | 912 | 0.5% |
+| ли | 913 | 0.5% |
 | тако | 909 | 0.5% |
 | имъ | 901 | 0.5% |
 | ѥго | 802 | 0.5% |
-| что | 721 | 0.4% |
-| ихъ | 617 | 0.4% |
+| что | 722 | 0.4% |
+| ихъ | 620 | 0.4% |
+| своего | 620 | 0.4% |
 | так | 605 | 0.3% |
-| своего | 594 | 0.3% |
 | ему | 540 | 0.3% |
 | со | 540 | 0.3% |
 | приде | 485 | 0.3% |
 | емоу | 483 | 0.3% |
 | то | 449 | 0.3% |
-| их | 423 | 0.2% |
+| их | 422 | 0.2% |
 | где | 411 | 0.2% |
+| свои | 399 | 0.2% |
 | єго | 396 | 0.2% |
-| свои | 396 | 0.2% |
 | ѥму | 390 | 0.2% |
 | тогда | 384 | 0.2% |
 | ӕко | 383 | 0.2% |
 | много | 380 | 0.2% |
-| кто | 361 | 0.2% |
+| кто | 362 | 0.2% |
 | ѥмѹ | 355 | 0.2% |
-| или | 347 | 0.2% |
+| или | 348 | 0.2% |
 | реч | 345 | 0.2% |
 | поиде | 327 | 0.2% |
 | реч̑ | 324 | 0.2% |
@@ -3609,76 +3831,76 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 
 | epoch | epoch N (corpus tokens) | tag source | tagged tokens | placed (% of tagged) | conflict | underspecified | untagged (linked, no tag) | lemmas with ≥ 1 cell | cells | cell spellings |
 |---|---|---|---|---|---|---|---|---|---|---|
-| shev.proto | 7 178 | TOROT (manual) | 125 | 125 (100.0%) | 0 | 0 | 35 | 253 | 568 | 690 |
-| shev.proto | 7 178 | Stanza (model, P-1.7) | 1 675 | 1 423 (85.0%) | 252 | 0 |  |  |  |  |
-| shev.old | 241 747 | TOROT (manual) | 15 514 | 15 275 (98.5%) | 233 | 6 | 376 | 1 674 | 4 888 | 8 441 |
-| shev.old | 241 747 | Stanza (model, P-1.7) | 41 814 | 34 542 (82.6%) | 7 272 | 0 |  |  |  |  |
-| shev.early_middle | 14 178 | Stanza (model, P-1.7) | 3 972 | 2 754 (69.3%) | 1 218 | 0 | 113 | 388 | 846 | 1 009 |
-| shev.middle | 152 769 | Stanza (model, P-1.7) | 29 309 | 18 549 (63.3%) | 10 760 | 0 | 385 | 1 982 | 6 778 | 8 918 |
-| shev.middle | 152 769 | VESUM (modern spelling) | 8 630 | 7 791 (90.3%) | 23 | 816 |  |  |  |  |
-| shev.late_middle | 73 665 | VESUM (modern spelling) | 24 498 | 21 309 (87.0%) | 28 | 3 161 | 3 | 2 457 | 8 951 | 10 037 |
-| shev.modern | 117 884 | VESUM (modern spelling) | 46 220 | 41 030 (88.8%) | 68 | 5 122 | 0 | 2 919 | 11 872 | 14 983 |
+| shev.proto | 7 214 | TOROT (manual) | 162 | 162 (100.0%) | 0 | 0 | 119 | 406 | 825 | 1 003 |
+| shev.proto | 7 214 | Stanza (model, P-1.7) | 2 325 | 1 854 (79.7%) | 294 | 177 |  |  |  |  |
+| shev.old | 243 331 | TOROT (manual) | 22 348 | 22 103 (98.9%) | 233 | 12 | 1 561 | 2 697 | 8 440 | 14 026 |
+| shev.old | 243 331 | Stanza (model, P-1.7) | 63 193 | 46 935 (74.3%) | 8 934 | 7 324 |  |  |  |  |
+| shev.early_middle | 14 238 | Stanza (model, P-1.7) | 5 329 | 3 689 (69.2%) | 1 393 | 247 | 251 | 689 | 1 364 | 1 637 |
+| shev.middle | 152 857 | Stanza (model, P-1.7) | 43 909 | 31 207 (71.1%) | 12 063 | 639 | 668 | 3 625 | 11 527 | 15 042 |
+| shev.middle | 152 857 | VESUM (modern spelling) | 10 782 | 9 797 (90.9%) | 32 | 953 |  |  |  |  |
+| shev.late_middle | 73 665 | VESUM (modern spelling) | 33 052 | 29 705 (89.9%) | 37 | 3 310 | 3 | 4 313 | 14 052 | 15 557 |
+| shev.modern | 117 884 | VESUM (modern spelling) | 64 227 | 58 821 (91.6%) | 71 | 5 335 | 0 | 5 391 | 20 673 | 25 095 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 15 066 · stanza:gender: 4 390 · torot:grid:none: 195 · vesum:grid:none: 119 · stanza:grid:none: 38 · torot:grid:adj: 38 · stanza:grid:adj: 8.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 18 249 · stanza:gender: 4 389 · torot:grid:none: 195 · vesum:grid:none: 119 · stanza:grid:none: 38 · torot:grid:adj: 38 · vesum:grid:noun: 21 · stanza:grid:adj: 8.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
 | lemma | kind | tokens | placed | conflict | underspecified | untagged | main conflict reasons |
 |---|---|---|---|---|---|---|---|
-| земля | noun | 1 494 | 1 387 | 3 | 104 | 0 | stanza:gender 2, stanza:lemma 1 |
+| він | pron | 1 905 | 1 799 | 102 | 0 | 4 | stanza:lemma 102 |
+| я | pron | 5 185 | 5 154 | 0 | 0 | 31 | — |
+| земля | noun | 1 497 | 1 387 | 3 | 104 | 3 | stanza:gender 2, stanza:lemma 1 |
 | син | noun | 1 381 | 1 300 | 80 | 0 | 1 | stanza:gender 51, stanza:lemma 29 |
-| да | uninflected | 1 785 | 0 | 1 457 | 327 | 1 | stanza:grid:none 1154, torot:grid:none 303 |
-| ми | pron | 2 428 | 2 420 | 1 | 0 | 7 | stanza:lemma 1 |
+| да | uninflected | 1 789 | 0 | 1 457 | 327 | 5 | stanza:grid:none 1154, torot:grid:none 303 |
+| ми | pron | 2 436 | 2 420 | 1 | 0 | 15 | stanza:lemma 1 |
 | себе | pron | 5 018 | 5 018 | 0 | 0 | 0 | — |
-| ви | pron | 2 139 | 2 130 | 2 | 0 | 7 | stanza:lemma 2 |
-| ти | pron | 3 606 | 3 581 | 23 | 0 | 2 | stanza:lemma 23 |
-| я | pron | 5 159 | 5 154 | 0 | 0 | 5 | — |
+| ви | pron | 2 137 | 2 130 | 2 | 0 | 5 | stanza:lemma 2 |
+| ти | pron | 3 614 | 3 581 | 23 | 0 | 10 | stanza:lemma 23 |
 | рука | noun | 771 | 750 | 21 | 0 | 0 | stanza:gender 16, stanza:lemma 5 |
-| князь | noun | 1 803 | 1 774 | 27 | 0 | 2 | stanza:gender 20, stanza:lemma 7 |
+| князь | noun | 1 804 | 1 774 | 27 | 0 | 3 | stanza:gender 20, stanza:lemma 7 |
 | город | noun | 853 | 752 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
 | аз | noun | 63 | 62 | 0 | 0 | 1 | — |
-| він | pron | 1 904 | 1 799 | 102 | 0 | 3 | stanza:lemma 102 |
 
-**Stem types** (EP-4): 5 451 lemmas carry epoch paradigms; stem claim known for 1 599 (of which 410 from a Stanza lemma, model-based per decision D4), `unknown` for 3 735. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-05: 1 · ST-06: 6 · ST-07: 22 · ST-08: 101 · ST-09: 677 · ST-10: 256 · ST-11: 75 · ST-12: 92 · ST-13: 279 · ST-14: 67.
+**Stem types** (EP-4): 8 996 lemmas carry epoch paradigms; stem claim known for 1 599 (of which 410 from a Stanza lemma, model-based per decision D4), `unknown` for 3 736. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-05: 1 · ST-06: 6 · ST-07: 22 · ST-08: 101 · ST-09: 677 · ST-10: 256 · ST-11: 75 · ST-12: 92 · ST-13: 279 · ST-14: 67.
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 537 lemmas, 48 830 reconstructed cells with 51 686 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 146 cells (6.4%), 3 162 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 11.27 MB of 87.99 MB shard total (12.8%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 17.93 MB of 94.80 MB shard total (18.9%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 67 109), *token* = occurrences (denominator linked tokens 433 600). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 67 276), *token* = occurrences (denominator linked tokens 435 328). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
-| R02 | Деназалізація ѧ > я, ѫ > у | G | 2672 | 4.0% | 14267 | 3.3% |
-| R14 | бы > бу (губне огублення) | L | 186 | 0.3% | 2650 | 0.6% |
-| R03 | ky, gy, xy > k'i, g'i, x'i | G | 225 | 0.3% | 717 | 0.2% |
-| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 548 | 0.8% | 1543 | 0.4% |
-| R13 | C + j: подовження, -ьѥ > -ття | G | 186 | 0.3% | 368 | 0.1% |
-| R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 113 | 0.2% | 185 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 8135 | 12.1% | 46056 | 10.6% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1549 | 2.3% | 6654 | 1.5% |
-| R07 | Вставні о, е в кінцевих групах | L | 38 | 0.1% | 252 | 0.1% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 4962 | 7.4% | 22313 | 5.1% |
+| R02 | Деназалізація ѧ > я, ѫ > у | G | 2713 | 4.0% | 14457 | 3.3% |
+| R14 | бы > бу (губне огублення) | L | 187 | 0.3% | 2655 | 0.6% |
+| R03 | ky, gy, xy > k'i, g'i, x'i | G | 225 | 0.3% | 720 | 0.2% |
+| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 557 | 0.8% | 1635 | 0.4% |
+| R13 | C + j: подовження, -ьѥ > -ття | G | 187 | 0.3% | 370 | 0.1% |
+| R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 113 | 0.2% | 186 | 0.0% |
+| R04 | Занепад єрів (закон Гавліка) | G | 8212 | 12.2% | 46516 | 10.7% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1558 | 2.3% | 6671 | 1.5% |
+| R07 | Вставні о, е в кінцевих групах | L | 38 | 0.1% | 253 | 0.1% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 4979 | 7.4% | 22379 | 5.1% |
 | R12 | ѥ у новозакритому складі > ї | G | 90 | 0.1% | 893 | 0.2% |
-| R11 | Злиття і та у > и | G | 3939 | 5.9% | 46755 | 10.8% |
-| R15 | Ствердіння губних у кінці складу | G | 856 | 1.3% | 3392 | 0.8% |
-| R16 | l > w після о, е | G | 374 | 0.6% | 1245 | 0.3% |
-| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 206 | 0.3% | 710 | 0.2% |
-| R17 | е > о після шиплячих перед твердим | L | 346 | 0.5% | 1599 | 0.4% |
-| R18 | Ствердіння ж, ч, ш | G | 708 | 1.1% | 2446 | 0.6% |
-| R19 | Ствердіння кінцевого р' | G | 187 | 0.3% | 706 | 0.2% |
-| R21 | Протетичні в, г | L | 1481 | 2.2% | 4360 | 1.0% |
-| R23 | Стягнення прикметникових закінчень | L | 954 | 1.4% | 3179 | 0.7% |
+| R11 | Злиття і та у > и | G | 3958 | 5.9% | 46874 | 10.8% |
+| R15 | Ствердіння губних у кінці складу | G | 868 | 1.3% | 3413 | 0.8% |
+| R16 | l > w після о, е | G | 373 | 0.6% | 1244 | 0.3% |
+| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 211 | 0.3% | 722 | 0.2% |
+| R17 | е > о після шиплячих перед твердим | L | 347 | 0.5% | 1600 | 0.4% |
+| R18 | Ствердіння ж, ч, ш | G | 712 | 1.1% | 2456 | 0.6% |
+| R19 | Ствердіння кінцевого р' | G | 188 | 0.3% | 708 | 0.2% |
+| R21 | Протетичні в, г | L | 1480 | 2.2% | 4360 | 1.0% |
+| R23 | Стягнення прикметникових закінчень | L | 960 | 1.4% | 3196 | 0.7% |
 
-Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-E: 56 types / 75 tokens · ORTH-KUL-I: 226 types / 640 tokens · ORTH-KUL-E: 198 types / 332 tokens · ORTH-YAR-JER: 685 types / 1514 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-YAR-I: 168 types / 353 tokens · ORTH-YAR-Y: 345 types / 459 tokens · ORTH-YAR-YAT: 309 types / 415 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-YAR-EH: 2 types / 2 tokens
+Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 345 types / 459 tokens · ORTH-YAR-JER: 682 types / 1492 tokens · ORTH-YAR-I: 167 types / 341 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-YAR-E: 56 types / 75 tokens · ORTH-KUL-I: 226 types / 640 tokens · ORTH-KUL-E: 198 types / 332 tokens · ORTH-YAR-YAT: 309 types / 415 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-YAR-EH: 2 types / 2 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 46 596 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 46 676 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 281 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 282 | 0 |
 | CS-C3 | cs | church_slavonic | 0.7 | 104 | 0 |
 | CS-C4 | cs | church_slavonic | 0.7 | 29 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 55 | 0 |
@@ -3692,7 +3914,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-E: 
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 8837 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 8876 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
 | MOR-PART-UCH | contact | calque_participle | 0.6 | 0 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
@@ -3707,7 +3929,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-E: 
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 0 | 0 |
 | N-DIPH-IE:CHN | dialect | CHN | 0.8 | 3 | 0 |
 | N-DIPH-IE:MPL | dialect | MPL | 0.8 | 3 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 225 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 226 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
 | 3SG-HARD-T:POD | dialect | POD | 0.4 | 0 | 0 |
 | 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 0 | 0 |
@@ -3757,147 +3979,147 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-E: 
 
 ## 4. Lexical statistics (M-5)
 
-Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 36324, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
+Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 36377, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
 
 ### 4.1 Top 30 lemmas per Shevelov epoch (ipm = f / N_epoch · 10⁶)
 
 Function words dominate the top of any frequency list; this is the expected shape, not a result.
 
-**shev.proto** — протоукраїнська доба, N = 7 178
+**shev.proto** — протоукраїнська доба, N = 7 214
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 627 | 87350 |
-| 2 | в | прийменник | 187 | 26052 |
-| 3 | бути | дієслово | 178 | 24798 |
-| 4 | же | сполучник | 135 | 18807 |
-| 5 | не | частка | 125 | 17414 |
-| 6 | яко | сполучник | 121 | 16857 |
-| 7 | бог | іменник, ч.р. | 115 | 16021 |
-| 8 | ти | займенник | 102 | 14210 |
-| 9 | на | частка | 94 | 13096 |
-| 10 | весь | займенник | 93 | 12956 |
-| 11 | от | частка | 89 | 12399 |
-| 12 | ми | займенник | 83 | 11563 |
-| 13 | земля | іменник, ж.р. | 64 | 8916 |
-| 14 | наш | займенник | 64 | 8916 |
-| 15 | господь | іменник, ч.р. | 63 | 8777 |
-| 16 | по | прийменник | 59 | 8220 |
-| 17 | бо | сполучник | 53 | 7384 |
-| 18 | іже | незмінне | 51 | 7105 |
-| 19 | святий | прикметник | 48 | 6687 |
-| 20 | о | прийменник | 47 | 6548 |
-| 21 | да | частка | 45 | 6269 |
-| 22 | син | іменник, ч.р. | 45 | 6269 |
-| 23 | отець | іменник, ч.р. | 43 | 5991 |
-| 24 | чоловік | іменник, ч.р. | 40 | 5573 |
-| 25 | видіти | дієслово | 32 | 4458 |
-| 26 | закон | іменник, ч.р. | 28 | 3901 |
-| 27 | я | займенник | 28 | 3901 |
-| 28 | язик | іменник, ч.р. | 26 | 3622 |
-| 29 | а | сполучник | 25 | 3483 |
-| 30 | глаголати | дієслово | 25 | 3483 |
+| 1 | і | сполучник | 628 | 87053 |
+| 2 | в | прийменник | 188 | 26060 |
+| 3 | бути | дієслово | 178 | 24674 |
+| 4 | же | сполучник | 135 | 18714 |
+| 5 | не | частка | 125 | 17327 |
+| 6 | яко | сполучник | 121 | 16773 |
+| 7 | бог | іменник, ч.р. | 115 | 15941 |
+| 8 | ти | займенник | 102 | 14139 |
+| 9 | на | частка | 94 | 13030 |
+| 10 | весь | займенник | 93 | 12892 |
+| 11 | от | частка | 89 | 12337 |
+| 12 | ми | займенник | 83 | 11505 |
+| 13 | господь | іменник, ч.р. | 71 | 9842 |
+| 14 | земля | іменник, ж.р. | 64 | 8872 |
+| 15 | наш | займенник | 64 | 8872 |
+| 16 | по | прийменник | 59 | 8179 |
+| 17 | бо | сполучник | 53 | 7347 |
+| 18 | іже | незмінне | 51 | 7070 |
+| 19 | о | прийменник | 48 | 6654 |
+| 20 | святий | прикметник | 48 | 6654 |
+| 21 | да | частка | 45 | 6238 |
+| 22 | син | іменник, ч.р. | 45 | 6238 |
+| 23 | отець | іменник, ч.р. | 43 | 5961 |
+| 24 | чоловік | іменник, ч.р. | 40 | 5545 |
+| 25 | видіти | дієслово | 32 | 4436 |
+| 26 | я | займенник | 29 | 4020 |
+| 27 | закон | іменник, ч.р. | 28 | 3881 |
+| 28 | язик | іменник, ч.р. | 26 | 3604 |
+| 29 | а | сполучник | 25 | 3465 |
+| 30 | глаголати | дієслово | 25 | 3465 |
 
-**shev.old** — давньоукраїнська доба, N = 241 747
+**shev.old** — давньоукраїнська доба, N = 243 331
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 19199 | 79418 |
-| 2 | же | сполучник | 7360 | 30445 |
-| 3 | в | прийменник | 6350 | 26267 |
-| 4 | бути | дієслово | 5859 | 24236 |
-| 5 | на | частка | 3892 | 16099 |
-| 6 | не | частка | 3731 | 15433 |
-| 7 | себе | займенник | 3124 | 12923 |
-| 8 | а | сполучник | 2726 | 11276 |
-| 9 | от | частка | 1927 | 7971 |
-| 10 | я | займенник | 1909 | 7897 |
-| 11 | весь | займенник | 1773 | 7334 |
-| 12 | по | прийменник | 1476 | 6106 |
-| 13 | бо | сполучник | 1449 | 5994 |
-| 14 | ти | займенник | 1445 | 5977 |
-| 15 | глаголати | дієслово | 1290 | 5336 |
-| 16 | яко | сполучник | 1275 | 5274 |
-| 17 | іти | дієслово | 1260 | 5212 |
-| 18 | іже | незмінне | 1239 | 5125 |
-| 19 | бог | іменник, ч.р. | 1132 | 4683 |
-| 20 | князь | іменник, ч.р. | 1095 | 4530 |
-| 21 | брат | іменник, ч.р. | 1015 | 4199 |
-| 22 | сей | займенник | 1008 | 4170 |
-| 23 | да | частка | 997 | 4124 |
-| 24 | послати | дієслово | 971 | 4017 |
-| 25 | літо | іменник, с.р. | 940 | 3888 |
-| 26 | син | іменник, ч.р. | 932 | 3855 |
-| 27 | ви | займенник | 912 | 3773 |
-| 28 | у | прийменник | 878 | 3632 |
-| 29 | отець | іменник, ч.р. | 869 | 3595 |
-| 30 | земля | іменник, ж.р. | 848 | 3508 |
+| 1 | і | сполучник | 19254 | 79127 |
+| 2 | же | сполучник | 7363 | 30259 |
+| 3 | в | прийменник | 6392 | 26269 |
+| 4 | бути | дієслово | 5865 | 24103 |
+| 5 | на | частка | 3914 | 16085 |
+| 6 | не | частка | 3739 | 15366 |
+| 7 | себе | займенник | 3124 | 12838 |
+| 8 | а | сполучник | 2731 | 11223 |
+| 9 | от | частка | 1934 | 7948 |
+| 10 | я | займенник | 1932 | 7940 |
+| 11 | весь | займенник | 1775 | 7295 |
+| 12 | по | прийменник | 1466 | 6025 |
+| 13 | ти | займенник | 1453 | 5971 |
+| 14 | бо | сполучник | 1451 | 5963 |
+| 15 | глаголати | дієслово | 1290 | 5301 |
+| 16 | яко | сполучник | 1274 | 5236 |
+| 17 | іти | дієслово | 1260 | 5178 |
+| 18 | іже | незмінне | 1240 | 5096 |
+| 19 | бог | іменник, ч.р. | 1158 | 4759 |
+| 20 | князь | іменник, ч.р. | 1096 | 4504 |
+| 21 | сей | займенник | 1017 | 4179 |
+| 22 | брат | іменник, ч.р. | 1015 | 4171 |
+| 23 | да | частка | 1001 | 4114 |
+| 24 | послати | дієслово | 971 | 3990 |
+| 25 | літо | іменник, с.р. | 947 | 3892 |
+| 26 | син | іменник, ч.р. | 932 | 3830 |
+| 27 | ви | займенник | 912 | 3748 |
+| 28 | у | прийменник | 873 | 3588 |
+| 29 | отець | іменник, ч.р. | 871 | 3579 |
+| 30 | земля | іменник, ж.р. | 851 | 3497 |
 
-**shev.early_middle** — ранньосередньоукраїнська доба, N = 14 178
+**shev.early_middle** — ранньосередньоукраїнська доба, N = 14 238
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 1009 | 71167 |
-| 2 | князь | іменник, ч.р. | 440 | 31034 |
-| 3 | на | частка | 300 | 21160 |
-| 4 | в | прийменник | 263 | 18550 |
-| 5 | великий | прикметник | 233 | 16434 |
-| 6 | же | сполучник | 210 | 14812 |
-| 7 | не | частка | 164 | 11567 |
-| 8 | бути | дієслово | 160 | 11285 |
-| 9 | а | сполучник | 156 | 11003 |
-| 10 | з | прийменник | 148 | 10439 |
-| 11 | от | частка | 121 | 8534 |
-| 12 | весь | займенник | 118 | 8323 |
-| 13 | себе | займенник | 115 | 8111 |
-| 14 | той | займенник | 115 | 8111 |
-| 15 | земля | іменник, ж.р. | 110 | 7758 |
-| 16 | іже | незмінне | 109 | 7688 |
-| 17 | свій | займенник | 97 | 6842 |
-| 18 | ми | займенник | 93 | 6559 |
-| 19 | Дмитрій | іменник, ч.р. | 86 | 6066 |
-| 20 | о | прийменник | 79 | 5572 |
-| 21 | яко | сполучник | 73 | 5149 |
-| 22 | бог | іменник, ч.р. | 72 | 5078 |
-| 23 | за | прислівник | 63 | 4444 |
-| 24 | святий | прикметник | 59 | 4161 |
-| 25 | по | прийменник | 58 | 4091 |
-| 26 | татарин | іменник, ч.р. | 57 | 4020 |
-| 27 | ви | займенник | 56 | 3950 |
-| 28 | бо | сполучник | 55 | 3879 |
-| 29 | господь | іменник, ч.р. | 53 | 3738 |
-| 30 | брат | іменник, ч.р. | 49 | 3456 |
+| 1 | і | сполучник | 1009 | 70867 |
+| 2 | князь | іменник, ч.р. | 440 | 30903 |
+| 3 | на | частка | 300 | 21070 |
+| 4 | в | прийменник | 268 | 18823 |
+| 5 | великий | прикметник | 233 | 16365 |
+| 6 | же | сполучник | 210 | 14749 |
+| 7 | не | частка | 164 | 11518 |
+| 8 | бути | дієслово | 161 | 11308 |
+| 9 | а | сполучник | 158 | 11097 |
+| 10 | з | прийменник | 148 | 10395 |
+| 11 | от | частка | 121 | 8498 |
+| 12 | весь | займенник | 119 | 8358 |
+| 13 | себе | займенник | 115 | 8077 |
+| 14 | той | займенник | 115 | 8077 |
+| 15 | земля | іменник, ж.р. | 110 | 7726 |
+| 16 | іже | незмінне | 109 | 7656 |
+| 17 | свій | займенник | 97 | 6813 |
+| 18 | ми | займенник | 93 | 6532 |
+| 19 | Дмитрій | іменник, ч.р. | 86 | 6040 |
+| 20 | о | прийменник | 79 | 5549 |
+| 21 | бог | іменник, ч.р. | 76 | 5338 |
+| 22 | яко | сполучник | 73 | 5127 |
+| 23 | господь | іменник, ч.р. | 64 | 4495 |
+| 24 | за | прислівник | 64 | 4495 |
+| 25 | святий | прикметник | 60 | 4214 |
+| 26 | по | прийменник | 58 | 4074 |
+| 27 | татарин | іменник, ч.р. | 57 | 4003 |
+| 28 | ви | займенник | 56 | 3933 |
+| 29 | бо | сполучник | 55 | 3863 |
+| 30 | брат | іменник, ч.р. | 49 | 3441 |
 
-**shev.middle** — середньоукраїнська доба, N = 152 769
+**shev.middle** — середньоукраїнська доба, N = 152 857
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 9122 | 59711 |
-| 2 | не | частка | 3362 | 22007 |
-| 3 | в | прийменник | 3064 | 20056 |
-| 4 | бути | дієслово | 2775 | 18165 |
-| 5 | на | частка | 2463 | 16122 |
-| 6 | а | сполучник | 2009 | 13151 |
-| 7 | той | займенник | 1840 | 12044 |
-| 8 | з | прийменник | 1792 | 11730 |
-| 9 | же | сполучник | 1751 | 11462 |
-| 10 | от | частка | 1515 | 9917 |
-| 11 | яко | сполучник | 1283 | 8398 |
-| 12 | себе | займенник | 1275 | 8346 |
-| 13 | до | прийменник | 1060 | 6939 |
-| 14 | которий | займенник | 904 | 5917 |
-| 15 | весь | займенник | 890 | 5826 |
-| 16 | о | прийменник | 777 | 5086 |
-| 17 | по | прийменник | 747 | 4890 |
-| 18 | за | прислівник | 742 | 4857 |
-| 19 | бог | іменник, ч.р. | 686 | 4490 |
-| 20 | іже | незмінне | 631 | 4130 |
-| 21 | але | сполучник | 628 | 4111 |
-| 22 | у | прийменник | 626 | 4098 |
-| 23 | бо | сполучник | 607 | 3973 |
-| 24 | сам | займенник | 532 | 3482 |
-| 25 | ви | займенник | 519 | 3397 |
-| 26 | да | частка | 482 | 3155 |
-| 27 | то | сполучник | 460 | 3011 |
-| 28 | свій | займенник | 457 | 2991 |
-| 29 | ми | займенник | 440 | 2880 |
-| 30 | ти | займенник | 424 | 2775 |
+| 1 | і | сполучник | 9119 | 59657 |
+| 2 | не | частка | 3362 | 21994 |
+| 3 | в | прийменник | 3065 | 20051 |
+| 4 | бути | дієслово | 2781 | 18193 |
+| 5 | на | частка | 2463 | 16113 |
+| 6 | а | сполучник | 2007 | 13130 |
+| 7 | той | займенник | 1841 | 12044 |
+| 8 | з | прийменник | 1792 | 11723 |
+| 9 | же | сполучник | 1751 | 11455 |
+| 10 | от | частка | 1515 | 9911 |
+| 11 | яко | сполучник | 1283 | 8393 |
+| 12 | себе | займенник | 1275 | 8341 |
+| 13 | до | прийменник | 1059 | 6928 |
+| 14 | которий | займенник | 904 | 5914 |
+| 15 | весь | займенник | 890 | 5822 |
+| 16 | о | прийменник | 777 | 5083 |
+| 17 | по | прийменник | 745 | 4874 |
+| 18 | за | прислівник | 742 | 4854 |
+| 19 | бог | іменник, ч.р. | 686 | 4488 |
+| 20 | іже | незмінне | 631 | 4128 |
+| 21 | але | сполучник | 628 | 4108 |
+| 22 | у | прийменник | 626 | 4095 |
+| 23 | бо | сполучник | 607 | 3971 |
+| 24 | сам | займенник | 531 | 3474 |
+| 25 | ви | займенник | 517 | 3382 |
+| 26 | да | частка | 482 | 3153 |
+| 27 | свій | займенник | 460 | 3009 |
+| 28 | то | сполучник | 460 | 3009 |
+| 29 | ми | займенник | 439 | 2872 |
+| 30 | ти | займенник | 424 | 2774 |
 
 **shev.late_middle** — пізньосередньоукраїнська доба, N = 73 665
 | # | lemma | POS | f | ipm |
@@ -3969,43 +4191,43 @@ Function words dominate the top of any frequency list; this is the expected shap
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (3010 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (3014 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| як | shev.middle → shev.late_middle | 4 (26) | 609 (8267) | 1322.6 | 8.30 | 0.0001 |
-| князь | shev.old → shev.early_middle | 1095 (4530) | 440 (31034) | 831.5 | 2.78 | 0.0001 |
-| ж | shev.middle → shev.late_middle | 21 (137) | 412 (5593) | 773.8 | 5.35 | 0.0001 |
-| з | shev.old → shev.early_middle | 17 (70) | 148 (10439) | 748.9 | 7.21 | 0.0001 |
-| він | shev.middle → shev.late_middle | 143 (936) | 571 (7751) | 679.8 | 3.05 | 0.0001 |
-| що | shev.middle → shev.late_middle | 226 (1479) | 671 (9109) | 672.2 | 2.62 | 0.0001 |
-| так | shev.middle → shev.late_middle | 11 (72) | 306 (4154) | 600.3 | 5.85 | 0.0001 |
-| я | shev.middle → shev.late_middle | 422 (2762) | 828 (11240) | 593.1 | 2.02 | 0.0001 |
-| великий | shev.old → shev.early_middle | 473 (1957) | 233 (16434) | 506.7 | 3.07 | 0.0001 |
-| Дмитрій | shev.old → shev.early_middle | 4 (17) | 86 (6066) | 465.4 | 8.52 | 0.0001 |
-| б | shev.middle → shev.late_middle | 1 (7) | 201 (2729) | 439.6 | 8.70 | 0.0001 |
-| й | shev.middle → shev.late_middle | 2 (13) | 174 (2362) | 370.5 | 7.50 | 0.0001 |
-| там | shev.middle → shev.late_middle | 13 (85) | 202 (2742) | 365.7 | 5.01 | 0.0001 |
+| як | shev.middle → shev.late_middle | 4 (26) | 609 (8267) | 1323.1 | 8.30 | 0.0001 |
+| князь | shev.old → shev.early_middle | 1096 (4504) | 440 (30903) | 832.6 | 2.78 | 0.0001 |
+| ж | shev.middle → shev.late_middle | 21 (137) | 412 (5593) | 774.1 | 5.35 | 0.0001 |
+| з | shev.old → shev.early_middle | 16 (66) | 148 (10395) | 754.0 | 7.30 | 0.0001 |
+| він | shev.middle → shev.late_middle | 143 (936) | 571 (7751) | 680.2 | 3.05 | 0.0001 |
+| що | shev.middle → shev.late_middle | 226 (1479) | 671 (9109) | 672.6 | 2.62 | 0.0001 |
+| так | shev.middle → shev.late_middle | 11 (72) | 306 (4154) | 600.6 | 5.85 | 0.0001 |
+| я | shev.middle → shev.late_middle | 424 (2774) | 828 (11240) | 590.8 | 2.02 | 0.0001 |
+| великий | shev.old → shev.early_middle | 473 (1944) | 233 (16365) | 507.6 | 3.07 | 0.0001 |
+| Дмитрій | shev.old → shev.early_middle | 4 (16) | 86 (6040) | 465.7 | 8.52 | 0.0001 |
+| б | shev.middle → shev.late_middle | 1 (7) | 201 (2729) | 439.7 | 8.70 | 0.0001 |
+| й | shev.middle → shev.late_middle | 2 (13) | 174 (2362) | 370.6 | 7.50 | 0.0001 |
+| там | shev.middle → shev.late_middle | 13 (85) | 202 (2742) | 365.9 | 5.01 | 0.0001 |
 | й | shev.late_middle → shev.modern | 174 (2362) | 995 (8441) | 315.0 | 1.84 | 0.0001 |
 | мова | shev.late_middle → shev.modern | 74 (1005) | 676 (5734) | 314.5 | 2.51 | 0.0001 |
 **Falling** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| князь | shev.early_middle → shev.middle | 440 (31034) | 240 (1571) | 1329.7 | -4.30 | 0.0001 |
-| яко | shev.middle → shev.late_middle | 1283 (8398) | 87 (1181) | 557.2 | -2.83 | 0.0001 |
+| князь | shev.early_middle → shev.middle | 440 (30903) | 240 (1570) | 1326.9 | -4.30 | 0.0001 |
+| яко | shev.middle → shev.late_middle | 1283 (8393) | 87 (1181) | 556.8 | -2.83 | 0.0001 |
 | Хмельницький | shev.late_middle → shev.modern | 277 (3760) | 0 (0) | 529.4 | -9.79 | 0.0001 |
 | і | shev.late_middle → shev.modern | 3320 (45069) | 3047 (25847) | 488.7 | -0.80 | 0.0001 |
 | от | shev.late_middle → shev.modern | 480 (6516) | 111 (942) | 454.2 | -2.79 | 0.0001 |
-| великий | shev.early_middle → shev.middle | 233 (16434) | 350 (2291) | 426.7 | -2.84 | 0.0001 |
-| Дмитрій | shev.early_middle → shev.middle | 86 (6066) | 2 (13) | 405.4 | -8.86 | 0.0001 |
-| іже | shev.middle → shev.late_middle | 631 (4130) | 23 (312) | 349.1 | -3.73 | 0.0001 |
-| которий | shev.middle → shev.late_middle | 904 (5917) | 86 (1167) | 320.1 | -2.34 | 0.0001 |
-| себе | shev.middle → shev.late_middle | 1275 (8346) | 187 (2539) | 305.4 | -1.72 | 0.0001 |
+| великий | shev.early_middle → shev.middle | 233 (16365) | 350 (2290) | 425.4 | -2.84 | 0.0001 |
+| Дмитрій | shev.early_middle → shev.middle | 86 (6040) | 2 (13) | 404.8 | -8.85 | 0.0001 |
+| іже | shev.middle → shev.late_middle | 631 (4128) | 23 (312) | 348.9 | -3.73 | 0.0001 |
+| которий | shev.middle → shev.late_middle | 904 (5914) | 86 (1167) | 319.8 | -2.34 | 0.0001 |
+| себе | shev.middle → shev.late_middle | 1275 (8341) | 187 (2539) | 305.0 | -1.72 | 0.0001 |
 | же | shev.late_middle → shev.modern | 403 (5471) | 143 (1213) | 281.1 | -2.17 | 0.0001 |
 | но | shev.late_middle → shev.modern | 227 (3082) | 39 (331) | 250.0 | -3.22 | 0.0001 |
 | Еней | shev.late_middle → shev.modern | 129 (1751) | 1 (8) | 235.8 | -7.69 | 0.0001 |
 | да | shev.late_middle → shev.modern | 207 (2810) | 35 (297) | 229.6 | -3.24 | 0.0001 |
-| же | shev.middle → shev.late_middle | 1751 (11462) | 403 (5471) | 206.8 | -1.07 | 0.0001 |
+| же | shev.middle → shev.late_middle | 1751 (11455) | 403 (5471) | 206.5 | -1.07 | 0.0001 |
 
 Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shevchenko corpus is poetry, the old epochs are chronicles and sermons) — a shift is a statement about *this corpus*, not about the language (research/06 §3.5).
 
@@ -4013,7 +4235,7 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-558 spellings with a church_slavonic label (denominator: 46 596 stored spellings); 108 lemmas with origin = church_slavonic.
+559 spellings with a church_slavonic label (denominator: 46 676 stored spellings); 109 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
@@ -4064,20 +4286,28 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 
 | lemma | date | author | witness | locator | form as written | co-first witnesses |
 |---|---|---|---|---|---|---|
-| отрок | 1019 | sophia_graffiti | sophia-99 | 118-02/99 | отрокъ | 0 |
-| л | 1019 | sophia_graffiti | sophia-89 | 118-02/89 | лъ | 0 |
-| в | 1023 | sophia_graffiti | sophia-3816 | 113-22b/3816 | В | 0 |
-| у | 1020–1025 | sophia_graffiti | sophia-298 | 110-01/298 | оу | 0 |
-| свій | 1030–1039 | sophia_graffiti | sophia-291 | 110-01/291 | своємоу | 0 |
-| Никола | 1030–1039 | sophia_graffiti | sophia-291 | 110-01/291 | николи | 0 |
-| і | 1037–1050 | ilarion | ilarion | абз. 1 | и | 0 |
+| і | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | и | 0 |
+| я | 1019 | sophia_graffiti | sophia-150 | 120-17/150 | Я | 0 |
+| він | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | нимъ | 0 |
+| господь | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | Господи | 1 |
+| раб | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | рабоу | 1 |
+| с | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | съ | 0 |
+| Іван | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | Иванѫ | 0 |
+| отрок | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | отроку | 2 |
+| названий | 1019 | sophia_graffiti | sophia-150 | 120-17/150 | названий | 0 |
+| в | 1022 | sophia_graffiti | sophia-2070 | 114-34/2070 | Вь | 0 |
+| о | 1022 | sophia_graffiti | sophia-275 | 110-01/275 | о | 0 |
+| спасти | 1022 | sophia_graffiti | sophia-2070 | 114-34/2070 | спаси | 0 |
+| простити | 1022 | sophia_graffiti | sophia-275 | 110-01/275 | прости | 0 |
+| паска | 1022 | sophia_graffiti | sophia-275 | 110-01/275 | пасцѣ | 0 |
+| свій | 1020–1025 | sophia_graffiti | sophia-297 | 110-01/297 | своємоу | 0 |
+| рик | 1036 | sophia_graffiti | sophia-269 | 110-01/269 | рік | 0 |
 | не | 1037–1050 | ilarion | ilarion | абз. 3 | не | 0 |
 | бути | 1037–1050 | ilarion | ilarion | абз. 5 | бѣ | 0 |
 | же | 1037–1050 | ilarion | ilarion | абз. 1 | же | 0 |
 | на | 1037–1050 | ilarion | ilarion | абз. 3 | на | 0 |
 | а | 1037–1050 | ilarion | ilarion | абз. 3 | а | 0 |
 | той | 1037–1050 | ilarion | ilarion | абз. 8 | томь | 2 |
-| я | 1037–1050 | ilarion | ilarion | абз. 10 | ми | 1 |
 | себе | 1037–1050 | ilarion | ilarion | абз. 15 | ся | 0 |
 | весь | 1037–1050 | ilarion | ilarion | абз. 25 | вси | 0 |
 | от | 1037–1050 | ilarion | ilarion | абз. 1 | от | 0 |
@@ -4086,38 +4316,30 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | сей | 1037–1050 | ilarion | ilarion | абз. 12 | сихъ | 0 |
 | до | 1037–1050 | ilarion | ilarion | абз. 1 | до | 0 |
 | яко | 1037–1050 | ilarion | ilarion | абз. 3 | яко | 0 |
-| бо | 1037–1050 | ilarion | ilarion | абз. 4 | бо | 0 |
-| за | 1037–1050 | ilarion | ilarion | абз. 3 | за | 0 |
-| бог | 1037–1050 | ilarion | ilarion | абз. 3 | богъ | 0 |
-| ми | 1037–1050 | ilarion | ilarion | абз. 3 | ны | 0 |
-| о | 1037–1050 | ilarion | ilarion | абз. 1 | О | 0 |
-| ви | 1037–1050 | ilarion | ilarion | абз. 25 | вамъ | 0 |
-| іже | 1037–1050 | ilarion | ilarion | абз. 6 | Еже | 0 |
-| то | 1037–1050 | ilarion | ilarion | абз. 6 | то | 0 |
 
-11844 of 11844 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+11860 of 11860 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 1908. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 427 of 11844 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); чрево (derived: russianism_or_hybrid)
+Surzhyk claims: 430 of 11860 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); грясти (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); украсити (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); чрево (derived: russianism_or_hybrid)
 
-Dialect labels (lemmas): CHN: 222 · MPL: 3 · SE: 4 · POD: 11 · MDN: 10 · BOY: 15 · LEM: 15
+Dialect labels (lemmas): CHN: 223 · MPL: 3 · SE: 4 · POD: 11 · MDN: 10 · BOY: 15 · LEM: 15
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 46596. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 46676. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 297 types (1 221 tokens). Top: да (235, replace), єсть (193, replace), да (57, replace), тай (46, replace), щож (29, replace), будучи (27, replace), да (22, replace), даже (17, replace), враг (12, replace), куда (9, replace), тай (9, replace), далече (8, replace), получивши (8, soft), государ (8, replace), єсть (8, replace), да (8, replace), власть (8, replace), тоже (7, replace), тута (7, replace), могучий (7, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 44 077 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 429 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 44 165 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 429 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 1758 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 1869 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
-- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (28.6%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 11 844 of 19 141 lemmas; 11 844 written, none dropped. Core lexicon.json 12.84 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 729 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 040 shards lex/<bucket>.json: max 206 KB, median 40 KB, total 88.0 MiB (limit 192 KiB each). lexindex.json 3.65 MB (3322 corpus-attested flagged forms added).
+- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (28.5%).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 11 860 of 19 161 lemmas; 11 860 written, none dropped. Core lexicon.json 13.02 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 798 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 041 shards lex/<bucket>.json: max 211 KB, median 43 KB, total 94.8 MiB (limit 192 KiB each). lexindex.json 3.65 MB (3325 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
