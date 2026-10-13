@@ -104,6 +104,18 @@ export function attach(row: PrefixRow, stem: string): { form: string; apostrophe
   return { form: allo.form + (apostrophe ? "'" : '') + stem, apostrophe }
 }
 
+/** BL-5: surface prefixes (all allomorphs) longest first; used to peel an existing prefix off a verb lemma. */
+const SURFACE = [...new Set(PREFIXES.filter(p => !p.closed).flatMap(p => p.allo.map(a => a.form)))].sort((x, y) => y.length - x.length)
+/** `base` = surface prefix + a verb that `has` attests (в+робити, пере+дати) → that verb; else undefined. Longest prefix first, apostrophe at the join dropped. */
+export function stripPrefix(base: string, has: Has): string | undefined {
+  for (const p of SURFACE) {
+    if (base.length <= p.length + 2 || !base.startsWith(p)) continue
+    const rest = base.slice(p.length).replace(/^'/, '')
+    if (/ти$/.test(rest) && has(rest)) return rest
+  }
+  return undefined
+}
+
 /**
  * DV-2: candidate prefixed lemmas of `lemma` (+ reflexive -ся), classified against `has`.
  * Attested ones (any verb or noun) are always returned; unattested candidates are returned (as `suggestion`) only for verbs
@@ -115,10 +127,14 @@ export function derivatives(lemma: string, has: Has): Derivative[] {
   const verb = /ти$/.test(base)
   const out: Derivative[] = []
   const seen = new Set<string>()
+  // BL-5: a lemma that is already prefix + attested verb (вробити = в- + робити) is derived from that base; stacking on the whole lemma (обвробити) is kept only when attested
+  const root = verb ? stripPrefix(base, has) : undefined
+  const stem = root ?? base
   for (const row of PREFIXES) {
     if (row.closed) { for (const w of row.closed) if (w === row.prefix.slice(0, -1) + base && has(w) && !seen.has(w)) { seen.add(w); out.push(make(row, w, false, has(w) as 'vesum' | 'corpus', lemma)) } continue }
-    const { form } = attach(row, base)
+    const { form } = attach(row, stem)
     if (!form || form === base) continue
+    if (root) { const whole = attach(row, base).form; for (const refl of [false, true]) { const f = refl ? whole + 'ся' : whole; if (whole && f !== base0 && !seen.has(f) && has(f)) { seen.add(f); out.push(make(row, f, refl, has(f) as 'vesum' | 'corpus', lemma)) } } }
     for (const refl of verb ? [false, true] : [false]) {
       const f = refl ? form + 'ся' : form
       if (seen.has(f)) continue

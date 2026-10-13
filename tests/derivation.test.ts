@@ -84,3 +84,18 @@ describe('DV-2 derivatives(lemma)', () => {
     expect(derivatives('ділати', () => null).some(d => d.prefix === 'прі-')).toBe(false)
   })
 })
+
+describe('BL-5 an existing prefix is stripped to the base verb before re-prefixing', () => {
+  const V2 = new Set([...VESUM, 'робити', 'обробити', 'ділати'])
+  const h2: Has = f => (V2.has(f) ? 'vesum' : null)
+  it('вробити → обробити, переробити; never обвробити', () => {
+    const forms = derivatives('вробити', h2).map(d => d.form)
+    expect(forms).toContain('обробити'); expect(forms).toContain('переробити')
+    expect(forms).not.toContain('обвробити'); expect(forms.some(f => /вробити$/.test(f))).toBe(false)
+    expect(derivatives('вробити', h2).find(d => d.form === 'обробити')!.status).toBe('vesum')
+  })
+  it('ділати still gives зділати, переділати, відділатися', () => {
+    const forms = derivatives('ділати', h2).map(d => d.form)
+    for (const f of ['зділати', 'переділати', 'відділатися']) expect(forms, f).toContain(f)
+  })
+})
