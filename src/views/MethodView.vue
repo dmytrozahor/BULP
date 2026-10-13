@@ -4,6 +4,7 @@
  * statistics (core/stats STAT_CITES) and SPEC 00 verbatim (specs/00-principles.md via ?raw). Nothing on this page is hand-copied.
  */
 import { RULES } from '../../core/phonology.ts'
+import { DIALECTS } from '../../core/rules.ts'
 import { EPOCHS } from '../../core/epochs.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, REGISTER_DEF, SURZHYK_DEF, RUSYN_STATUS, ruleGate } from '../../core/rules.ts'
@@ -39,14 +40,14 @@ const formulas: [string, string, string][] = [
 
   <section class="card"><h2><span>Звукові правила (Шевельов) — {{ RULES.length }}</span></h2>
     <div class="tablewrap"><table><thead><tr><th>id</th><th>назва</th><th>час</th><th>сфера</th><th>цитата й локатор</th></tr></thead>
-      <tbody><tr v-for="r in RULES" :key="r.id"><td><code>{{ r.id }}</code></td><td>{{ r.name }}</td><td>{{ r.date }}</td><td>{{ r.scope }}</td>
+      <tbody><tr v-for="r in RULES" :key="r.id" :id="`rule-${r.id}`"><td><code>{{ r.id }}</code></td><td>{{ r.name }}</td><td>{{ r.date }}</td><td>{{ r.scope }}</td>
         <td><EvidencePopover :evidence="[r.cite]" :heading="r.id + ' ' + r.name" :label="r.id"><span class="small" style="text-align:left">{{ r.cite.quote.slice(0, 70) }}{{ r.cite.quote.length > 70 ? '…' : '' }} <span class="badge">{{ r.cite.kind }} ⓘ</span></span></EvidencePopover></td></tr></tbody></table></div>
     <p class="small muted sans">Сфери: G — загальні; X — загальні з лексичними винятками; L — лексичні (гілки); D — діалектні (ніколи не застосовуються до стандарту). Правила M01–M06 пропущено: вони без джерела.</p>
   </section>
 
   <section v-for="[axis, rules] in tables" :key="axis" class="card"><h2><span>Детектор — {{ AXIS_UK[axis] }} ({{ rules.length }})</span></h2>
     <div class="tablewrap"><table><thead><tr><th>id</th><th>вісь</th><th>мітка</th><th class="num">вага</th><th v-if="axis === 'dialect'" class="num">від</th><th>джерело</th></tr></thead>
-      <tbody><tr v-for="r in rules" :key="r.id" :class="{ muted: r.weight <= 0 }">
+      <tbody><tr v-for="r in rules" :key="r.id" :id="`rule-${r.id}`" :class="{ muted: r.weight <= 0 }">
         <td><code>{{ r.id }}</code></td><td>{{ r.axis }}</td><td>{{ labelUk(r.label) }}<div class="small muted">{{ r.note }}</div></td>
         <td class="num">{{ r.weight }}<div v-if="r.weight <= 0" class="small unk">без джерела</div></td>
         <td v-if="axis === 'dialect'" class="num">{{ ruleGate(r) }}<div v-if="r.earliestCite" class="small"><EvidencePopover :evidence="[r.earliestCite]" :heading="r.id + ': перша фіксація ознаки'" :label="r.id + ' датування'"><span class="badge">датовано ⓘ</span></EvidencePopover></div></td>
@@ -59,10 +60,22 @@ const formulas: [string, string, string][] = [
 
   <section class="card"><h2><span>Епохи (дві схеми, не зливаються)</span></h2>
     <div class="tablewrap"><table><thead><tr><th>id</th><th>схема</th><th>назва</th><th class="num">від</th><th class="num">до</th><th>межа (цитата)</th></tr></thead>
-      <tbody><tr v-for="e in EPOCHS" :key="e.id"><td><code>{{ e.id }}</code><span v-if="e.overlay" class="small muted"> накладка</span></td><td>{{ e.scheme }}</td><td>{{ e.uk }}<div class="small muted">{{ e.en }}</div></td>
+      <tbody><tr v-for="e in EPOCHS" :key="e.id" :id="`epoch-${e.id}`"><td><code>{{ e.id }}</code><span v-if="e.overlay" class="small muted"> накладка</span></td><td>{{ e.scheme }}</td><td>{{ e.uk }}<div class="small muted">{{ e.en }}</div></td>
         <td class="num">{{ e.start }}</td><td class="num">{{ e.end === 9999 ? '…' : e.end }}</td>
         <td><EvidencePopover :evidence="[e.cite]" :heading="e.uk" :label="e.id"><span class="small">{{ e.cite.quote.slice(0, 60) }}… <span class="badge">{{ e.cite.kind }} ⓘ</span></span></EvidencePopover></td></tr></tbody></table></div>
     <p class="small muted sans">Алгоритм: точний збіг → high; частка ≥ 0,8 з допуском → medium; інакше всі епохи з часткою &gt; 0,1 → low. «Енеїда» 1798: Шевельов — пізньосередньоукраїнська, WL — нова українська; розбіжність свідома.</p>
+  </section>
+
+  <section class="card"><h2><span>Говори (діалектні групи)</span></h2>
+    <ul class="sans small"><li v-for="(name, code) in DIALECTS" :id="`dialect-${code}`" :key="code"><code>{{ code }}</code> {{ name }}</li></ul>
+  </section>
+
+  <section id="fonts" class="card"><h2><span>Шрифти й ліцензії</span></h2>
+    <ul class="sans small">
+      <li><strong>Monomakh</strong> (Slavonic Computing Initiative) — SIL Open Font License 1.1; Google Fonts; самохостинг у <code>public/fonts</code>. Для давніх форм: до 1800 р. або з ѣ ѧ ѫ ъ ы ѡ ꙋ, титлом, надрядковими літерами.</li>
+      <li><strong>Noto Serif Light</strong> (Google / Noto Project) — SIL Open Font License 1.1; самохостинг. Для сучасних форм.</li>
+      <li>«Ruthenia» не використано: підтвердженої ліцензії на вбудовування у вебсторінку не знайдено.</li>
+    </ul>
   </section>
 
   <section class="card"><h2><span>Статистика</span></h2>

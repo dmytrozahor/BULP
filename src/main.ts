@@ -1,27 +1,7 @@
-﻿import { createApp } from 'vue'
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createApp } from 'vue'
 import App from './App.vue'
+import { makeRouter } from './router.ts'
 import './style.css'
 import './ux.css'
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  scrollBehavior: (to, from) => (to.path === from.path ? undefined : { top: 0 }),
-  routes: [
-    { path: '/', component: () => import('./views/SearchView.vue') },
-    { path: '/w/:lemma', component: () => import('./views/WordView.vue'), props: true },
-    { path: '/f/:form', component: () => import('./views/FormView.vue'), props: true },
-    { path: '/analyze', component: () => import('./views/AnalyzeView.vue') },
-    { path: '/derive', component: () => import('./views/DeriveView.vue') },
-    { path: '/annotate', component: () => import('./views/AnnotateView.vue') },
-    { path: '/texts', component: () => import('./views/TextsView.vue') },
-    { path: '/songs/:id?', component: () => import('./views/SongsView.vue'), props: true },
-    { path: '/sophia', component: () => import('./views/SophiaView.vue') },
-    { path: '/map', component: () => import('./views/MapView.vue') },
-    { path: '/corpus', component: () => import('./views/CorpusView.vue') },
-    { path: '/report', component: () => import('./views/ReportView.vue') },
-    { path: '/method', component: () => import('./views/MethodView.vue') },
-    { path: '/:rest(.*)*', redirect: '/' },
-  ],
-})
-createApp(App).use(router).mount('#app')
+createApp(App).use(makeRouter()).mount('#app')

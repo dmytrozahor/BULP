@@ -467,7 +467,7 @@ describe('W1-4 statistics explainer (U-24)', () => {
 
 describe('W1-5 /texts reader (U-8)', () => {
   it('route and nav exist; the view reads public/data/texts/<witness>.json and links words to /w/:lemma', () => {
-    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/texts"')
+    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/texts"')
     const v = readFileSync('src/views/TextsView.vue', 'utf8'); expect(v).toContain('./data/texts/'); expect(v).toContain('/w/${encodeURIComponent(t.lemma)}'); expect(v).toContain('annotate(')
   })
   it('SSR before data load shows the skeleton, not a crash', async () => {
@@ -521,7 +521,7 @@ describe('MV-1 media panel', () => {
   })
   it('MV-1 Kwic offers «переглянути» for media witnesses; /sophia is routed and in the nav', async () => {
     expect(readFileSync('src/components/Kwic.vue', 'utf8')).toContain('переглянути')
-    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/sophia'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/sophia"')
+    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/sophia'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/sophia"')
     expect(await ssr(SophiaView, {}, '/sophia')).toContain('Софія Київська')
   })
 })
@@ -583,7 +583,7 @@ describe('NW-7 songs UI (songs.json)', () => {
     expect(songOfWitness(d, 'song_zhentsi')?.id).toBe('oy-na-hori'); expect(songOfWitness(d, 'nope')).toBeUndefined()
   })
   it('route /songs/:id? exists, the list renders without data, the view uses MediaPanel and Kwic links to songs', async () => {
-    expect(readFileSync('src/main.ts', 'utf8')).toContain("'/songs/:id?'")
+    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/songs/:id?'")
     expect(readFileSync('src/components/Kwic.vue', 'utf8')).toContain('/songs/')
     expect(readFileSync('src/views/SongsView.vue', 'utf8')).toContain('MediaPanel')
     const SongsView = (await import('../src/views/SongsView.vue')).default

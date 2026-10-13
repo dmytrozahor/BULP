@@ -51,7 +51,7 @@ describe('NP-2 gazetteer', () => {
 
 describe('NP-3 /map', () => {
   it('NP-3 route and nav exist; Leaflet is imported dynamically (lazy chunk) with OSM attribution; word card has «на мапі»', () => {
-    expect(rd('src/main.ts')).toMatch(/path: '\/map', component: \(\) => import\('\.\/views\/MapView\.vue'\)/)
+    expect(rd('src/router.ts')).toMatch(/path: '\/map', component: \(\) => import\('\.\/views\/MapView\.vue'\)/)
     const v = rd('src/views/MapView.vue')
     expect(v).toContain("await import('leaflet')"); expect(v).not.toMatch(/^import .* from 'leaflet'/m)
     expect(v).toContain('OpenStreetMap'); expect(v).toContain('tile.openstreetmap.org')
