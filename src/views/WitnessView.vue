@@ -8,7 +8,7 @@ import { computed, ref, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK, WTYPE_UK } from '../lib/format.ts'
-import { authorTo, epochTo, textTo, wordTo } from '../lib/nav.ts'
+import { authorTo, epochTo, isOldForm, textTo, wordTo } from '../lib/nav.ts'
 import { loadSophia, resolveMedia } from '../lib/sophiaData.ts'
 import { sophiaIdOf, type SophiaItem, type WitnessMedia } from '../lib/media.ts'
 import { loadTokens, rowsOf, type Row } from '../lib/witnessText.ts'
@@ -60,8 +60,8 @@ const title = computed(() => w.value?.title ?? (item.value ? `Графіті ${i
     <template v-else>
       <p class="reader" style="font-family:var(--serif);line-height:2">
         <template v-for="(t, i) in rows" :key="i">
-          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived' }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
-          <span v-else class="tok unknown" :title="t.loc">{{ t.raw }}</span>{{ t.sep }}
+          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', old: isOldForm(t.raw, w?.date[1] ?? item?.to) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
+          <span v-else :class="['tok', 'unknown', { old: isOldForm(t.raw, w?.date[1] ?? item?.to) }]" :title="t.loc">{{ t.raw }}</span>{{ t.sep }}
         </template>
       </p>
       <p class="small sans"><RouterLink :to="textTo(id)">читати весь текст у читачі →</RouterLink></p>

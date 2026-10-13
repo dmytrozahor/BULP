@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * /texts[?w=<witness>[&p=<page>]] — U-8 corpus reader: all witnesses of corpus.json (filter by epoch / author / region), and a witness's running text
  * annotated with the existing annotate() pipeline, PAGE_SIZE tokens at a time (paged, so a long chronicle never renders at once).
@@ -10,7 +11,7 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { findLoc, loadTokens, rowsOf, type Tok } from '../lib/witnessText.ts'
-import { authorTo, epochTo, witnessTo, wordTo } from '../lib/nav.ts'
+import { epochTo, witnessTo, wordTo }  from '../lib/nav.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
@@ -85,8 +86,8 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
       </nav>
       <p class="reader" style="font-family:var(--serif);line-height:2">
         <template v-for="(t, i) in rows" :key="i">
-          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', hit: isHit(t.loc) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
-          <RouterLink v-else class="tok unknown" :class="{ hit: isHit(t.loc) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}
+          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
+          <RouterLink v-else class="tok unknown" :class="{ hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}
         </template>
       </p>
       <p v-if="rows.length" class="small sans muted">Перше слово сторінки: {{ rows[0]!.loc }}

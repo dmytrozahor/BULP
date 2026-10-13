@@ -1,4 +1,5 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * research/07 §3.1: «KWIC rows use the format left context | **node** | right context with a monospace-aligned node, and a citation line
  * underneath (author, title, year, region, link). Offer … a filter by period.» P-1.6: statistics link to the concordance lines.
@@ -40,7 +41,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
       <button v-for="e in epochs" :key="e" type="button" class="chip" :aria-pressed="sel === e" @click="sel = e">{{ epochShort(e) }}</button>
     </div>
     <div v-for="(k, i) in view" :key="i" class="kwic">
-      <span class="l"><span>{{ k.left }}</span></span>{{ ' ' }}<RouterLink class="n" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span class="r">{{ k.right }}</span>
+      <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span>{{ k.left }}</span></span>{{ ' ' }}<RouterLink :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]">{{ k.right }}</span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>

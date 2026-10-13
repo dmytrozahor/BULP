@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /** NP-1/NP-3 word-card block «Власна назва / на мапі»: proper-name claim, the gazetteer row (Wikidata QID, coordinates), the spelling-variant cluster and a link to /map. */
 import { computed, onMounted, ref } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
@@ -28,7 +29,7 @@ const claim = computed(() => (place.value ? placeClaim(place.value) : undefined)
       </p>
       <p v-if="place.note" class="sans small muted">{{ place.note }}</p>
       <p class="sans small"><span class="muted">написання в корпусі ({{ place.n }} токенів у {{ place.nW }} пам’ятках): </span>
-        <span v-for="v in place.variants.slice(0, 14)" :key="v.raw" class="lang" style="margin-right:.6rem" :title="`${v.w}, ${v.loc}, ${fmtDate(v.date)}`">{{ v.raw }}<small class="muted">×{{ v.f }}</small></span></p>
+        <span v-for="v in place.variants.slice(0, 14)" :key="v.raw" :class="['lang', { old: isOldForm(v.raw, v.date[1]) }]" style="margin-right:.6rem" :title="`${v.w}, ${v.loc}, ${fmtDate(v.date)}`">{{ v.raw }}<small class="muted">×{{ v.f }}</small></span></p>
       <p v-if="place.recon.length" class="sans small"><span class="muted">реконструкції зі сучасної назви (гіпотези, правила R…): </span>
         <span v-for="r in place.recon" :key="r.form" class="derived" style="margin-right:.6rem" :title="r.rules.join('+')">{{ r.form }}<small v-if="r.confirmed"> ✓ є в корпусі</small></span></p>
     </template>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * SPEC 00 P-1.5: "Derivations keep a full trace: one step per rule, each step with its citation (видѣти →R09→ видіти)."
  * research/07 §3.1 «Походження (provenance timeline per form)». Click a step → the Shevelov quote + locator from core RULES.
@@ -32,7 +33,7 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
     <li v-for="{ f, date, derived } in items.slice(0, n)" :key="f.raw">
       <div class="date">{{ date ? fmtDate(date) : 'дата невідома' }} </div>
       <div>
-        <strong :class="['lang', derived ? 'derived' : 'attested']" style="font-size:1.25rem">{{ f.raw }}</strong><span v-if="derived" class="derived-badge">реконструкція</span>
+        <strong :class="['lang', derived ? 'derived' : 'attested', { old: isOldForm(f.raw, f.date?.[1]) }]" style="font-size:1.25rem">{{ f.raw }}</strong><span v-if="derived" class="derived-badge">реконструкція</span>
         <span v-if="f.norm !== f.raw" class="muted"> (норм. {{ f.norm }})</span>
         <span> → <strong>{{ f.modern }}</strong></span>
         <span class="muted small"> · f = {{ f.f }}</span>

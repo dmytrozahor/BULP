@@ -370,7 +370,7 @@ describe('SPEC 50 epoch paradigms', () => {
   })
   it('EP-7.3 three classes, each with a text badge; attestation and a differing reconstruction side by side', async () => {
     const html = await panel(epochSample())
-    expect(html).toContain('class="lang attested">рѣка<'); expect(html).toContain('class="lang derived">рѣку<')   // sg.acc reconstructed only
+    expect(html).toContain('class="lang attested old">рѣка<'); expect(html).toContain('class="lang derived old">рѣку<')   // sg.acc reconstructed only
     expect(html).toContain('реконструкція'); expect(html).toContain('✓ підтверджено пам’яткою')
     const g = epochGrid(epochSample().paradigms[0], 'shev.old', stemV), ins = g.rows[4]!.cells[0]!
     expect(ins.att.map(f => f.raw)).toEqual(['рѣкою']); expect(ins.rec.map(r => r.form)).toEqual(['рѣкою'])   // same spelling in the same cell confirms
@@ -434,7 +434,7 @@ describe('SPEC 50 epoch paradigms', () => {
 describe('W1-1 KWIC spacing', () => {
   it('left, node and right are separated by spaces; the citation is its own element', async () => {
     const html = await ssr(Kwic, { lines: [{ w: 'x', loc: 'абз. 1', left: 'по Всеславѣ', node: 'пожегъ', right: 'землю', date: [1096, 1117] }] })
-    expect(html).toMatch(/<\/span> <a href="\/f\/пожегъ"[^>]*class="n"[^>]*>пожегъ<\/a> <span class="r">/); expect(html).toContain('class="cite"')
+    expect(html).toMatch(/<\/span> <a href="\/f\/пожегъ"[^>]*class="n old"[^>]*>пожегъ<\/a> <span class="r old">/); expect(html).toContain('class="cite"')
   })
 })
 

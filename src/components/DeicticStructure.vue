@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * «Будова» block (SPEC 60 DX-3): segmentation of a reinforced deictic (core/deictics.ts, research/24). An attested form (озьдо = о + сьде + о «ось тут»)
  * is a claim with the dictionary quote; an unattested compound (отуточки, онтамека, осьтамека) is a reconstruction — dashed, «реконструкція» badge,
@@ -17,7 +18,7 @@ const segs = computed(() => segment(props.word))
     <div v-else class="small muted sans">Будова</div>
     <div v-for="s in segs" :key="s.parts.map(p => p.text).join('+')" class="sans" style="margin:.4rem 0">
       <div>
-        <strong :class="['lang', s.status === 'attested' ? 'attested' : 'derived']" style="font-family:var(--serif);font-size:1.1rem">{{ s.form }}</strong>
+        <strong :class="['lang', s.status === 'attested' ? 'attested' : 'derived', { old: isOldForm(s.form) }]" style="font-family:var(--serif);font-size:1.1rem">{{ s.form }}</strong>
         <span v-if="s.status === 'reconstruction'" class="derived-badge">реконструкція (гіпотеза)</span>
         <span v-else class="attested-badge">✓ засвідчено</span>
         <span class="muted small"> · «{{ s.reading }}»<template v-if="s.standard"> · стандартний відповідник: {{ s.standard }}</template>

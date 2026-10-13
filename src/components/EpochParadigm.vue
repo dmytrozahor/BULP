@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * SPEC 50 EP-7: paradigm per historical epoch next to the modern VESUM grid. Tabs = shev epochs (EP-7.1); cells in three classes by shape + text
  * (EP-7.3): attested (solid, source badge), reconstruction (dashed, italic, «реконструкція»), confirmed reconstruction (dashed + ✓).
@@ -26,6 +27,7 @@ const { corpus } = useData()
 const tabs = computed(() => epochTabs(props.epochs?.paradigms ?? [], props.sizes ?? corpus.value?.epochSizes ?? {}))
 const chosen = ref(props.start ?? '')   // user's pick; until then the default tab follows the data (the shard may arrive after mount)
 const sel = computed(() => chosen.value || tabs.value.default)
+const oldEp = (s: string) => isOldForm(s, epochById[sel.value]?.end)
 const cur = computed(() => tabs.value.tabs.find(t => t.id === sel.value))
 const stem = computed(() => (props.epochs && props.epochs.stem.value !== 'unknown' ? (props.epochs.stem.value as StemValue) : undefined))
 /** D4 / P-1.7: a stem assigned from a Stanza lemma is model-based, and so is every reconstruction built on it */
@@ -103,7 +105,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                       <!-- attested: solid -->
                       <EvidencePopover v-for="f in c.att" :key="f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key}`" :label="`${f.raw}, ${c.key}`"
                         :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
-                        <span class="ef att"><strong class="lang attested">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
+                        <span class="ef att"><strong :class="['lang', 'attested', { old: oldEp(f.raw) }]">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                           <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="f.amb && f.amb > 1" class="sb" :title="`токен міг стояти в ${f.amb} клітинках`">≈{{ f.amb }}</span>
                           <span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30): форма може не відбивати живу мову">ЦС</span>
                           <span v-if="ood(f)" class="sb" title="текст поза доменом моделі Stanza">модель поза доменом</span></span>
@@ -119,14 +121,14 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                       <div v-if="c.enc?.length" class="encrow small">
                         <EvidencePopover v-for="f in c.enc" :key="'e' + f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key} · енклітична форма`" :label="`${f.raw}, ${c.key}, енклітична форма`"
                           :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
-                          <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong class="lang attested">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
+                          <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong :class="['lang', 'attested', { old: oldEp(f.raw) }]">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                             <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30)">ЦС</span></span>
                         </EvidencePopover>
                       </div>
                       <!-- reconstruction: dashed -->
                       <EvidencePopover v-for="r in c.rec" :key="'r' + r.form" :evidence="[...r.trace.flatMap(s => s.cite), ...(r.confirmedBy ?? []).map(evOf)]"
                         :heading="`${r.form} · реконструкція · ${c.key}`" :label="`реконструкція ${r.form}, ${c.key}`" meta="не засвідчено: виведено за таблицею парадигм (P-1.7)">
-                        <span class="ef rec"><strong class="lang derived">{{ r.form }}</strong><span class="derived-badge">реконструкція</span>
+                        <span class="ef rec"><strong :class="['lang', 'derived', { old: oldEp(r.form) }]">{{ r.form }}</strong><span class="derived-badge">реконструкція</span>
                           <span v-if="r.variant" class="sb" title="варіант цієї клітинки у джерелі">варіант</span>
                           <span v-if="modelStem" class="sb" title="тип основи визначено за моделлю Stanza (P-1.7)">основа: модель</span>
                           <span v-if="r.confirmedBy" class="derived-badge ok" title="збігається з написанням у пам’ятці в цій самій клітинці">✓ підтверджено пам’яткою</span></span>

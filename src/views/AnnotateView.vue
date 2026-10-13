@@ -14,7 +14,7 @@ import SyntaxSpans from '../components/SyntaxSpans.vue'
 import { CATEGORIES, CATEGORY_UK } from '../lib/analyze.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
-import { textTo, wordTo, witnessTo } from '../lib/nav.ts'
+import { isOldForm, textTo, wordTo, witnessTo } from '../lib/nav.ts'
 import FormLegend from '../components/FormLegend.vue'
 import UsageLegend from '../components/UsageLegend.vue'
 import WordCard from '../components/WordCard.vue'
@@ -44,7 +44,7 @@ const groups = computed(() => {
 })
 const shev = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay)
 const maxEp = computed(() => Math.max(1, ...Object.values(sum.value.epochProfile)))
-const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : '', t.numeral ? 'numeral' : '', heteronymOf(t.key) ? 'het' : ''].join(' ')
+const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : '', t.numeral ? 'numeral' : '', isOldForm(t.raw, y.value) ? 'old' : '', heteronymOf(t.key) ? 'het' : ''].join(' ')
 const numTitle = (t: AnnotatedToken) => t.numeral ? `числівник = ${t.numeral.value}` + (t.numeral.ad ? ` (від створення світу) = ${t.numeral.ad} р. по Р.Х.` : '') : undefined
 const label = (t: AnnotatedToken) => t.numeral ? numTitle(t)! : `${t.raw}: ${t.status}${t.mark ? ', ' + CATEGORY_UK[t.mark] : ''}${heteronymOf(t.key) ? ', ' + HETERONYM_FLAG : ''}`
 </script>

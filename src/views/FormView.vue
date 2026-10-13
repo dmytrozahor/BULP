@@ -1,4 +1,4 @@
-﻿<script setup lang="ts">
+<script setup lang="ts">
 /**
  * BL-6 form page /f/:form — everything for exactly one spelling of a lemma: its KWIC, epoch cells, witnesses, f / ipm / HK / DP with denominators (lib/formStats.ts),
  * the derivation trace and the claims. All of it comes from the lemma's detail shard (fullOf). Several lemmas can share a spelling: ?lemma= picks one.
@@ -19,7 +19,7 @@ import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
 import RegionMap from '../components/RegionMap.vue'
 import { paradigmKindOf } from '../lib/ux.ts'
-import { witnessTo } from '../lib/nav.ts'
+import { isOldForm, witnessTo } from '../lib/nav.ts'
 
 const props = defineProps<{ form: string }>()
 const route = useRoute()
@@ -60,7 +60,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
   </div>
   <template v-else>
     <header class="wordhead headline">
-      <h1 class="lemma">{{ pick.raw }}</h1>
+      <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>

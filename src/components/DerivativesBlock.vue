@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * Word-card block «Похідні» (SPEC 60 DV-3): prefix → derivative. ✓ВЕСУМ / ✓корпус = attested (D-evidence); suggestions are
  * `method: derivation` reconstructions (dashed, «пропозиція», SPEC 30 D-4), never dictionary facts (P-1.7). Renders nothing for a word with no attested derivative and no verb candidates.
@@ -25,7 +26,7 @@ const link = (form: string) => (byLemma.value.has(form) ? `/w/${encodeURICompone
     <ul v-if="attested.length" class="sans" style="list-style:none;padding:0;margin:0">
       <li v-for="d in attested" :key="d.form" style="margin:.3rem 0">
         <span class="muted small">{{ d.prefix }}</span> →
-        <RouterLink v-if="link(d.form)" :to="link(d.form)"><strong class="lang attested">{{ d.form }}</strong></RouterLink><strong v-else class="lang attested">{{ d.form }}</strong>
+        <RouterLink v-if="link(d.form)" :to="link(d.form)"><strong :class="['lang', 'attested', { old: isOldForm(d.form) }]">{{ d.form }}</strong></RouterLink><strong v-else :class="['lang', 'attested', { old: isOldForm(d.form) }]">{{ d.form }}</strong>
         <span class="attested-badge">{{ d.status === 'vesum' ? '✓ ВЕСУМ' : '✓ корпус' }}</span>
         <span v-if="d.hint" class="derived-badge" title="префікс без прямої цитати з Правопису: вага 0">префікс без цитати</span>
         <EvidencePopover :evidence="d.claim.evidence" heading="Докази похідного" :label="d.form"><span class="badge">ⓘ докази</span></EvidencePopover>
@@ -36,7 +37,7 @@ const link = (form: string) => (byLemma.value.has(form) ? `/w/${encodeURICompone
       <summary class="small sans">пропозиції без засвідчення ({{ suggested.length }}) — реконструкція, а не словникова форма</summary>
       <ul class="sans" style="list-style:none;padding:0;margin:.3rem 0 0">
         <li v-for="d in suggested" :key="d.form" style="display:inline-block;margin:.2rem .8rem .2rem 0">
-          <span class="muted small">{{ d.prefix }}</span> → <strong class="lang derived">{{ d.form }}</strong>
+          <span class="muted small">{{ d.prefix }}</span> → <strong :class="['lang', 'derived', { old: isOldForm(d.form) }]">{{ d.form }}</strong>
           <span class="derived-badge">пропозиція</span>
           <EvidencePopover :evidence="d.claim.evidence" heading="Правило префікса" :label="d.form"><span class="badge">ⓘ</span></EvidencePopover>
         </li>

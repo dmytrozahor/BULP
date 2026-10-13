@@ -16,7 +16,7 @@ import { renderStress } from '../../core/text.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
-import { textTo, witnessTo } from '../lib/nav.ts'
+import { isOldForm, textTo, witnessTo } from '../lib/nav.ts'
 import { reconstruct } from '../lib/derive.ts'
 import { groupFormClaims, KIND_UK, paradigmKindOf, placedCells, topForms } from '../lib/ux.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
@@ -157,7 +157,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
   </template>
   <template v-else>
     <header class="wordhead headline">
-      <h1 class="lemma">{{ card.lemma }}</h1>
+      <h1 :class="['lemma', { old: isOldForm(card.lemma) }]">{{ card.lemma }}</h1>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
         <template v-if="stress1"><span class="muted sans">·</span>
           <template v-for="(sv, i) in full!.stress" :key="i"><span v-if="i" class="muted sans">/</span>

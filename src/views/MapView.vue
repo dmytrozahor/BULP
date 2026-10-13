@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isOldForm } from '../lib/nav.ts'
 /**
  * NP-3 /map: the gazetteer (public/data/places.json) on Leaflet + OpenStreetMap tiles. Leaflet and its CSS are a separate chunk, imported only when this route opens.
  * Coordinates are Wikidata P625 (CC0); every marker links to the word card and lists the corpus spellings (the variant cluster). Tiles: © OpenStreetMap contributors (ODbL).
@@ -62,7 +63,7 @@ onBeforeUnmount(() => { map?.remove(); map = undefined })
           <td><RouterLink :to="`/w/${encodeURIComponent(p.lemma)}`">{{ p.name }}</RouterLink> <a :href="osmLink(p.pt[0], p.pt[1])" target="_blank" rel="noopener" title="на OpenStreetMap">↗</a></td>
           <td><a :href="`https://www.wikidata.org/wiki/${p.qid}`" target="_blank" rel="noopener">{{ p.qid }}</a></td>
           <td>{{ p.n }}</td><td>{{ p.earliest ? fmtDate(p.earliest.date) : '' }}</td>
-          <td class="lang">{{ p.variants.slice(0, 5).map(v => v.raw + '×' + v.f).join(', ') }}</td>
+          <td :class="['lang', { old: p.variants.some(v => isOldForm(v.raw)) }]">{{ p.variants.slice(0, 5).map(v => v.raw + '×' + v.f).join(', ') }}</td>
         </tr>
       </tbody>
     </table>

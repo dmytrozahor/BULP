@@ -8,7 +8,7 @@ import { isKnown } from '../../core/evidence.ts'
 import type { AnnotatedToken } from '../lib/annotate.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate } from '../lib/format.ts'
-import { formTo } from '../lib/nav.ts'
+import { formTo, isOldForm } from '../lib/nav.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
 import BankChip from './BankChip.vue'
@@ -34,7 +34,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
 <template>
   <div class="wcard" aria-live="polite">
     <div class="row" style="margin-bottom:.3rem">
-      <strong :class="['lang', t.provenance]" style="font-size:1.25rem; font-family:var(--serif)">{{ t.raw }}</strong>
+      <strong :class="['lang', t.provenance, { old: isOldForm(t.raw, year) }]" style="font-size:1.25rem; font-family:var(--serif)">{{ t.raw }}</strong>
       <span v-if="t.provenance === 'derived'" class="derived-badge">реконструкція (гіпотеза)</span>
       <span class="muted small">{{ t.provenance === 'derived' ? 'не засвідчено: виведено за правилами' : STATUS_UK[t.status] }}</span>
     </div>
