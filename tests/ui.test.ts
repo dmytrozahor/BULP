@@ -1,4 +1,4 @@
-﻿import { describe, it, expect } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mkdtempSync, readFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
@@ -591,3 +591,32 @@ describe('NW-7 songs UI (songs.json)', () => {
     expect(await ssr(SongsView, { id: 'oy-na-hori' }, '/songs/oy-na-hori')).toContain('усі пісні')
   })
 })
+
+describe('BL-17 theme tokens (light default, dark toggle) and WCAG AA contrast', () => {
+  const css = readFileSync('src/style.css', 'utf8')
+  const block = (re: RegExp) => { const m = css.match(re); if (!m) throw new Error('block missing ' + re); return m[1] ?? '' }
+  const tokens = (b: string): Record<string, string> => Object.fromEntries([...b.matchAll(/--([a-z0-9-]+):\s*(#[0-9a-fA-F]{6})/g)].map(m => [m[1], m[2]]))
+  const light = tokens(block(/:root \{([^}]*)\}/))
+  const dark = tokens(block(/:root\[data-theme="dark"\] \{([^}]*)\}/))
+  const darkMedia = tokens(block(/prefers-color-scheme: dark\) \{\s*:root:not\(\[data-theme="light"\]\) \{([^}]*)\}/))
+  const NEED = ['bg', 'surface', 'surface-2', 'ink', 'muted', 'line', 'accent', 'accent-ink', 'accent-soft', 'warn', 'warn-soft', 'danger',
+    'ep1', 'ep2', 'ep3', 'ep4', 'ep5', 'ep6', 'm-cs', 'm-contact', 'm-dialect', 'm-colloquial', 'm-archaic', 'm-rusyn', 'map-line', 'map-dot']
+  const lum = (h = '#000000') => { const c = [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16) / 255).map(v => v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4); return .2126 * c[0]! + .7152 * c[1]! + .0722 * c[2]! }
+  const ratio = (a?: string, b?: string) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x! + .05) / (y! + .05) }
+  it('both themes define the full token set; the media-query dark block equals the data-theme dark block', () => {
+    for (const t of [light, dark, darkMedia]) for (const k of NEED) expect(t[k], k).toMatch(/^#[0-9a-f]{6}$/i)
+    expect(darkMedia).toEqual(dark)
+    expect(lum(light.bg)).toBeGreaterThan(.9); expect(lum(dark.bg)).toBeLessThan(.05)
+  })
+  for (const [name, t] of [['light', light], ['dark', dark]] as const) {
+    it(`${name}: text, links, chips, badges, charts and map meet WCAG AA`, () => {
+      const text: [string, string][] = [['ink', 'bg'], ['ink', 'surface'], ['ink', 'surface-2'], ['muted', 'bg'], ['muted', 'surface'], ['muted', 'surface-2'],
+        ['accent', 'bg'], ['accent', 'surface'], ['accent', 'surface-2'], ['accent-ink', 'accent'], ['ink', 'accent-soft'], ['accent', 'accent-soft'],
+        ['warn', 'warn-soft'], ['warn', 'bg'], ['danger', 'bg'], ['danger', 'warn-soft']]
+      for (const [f, b] of text) expect(ratio(t[f], t[b]), `${f} on ${b}`).toBeGreaterThanOrEqual(4.5)
+      for (const k of ['m-cs', 'm-contact', 'm-dialect', 'm-colloquial', 'm-archaic', 'm-rusyn', 'map-line', 'map-dot', 'accent'])
+        expect(ratio(t[k], t.bg), `${k} (non-text) on bg`).toBeGreaterThanOrEqual(3)
+    })
+  }
+})
+

@@ -1,9 +1,10 @@
 /* Design tokens: scholarly paper, one accent. Epoch colours are the only categorical set and are an ordered sequential ramp. */
 :root {
-  --bg: #faf7f1; --surface: #ffffff; --surface-2: #f3eee3; --ink: #1f1c17; --muted: #675f52; --line: #d9d1bf;
-  --accent: #1d4f7a; --accent-ink: #ffffff; --accent-soft: #e3edf5; --warn: #8a4b0f; --warn-soft: #fbefdb; --danger: #8e2a2a;
+  --bg: #fffdf8; --surface: #ffffff; --surface-2: #f7f1e3; --ink: #14110c; --muted: #5a5244; --line: #e8e1d0;
+  --accent: #0b5fd0; --accent-ink: #ffffff; --accent-soft: #e8f1fe; --warn: #8a4b0f; --warn-soft: #fff3dc; --danger: #a31f1f;
   --ep1: #ecdcae; --ep2: #e2bb6a; --ep3: #cf9140; --ep4: #a9622e; --ep5: #7b402b; --ep6: #4b2531;
-  --m-cs: #6b3fa0; --m-contact: #b3402a; --m-dialect: #2f7a3e; --m-colloquial: #1d4f7a; --m-archaic: #7a6a40; --m-rusyn: #a2652a;
+  --m-cs: #6b3fa0; --m-contact: #b3402a; --m-dialect: #2f7a3e; --m-colloquial: #0b5fd0; --m-archaic: #7a6a40; --m-rusyn: #a2652a;
+  --map-line: #0b5fd0; --map-dot: #b3261e;
   --serif: "Noto Serif", "PT Serif", Georgia, "Times New Roman", "Segoe UI Historic", "Segoe UI", "DejaVu Serif", serif;   /* the tail covers the Cyrillic Extended-B letters of reconstructions (ꙗ U+A657) */
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -14,14 +15,14 @@
     --bg: #17150f; --surface: #201d16; --surface-2: #2a261d; --ink: #ece6d8; --muted: #a79f8d; --line: #3c372b;
     --accent: #8dbbe3; --accent-ink: #10202e; --accent-soft: #1d2d3b; --warn: #e0a460; --warn-soft: #33260f; --danger: #e58a8a;
     --ep1: #5b4a28; --ep2: #8b6a2d; --ep3: #b98a3e; --ep4: #d9a864; --ep5: #ecc98f; --ep6: #f8e7c0;
-    --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; color-scheme: dark;
+    --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; --map-line: #8dbbe3; --map-dot: #f09a85; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #17150f; --surface: #201d16; --surface-2: #2a261d; --ink: #ece6d8; --muted: #a79f8d; --line: #3c372b;
   --accent: #8dbbe3; --accent-ink: #10202e; --accent-soft: #1d2d3b; --warn: #e0a460; --warn-soft: #33260f; --danger: #e58a8a;
   --ep1: #5b4a28; --ep2: #8b6a2d; --ep3: #b98a3e; --ep4: #d9a864; --ep5: #ecc98f; --ep6: #f8e7c0;
-  --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; color-scheme: dark;
+  --m-cs: #c3a1ec; --m-contact: #f09a85; --m-dialect: #8fd09b; --m-colloquial: #8dbbe3; --m-archaic: #cdbb85; --m-rusyn: #e3b177; --map-line: #8dbbe3; --map-dot: #f09a85; color-scheme: dark;
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -29,6 +30,8 @@ body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1rem/1.55 
 h1, h2, h3 { font-weight: 700; line-height: 1.25; margin: 0 0 .5rem; }
 h1 { font-size: 1.9rem; } h2 { font-size: 1.15rem; } h3 { font-size: 1rem; }
 a { color: var(--accent); }
+.themebtn { font: .85rem var(--sans); background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: .2rem .7rem; cursor: pointer; }
+.themebtn:hover { border-color: var(--accent); }
 code, .mono { font-family: var(--mono); font-size: .88em; }
 small, .small { font-size: .82rem; } .muted { color: var(--muted); } .sans { font-family: var(--sans); }
 button { font: inherit; color: inherit; }

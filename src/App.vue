@@ -1,7 +1,31 @@
 ﻿<script setup lang="ts">
 /** Shell: navigation + FIXTURE banner (data/*.json carry "generated": "FIXTURE" until the real pipeline overwrites them). */
 import { useData } from './composables/useData.ts'
+import { ref } from 'vue'
 const { isFixture, error, loading, progress } = useData()
+
+/** Theme: light by default; an explicit choice is persisted in localStorage; prefers-color-scheme (CSS) applies only while no choice is stored. */
+const KEY = 'lex-theme'
+function stored(): 'light' | 'dark' | null {
+  try { const v = localStorage.getItem(KEY); return v === 'light' || v === 'dark' ? v : null } catch { return null }
+}
+const choice = ref<'light' | 'dark' | null>(stored())
+function apply() {
+  const el = document.documentElement
+  if (choice.value) el.setAttribute('data-theme', choice.value); else el.removeAttribute('data-theme')
+}
+function isDark(): boolean {
+  if (choice.value) return choice.value === 'dark'
+  try { return window.matchMedia('(prefers-color-scheme: dark)').matches } catch { return false }
+}
+const dark = ref(isDark())
+function toggle() {
+  choice.value = dark.value ? 'light' : 'dark'
+  dark.value = choice.value === 'dark'
+  try { localStorage.setItem(KEY, choice.value) } catch { /* private mode: the choice lasts for this session only */ }
+  apply()
+}
+apply()
 </script>
 
 <template>
@@ -21,6 +45,7 @@ const { isFixture, error, loading, progress } = useData()
       <RouterLink to="/report">Звіт</RouterLink>
       <RouterLink to="/method">Метод</RouterLink>
     </nav>
+    <button type="button" class="themebtn" :aria-pressed="dark" @click="toggle">{{ dark ? '☀ Світла' : '☾ Темна' }}</button>
   </header>
   <p v-if="isFixture" class="fixture" role="status">Показано <strong>фікстуру</strong>: вигадані числа й приклади для розробки інтерфейсу (деривації, епохи й мітки обчислено реальним кодом). Справжні дані замінять <code>public/data</code>.</p>
   <p v-if="error" class="fixture err" role="alert">Не вдалося завантажити дані: {{ error }}</p>
