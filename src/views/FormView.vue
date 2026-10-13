@@ -9,7 +9,7 @@ import { isKnown } from '../../core/evidence.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
-import { formStats, restrictEpochs } from '../lib/formStats.ts'
+import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import DerivationSteps from '../components/DerivationSteps.vue'
@@ -17,6 +17,7 @@ import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
+import RegionMap from '../components/RegionMap.vue'
 import { paradigmKindOf } from '../lib/ux.ts'
 
 const props = defineProps<{ form: string }>()
@@ -41,6 +42,7 @@ const err = computed(() => pick.value ? detailError.get(pick.value.lemma) : unde
 const epochs = computed(() => restrictEpochs(full.value?.epochs, pick.value?.raw ?? ''))
 const stats = computed(() => fc.value && full.value && corpus.value
   ? formStats(fc.value, full.value.stats, epochs.value, { N: corpus.value.N, epoch: corpus.value.epochSizes }) : undefined)
+const byRegion = computed(() => fc.value ? formRegions(fc.value.kwic, corpus.value?.regions, w => witnessById.value.get(w)?.region) : [])
 const kind = computed(() => paradigmKindOf(core.value))
 const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron')
 const link = computed(() => fc.value && isKnown(fc.value.link) ? fc.value.link.value : undefined)
@@ -82,6 +84,11 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
               <span class="count-n"> · прикладів: {{ w.lines }}</span></li>
           </ul>
           <p class="small sans muted">Перелік за наведеними прикладами (≤ 6); повний розподіл за пам’ятками для окремого написання в даних не зберігається.</p>
+        </Panel>
+        <Panel id="f-reg" :open="true" title="Карта · регіон пам’ятки" :summary="`${byRegion.filter(r => r.f).length} регіонів у прикладах`" :empty="!byRegion.length"
+          info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
+          <RegionMap :by="byRegion" />
+          <p class="small sans muted">f у регіоні — це наведені приклади (≤ 6): нижня межа; N — токени всіх пам’яток регіону.</p>
         </Panel>
         <Panel id="f-der" :open="true" title="Виведення · Derivation" :summary="fc.derivation.length ? `${fc.derivation.length} кроків → ${fc.modern}` : `без змін → ${fc.modern}`">
           <p class="sans small"><span class="muted">норма: </span>{{ fc.norm }} <span class="muted"> · сучасна: </span>{{ fc.modern }}</p>

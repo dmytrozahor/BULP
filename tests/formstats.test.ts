@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formStats, restrictEpochs } from '../src/lib/formStats.ts'
+import { formRegions, formStats, restrictEpochs } from '../src/lib/formStats.ts'
 import type { EpochParadigms } from '../core/types.ts'
 
 const cf = (raw: string, n: number) => ({ raw, n, src: 'torot' as const, t: 0, ex: [0, '1'] as [number, string] })
@@ -32,5 +32,15 @@ describe('BL-6 form statistics', () => {
     const r = restrictEpochs(ep, 'б')!
     expect(r.paradigms[0]!.cells).toEqual([{ key: 'sg.nom', forms: [cf('б', 1)] }]); expect(r.paradigms[1]!.cells).toHaveLength(1)
     expect(restrictEpochs(undefined, 'б')).toBeUndefined()
+  })
+})
+
+describe('BL-6b form regions', () => {
+  const regions = [{ code: 'kyiv', name: 'K', oblasts: [], N: 100 }, { code: 'volyn', name: 'V', oblasts: [], N: 50 }, { code: 'halychyna', name: 'H', oblasts: [], N: 0 }]
+  const reg: Record<string, string> = { a: 'Київ', b: 'Волинь', c: 'Київ', d: 'Київ або Новгород' }
+  it('counts kwic lines by witness region, keeps region N, drops unknown/unmatched witnesses and empty regions', () => {
+    const r = formRegions([{ w: 'a' }, { w: 'c' }, { w: 'd' }, { w: 'z' }, { w: 'b' }], regions, w => reg[w])
+    expect(r).toEqual([{ code: 'kyiv', f: 2, N: 100 }, { code: 'volyn', f: 1, N: 50 }])
+    expect(formRegions([], undefined, () => undefined)).toEqual([])
   })
 })

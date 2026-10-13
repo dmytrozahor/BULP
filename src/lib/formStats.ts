@@ -7,7 +7,8 @@
  *  - DP is taken over epochs (Gries, core/stats.ts dispersion) on those placed counts — a per-witness DP of one spelling is not stored in the shard, so none is invented.
  */
 import { dispersion, dots, freqClass, ipm } from '../../core/stats.ts'
-import type { EpochParadigms, FormCard, Kwic } from '../../core/types.ts'
+import { regionOf } from '../../pipelines/regions.ts'
+import type { CorpusMeta, EpochParadigms, FormCard, Kwic, LemmaStats } from '../../core/types.ts'
 
 export interface FormEpochStat { epoch: string; f: number; N: number; ipm: number }
 export interface FormStats {
@@ -43,4 +44,17 @@ export function formStats(
     dp: d?.dp, evenness: d?.evenness, epochRange: d?.range ?? 0,
     witnesses: [...by].map(([w, lines]) => ({ w, lines })).sort((a, b) => b.lines - a.lines || a.w.localeCompare(b.w)),
   }
+}
+
+/**
+ * BL-6b: this spelling's tokens by REGION OF THE WITNESS («регіон пам’ятки», SPEC 20 B-3.6 — never a dialect label). The shard keeps only ≤ 6 KWIC lines per
+ * spelling, so f per region counts those lines (a lower bound); N = the region's token count from corpus.regions (denominator, P-1.6). A witness whose region
+ * is unknown or matches no region row is left out (unknown stays unknown, P-3.1). Rows are shaped like LemmaStats.byRegion, so RegionMap / regionRows apply.
+ */
+export function formRegions(
+  kwic: Pick<Kwic, 'w'>[], regions: CorpusMeta['regions'] | undefined, witnessRegion: (w: string) => string | undefined,
+): NonNullable<LemmaStats['byRegion']> {
+  const f = new Map<string, number>()
+  for (const k of kwic) { const c = regionOf(witnessRegion(k.w)); if (c) f.set(c, (f.get(c) ?? 0) + 1) }
+  return (regions ?? []).filter(r => r.N > 0).map(r => ({ code: r.code, f: f.get(r.code) ?? 0, N: r.N }))
 }

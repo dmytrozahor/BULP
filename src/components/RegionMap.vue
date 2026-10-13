@@ -10,11 +10,11 @@ import type { LemmaCard } from '../../core/types.ts'
 import { useData } from '../composables/useData.ts'
 import { fmtNum } from '../lib/format.ts'
 import { loadGeo, pathOf, regionRows, stepOf, VIEW, type Geo } from '../lib/geo.ts'
-const props = defineProps<{ card: LemmaCard }>()
+const props = defineProps<{ card?: LemmaCard; by?: LemmaCard['stats']['byRegion'] }>()
 const { corpus } = useData()
 const geo = ref<Geo>(), err = ref(''), hot = ref<string | null>(null)
 onMounted(() => loadGeo().then(g => (geo.value = g), e => (err.value = String(e.message ?? e))))
-const rows = computed(() => regionRows(corpus.value?.regions, props.card.stats.byRegion))
+const rows = computed(() => regionRows(corpus.value?.regions, props.by ?? props.card?.stats.byRegion))
 const max = computed(() => Math.max(0, ...rows.value.map(r => r.ipm ?? 0)))
 const byOblast = computed(() => { const m = new Map<string, (typeof rows.value)[number]>(); for (const r of rows.value) for (const o of r.oblasts) m.set(o, r); return m })
 const shapes = computed(() => (geo.value?.features ?? []).map(f => ({ code: f.properties.code, name: f.properties.name, d: pathOf(f), r: byOblast.value.get(f.properties.code) })))
