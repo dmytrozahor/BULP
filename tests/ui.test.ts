@@ -318,7 +318,7 @@ const epochSample = (stem: EpochParadigms['stem'] = { value: stemV, evidence: [Q
 const wmeta = (id: string, lang: string, extra = {}) => ({ id, title: id, author: id, lang, date: [1100, 1200], epochShev: { value: { epochs: ['shev.old'], confidence: 'high', overlays: [] }, evidence: [] }, ...extra }) as unknown as WitnessMeta
 const WS = [wmeta('tor', 'orv'), wmeta('arch', 'chu-rus'), wmeta('samov', 'ruthenian', { outOfDomain: true }), wmeta('mod', 'uk')]
 const SIZES = { 'shev.proto': 100, 'shev.old': 500, 'shev.early_middle': 0, 'shev.middle': 80, 'shev.late_middle': 90, 'shev.modern': 1000 }
-const panel = async (epochs: EpochParadigms | undefined, extra: Record<string, unknown> = {}) => (await ssr(EpochParadigm, { epochs, witnesses: WS, sizes: SIZES, spellings: ['рѣка'], ...extra })).split('<details')[0]!   // without the legend, which names every marker
+const panel = async (epochs: EpochParadigms | undefined, extra: Record<string, unknown> = {}) => (await ssr(EpochParadigm, { epochs, witnesses: WS, sizes: SIZES, spellings: ['рѣка'], ...extra })).split('<details class="card flegend"')[0]!   // without the legend, which names every marker
 
 describe('SPEC 50 epoch paradigms', () => {
   it('EP-7.1 tabs in shev order with N; default = oldest epoch with data; loading and missing shard states', async () => {
