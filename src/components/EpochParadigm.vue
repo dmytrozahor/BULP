@@ -148,13 +148,14 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
             </table>
           </div>
         </template>
+          <details v-if="grid.notes.length" class="enotes-spoiler small sans"><summary>Правила відмінювання та зміни, засвідчені граматикою ({{ grid.notes.length }})</summary>
           <ul class="small sans enotes" aria-label="Зміни, засвідчені граматикою">
             <li v-for="n in grid.notes" :key="n.id">
               <EvidencePopover :evidence="n.cite" :heading="noteTitle(n)" :meta="n.dated ?? 'дата в джерелі не вказана'" :label="n.id"><span class="badge">{{ n.id }} <i class="evmark" aria-hidden="true">ⓘ{{ n.cite.length }}</i></span></EvidencePopover>
               {{ n.what }} · <span :class="{ unk: !n.dated }">{{ n.dated ?? 'дата в джерелі не вказана' }}</span>
               <template v-if="n.keys?.some(k => k.startsWith('du.')) && grid.duHidden && !cur?.disabled"> · двоїни в цій добі в корпусі не засвідчено, колонку приховано</template>
             </li>
-          </ul>
+          </ul></details>
       </div>
       <FormLegend v-if="!noLegend" epoch />
       </template>
