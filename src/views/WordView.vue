@@ -27,6 +27,7 @@ import Collocations from '../components/Collocations.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
+import StressNote from '../components/StressNote.vue'
 import StatsExplainer from '../components/StatsExplainer.vue'
 import Kwic from '../components/Kwic.vue'
 import Paradigm from '../components/Paradigm.vue'
@@ -155,10 +156,11 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
       <h1 class="lemma">{{ card.lemma }}</h1>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
         <template v-if="stress1"><span class="muted sans">·</span>
-          <EvidencePopover :evidence="stress1.evidence" :heading="`Наголос: ${renderStress(stress1.form, stress1.positions)}`" :meta="`метод: ${stress1.method}`" :label="renderStress(stress1.form, stress1.positions)">
-            <strong style="font-size:1.1rem">{{ renderStress(stress1.form, stress1.positions) }}</strong></EvidencePopover>
-          <span v-if="(full?.stress.length ?? 0) > 1" class="small muted sans">+{{ full!.stress.length - 1 }} варіанти</span></template>
-        <span v-else-if="full" class="unk small sans" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос невідомий</span>
+          <template v-for="(sv, i) in full!.stress" :key="i"><span v-if="i" class="muted sans">/</span>
+            <EvidencePopover :evidence="sv.evidence" :heading="`Наголос: ${renderStress(sv.form, sv.positions)}`" :meta="`метод: ${sv.method}`" :label="renderStress(sv.form, sv.positions)">
+              <strong style="font-size:1.1rem">{{ renderStress(sv.form, sv.positions) }}</strong></EvidencePopover></template>
+          <StressNote v-if="full!.stress.some(v => v.status === 'unknown')" :variants="full!.stress" /></template>
+        <span v-else-if="full" class="unk small sans" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос не встановлено</span>
         <span v-else-if="!err" class="muted small sans">наголос: завантаження…</span>
         <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
       <p class="hl-line sans"><span class="muted">Перша фіксація: </span>

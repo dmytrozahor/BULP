@@ -255,8 +255,11 @@ describe('Rusyn display: parallel, neutral, with status note', () => {
 describe('F6 stress & register unknown', () => {
   it('stress variant shows its source and the unknown-status note; empty = explicit unknown', async () => {
     const v = [{ form: 'вода', positions: [1], status: 'unknown' as const, evidence: [P('ukrainian-word-stress', 'ULIF-derived', 'вода')], method: 'dictionary' as const }]
-    const html = await ssr(StressForms, { variants: v }); expect(html).toContain('джерело: ukrainian-word-stress'); expect(html).toContain('статус невідомий')
-    expect(await ssr(StressForms, { variants: [] })).toContain('наголос невідомий')
+    const html = await ssr(StressForms, { variants: v }); expect(html).toContain('джерело: ukrainian-word-stress'); expect(html).toContain('джерело не нормативне')
+    expect(html).toContain('во́да'); expect(html).not.toContain('наголос невідомий')
+    const two = await ssr(StressForms, { variants: [{ ...v[0], form: 'помилка', positions: [1] }, { ...v[0], form: 'помилка', positions: [3] }] })
+    expect(two).toContain('по́милка'); expect(two).toContain('поми́лка')
+    const none = await ssr(StressForms, { variants: [] }); expect(none).toContain('наголос не встановлено'); expect(none).not.toContain('джерело не нормативне')
   })
 })
 
