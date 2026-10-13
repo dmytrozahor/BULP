@@ -4,9 +4,10 @@
  *  - public/data/heteronyms.json   HT-1  ukrainian-word-stress forms whose output is ambiguous → CANDIDATES only (method 'dictionary', status 'unknown'; never verified pairs)
  * Inputs are the harvest cache data/work/loanlabels-raw.json (pipelines/loan-labels.ts) and data/work/stress.json (nlp/stress.py).
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { ARTISTS, SONGS, SONGS_POLICY } from '../core/songs.ts'
+import { parseSenses, type SensesFile } from '../core/senses.ts'
 
 const rdj = <T>(p: string): T | undefined => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) as T : undefined)
 const SINGLE = /^[а-яіїєґ'’-]+$/i
@@ -50,4 +51,33 @@ export function writeHeteronymCandidates(root: string, pub: string): number {
     note: 'кандидати: слово має кілька наголосів у виводі ukrainian-word-stress; це не підтверджені пари омографів (HT-1, P-1.7)', forms,
   }))
   return Object.keys(forms).length
+}
+
+/**
+ * BL-9: public/data/senses.json = { lemma: [{ gloss, pos?, stress?, source }] } from the uk.wiktionary harvest cache (data/raw/wikt/senses-*.json, pipelines/senses-wikt.ts).
+ * CC BY-SA 4.0: `source` keeps the revision id of every sense; the UI attributes «Вікісловник (uk), CC BY-SA 4.0» with the permalink. Absent cache → nothing written (an existing file stays).
+ * Returns the lemmas with senses, the lemmas looked up (cache coverage) and how many senses carry a stress.
+ */
+export function writeSenses(root: string, pub: string, lemmas: Iterable<string>): { lemmas: number; looked: number; withStress: number; senses: number } {
+  const dir = resolve(root, 'data/raw/wikt')
+  if (!existsSync(dir)) return { lemmas: 0, looked: 0, withStress: 0, senses: 0 }
+  const pages = new Map<string, { revid: number; content: string; retrieved: string }>(), looked = new Set<string>()
+  for (const f of readdirSync(dir).filter(x => /^senses-.*\.json$/.test(x)).sort()) {
+    const b = JSON.parse(readFileSync(resolve(dir, f), 'utf8')) as { retrieved: string; pages: { title: string; revid?: number; content?: string; missing?: true }[] }
+    for (const p of b.pages) { looked.add(p.title); if (!p.missing && p.content && p.revid) pages.set(p.title, { revid: p.revid, content: p.content, retrieved: b.retrieved }) }
+  }
+  if (!pages.size) return { lemmas: 0, looked: 0, withStress: 0, senses: 0 }
+  const out: SensesFile = {}
+  let senses = 0, withStress = 0, nl = 0
+  for (const l of lemmas) {
+    if (!looked.has(l)) continue
+    nl++
+    const p = pages.get(l)
+    if (!p) continue
+    const s = parseSenses(p.content, p.revid, l)
+    if (!s.length) continue
+    out[l] = s; senses += s.length; withStress += s.filter(x => x.stress).length
+  }
+  writeFileSync(resolve(pub, 'senses.json'), JSON.stringify(out))
+  return { lemmas: Object.keys(out).length, looked: nl, withStress, senses }
 }

@@ -42,6 +42,8 @@ import EtymologyBlock from '../components/EtymologyBlock.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
+import SensesBlock from '../components/SensesBlock.vue'
+import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
 import DerivativesBlock from '../components/DerivativesBlock.vue'
@@ -58,6 +60,7 @@ const active = ref<string | null>(null), nForms = ref(60), allForms = ref(false)
 const ui = reactive({ prov: true, lab: false, par: false, ep: false, kw: false, st: false })
 watch(() => props.lemma, () => { active.value = null; allForms.value = false; Object.assign(ui, { prov: true, lab: false, par: false, ep: false, kw: false, st: false }) })
 const kind = computed(() => paradigmKindOf(card.value))
+const lemmaSenses = computed(() => (card.value ? sensesOf(card.value.lemma) : []))   // BL-9
 const isNoun = computed(() => kind.value === 'noun')
 const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron' || kind.value === 'verb')   // SPEC 50: epoch grids are built for nouns, pronouns, and (BL-8) verbs
 const showKwic = (raw: string) => { active.value = raw; ui.kw = true; nextTick(() => document.getElementById('h-kw')?.scrollIntoView({ block: 'start' })) }
@@ -260,6 +263,11 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
+        <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
+        <Panel id="h-sn" :open="false" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
+          info="Значення — з розділу «Значення» uk.wiktionary (CC BY-SA 4.0), скорочено; не словникова норма проєкту. Наголос показано лише там, де сторінка Вікісловника дає наголошений склад для цієї омонімічної статті.">
+          <SensesBlock :lemma="card.lemma" />
+        </Panel>
 
         <!-- 3. Paradigm, by the lemma's paradigm kind (FX-5) -->
         <Panel id="h-par" v-model:open="ui.par" title="Словозміна · Paradigm" :summary="parSummary" :empty="kind !== 'uninflected' && !card.paradigm.length"
