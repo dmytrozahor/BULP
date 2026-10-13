@@ -19,6 +19,7 @@ import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
 import RegionMap from '../components/RegionMap.vue'
 import { paradigmKindOf } from '../lib/ux.ts'
+import { witnessTo } from '../lib/nav.ts'
 
 const props = defineProps<{ form: string }>()
 const route = useRoute()
@@ -80,7 +81,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
         </Panel>
         <Panel id="f-wit" :open="true" title="Пам’ятки" :summary="`${stats.witnesses.length} у прикладах`" :empty="!stats.witnesses.length">
           <ul class="sans small" style="list-style:none;padding:0;margin:0">
-            <li v-for="w in stats.witnesses" :key="w.w" style="margin:.2rem 0"><a v-if="witnessById.get(w.w)?.url" :href="witnessById.get(w.w)!.url" target="_blank" rel="noopener">{{ wTitle(w.w) }}</a><template v-else>{{ wTitle(w.w) }}</template>
+            <li v-for="w in stats.witnesses" :key="w.w" style="margin:.2rem 0"><RouterLink v-if="witnessById.get(w.w)" :to="witnessTo(w.w)">{{ wTitle(w.w) }}</RouterLink><template v-else>{{ wTitle(w.w) }}</template>
               <span class="count-n"> · прикладів: {{ w.lines }}</span></li>
           </ul>
           <p class="small sans muted">Перелік за наведеними прикладами (≤ 6); повний розподіл за пам’ятками для окремого написання в даних не зберігається.</p>

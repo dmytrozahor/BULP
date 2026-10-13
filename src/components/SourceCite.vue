@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import type { Kwic } from '../../core/types.ts'
 import { fmtDate } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
+import { textTo, witnessTo } from '../lib/nav.ts'
 import { useData } from '../composables/useData.ts'
 import AuthorBadge from './AuthorBadge.vue'
 const props = defineProps<{ w: string; loc: string; date?: [number, number]; kwic?: Pick<Kwic, 'left' | 'node' | 'right'> }>()
@@ -19,9 +20,9 @@ const link = computed(() => sourceLink(wit.value, props.loc, props.kwic))
   <span class="srccite">
     <AuthorBadge v-if="wit" :author="wit.author" :witness="w" />
     <template v-if="wit"> · </template>
-    <span class="srctitle">{{ wit?.title ?? w }}</span>
-    · <span class="srcloc"><span class="muted">локатор:</span> {{ loc }}</span>
+    <RouterLink v-if="wit" class="srctitle" :to="witnessTo(w)">{{ wit.title }}</RouterLink><span v-else class="srctitle">{{ w }}</span>
+    · <span class="srcloc"><span class="muted">локатор:</span> <RouterLink v-if="wit" :to="textTo(w, loc)">{{ loc }}</RouterLink><template v-else>{{ loc }}</template></span>
     <template v-if="date"> · {{ fmtDate(date) }}</template>
-    <template v-if="link"> · <a class="srclink" :href="link.url" target="_blank" rel="noopener">{{ link.label }} ↗</a></template>
+    <template v-if="link"> · <a class="srclink" :href="link.url" target="_blank" rel="noopener">оригінал ↗</a></template>
   </span>
 </template>

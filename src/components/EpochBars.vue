@@ -9,6 +9,7 @@ import type { LemmaStats } from '../../core/types.ts'
 import { EPOCHS } from '../../core/epochs.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { epochShort, fmtNum, stars } from '../lib/format.ts'
+import { epochTo } from '../lib/nav.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ stats: LemmaStats; sizes: Record<string, number> }>()
 const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
@@ -25,7 +26,7 @@ const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
   <div v-for="g in groups" :key="g.sc" style="margin-bottom:.8rem">
     <h3 class="small sans muted">{{ g.title }}</h3>
     <div v-for="r in g.rows" :key="r.id" style="margin:.35rem 0">
-      <div class="row small sans" style="justify-content:space-between"><span>{{ r.name }}</span>
+      <div class="row small sans" style="justify-content:space-between"><RouterLink :to="epochTo(r.id)">{{ r.name }}</RouterLink>
         <span :title="`f=${r.f}, N=${fmtNum(r.N)}`">{{ fmtNum(r.ipm, 1) }} ipm<span class="muted"> (f={{ r.f }}; N={{ fmtNum(r.N) }})</span></span></div>
       <div class="bar" role="img" :aria-label="`${r.name}: ${fmtNum(r.ipm, 1)} ipm`"><i :style="{ width: r.w + '%', background: r.ramp }"></i></div>
       <div v-if="r.sh && stars(r.sh.p)" class="small sans" :title="`G² = ${fmtNum(r.sh.g2, 1)}, p ≤ ${r.sh.p}`">

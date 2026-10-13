@@ -8,6 +8,7 @@ import { isKnown } from '../../core/evidence.ts'
 import type { AnnotatedToken } from '../lib/annotate.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate } from '../lib/format.ts'
+import { formTo } from '../lib/nav.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
 import BankChip from './BankChip.vue'
@@ -44,7 +45,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
     </div>
     <template v-if="t.status === 'attested' && t.card">
       <div>лема: <RouterLink :to="`/w/${encodeURIComponent(t.card.lemma)}`"><strong>{{ t.card.lemma }}</strong></RouterLink> <span class="muted">{{ t.card.pos }}</span></div>
-      <div v-if="t.form && t.form.raw !== t.card.lemma" class="small muted">написання «{{ t.form.raw }}» → {{ t.form.modern }}
+      <div v-if="t.form && t.form.raw !== t.card.lemma" class="small muted">написання «<RouterLink :to="formTo(t.form.raw, t.card.lemma)">{{ t.form.raw }}</RouterLink>» → {{ t.form.modern }}
         <template v-if="deriv.length">({{ deriv.map(s => s.rule).join(' → ') }})</template></div>
       <div v-else-if="t.via === 'paradigm'" class="small muted">словоформа з парадигми ВЕСУМ</div>
       <div v-if="first">перша фіксація: <strong>{{ fmtDate(first.date) }}</strong>, {{ who }}</div>

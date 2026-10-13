@@ -16,6 +16,7 @@ import { renderStress } from '../../core/text.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
+import { textTo, witnessTo } from '../lib/nav.ts'
 import { reconstruct } from '../lib/derive.ts'
 import { groupFormClaims, KIND_UK, paradigmKindOf, placedCells, topForms } from '../lib/ux.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
@@ -204,9 +205,9 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
               <ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
             <ul class="sans small" style="list-style:none;padding:0;margin:0 0 .8rem">
               <li><span class="muted">автор: </span><AuthorBadge :author="first.author" :witness="first.witness" /></li>
-              <li><span class="muted">пам’ятка: </span><a v-if="firstW" :href="firstW.url" target="_blank" rel="noopener">{{ firstW.title }}</a><template v-else>{{ first.witness }}</template>
-                · <span class="muted">локатор:</span> <template v-if="firstF">{{ firstF.loc }}</template><template v-else-if="!err">…</template>
-                <template v-if="firstLink"> · <a class="srclink" :href="firstLink.url" target="_blank" rel="noopener">{{ firstLink.label }} ↗</a></template></li>
+              <li><span class="muted">пам’ятка: </span><RouterLink v-if="firstW" :to="witnessTo(firstW.id)">{{ firstW.title }}</RouterLink><template v-else>{{ first.witness }}</template>
+                · <span class="muted">локатор:</span> <RouterLink v-if="firstF && firstW" :to="textTo(firstW.id, firstF.loc)">{{ firstF.loc }}</RouterLink><template v-else-if="firstF">{{ firstF.loc }}</template><template v-else-if="!err">…</template>
+                <template v-if="firstLink"> · <a class="srclink" :href="firstLink.url" target="_blank" rel="noopener">оригінал ↗</a></template></li>
               <li><span class="muted">дата: </span>{{ fmtDate(first.date) }}
                 <EvidencePopover v-if="firstW" :evidence="[firstW.dateCite]" heading="Датування пам’ятки" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover>
                 <template v-if="firstF"> · <span class="muted">тип свідчення: </span>{{ WTYPE_UK[firstF.witnessType] ?? firstF.witnessType }}</template></li>

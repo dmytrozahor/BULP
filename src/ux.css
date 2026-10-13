@@ -55,3 +55,6 @@
 
 /* FX-5 pronoun grid: enclitic sub-row of a cell */
 .encrow { margin-top: .15rem; padding-top: .1rem; border-top: 1px dotted var(--line); }
+
+/* BL-16: the locator a link landed on */
+.tok.hit { background: color-mix(in srgb, var(--accent) 22%, transparent); outline: 2px solid var(--accent); border-radius: 3px; }

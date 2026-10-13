@@ -14,6 +14,7 @@ import SyntaxSpans from '../components/SyntaxSpans.vue'
 import { CATEGORIES, CATEGORY_UK } from '../lib/analyze.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { EXAMPLES } from '../data/examples.ts'
+import { textTo, wordTo, witnessTo } from '../lib/nav.ts'
 import FormLegend from '../components/FormLegend.vue'
 import UsageLegend from '../components/UsageLegend.vue'
 import WordCard from '../components/WordCard.vue'
@@ -60,7 +61,7 @@ const label = (t: AnnotatedToken) => t.numeral ? numTitle(t)! : `${t.raw}: ${t.s
           <label class="small">рік тексту <input v-model="year" type="text" inputmode="numeric" placeholder="порожньо = сучасний" style="width:9rem" aria-describedby="yh2" /></label>
         </div>
         <p id="yh2" class="small muted sans" style="margin:0 0 .5rem">Рік вмикає хронологічні умови правил: «ы» у тексті 1798 р. — архаїчний правопис, а не русизм.</p>
-        <p v-if="ex" class="small sans">Джерело: <strong>{{ ex.title }}</strong> · {{ ex.loc }} · {{ fmtDate(ex.date) }} · <a :href="ex.url" target="_blank" rel="noopener">{{ ex.url }}</a>
+        <p v-if="ex" class="small sans">Джерело: <RouterLink :to="witnessTo(ex.witness)"><strong>{{ ex.title }}</strong></RouterLink> · <RouterLink :to="textTo(ex.witness, ex.loc)">{{ ex.loc }}</RouterLink> · {{ fmtDate(ex.date) }} · <a :href="ex.url" target="_blank" rel="noopener">оригінал ↗</a>
           <span v-if="ex.note" class="muted"> · {{ ex.note }}</span> <span class="muted">· уривок скопійовано дослівно з кешованого файлу</span></p>
         <textarea v-model="text" class="src" aria-label="Текст для анотації" placeholder="Вставте текст…" spellcheck="false"></textarea>
         <div class="legend" aria-label="Легенда">
@@ -79,8 +80,9 @@ const label = (t: AnnotatedToken) => t.numeral ? numTitle(t)! : `${t.raw}: ${t.s
       <section v-else-if="tokens.length" class="card" aria-label="Анотований текст">
         <div class="ann"><span v-for="(g, gi) in groups" :key="gi" :class="g.span ? ['syn', g.span.hint ? 'syn-hint' : ''] : undefined"
             :title="g.span ? `${g.span.modern} · ${g.span.note}` : undefined" @mouseenter="g.span && (hotSpan = g.span)"><template v-for="(p, k) in g.parts" :key="k"><template v-if="'gap' in p">{{ p.gap }}</template>
-          <RouterLink v-else-if="p.t.status === 'attested' && p.t.card" :to="`/w/${encodeURIComponent(p.t.card.lemma)}`" :class="cls(p.t)" :aria-label="label(p.t)"
+          <RouterLink v-else-if="p.t.card" :to="wordTo(p.t.card.lemma)" :class="cls(p.t)" :aria-label="label(p.t)"
             @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.provenance === 'derived'" class="derived-badge">реконстр.</sup></RouterLink>
+          <RouterLink v-else-if="!p.t.numeral" :to="{ path: '/analyze', query: { q: p.t.raw } }" :class="cls(p.t)" :aria-label="label(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</RouterLink>
           <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" :title="numTitle(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.numeral && p.t.numeral.start === p.t.start" class="derived-badge">= {{ p.t.numeral.ad ? p.t.numeral.ad + ' р.' : p.t.numeral.value }}</sup></span></template></span></div>
       </section>
     </div>

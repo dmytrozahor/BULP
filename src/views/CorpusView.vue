@@ -5,6 +5,7 @@ import { EPOCHS } from '../../core/epochs.ts'
 import { SOURCES } from '../../core/sources.ts'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtNum } from '../lib/format.ts'
+import { sourceTo, epochTo } from '../lib/nav.ts'
 import WitnessTable from '../components/WitnessTable.vue'
 const { corpus, loaded } = useData()
 const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
@@ -34,7 +35,7 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
     <div class="grid2">
       <section v-for="g in groups" :key="g.sc" class="card"><h2><span>Розмір за епохами — {{ g.title }}</span></h2>
         <div v-for="r in g.rows" :key="r.id" style="margin:.4rem 0">
-          <div class="row small sans" style="justify-content:space-between"><span>{{ r.name }}</span><span>{{ fmtNum(r.n) }} слів</span></div>
+          <div class="row small sans" style="justify-content:space-between"><RouterLink :to="epochTo(r.id)">{{ r.name }}</RouterLink><span>{{ fmtNum(r.n) }} слів</span></div>
           <div class="bar"><i :style="{ width: r.w + '%', background: r.ramp }"></i></div>
         </div>
         <p class="small muted">Це знаменники (N) для ipm. Пам’ятка з кількома епохами ділиться порівну.</p>
@@ -49,7 +50,7 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
 
     <section class="card"><h2><span>Ліцензії</span></h2>
       <ul class="sans small">
-        <li v-for="k in lic" :key="k"><strong>{{ SOURCES[k]!.title }}</strong> — {{ SOURCES[k]!.license }} <a v-if="SOURCES[k]!.url" :href="SOURCES[k]!.url" target="_blank" rel="noopener">{{ SOURCES[k]!.url }}</a></li>
+        <li v-for="k in lic" :key="k"><RouterLink :to="sourceTo(k)"><strong>{{ SOURCES[k]!.title }}</strong></RouterLink> — {{ SOURCES[k]!.license }} <a v-if="SOURCES[k]!.url" :href="SOURCES[k]!.url" target="_blank" rel="noopener">оригінал ↗</a></li>
         <li>ВЕСУМ і Brown-UK — <strong>CC BY-NC-SA 4.0</strong>; TOROT — <strong>CC BY-NC-SA 3.0</strong>; LanguageTool — <strong>LGPL-2.1+</strong>.</li>
       </ul>
       <p><strong>Похідні дані (public/data/*.json) — некомерційні, з поширенням на тих самих умовах (share-alike).</strong> SPEC 00 P-4.4: «Licences are respected and displayed».</p>

@@ -6,10 +6,11 @@
  * produced later by the backend. Until that file exists the reader shows the witness's own KWIC examples (from the detail shards of its lemmas is not loaded here;
  * the fixture/real core has none per witness) and says so — it never invents text.
  */
-import { computed, ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
-import { annotate } from '../lib/annotate.ts'
+import { findLoc, loadTokens, rowsOf, type Tok } from '../lib/witnessText.ts'
+import { authorTo, epochTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
@@ -25,28 +26,23 @@ const authors = computed(() => [...new Set(all.value.map(w => w.author))].map(a 
 const regions = computed(() => [...new Set(all.value.map(w => w.region).filter(Boolean) as string[])])
 const list = computed(() => all.value.filter(w => (!ep.value || epochOf(w) === ep.value) && (!au.value || w.author === au.value) && (!rg.value || w.region === rg.value)))
 const cur = computed(() => witnessById.value.get(String(route.query.w ?? '')))
-const page = computed(() => Math.max(0, (+String(route.query.p ?? '0') || 0)))
+const locQ = computed(() => String(route.query.loc ?? ''))
+/** BL-16: a locator in the URL (?loc=) opens the page that holds it unless ?p= says otherwise */
+const locIdx = computed(() => (Array.isArray(toks.value) && locQ.value ? findLoc(toks.value, locQ.value) : -1))
+const page = computed(() => (route.query.p !== undefined ? Math.max(0, (+String(route.query.p) || 0)) : locIdx.value >= 0 ? Math.floor(locIdx.value / PAGE_SIZE) : 0))
+const isHit = (loc: string) => !!locQ.value && (loc === locQ.value || loc.startsWith(locQ.value))
 const open = (id: string) => router.push({ path: '/texts', query: { w: id } })
 const turn = (p: number) => router.push({ path: '/texts', query: { w: cur.value!.id, p: String(p) } })
 
-const toks = ref<[string, string, string | boolean][] | null | 'loading'>(null)
+const toks = ref<Tok[] | null | 'loading'>(null)
 watch(() => cur.value?.id, async id => {
   toks.value = null; if (!id) return
   toks.value = 'loading'
-  try {
-    const r = await fetch(`./data/texts/${encodeURIComponent(id)}.json`)
-    if (!r.ok) throw new Error(String(r.status))
-    const j = await r.json(); toks.value = Array.isArray(j?.tokens) ? j.tokens : null
-  } catch { toks.value = null }
+  const t = await loadTokens(id); if (id === cur.value?.id) toks.value = t
 }, { immediate: true })
 const total = computed(() => (Array.isArray(toks.value) ? toks.value.length : 0))
-const rows = computed(() => {
-  if (!Array.isArray(toks.value) || !loaded.value) return []
-  return toks.value.slice(page.value * PAGE_SIZE, (page.value + 1) * PAGE_SIZE).map(([raw, loc, s]) => {
-    const a = annotate(raw, annData.value)[0]
-    return { raw, loc, sep: typeof s === 'string' ? s : s === false ? '' : ' ', lemma: a?.lemma, status: a?.status ?? 'unknown', provenance: a?.provenance }
-  })
-})
+const rows = computed(() => (!Array.isArray(toks.value) || !loaded.value ? [] : rowsOf(toks.value, page.value * PAGE_SIZE, (page.value + 1) * PAGE_SIZE, annData.value)))
+watch([locIdx, () => rows.value.length], async () => { if (locIdx.value < 0) return; await nextTick(); document.querySelector('.tok.hit')?.scrollIntoView({ block: 'center' }) })
 const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node: raw })
 </script>
 
@@ -63,9 +59,9 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
     </div>
     <ul class="witlist" style="list-style:none;padding:0">
       <li v-for="w in list" :key="w.id" class="card" style="margin:.5rem 0">
-        <button type="button" class="chip" @click="open(w.id)"><strong>{{ w.title }}</strong></button>
-        <div class="small sans"><AuthorBadge :author="w.author" :witness="w.id" /> · {{ fmtDate(w.date) }} · {{ epochShort(epochOf(w)) }}<template v-if="w.region"> · {{ w.region }}</template> · {{ LANG_UK[w.lang] }} · {{ fmtNum(w.n) }} слів
-          · <a :href="w.url" target="_blank" rel="noopener">відкрити джерело ↗</a></div>
+        <button type="button" class="chip" @click="open(w.id)"><strong>{{ w.title }}</strong></button> <RouterLink class="small sans" :to="witnessTo(w.id)">картка →</RouterLink>
+        <div class="small sans"><AuthorBadge :author="w.author" :witness="w.id" /> · {{ fmtDate(w.date) }} · <RouterLink :to="epochTo(epochOf(w))">{{ epochShort(epochOf(w)) }}</RouterLink><template v-if="w.region"> · {{ w.region }}</template> · {{ LANG_UK[w.lang] }} · {{ fmtNum(w.n) }} слів
+          · <a :href="w.url" target="_blank" rel="noopener">оригінал ↗</a></div>
         <div v-if="w.licenceNote" class="small sans muted" role="note">{{ w.licenceNote }}</div>
       </li>
     </ul>
@@ -73,12 +69,13 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
   <template v-else>
     <p><RouterLink to="/texts">← усі пам’ятки</RouterLink></p>
     <h2>{{ cur.title }}</h2>
-    <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }}<template v-if="cur.license"> ({{ cur.license }})</template> · <a :href="cur.url" target="_blank" rel="noopener">відкрити джерело ↗</a></p>
+    <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }}<template v-if="cur.license"> ({{ cur.license }})</template> · <RouterLink :to="witnessTo(cur.id)">картка пам’ятки →</RouterLink> · <a :href="cur.url" target="_blank" rel="noopener">оригінал ↗</a></p>
+    <p v-if="locQ" class="small sans muted" role="status">Локатор: {{ locQ }}<template v-if="locIdx < 0 && Array.isArray(toks)"> — у тексті такого локатора немає, показано початок.</template></p>
     <p v-if="cur.licenceNote" class="small sans muted licence-note" role="note">{{ cur.licenceNote }}</p>
     <div v-if="toks === 'loading'" class="skeleton" style="height:8rem" />
     <div v-else-if="!toks" class="card" role="status">
       <p>Тексту цієї пам’ятки ще немає в даних: <code>public/data/texts/{{ cur.id }}.json</code> (<code>{ tokens: [raw, loc, s][] }</code>) створює збірка корпусу. Читач відкриє його без змін у коді.</p>
-      <p class="muted small">Тим часом приклади вживання зі слів цієї пам’ятки дивіться в картках лем (розділ «Приклади»), а оригінал — за посиланням «відкрити джерело».</p>
+      <p class="muted small">Тим часом дивіться <RouterLink :to="witnessTo(cur.id)">картку пам’ятки</RouterLink>, приклади вживання зі слів цієї пам’ятки дивіться в картках лем (розділ «Приклади»), а оригінал — за посиланням «відкрити джерело».</p>
     </div>
     <template v-else>
       <nav class="row sans small" aria-label="Сторінки тексту">
@@ -88,8 +85,8 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
       </nav>
       <p class="reader" style="font-family:var(--serif);line-height:2">
         <template v-for="(t, i) in rows" :key="i">
-          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived' }]" :to="`/w/${encodeURIComponent(t.lemma)}`" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
-          <span v-else class="tok unknown" :title="t.loc">{{ t.raw }}</span>{{ t.sep }}
+          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', hit: isHit(t.loc) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
+          <RouterLink v-else class="tok unknown" :class="{ hit: isHit(t.loc) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}
         </template>
       </p>
       <p v-if="rows.length" class="small sans muted">Перше слово сторінки: {{ rows[0]!.loc }}

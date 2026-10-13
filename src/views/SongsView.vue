@@ -7,6 +7,7 @@
 import { computed, ref, watch } from 'vue'
 import { useSongs, KIND_SONG_UK, songLines, type Song } from '../lib/datasets.ts'
 import type { WitnessMedia } from '../lib/media.ts'
+import { evidenceTo } from '../lib/nav.ts'
 import Panel from '../components/Panel.vue'
 import MediaPanel from '../components/MediaPanel.vue'
 import EvidenceList from '../components/EvidenceList.vue'
@@ -59,7 +60,7 @@ const lines = (s: Song) => s.quotes.flatMap(q => songLines(q.text).map(t => ({ t
         </header>
         <div v-if="lines(song).length" class="card">
           <blockquote v-for="(l, i) in lines(song)" :key="i" style="margin:.2rem 0">{{ l.t }}</blockquote>
-          <p class="small muted sans">Цитата (не більше 2 рядків) за <a :href="song.quotes[0]!.evidence.locator" target="_blank" rel="noopener">джерелом ↗</a>.</p>
+          <p class="small muted sans">Цитата (не більше 2 рядків) за <RouterLink :to="evidenceTo(song.quotes[0]!.evidence.source, song.quotes[0]!.evidence.locator)">джерелом</RouterLink><template v-if="/^https?:/.test(song.quotes[0]!.evidence.locator)"> (<a :href="song.quotes[0]!.evidence.locator" target="_blank" rel="noopener">оригінал ↗</a>)</template>.</p>
         </div>
         <p v-else class="small muted sans">Тексту не наведено: {{ song.licence === 'link-only' ? 'лише посилання (права на текст не підтверджено)' : 'немає цитати' }}.</p>
         <p v-if="song.witness" class="small sans">Текст у корпусі: <RouterLink :to="{ path: '/texts', query: { w: song.witness } }">пам’ятка {{ song.witness }}</RouterLink></p>

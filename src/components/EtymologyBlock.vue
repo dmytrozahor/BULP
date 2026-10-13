@@ -28,7 +28,7 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
         <li v-for="(s, i) in entry.chain" :key="i"><span class="muted">{{ LANG_UK[s.rel] ?? s.rel }}: </span>{{ s.text }}</li>
       </ul>
       <EvidenceList :evidence="entry.sources" />
-      <p class="small muted sans">Повний ЕСУМ — на <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua ↗</a></p>
+      <p class="small muted sans">Про ЕСУМ: <RouterLink to="/source/ESUM">картка джерела</RouterLink> · <a :href="goroh(lemma)" target="_blank" rel="noopener">оригінал (goroh.pp.ua) ↗</a></p>
     </template>
     <p v-else-if="done" class="sans small muted">У зібраних словниках етимології цього слова немає. ЕСУМ: <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua ↗</a>.</p>
     <p v-else class="muted small">завантаження…</p>

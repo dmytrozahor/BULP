@@ -5,6 +5,7 @@
  */
 import { computed, onMounted, ref } from 'vue'
 import { filterSophia, mediaOfSophia, SOPHIA_ATTRIBUTION, SOPHIA_PORTAL, iiifImageUrl, type SophiaData, type SophiaItem } from '../lib/media.ts'
+import { witnessTo } from '../lib/nav.ts'
 import { loadSophia } from '../lib/sophiaData.ts'
 import MediaPanel from '../components/MediaPanel.vue'
 import AffiliationChips from '../components/AffiliationChips.vue'
@@ -40,6 +41,7 @@ const yrs = (i: SophiaItem) => (i.from === i.to ? `${i.from}` : `${i.from}–${i
         <li v-for="i in shown" :key="i.id">
           <span class="mono">№ {{ i.title }}</span> · {{ i.type }} · {{ yrs(i) }} · панель {{ i.panel }}
           <span class="row small">
+            <RouterLink class="chip" :to="witnessTo(`sophia-${i.id}`)">картка графіті →</RouterLink>
             <button type="button" class="chip" @click="open = i.id">переглянути</button>
             <a :href="i.viewer" target="_blank" rel="noopener">сторінка порталу ↗</a>
             <a :href="iiifImageUrl(i.iiif, 1200)" target="_blank" rel="noopener">зображення IIIF ↗</a>

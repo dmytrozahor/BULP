@@ -468,7 +468,7 @@ describe('W1-4 statistics explainer (U-24)', () => {
 describe('W1-5 /texts reader (U-8)', () => {
   it('route and nav exist; the view reads public/data/texts/<witness>.json and links words to /w/:lemma', () => {
     expect(readFileSync('src/router.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/texts"')
-    const v = readFileSync('src/views/TextsView.vue', 'utf8'); expect(v).toContain('./data/texts/'); expect(v).toContain('/w/${encodeURIComponent(t.lemma)}'); expect(v).toContain('annotate(')
+    const v = readFileSync('src/views/TextsView.vue', 'utf8'); expect(readFileSync('src/lib/witnessText.ts', 'utf8')).toContain('./data/texts/'); expect(v).toContain('wordTo(t.lemma)'); expect(readFileSync('src/lib/witnessText.ts', 'utf8')).toContain('annotate(')
   })
   it('SSR before data load shows the skeleton, not a crash', async () => {
     expect(await ssr(TextsView, {}, '/texts')).toContain('Тексти корпусу')
