@@ -6,5 +6,6 @@ export default defineConfig({
   plugins: [vue()],
   base: './',
   resolve: { alias: { '@core': fileURLToPath(new URL('./core', import.meta.url)) } },
-  test: { include: ['tests/**/*.test.ts'] },
+  // real-data tests read ~2k shards + the 13 MB core; the default 5 s timed out on the CI runner (run 38476803356)
+  test: { include: ['tests/**/*.test.ts'], testTimeout: 60_000 },
 })
