@@ -18,7 +18,7 @@ export interface TokenRec {
 export interface WitnessOut {
   id: string; unit: string; title: string; author: string; url: string
   date: [number, number]; dateCite: Evidence; msDate?: number
-  lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; region?: string
+  lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; region?: string
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   /** SPEC 60 NW-6 amendment: shown wherever the witness text is shown (/texts, media panel) when the text licence is not stated by the source */
   licenceNote?: string

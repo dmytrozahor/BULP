@@ -20,7 +20,7 @@ export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
+export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
@@ -85,6 +85,9 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
   }
   if (t.lemma) { const opts = viaLemma(t.lemma); if (opts.length) return { route: 'torot-lemma', opts } }
   if (t.stanza) { const opts = viaLemma(t.stanza); if (opts.length) return { route: 'stanza-lemma', opts } }
+  if (t.lang !== 'uk' && !t.lemma && !t.stanza && correspondenceFor(key(t.raw))) {   // un-lemmatised witness (Sophia): the same cited suppletive correspondence applies to the raw form
+    const opts = viaLemma(key(t.raw)); if (opts.length) return { route: 'token', opts }
+  }
   if (t.lang !== 'uk') {
     const opts = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true))))
     if (opts.length) return { route: 'token', opts }
@@ -102,6 +105,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): strin
     for (const c of env.derive(l, t.oldI).candidates) out.push(key(c.form))
     const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form))
   }
+  if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
   if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) out.push(key(c.form))
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   return out

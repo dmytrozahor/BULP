@@ -123,7 +123,7 @@ export function pickText(r: any): { field: 'transcription' | 'interpretative_edi
     if (/\p{Script=Latin}/u.test(ro)) return { field: 'romanisation', text: ro, script: 'Latin', note: 'глаголиця, латинська транслітерація порталу' }
     return tr ? { field: 'transcription', text: tr, script: 'Glagolitic', note: 'глаголиця без транслітерації' } : undefined
   }
-  if (tr) return { field: 'transcription', text: tr, script: 'Cyrillic' }
+  if (tr && (/\p{Script=Cyrillic}/u.test(tr) || !/\p{Script=Cyrillic}/u.test(ie))) return { field: 'transcription', text: tr, script: 'Cyrillic' }
   return ie ? { field: 'interpretative_edition', text: ie, script: 'Cyrillic', note: 'нормалізоване прочитання (транскрипція порожня)' } : undefined
 }
 
@@ -137,12 +137,13 @@ export function ingestRows(rows: any[]): Ingest {
     seen.add(r.id)
     const langName: string | undefined = r.language?.text || undefined
     const glagolitic = r.writing_system?.text === 'Glagolitic'
-    if (langName && langName !== 'Church Slavonic' && langName !== 'Ukrainian') { skip(`language:${langName}`, r.id); continue }
-    if (!langName && !glagolitic) { skip('language-unstated', r.id); continue }
+    const unstated = !langName || langName === 'N/A'
+    if (!unstated && langName !== 'Church Slavonic' && langName !== 'Ukrainian') { skip(`language:${langName}`, r.id); continue }
     const from = r.min_year, to = r.max_year
     if (typeof from !== 'number' || typeof to !== 'number') { skip('undated', r.id); continue }
     if (from > to || from < 1000 || to > 1950) { skip('bad-date', r.id); continue }
     const pick = pickText(r)
+    if (unstated && !glagolitic && pick?.script !== 'Cyrillic') { skip('language-unstated', r.id); continue }   // BL-10: unstated language kept only for Cyrillic text
     const panel = r.panel?.title ? String(r.panel.title) : ''
     const loc = `${panel}/${r.id}`
     const tk = pick ? tokenize(pick.text, loc, pick.script) : undefined
@@ -154,7 +155,7 @@ export function ingestRows(rows: any[]): Ingest {
     witnesses.push({
       id: `sophia-${r.id}`, unit: 'sophia', title, author: 'sophia_graffiti', url,
       date: [from, to], dateCite: D('SOPHIA', url, `min_year ${from}, max_year ${to}`, `датування порталу${crit ? ' (критерії: ' + crit + ')' : ''}`),
-      lang: langName === 'Ukrainian' ? (to <= 1798 ? 'ruthenian' : 'uk') : 'chu-rus', region: 'Київ',
+      lang: unstated && !glagolitic ? 'undetermined' : langName === 'Ukrainian' ? (to <= 1798 ? 'ruthenian' : 'uk') : 'chu-rus', region: 'Київ',
       witnessType: 'autograph', edition: `${ATTRIBUTION}; поле «${pick.field}»${pick.note ? '; ' + pick.note : ''}`,
       ...(to <= 1400 ? { oldI: true } : {}), license: 'не вказано порталом', licenceNote: LICENCE_NOTE,
       ...(iiif ? { media: { kind: 'iiif' as const, url: iiif, attribution: ATTRIBUTION, licence: 'зображення CC BY-NC', title } } : {}),

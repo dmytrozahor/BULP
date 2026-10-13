@@ -29,6 +29,8 @@ const FIX = [
   row(6, { min_year: 1300, max_year: 13015 }),                                                      // portal typo
   row(7, { transcription: '<p>та----- | в-------- | ...</p>' }),                                    // lacunae only
   row(8, { published: false }),
+  row(9, { language: { text: 'N/A' }, transcription: '', interpretative_edition: '<p>Иван тут</p>' }),   // BL-10: undetermined, normalised reading only
+  row(10, { language: undefined, writing_system: { text: 'Latin' }, transcription: '<p>Ivan hic</p>' }),  // unstated, not Cyrillic
   row(582, { language: undefined, writing_system: { text: 'Glagolitic' }, min_year: 1050, max_year: 1100, transcription: '<p>Ⰾ(Ⰵჵ)☊ჵჵⰇⰟ</p>', romanisation: 'Fєodoulʺ', interpretative_edition: '<p>Фєодоулъ</p>' }),
   row(583, { language: undefined, writing_system: { text: 'Glagolitic' }, min_year: 1050, max_year: 1100, transcription: '<p>ⰰⰱⰲ ⰳⰴⰵ</p>' }),
 ]
@@ -67,9 +69,10 @@ describe('ingestRows gates and witness shape', () => {
   const r = ingestRows([...FIX, row(3469)])   // duplicate id is ignored
   const by = Object.fromEntries(r.witnesses.map(w => [w.id, w]))
   it('keeps Church Slavonic and Ukrainian (Glagolitic by script); lists every exclusion by reason', () => {
-    expect(r.witnesses.map(w => w.id)).toEqual(['sophia-448', 'sophia-582', 'sophia-583', 'sophia-900', 'sophia-3469'])
-    expect(r.excluded).toEqual({ 'language:Ancient Greek': 1, 'language:Polish': 1, 'language:Russian': 1, 'language-unstated': 1, undated: 1, 'bad-date': 1, 'no-text': 1 })
+    expect(r.witnesses.map(w => w.id)).toEqual(['sophia-4', 'sophia-9', 'sophia-448', 'sophia-582', 'sophia-583', 'sophia-900', 'sophia-3469'])
+    expect(r.excluded).toEqual({ 'language:Ancient Greek': 1, 'language:Polish': 1, 'language:Russian': 1, undated: 1, 'bad-date': 1, 'no-text': 2 })
     expect(r.excludedIds['undated']).toEqual([5])
+    expect(by['sophia-4']!.lang).toBe('undetermined'); expect(by['sophia-9']!.lang).toBe('undetermined'); expect(by['sophia-9']!.edition).toContain('interpretative_edition')
   })
   it('witness fields: id for the media panel, dates, language by date, region, author, IIIF media, URL', () => {
     const w = by['sophia-3469']!

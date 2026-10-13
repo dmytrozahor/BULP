@@ -15,7 +15,7 @@ import { UNITS_SONGS } from './nw-songs.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
-export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk'
+export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed'
 
 export interface Unit {
