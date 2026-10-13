@@ -179,6 +179,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
       <div class="chips" role="group" aria-label="Історичні написання (фільтр панелей)">
         <button v-for="f in chipForms" :key="f.raw" type="button" class="chip" :aria-pressed="active === f.raw" @click="toggle(f.raw)">{{ f.raw }}</button>
         <button v-if="top.rest" type="button" class="chip sans small" :aria-expanded="allForms" @click="allForms = !allForms">{{ allForms ? 'згорнути' : `+${top.rest}` }}</button>
+        <RouterLink v-if="active" class="chip sans small" :to="{ path: `/f/${active}`, query: { lemma: card.lemma } }">сторінка форми «{{ active }}» →</RouterLink>
         <button v-if="active" type="button" class="chip sans small" @click="active = null">× усі форми</button>
       </div>
       <div v-if="allForms" class="allforms">
@@ -275,7 +276,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
 
         <!-- 5. Examples -->
         <Panel id="h-kw" v-model:open="ui.kw" title="Приклади · KWIC" :summary="`${kwic.length} прикладів`" :empty="!!full && !kwic.length">
-          <Kwic v-if="full" :lines="kwic" />
+          <Kwic v-if="full" :lines="kwic" :lemma="card.lemma" />
           <div v-else class="skeleton" style="height:8rem" />
           <p v-if="activeForm" class="small muted">показано приклади форми «{{ activeForm.raw }}»</p>
         </Panel>

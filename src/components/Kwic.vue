@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 /**
  * research/07 §3.1: «KWIC rows use the format left context | **node** | right context with a monospace-aligned node, and a citation line
  * underneath (author, title, year, region, link). Offer … a filter by period.» P-1.6: statistics link to the concordance lines.
@@ -23,7 +23,9 @@ const showMedia = async (i: number, w: string) => {
   mediaErr.value = false; media.value = undefined; mediaOpen.value = i
   try { media.value = await resolveMedia(w, wm(w)) } catch { mediaErr.value = true }
 }
-const props = defineProps<{ lines: Kwic[]; limit?: number }>()
+const props = defineProps<{ lines: Kwic[]; limit?: number; lemma?: string }>()
+/** BL-6: the node word links to its form page (/f/:form), the lemma disambiguates shared spellings */
+const formTo = (k: Kwic) => ({ path: `/f/${k.node}`, query: props.lemma ? { lemma: props.lemma } : {} })
 const epochOf = (k: Kwic) => { const a = assignEpoch(k.date, 'shev'); return isKnown(a) ? a.value.epochs[0]! : 'unknown' }
 const epochs = computed(() => [...new Set(props.lines.map(epochOf))])
 const sel = ref(''), all = ref(false)
@@ -38,7 +40,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
       <button v-for="e in epochs" :key="e" type="button" class="chip" :aria-pressed="sel === e" @click="sel = e">{{ epochShort(e) }}</button>
     </div>
     <div v-for="(k, i) in view" :key="i" class="kwic">
-      <span class="l"><span>{{ k.left }}</span></span>{{ ' ' }}<span class="n">{{ k.node }}</span>{{ ' ' }}<span class="r">{{ k.right }}</span>
+      <span class="l"><span>{{ k.left }}</span></span>{{ ' ' }}<RouterLink class="n" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span class="r">{{ k.right }}</span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>

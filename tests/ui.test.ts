@@ -414,7 +414,7 @@ describe('SPEC 50 epoch paradigms', () => {
 describe('W1-1 KWIC spacing', () => {
   it('left, node and right are separated by spaces; the citation is its own element', async () => {
     const html = await ssr(Kwic, { lines: [{ w: 'x', loc: 'абз. 1', left: 'по Всеславѣ', node: 'пожегъ', right: 'землю', date: [1096, 1117] }] })
-    expect(html).toMatch(/<\/span> <span class="n">пожегъ<\/span> <span class="r">/); expect(html).toContain('class="cite"')
+    expect(html).toMatch(/<\/span> <a href="\/f\/пожегъ"[^>]*class="n"[^>]*>пожегъ<\/a> <span class="r">/); expect(html).toContain('class="cite"')
   })
 })
 

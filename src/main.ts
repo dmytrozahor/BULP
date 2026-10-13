@@ -10,6 +10,7 @@ const router = createRouter({
   routes: [
     { path: '/', component: () => import('./views/SearchView.vue') },
     { path: '/w/:lemma', component: () => import('./views/WordView.vue'), props: true },
+    { path: '/f/:form', component: () => import('./views/FormView.vue'), props: true },
     { path: '/analyze', component: () => import('./views/AnalyzeView.vue') },
     { path: '/derive', component: () => import('./views/DeriveView.vue') },
     { path: '/annotate', component: () => import('./views/AnnotateView.vue') },
