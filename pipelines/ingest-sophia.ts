@@ -31,6 +31,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync, rmSync
 import { D } from '../core/evidence.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
 import { ATTRIBUTION, LICENCE_NOTE, SOPHIA_API } from './nw-sophia.ts'
+import { buildSegmenter, loadAttested } from './sophia-segment.ts'
 
 export const API = SOPHIA_API
 export const PORTAL = 'https://saintsophia.dh.gu.se/'
@@ -47,7 +48,15 @@ export interface SophiaCatalogue {
   attribution: string
   items: SophiaItem[]
   /** NW-6 amendment: outcome of the text ingestion (witnesses written / excluded by reason) */
-  text?: { field: string; witnesses: number; tokens: number; excluded: Record<string, number> }
+  text?: {
+    field: string; witnesses: number; tokens: number; excluded: Record<string, number>
+    /** continuous-text inscriptions accepted after dictionary segmentation (every segment links) and the tokens so produced (method 'segmentation') */
+    segmentedWitnesses: number; segmentedTokens: number
+    /** ids of inscriptions with only continuous text that could not be segmented: shown (IIIF image), excluded from the statistics */
+    displayOnly: number[]
+    /** tokens dropped as unmapped (private-use glyphs, other scripts, numerals) across the ingested witnesses */
+    droppedUnmapped: number
+  }
 }
 
 type Txt = { text?: string } | null | undefined
@@ -128,7 +137,7 @@ export function tokenize(text: string, loc: string, script: Script = 'Cyrillic',
       if (long && seg) {
         const parts = seg(t)
         if (!parts) { out.failed++; continue }
-        for (const p of parts) out.tokens.push({ raw: p, loc, s, method: 'segmentation' })
+        for (const p of parts) out.tokens.push(parts.length > 1 ? { raw: p, loc, s, method: 'segmentation' } : { raw: p, loc, s })   // one linking word: nothing was inferred
         any = true; continue
       }
       out.tokens.push({ raw: t, loc, s }); any = true
@@ -234,8 +243,20 @@ async function main() {
   }
   const pages = readdirSync(dir).filter(n => /^\d{3}\.json$/.test(n)).sort().map(n => JSON.parse(readFileSync(`${dir}/${n}`, 'utf8')).results as any[])
   const cat = catalogue(pages)
-  const ing = ingestRows(pages.flat())
-  cat.text = { field: 'transcription (fallback interpretative_edition; Glagolitic → portal transliteration)', witnesses: ing.witnesses.length, tokens: ing.witnesses.reduce((s, w) => s + w.tokens.length, 0), excluded: ing.excluded }
+  const rows = pages.flat()
+  const need = new Map<string, { chunk: string; lang: WitnessOut['lang']; oldI: boolean }>()       // pass 1: which unspaced chunks need segmenting
+  ingestRows(rows, { segmenter: (chunk, x) => { need.set(`${x.lang}|${x.oldI}|${chunk}`, { chunk, ...x }); return undefined } })
+  console.log(`sophia: segmenting ${need.size} unspaced chunks (VESUM pass)…`)
+  const segmenter = await buildSegmenter([...need.values()], loadAttested())
+  const ing = ingestRows(rows, { segmenter })
+  const nSeg = ing.witnesses.reduce((s, w) => s + w.tokens.filter(t => t.method === 'segmentation').length, 0)
+  cat.text = {
+    field: 'interpretative_edition when present (else transcription; unspaced transcription only after dictionary segmentation; Glagolitic → portal transliteration)',
+    witnesses: ing.witnesses.length, tokens: ing.witnesses.reduce((s, w) => s + w.tokens.length, 0), excluded: ing.excluded,
+    segmentedWitnesses: ing.witnesses.filter(w => w.tokens.some(t => t.method === 'segmentation')).length, segmentedTokens: nSeg,
+    displayOnly: ing.excludedIds['display-only'] ?? [],
+    droppedUnmapped: ing.witnesses.reduce((s, w) => s + w.dropped.unmapped, 0),
+  }
   mkdirSync('public/data', { recursive: true })
   writeFileSync('public/data/sophia.json', JSON.stringify(cat))
   mkdirSync('data/work', { recursive: true })
