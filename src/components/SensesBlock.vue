@@ -22,7 +22,7 @@ const rev = computed(() => (rows.value[0] ? senseRevision(rows.value[0]) : undef
         </li>
       </ol>
     </template>
-    <p class="small muted">Джерело: {{ SENSES_LICENCE }}; <a :href="wiktUrl(lemma, rev)" target="_blank" rel="noopener">стаття «{{ lemma }}»<template v-if="rev">, ред. {{ rev }}</template></a>.
+    <p class="small muted">Джерело: <RouterLink to="/source/WIKTUK">Вікісловник</RouterLink>, {{ SENSES_LICENCE }}; <a :href="wiktUrl(lemma, rev)" target="_blank" rel="noopener">оригінал: стаття «{{ lemma }}»<template v-if="rev">, ред. {{ rev }}</template> ↗</a>.
       Скорочено; значення з розділу «Значення» без прикладів і міток.</p>
   </div>
 </template>

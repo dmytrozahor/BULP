@@ -24,7 +24,7 @@ const yrs = (i: SophiaItem) => (i.from === i.to ? `${i.from}` : `${i.from}–${i
 <template>
   <section>
     <h1>Софія Київська: графіті</h1>
-    <p class="muted sans small">Метадані й посилання на зображення порталу <a href="https://saintsophia.dh.gu.se/" target="_blank" rel="noopener">saintsophia.dh.gu.se</a>. {{ SOPHIA_ATTRIBUTION }}. Ліцензію на тексти транскрипцій не підтверджено, тому тексти тут не показано.</p>
+    <p class="muted sans small">Метадані й посилання на зображення порталу <a href="https://saintsophia.dh.gu.se/" target="_blank" rel="noopener">saintsophia.dh.gu.se ↗</a> (<RouterLink to="/source/SOPHIA">про джерело</RouterLink>). {{ SOPHIA_ATTRIBUTION }}. Ліцензію на тексти транскрипцій не підтверджено, тому тексти тут не показано.</p>
     <p><AffiliationChips :refs="[SOPHIA_PORTAL]" /></p>
     <p v-if="err" class="fixture err" role="alert">{{ err }}</p>
     <p v-else-if="!data" class="muted" role="status">Завантаження…</p>

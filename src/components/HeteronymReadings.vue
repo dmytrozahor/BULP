@@ -47,7 +47,7 @@ const revOf = (r: { lemma: string; stressed: string }) => { const s = wikt(r)[0]
           <details v-if="wikt(r).length" class="small wsenses" style="margin:.15rem 0">
             <summary>Вікісловник: {{ wikt(r)[0]!.gloss }}<template v-if="wikt(r).length > 1"> · значень: {{ wikt(r).length }}</template></summary>
             <ol style="margin:.2rem 0 .2rem 1.2rem;padding:0"><li v-for="(s, i) in wikt(r)" :key="i">{{ s.gloss }}</li></ol>
-            <span class="muted">{{ SENSES_LICENCE }}; <a :href="wiktUrl(r.lemma, revOf(r))" target="_blank" rel="noopener">стаття «{{ r.lemma }}»</a></span>
+            <span class="muted"><RouterLink to="/source/WIKTUK">Вікісловник</RouterLink>, {{ SENSES_LICENCE }}; <a :href="wiktUrl(r.lemma, revOf(r))" target="_blank" rel="noopener">оригінал: стаття «{{ r.lemma }}» ↗</a></span>
           </details>
         </li>
       </ul>
