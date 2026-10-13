@@ -4,7 +4,8 @@
  * Теперішній · Минулий). Tagset after research/02 §2: "Cases: v_naz v_rod v_dav v_zna v_oru v_mis v_kly … Number is s/p; gender is m/f/n".
  * Cells keep the tag string so the UI can show it verbatim on hover (D-evidence).
  */
-export interface PForm { form: string; tags: string }
+import { participleSlot, type PForm, type PartSlot } from '../../core/verbs.ts'
+export type { PForm }
 export interface Grid { id: string; title: string; cols: string[]; rows: { label: string; cells: PForm[][] }[] }
 
 export const CASES: [string, string][] = [['v_naz', 'називний'], ['v_rod', 'родовий'], ['v_dav', 'давальний'], ['v_zna', 'знахідний'], ['v_oru', 'орудний'], ['v_mis', 'місцевий'], ['v_kly', 'кличний']]
@@ -39,6 +40,14 @@ function verb(ps: PForm[]): Grid[] {
   if (past.length) grids.push({ id: 'past', title: 'Минулий час', cols: ['чол.', 'жін.', 'сер.', 'множина'], rows: [{ label: 'минулий', cells: ['m', 'f', 'n', 'p'].map(g => pick(past, g)) }] })
   const impr = pick(ps, 'impr')
   if (impr.length) grids.push({ id: 'impr', title: 'Наказовий спосіб', cols: ['однина', 'множина'], rows: ['1', '2'].map(n => ({ label: `${n} особа`, cells: [pick(impr, 's', n), pick(impr, 'p', n)] })) })
+  const imp = pick(ps, 'impers')
+  if (imp.length) grids.push({ id: 'impers', title: 'Безособова форма (-но, -то)', cols: [''], rows: [{ label: 'безособова', cells: [imp] }] })
+  // BL-8: participles are VESUM lemmas of their own, linked at build time (core/verbs.ts); slot by tag + suffix
+  const slot = (s: PartSlot) => ps.filter(p => participleSlot(p) === s)
+  if (ps.some(p => { const s = participleSlot(p); return s && !s.startsWith('advp') }))
+    grids.push({ id: 'part', title: 'Дієприкметники', cols: ['теперішній', 'минулий'], rows: [{ label: 'активний', cells: [slot('actv.pres'), slot('actv.past')] }, { label: 'пасивний', cells: [[], slot('pasv')] }] })
+  if (ps.some(p => participleSlot(p)?.startsWith('advp')))
+    grids.push({ id: 'advp', title: 'Дієприслівники', cols: ['теперішній', 'минулий'], rows: [{ label: 'дієприслівник', cells: [slot('advp.pres'), slot('advp.past')] }] })
   return grids
 }
 

@@ -4,7 +4,7 @@
  * A cell with neither is `unknown` (EP-7.4, EP-3.8: absence is not evidence).
  */
 import { EPOCHS } from '../../core/epochs.ts'
-import { CASES, CASE_UK, DUAL_OF, DUAL_UK, dualShown, epochDisabled, nounKey, PRON_CASES, pronDualShown, type Case } from '../../core/cells.ts'
+import { CASES, CASE_UK, DUAL_OF, DUAL_UK, dualShown, epochDisabled, nounKey, NUMS, PRON_CASES, pronDualShown, VERB_FIN, VERB_FIN_UK, VERB_GENDERS, VERB_NONFIN, VERB_NONFIN_UK, VERB_PERSONS, verbDualShown, type Case } from '../../core/cells.ts'
 import { generalNotes, notesFor, type MorphChange } from '../../core/morph-history.ts'
 import { confirm, reconstruct, type ReconCell, type ReconForm } from '../../core/reconstruct.ts'
 import type { CellForm, CellKey, EpochParadigm, StemValue } from '../../core/types.ts'
@@ -15,7 +15,7 @@ export interface GCell {
   key: CellKey; tag?: string; att: CellForm[]; enc?: CellForm[]; more: number; rec: ReconForm[]; eq?: ReconCell['eq']; notes: MorphChange[]; unknown: boolean
 }
 export interface EGrid {
-  epoch: string; cols: { id: 'sg' | 'du' | 'pl'; label: string }[]; rows: { label: string; cells: (GCell | null)[] }[]
+  epoch: string; cols: { id: 'sg' | 'du' | 'pl'; label: string }[]; rows: { label: string; cells: (GCell | null)[]; span?: number }[]
   duHidden: boolean; notes: MorphChange[]; reconstructed: boolean
 }
 
@@ -35,7 +35,25 @@ export function pronGrid(p: EpochParadigm | undefined, epoch: string): EGrid {
     rows: PRON_CASES.map(c => ({ label: CASE_UK[c], cells: [cell(`sg.${c}`), ...(du ? [cell(`du.${c}`)] : []), cell(`pl.${c}`)] })) }
 }
 
+/**
+ * BL-8 verb grid: attested-only (no reconstruction, no noun-cell notes). Only the tense/mood groups that have at least one attested cell in this epoch get rows (person × number);
+ * non-finite forms (inf, sup, participles) are one wide cell each (`span`), the l-participle has a row per gender. The dual column appears only where a dual cell is attested.
+ */
+export function verbGrid(p: EpochParadigm | undefined, epoch: string): EGrid {
+  const att = new Map((p?.cells ?? []).map(c => [c.key, c])), du = verbDualShown(p)
+  const nums = du ? NUMS : NUMS.filter(n => n !== 'du')
+  const cell = (key: CellKey): GCell => { const a = att.get(key), forms = a?.forms ?? []; return { key, att: forms, more: a?.more ?? 0, rec: [], notes: [], unknown: !forms.length } }
+  const has = (pre: string) => [...att.values()].some(c => c.forms.length && (c.key === pre || c.key.startsWith(pre + '.')))
+  const rows: EGrid['rows'] = []
+  for (const g of VERB_FIN) if (has(g)) for (const per of VERB_PERSONS) rows.push({ label: `${VERB_FIN_UK[g]} · ${per} ос.`, cells: nums.map(n => cell(`${g}.${n}.${per}`)) })
+  for (const k of VERB_NONFIN) if (has(k)) rows.push({ label: VERB_NONFIN_UK[k], cells: [cell(k)], span: nums.length })
+  if (has('lpt')) for (const gd of VERB_GENDERS) rows.push({ label: `л-форма (результатив) · ${{ m: 'чол.', f: 'жін.', n: 'сер.' }[gd]}`, cells: nums.map(n => cell(`lpt.${gd}.${n}`)) })
+  const cols: EGrid['cols'] = nums.map(n => ({ id: n, label: { sg: 'однина', du: 'двоїна', pl: 'множина' }[n] }))
+  return { epoch, cols, rows, duHidden: !du, notes: [], reconstructed: false }
+}
+
 export function epochGrid(p: EpochParadigm | undefined, epoch: string, stem?: StemValue, kind?: string): EGrid {
+  if (kind === 'verb') return verbGrid(p, epoch)
   if (kind === 'pron') return pronGrid(p, epoch)
   const att = new Map((p?.cells ?? []).map(c => [c.key, c]))
   const rec = new Map((stem ? confirm(reconstruct(stem, epoch), p) : []).map(c => [c.key, c]))

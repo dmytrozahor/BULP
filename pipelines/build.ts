@@ -37,6 +37,7 @@ import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
+import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
 import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
@@ -261,6 +262,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
   lap(`VESUM pass 2 (${keys2.size} keys, ${kept.length} paradigms) + python stages`)
   const [v2] = await Promise.all([vesumIndex(keys2, new Map(kept.map(l => [l.id, l.cls] as const))), py()])
   lap('pass 2 done')
+  {   // BL-8: participles / adverbial participles are VESUM lemmas of their own — link them to the kept verbs by construction + VESUM oracle (core/verbs.ts) and append them to the verb paradigm
+    const cand = new Map<string, string[]>()
+    for (const l of kept) if (paradigmKindOf(v2.lemmaTags.get(l.id) ?? l.tags) === 'verb') { const c = participleCandidates(v2.paradigms.get(l.id) ?? []); if (c.length) cand.set(l.id, c) }
+    const ph = (await vesumIndex(new Set([...cand.values()].flat()), new Set())).hits
+    let n = 0
+    for (const [id, c] of cand) { const add = acceptParticiples(v2.paradigms.get(id)!, c, ph, key); if (add.length) { v2.paradigms.get(id)!.push(...add); n += add.length } }
+    lap(`verb participles linked: ${n} forms for ${cand.size} verbs with candidates`)
+  }
   const stressJson = existsSync(resolve(WORK, 'stress.json')) ? rd<StressJson>(resolve(WORK, 'stress.json')) : undefined
   const ruJson = existsSync(resolve(WORK, 'ru.json')) ? rd<{ forms: AnnEnv['ru'] }>(resolve(WORK, 'ru.json')).forms : {}
   if (!stressJson) console.warn('  ! no stress.json — stress variants empty')
@@ -272,7 +281,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const annEnv: AnnEnv = { hits: v2.hits, lt, ru: ruJson, derive: dryEnv.derive }
 
   // ── 5b. epoch paradigms of the kept noun lemmas (SPEC 50 EP-3/EP-4) ───────────────────────────
-  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; const k = paradigmKindOf(t); return k === 'noun' || k === 'pron' ? [[l.id, { display: l.display, tags: t }] as const] : [] }))   // FX-5: nouns get the noun grid, pronouns (VESUM `pron` segment) the pronominal grid; other POS none
+  const nounLemmas = new Map(kept.flatMap(l => { const t = v2.lemmaTags.get(l.id) ?? l.tags; const k = paradigmKindOf(t); return k === 'noun' || k === 'pron' || k === 'verb' ? [[l.id, { display: l.display, tags: t }] as const] : [] }))   // FX-5: nouns get the noun grid, pronouns (VESUM `pron` segment) the pronominal grid, BL-8: verbs the verb grid; other POS none
   const PROBE = ['рука', 'земля', 'князь', 'город', 'син', 'я', 'ти', 'себе', 'ми', 'ви', 'він', 'аз', 'да']   // FX-6 test lemmas
   const epochRes = buildEpochs({
     probe: new Set(PROBE), kindOf: id => { const l = lemmas.get(id); return l ? paradigmKindOf(v2.lemmaTags.get(id) ?? l.tags) : '' },

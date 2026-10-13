@@ -70,10 +70,76 @@ const PNUM: Record<string, Num> = { s: 'sg', d: 'du', p: 'pl' }
 const PGEN: Record<string, 'm' | 'f' | 'n'> = { m: 'm', f: 'f', n: 'n' }
 const PPOS: Record<string, Grid | undefined> = { Nb: 'noun', Ne: 'noun', 'A-': 'adj', Pp: 'pron', Pd: 'pron', Ps: 'pron', Pr: 'pron', Pk: 'pron', Pi: 'pron', Pt: 'pron', Px: 'pron', Pc: 'pron', 'V-': 'verb' }
 
+// ── verb grid (BL-8): finite cells `${group}.${num}.${person}` (group in VERB_FIN, person 1|2|3), non-finite `inf` `sup` `part.act.pres` `part.act.past` `part.pass`, and the
+//    l-participle (resultative; the modern past) `lpt.${gender}.${num}`. Attested-only: nothing is reconstructed (no cited verb table, SPEC 50 EP-5.1). Dual cells are unmerged. ──
+/** Finite groups in display order; PROIEL tense letters p i a r l u f t + mood m (imperative). `past` = PROIEL «u past» (tense not specified further). */
+export const VERB_FIN = ['pres', 'aor', 'impf', 'perf', 'plup', 'past', 'fut', 'fpf', 'impr'] as const
+export type VerbFin = (typeof VERB_FIN)[number]
+export const VERB_FIN_UK: Record<VerbFin, string> = { pres: 'Теперішній', aor: 'Аорист', impf: 'Імперфект', perf: 'Перфект', plup: 'Плюсквамперфект', past: 'Минулий (u)', fut: 'Майбутній', fpf: 'Майбутній доконаний', impr: 'Наказовий' }
+export const VERB_NONFIN = ['inf', 'sup', 'part.act.pres', 'part.act.past', 'part.pass'] as const
+export const VERB_NONFIN_UK: Record<(typeof VERB_NONFIN)[number], string> = { inf: 'Інфінітив', sup: 'Супін', 'part.act.pres': 'Дієприкметник акт. теперішній', 'part.act.past': 'Дієприкметник акт. минулий', 'part.pass': 'Дієприкметник пас.' }
+export const VERB_GENDERS = ['m', 'f', 'n'] as const
+export const VERB_PERSONS = ['1', '2', '3'] as const
+/** All verb cell keys in display order. */
+export const VERB_KEYS: CellKey[] = [
+  ...VERB_FIN.flatMap(g => VERB_PERSONS.flatMap(p => NUMS.map(n => `${g}.${n}.${p}`))), ...VERB_NONFIN,
+  ...VERB_GENDERS.flatMap(g => NUMS.map(n => `lpt.${g}.${n}`)),
+]
+export const isVerbKey = (k: CellKey): boolean => VERB_KEYS.includes(k)
+export const isVerbDualKey = (k: CellKey): boolean => /(^|\.)du(\.|$)/.test(k)
+/** True if any dual verb cell has an attested spelling (EP-6.2 for the verb grid). */
+export const verbDualShown = (p?: { cells: { key: CellKey; forms: unknown[] }[] }): boolean => !!p?.cells.some(c => isVerbDualKey(c.key) && c.forms.length > 0)
+const placedV = (keys: CellKey[]): Decoded => {
+  const u = [...new Set(keys)]
+  return !u.length || u.length > MAX_AMB ? { grid: 'verb', keys: [], amb: 0, under: true } : { grid: 'verb', keys: VERB_KEYS.filter(k => u.includes(k)), amb: u.length }
+}
+const PTENSE: Record<string, VerbFin> = { p: 'pres', i: 'impf', a: 'aor', r: 'perf', l: 'plup', u: 'past', f: 'fut', t: 'fpf' }
+/** TOROT/PROIEL V- fields (person number tense mood voice gender …): indicative → tense group; m → imperative; n → inf; u → sup; p → participle; s/o/d/g/x… → underspecified here. */
+function verbFromProiel(f: string): Decoded {
+  const person = f[0] ?? '', num = PNUM[f[1] ?? ''], tense = f[2] ?? '', mood = f[3] ?? '', voice = f[4] ?? '', gen = f[5] ?? ''
+  if (mood === 'n') return placedV(['inf'])
+  if (mood === 'u') return placedV(['sup'])
+  if (mood === 'p') {
+    if (tense === 's') {   // resultative = l-participle (research/11 §4.1 пошла/поити); gender m f n, ambiguity from p o r q
+      const gs = gen === 'q' ? ['m', 'f', 'n'] : gen === 'o' ? ['m', 'n'] : gen === 'r' ? ['f', 'n'] : gen === 'p' ? ['m', 'f'] : PGEN[gen] ? [PGEN[gen]!] : []
+      return placedV(num ? gs.map(g => `lpt.${g}.${num}`) : [])
+    }
+    if (voice === 'p' || voice === 'e') return placedV(['part.pass'])
+    if (voice === 'a') return placedV(tense === 'p' ? ['part.act.pres'] : tense === 'a' || tense === 'u' ? ['part.act.past'] : [])
+    return placedV([])
+  }
+  const grp = mood === 'm' ? 'impr' : mood === 'i' ? PTENSE[tense] : undefined
+  return placedV(grp && num && person && '123'.includes(person) ? [`${grp}.${num}.${person}`] : [])
+}
+/** Stanza UD verb: UD has no aorist/imperfect value (research/11 §4.2), so a finite Past is underspecified (never guessed into a tense group). */
+function verbFromUd(f: Record<string, string>): Decoded {
+  const nums = (f.Number ?? '').split(',').map(v => UNUM[v]).filter((x): x is Num => !!x), pers = (f.Person ?? '').split(',').filter(p => p && '123'.includes(p))
+  const vf = f.VerbForm ?? ''
+  if (vf === 'Inf') return placedV(['inf'])
+  if (vf === 'Sup') return placedV(['sup'])
+  if (vf === 'PartRes') return placedV(nums.flatMap(n => (f.Gender ?? '').split(',').map(v => UGEN[v]).filter((x): x is 'm' | 'f' | 'n' => !!x).map(g => `lpt.${g}.${n}`)))
+  if (vf === 'Part') return placedV(f.Voice === 'Pass' ? ['part.pass'] : f.Tense === 'Pres' ? ['part.act.pres'] : f.Tense === 'Past' ? ['part.act.past'] : [])
+  const grp = f.Mood === 'Imp' ? 'impr' : f.Tense === 'Pres' ? 'pres' : f.Tense === 'Fut' ? 'fut' : undefined
+  return placedV(grp ? nums.flatMap(n => pers.map(p => `${grp}.${n}.${p}`)) : [])
+}
+/** VESUM verb lines of the lemma: inf; pres/futr/impr by number (s|p) and person; `past` m/f/n/p = the l-form (lpt); impers and the rest are not placed. */
+function verbFromVesum(lines: string[][]): Decoded {
+  const keys: CellKey[] = []
+  for (const t of lines) {
+    if (t[0] !== 'verb') continue
+    const num: Num = t.includes('p') ? 'pl' : 'sg', per = ['1', '2', '3'].find(x => t.includes(x))
+    if (t.includes('inf')) keys.push('inf')
+    else if (t.includes('past')) { for (const g of VERB_GENDERS) if (t.includes(g)) keys.push(`lpt.${g}.sg`); if (t.includes('p')) keys.push(...VERB_GENDERS.map(g => `lpt.${g}.pl`)) }
+    else for (const [tag, grp] of [['pres', 'pres'], ['futr', 'fut'], ['impr', 'impr']] as const) if (t.includes(tag) && per) keys.push(`${grp}.${num}.${per}`)
+  }
+  return placedV(keys)
+}
+
 /** TOROT / PROIEL positional tag `"<pos> <person><number><tense><mood><voice><gender><case><degree><strength><inflection>"`, e.g. `"Nb -d---fa--i"` → du.nav. */
 export function cellsFromProiel(morph: string): Decoded {
   const [pos = '', f = ''] = morph.trim().split(/\s+/), grid = PPOS[pos]
   if (grid === 'pron') { const num = PNUM[f[1] ?? '']; return placed(num ? crossP([num], PCASE[f[6] ?? ''] ?? []) : [], PGEN[f[5] ?? ''], 'pron') }
+  if (grid === 'verb') return verbFromProiel(f)
   if (grid !== 'noun') return other(grid)
   const num = PNUM[f[1] ?? '']
   return placed(num ? cross([num], PCASE[f[6] ?? ''] ?? []) : [], PGEN[f[5] ?? ''])
@@ -86,8 +152,9 @@ const UGEN: Record<string, 'm' | 'f' | 'n'> = { Masc: 'm', Fem: 'f', Neut: 'n' }
 /** Stanza UD output (model, P-1.7): `cellsFromUd('NOUN', 'Case=Ins|Gender=Fem|Number=Dual')` → du.di. Comma lists (`Case=Acc,Nom`) are ambiguity. */
 export function cellsFromUd(upos: string, feats: string | null | undefined): Decoded {
   const grid = UPOS[upos]
-  if (grid !== 'noun' && grid !== 'pron') return other(grid)
+  if (grid !== 'noun' && grid !== 'pron' && grid !== 'verb') return other(grid)
   const f = Object.fromEntries((feats ?? '').split('|').filter(Boolean).map(p => { const i = p.indexOf('='); return [p.slice(0, i), p.slice(i + 1)] as [string, string] }))
+  if (grid === 'verb') return verbFromUd(f)
   const list = <T>(k: string, m: Record<string, T>) => (f[k] ?? '').split(',').map(v => m[v]).filter((x): x is T => x !== undefined)
   const g = list('Gender', UGEN)
   if (grid === 'pron') return placed(crossP(list('Number', UNUM), list('Case', UCASE)), g.length === 1 ? g[0] : undefined, 'pron')
@@ -109,6 +176,7 @@ export function cellsFromVesum(tagLines: string[]): Decoded {
     }
     return placed(keys, undefined, 'pron')
   }
+  if (grid === 'verb') return verbFromVesum(lines)
   if (grid !== 'noun') return other(grid)
   const keys: CellKey[] = [], genders = new Set<'m' | 'f' | 'n'>()
   for (const t of lines) {

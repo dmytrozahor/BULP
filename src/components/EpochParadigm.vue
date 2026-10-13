@@ -31,6 +31,7 @@ const stem = computed(() => (props.epochs && props.epochs.stem.value !== 'unknow
 /** D4 / P-1.7: a stem assigned from a Stanza lemma is model-based, and so is every reconstruction built on it */
 const sample = computed(() => stem.value ? stemSample(stem.value.type, stem.value.model) : undefined)
 const modelStem = computed(() => !!props.epochs && (!!props.epochs.stem.method?.includes('stanza')))
+const isVerb = computed(() => props.kind === 'verb')   // BL-8: verb grid — attested cells only, no stem type
 const isPron = computed(() => props.kind === 'pron')   // FX-5: pronominal grid — no stem type, attested cells only
 const grid = computed(() => epochGrid(cur.value?.p, sel.value, stem.value, props.kind))
 const years = (id: string) => { const e = epochById[id]!; return `${e.start}${e.end >= 9999 ? '–…' : '–' + e.end}` }
@@ -62,7 +63,8 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
         <span class="unk">невідомо</span> ≠ «форми не було».
         <button v-if="!forceGrid" type="button" class="chip small sans" @click="forceGrid = true">показати порожню таблицю</button></p>
       <template v-if="gridOn">
-      <p v-if="isPron" class="small sans muted" style="margin:.2rem 0 .4rem">займенникова сітка: відмінок × число, без типу основи; лише засвідчені форми (реконструкції займенників немає: таблиці не процитовано).</p>
+      <p v-if="isVerb" class="small sans muted" style="margin:.2rem 0 .4rem">дієслівна сітка: час/спосіб × особа × число; лише засвідчені форми й лише групи, що трапляються в цій добі (реконструкції дієслів немає: таблиці не процитовано). Модельна розмітка Stanza не розрізняє аорист, імперфект і перфект, тому такі токени не розміщено.</p>
+      <p v-else-if="isPron" class="small sans muted" style="margin:.2rem 0 .4rem">займенникова сітка: відмінок × число, без типу основи; лише засвідчені форми (реконструкції займенників немає: таблиці не процитовано).</p>
       <div v-else class="row small sans" style="margin-bottom:.4rem">
         <span class="muted">тип основи:</span>
         <template v-if="stem">
@@ -86,7 +88,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
             <template v-if="dropTxt(cur?.p)"> · не розміщено в клітинках: {{ dropTxt(cur?.p) }}</template>
             <template v-if="!cur?.p"> · лему в цій добі не знайдено: усі клітинки невідомі</template></p>
           <p v-if="sel === 'shev.modern'" class="small sans muted" style="margin:.2rem 0">повна парадигма ВЕСУМ — у таблиці вище; тут — написання з пам’яток у клітинках.</p>
-          <template v-else-if="isPron" />
+          <template v-else-if="isPron || isVerb" />
           <p v-else-if="!grid.reconstructed && (sel === 'shev.proto' || sel === 'shev.old')" class="small sans muted" style="margin:.2rem 0">реконструкції немає: <span class="unk">невідомо</span> (тип основи не визначено або немає таблиці).</p>
           <p v-else-if="!['shev.proto', 'shev.old'].includes(sel)" class="small sans muted" style="margin:.2rem 0">реконструкції для цієї доби немає: цитованої таблиці парадигм немає (EP-5.1).</p>
           <div class="tablewrap">
@@ -95,7 +97,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
               <tbody>
                 <tr v-for="r in grid.rows" :key="r.label">
                   <th scope="row">{{ r.label }}</th>
-                  <td v-for="(c, i) in r.cells" :key="i" :class="{ na: !c }" :data-cell="c && cellId(c)" :data-col="grid.cols[i]?.label">
+                  <td v-for="(c, i) in r.cells" :key="i" :class="{ na: !c }" :colspan="r.span" :data-cell="c && cellId(c)" :data-col="grid.cols[i]?.label">
                     <template v-if="c">
                       <span v-if="c.tag" class="small muted dutag">{{ c.tag }}</span>
                       <!-- attested: solid -->

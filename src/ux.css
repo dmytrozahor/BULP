@@ -34,6 +34,7 @@
   .etable td { border: 0; border-top: 1px dotted var(--line); min-width: 0; padding: .25rem 0 .3rem; overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere; }
   .etable td::before { content: attr(data-col); display: block; font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
   .etable td.na { display: none; }
+  .etable td[colspan]::before { display: none; }
   .etable .ef { display: inline-block; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
   .tablewrap { overflow-x: visible; }
   .epanel { padding: .4rem; min-width: 0; }

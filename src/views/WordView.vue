@@ -59,7 +59,7 @@ const ui = reactive({ prov: true, lab: false, par: false, ep: false, kw: false, 
 watch(() => props.lemma, () => { active.value = null; allForms.value = false; Object.assign(ui, { prov: true, lab: false, par: false, ep: false, kw: false, st: false }) })
 const kind = computed(() => paradigmKindOf(card.value))
 const isNoun = computed(() => kind.value === 'noun')
-const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron')   // SPEC 50: epoch grids are built for nouns (pronouns phase 2)
+const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron' || kind.value === 'verb')   // SPEC 50: epoch grids are built for nouns, pronouns, and (BL-8) verbs
 const showKwic = (raw: string) => { active.value = raw; ui.kw = true; nextTick(() => document.getElementById('h-kw')?.scrollIntoView({ block: 'start' })) }
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 

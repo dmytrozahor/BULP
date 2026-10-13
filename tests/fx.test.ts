@@ -96,7 +96,7 @@ describe.skipIf(!hasData())('FX on the built data', () => {
   })
   it('да is not a noun; uninflected words carry kind uninflected and no epoch paradigm', () => {
     const da = by.get('да'); if (da) { expect(da.paradigmKind).toBe('uninflected'); expect(da.epochs).toBeUndefined() }
-    for (const x of cards) if (x.paradigmKind && x.paradigmKind !== 'noun' && x.paradigmKind !== 'pron') expect(x.epochs, x.lemma).toBeUndefined()   // pronouns have their own grid (FX-5 follow-up)
+    for (const x of cards) if (x.paradigmKind && x.paradigmKind !== 'noun' && x.paradigmKind !== 'pron' && x.paradigmKind !== 'verb') expect(x.epochs, x.lemma).toBeUndefined()   // pronouns have their own grid (FX-5 follow-up)
   })
   it('FX-3: first-attestation form = oldest form for every lemma; every lemma card has a kind', () => {
     for (const x of cards) {
