@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-13T22:36:29.714Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **609 189**.
+Generated 2026-10-13T22:53:05.150Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **609 189**.
 
 ## 1. Corpus
 
@@ -3865,7 +3865,7 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 537 lemmas, 48 830 reconstructed cells with 51 686 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 146 cells (6.4%), 3 162 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 17.93 MB of 94.80 MB shard total (18.9%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 17.93 MB of 94.83 MB shard total (18.9%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
@@ -4331,7 +4331,7 @@ Dialect labels (lemmas): CHN: 223 · MPL: 3 · SE: 4 · POD: 11 · MDN: 10 · BO
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 297 types (1 221 tokens). Top: да (235, replace), єсть (193, replace), да (57, replace), тай (46, replace), щож (29, replace), будучи (27, replace), да (22, replace), даже (17, replace), враг (12, replace), куда (9, replace), тай (9, replace), далече (8, replace), получивши (8, soft), государ (8, replace), єсть (8, replace), да (8, replace), власть (8, replace), тоже (7, replace), тута (7, replace), могучий (7, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 44 165 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 429 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 44 206 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 436 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
