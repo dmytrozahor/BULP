@@ -84,7 +84,8 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
     return viaCorr.length ? viaCorr : gated(via(lemma))
   }
   if (t.lemma) { const opts = viaLemma(t.lemma); if (opts.length) return { route: 'torot-lemma', opts } }
-  if (t.stanza) { const opts = viaLemma(t.stanza); if (opts.length) return { route: 'stanza-lemma', opts } }
+  // BL-19: a model lemma is accepted only if corroborated: the token's own derived form is a VESUM form of that lemma
+  if (t.stanza) { const opts = viaLemma(t.stanza).filter(o => o.ownConfirmed); if (opts.length) return { route: 'stanza-lemma', opts } }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza && correspondenceFor(key(t.raw))) {   // un-lemmatised witness (Sophia): the same cited suppletive correspondence applies to the raw form
     const opts = viaLemma(key(t.raw)); if (opts.length) return { route: 'token', opts }
   }

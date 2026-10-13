@@ -11,7 +11,10 @@ const STRESS = /[́´ˊ]/g
 export const stripStress = (s: string) => s.normalize('NFC').replace(STRESS, '').normalize('NFC')
 export const unifyApostrophe = (s: string) => s.replace(/[’ʼ`]/g, "'")
 /** Search key: NFC, no stress, lower case, one apostrophe. */
-export const key = (s: string) => unifyApostrophe(stripStress(s)).toLowerCase()
+/** BL-19: Latin precomposed accented look-alikes → Cyrillic + stress mark (research/08 A3), so «á» = «а́» = «а». */
+const LATIN_ACC: Record<string, string> = { á: 'а', Á: 'А', é: 'е', É: 'Е', í: 'і', Í: 'І', ó: 'о', Ó: 'О', ý: 'у', Ý: 'У', ú: 'у', Ú: 'У' }
+export const foldLatinAccents = (s: string) => s.normalize('NFC').replace(/[áÁéÉíÍóÓýÝúÚ]/g, c => LATIN_ACC[c]! + '́')
+export const key = (s: string) => unifyApostrophe(stripStress(foldLatinAccents(s))).toLowerCase()
 
 /** Render stress positions (indices of stressed vowels) with U+0301 right after the vowel (research/08 A3). */
 export const renderStress = (form: string, positions: number[]) =>
@@ -126,6 +129,6 @@ export function decodeVira(s: string): string {
 const LETTER = "\\p{Script=Cyrillic}\\p{M}ⷠ-ⷿ'’ʼ"
 const WORD = new RegExp(`[${LETTER}]+(?:-[${LETTER}]+)*`, 'gu')
 export interface Token { raw: string; index: number }
-export const tokenize = (text: string): Token[] => [...text.matchAll(WORD)].map(m => ({ raw: m[0].replace(/^['’ʼ]+|['’ʼ]+$/g, ''), index: m.index! })).filter(t => t.raw)
+export const tokenize = (text: string): Token[] => [...text.matchAll(WORD)].map(m => ({ raw: m[0].replace(/^[^\p{Script=Cyrillic}]+|[^\p{Script=Cyrillic}\p{M}]+$/gu, ''), index: m.index! })).filter(t => t.raw)
 /** A token with a Latin letter left after decoding is dropped (SPEC 10 M-2.1). */
 export const hasUnmapped = (s: string) => /[A-Za-z]/.test(s)

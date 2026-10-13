@@ -36,7 +36,7 @@ export const STRESS_STATUS_UK: Record<string, string> = {
   normative: 'нормативний', admissible: 'допустимий', dialectal: 'діалектний', historical: 'історичний', poetic: 'поетичний', unknown: 'невідомий',
 }
 export const METHOD_UK: Record<string, string> = { dictionary: 'словник', 'metrical-inference': 'виведено з метра', corpus: 'корпус' }
-export const ROUTE_UK: Record<string, string> = { 'torot-lemma': 'лема TOROT → ВЕСУМ', token: 'токен → правила → ВЕСУМ', direct: 'пряме збігання' }
+export const ROUTE_UK: Record<string, string> = { 'torot-lemma': 'лема TOROT → ВЕСУМ', 'stanza-lemma': 'модельна лема → ВЕСУМ', token: 'токен → правила → ВЕСУМ', direct: 'пряме збігання' }
 
 /** Claim label → Ukrainian (detector labels, register, origin). */
 export const LABEL_UK: Record<string, string> = {
