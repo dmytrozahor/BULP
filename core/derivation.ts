@@ -91,7 +91,16 @@ export interface Derivative {
   claim: Claim<string>
 }
 /** Existence oracle: 'vesum' (D-evidence from VESUM), 'corpus' (attested in the corpus) or null. Injected so tests can mock VESUM. */
-export type Has = (form: string) => 'vesum' | 'corpus' | null | undefined | false
+export type Has = (form: string, pos?: DerivPos) => 'vesum' | 'corpus' | null | undefined | false
+/** BL-5b: `pos` passed to the oracle means the candidate must be its OWN lemma of that POS (verb↔verb), never just a form string that equals it. */
+export type DerivPos = 'verb' | 'noun' | 'adj'
+/** BL-5b POS gate: derivation runs for verbs, nouns, adjectives only; particles, conjunctions, prepositions, pronouns, numerals, interjections, adverbs, uninflected words → undefined (no Похідні block). */
+export function derivPos(pos?: string, paradigmKind?: string, lemma = ''): DerivPos | undefined {
+  if (paradigmKind) return paradigmKind === 'verb' || paradigmKind === 'noun' || paradigmKind === 'adj' ? paradigmKind : undefined
+  const p = (pos ?? '').toLowerCase()
+  if (p) return /^дієслово/.test(p) ? 'verb' : /^іменник/.test(p) ? 'noun' : /^прикметник/.test(p) ? 'adj' : undefined
+  return lemma.length > 4 && /(ти|тися)$/.test(lemma) ? 'verb' : undefined
+}
 
 const norm = (s: string) => s.normalize('NFC').toLowerCase().replace(/[’ʼ`]/g, "'")
 
@@ -111,7 +120,7 @@ export function stripPrefix(base: string, has: Has): string | undefined {
   for (const p of SURFACE) {
     if (base.length <= p.length + 2 || !base.startsWith(p)) continue
     const rest = base.slice(p.length).replace(/^'/, '')
-    if (/ти$/.test(rest) && has(rest)) return rest
+    if (/ти$/.test(rest) && has(rest, 'verb')) return rest
   }
   return undefined
 }
@@ -121,10 +130,13 @@ export function stripPrefix(base: string, has: Has): string | undefined {
  * Attested ones (any verb or noun) are always returned; unattested candidates are returned (as `suggestion`) only for verbs
  * (lemma in -ти / -тися) so a noun does not produce 25 meaningless reconstructions.
  */
-export function derivatives(lemma: string, has: Has): Derivative[] {
+export function derivatives(lemma: string, has0: Has, pos?: DerivPos | 'none'): Derivative[] {
+  if (pos === 'none') return []
   const base0 = norm(lemma).trim()
   const reflexiveIn = /ся$/.test(base0), base = reflexiveIn ? base0.slice(0, -2) : base0
-  const verb = /ти$/.test(base)
+  const verb = pos ? pos === 'verb' : /ти$/.test(base)
+  const bpos: DerivPos | undefined = pos || (verb ? 'verb' : undefined)
+  const has: Has = (f, p) => has0(f, p ?? bpos)
   const out: Derivative[] = []
   const seen = new Set<string>()
   // BL-5: a lemma that is already prefix + attested verb (вробити = в- + робити) is derived from that base; stacking on the whole lemma (обвробити) is kept only when attested

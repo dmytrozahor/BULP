@@ -7,7 +7,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { explain, principles } from '../../core/reverse.ts'
-import { derivatives } from '../../core/derivation.ts'
+import { derivatives, derivPos } from '../../core/derivation.ts'
 import { modernize } from '../../core/modernize.ts'
 import { lexHas, lexHasBool } from '../lib/lexhas.ts'
 import { key } from '../../core/text.ts'
@@ -35,7 +35,7 @@ const par = computed(() => (word.value && dir.value === 'new2old' && loaded.valu
 const fwd = computed(() => (word.value && dir.value === 'old2new'
   ? deriveWithSteps(word.value).candidates.map(c => ({ ...c, lemma: searchIdx.value.map.get(key(c.form))?.[0]?.lemma, mod: loaded.value ? modernize(c.form, lexHasBool(annData.value)) : [] })) : []))
 /** DV-3: prefix mode — the input is a lemma, e.g. ділати */
-const pfx = computed(() => (word.value && dir.value === 'prefix' && loaded.value ? derivatives(word.value, lexHas(annData.value)) : []))
+const pfx = computed(() => (word.value && dir.value === 'prefix' && loaded.value ? derivatives(word.value, lexHas(annData.value), (c => derivPos(c?.pos, c?.paradigmKind, word.value) ?? 'none')(byLemma.value.get(word.value))) : []))
 const pfxAtt = computed(() => pfx.value.filter(d => d.status !== 'suggestion')), pfxSug = computed(() => pfx.value.filter(d => d.status === 'suggestion'))
 const back = computed(() => (word.value && dir.value === 'new2old' && loaded.value ? reconstruct(word.value, searchIdx.value, byLemma.value, att.value).candidates : []))
 /** The attestation line of a confirmed candidate: the first KWIC of that spelling, from the lemma's detail shard (SPEC 20 B-5; core keeps no KWIC). loading = shard not there yet. */

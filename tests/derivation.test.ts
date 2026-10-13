@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { readFileSync } from 'node:fs'
-import { derivatives, PREFIXES, attach, prefixById, type Has } from '../core/derivation.ts'
+import { derivatives, derivPos, PREFIXES, attach, prefixById, type Has } from '../core/derivation.ts'
 
 const src = (p: string) => readFileSync(p, 'utf8')
 
@@ -97,5 +97,27 @@ describe('BL-5 an existing prefix is stripped to the base verb before re-prefixi
   it('ділати still gives зділати, переділати, відділатися', () => {
     const forms = derivatives('ділати', h2).map(d => d.form)
     for (const f of ['зділати', 'переділати', 'відділатися']) expect(forms, f).toContain(f)
+  })
+})
+
+describe('BL-5b POS gate and own-lemma oracle', () => {
+  it('derivPos: only verbs, nouns, adjectives', () => {
+    expect(derivPos('частка')).toBeUndefined(); expect(derivPos('сполучник')).toBeUndefined()
+    expect(derivPos('дієслово, недок.')).toBe('verb'); expect(derivPos('іменник, ч.р.')).toBe('noun')
+    expect(derivPos(undefined, 'numr')).toBeUndefined(); expect(derivPos(undefined, 'uninflected')).toBeUndefined()
+  })
+  it('не (particle) → no derivatives, even if одне/доне exist as forms', () => {
+    const forms = new Set(['одне', 'доне'])
+    expect(derivatives('не', f => (forms.has(f) ? 'vesum' : null), 'none')).toEqual([])
+    expect(derivatives('не', f => (forms.has(f) ? 'vesum' : null), derivPos('частка') ?? 'none')).toEqual([])
+  })
+  it('oracle receives the base POS: only own lemmas of that POS are attested', () => {
+    const lemmaPos: Record<string, string> = { переробити: 'verb', робити: 'verb', одне: 'form' }
+    const h: Has = (f, p) => (p && lemmaPos[f] === p ? 'vesum' : null)
+    expect(derivatives('робити', h, 'verb').find(d => d.form === 'переробити')!.status).toBe('vesum')
+    expect(derivatives('не', h, 'noun')).toEqual([])
+    const calls: (string | undefined)[] = []
+    derivatives('робити', (f, p) => { calls.push(p); return null }, 'verb')
+    expect(calls.every(p => p === 'verb')).toBe(true)
   })
 })

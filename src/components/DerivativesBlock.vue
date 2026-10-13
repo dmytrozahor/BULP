@@ -4,14 +4,14 @@
  * `method: derivation` reconstructions (dashed, «пропозиція», SPEC 30 D-4), never dictionary facts (P-1.7). Renders nothing for a word with no attested derivative and no verb candidates.
  */
 import { computed } from 'vue'
-import { derivatives } from '../../core/derivation.ts'
+import { derivatives, derivPos } from '../../core/derivation.ts'
 import { useData } from '../composables/useData.ts'
 import { lexHas } from '../lib/lexhas.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import Panel from './Panel.vue'
 const props = defineProps<{ lemma: string; panel?: boolean }>()   // panel: collapsible Panel with a one-line summary (word card /w/:lemma)
 const { annData, loaded, byLemma } = useData()
-const all = computed(() => (loaded.value ? derivatives(props.lemma, lexHas(annData.value)) : []))
+const all = computed(() => { if (!loaded.value) return []; const c = byLemma.value.get(props.lemma); return derivatives(props.lemma, lexHas(annData.value), derivPos(c?.pos, c?.paradigmKind, props.lemma) ?? 'none') })
 const attested = computed(() => all.value.filter(d => d.status !== 'suggestion'))
 const suggested = computed(() => all.value.filter(d => d.status === 'suggestion'))
 const summary = computed(() => `${attested.value.length} засвідчених` + (suggested.value.length ? ` · ${suggested.value.length} пропозицій` : '') + (attested.value[0] ? ` · напр. ${attested.value[0].form}` : ''))
