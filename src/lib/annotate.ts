@@ -15,6 +15,7 @@ import { traceSteps } from './derive.ts'
 import { key, normalizeOld, tokenize } from '../../core/text.ts'
 import { type SearchIndex, type Via } from './search.ts'
 import { hitsOf, runDetectors, strongest, type Category, type LexData } from './analyze.ts'
+import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
@@ -28,6 +29,7 @@ export interface AnnotatedToken {
   lemma?: string; card?: CoreCard; form?: CoreForm; via?: Via
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
+  numeral?: Numeral                                  // BL-4/N11: a Cyrillic numeral (value, not a word; same object on every token of the run)
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
 }
 
@@ -56,9 +58,12 @@ export function shevEpochOf(card: CoreCard): string | undefined {
 export function annotate(text: string, data: AnnotateData, year?: number): AnnotatedToken[] {
   const out: AnnotatedToken[] = []
   let from = 0
+  const nums = findNumerals(text)
   for (const t of tokenize(text)) {
     const at = text.indexOf(t.raw, from); const start = at < 0 ? t.index : at
     from = start + t.raw.length
+    const numeral = nums.find(n => start >= n.start && from <= n.end)
+    if (numeral) { out.push({ raw: t.raw, start, end: from, key: key(t.raw), provenance: 'attested', status: 'unknown', claims: {}, hints: [], numeral }); continue }
     const k = key(t.raw), kn = key(normalizeOld(t.raw).norm)
     const hits = [...(data.search.map.get(k) ?? []), ...(k !== kn ? data.search.map.get(kn) ?? [] : [])]
       .sort((a, b) => VIA_ORDER.indexOf(a.via) - VIA_ORDER.indexOf(b.via))
@@ -118,6 +123,7 @@ export function summarize(tokens: AnnotatedToken[]): Summary {
   const lemmas = new Map<string, string>(), unknown = new Set<string>()
   let derived = 0
   for (const t of tokens) {
+    if (t.numeral) continue   // a numeral is not a word: outside the coverage count
     if (t.provenance === 'derived') { derived++; continue }   // a hypothesis is not a corpus link
     byStatus[t.status]++
     if (t.mark) byMark[t.mark]++
@@ -126,6 +132,6 @@ export function summarize(tokens: AnnotatedToken[]): Summary {
   }
   const epochProfile: Record<string, number> = {}
   for (const e of lemmas.values()) epochProfile[e] = (epochProfile[e] ?? 0) + 1
-  const total = tokens.length
+  const total = tokens.filter(t => !t.numeral).length
   return { total, linked: byStatus.attested, derived, pct: total ? byStatus.attested / total : 0, byStatus, byMark, epochProfile, unknown: [...unknown] }
 }

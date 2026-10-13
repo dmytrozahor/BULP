@@ -43,8 +43,9 @@ const groups = computed(() => {
 })
 const shev = EPOCHS.filter(e => e.scheme === 'shev' && !e.overlay)
 const maxEp = computed(() => Math.max(1, ...Object.values(sum.value.epochProfile)))
-const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : '', heteronymOf(t.key) ? 'het' : ''].join(' ')
-const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CATEGORY_UK[t.mark] : ''}${heteronymOf(t.key) ? ', ' + HETERONYM_FLAG : ''}`
+const cls = (t: AnnotatedToken) => ['w', t.status === 'attested' ? 'attested-s' : t.status, t.mark ? 'm-' + t.mark : '', t.provenance === 'derived' ? 'derived' : '', t.numeral ? 'numeral' : '', heteronymOf(t.key) ? 'het' : ''].join(' ')
+const numTitle = (t: AnnotatedToken) => t.numeral ? `числівник = ${t.numeral.value}` + (t.numeral.ad ? ` (від створення світу) = ${t.numeral.ad} р. по Р.Х.` : '') : undefined
+const label = (t: AnnotatedToken) => t.numeral ? numTitle(t)! : `${t.raw}: ${t.status}${t.mark ? ', ' + CATEGORY_UK[t.mark] : ''}${heteronymOf(t.key) ? ', ' + HETERONYM_FLAG : ''}`
 </script>
 
 <template>
@@ -80,7 +81,7 @@ const label = (t: AnnotatedToken) => `${t.raw}: ${t.status}${t.mark ? ', ' + CAT
             :title="g.span ? `${g.span.modern} · ${g.span.note}` : undefined" @mouseenter="g.span && (hotSpan = g.span)"><template v-for="(p, k) in g.parts" :key="k"><template v-if="'gap' in p">{{ p.gap }}</template>
           <RouterLink v-else-if="p.t.status === 'attested' && p.t.card" :to="`/w/${encodeURIComponent(p.t.card.lemma)}`" :class="cls(p.t)" :aria-label="label(p.t)"
             @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.provenance === 'derived'" class="derived-badge">реконстр.</sup></RouterLink>
-          <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}</span></template></span></div>
+          <span v-else :class="cls(p.t)" tabindex="0" :aria-label="label(p.t)" :title="numTitle(p.t)" @mouseenter="hot = p.t" @focus="hot = p.t">{{ p.t.raw }}<sup v-if="p.t.numeral && p.t.numeral.start === p.t.start" class="derived-badge">= {{ p.t.numeral.ad ? p.t.numeral.ad + ' р.' : p.t.numeral.value }}</sup></span></template></span></div>
       </section>
     </div>
 
