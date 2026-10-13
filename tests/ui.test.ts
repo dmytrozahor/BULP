@@ -27,6 +27,26 @@ describe('UX defect: text panels never overflow their container (etymology, KWIC
   })
 })
 
+describe('BL-7 epoch paradigm readable at 360 px', () => {
+  const css = readFileSync('src/ux.css', 'utf8'), vue = readFileSync('src/components/EpochParadigm.vue', 'utf8')
+  const m = css.slice(css.indexOf('/* UX-3 / BL-7') >= 0 ? css.indexOf('/* UX-3 / BL-7') : css.indexOf('/* UX-3 epoch paradigm'))
+  const block = m.slice(0, m.indexOf('.epsum'))
+  it('the grid collapses (≤ 600 px) into stacked case cards with a labelled block per number', () => {
+    expect(block).toMatch(/@media \(max-width:\s*600px\)/)
+    expect(block).toMatch(/\.etable td[^{]*\{[^}]*display|\.etable, \.etable thead[^{]*\{[^}]*display:\s*block/)
+    expect(block).toMatch(/\.etable td::before\s*\{[^}]*content:\s*attr\(data-col\)[^}]*display:\s*block/)
+    expect(vue).toMatch(/:data-col="grid\.cols\[i\]\?\.label"/)
+  })
+  it('nothing is truncated: cells wrap, no ellipsis/clip, no overflow hidden', () => {
+    expect(block).toMatch(/\.etable td\s*\{[^}]*overflow-wrap:\s*anywhere/)
+    expect(block).not.toMatch(/text-overflow:\s*ellipsis|overflow:\s*hidden/)
+  })
+  it('epoch tabs scroll horizontally instead of wrapping', () => {
+    expect(block).toMatch(/\.etabs\s*\{[^}]*overflow-x:\s*auto[^}]*flex-wrap:\s*nowrap/)
+    expect(block).toMatch(/\.etab\s*\{[^}]*flex:\s*0 0 auto/)
+  })
+})
+
 describe('SPEC 61 UX helpers (FX-5 kind, UX-4 grouping, UX-5 top-N, UX-3 placed)', () => {
   const ev = [{ source: 's', quote: 'q', locator: 'l', kind: 'Q' as const }]
   const cl = (v: unknown) => ({ value: v, evidence: ev })

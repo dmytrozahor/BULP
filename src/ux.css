@@ -29,11 +29,17 @@
   .etable, .etable thead, .etable tbody, .etable tr, .etable th, .etable td { display: block; width: 100%; box-sizing: border-box; }
   .etable thead { position: absolute; left: -9999px; }
   .etable tr { border: 1px solid var(--line); border-radius: var(--r); margin-bottom: .5rem; padding: .2rem .5rem; }
-  .etable th[scope=row] { text-align: left; font-family: var(--sans); font-size: .85rem; border: 0; padding: .2rem 0; }
-  .etable td { border: 0; min-width: 0; padding: .15rem 0; }
-  .etable td::before { content: attr(data-col) ': '; font-family: var(--sans); font-size: .75rem; color: var(--muted); }
+  .etable th[scope=row] { text-align: left; font-family: var(--sans); font-size: .9rem; font-weight: 700; border: 0; padding: .2rem 0; }
+  /* BL-7: a stacked block per number (однина / двоїна / множина), label above; nothing clipped or ellipsised — long spellings and badges wrap */
+  .etable td { border: 0; border-top: 1px dotted var(--line); min-width: 0; padding: .25rem 0 .3rem; overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere; }
+  .etable td::before { content: attr(data-col); display: block; font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
   .etable td.na { display: none; }
-  .etabs { overflow-x: auto; flex-wrap: nowrap; }
+  .etable .ef { display: inline-block; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+  .tablewrap { overflow-x: visible; }
+  .epanel { padding: .4rem; min-width: 0; }
+  /* BL-7: epoch tabs scroll sideways instead of wrapping */
+  .etabs { overflow-x: auto; flex-wrap: nowrap; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; padding-bottom: .2rem; }
+  .etab { flex: 0 0 auto; white-space: nowrap; scroll-snap-align: start; }
 }
 .epsum { margin: .3rem 0; }
 
