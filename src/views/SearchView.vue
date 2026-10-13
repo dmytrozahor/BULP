@@ -21,6 +21,14 @@ const rows = computed(() => results.value.map(r => {
   return { r, c, fa, who: fa ? authorInfo(fa.author, witnessById.value.get(fa.witness)).name : '' }
 }))
 const go = () => rows.value[0] && router.push(`/w/${encodeURIComponent(rows.value[0].c.lemma)}`)
+// BL-2: switching the phone keyboard language blurs the field (IME/viewport resize); keep focus unless the user deliberately tapped elsewhere.
+const box = ref<HTMLInputElement | null>(null)
+let lastTap = 0
+if (typeof window !== 'undefined') window.addEventListener('pointerdown', () => { lastTap = Date.now() }, true)
+const keepFocus = (e: FocusEvent) => {
+  if (e.relatedTarget || Date.now() - lastTap < 600) return
+  setTimeout(() => { if (document.visibilityState === 'visible' && !document.activeElement?.closest('a,button,summary,select,textarea')) box.value?.focus({ preventScroll: true }) }, 80)
+}
 const shown = ref(300)   // F2: the full lemma list is paged, never rendered at once (thousands of nodes)
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
 </script>
@@ -30,7 +38,7 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
     <h1>Звідки слово?</h1>
     <p class="muted">Лексикон словоформ із доказами: перша фіксація, історичні написання, мітки (церковнослов’янське, суржик, діалектне, розмовне) — кожна з джерелом і цитатою.
       <span class="sans small">Where does a Ukrainian word come from — every claim with its evidence.</span></p>
-    <input v-model="q" type="search" placeholder="Знайти слово: князь, кънѧзь, видѣти, шо…" aria-label="Пошук слова" autofocus autocomplete="off" spellcheck="false" @keydown.enter="go" />
+    <input ref="box" v-model="q" type="search" inputmode="search" enterkeyhint="search" @blur="keepFocus" placeholder="Знайти слово: князь, кънѧзь, видѣти, шо…" aria-label="Пошук слова" autofocus autocomplete="off" spellcheck="false" @keydown.enter="go" />
     <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ cards.length }} лем у словнику.</template></p>
   </section>
 
