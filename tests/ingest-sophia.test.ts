@@ -4,7 +4,7 @@
  */
 import { describe, it, expect } from 'vitest'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
-import { htmlText, tokenize, pickText, ingestRows } from '../pipelines/ingest-sophia.ts'
+import { htmlText, tokenize, pickText, ingestRows, usableEdition, UNMAPPED_GLYPH } from '../pipelines/ingest-sophia.ts'
 import { LICENCE_NOTE } from '../pipelines/nw-sophia.ts'
 import { authorById, admissible } from '../pipelines/authors.ts'
 import { admit } from '../pipelines/build-annotate.ts'
@@ -19,6 +19,11 @@ const row = (id: number, o: Record<string, any> = {}) => ({
 })
 const FIX = [
   row(3469),                                                                                       // diplomatic, two lines
+  row(347, {                                                                                       // 120-19c/347 (screenshot): PUA glyphs, unspaced diplomatic text, word-spaced edition
+    panel: { title: '120-19c', room: '120' }, min_year: 1019, max_year: 1019,
+    transcription: '<p>г͠ пꙍмоꙁрабꙋсвꙍѥмꙋ | късн-т-н-</p>',
+    interpretative_edition: '<p>Г(оспод)и пꙍмози рабꙋ свꙍѥмꙋ Късн[ѧ]т[и]н[ꙋ]</p>',
+  }),
   row(448, { language: { text: 'Ukrainian' }, min_year: 1570, max_year: 1700, transcription: '<p>Спаси Господи раба сво[е]го Иполита</p>' }),
   row(900, { language: { text: 'Ukrainian' }, min_year: 1850, max_year: 1900, transcription: '<p>Іван був тут</p>' }),
   row(1, { language: { text: 'Ancient Greek' }, writing_system: { text: 'Greek' }, transcription: '<p>κε βοηθη</p>' }),
@@ -69,7 +74,7 @@ describe('ingestRows gates and witness shape', () => {
   const r = ingestRows([...FIX, row(3469)])   // duplicate id is ignored
   const by = Object.fromEntries(r.witnesses.map(w => [w.id, w]))
   it('keeps Church Slavonic and Ukrainian (Glagolitic by script); lists every exclusion by reason', () => {
-    expect(r.witnesses.map(w => w.id)).toEqual(['sophia-4', 'sophia-9', 'sophia-448', 'sophia-582', 'sophia-583', 'sophia-900', 'sophia-3469'])
+    expect(r.witnesses.map(w => w.id)).toEqual(['sophia-4', 'sophia-9', 'sophia-347', 'sophia-448', 'sophia-582', 'sophia-583', 'sophia-900', 'sophia-3469'])
     expect(r.excluded).toEqual({ 'language:Ancient Greek': 1, 'language:Polish': 1, 'language:Russian': 1, undated: 1, 'bad-date': 1, 'no-text': 2 })
     expect(r.excludedIds['undated']).toEqual([5])
     expect(by['sophia-4']!.lang).toBe('undetermined'); expect(by['sophia-9']!.lang).toBe('undetermined'); expect(by['sophia-9']!.edition).toContain('interpretative_edition')
@@ -98,6 +103,36 @@ describe('ingestRows gates and witness shape', () => {
     const a = authorById['sophia_graffiti']!
     expect(a).toMatchObject({ label: 'institutional', status: 'provisional' }); expect(admissible(a)).toBe(true)
     for (const w of r.witnesses) expect(admit(w, a)).toEqual({ ok: true })
+  })
+})
+
+describe('analysis text = interpretative edition; private-use glyphs (BL-10 follow-up)', () => {
+  const PUA = ''
+  it('prefers the word-spaced edition and keeps the diplomatic text for display (inscription 120-19c/347)', () => {
+    const w = ingestRows([FIX[1]!]).witnesses[0]!
+    expect(w.id).toBe('sophia-347')
+    expect(w.tokens.map(t => t.raw)).toEqual(['Господи', 'пꙍмози', 'рабꙋ', 'свꙍѥмꙋ', 'Къснѧтинꙋ'])
+    expect(w.tokens.some(t => t.method)).toBe(false)
+    expect(w.edition).toContain('поле «interpretative_edition»')
+    expect(w.diplomatic).toBe('г͠ ' + PUA + 'пꙍмоꙁ' + PUA + 'рабꙋсвꙍѥмꙋ | късн-т-н-')
+    expect(w.dropped).toEqual({ unmapped: 0, apparatus: 0 })
+  })
+  it('usableEdition: editor note → first line after the colon; modern-Ukrainian rendering and non-Cyrillic → not an edition', () => {
+    expect(usableEdition('З розбивкою на слова текст виглядає таким чином:\n\n\nПомѧни Г(оспод)и Гавьрила.\n\nПом’яни, Господи, Гаврила.\n\nДатування', 1200)).toBe('Помѧни Г(оспод)и Гавьрила.')
+    expect(usableEdition('З розбивкою на слова та відновленням', 1200)).toBe('')
+    expect(usableEdition('Пом’яни, Господи, раба свого Петра', 1690)).toBe('')
+    expect(usableEdition('Пом’яни, Господи', 1850)).toBe('Пом’яни, Господи')
+    expect(usableEdition('Ioan', 1200)).toBe('')
+    expect(pickText(row(1, { transcription: '<p>помни</p>', interpretative_edition: '<p>Пом’яни</p>', max_year: 1690 }))).toMatchObject({ field: 'transcription' })
+  })
+  it('a token holding a private-use glyph is dropped and counted, never guessed', () => {
+    const t = tokenize(`гос${PUA}поди рабу ${PUA} мозі`, 'x')
+    expect(t.tokens.map(x => x.raw)).toEqual(['рабу', 'мозі'])
+    expect(t.unmapped).toBe(1); expect(t.pua).toBe(1)
+    expect(tokenize('�аб', 'x').pua).toBe(1)
+  })
+  it('the 20 code points of the cached portal data are all private-use (documented in the header, not mapped)', () => {
+    for (let c = 0xe000; c <= 0xe04c; c++) expect(UNMAPPED_GLYPH.test(String.fromCodePoint(c))).toBe(true)
   })
 })
 

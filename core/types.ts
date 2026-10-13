@@ -14,6 +14,8 @@ export interface TokenRec {
   s: number              // segment index (sentence/verse/line) for KWIC windows
   lemma?: string         // TOROT lemma (scholarly annotation, D-evidence)
   morph?: string         // TOROT morphology / POS
+  /** P-1.7: set when the token was inferred, not read: 'segmentation' = word boundaries of continuous (unspaced) text found by dictionary segmentation (pipelines/sophia-segment.ts) */
+  method?: 'segmentation'
 }
 export interface WitnessOut {
   id: string; unit: string; title: string; author: string; url: string
@@ -22,6 +24,8 @@ export interface WitnessOut {
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   /** SPEC 60 NW-6 amendment: shown wherever the witness text is shown (/texts, media panel) when the text licence is not stated by the source */
   licenceNote?: string
+  /** Sophia: the portal's diplomatic transcription (as written, abbreviations unexpanded) kept for display when the analysed text is the interpretative edition or a segmentation of it */
+  diplomatic?: string
   authorEvidence?: Evidence[]   // self-reference found in the witness itself (e.g. Kyiv Chronicle)
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
   /** SPEC 60 MV-1 / NW-7: the witness's media (a song's YouTube video; Sophia IIIF image). `id` = video id for youtube. Inherited by WitnessMeta. */

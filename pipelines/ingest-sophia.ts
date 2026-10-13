@@ -7,8 +7,14 @@
  * > Amendment 2026-10-12 (user: "I need also in scripts of Sophia for text analysis no matter the license"): transcriptions ARE ingested as running text,
  * > each witness carries `licenceNote` and the attribution «Saint Sophia, University of Gothenburg» + the inscription URL.
  *
- * TEXT FIELD CHOSEN: `transcription` — the portal's diplomatic reading (HTML; `<br>` = line break, `[x]` = restored letters, `(x)` = expanded abbreviation,
- * `--`/`...` = lacuna). Only when it is empty is `interpretative_edition` used (normalised reading). `epidoc_text` repeats `transcription` in TEI and is not read;
+ * TEXT FIELD CHOSEN (BL-10 follow-up; counts by pipelines/sophia-measure.ts): the ANALYSIS text is the portal's `interpretative_edition` (word-spaced, `(x)` = expanded
+ * abbreviation, `[x]` = restored letters) whenever it is present and really is an edition: the editor's prose note «З розбивкою на слова … виглядає таким чином:» yields its first line
+ * after the colon, and a modern-Ukrainian rendering (’ or ґ in a pre-1700 inscription) is not an edition. Otherwise the diplomatic `transcription` (HTML; `<br>` = line break, `[x]` = restored
+ * letters, `(x)` = expanded abbreviation, `--`/`...` = lacuna) is analysed. The diplomatic text is always kept in the witness (`diplomatic`) for display.
+ * PRIVATE-USE GLYPHS: the diplomatic `transcription` encodes abbreviation / supralinear signs in the private-use block U+E000–U+E04C (20 code points; none is documented by the portal —
+ * its pages and CSS ship no font mapping, the API has no glyph table — and the romanisation aligned char-by-char gives no single value: U+E01F ↔ n ( ) i space, U+E01E ↔ U+0304). They are
+ * therefore NOT mapped; a token containing one is dropped and counted (`dropped.unmapped`, `Ingest.pua`). Continuous (unspaced) diplomatic text: see pipelines/sophia-segment.ts.
+ * `epidoc_text` repeats `transcription` in TEI and is not read;
  * `translation_*`, `comments_*` are never read as text. Tokenisation: whitespace words made of letters of ONE script (Cyrillic); tokens touching a lacuna
  * are dropped as incomplete (`dropped.apparatus`); numerals (҂-sign, letters+digits), mixed-script and one-letter non-words are dropped (`dropped.unmapped`).
  * Glagolitic inscriptions: the Cyrillic `interpretative_edition` (else the Latin `romanisation`) is used when the portal gives one and the witness `edition`
@@ -88,10 +94,20 @@ const ONE_LETTER_WORDS = new Set([...'аиядуовзскійо'])   // а и �
 const LACUNA = /\[?\(?(?:\.{2,}|…|-{2,}|—{2,})\)?\]?/gu
 const LEAD = '\u0001'
 
-export interface Toks { tokens: TokenRec[]; unmapped: number; apparatus: number }
-/** Pure: plain transcription → word tokens of one script. Lines split at newline and « | »; `s` = line index. */
-export function tokenize(text: string, loc: string, script: Script = 'Cyrillic'): Toks {
-  const out: Toks = { tokens: [], unmapped: 0, apparatus: 0 }
+/** Private-use / unassigned / replacement code points: glyphs the portal's font encodes and Unicode does not (see the header). */
+export const UNMAPPED_GLYPH = /[\p{Co}\p{Cn}�]/u
+/** A chunk with at least this many letters between spaces is a candidate for dictionary segmentation (sophia-segment.ts). */
+export const SEG_MIN = 12
+/** Splits one unspaced chunk into words, or returns undefined when it cannot (every segment must link). */
+export type Segmenter = (chunk: string, ctx: { lang: WitnessOut['lang']; oldI: boolean }) => string[] | undefined
+
+export interface Toks { tokens: TokenRec[]; unmapped: number; apparatus: number; pua: number; chunks: number; long: number; failed: number }
+/**
+ * Pure: plain transcription → word tokens of one script. Lines split at newline and « | »; `s` = line index.
+ * `seg` (continuous diplomatic text only): chunks of ≥ SEG_MIN letters are split into words by it; a chunk it cannot split is dropped and counted in `failed`.
+ */
+export function tokenize(text: string, loc: string, script: Script = 'Cyrillic', seg?: (chunk: string) => string[] | undefined): Toks {
+  const out: Toks = { tokens: [], unmapped: 0, apparatus: 0, pua: 0, chunks: 0, long: 0, failed: 0 }
   const ok = SCRIPT_RE[script]
   let s = 0
   for (const line of text.normalize('NFC').split(/\n|\s\|\s/)) {
@@ -100,11 +116,21 @@ export function tokenize(text: string, loc: string, script: Script = 'Cyrillic')
       if (!chunk) continue
       if (chunk.includes(LEAD)) { if (/\p{L}/u.test(chunk)) out.apparatus++; continue }          // word touching a lacuna → incomplete
       if (chunk.includes('҂') || (/\p{N}/u.test(chunk) && /\p{L}/u.test(chunk))) { out.unmapped++; continue }   // ҂-numerals, letters mixed with digits
-      const t = chunk.replace(/[\p{P}\p{S}]/gu, '')
+      const glyph = UNMAPPED_GLYPH.test(chunk)
+      const t = chunk.replace(/[\p{P}\p{S}]/gu, '').replace(/[\p{Co}\p{Cn}�]/gu, '')
       const letters = [...t].filter(c => /\p{L}/u.test(c))
       if (!letters.length) continue
+      out.chunks++
+      const long = letters.length >= SEG_MIN; if (long) out.long++
+      if (glyph) { out.unmapped++; out.pua++; if (long && seg) out.failed++; continue }          // unmapped glyph inside the word → the word is dropped, never guessed
       if (!letters.every(c => ok.test(c))) { out.unmapped++; continue }                            // other script / mixed-script word
       if (letters.length === 1 && !ONE_LETTER_WORDS.has(letters[0]!.toLowerCase())) { out.unmapped++; continue }
+      if (long && seg) {
+        const parts = seg(t)
+        if (!parts) { out.failed++; continue }
+        for (const p of parts) out.tokens.push({ raw: p, loc, s, method: 'segmentation' })
+        any = true; continue
+      }
       out.tokens.push({ raw: t, loc, s }); any = true
     }
     if (any) s++
@@ -123,12 +149,25 @@ export function pickText(r: any): { field: 'transcription' | 'interpretative_edi
     if (/\p{Script=Latin}/u.test(ro)) return { field: 'romanisation', text: ro, script: 'Latin', note: 'глаголиця, латинська транслітерація порталу' }
     return tr ? { field: 'transcription', text: tr, script: 'Glagolitic', note: 'глаголиця без транслітерації' } : undefined
   }
-  if (tr && (/\p{Script=Cyrillic}/u.test(tr) || !/\p{Script=Cyrillic}/u.test(ie))) return { field: 'transcription', text: tr, script: 'Cyrillic' }
-  return ie ? { field: 'interpretative_edition', text: ie, script: 'Cyrillic', note: 'нормалізоване прочитання (транскрипція порожня)' } : undefined
+  const ed = usableEdition(ie, r.max_year)
+  if (ed) return { field: 'interpretative_edition', text: ed, script: 'Cyrillic', note: tr ? 'прочитання порталу зі словорозділом; діпломатична транскрипція збережена для показу' : 'нормалізоване прочитання (транскрипція порожня)' }
+  return tr ? { field: 'transcription', text: tr, script: 'Cyrillic' } : undefined
+}
+
+/** Pure: the `interpretative_edition` text that can be analysed, or '' (empty, no Cyrillic, or not an edition: a modern-Ukrainian rendering with ’/ґ in a pre-1700 inscription). */
+export function usableEdition(ie: string, to?: number): string {
+  let e = ie
+  if (/розбивк|відновленн/.test(e)) {               // the editor's note «З розбивкою на слова … текст виглядає таким чином:» + the edition on its first line
+    const after = e.split('виглядає таким чином:')[1]
+    e = after ? after.split('\n').map(x => x.trim()).find(Boolean) ?? '' : ''
+  }
+  if (!/\p{Script=Cyrillic}/u.test(e)) return ''
+  if (/[’ʼґ]/.test(e) && (to ?? 3000) <= 1700) return ''
+  return e
 }
 
 /** Pure: API rows → witnesses + exclusion counts (see the header for the gates). */
-export function ingestRows(rows: any[]): Ingest {
+export function ingestRows(rows: any[], opts: { segmenter?: Segmenter } = {}): Ingest {
   const witnesses: WitnessOut[] = [], excluded: Record<string, number> = {}, excludedIds: Record<string, number[]> = {}
   const skip = (why: string, id: number) => { excluded[why] = (excluded[why] ?? 0) + 1; (excludedIds[why] ??= []).push(id) }
   const seen = new Set<number>()
@@ -146,8 +185,19 @@ export function ingestRows(rows: any[]): Ingest {
     if (unstated && !glagolitic && pick?.script !== 'Cyrillic') { skip('language-unstated', r.id); continue }   // BL-10: unstated language kept only for Cyrillic text
     const panel = r.panel?.title ? String(r.panel.title) : ''
     const loc = `${panel}/${r.id}`
-    const tk = pick ? tokenize(pick.text, loc, pick.script) : undefined
+    const lang: WitnessOut['lang'] = unstated && !glagolitic ? 'undetermined' : langName === 'Ukrainian' ? (to <= 1798 ? 'ruthenian' : 'uk') : 'chu-rus'
+    let tk = pick ? tokenize(pick.text, loc, pick.script) : undefined
+    let segmented = false
+    // Continuous diplomatic text (no word spacing: most letters sit in chunks of ≥ SEG_MIN letters): analysed only after dictionary segmentation where EVERY segment links
+    // (sophia-segment.ts, P-1.7: such tokens carry method 'segmentation'); otherwise the inscription is display-only (portal image/IIIF in the catalogue, no statistics).
+    if (pick && tk && pick.field === 'transcription' && pick.script === 'Cyrillic' && tk.long > 0 && tk.long * 2 >= tk.chunks) {
+      const sg = opts.segmenter, oldI = to <= 1400
+      const t2 = tokenize(pick.text, loc, pick.script, c => sg?.(c, { lang, oldI }))
+      if (t2.failed) { skip('display-only', r.id); continue }
+      tk = t2; segmented = true
+    }
     if (!pick || !tk || !tk.tokens.length) { skip('no-text', r.id); continue }
+    const dipl = htmlText(r.transcription).replace(/\n{2,}/g, '\n').trim()
     const url = viewerUrl(panel, r.id)
     const crit = Array.isArray(r.dating_criteria) ? r.dating_criteria.map((c: any) => c?.text).filter(Boolean).join(', ') : ''
     const iiif = r.inscription_iiif_url ? String(r.inscription_iiif_url) : ''
@@ -155,8 +205,9 @@ export function ingestRows(rows: any[]): Ingest {
     witnesses.push({
       id: `sophia-${r.id}`, unit: 'sophia', title, author: 'sophia_graffiti', url,
       date: [from, to], dateCite: D('SOPHIA', url, `min_year ${from}, max_year ${to}`, `датування порталу${crit ? ' (критерії: ' + crit + ')' : ''}`),
-      lang: unstated && !glagolitic ? 'undetermined' : langName === 'Ukrainian' ? (to <= 1798 ? 'ruthenian' : 'uk') : 'chu-rus', region: 'Київ',
-      witnessType: 'autograph', edition: `${ATTRIBUTION}; поле «${pick.field}»${pick.note ? '; ' + pick.note : ''}`,
+      lang, region: 'Київ',
+      witnessType: 'autograph', edition: `${ATTRIBUTION}; поле «${pick.field}»${pick.note ? '; ' + pick.note : ''}${segmented ? '; безпробільна діпломатична транскрипція, слова виділено словниковою сегментацією (method: segmentation)' : ''}`,
+      ...(dipl ? { diplomatic: dipl } : {}),
       ...(to <= 1400 ? { oldI: true } : {}), license: 'не вказано порталом', licenceNote: LICENCE_NOTE,
       ...(iiif ? { media: { kind: 'iiif' as const, url: iiif, attribution: ATTRIBUTION, licence: 'зображення CC BY-NC', title } } : {}),
       dropped: { unmapped: tk.unmapped, apparatus: tk.apparatus }, tokens: tk.tokens,
