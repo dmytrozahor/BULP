@@ -243,7 +243,8 @@ describe('regions (research/07 §3.3, SPEC 20 B-3.6)', () => {
     expect(regionOf('Київ')).toBe('kyiv'); expect(regionOf('Київщина')).toBe('kyiv'); expect(regionOf('Галичина')).toBe('halychyna'); expect(regionOf('Волинь')).toBe('volyn')
     for (const r of ['Київ або Новгород', 'Галич / Волинь', 'Галичина / Афон', undefined, '']) expect(regionOf(r), String(r)).toBeUndefined()
   })
-  it('oblast codes are ISO 3166-2:UA', () => REGIONS.forEach(r => r.oblasts.forEach(o => expect(o).toMatch(/^UA-\d\d$/))))
+  // MP-2: historical Ukrainian territories outside today's borders carry HT-<id> codes (no ISO 3166-2:UA code exists for them)
+  it('oblast codes are ISO 3166-2:UA, or HT-<id> for historical territories (MP-2)', () => REGIONS.forEach(r => r.oblasts.forEach(o => expect(o).toMatch(/^(UA-\d\d|HT-[a-z][a-z-]*)$/))))
 })
 
 // P-1.1 over the real built data (skipped on a clean checkout without public/data)
