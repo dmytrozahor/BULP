@@ -164,7 +164,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
     <AnalyzeView :embed="lemma" />
   </template>
   <template v-else>
-    <header class="wordhead headline">
+    <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(card.lemma) }]">{{ card.lemma }}</h1>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
         <template v-if="stress1"><span class="muted sans">·</span>
@@ -235,7 +235,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <EtymologyBlock :lemma="card.lemma" /><CognatesPanel :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (collapsible Panel inside) -->
 
         <!-- 2. Labels -->
-        <Panel id="h-lab" v-model:open="ui.lab" title="Мітки · Labels" :summary="labParts.join(' · ')" :empty="!labParts.length"
+        <Panel id="h-lab" v-model:open="ui.lab" :count="labParts.length" title="Мітки · Labels" :summary="labParts.join(' · ')" :empty="!labParts.length"
           info="Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1). «Невідомо» означає відсутність доказів, а не «літературне». Тверді мітки з ⓘ відкривають цитату й локатор.">
           <div class="grid2 sans">
             <div><span class="muted">Регістр: </span><ClaimBadge :claim="card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
@@ -278,13 +278,13 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
         <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
-        <Panel id="h-sn" :open="false" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
+        <Panel id="h-sn" :open="false" :count="lemmaSenses.length" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
           info="Значення — з розділу «Значення» uk.wiktionary (CC BY-SA 4.0), скорочено; не словникова норма проєкту. Наголос показано лише там, де сторінка Вікісловника дає наголошений склад для цієї омонімічної статті.">
           <SensesBlock :lemma="card.lemma" />
         </Panel>
 
         <!-- 3. Paradigm, by the lemma's paradigm kind (FX-5) -->
-        <Panel id="h-par" v-model:open="ui.par" title="Словозміна · Paradigm" :summary="parSummary" :empty="kind !== 'uninflected' && !card.paradigm.length"
+        <Panel id="h-par" v-model:open="ui.par" :count="card.paradigm.length" title="Словозміна · Paradigm" :summary="parSummary" :empty="kind !== 'uninflected' && !card.paradigm.length"
           info="Джерело: ВЕСУМ v6.8.6, CC BY-NC-SA 4.0. Теги дослівно при наведенні (D-докази). Наголосу у ВЕСУМ немає.">
           <Paradigm :paradigm="card.paradigm" :kind="kind" />
         </Panel>
@@ -297,7 +297,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         </Panel>
 
         <!-- 5. Examples -->
-        <Panel id="h-kw" v-model:open="ui.kw" title="Приклади · KWIC" :summary="`${kwic.length} прикладів`" :empty="!!full && !kwic.length">
+        <Panel id="h-kw" v-model:open="ui.kw" :count="kwic.length" title="Приклади · KWIC" :summary="`${kwic.length} прикладів`" :empty="!!full && !kwic.length">
           <Kwic v-if="full" :lines="kwic" :lemma="card.lemma" />
           <div v-else class="skeleton" style="height:8rem" />
           <p v-if="activeForm" class="small muted">показано приклади форми «{{ activeForm.raw }}»</p>

@@ -58,3 +58,26 @@
 
 /* BL-16: the locator a link landed on */
 .tok.hit { background: color-mix(in srgb, var(--accent) 22%, transparent); outline: 2px solid var(--accent); border-radius: 3px; }
+
+/* SPEC 63 UI-1…UI-3: compact cards, SVG graph views (theme tokens only), «граф / список» switch */
+.vsw-bar { display: flex; gap: 2px; justify-content: flex-end; margin: 0 0 .25rem; }
+.vsw-b { font: inherit; background: var(--surface-2); color: var(--ink); border: 1px solid var(--line); padding: 0 .5rem; min-height: 24px; cursor: pointer; }
+.vsw-b:first-child { border-radius: 4px 0 0 4px; } .vsw-def { border-radius: 0 4px 4px 0; color: var(--muted); }
+.vsw-b[aria-pressed=true] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.gscroll { overflow-x: auto; max-width: 100%; -webkit-overflow-scrolling: touch; }
+.gscroll svg { display: block; max-width: none; font-family: var(--sans); }
+.g-node rect { fill: var(--surface-2); stroke: var(--line); stroke-width: 1; } .g-node:hover rect, .g-node:focus rect { stroke: var(--accent); fill: var(--accent-soft); }
+.g-label { fill: var(--ink); font-size: 14px; } .g-date { fill: var(--muted); font-size: 10px; } .g-rule { fill: var(--accent); font-size: 11px; font-weight: 600; }
+.g-edge { cursor: pointer; } .g-edge line { stroke: var(--muted); stroke-width: 1.5; } .g-edge:hover line, .g-edge[aria-pressed=true] line { stroke: var(--accent); }
+.g-arrow { fill: var(--muted); } .g-axis { stroke: var(--line); stroke-width: 1; }
+.g-dot circle { fill: var(--accent); fill-opacity: .55; stroke: var(--accent); cursor: pointer; } .g-dot:hover circle { fill-opacity: .9; }
+.g-dot .g-label { font-size: 11px; }
+.g-dot[data-kind=old] circle { fill: var(--m-archaic); stroke: var(--m-archaic); } .g-dot[data-kind=modern] circle { fill: var(--m-dialect); stroke: var(--m-dialect); }
+.g-dot[data-kind=chronicle] circle { fill: var(--m-cs); stroke: var(--m-cs); } .g-dot[data-kind=folk] circle { fill: var(--m-rusyn); stroke: var(--m-rusyn); } .g-dot[data-kind=other] circle { fill: var(--m-colloquial); stroke: var(--m-colloquial); }
+.gleg-i { margin-right: .6rem; white-space: nowrap; }
+/* compact word / form header: 8-px grid, ≤ 3 lines at 360 px */
+.wordhead.compact { padding: 0 0 .5rem; gap: .125rem; } .wordhead.compact .lemma { font-size: 1.7rem; line-height: 1.15; display: inline; }
+.wordhead.compact .hl-line, .wordhead.compact .hl-chips { font-size: .9rem; } .wordhead.compact .hl-chips { margin-top: .125rem; gap: .25rem .5rem; }
+.panel.card { padding: .5rem .75rem; margin-bottom: .5rem; }
+.wordhead.compact { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .75rem; } .wordhead.compact > .hl-chips, .wordhead.compact > .chips, .wordhead.compact > .allforms, .wordhead.compact > p.small { flex-basis: 100%; margin: 0; }
+.wordhead.compact > .hl-line { flex: 1 1 auto; }

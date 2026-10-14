@@ -624,7 +624,7 @@ describe('BL-17 theme tokens (light default, dark toggle) and WCAG AA contrast',
 describe('SPEC 61 UX-1 / UX-2 / UX-7 wiring (GA-2)', () => {
   const wv = readFileSync('src/views/WordView.vue', 'utf8')
   it('UX-1 headline and UX-2 collapsible panels each with a one-line summary', () => {
-    expect(wv).toContain('class="wordhead headline"')
+    expect(wv).toContain('class="wordhead headline compact"')
     const panels = [...wv.matchAll(/<Panel [^>]*>/g)].map(m => m[0])
     expect(panels.length).toBeGreaterThanOrEqual(10)
     for (const p of panels) expect(p, p).toMatch(/:?summary=/)

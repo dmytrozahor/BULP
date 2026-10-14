@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { isOldForm } from '../lib/nav.ts'
+import { formTo, isOldForm } from '../lib/nav.ts'
+import ViewSwitch from './ViewSwitch.vue'
+import AttestGraph from './AttestGraph.vue'
 /**
  * SPEC 00 P-1.5: "Derivations keep a full trace: one step per rule, each step with its citation (видѣти →R09→ видіти)."
  * research/07 §3.1 «Походження (provenance timeline per form)». Click a step → the Shevelov quote + locator from core RULES.
@@ -24,11 +26,18 @@ const items = computed(() => props.forms.filter(f => !props.active || f.raw === 
 const sameN = computed(() => { const m = new Map<string, number>(); for (const { f } of items.value) if (Object.keys(f.claims).length) { const s = claimSignature(f.claims); m.set(s, (m.get(s) ?? 0) + 1) } return m })
 const firstOf = computed(() => { const m = new Map<string, string>(); for (const { f } of items.value) if (Object.keys(f.claims).length) { const s = claimSignature(f.claims); if (!m.has(s)) m.set(s, f.raw) } return m })
 const claimsInfo = (f: FormCard) => { const s = claimSignature(f.claims); return { n: sameN.value.get(s) ?? 1, first: firstOf.value.get(s) === f.raw, head: firstOf.value.get(s) } }
+/** SPEC 63 UI-2: one dot per dated spelling (x = year, r ∝ √f); a dot links to the same /f page as the list */
+const points = computed(() => items.value.filter(i => i.date).slice(0, 120).map(({ f, date }) => ({
+  id: f.raw, label: f.raw, year: (date![0] + date![1]) / 2, f: f.f, kind: isOldForm(f.raw, date![1]) ? 'old' : 'modern',
+  to: formTo(f.raw, props.card?.lemma), title: `${f.raw} · ${fmtDate(date!)}` })))
 const toggle = (k: string) => (open.value = open.value === k ? null : k)
 </script>
 
 <template>
   <div>
+  <ViewSwitch panel="chrono">
+  <template #graph><AttestGraph :points="points" label="Хронологія написань" /></template>
+  <template #list>
   <ol class="timeline">
     <li v-for="{ f, date, derived } in items.slice(0, n)" :key="f.raw">
       <div class="date">{{ date ? fmtDate(date) : 'дата невідома' }} </div>
@@ -63,6 +72,8 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
     </li>
   </ol>
   <button v-if="items.length > n" type="button" class="btn" @click="n += 80">Показати ще ({{ items.length - n }})</button>
+  </template>
+  </ViewSwitch>
   <ReconstructedForms v-if="card && !active" :card="card" />
   </div>
 </template>
