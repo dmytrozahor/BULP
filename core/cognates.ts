@@ -58,6 +58,8 @@ export function treeTagDating(tags: string[] | undefined): { from: number; to: n
 
 // ── ET-3 flag (BL-15) ─────────────────────────────────────────────────────────────────────────────
 const span = (a: [number, number]) => (a[0] === a[1] ? String(a[0]) : a.join('–'))
+const EAST_WORDING = /East Slavic|Old Rus|праслов|Proto-Slavic/i
+const EAST_SLAVIC_LANG: ReadonlySet<CogLang> = new Set<CogLang>(['orv', 'zle-ort'])
 export interface VernInput { ours: [number, number]; vernacular: boolean }
 /**
  * `donor`: the language the Ukrainian etymology (Wiktionary chain «Borrowed from Polish …») names as source, if any.
@@ -67,16 +69,19 @@ export interface VernInput { ours: [number, number]; vernacular: boolean }
  */
 export function cognateFlag(v: VernInput, rows: CogRow[], donor?: CogLang): CogFlag | undefined {
   if (!v.vernacular) return undefined
-  const dated = rows.filter(r => r.d && !r.b)
+  // BL-15b: a dating whose own wording is East Slavic / Proto-Slavic already covers the Old Rus' period — it is no Ukrainian-specific claim to antedate
+  const dated = rows.filter(r => r.d && !r.b && !EAST_WORDING.test(r.q ?? ''))
   if (!dated.length) return undefined
   const east = v.ours[1] < 1300
   const pre = east ? 'давньоруська (східнослов’янська) фіксація' : 'українська (рутенська) фіксація'
   const pick = (rs: CogRow[]) => ({ from: Math.min(...rs.map(r => r.d![0])), to: Math.min(...rs.map(r => r.d![1])) })
-  const d = donor ? dated.filter(r => r.l === donor) : []
+  // BL-15b: before ~1300 only a dated Polish-type donor claim can be antedated; cognate-set flags (338 of 343 at first build) carry no information and are not emitted
+  const d = donor && !EAST_SLAVIC_LANG.has(donor) ? dated.filter(r => r.l === donor) : []
   if (d.length) {
     const t = pick(d)
     if (v.ours[1] < t.from) return { code: 'uk-antedates-donor', ours: v.ours, theirs: [t.from, t.to], langs: [donor!], eastSlavic: east, note: `${pre} (${span(v.ours)}) раніша за датування джерела запозичення — ${COG_LANG_UK[donor!]} (${span([t.from, t.to])}): або джерело датування неповне, або напрям/час запозичення варто перевірити` }
   }
+  if (east) return undefined
   const t = pick(dated)
   if (v.ours[1] < t.from) {
     const langs = [...new Set(dated.map(r => r.l))]

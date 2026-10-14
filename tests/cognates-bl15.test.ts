@@ -32,7 +32,7 @@ describe('BL-15 ET-3 flag: interval logic, vernacular only, a review prompt', ()
     expect(cognateFlag({ ours: [1100, 1100], vernacular: true }, [{ l: 'ru', w: 'хата', b: 1, d: [1801, 1900], q: 'q', k: 'tree' }])).toBeUndefined()
   })
   it('before 1300 the claim is East Slavic, not «Ukrainian»; donor flag names the donor language', () => {
-    const a = cognateFlag({ ours: [1150, 1150], vernacular: true }, rows)!
+    const a = cognateFlag({ ours: [1150, 1150], vernacular: true }, rows, 'pl')!   // BL-15b: only a Polish-type donor claim is left to flag before 1300
     expect(a.eastSlavic).toBe(true); expect(a.note).toContain('давньоруська')
     const d = cognateFlag({ ours: [1420, 1430], vernacular: true }, rows, 'pl')!
     expect(d.code).toBe('uk-antedates-donor'); expect(d.langs).toEqual(['pl']); expect(d.eastSlavic).toBe(false); expect(d.note).toContain('українська')
@@ -63,5 +63,20 @@ describe.skipIf(!existsSync('public/data/cognates.json'))('BL-15 built cognates.
     const j = JSON.parse(readFileSync('public/data/cognates.json', 'utf8')) as { attribution: { licence: string }; entries: Record<string, { evidence: { kind: string }[]; flag?: { ours: number[]; theirs: number[] } }> }
     expect(j.attribution.licence).toContain('CC BY-SA')
     for (const e of Object.values(j.entries)) { expect(e.evidence[0]!.kind).toBe('D'); if (e.flag) expect(e.flag.ours[1]).toBeLessThan(e.flag.theirs[0]!) }
+  })
+})
+
+describe('BL-15b informative ET-3 flags only', () => {
+  const pl: CogRow[] = [{ l: 'pl', w: 'x', d: [1450, 1450], q: 'First attested in 1450', k: 'etym' }]
+  it('a pre-1300 East-Slavic flag from the cognate set is suppressed, a pre-1300 flag against a dated Polish donor claim is kept', () => {
+    expect(cognateFlag({ ours: [1150, 1150], vernacular: true }, pl)).toBeUndefined()
+    const g = cognateFlag({ ours: [1150, 1150], vernacular: true }, pl, 'pl')!
+    expect(g.code).toBe('uk-antedates-donor'); expect(g.eastSlavic).toBe(true)
+  })
+  it('a dating whose wording is East Slavic / Proto-Slavic does not count; an Old East Slavic donor is no Ukrainian-specific claim; a post-1300 genuine flag stays', () => {
+    const es: CogRow[] = [{ l: 'ru', w: 'x', d: [1500, 1500], q: 'First attested in Old East Slavic, 1500', k: 'etym' }]
+    expect(cognateFlag({ ours: [1400, 1400], vernacular: true }, es)).toBeUndefined()
+    expect(cognateFlag({ ours: [1150, 1150], vernacular: true }, [{ l: 'orv', w: 'x', d: [1300, 1300], q: 'q', k: 'etym' }], 'orv')).toBeUndefined()
+    expect(cognateFlag({ ours: [1400, 1400], vernacular: true }, pl)?.code).toBe('uk-antedates-cognates')
   })
 })
