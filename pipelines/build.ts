@@ -27,6 +27,7 @@ import { bucketOf, packShard, splitCard } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
 import { ltIndex } from './lt.ts'
+import { palatalClaim, R24_CITE } from '../core/palatalization.ts'
 import { chooseLemma, linkOptions, posLabel, traceSteps, wantedKeys, ROUTE_RANK, type Chosen, type Env, type Route, type TypeCtx } from './build-link.ts'
 import {
   admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, rankFirst, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
@@ -308,6 +309,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     if (fa.route === 'torot-lemma') ev.push(D('TOROT', `${w.id}: ${tok.loc}`, `${tok.raw} ← лема «${tok.lemma}»${tok.morph ? ' · ' + tok.morph : ''}`, 'наукова анотація TOROT'))
     else if (fa.route === 'stanza-lemma') ev.push(D('stanza orv', nlp?.model ?? 'stanza orv', `${tok.raw} → «${nlp?.tokens[fa.ref.ti]?.lemma}»`, `модельна лематизація, не словниковий факт (P-1.7)${nlp?.outOfDomain ? '; текст поза доменом моделі' : ''}`))
     else ev.push(D(w.id, tok.loc, `${tok.raw} → ${c.own.form}${c.own.trace.length ? ' [' + c.own.trace.join('→') + ']' : ''}`))
+    if (c.own.trace.includes('R24r')) ev.push(...R24_CITE.slice(0, 2))   // BL-20: ц/з/с → к/г/х before и/і/ѣ
     return ev
   }
 
@@ -365,11 +367,12 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const proper = properClaim(la.display, {
       vesum: lemmaPos, ...(la.nm.torot ? { torot: { ...la.nm.torot, of: la.nm.nMorph } } : {}), ...(la.nm.stanza ? { stanza: { ...la.nm.stanza, of: la.nm.nNlp } } : {}),
     }, VESUM_LOC)   // NP-1
+    const pal = palatalClaim(la.display, [...la.forms.values()].map(fa => ({ raw: fa.raw, forms: [...new Set([key(fa.norm), key(fa.raw), key(fa.modern)])], f: fa.f, viaR24r: fa.chosen.own.trace.includes('R24r'), ev: D(fa.firstW, fa.firstLoc, kline(fa.first)) })))   // BL-20
     cards.push({
       lemma: la.display, pos: posLabel(lemmaPos), paradigmKind: paradigmKindOf(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
-      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}) },
+      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}), ...(pal ? { palatalization: pal } : {}) },
     })
   }
   cards.sort((a, b) => b.stats.f - a.stats.f || a.lemma.localeCompare(b.lemma, 'uk'))

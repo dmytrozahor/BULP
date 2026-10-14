@@ -11,6 +11,7 @@
  */
 import { Q, P, type Evidence } from './evidence.ts'
 import { normalizeOld, type NormOpts } from './text.ts'
+import { R24_CITE, restoreVelar } from './palatalization.ts'
 
 const sh = (ch: number, file: string) => `${'http://izbornyk.org.ua/shevelov/'}${file}.htm, розд. ${ch}`
 const S14 = sh(14, 'shev04'), S62 = sh(62, 'shev08')
@@ -101,6 +102,13 @@ export const RULES: SoundRule[] = [
   { id: 'R23', name: 'Стягнення прикметникових закінчень', date: 'XIV–XVI ст.', scope: 'L',
     cite: P('SHEV', sh(53, 'shev07'), 'Усічення та стягнення (назва розділу 53)'),
     apply: seq(rx('а[ѧя]$', 'а'), rx('о[ѥеє]$', 'е'), rx('ую$', 'у')) },
+  // R24 «kept»: ц/з/с from the second palatalization survive (руцѣ → руці); ѣ → і is R09. Identity here, so it never appears in a forward trace.
+  { id: 'R24', name: 'Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається', date: 'праслов’янська; в укр. зберігається', scope: 'G', cite: R24_CITE[0]!, apply: w => w },
+]
+
+/** Rules used only to LINK a token back to a lemma (not part of the forward derive loop; present in ruleById for traces and the UI). */
+export const LINK_RULES: SoundRule[] = [
+  { id: 'R24r', name: 'Друга палаталізація навпаки: ц, з, с > к, г, х перед ѣ, и (лема з основою на задньоязичний)', date: 'праслов’янська', scope: 'L', cite: R24_CITE[0]!, apply: restoreVelar },
 ]
 
 const finish = (w: string) => w.replaceAll(STRONG_O, 'о').replaceAll(STRONG_E, 'е').replaceAll(LOST, '').replace(/ъ/g, '').replace(/ѥ/g, 'є')
@@ -129,4 +137,4 @@ export function derive(raw: string, opts: NormOpts = {}): Derivation {
   return { input: raw, norm, titlo, candidates: [...seen.values()] }
 }
 
-export const ruleById = Object.fromEntries(RULES.map(r => [r.id, r])) as Record<string, SoundRule>
+export const ruleById = Object.fromEntries([...RULES, ...LINK_RULES].map(r => [r.id, r])) as Record<string, SoundRule>

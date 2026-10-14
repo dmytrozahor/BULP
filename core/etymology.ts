@@ -13,6 +13,8 @@ import { Q, type Evidence } from './evidence.ts'
 
 export interface EtymHypothesis { author: string; text: string; status: 'proposed' | 'accepted' | 'rejected'; evidence: Evidence[]; date: string }
 export interface EtymStep { rel: string; text: string }   // rel: inh | der | bor | calque | sl …; text = Wiktionary's own expansion («Old East Slavic мѣ́сто (mě́sto)»)
+/** BL-20 word-family edge: `basis` 'vesum' = visible in the VESUM entries (D), 'hypothesis' = project/user claim awaiting a dictionary quote (kept apart, never a fact) */
+export interface FamilyLink { lemma: string; rel: string; basis: 'vesum' | 'hypothesis'; evidence: Evidence[]; inLexicon?: boolean }
 export type EtymConflict = 'corpus-antedates' | 'corpus-postdates'
 export interface Etymology {
   /** Evidence, kind Q: the Wiktionary etymology_text (CC BY-SA, attributed) and the ≤ 2-clause ЕСУМ quotation (goroh) */
@@ -21,6 +23,7 @@ export interface Etymology {
   text: string
   chain?: EtymStep[]
   hypotheses: EtymHypothesis[]
+  family?: FamilyLink[]
   conflict?: EtymConflict
   conflictNote?: string
 }
@@ -77,12 +80,12 @@ export function etymConflict(d: Dating | undefined, corpus: [number, number] | u
 
 // ── assembly ─────────────────────────────────────────────────────────────────────────────────────
 export interface KaikkiRec { text: string; chain?: EtymStep[] }
-export function buildEtymology(lemma: string, k: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string): Etymology | undefined {
-  if (!k && !esumQuote && !hyps.length) return undefined
+export function buildEtymology(lemma: string, k: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = []): Etymology | undefined {
+  if (!k && !esumQuote && !hyps.length && !family.length) return undefined
   const sources: Evidence[] = []
   if (k) sources.push(wiktEvidence(lemma, k.text, extracted))
   if (esumQuote) sources.push(esumEvidence(lemma, esumQuote))
-  const e: Etymology = { sources, text: k?.text ?? '', hypotheses: hyps, ...(k?.chain?.length ? { chain: k.chain } : {}) }
+  const e: Etymology = { sources, text: k?.text ?? '', hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}) }
   const c = k ? etymConflict(dictDating(k.text), corpusFirst) : undefined
   if (c) { e.conflict = c.conflict; e.conflictNote = c.note }
   return e

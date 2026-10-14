@@ -126,8 +126,11 @@ const keyChips = computed(() => {
 const nKnownChips = computed(() => Object.values(keyChips.value).filter(Boolean).length)
 
 // ── UX-2 one-line summaries ──
+/** BL-20: attested forms with the second palatalization (R24) */
+const pal = computed(() => { const c = card.value?.claims.palatalization; return c && isKnown(c) ? { claim: c, forms: c.value.forms } : undefined })
 const labParts = computed(() => {
   const c = card.value!.claims, p: string[] = []
+  if (pal.value) p.push(`друга палаталізація: ${pal.value.forms.length}`)
   if (isKnown(c.origin)) p.push(labelUk(String(c.origin.value)))
   if (isKnown(c.register)) p.push('розмовне')
   if (isKnown(c.surzhyk)) p.push('суржик')
@@ -233,6 +236,9 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
             <div><span class="muted">Регістр: </span><ClaimBadge :claim="card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
             <div><span class="muted">Суржик: </span><ClaimBadge :claim="card.claims.surzhyk" text="суржик" tone="contact" /></div>
             <div><span class="muted">Походження: </span><ClaimBadge :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" /></div>
+            <div v-if="pal"><span class="muted">Друга палаталізація: </span>
+              <ClaimBadge :claim="pal.claim" :text="'друга палаталізація (' + pal.forms.length + ')'" tone="" />
+              <span class="small"> <template v-for="(f, i) in pal.forms.slice(0, 6)" :key="f.raw"><template v-if="i">, </template><span class="old">{{ f.raw }}</span> ({{ f.alt || f.via }})</template></span></div>
             <div><span class="muted">Діалекти: </span>
               <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>

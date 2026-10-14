@@ -4,6 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { isKnown } from '../core/evidence.ts'
 import { buildEtymology, type EtymHypothesis, type EtymologyFile, type KaikkiRec } from '../core/etymology.ts'
+import type { FamilyLink } from '../core/etymology.ts'
 import type { LemmaCard } from '../core/types.ts'
 
 const rdj = <T>(p: string, d: T): T => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) as T : d)
@@ -12,11 +13,14 @@ export function writeEtymology(cards: Pick<LemmaCard, 'lemma' | 'first'>[], root
   const kk = rdj<{ file: string; sha256: string; extracted: string; words: Record<string, KaikkiRec> } | undefined>(resolve(root, 'data/work/etymology-kaikki.json'), undefined)
   const gh = rdj<Record<string, string | null>>(resolve(root, 'data/work/etymology-goroh.json'), {})
   const hyps = rdj<(EtymHypothesis & { lemma: string })[]>(resolve(root, 'pipelines/etymology-hypotheses.json'), [])
+  const fam = rdj<{ edges: { a: string; b: string; rel: string; basis: FamilyLink['basis']; evidence: FamilyLink['evidence'] }[] }[]>(resolve(root, 'pipelines/word-families.json'), []).flatMap(g => g.edges)
+  const have = new Set(cards.map(c => c.lemma))
+  const famOf = (l: string): FamilyLink[] => fam.flatMap(e => e.a === l ? [{ lemma: e.b, rel: e.rel, basis: e.basis, evidence: e.evidence, inLexicon: have.has(e.b) }] : e.b === l ? [{ lemma: e.a, rel: e.rel, basis: e.basis, evidence: e.evidence, inLexicon: have.has(e.a) }] : [])
   const entries: EtymologyFile['entries'] = {}
   let conflicts = 0
   for (const c of cards) {
     const first = isKnown(c.first) ? c.first.value.date : undefined
-    const e = buildEtymology(c.lemma, kk?.words[c.lemma], gh[c.lemma] ?? undefined, hyps.filter(h => h.lemma === c.lemma).map(({ lemma: _l, ...h }) => h), first, kk?.extracted ?? '')
+    const e = buildEtymology(c.lemma, kk?.words[c.lemma], gh[c.lemma] ?? undefined, hyps.filter(h => h.lemma === c.lemma).map(({ lemma: _l, ...h }) => h), first, kk?.extracted ?? '', famOf(c.lemma))
     if (e) { entries[c.lemma] = e; if (e.conflict) conflicts++ }
   }
   const file: EtymologyFile = {

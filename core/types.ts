@@ -93,6 +93,8 @@ export interface LemmaCard {
     rusyn?: Claim<string>
     /** SPEC 60 NP-1: proper-name kind (VESUM prop/geo/fname/lname/patr, PROIEL Ne, Stanza PROPN = model); absent when nothing supports it */
     proper?: Claim<import('./places.ts').NameKind>
+    /** BL-20: «друга палаталізація» (R24) — the attested forms of this velar-stem lemma that show к/г/х → ц/з/с before и/і/ѣ */
+    palatalization?: Claim<{ forms: { raw: string; form: string; alt: string; f: number; via: 'R24r' | 'kept' }[] }>
   }
 }
 

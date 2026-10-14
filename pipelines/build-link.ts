@@ -14,6 +14,7 @@ import { key } from '../core/text.ts'
 import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
 import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
+import { velarCandidates } from '../core/palatalization.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -92,6 +93,13 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
   if (t.lang !== 'uk') {
     const opts = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true))))
     if (opts.length) return { route: 'token', opts }
+    // R24r (BL-20): ц/з/с before и/і/ѣ → the velar-stem lemma (помози → помогти, руцѣ → рука); last resort, VESUM must list the lemma with the right POS
+    const pal = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => velarCandidates(key(c.form)).flatMap(v =>
+      (env.hits.get(v.lemma) ?? []).filter(h => isHead(h, v.lemma) && (v.cls === 'verb' ? /^verb:[a-z]+:inf\b/.test(h.tags) : h.tags.startsWith('noun') && (!v.gender || h.tags.includes(':' + v.gender)))).map(h => {
+        const rc: Candidate = { form: v.restored, trace: [...c.trace, 'R24r'], branches: c.branches + 1 }
+        return toOption(v.lemma, h, rc, rc, true)
+      }))))
+    if (pal.length) return { route: 'token', opts: pal }
   } else {
     const opts = env.fold(key(t.raw), t.orth).flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true)))
     if (opts.length) return { route: 'direct', opts }
@@ -107,7 +115,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): strin
     const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form))
   }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
-  if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) out.push(key(c.form))
+  if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   return out
 }

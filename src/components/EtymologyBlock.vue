@@ -32,6 +32,12 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
     </template>
     <p v-else-if="done" class="sans small muted">У зібраних словниках етимології цього слова немає. ЕСУМ: <a :href="goroh(lemma)" target="_blank" rel="noopener">goroh.pp.ua ↗</a>.</p>
     <p v-else class="muted small">завантаження…</p>
+    <template v-if="entry?.family?.length">
+      <h3 class="sans small muted" style="margin-top:.7rem">Родина слова</h3>
+      <ul class="sans small">
+        <li v-for="f in entry.family" :key="f.lemma"><RouterLink v-if="f.inLexicon" :to="'/w/' + encodeURIComponent(f.lemma)">{{ f.lemma }}</RouterLink><template v-else>{{ f.lemma }}</template> · {{ f.rel }} · <em>{{ f.basis === 'vesum' ? 'за записами VESUM' : 'гіпотеза, чекає на цитату зі словника' }}</em><EvidenceList :evidence="f.evidence" /></li>
+      </ul>
+    </template>
     <h3 class="sans small muted" style="margin-top:.7rem">Гіпотези проєкту (hypotheses)</h3>
     <ul v-if="entry?.hypotheses.length" class="sans small">
       <li v-for="(h, i) in entry.hypotheses" :key="i"><strong>{{ h.author }}</strong> · {{ STATUS_UK[h.status] }} · {{ h.date }}<br />{{ h.text }}<EvidenceList :evidence="h.evidence" /></li>

@@ -13,6 +13,7 @@
 import { D, type Evidence } from './evidence.ts'
 import { derive, ruleById, type SoundRule } from './phonology.ts'
 import { key } from './text.ts'
+import { PAL, UNPAL, R24_CITE } from './palatalization.ts'
 import type { Kwic, TraceStep } from './types.ts'
 
 export type ReverseStatus = 'reconstruction' | 'confirmed-by-attestation'
@@ -60,6 +61,12 @@ const fleeting = (w: string, c: Ctx): Alt[] => [...w.matchAll(R('[ое](?=C+ь?$
 
 /** Inversion table, in the order of application (= reverse of RULES). */
 const ROWS: Row[] = [
+  // R24 kept: a ц/з/с + і/и ending is annotated (not changed) when the lemma's paradigm shows the velar sibling (руці ~ руки)
+  { id: 'R24', forced: true, gen: (w, c) => {
+    const m = /^(.+?)([цзс])[іи]$/.exec(w); if (!m) return []
+    const sib = c.par.find(q => q.startsWith(m[1]! + UNPAL[m[2]!]) && q.length <= w.length + 1)
+    return sib ? [{ w, ev: [D('VESUM', 'парадигма леми', `${w} / ${sib}`)], cost: 0 }] : []
+  } },
   { id: 'R21', gen: w => one(w, R('^в(?=у|оC)'), () => '') },                                              // drop prothetic в
   { id: 'R19', gen: w => one(w, /р$/g, () => 'рь') },
   { id: 'R18', gen: w => [...one(w, /([жчшщ])$/g, m => m[1] + 'ь'), ...one(w, /([жчшщ])у/g, m => m[1] + 'ю'), ...one(w, /([жчш])а/g, m => m[1] + 'я')] },
@@ -113,6 +120,24 @@ export function reverse(modern: string, opts: ReverseOpts = {}): { candidates: R
   cands.sort((a, b) => +(b.status === 'confirmed-by-attestation') - +(a.status === 'confirmed-by-attestation') || a.branches - b.branches
     || a.trace.length - b.trace.length || a.form.localeCompare(b.form))
   return { candidates: cands.slice(0, 12) }
+}
+
+// ── R24: palatalised OLD forms of a velar-stem lemma ─────────────────────────────────────────────
+export interface PalatalForm { form: string; cell: string; rule: 'R24'; velar: string; pal: string; evidence: Evidence[] }
+/**
+ * Old forms that carry the second palatalization for a modern velar-stem lemma (hypotheses, P-1.7): ā-stem dat./loc. sg. -ѣ (рука → руцѣ),
+ * ŏ-stem loc. sg. -ѣ and nom. pl. -и (друг → друзѣ, друзи; вовк → вълци), velar verbs 2sg imperative -и (помогти → помози). `tags` = VESUM lemma tags.
+ */
+export function palatalizedOldForms(lemma: string, tags: string): PalatalForm[] {
+  const t = tags.split(':'), l = key(lemma)
+  const old = (w: string) => w   // modern stem + old ending: the stem's own sound changes are R-rules of their own (reverse()), the alternation is independent of them
+  const mk = (stem: string, end: string, cell: string): PalatalForm[] => {
+    const v = stem.slice(-1), p = PAL[v]; return p ? [{ form: stem.slice(0, -1) + p + end, cell, rule: 'R24', velar: v, pal: p, evidence: R24_CITE }] : []
+  }
+  if (t[0] === 'noun' && t.includes('f') && l.endsWith('а')) return ['ѣ'].flatMap(e => mk(old(l).slice(0, -1), e, 'sg.dat / sg.loc'))
+  if (t[0] === 'noun' && t.includes('m') && /[кгх]$/.test(l)) return [...mk(old(l), 'ѣ', 'sg.loc'), ...mk(old(l), 'и', 'pl.nom')]
+  if (t[0] === 'verb' && t.includes('inf') && /[кгх]ти$/.test(l)) return mk(l.slice(0, -2), 'и', 'impr.2sg')
+  return []
 }
 
 // ── D-3 explainer ─────────────────────────────────────────────────────────────────────────────────
