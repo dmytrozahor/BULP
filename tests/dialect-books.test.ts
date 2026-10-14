@@ -4,6 +4,7 @@ import { detect, type Ctx } from '../core/detect.ts'
 import { DIALECT_RULES, DIALECT_BOOK_RULES, DIALECT_LEX_RULES, DIALECTS, DIALECT_GROUP_FROM, ruleGate } from '../core/rules.ts'
 import { DIALECT_LEX } from '../core/dialect-lex.ts'
 import { SOURCES } from '../core/sources.ts'
+import { territoryById } from '../core/territories.ts'
 
 const ctx = (form: string, o: Partial<Ctx> = {}): Ctx => ({ form, vesum: [], inLexicon: () => [], ...o })
 const claims = (f: string, year?: number, o: Partial<Ctx> = {}) => detect(DIALECT_RULES, ctx(f, { year, ...o })).claims
@@ -146,5 +147,24 @@ describe('DL-4 lexical dialectisms (core/dialect-lex.ts)', () => {
     for (const e of a) { expect(e.codes).toEqual(['WPL']); expect(e.loc).toContain('slzhdplhv') }
     for (const e of l) { expect(e.codes).toEqual(['MPL', 'CHN']); expect(e.loc).toContain('p0lissia') }
     expect(claims(a[0]!.w[0]!, 1900).WPL!.evidence.some(x => x.source === 'ARKUSHYN')).toBe(true)
+  })
+})
+
+describe('DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020', () => {
+  const av = DIALECT_LEX.filter(e => e.src === 'AVDEEVA')
+  it('the dictionary is a registered source with both volumes and the access terms', () => {
+    expect(SOURCES.AVDEEVA!.title).toMatch(/Т\. 1 \(А–М\), 2008/); expect(SOURCES.AVDEEVA!.title).toMatch(/Т\. 2 \(Н–Я\), 2012/); expect(SOURCES.AVDEEVA!.license).toMatch(/cite-only/)
+  })
+  it('every entry: headword, one-sentence quoted gloss, village label, volume + page locator, region = a real MP territory', () => {
+    expect(av.length).toBeGreaterThanOrEqual(3)
+    for (const e of av) {
+      expect(e.region, e.w[0]).toBe('voronizhchyna'); expect(territoryById[e.region!], e.w[0]).toBeDefined()
+      expect(e.village, e.w[0]).toBeTruthy(); expect(e.loc, e.w[0]).toMatch(/т\. (I|II) \((2008|2012)\), с\. \d+/)
+      expect(e.gloss.split(/[.!?]/).filter(Boolean).length).toBe(1); expect(e.q.length).toBeLessThan(200)
+    }
+  })
+  it('no dialect group is asserted: the preface (p. 4) names none, so codes stay empty and no rule is generated', () => {
+    for (const e of av) { expect(e.codes).toEqual([]); expect(DIALECT_LEX_RULES.some(r => r.id.startsWith(`LEX-AVDEEVA:${e.w[0]}`))).toBe(false) }
+    expect(claims('вутя', 1900)).toEqual({})
   })
 })

@@ -226,6 +226,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DL-4 | tests/dialect-books.test.ts › has entries for every dialect group of the book sources, each with a Q quote, a registered source and a locator |
 | DL-4 | tests/dialect-books.test.ts › Polissian rows: Arkushin (WPL) and Lysenko (MPL, CHN) entries quote the dictionary with the book locator |
 | DL-5 | manual — research/31-dialect-books.md §1 logs every source with URL, access method, robots.txt/licence verdict and the sources skipped or failed; reviewed by reading it |
+| DL-6 | tests/dialect-books.test.ts › DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020 › the dictionary is a registered source with both volumes and the access terms |
+| DL-6 | tests/dialect-books.test.ts › DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020 › every entry: headword, one-sentence quoted gloss, village label, volume + page locator, region = a real MP territory |
+| DL-6 | tests/dialect-books.test.ts › DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020 › no dialect group is asserted: the preface (p. 4) names none, so codes stay empty and no rule is generated |
+| DL-6 | manual — research/31-dialect-books.md §1 logs the access search (НЭБ 403, Google Books record only, third-party PDF not opened: owner's decision) |
 | AC-1 | tests/autolabel.test.ts › every table row has a verbatim meaning and the table a registered source and a locator |
 | AC-1 | tests/autolabel.test.ts › articleLabels returns a verbatim slice of the article for each abbreviation and ignores look-alikes |
 | AC-1 | tests/autolabel.test.ts › r2u: parseCell reads Грінченко labels from the FULL article, quote ⊂ article |
@@ -337,7 +341,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AR-2 | tests/archaic.test.ts › AR-2 every unresolved corpus token whose spelling equals a dictionary variant links to the lemma (ref a:<id>); dictionary words that VESUM knows are not archaic |
 | AR-3 | tests/archaic.test.ts › AR-3 dictionary-backed lemmas are always kept; recurring unresolved clusters (≥ 3) become labelled unverified candidates; counts per epoch |
 | PV-8 | tests/torot-pv.test.ts › PV-8b cited OES endings: gen. -аго, long -ыи, aorist / imperfect with stem agreement and the quoted sources in research/37 |
-| DL-6 | manual — pending: DL-6 (Авдеева, Воронеж 2008) is being located and ingested; the test row replaces this line when it lands |
 | GZ-1 | tests/gz.test.ts › GZ-1 ordinary VESUM forms are never bare words › an unresolved token whose own spelling is a VESUM form (FX-3 homonym loser: мати noun vs verb, раз noun vs adverb) gets a light-card ref; linked, ref-holding, non-uk and non-VESUM tokens do not |
 | GZ-1 | tests/gz.test.ts › GZ-1 ordinary VESUM forms are never bare words › build wires it after the PV-6 light index and adds the raw spelling to the VESUM pass |
 | GZ-2 | tests/gz.test.ts › GZ-2 cited Желехівка folds › every fold quotes its source statement and locator; there is no rule without one |

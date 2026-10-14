@@ -3,7 +3,9 @@
  * Built from the fetched texts (ЕУМ entries on litopys.org.ua; dictionaries as OCR text on archive.org) by a one-off script; every quote was checked against the source text.
  * Cite-only: one headword + gloss fragment per entry, no bulk copying. Forms that VESUM lists were dropped (a normative VESUM hit vetoes dialect rules anyway).
  */
-export interface LexEntry { w: string[]; gloss: string; codes: string[]; src: string; loc: string; q: string }
+export interface LexEntry { w: string[]; gloss: string; codes: string[]; src: string; loc: string; q: string
+  /** DL-6: historical territory id (core/territories.ts) and the village/district label exactly as the dictionary gives it; `codes` stays [] when the source does not itself name a dialect group */
+  region?: string; village?: string }
 export const DIALECT_LEX: LexEntry[] = [
   { w: ["пожаливник","пожалиўник"], gloss: "байстрюк", codes: ["BOY"], src: "ENC", loc: "http://litopys.org.ua/ukrmova/um177.htm", q: "пожали́ўник … ‘байстрюк’" },
   { w: ["віблиця"], gloss: "довга жердина", codes: ["BOY"], src: "ENC", loc: "http://litopys.org.ua/ukrmova/um177.htm", q: "вíблиц’а … ‘довга жердина’" },
@@ -147,4 +149,7 @@ export const DIALECT_LEX: LexEntry[] = [
   { w: ["маштарня"], gloss: "хлів для коней", codes: ["BOY"], src: "ONYSH", loc: "https://archive.org/details/slv1984 (Онишкевич, Словник бойківських говірок, 1984), s.v. МАШТАРНЯ", q: "МАШТАРНЯ … хлів для коней" },
   { w: ["шварь"], gloss: "скошене з мокрого місця сіно", codes: ["BOY"], src: "ONYSH", loc: "https://archive.org/details/slv1984 (Онишкевич, Словник бойківських говірок, 1984), s.v. ШВАРЬ", q: "ШВАРЬ … скошене з мокрого місця сіно" },
   { w: ["кылавий","килавий"], gloss: "слабенький", codes: ["ZAK"], src: "KOLYBA", loc: "https://www.kolyba.org.ua/zakarpatskij-slovnik, s.v. КЫЛАВИЙ", q: "КЫЛАВИЙ … слабенький, ні на що не здатний" },
+  { w: ["вутя","вутя’"], gloss: "утка", codes: [], region: "voronizhchyna", village: "Новобелая Кантем., Старотолучеево Богуч., Поповка Рос., Нижний Карабут Рос., Замостье Петр.", src: "AVDEEVA", loc: "Авдеева М. Т., Словарь украинских говоров Воронежской области, т. I (2008), с. 82; цит. за: Сьянова Е. И., Gwary Dziś 12 (2020), с. 128–130, DOI 10.14746/gd.2020.12.9", q: "ву’тя ‘утка’ (Старотолучеево Богуч., Поповка Рос.)" },
+  { w: ["вути-вути"], gloss: "слова, которыми подзывают уток", codes: [], region: "voronizhchyna", village: "Петр., Богуч.", src: "AVDEEVA", loc: "Авдеева М. Т., Словарь украинских говоров Воронежской области, т. I (2008), с. 82; цит. за: Сьянова Е. И., Gwary Dziś 12 (2020), с. 128–130, DOI 10.14746/gd.2020.12.9", q: "ву’ти-ву’ти, ву’тя-ву’тя – слова, которыми подзывают уток (Петр., Богуч.)" },
+  { w: ["кутя","кутя’"], gloss: "щенок", codes: [], region: "voronizhchyna", village: "Витебск Подгор.", src: "AVDEEVA", loc: "Авдеева М. Т., Словарь украинских говоров Воронежской области, т. II (2012), с. 303; цит. за: Сьянова Е. И., Gwary Dziś 12 (2020), с. 128–130, DOI 10.14746/gd.2020.12.9", q: "кутя’ имеет географическую помету Витебск Подгор." },
 ]
