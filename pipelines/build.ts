@@ -147,9 +147,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
     w.tokens.forEach((t, i) => {
       const raw = rawKey(t.raw), lemma = t.lemma || undefined, stanza = !lemma ? nlp?.tokens[i]?.lemma || undefined : undefined
       const gate = w.lang === 'uk' ? undefined : gateKey(t.morph, nlp?.tokens[i]?.upos)   // FX-1: the token's own POS (TOROT manual, else Stanza)
-      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${raw}`
+      const past = !!stanza && /(^|\|)Tense=Past\b/.test(nlp?.tokens[i]?.feats ?? '') && /VerbForm=Fin/.test(nlp?.tokens[i]?.feats ?? '')   // PV-8b: finite past verb (Stanza ORV feats, model output)
+      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${past ? 'P' : ''}|${raw}`
       let x = typeIdx.get(k)
-      if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate }); typeCount.push(0) }
+      if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate, ...(past ? { past } : {}) }); typeCount.push(0) }
       if (!w.noFreq) typeCount[x]!++
       a[i] = x
     })

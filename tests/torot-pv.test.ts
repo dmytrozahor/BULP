@@ -9,7 +9,7 @@ import { TorotScan, bucketOf } from '../core/torot.ts'
 import { lightIndex, scanTorot, torotReport } from '../pipelines/build-torot.ts'
 import { textShard } from '../pipelines/build-texts.ts'
 import { rowRef, type Row } from '../src/lib/witnessText.ts'
-import { oesVariants, oesFoldById } from '../core/oes-folds.ts'
+import { oesVariants, oesFoldById, oesPast } from '../core/oes-folds.ts'
 import { makeRouter } from '../src/router.ts'
 
 const XML = `<sentence id="9001"><token id="1" form="киевѣ" citation-part="0.3" lemma="кыевъ" part-of-speech="Ne" morphology="-s---ml--i"/><token id="2" form="ѿ" citation-part="0.3" lemma="отъ" part-of-speech="R-" morphology="---------n"/><token id="3" form="хоумъ" citation-part="0.4" lemma="хоумъ" part-of-speech="Nb" morphology="-s---mn--i"/></sentence>`
@@ -70,5 +70,12 @@ describe('SPEC 63 PV', () => {
     const s = new TorotScan(), m = { raw: 'Моисѣомъ', loc: 'a', lemma: 'моисеи', morph: 'PROPN Case=Ins' }
     expect(bucketOf(m, false)).toBe('name'); expect(s.add('name', 'ilarion', m, { model: true })).toBe('n:моисеи')
     expect(s.names.get('моисеи')).toMatchObject({ model: true, pos: 'PROPN (Stanza ORV, модель)' })
+  })
+  it('PV-8b cited OES endings: gen. -аго, long -ыи, aorist / imperfect with stem agreement and the quoted sources in research/37', () => {
+    expect(oesVariants('рускаго').map(v => v.form)).toContain('руского'); expect(oesVariants('добрыи').map(v => v.form)).toContain('добрий')
+    expect(oesPast('отиде', 'отъити')).toMatchObject({ tense: 'aorist', id: 'OES-AOR' }); expect(oesPast('быхомъ', 'быти')).toMatchObject({ tense: 'aorist' })
+    expect(oesPast('писаше', 'писати')).toMatchObject({ tense: 'imperfect', id: 'OES-IMPF' }); expect(oesPast('столъ', 'отъити')).toBeUndefined()
+    const md = readFileSync('research/37-oes-morphology.md', 'utf8')
+    for (const q of [oesFoldById['OES-GEN-AGO']!.cite.quote, oesFoldById['OES-LONG-YI']!.cite.quote, 'знахъ | знахомъ', 'писахъ, писаше, писаховѣ, писахомъ, писаху']) expect(md.includes(q.slice(0, 40)), q.slice(0, 40)).toBe(true)
   })
 })

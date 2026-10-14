@@ -14,6 +14,7 @@ import { key } from '../core/text.ts'
 import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
 import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
+import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 
@@ -22,7 +23,7 @@ export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
+export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string; past?: boolean }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
@@ -106,7 +107,12 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
   }
   if (t.lemma) { const opts = viaLemma(t.lemma); if (opts.length) return { route: 'torot-lemma', opts } }
   // BL-19: a model lemma is accepted only if corroborated: the token's own derived form is a VESUM form of that lemma
-  if (t.stanza) { const opts = viaLemma(t.stanza).filter(o => o.ownConfirmed); if (opts.length) return { route: 'stanza-lemma', opts } }
+  if (t.stanza) {
+    // PV-8b: the model lemma of a finite PAST verb is also corroborated by a cited aorist / imperfect ending + matching stem (core/oes-folds.ts oesPast); the tense is recorded as a trace step
+    const past = t.past ? oesPast(t.raw, t.stanza) : undefined
+    const opts = viaLemma(t.stanza).flatMap(o => o.ownConfirmed ? [o] : past && o.cls === 'verb' ? [{ ...o, own: { ...o.own, trace: [...o.own.trace, past.id], branches: o.own.branches + 1 } }] : [])
+    if (opts.length) return { route: 'stanza-lemma', opts }
+  }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza && correspondenceFor(key(t.raw))) {   // un-lemmatised witness (Sophia): the same cited suppletive correspondence applies to the raw form
     const opts = viaLemma(key(t.raw)); if (opts.length) return { route: 'token', opts }
   }
