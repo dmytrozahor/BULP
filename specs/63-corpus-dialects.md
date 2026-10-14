@@ -15,3 +15,11 @@ Rules: SPEC 00 (evidence; P-2 author vetting; language gate), trunk `mvp`, path-
   - **DL-3** Dated rows (Shevelov ch. 8): `earliest` + Q dating cite; new groups HUT, SYAN, PKB, VOL, SLB, STP are gated by `DIALECT_GROUP_FROM`.
   - **DL-4** Lexical dialectisms (core/dialect-lex.ts, research/31 §3): word → gloss → dialect, one verbatim [Q] and locator per entry, cite-only; Polissian priority (Arkushin WPL, Lysenko MPL+CHN, ЕУМ).
   - **DL-5** Sources, access conditions (robots.txt, licences) and rejected sources are logged in research/31 §1 (manual).
+
+## AC — automatic classification (user 2026-10-14: *"You ought not to manually classify everything it should be automatic"*)
+Labels (dialect, region, surzhyk/contact, usage/register, archaism, POS) are produced by code from what the sources already say, never by hand-curated word lists. Hand lists survive only as test fixtures and seeds for evaluation.
+- **AC-1** Label extraction: every ingested dictionary witness (Грінченко, Уманець–Спілка, Ніковський, ЕУМ, dialect dictionaries, uk.wiktionary, r2u) is parsed for its own label abbreviations («діал.», «розм.», «заст.», «рідко», «пол.», «рос.», «гал.», «волин.», region names…) through one abbreviation table per source (taken from the source's list of abbreviations, cited) → claims {label, source, verbatim quote, locator}. No label without such a quote.
+- **AC-2** Region → dialect group mapping is computed from a cited gazetteer (research/04 areas; place/region name → group), not assigned per word.
+- **AC-3** Surzhyk/contact: computed from r2u Russian→Ukrainian pairs + VESUM/pymorphy3-ru membership (form ∉ VESUM ∧ ∈ ru dictionary ∧ r2u gives a Ukrainian equivalent) with the r2u quote; no manual lists.
+- **AC-4** Phonetic dialect markers stay rule-based (DIALECT_RULES) but rule rows are generated from the dialectology sources' feature tables where machine-readable; every lemma's labels are recomputed on each build.
+- **AC-5** Report: per label type coverage before/after, precision on the hand fixtures (old manual lists), in analysis/auto-classification.md.
