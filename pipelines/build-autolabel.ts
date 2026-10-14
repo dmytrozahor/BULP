@@ -62,7 +62,7 @@ export async function buildAutoLabels(root: string, lemmas: string[]): Promise<A
   const want = new Map(lemmas.map(l => [key(l), l])), dialect = new Map<string, Record<string, Claim<true>>>(), ruPairs = new Map<string, R2uPair[]>()
   let r2uRows = 0, r2uLabelled = 0
   if (existsSync(resolve(root, R2U_DIR, 'index.jsonl'))) {
-    const { rows } = storedRows(resolve(root, R2U_DIR))
+    const { rows } = storedRows(resolve(root, R2U_DIR), 'pages/')   // the open dump: pages/<file>.html.gz beside index.jsonl
     r2uRows = rows.length
     for (const r of rows) {
       const d = r2uDictById[r.dict]; if (!d) continue

@@ -23,14 +23,16 @@ export interface StoredRow extends R2uRow { q: string; scope: string }
 export interface RowsFile { format: 1; lookups: number; /** lemmas looked up (scope ukr): a looked-up lemma that the dictionaries know is kept as a dictionary headword even at corpus f < 2 (build.ts) */ queried: string[]; rows: StoredRow[] }
 
 /** Every distinct article (dict + row id) found by the cached lookups, in lookup order. */
-export function storedRows(dir = R2U_DIR): { rows: StoredRow[]; lookups: number; queried: string[] } {
+/** `pagesSub`: sub-folder of the page files relative to `dir` (the open dump keeps them in «pages/», SPEC 63 AC reads it that way; the witness ingester keeps the default ''). */
+export function storedRows(dir = R2U_DIR, pagesSub = ''): { rows: StoredRow[]; lookups: number; queried: string[] } {
   const seen = new Set<string>(), rows: StoredRow[] = []
   let lookups = 0; const queried = new Set<string>()
   const index = dir === R2U_DIR ? readIndex() : readFileSync(`${dir}/index.jsonl`, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l))
   for (const l of index) {
-    if (l.status !== 200 || !existsSync(`${dir}/${l.file}`)) continue
+    const path = `${dir}/${pagesSub}${l.file}`
+    if (l.status !== 200 || !existsSync(path)) continue
     lookups++; if (l.scope === 'ukr') queried.add(l.q)
-    for (const r of parseSearch(gunzipSync(readFileSync(`${dir}/${l.file}`)).toString('utf8'))) {
+    for (const r of parseSearch(gunzipSync(readFileSync(path)).toString('utf8'))) {
       const k = `${r.dict}_${r.rowId}`
       if (!seen.has(k)) { seen.add(k); rows.push({ ...r, q: l.q, scope: l.scope }) }
     }
