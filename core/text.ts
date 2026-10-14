@@ -55,9 +55,18 @@ const TITLO: [string, string][] = [
   ['агг', 'ангел'], ['анг', 'ангел'], ['дв', 'дѣв'], ['кнз', 'кънѧз'], ['мсц', 'мѣсѧц'], ['слнц', 'сълньц'], ['влдк', 'владык'], ['пррк', 'пророк'],
   ['крст', 'крьст'], ['грд', 'град'], ['днсь', 'дьньсь'],
 ]
+// SPEC 63 PV-7: rows added for the Archangel Gospel 1092 (рства, двдъ); they extend the research/03 §5 seed with the same nomina-sacra mechanism and
+// stay hypotheses — an expansion becomes a link only if VESUM lists the modern form (build-link.ts). No verbatim palaeography quote is held for these two rows (SPEC 00: provisional).
+TITLO.unshift(['рств', 'рождьств'], ['двд', 'давид'])
+/** PV-7: the same contractions as printed WITHOUT a titlo (vira.ukr page text drops the mark). Whole-word match only; «сна/снъ» is omitted on purpose: сна = gen. of сон (homograph). */
+const NOMINA_BARE = new Set(['ісъ', 'исъ', 'хсъ', 'хва', 'цръ', 'рства', 'двдъ', 'бгъ', 'гдь', 'бжіи', 'гдн'])
 const TITLO_MARK = /[҃ⷠ-ⷿ]/
 export function expandTitlo(word: string): { word: string; expanded?: string } {
-  if (!TITLO_MARK.test(word)) return { word }
+  if (!TITLO_MARK.test(word)) {
+    const b = word.normalize('NFC').toLowerCase()
+    const hit = NOMINA_BARE.has(b) ? TITLO.find(([abbr]) => b.startsWith(abbr) && b.length <= abbr.length + 4) : undefined
+    return hit ? { word: hit[1] + b.slice(hit[0].length), expanded: hit[0] } : { word }
+  }
   const bare = stripMarks(word)
   const hit = TITLO.find(([abbr]) => bare.startsWith(abbr) && bare.length <= abbr.length + 4)
   return hit ? { word: hit[1] + bare.slice(hit[0].length), expanded: hit[0] } : { word: bare }

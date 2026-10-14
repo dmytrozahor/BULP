@@ -10,7 +10,7 @@ import { isOldForm } from '../lib/nav.ts'
 import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
-import { findLoc, loadTokens, rowsOf, type Tok } from '../lib/witnessText.ts'
+import { findLoc, loadTokens, rowRef, rowsOf, type Tok } from '../lib/witnessText.ts'
 import { epochTo, witnessTo, wordTo }  from '../lib/nav.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
@@ -86,7 +86,8 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
       </nav>
       <p class="reader" style="font-family:var(--serif);line-height:2">
         <template v-for="(t, i) in rows" :key="i">
-          <RouterLink v-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
+          <RouterLink v-if="rowRef(t)" :class="['tok', 'attested', { hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="rowRef(t)!" :title="`${t.loc} · ${t.ref}`">{{ t.raw }}</RouterLink>
+          <RouterLink v-else-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
           <RouterLink v-else class="tok unknown" :class="{ hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}
         </template>
       </p>

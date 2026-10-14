@@ -7,14 +7,15 @@ import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { WitnessOut } from '../core/types.ts'
 
-export interface TextShard { id: string; tokens: [string, string, number][] }
-export const textShard = (w: Pick<WitnessOut, 'id' | 'tokens'>): TextShard => ({ id: w.id, tokens: w.tokens.map(t => [t.raw, t.loc, t.s]) })
+/** PV: optional 4th column = TOROT-based reference of the token: 'n:<name id>' (/name/:id), 'o:<orv lemma id>' (/orv/:id), 'w:<modern lemma>' (/w/:lemma); absent for other witnesses */
+export interface TextShard { id: string; tokens: ([string, string, number] | [string, string, number, string])[] }
+export const textShard = (w: Pick<WitnessOut, 'id' | 'tokens'>, refs?: string[]): TextShard => ({ id: w.id, tokens: w.tokens.map((t, i) => (refs?.[i] ? [t.raw, t.loc, t.s, refs[i]!] : [t.raw, t.loc, t.s])) })
 
 /** Writes one file per witness into `<pub>/texts` (replacing the directory); returns total bytes. */
-export function writeTexts(ws: Pick<WitnessOut, 'id' | 'tokens'>[], pub: string): number {
+export function writeTexts(ws: Pick<WitnessOut, 'id' | 'tokens'>[], pub: string, refs?: Map<string, string[]>): number {
   const dir = resolve(pub, 'texts'); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true })
   let bytes = 0
-  for (const w of ws) { const s = JSON.stringify(textShard(w)); bytes += Buffer.byteLength(s); writeFileSync(resolve(dir, `${w.id}.json`), s) }
+  for (const w of ws) { const s = JSON.stringify(textShard(w, refs?.get(w.id))); bytes += Buffer.byteLength(s); writeFileSync(resolve(dir, `${w.id}.json`), s) }
   return bytes
 }
 

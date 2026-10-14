@@ -1,0 +1,11 @@
+{
+ "note": "strict VESUM-linked token counts per witness before SPEC 63 PV (public/data/corpus.json of 2026-10-14; arch/o18_26 = build with PV-1..5 only, whose strict link is unchanged)",
+ "linked": {
+  "ostromir": 122,
+  "kiev-mis": 226,
+  "pvl_lav": 35635,
+  "spi": 1769,
+  "arch": 31627,
+  "o18_26": 6012
+ }
+}

@@ -1,8 +1,17 @@
 /** Running text of a witness (public/data/texts/<id>.json = { tokens: [raw, loc, s][] }) + annotation of a token slice; shared by /texts and the /witness card. */
 import { annotate, type AnnotateData } from './annotate.ts'
 
-export type Tok = [string, string, string | boolean]
-export interface Row { raw: string; loc: string; sep: string; lemma?: string; form?: string; status: string; provenance?: string }
+export type Tok = [string, string, string | boolean, string?]   // 4th = SPEC 63 PV ref ('n:' name card, 'o:' ORV-only card, 'l:' light card, 'w:' word card)
+export interface Row { raw: string; loc: string; sep: string; lemma?: string; form?: string; status: string; provenance?: string; ref?: string }
+/** PV: in-site target of a token's ref. Name / ORV-only cards win; a light (KEEP_MIN_F-dropped) or word ref only fills a token the lexicon did not link. */
+export function rowRef(r: Row): string | undefined {
+  const x = r.ref; if (!x) return undefined
+  const id = encodeURIComponent(x.slice(2))
+  if (x.startsWith('n:')) return `/name/${id}`
+  if (x.startsWith('o:')) return `/orv/${id}`
+  if (r.lemma) return undefined
+  return x.startsWith('l:') ? `/lw/${id}` : x.startsWith('w:') ? `/w/${id}` : undefined
+}
 
 export async function loadTokens(id: string): Promise<Tok[] | null> {
   try {
@@ -14,9 +23,9 @@ export async function loadTokens(id: string): Promise<Tok[] | null> {
 }
 
 export function rowsOf(toks: Tok[], from: number, to: number, data: AnnotateData): Row[] {
-  return toks.slice(from, to).map(([raw, loc, s]) => {
+  return toks.slice(from, to).map(([raw, loc, s, ref]) => {
     const a = annotate(raw, data)[0]
-    return { raw, loc, sep: typeof s === 'string' ? s : s === false ? '' : ' ', lemma: a?.lemma, form: a?.form?.raw, status: a?.status ?? 'unknown', provenance: a?.provenance }
+    return { raw, loc, ref, sep: typeof s === 'string' ? s : s === false ? '' : ' ', lemma: a?.lemma, form: a?.form?.raw, status: a?.status ?? 'unknown', provenance: a?.provenance }
   })
 }
 

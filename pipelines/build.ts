@@ -39,6 +39,7 @@ import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
+import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
 import { corrEvidence } from '../core/correspondences.ts'
@@ -269,6 +270,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
   })
   const NL = [...wLinked.values()].reduce((a, b) => a + b, 0), unresolved = sizes.N - NL
   lap(`linked ${NL}/${sizes.N} tokens (${(100 * NL / sizes.N).toFixed(1)}%), ${lemmaList.length} lemmas`)
+  // SPEC 63 PV: TOROT witnesses — every token with a TOROT lemma is linked, a name (Ne) or an ORV-only card; strict VESUM link unchanged
+  const torot = scanTorot(adm.flatMap(({ w }, wi) => w.lang !== 'uk' && w.tokens.some(t => t.lemma) ? [{
+    w, ids: docs[wi]!.id,
+    reasonOf: (ti: number) => { const x = tix[wi]![ti]!, t = types[x]!; return opts1[x] ? 'POS agreement (FX-3)' : linkOptions({ ...t, gate: undefined }, env) ? `POS gate (TOROT ${t.gate})` : 'no VESUM-attested fold/derivation candidate' },
+    lemmaOf: (i: number) => lemmaList[i]!,
+  }] : []), new Date().toISOString())
+  lap(`TOROT: ${torot.file.names.length} name cards, ${torot.file.orv.length} ORV-only cards`)
 
   const fMax = Math.max(...lemmaList.map(l => l.f))
   // CX budget: lemmas attested only in later (post-1400, non-dictionary) texts must reach KEEP_MIN_F tokens; the 15 MiB core limit (B-5a) is held by this threshold, never by dropping fields
@@ -277,6 +285,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
   if (process.env['HIST_ONLY']) process.exit(0)
   const kept = lemmaList.filter(l => l.f >= KEEP_MIN_F || l.pre1400 || l.dict)
   const keep = new Uint8Array(lemmaList.length); kept.forEach(l => (keep[l.idx] = 1))
+  // SPEC 63 PV-6: lemmas dropped by KEEP_MIN_F still get a light card (/lw/:lemma): the text shards reference them as 'l:<lemma>'
+  const light = lightIndex(adm.map(({ w }) => w), docs.map(d => d.id), lemmaList, keep)
+  for (const [wid, r] of light.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
+  lap(`light cards: ${light.file.lemmas.length} lemmas dropped by KEEP_MIN_F`)
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)
   lap(`${kept.length} lemmas kept (f ≥ 2, pre-1400 or dictionary headword); collocations for ${coll.size}`)
@@ -458,7 +470,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lexIdxJson = JSON.stringify(lexindex)
   const budget = writeLexicon(cards, PUB)   // B-5: core + detail shards, nothing dropped
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
-  lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
+  lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB, torot.refs) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
+  writeFileSync(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeFileSync(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
+    [['arch', 'PV-7 Архангельське Євангеліє 1092'], ['o18_26', 'PV-6 Прокопович «Владимир» 1705']].flatMap(([id, what]) => { const x = adm.findIndex(a => a.w.id === id); return x < 0 ? [] : [{ id: id!, what: what!, n: adm[x]!.w.tokens.length, linked: wLinked.get(id!) ?? 0 }] }))
   writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
   {   // NP-2: toponym gazetteer + spelling-variant clusters over every capitalised token of the admitted witnesses
     const scan = new PlaceScan(); for (const { w } of adm) for (const t of w.tokens) scan.add(w, t)

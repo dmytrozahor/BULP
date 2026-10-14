@@ -262,3 +262,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SL-4 | tests/sociolect.test.ts › Plast headwords get the «пластова лексика» badge, computed from the entry (stress/case-insensitive), evidence = the quote |
 | SL-4 | tests/sociolect.test.ts › VESUM presence/absence is reported; unchecked words give null |
 | SL-4 | tests/sociolect.test.ts › badges render on word and form pages through ClaimBadge (evidence popover → /source card); sources are registered |
+| PV-1 | tests/torot-pv.test.ts › PV-1 TOROT lemma, POS+morphology and citation-part are the token annotation |
+| PV-2 | tests/torot-pv.test.ts › PV-2 ORV folds are the existing cited tables |
+| PV-3 | tests/torot-pv.test.ts › PV-3 Ne tokens become name cards (/name/:id) |
+| PV-4 | tests/torot-pv.test.ts › PV-4 per-witness report: link % before/after and top-50 unlinked lemmas with reasons |
+| PV-5 | tests/torot-pv.test.ts › PV-5 ORV-only lemma gets a card (/orv/:id) |
+| PV-6 | tests/torot-pv.test.ts › PV-6 lemmas dropped by KEEP_MIN_F get a light card /lw/:lemma |
+| PV-7 | tests/torot-pv.test.ts › PV-7 nomina sacra expand with or without titlo |
