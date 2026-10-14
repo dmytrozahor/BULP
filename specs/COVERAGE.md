@@ -314,3 +314,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NV-2 | tests/pagination.test.ts › NV-2 a spelling the lexicon attests → /f/:form?lemma= |
 | NV-2 | tests/pagination.test.ts › NV-2 a rare VESUM lemma → /lw/:lemma, anything else → /f/:form (never a dead end) |
 | NV-2 | tests/pagination.test.ts › NV-2 «Аналіз слова» links the input, the normalised form, each candidate and each chain stage |
+| OR-1 | tests/ocirc.test.ts › OR-1 research and evidence of every reading › OR-1 research/36 exists and answers the user hypothesis (у, ю, ü) with sources and the unknowns |
+| OR-1 | tests/ocirc.test.ts › OR-1 research and evidence of every reading › OR-1 every reading carries verbatim evidence (quote ≤ 300 chars, locator, kind Q) and a period; ю is not an ô reading |
+| OR-1 | tests/ocirc.test.ts › OR-1 research and evidence of every reading › OR-1 the regions are dialect codes of the IPA machinery (or GAL = orthography) |
+| OR-2 | tests/ocirc.test.ts › OR-2 possible readings and IPA variants › OR-2 ô is recognised in precomposed and combining form; plain words have none |
+| OR-2 | tests/ocirc.test.ts › OR-2 possible readings and IPA variants › OR-2 пôшовъ gets the readings і, у, ü, уо, и, ы each with its spelling and derived IPA; no ê readings |
+| OR-2 | tests/ocirc.test.ts › OR-2 possible readings and IPA variants › OR-2 ê spellings get the ê readings including the [ʲу] one (матêрью → і / іе / ю) |
+| OR-2 | tests/ocirc.test.ts › OR-2 possible readings and IPA variants › OR-2 the form page lists the panel and the picker only for ô/ê spellings |
+| OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 пôшовъ: ô → о, branches south (о·, у, ü, і) and north (о·, уо, уі, і), reconstruction not attested |
+| OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 ê → е chains; spellings without ô/ê have no branches; renderReading keeps other Maksymovych folds |
