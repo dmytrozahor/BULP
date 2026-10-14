@@ -181,3 +181,15 @@ describe('DL-7 Залеський 1973 / Шило 1957: access log, no unverifia
     expect(cites.filter(s => /ZALES|SHYLO|ZALESKYI/i.test(String(s)))).toEqual([])
   })
 })
+
+describe('DL-8 Лукашенко–Похилевич 2006 (Північне Підляшшя): access log, nothing ingested from an unread copyrighted book', () => {
+  it('the access route and the owner decision are logged, and the target region is a real MP territory', () => {
+    const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+    for (const k of ['**DL-8**', 'Традиційні пісні українців північного Підляшшя', 'Камула', 'drive.google.com', 'pidliashshia']) expect(log, k).toContain(k)
+    expect(territoryById.pidliashshia!.code).toBe('HT-pidliashshia')
+  })
+  it('no lexical entry or rule cites the edition (it was not read)', () => {
+    expect(DIALECT_LEX.filter(e => /LUKASH|POKHYL|PIDLIASH/i.test(e.src))).toEqual([])
+    expect(DIALECT_BOOK_RULES.filter(r => /LUKASH|POKHYL|PIDLIASH/i.test(String(r.cite?.source)))).toEqual([])
+  })
+})
