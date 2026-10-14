@@ -55,6 +55,8 @@ export const SOURCES: Record<string, Source> = {
   SOPHIA: { title: 'Saint Sophia’s Inscriptions — University of Gothenburg & НЗ «Софія Київська» (saintsophia.dh.gu.se, API)', url: 'https://saintsophia.dh.gu.se/', license: 'зображення CC BY-NC; ліцензія тексту транскрипцій порталом не вказана (див. licenceNote)' },
   ESUS:   { title: 'Енциклопедія сучасної України, т. 3 (2004), стаття «Бойківський говір» (Радевич-Винницький Я. К.)', url: 'https://esu.com.ua/article-36048', year: '2004' },
   LEMKO:  { title: 'Лемківський Словничок (lemko.org; укладачів не названо — самоідентифікацію авторів не перевірено, P-2)', url: 'https://lemko.org/lemko2/slovnyk.html' },
+  IEU:    { title: 'Internet Encyclopedia of Ukraine (CIUS; Encyclopedia of Ukraine, 1984–93, updated 2018–19; Енциклопедія українознавства)', url: 'https://www.encyclopediaofukraine.com', year: '1993' },
+  NATEARTH: { title: 'Natural Earth 10m admin-1 states/provinces (public domain)', url: 'https://www.naturalearthdata.com/about/terms-of-use/', license: 'public domain' },
   SYNYAV: { title: 'Синявський О. Норми української літературної мови, 1941 (розд. 5 «Займенник», r2u.org.ua)', url: 'https://r2u.org.ua/guides/synyavsky/slovozmina_zaymennyk', year: '1941' },
   GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
   ARKUSHYN: { title: 'Аркушин Г. Л. Словник західнополіських говірок. У 2 т. Луцьк: Вежа, 2000 (скан: archive.org slzhdplhv; цитування, один заголовок + уривок тлумачення)', url: 'https://archive.org/details/slzhdplhv', year: '2000' },

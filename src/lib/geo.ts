@@ -6,7 +6,8 @@ import type { CorpusMeta, LemmaStats } from '../../core/types.ts'
 
 export interface GeoFeature { properties: { code: string; name: string }; geometry: { type: 'Polygon' | 'MultiPolygon'; coordinates: number[][][] | number[][][][] } }
 export interface Geo { attribution: string; features: GeoFeature[] }
-export const LON0 = 22, LON1 = 40.4, LAT0 = 44.2, LAT1 = 52.5, KX = Math.cos((48.3 * Math.PI) / 180)
+/** MP-1: the frame covers Ukraine and the historical territories (Пряшівщина 19.9°E … Кубань 41.7°E; Сочі 43.4°N … Підляшшя/Берестейщина 53.1°N). */
+export const LON0 = 19.8, LON1 = 42.3, LAT0 = 43.2, LAT1 = 53.2, KX = Math.cos((48.3 * Math.PI) / 180)
 export const VIEW = { w: Math.round((LON1 - LON0) * KX * 40), h: Math.round((LAT1 - LAT0) * 40) }
 const px = (lon: number, lat: number) => `${(((lon - LON0) / (LON1 - LON0)) * VIEW.w).toFixed(1)},${(((LAT1 - lat) / (LAT1 - LAT0)) * VIEW.h).toFixed(1)}`
 export function pathOf(f: GeoFeature): string {
@@ -16,6 +17,29 @@ export function pathOf(f: GeoFeature): string {
 
 let geo: Promise<Geo> | undefined
 export const loadGeo = () => (geo ??= fetch('./geo/ukr-oblasts.json').then(r => { if (!r.ok) throw new Error(`ukr-oblasts.json: HTTP ${r.status}`); return r.json() as Promise<Geo> }))
+
+/** MP-1: public/geo/historical.json — historical Ukrainian territories (core/territories.ts), Natural Earth (public domain) units, simplified. */
+export interface HistGeo extends Geo { licence: string }
+let hist: Promise<HistGeo> | undefined
+export const loadHistorical = () => (hist ??= fetch('./geo/historical.json').then(r => { if (!r.ok) throw new Error(`historical.json: HTTP ${r.status}`); return r.json() as Promise<HistGeo> }))
+
+/** MP-3 pan/zoom: the visible window of the SVG in view units; zoom 1 = the whole frame. */
+export interface ViewBox { x: number; y: number; w: number; h: number }
+export const FULL: ViewBox = { x: 0, y: 0, w: VIEW.w, h: VIEW.h }
+export const MAX_ZOOM = 8
+export const zoomOf = (v: ViewBox) => VIEW.w / v.w
+/** Keep the window inside the frame. */
+export function clampView(v: ViewBox): ViewBox {
+  const w = Math.min(VIEW.w, Math.max(VIEW.w / MAX_ZOOM, v.w)), h = w * (VIEW.h / VIEW.w)
+  return { x: Math.min(VIEW.w - w, Math.max(0, v.x)), y: Math.min(VIEW.h - h, Math.max(0, v.y)), w, h }
+}
+/** Zoom by `factor` (>1 in) keeping the view point (px, py) fixed on screen. */
+export function zoomAt(v: ViewBox, factor: number, px: number, py: number): ViewBox {
+  const w = v.w / factor, h = v.h / factor
+  return clampView({ x: px - ((px - v.x) / v.w) * w, y: py - ((py - v.y) / v.h) * h, w, h })
+}
+/** Pan by a delta in view units. */
+export const panBy = (v: ViewBox, dx: number, dy: number): ViewBox => clampView({ ...v, x: v.x + dx, y: v.y + dy })
 
 export interface RegionRow { code: string; name: string; oblasts: string[]; f: number; N: number; ipm: number | undefined }
 /** byRegion × corpus.regions → rows with ipm = f/N·10⁶ (P-1.6: N always kept); a region without tokens has ipm undefined = unknown, never 0. */

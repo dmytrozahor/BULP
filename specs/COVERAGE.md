@@ -354,3 +354,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LA-4 | tests/loan-adapt.test.ts › -ація still wins over -ція; every new rule has quote, locator and registered source |
 | LA-4 | tests/loan-adapt.test.ts › agentive -ер fires only when the stem is itself a word (ліфтер yes, тепер no) |
 | LA-4 | tests/loan-adapt.test.ts › no calque equivalent is asserted without a dictionary row (застосовність for аплікабельність has none) |
+| MP-1 | tests/territories.test.ts › MP-1 every territory named in the spec is present with ≥ 1 verbatim IEU quote and a locator; unseen ones are reported, not guessed |
+| MP-1 | tests/territories.test.ts › MP-1 historical.json: every territory has an outline inside the map frame, the Natural Earth licence is noted, the file is small |
+| MP-1 | tests/territories.test.ts › MP-1 Кубань lies east of the Azov Sea and Берестейщина west of 28°E; Кубань reaches the frame the ukr-oblasts layer does not |
+| MP-2 | tests/territories.test.ts › MP-2 each territory is a REGIONS row (polygon code in oblasts) and a witness region string matches it |
+| MP-2 | tests/territories.test.ts › MP-2 dialect group only through the AC gazetteer and only where a source states the area: Берестейщина → WPL, Лемківщина → LEM, Білгородщина/Воронежчина → SLB; Кубань, Курщина unknown |
+| MP-2 | tests/territories.test.ts › MP-2 drawn dashed with the label «історична українська територія», source on tap; legend explains modern vs historical borders |
+| MP-3 | tests/territories.test.ts › MP-3 no hard-coded colours in MapView / RegionMap; map tokens exist for light and dark |
+| MP-3 | tests/territories.test.ts › MP-3 zoom keeps the pointed place fixed, clamps to the frame, pans and resets |
+| MP-3 | tests/territories.test.ts › MP-3 360 px: touch targets ≥ 44 px, page scrolls at zoom 1 (touch-action: pan-y) and the map takes the gesture once zoomed; pinch, drag, wheel and keys are wired |
