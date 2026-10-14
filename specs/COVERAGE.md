@@ -365,3 +365,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MP-3 | tests/territories.test.ts › MP-3 no hard-coded colours in MapView / RegionMap; map tokens exist for light and dark |
 | MP-3 | tests/territories.test.ts › MP-3 zoom keeps the pointed place fixed, clamps to the frame, pans and resets |
 | MP-3 | tests/territories.test.ts › MP-3 360 px: touch targets ≥ 44 px, page scrolls at zoom 1 (touch-action: pan-y) and the map takes the gesture once zoomed; pinch, drag, wheel and keys are wired |
+| MD-1 | tests/modern.test.ts › covers every candidate source named in the spec with a decision, and separates allowed from owner-decision |
+| MD-1 | tests/modern.test.ts › quotes the access terms (robots / ToS / licence) and says how each item is dated |
+| MD-1 | tests/modern.test.ts › nothing from section (b) is fetched by the pipelines |
+| MD-2 | tests/modern.test.ts › a candidate needs f ≥ 3, ≥ 2 sources and absence from VESUM |
+| MD-2 | tests/modern.test.ts › witnesses are typed (web / social / slang-dictionary) and dated: HPLT crawl month, Wiktionary entry month, UberText unknown |
+| MD-2 | tests/modern.test.ts › LA types the candidate: сторітелінг fires the cited -інг rule; no hand list |
+| MD-2 | tests/modern.test.ts › vocabulary only: an entry holds counters, dates and locators, never running text or URLs of pages |
+| MD-2 | tests/modern.test.ts › uk.wiktionary categories and the gloss extractor: first «#» line, markup stripped, ≤ 160 chars |
+| MD-2 | tests/modern.test.ts › real data: candidates satisfy the thresholds, dates are YYYY-MM, sources are registered |
+| MD-3 | tests/modern.test.ts › «сучасний сленг», «ІТ-жаргон» and «неологізм (з року)» with the first-attestation date and a claim with evidence |
+| MD-3 | tests/modern.test.ts › an unlisted word has no badge; a corpus-only unknown date is stated, not invented |
+| MD-3 | tests/modern.test.ts › the date kind is spelled out: crawl is not publication, entry is not first use |
+| MD-3 | tests/modern.test.ts › the report counts distinct words per source and per first-attestation year |
+| MD-3 | tests/modern.test.ts › the badges are wired into the word and form pages |

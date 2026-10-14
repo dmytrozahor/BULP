@@ -41,6 +41,7 @@ import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
+import ModernBadges from '../components/ModernBadges.vue'
 import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
 import CognatesPanel from '../components/CognatesPanel.vue'
@@ -249,7 +250,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
               <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
             <div v-if="bankForms.length"><BankChip :forms="bankForms" /></div>
-            <div><UsageChips :lemma="card.lemma" label /> <SociolectBadges :word="card.lemma" /></div>
+            <div><UsageChips :lemma="card.lemma" label /> <SociolectBadges :word="card.lemma" /> <ModernBadges :word="card.lemma" /></div>
       <LoanAdaptBlock :word="card.lemma" />
             <div><LoanChip :word="card.lemma" /></div>
           </div>

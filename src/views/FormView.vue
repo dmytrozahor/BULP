@@ -12,6 +12,7 @@ import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
+import ModernBadges from '../components/ModernBadges.vue'
 import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import DialectBlock from '../components/DialectBlock.vue'
@@ -92,7 +93,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
   <template v-else>
     <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
-      <SociolectBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
+      <SociolectBadges :word="pick.raw" /><ModernBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
