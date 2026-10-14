@@ -28,6 +28,9 @@ import HeteronymReadings from '../components/HeteronymReadings.vue'
 import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
 import { loanLabels } from '../lib/datasets.ts'
+import { analyzeTarget } from '../lib/analyze-links.ts'
+import { formTo } from '../lib/nav.ts'
+import { loadLight } from '../lib/torotData.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -51,6 +54,10 @@ const claimList = computed(() => allClaims.value.filter(([l]) => !parallelLabel(
 const parallelClaims = computed(() => Object.fromEntries(allClaims.value.filter(([l]) => parallelLabel(l))))
 const spans = computed(() => (word.value && loaded.value ? annotateSyntax(word.value, annData.value, y.value) : []))   // SPEC 60 SX-4
 const open = ref<string | null>(null)
+/** SPEC 63 NV-2: every form shown here leads to its page (/w, /lw or /f); the rare-lemma set loads lazily */
+const light = ref<ReadonlySet<string>>()
+loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
+const to = (form: string) => analyzeTarget(form, { lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value })
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
 
@@ -69,15 +76,17 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
   </template>
   <div v-if="!word" class="card muted">Введіть слово.</div>
   <template v-else-if="d && a">
-    <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: {{ d.norm }}</span></h2>
+    <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: <RouterLink :to="to(d.norm)" class="lang">{{ d.norm }}</RouterLink></span></h2>
+      <p class="sans small">Введена форма: <RouterLink :to="formTo(word)" class="lang">{{ word }}</RouterLink></p>
       <p v-if="inLex.length" class="sans small">У словнику: <span v-for="h in inLex" :key="h.lemma" style="margin-right:.6rem"><RouterLink :to="`/w/${encodeURIComponent(h.lemma)}`">{{ h.lemma }}</RouterLink> ({{ h.via }})</span></p>
       <ul style="list-style:none;padding:0;margin:0">
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
           <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
           <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
-          <RouterLink v-if="byLemma.has(c.form)" :to="`/w/${encodeURIComponent(c.form)}`" class="small sans"> → картка</RouterLink>
+          <RouterLink :to="to(c.form)" class="small sans"> → сторінка слова</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>
+          <div v-if="c.steps.length" class="small sans chain-links">ланцюг: <template v-for="(s, i) in c.steps" :key="'cl' + i"><RouterLink v-if="i === 0" :to="to(s.from)" class="lang">{{ s.from }}</RouterLink> → <RouterLink :to="to(s.to)" class="lang">{{ s.to }}</RouterLink> </template></div>
           <div v-else class="small muted sans">без змін (форма вже сучасна за цими правилами)</div>
           <ModernForms :mods="modOf(c.form)" />
           <template v-for="(s, i) in c.steps" :key="'e' + i"><div v-if="open === c.form + i" class="card" style="margin:.3rem 0"><EvidenceList :evidence="[ruleById[s.rule]!.cite]" /></div></template>

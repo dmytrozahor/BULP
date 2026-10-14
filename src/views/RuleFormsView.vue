@@ -7,10 +7,13 @@ import { useData } from '../composables/useData.ts'
 import { fmtNum } from '../lib/format.ts'
 import { formTo, ruleTo, wordTo } from '../lib/nav.ts'
 import EvidencePopover from '../components/EvidencePopover.vue'
+import Pagination from '../components/Pagination.vue'
+import { usePage } from '../composables/usePage.ts'
 const props = defineProps<{ rule: string }>()
 const { cards, loaded } = useData()
 const rows = computed(() => (loaded.value ? ruleForms(props.rule, cards.value) : []))
-const shown = computed(() => rows.value.slice(0, 500))
+const pg = usePage(computed(() => rows.value.length))   // SPEC 63 NV-1
+const shown = computed(() => pg.slice(rows.value))
 const rules = computed(() => { const r = dialectRule(props.rule); return r ? [r] : [] })
 </script>
 
@@ -30,6 +33,6 @@ const rules = computed(() => { const r = dialectRule(props.rule); return r ? [r]
       <li v-for="r in shown" :key="r.form + r.lemma"><RouterLink :to="formTo(r.form, r.lemma)" class="lang">{{ r.form }}</RouterLink>
         <span class="muted small"> ← <RouterLink :to="wordTo(r.lemma)">{{ r.lemma }}</RouterLink> · f {{ fmtNum(r.f) }}</span></li>
     </ul>
-    <p v-if="rows.length > shown.length" class="small muted sans">Показано перші {{ shown.length }} з {{ fmtNum(rows.length) }}.</p>
+    <Pagination :page="pg.page.value" :pages="pg.pages.value" :total="rows.length" @go="pg.go" />
   </template>
 </template>

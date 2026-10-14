@@ -305,3 +305,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | UI-2 | tests/ui-graph.test.ts › UI-2 axis ticks: 3–6 nice year ticks for any range (single year, 38 years, nine centuries), strictly increasing |
 | UI-1 | tests/ui-graph.test.ts › UI-1 panel summaries break at a word boundary with «…» and show in full as the tooltip; the CSS wraps them to 2 lines instead of cutting mid-word |
 | UI-2 | tests/ui-graph.test.ts › UI-2 chain graph fits: margins on both sides, every rule label fits its edge, the date line is inside the height, epoch rows use Ukrainian names |
+| NV-1 | tests/pagination.test.ts › NV-1 page size is 50 (KWIC 20) and slices are exact |
+| NV-1 | tests/pagination.test.ts › NV-1 ?p= is clamped: junk, zero, negative and too large fall back into 1..pages |
+| NV-1 | tests/pagination.test.ts › NV-1 the control window is «‹ 1 2 3 … 9 ›»: first, last and neighbours, gaps as … |
+| NV-1 | tests/pagination.test.ts › NV-1 every long list uses the shared Pagination and the page lives in the URL (?p=) |
+| NV-1 | tests/pagination.test.ts › NV-1 the pager is mobile-friendly: wraps in a row and the controls are buttons with aria labels |
+| NV-2 | tests/pagination.test.ts › NV-2 a lemma of the lexicon → /w/:lemma |
+| NV-2 | tests/pagination.test.ts › NV-2 a spelling the lexicon attests → /f/:form?lemma= |
+| NV-2 | tests/pagination.test.ts › NV-2 a rare VESUM lemma → /lw/:lemma, anything else → /f/:form (never a dead end) |
+| NV-2 | tests/pagination.test.ts › NV-2 «Аналіз слова» links the input, the normalised form, each candidate and each chain stage |

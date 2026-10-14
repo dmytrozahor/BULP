@@ -3,7 +3,9 @@
  * Instant search over lemmas AND every historical spelling / paradigm form (stress- and case-insensitive via core/text.ts key();
  * Old letters ѣ ъ ы ѧ accepted). Results: lemma, first-attestation year + author, dots barometer. Unknown → /analyze.
  */
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import Pagination from '../components/Pagination.vue'
+import { usePage } from '../composables/usePage.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { search } from '../lib/search.ts'
@@ -29,7 +31,9 @@ const keepFocus = (e: FocusEvent) => {
   if (e.relatedTarget || Date.now() - lastTap < 600) return
   setTimeout(() => { if (document.visibilityState === 'visible' && !document.activeElement?.closest('a,button,summary,select,textarea')) box.value?.focus({ preventScroll: true }) }, 80)
 }
-const shown = ref(300)   // F2: the full lemma list is paged, never rendered at once (thousands of nodes)
+/** SPEC 63 NV-1 (was F2 «показати ще»): results and the full lemma list are paged by `?p=`, never rendered at once */
+const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed(() => cards.value.length))
+watch(q, () => { if (route.query.p !== undefined) pgR.go(1) })
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
 </script>
 
@@ -44,7 +48,7 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
 
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
-    <li v-for="{ r, c, fa, who } in rows" :key="c.lemma">
+    <li v-for="{ r, c, fa, who } in pgR.slice(rows)" :key="c.lemma">
       <RouterLink :to="`/w/${encodeURIComponent(c.lemma)}`">
         <span class="lem">{{ c.lemma }}</span>
         <span class="muted small sans">{{ c.pos }}</span>
@@ -54,6 +58,7 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
         <Dots :dots="c.stats.dots" :ipm="c.stats.ipm" :hk="c.stats.hk" :f="c.stats.f" :N="corpus?.N" />
       </RouterLink>
     </li>
+    <li v-if="pgR.pages.value > 1" class="pagerli"><Pagination :page="pgR.page.value" :pages="pgR.pages.value" :total="rows.length" @go="pgR.go" /></li>
   </ul>
   <template v-else-if="q.trim() && loaded">
     <div class="card" role="status">
@@ -63,9 +68,9 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
     <AnalyzeView :embed="q.trim()" />
   </template>
   <div v-else-if="loaded" class="card">
-    <h2>Усі леми ({{ cards.length }}, показано {{ Math.min(shown, cards.length) }})</h2>
-    <div class="chips"><RouterLink v-for="c in cards.slice(0, shown)" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>
-    <button v-if="shown < cards.length" type="button" class="btn" style="margin-top:.6rem" @click="shown += 600">Показати ще ({{ cards.length - shown }})</button>
+    <h2>Усі леми ({{ cards.length }})</h2>
+    <div class="chips"><RouterLink v-for="c in pgL.slice(cards)" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>
+    <Pagination :page="pgL.page.value" :pages="pgL.pages.value" @go="pgL.go" />
     <p class="small muted sans" style="margin-top:.8rem">Спробуйте <a href="#/annotate">анотатор тексту</a> на прикладах із пам’яток корпусу.</p>
   </div>
 </template>

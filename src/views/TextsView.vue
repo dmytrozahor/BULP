@@ -16,6 +16,8 @@ import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
+import Pagination from '../components/Pagination.vue'
+import { usePage } from '../composables/usePage.ts'
 const PAGE_SIZE = 200
 const route = useRoute(), router = useRouter()
 const { corpus, loaded, annData, witnessById } = useData()
@@ -26,6 +28,9 @@ const epochs = computed(() => [...new Set(all.value.map(epochOf))])
 const authors = computed(() => [...new Set(all.value.map(w => w.author))].map(a => ({ id: a, name: authorInfo(a).name })))
 const regions = computed(() => [...new Set(all.value.map(w => w.region).filter(Boolean) as string[])])
 const list = computed(() => all.value.filter(w => (!ep.value || epochOf(w) === ep.value) && (!au.value || w.author === au.value) && (!rg.value || w.region === rg.value)))
+/** SPEC 63 NV-1: the witness list is paged (`?p=`, 50 per page; in the reader `?p=` stays the token page) */
+const lp = usePage(computed(() => list.value.length))
+watch([ep, au, rg], () => { if (route.query.p !== undefined && route.query.w === undefined) lp.go(1) })
 const cur = computed(() => witnessById.value.get(String(route.query.w ?? '')))
 const locQ = computed(() => String(route.query.loc ?? ''))
 /** BL-16: a locator in the URL (?loc=) opens the page that holds it unless ?p= says otherwise */
@@ -59,13 +64,14 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
       <span class="muted">{{ list.length }} із {{ all.length }}</span>
     </div>
     <ul class="witlist" style="list-style:none;padding:0">
-      <li v-for="w in list" :key="w.id" class="card" style="margin:.5rem 0">
+      <li v-for="w in lp.slice(list)" :key="w.id" class="card" style="margin:.5rem 0">
         <button type="button" class="chip" @click="open(w.id)"><strong>{{ w.title }}</strong></button> <RouterLink class="small sans" :to="witnessTo(w.id)">картка →</RouterLink>
         <div class="small sans"><AuthorBadge :author="w.author" :witness="w.id" /> · {{ fmtDate(w.date) }} · <RouterLink :to="epochTo(epochOf(w))">{{ epochShort(epochOf(w)) }}</RouterLink><template v-if="w.region"> · {{ w.region }}</template> · {{ LANG_UK[w.lang] }} · {{ fmtNum(w.n) }} слів
           · <a :href="w.url" target="_blank" rel="noopener">оригінал ↗</a></div>
         <div v-if="w.licenceNote" class="small sans muted" role="note">{{ w.licenceNote }}</div>
       </li>
     </ul>
+    <Pagination :page="lp.page.value" :pages="lp.pages.value" :total="list.length" @go="lp.go" />
   </template>
   <template v-else>
     <p><RouterLink to="/texts">← усі пам’ятки</RouterLink></p>

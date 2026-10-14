@@ -4,7 +4,9 @@ import { isOldForm } from '../lib/nav.ts'
  * research/07 §3.1: «KWIC rows use the format left context | **node** | right context with a monospace-aligned node, and a citation line
  * underneath (author, title, year, region, link). Offer … a filter by period.» P-1.6: statistics link to the concordance lines.
  */
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { KWIC_PAGE, pageCount, pageSlice } from '../lib/page.ts'
+import Pagination from './Pagination.vue'
 import type { Kwic } from '../../core/types.ts'
 import { assignEpoch } from '../../core/epochs.ts'
 import { isKnown } from '../../core/evidence.ts'
@@ -38,7 +40,11 @@ const epochOf = (k: Kwic) => { const a = assignEpoch(k.date, 'shev'); return isK
 const epochs = computed(() => [...new Set(props.lines.map(epochOf))])
 const sel = ref(''), all = ref(false)
 const shown = computed(() => props.lines.filter(k => !sel.value || epochOf(k) === sel.value).sort((a, b) => a.date[1] - b.date[1]))
-const view = computed(() => (all.value ? shown.value : shown.value.slice(0, props.limit ?? 5)))
+/** SPEC 63 NV-1: expanded, the concordance is paged by KWIC_PAGE (20); local state, since several KWIC blocks can share one page/URL */
+const kp = ref(1)
+const kpages = computed(() => pageCount(shown.value.length, KWIC_PAGE))
+watch(sel, () => { kp.value = 1 })
+const view = computed(() => (all.value ? pageSlice(shown.value, Math.min(kp.value, kpages.value), KWIC_PAGE) : shown.value.slice(0, props.limit ?? 5)))
 </script>
 
 <template>
@@ -50,15 +56,16 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
     <div v-for="(k, i) in view" :key="i" class="kwic">
       <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span>{{ k.left }}</span></span>{{ ' ' }}<span v-if="plain" :class="['n', { old: isOldForm(k.node, k.date[1]) }]">{{ k.node }}</span><RouterLink v-else :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]">{{ k.right }}</span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
+        <template v-if="phraseOf(k)"> · <RouterLink class="small" :to="phraseTo(phraseOf(k)!.id!)">сталий зворот →</RouterLink></template>
         <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>
       <template v-if="mediaOpen === i">
         <MediaPanel v-if="media" :media="media" :licence-note="wm(k.w)?.licenceNote" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
         <p v-else class="muted small sans" role="status">{{ mediaErr ? 'Медіа недоступне.' : 'Завантаження…' }}</p>
       </template>
-        <template v-if="phraseOf(k)"> · <RouterLink class="small" :to="phraseTo(phraseOf(k)!.id!)">сталий зворот →</RouterLink></template>
     </div>
     <p v-if="!view.length" class="muted">Прикладів немає.</p>
-    <button v-if="shown.length > view.length" type="button" class="chip sans small" @click="all = true">більше… ({{ shown.length - view.length }})</button>
+    <button v-if="!all && shown.length > view.length" type="button" class="chip sans small" @click="all = true">більше… ({{ shown.length - view.length }})</button>
+    <Pagination v-if="all" :page="Math.min(kp, kpages)" :pages="kpages" :total="shown.length" @go="kp = $event" />
   </div>
 </template>
