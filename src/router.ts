@@ -8,6 +8,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/forms/:rule', component: () => import('./views/RuleFormsView.vue'), props: true },
   { path: '/name/:id', component: () => import('./views/TorotCardView.vue'), props: r => ({ id: r.params.id, kind: 'name' }) },
   { path: '/orv/:id', component: () => import('./views/TorotCardView.vue'), props: r => ({ id: r.params.id, kind: 'orv' }) },
+  { path: '/ar/:id', component: () => import('./views/ArchaicView.vue'), props: true },
   { path: '/lw/:lemma', component: () => import('./views/LightWordView.vue'), props: true },
   { path: '/witness/:id', component: () => import('./views/WitnessView.vue'), props: true },
   { path: '/author/:id', component: () => import('./views/AuthorView.vue'), props: true },

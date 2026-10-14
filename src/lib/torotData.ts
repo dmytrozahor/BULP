@@ -1,6 +1,7 @@
 /** SPEC 63 PV: lazy loader of public/data/torot.json (name cards + ORV-only lemma cards) and the in-site links of a text-shard `ref` column. */
 import type { TorotFile } from '../../core/torot.ts'
 import type { LightFile } from '../../pipelines/build-torot.ts'
+import type { ArchFile } from '../../core/archaic.ts'
 
 let p: Promise<TorotFile> | undefined
 export function loadTorot(): Promise<TorotFile> {
@@ -13,6 +14,12 @@ export function loadLight(): Promise<LightFile> {
   lp ??= fetch('./data/light.json').then(r => { if (!r.ok) throw new Error(`light.json: HTTP ${r.status}`); return r.json() as Promise<LightFile> }).catch(e => { lp = undefined; throw e })
   return lp
 }
+let ap: Promise<ArchFile> | undefined
+/** SPEC 63 AR: public/data/archaic.json — archaic lemma cards (dictionary headwords unknown to VESUM + unverified clusters) */
+export function loadArchaic(): Promise<ArchFile> {
+  ap ??= fetch('./data/archaic.json').then(r => { if (!r.ok) throw new Error(`archaic.json: HTTP ${r.status}`); return r.json() as Promise<ArchFile> }).catch(e => { ap = undefined; throw e })
+  return ap
+}
 const e = encodeURIComponent
 export const nameTo = (id: string) => `/name/${e(id)}`
 export const orvTo = (id: string) => `/orv/${e(id)}`
@@ -20,5 +27,5 @@ export const orvTo = (id: string) => `/orv/${e(id)}`
 export function refTo(ref?: string): string | undefined {
   if (!ref) return undefined
   const id = ref.slice(2)
-  return ref.startsWith('n:') ? nameTo(id) : ref.startsWith('o:') ? orvTo(id) : ref.startsWith('w:') ? `/w/${e(id)}` : undefined
+  return ref.startsWith('n:') ? nameTo(id) : ref.startsWith('o:') ? orvTo(id) : ref.startsWith('w:') ? `/w/${e(id)}` : ref.startsWith('a:') ? `/ar/${e(id)}` : undefined
 }

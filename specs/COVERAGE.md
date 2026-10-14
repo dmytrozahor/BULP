@@ -324,3 +324,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 пôшовъ: ô → о, branches south (о·, у, ü, і) and north (о·, уо, уі, і), reconstruction not attested |
 | OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 ê → е chains; spellings without ô/ê have no branches; renderReading keeps other Maksymovych folds |
 | PV-8 | manual — pending: PV-8 (non-TOROT OES witnesses) is being implemented; the test row replaces this line when it lands |
+| MU-1 | tests/mu-fold.test.ts › MU-1 every rule cites a read source with a locator, and its quote is in research/35 |
+| MU-2 | tests/mu-fold.test.ts › MU-2 fold engine: enclitic split + past -л → -в, the chain is shown through foldById |
+| MU-2 | tests/mu-fold.test.ts › MU-2 a candidate links only through VESUM with the analysis the rule states (POS / case gate) |
+| MU-2 | tests/mu-fold.test.ts › MU-2 rules: loc. pl. -ех, gen. pl. -ов, short participle -ен, uncontracted -оє/-ії; proper nouns and participles are excluded where stated |
+| MU-2 | tests/mu-fold.test.ts › MU-2 spelling and sound folds (кг, -ск-, е/о → і, -ніє → -ння) run in the second pass and are checked by VESUM; closed-syllable о → і is restricted; names and 1st-person verbs are refused |
+| MU-3 | tests/mu-fold.test.ts › MU-3 capitalised unresolved tokens (not paragraph-first, never written lower-case) get name cards with basis capitalisation |
+| MU-3 | tests/mu-fold.test.ts › MU-3 report: link % before/after per witness, rules fired, reasons for the remainder |
+| MU-3 | tests/mu-fold.test.ts › MU-3 the generated report (analysis/middle-ukr-extraction.md) and its baseline exist and show a gain for Величко 1720 |
+| AR-1 | tests/archaic.test.ts › AR-1 a dictionary header line becomes a lemma card: headword, variants, part of speech and brackets from the line itself, quote + locator |
+| AR-1 | tests/archaic.test.ts › AR-1 /ar/:id is routed and the card marks missing data as «невідомо»/«не зафіксовано» |
+| AR-2 | tests/archaic.test.ts › AR-2 every unresolved corpus token whose spelling equals a dictionary variant links to the lemma (ref a:<id>); dictionary words that VESUM knows are not archaic |
+| AR-3 | tests/archaic.test.ts › AR-3 dictionary-backed lemmas are always kept; recurring unresolved clusters (≥ 3) become labelled unverified candidates; counts per epoch |

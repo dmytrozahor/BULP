@@ -42,6 +42,7 @@ import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
+import { archReport, buildArchaic } from './build-archaic.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
@@ -315,6 +316,12 @@ export async function build(opts: { noPy?: boolean } = {}) {
     })
     muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26', 'i14_09'])
     lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
+  }
+  {   // SPEC 63 AR: archaic lemmas (dictionary headwords unknown to VESUM + unverified recurring clusters); cards /ar/:id, text refs 'a:<id>'
+    const ar = buildArchaic(adm.map(({ w }, wi) => ({ w, linked: (ti: number) => !!linked[tix[wi]![ti]!], epoch: meta[wi]!.pe })), derive, new Date().toISOString())
+    for (const [wid, r] of ar.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
+    writeFileSync(resolve(PUB, 'archaic.json'), JSON.stringify(ar.file)); archReport(ar.file, ar.counts, ANALYSIS)
+    lap(`archaic lemmas: ${ar.file.entries.filter(e => e.status === 'dictionary').length} dictionary, ${ar.file.entries.filter(e => e.status === 'unverified').length} unverified; ${ar.counts.dictionaryTokens + ar.counts.unverifiedTokens} corpus tokens linked`)
   }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)

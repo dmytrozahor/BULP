@@ -10,6 +10,7 @@ export function rowRef(r: Row): string | undefined {
   if (x.startsWith('n:')) return `/name/${id}`
   if (x.startsWith('o:')) return `/orv/${id}`
   if (r.lemma) return undefined
+  if (x.startsWith('a:')) return `/ar/${id}`   // SPEC 63 AR: archaic lemma card
   return x.startsWith('l:') ? `/lw/${id}` : x.startsWith('w:') ? `/w/${id}` : undefined
 }
 
