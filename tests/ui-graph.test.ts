@@ -5,7 +5,8 @@ import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import { explain } from '../core/reverse.ts'
-import { chainLayout, timelineLayout } from '../src/lib/graphLayout.ts'
+import { chainLayout, timelineLayout, niceTicks } from '../src/lib/graphLayout.ts'
+import { clipWords } from '../src/lib/format.ts'
 import { VIEW_KEY, resetViewModes, useViewMode } from '../src/lib/viewMode.ts'
 import DerivationSteps from '../src/components/DerivationSteps.vue'
 import AttestGraph from '../src/components/AttestGraph.vue'
@@ -53,12 +54,52 @@ describe('UI-2 graph views', () => {
       const sepX = a.x + a.w + 1 <= b.x || b.x + b.w + 1 <= a.x, sepY = a.y + a.h + 1 <= b.y || b.y + b.h + 1 <= a.y
       expect(sepX || sepY, `${a.id}/${b.id} overlap`).toBe(true)
     }
+    // arrows need room: ≥ 36 px between lanes, ≥ 40 px between plates of one lane, arrowheads ≥ 10 px, 2 px ink stroke
+    for (const a of t.plates) for (const b of t.plates) if (a.id < b.id && a.lane === b.lane) expect(Math.max(b.x - (a.x + a.w), a.x - (b.x + b.w)), `${a.id}/${b.id} gap`).toBeGreaterThanOrEqual(40)
+    for (const a of t.plates) for (const b of t.plates) if (a.lane === b.lane - 1) expect(b.y - (a.y + a.h)).toBeGreaterThanOrEqual(36)
+    expect(Number(/markerWidth="(\d+)"/.exec(src('../src/components/AttestGraph.vue'))![1])).toBeGreaterThanOrEqual(10)
+    expect(src('../src/ux.css')).toMatch(/\.g-link\s*\{[^}]*stroke:\s*var\(--ink\)[^}]*stroke-width:\s*2/)
+    expect(t.arrows.find(x => x.from === 'g')).toBeUndefined(); expect(t.arrows.find(x => x.from === 'f')!.dy).toMatch(/^\+7\d\d р\.$/)   // Δ > 50 years is labelled
+    expect(t.arrows.find(x => x.from === 'a')!.dy).toBeUndefined()
     expect(t.plates.map(p => p.id)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
     expect(t.arrows.map(x => x.from + x.to)).toEqual(['ab', 'bc', 'cd', 'de', 'ef', 'fg'])
     expect(t.plates.every(p => p.y >= 0 && p.y + p.h <= t.height && p.x + p.w <= t.width)).toBe(true)
     expect(t.width).toBeLessThan(900)   // 1037…1900 is not stretched linearly
     expect(t.plates.find(p => p.id === 'g')!.sw).toBeGreaterThan(t.plates.find(p => p.id === 'b')!.sw)
     expect(timelineLayout([mk('x', 'довге-слово-форма', 1200, 1)]).plates[0]!.w).toBeGreaterThan(timelineLayout([mk('y', 'а', 1200, 1)]).plates[0]!.w)
+  })
+  it('UI-2 viewBox fits: it contains every plate bbox (with border and margin), the axis and its labels — nothing is clipped, also for one plate and heavy plates', () => {
+    const mk = (id: string, label: string, year: number, f: number) => ({ id, label, year, f, kind: 'modern', to: `/f/${id}` })
+    for (const pts of [[mk('a', 'міна', 1862, 1000)], [mk('a', 'міна', 1862, 5), mk('b', 'мінь', 1870, 900), mk('c', 'міни', 1900, 1), mk('d', 'мін', 1900, 2), mk('e', 'мінам', 1901, 3)]]) {
+      const t = timelineLayout(pts), [x0, y0, vw, vh] = t.viewBox.split(' ').map(Number) as [number, number, number, number]
+      expect(x0).toBe(0); expect(y0).toBe(0)
+      for (const p of t.plates) { expect(p.x - p.sw / 2).toBeGreaterThanOrEqual(x0 + 8); expect(p.y - p.sw / 2).toBeGreaterThanOrEqual(y0 + 8); expect(p.x + p.w + p.sw / 2).toBeLessThanOrEqual(vw - 8); expect(p.y + p.h + p.sw / 2).toBeLessThanOrEqual(vh - 8) }
+      expect(t.axisY + 22).toBeLessThanOrEqual(vh)
+      for (const k of t.ticks) { expect(k.x).toBeGreaterThanOrEqual(0); expect(k.x).toBeLessThanOrEqual(vw) }
+    }
+  })
+  it('UI-2 axis ticks: 3–6 nice year ticks for any range (single year, 38 years, nine centuries), strictly increasing', () => {
+    for (const [lo, hi] of [[1862, 1900], [1900, 1900], [1037, 1900], [1110, 1115], [1500, 1650], [900, 1990]] as const) {
+      const t = niceTicks(lo, hi); expect(t.length, `${lo}–${hi}`).toBeGreaterThanOrEqual(3); expect(t.length).toBeLessThanOrEqual(6)
+      for (let i = 1; i < t.length; i++) expect(t[i]).toBeGreaterThan(t[i - 1]!)
+    }
+    const g = timelineLayout([{ id: 'a', label: 'міна', year: 1862, f: 1, kind: 'old', to: '/f/a' }, { id: 'b', label: 'мін', year: 1900, f: 1, kind: 'modern', to: '/f/b' }])
+    expect(g.ticks.length).toBeGreaterThanOrEqual(3)
+  })
+  it('UI-1 panel summaries break at a word boundary with «…» and show in full as the tooltip; the CSS wraps them to 2 lines instead of cutting mid-word', () => {
+    const s = 'From Proto-Balto-Slavic *mainā, from Proto-Indo-European *mey- (to change), a borrowing'
+    const c = clipWords(s, 40); expect(c.endsWith('…')).toBe(true); expect(c.length).toBeLessThanOrEqual(41)
+    expect(s.startsWith(c.slice(0, -1))).toBe(true); expect(s[c.length - 1]).toBe(' ')   // cut right before a space: no word is split
+    expect(clipWords('коротко', 40)).toBe('коротко')
+    expect(src('../src/components/EtymologyBlock.vue')).toContain('clipWords('); expect(src('../src/components/Panel.vue')).toContain(':title="empty ? undefined : summary"')
+    expect(src('../src/ux.css')).toMatch(/\.panel \.psum\s*\{[^}]*-webkit-line-clamp:\s*2/)
+  })
+  it('UI-2 chain graph fits: margins on both sides, every rule label fits its edge, the date line is inside the height, epoch rows use Ukrainian names', () => {
+    const long = [{ from: 'пôшовъ', to: 'пошовъ', rule: 'ORTH-MAX-JER-FINAL' }, { from: 'пошовъ', to: 'пішов', rule: 'R10' }] as unknown as typeof steps
+    const g = chainLayout(long, { пôшовъ: '1600' })
+    expect(g.nodes[0]!.x).toBeGreaterThanOrEqual(12); expect(g.nodes.at(-1)!.x + g.nodes.at(-1)!.w).toBeLessThanOrEqual(g.width - 12); expect(g.height).toBeGreaterThanOrEqual(70)
+    for (const e of g.edges) expect((e.x2 - e.x1)).toBeGreaterThanOrEqual(e.label.length * 8)
+    const fv = src('../src/views/FormView.vue'); expect(fv).toContain('epochShort(e.epoch)'); expect(fv).not.toContain("e.epoch.replace('shev.'")
   })
   it('UI-2 legend: HTML chips with full dots and Ukrainian labels (давня / сучасна), outside the SVG so it is never clipped', async () => {
     const html = await render(AttestGraph, { points: [{ id: 'a', label: 'нѣ', year: 1110, f: 3, kind: 'old', to: '/f/a', when: '1110' }, { id: 'b', label: 'не', year: 1900, f: 3, kind: 'modern', to: '/f/b', when: '1900' }] })

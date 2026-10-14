@@ -301,3 +301,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PH-2 | tests/phraseme-pages.test.ts › PH-2 corpus evidence of a phraseme › PH-2 component-order and lexical variants are found among the other phrasemes |
 | PH-3 | tests/phraseme-pages.test.ts › PH-3 phraseme relations › PH-3 related phrasemes share a content component and are ranked by score; short function words do not relate |
 | PH-3 | tests/phraseme-pages.test.ts › PH-3 phraseme relations › PH-3 /p/:id is routed and the page marks missing data as «невідомо» and scores as a model |
+| UI-2 | tests/ui-graph.test.ts › UI-2 viewBox fits: it contains every plate bbox (with border and margin), the axis and its labels — nothing is clipped, also for one plate and heavy plates |
+| UI-2 | tests/ui-graph.test.ts › UI-2 axis ticks: 3–6 nice year ticks for any range (single year, 38 years, nine centuries), strictly increasing |
+| UI-1 | tests/ui-graph.test.ts › UI-1 panel summaries break at a word boundary with «…» and show in full as the tooltip; the CSS wraps them to 2 lines instead of cutting mid-word |
+| UI-2 | tests/ui-graph.test.ts › UI-2 chain graph fits: margins on both sides, every rule label fits its edge, the date line is inside the height, epoch rows use Ukrainian names |

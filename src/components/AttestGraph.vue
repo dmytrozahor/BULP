@@ -17,9 +17,11 @@ const kinds = computed(() => [...new Set(props.points.map(p => p.kind))])
 <template>
   <div>
     <div class="gscroll">
-      <svg v-if="g.plates.length" class="tgraph" role="group" :aria-label="label ?? 'Хронологія'" :viewBox="`0 0 ${g.width} ${g.height}`" :width="g.width" :height="g.height">
-        <defs><marker id="tg-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 8 4 0 8z" class="g-arrow" /></marker></defs>
-        <path v-for="a in g.arrows" :key="a.from + a.to" :d="a.d" class="g-link" marker-end="url(#tg-arr)" />
+      <svg v-if="g.plates.length" class="tgraph" role="group" :aria-label="label ?? 'Хронологія'" :viewBox="g.viewBox" :width="g.width" :height="g.height">
+        <defs><marker id="tg-arr" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto"><path d="M0 0 10 5 0 10z" class="g-arrow g-arrow-ink" /></marker></defs>
+        <g class="g-axisg"><line x1="0" :x2="g.width" :y1="g.axisY" :y2="g.axisY" class="g-axis" />
+          <g v-for="t in g.ticks" :key="t.label"><line :x1="t.x" :x2="t.x" :y1="g.axisY" :y2="g.axisY + 5" class="g-axis" /><text :x="t.x" :y="g.axisY + 17" text-anchor="middle" class="g-date">{{ t.label }}</text></g></g>
+        <g v-for="a in g.arrows" :key="a.from + a.to"><path :d="a.d" class="g-link" marker-end="url(#tg-arr)" /><text v-if="a.dy" :x="a.mx" :y="a.my" text-anchor="middle" class="g-date g-dy">{{ a.dy }}</text></g>
         <a v-for="d in g.plates" :key="d.id" class="g-plate" :data-kind="d.kind" :href="href(d.to)" @click.prevent="router.push(d.to)">
           <title>{{ d.title ?? d.label }} · {{ d.when }} · f = {{ d.f }}</title>
           <rect :x="d.x" :y="d.y" :width="d.w" :height="d.h" rx="12" :stroke-width="d.sw" />

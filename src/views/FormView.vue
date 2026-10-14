@@ -8,7 +8,7 @@ import { useRoute } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
-import { fmtDate, fmtNum } from '../lib/format.ts'
+import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
@@ -22,10 +22,10 @@ import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
-import RegionMap from '../components/RegionMap.vue'
 import ViewSwitch from '../components/ViewSwitch.vue'
 import AttestGraph from '../components/AttestGraph.vue'
 import type { TPoint } from '../lib/graphLayout.ts'
+import RegionMap from '../components/RegionMap.vue'
 import { paradigmKindOf } from '../lib/ux.ts'
 import { isOldForm, witnessTo } from '../lib/nav.ts'
 
@@ -64,7 +64,6 @@ const derivedOnly = computed(() => {
   const sg = segment(props.form)[0]; return sg ? { kind: 'dx' as const, sg } : undefined
 })
 const regionNames = computed(() => byRegion.value.filter(r => r.f).map(r => ({ name: corpus.value?.regions.find(x => x.code === r.code)?.name ?? r.code, f: r.f })))
-const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 /** SPEC 63 UI-2: chronology of the spelling = one dot per witness (x = composition year, r ∝ √f, colour = witness type); dot → /witness page like the list */
 const witKind = (t: string) => /chron|літопис/i.test(t) ? 'chronicle' : /folk|song|фольк/i.test(t) ? 'folk' : 'other'
 const witPoints = computed<TPoint[]>(() => (stats.value?.witnesses ?? []).flatMap(w => {
@@ -72,6 +71,7 @@ const witPoints = computed<TPoint[]>(() => (stats.value?.witnesses ?? []).flatMa
   return x ? [{ id: w.w, label: x.title.slice(0, 18), year: (x.date[0] + x.date[1]) / 2, f: w.lines, kind: witKind(x.witnessType), to: witnessTo(w.w), title: x.title }] : []
 }))
 const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.date) } : {})
+const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 </script>
 
 <template>
@@ -145,7 +145,7 @@ const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.
           <p v-else class="small sans muted">DP: немає розміщених токенів, щоб його обчислити.</p>
           <table v-if="stats.byEpoch.length" class="small sans" style="border-collapse:collapse;width:100%">
             <thead><tr><th scope="col" style="text-align:left">епоха</th><th scope="col">f</th><th scope="col">N</th><th scope="col">ipm</th></tr></thead>
-            <tbody><tr v-for="e in stats.byEpoch" :key="e.epoch"><td>{{ e.epoch.replace('shev.', '') }}</td><td>{{ e.f }}</td><td>{{ fmtNum(e.N) }}</td><td>{{ fmtNum(e.ipm, 1) }}</td></tr></tbody>
+            <tbody><tr v-for="e in stats.byEpoch" :key="e.epoch"><td>{{ epochShort(e.epoch) }}</td><td>{{ e.f }}</td><td>{{ fmtNum(e.N) }}</td><td>{{ fmtNum(e.ipm, 1) }}</td></tr></tbody>
           </table>
           <p class="small sans muted">Розподіл за епохами — нижня межа: лише токени, розміщені в клітинках парадигми (P-3.1).</p>
         </Panel>

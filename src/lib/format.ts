@@ -3,7 +3,13 @@ import { epochById } from '../../core/epochs.ts'
 import type { Author } from '../../core/types.ts'
 type AuthorLabel = Author['label']
 
-export const fmtDate = (d: [number, number]) => (d[0] === d[1] ? `${d[0]}` : `${d[0]}–${d[1]}`)
+/** cut at a word boundary with «…» (never mid-word); text that fits is returned unchanged */
+export const clipWords = (s: string, max: number) => {
+  if (s.length <= max) return s
+  const cut = s.slice(0, max + 1), i = cut.search(/\s\S*$/)
+  return (i > max * 0.5 ? cut.slice(0, i) : s.slice(0, max)).replace(/[\s,;:.\-–—(]+$/, '') + '…'
+}
+export const fmtDate =(d: [number, number]) => (d[0] === d[1] ? `${d[0]}` : `${d[0]}–${d[1]}`)
 
 const ROMAN: [number, string][] = [[10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']]
 export const roman = (n: number) => ROMAN.reduce((s, [v, r]) => { while (n >= v) { s += r; n -= v } return s }, '')

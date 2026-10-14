@@ -24,7 +24,7 @@ const showInfo = ref(false)
       <button type="button" class="ptoggle" :aria-expanded="isOpen" :aria-controls="id + '-body'" @click="toggle">
         <span class="caret" aria-hidden="true">{{ isOpen ? '▾' : '▸' }}</span><span class="ptitle">{{ title }}</span><span v-if="count !== undefined" class="small pcount">{{ count }}</span>
       </button>
-      <span class="psum small sans" :class="{ unk: empty }">{{ empty ? 'немає даних' : summary }}</span>
+      <span class="psum small sans" :title="empty ? undefined : summary" :class="{ unk: empty }">{{ empty ? 'немає даних' : summary }}</span>
       <button v-if="info || $slots.info" type="button" class="pinfo" :aria-expanded="showInfo" :aria-label="`Примітка до панелі «${title}»`" @click="showInfo = !showInfo">ⓘ</button>
     </h2>
     <p v-if="(info || $slots.info) && showInfo" class="small muted sans pnote" role="note"><slot name="info">{{ info }}</slot></p>

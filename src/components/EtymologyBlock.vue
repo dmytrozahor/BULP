@@ -6,6 +6,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { CONFLICT_UK, LANG_UK, goroh, type Etymology, type EtymologyFile } from '../../core/etymology.ts'
 import { etymologyOf } from '../lib/etymologyData.ts'
+import { clipWords } from '../lib/format.ts'
 import EvidenceList from './EvidenceList.vue'
 import Panel from './Panel.vue'
 const props = defineProps<{ lemma: string }>()
@@ -16,7 +17,7 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
 </script>
 
 <template>
-  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? (entry.text ?? entry.chain?.[0]?.text ?? 'є запис у словниках').slice(0, 90) : 'завантаження…'"
+  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? clipWords(entry.text ?? entry.chain?.[0]?.text ?? 'є запис у словниках', 130) : 'завантаження…'"
     :info="entry ? `Вікісловник — ${file?.attribution.licence ?? 'CC BY-SA 4.0'}; витяг Wiktextract/kaikki.org. ЕСУМ цитується коротко, повний текст — на goroh.pp.ua.` : undefined">
 
     <template v-if="entry">
