@@ -323,3 +323,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | OR-2 | tests/ocirc.test.ts › OR-2 possible readings and IPA variants › OR-2 the form page lists the panel and the picker only for ô/ê spellings |
 | OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 пôшовъ: ô → о, branches south (о·, у, ü, і) and north (о·, уо, уі, і), reconstruction not attested |
 | OR-3 | tests/ocirc.test.ts › OR-3 derivation branches from the marked etymological о › OR-3 ê → е chains; spellings without ô/ê have no branches; renderReading keeps other Maksymovych folds |
+| PV-8 | manual — pending: PV-8 (non-TOROT OES witnesses) is being implemented; the test row replaces this line when it lands |
