@@ -13,10 +13,11 @@ import { UNITS_18A } from './nw-izb18a.ts'
 import { UNITS_18B } from './nw-izb18b.ts'
 import { UNITS_SONGS } from './nw-songs.ts'
 import { UNITS_DICT } from './nw-dict.ts'
+import { UNITS_R2U } from './nw-r2u.ts'
 import { UNITS_17 } from './nw-izb17.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary'
 
@@ -99,6 +100,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_18B,
   ...UNITS_SONGS,
   ...UNITS_DICT,
+  ...UNITS_R2U,
   ...UNITS_17,
 ]
 

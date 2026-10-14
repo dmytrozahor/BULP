@@ -24,7 +24,7 @@ export async function get(url: string): Promise<Buffer> {
 const fetchText = async (url: string) => (await get(url)).toString('utf8')
 
 const only = process.argv[2]
-for (const u of MANIFEST.filter(u => !only || u.id === only)) {
+for (const u of MANIFEST.filter(u => (!only || u.id === only) && u.kind !== 'r2u')) {   // r2u: no fetching (robots.txt disallows /s)
   const dir = `data/raw/${u.kind}/${u.id}`
   await mkdir(dir, { recursive: true })
   const idx = `${dir}/urls.json`

@@ -11,6 +11,7 @@ import { AUTHORS_18B } from './nw-izb18b.ts'
 import { AUTHORS_SONGS } from './nw-songs.ts'
 import { AUTHORS_SOPHIA } from './nw-sophia.ts'
 import { AUTHORS_DICT } from './nw-dict.ts'
+import { AUTHORS_R2U } from './nw-r2u.ts'
 import { AUTHORS_17 } from './nw-izb17.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
@@ -88,6 +89,7 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_SONGS,
   ...AUTHORS_SOPHIA,
   ...AUTHORS_DICT,
+  ...AUTHORS_R2U,
   ...AUTHORS_17,
 ]
 

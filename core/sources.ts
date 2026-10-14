@@ -19,6 +19,7 @@ export const SOURCES: Record<string, Source> = {
   WS:     { title: 'Українські Вікіджерела', url: 'https://uk.wikisource.org', license: 'PD / CC BY-SA 4.0' },
   WIKT:   { title: 'Вікісловник (uk.wiktionary)', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
   SUM20:  { title: 'Словник української мови у 20 т. Т. 1. Київ, 2010', url: 'https://archive.org/details/SUM-20', year: '2010' },
+  R2U:    { title: 'Словниковий портал r2u.org.ua — російсько-українські словники (оцифровка друкованих словників 1886–1933; зберігаються лише написання та цитата ≤ 300 знаків)', url: 'https://r2u.org.ua/main/dicts', license: 'без ліцензії (© r2u.org.ua), repo brown-uk/r2u.org.ua порожній — лише цитування (research/30)', year: '2026' },
   SUSM14: { title: 'Словник староукраїнської мови XIV–XV ст. у 2 т. К.: Наукова думка, 1977–78 (OCR: archive.org staroukr1, staroukr2; беруться лише заголовні слова)', url: 'https://archive.org/details/staroukr1', year: '1977' },
   WUK:    { title: 'Українська Вікіпедія (статті про говори; тексти збігаються з енц. «Українська мова», 2000)', url: 'https://uk.wikipedia.org', license: 'CC BY-SA 4.0' },
   DWDS:   { title: 'DWDS — Digitales Wörterbuch der deutschen Sprache (Hilfe: Wortprofil, Verlaufskurve, Worthäufigkeit)', url: 'https://www.dwds.de' },
@@ -48,10 +49,10 @@ export const SOURCES: Record<string, Source> = {
   MAKSYM1834: { title: 'Максимович М. Украинскія народныя пѣсни. Москва, 1834 (Вікіджерела)', url: 'https://uk.wikisource.org', license: 'PD' },
   SOPHIA: { title: 'Saint Sophia’s Inscriptions — University of Gothenburg & НЗ «Софія Київська» (saintsophia.dh.gu.se, API)', url: 'https://saintsophia.dh.gu.se/', license: 'зображення CC BY-NC; ліцензія тексту транскрипцій порталом не вказана (див. licenceNote)' },
   GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
-}
   ARKUSHYN: { title: 'Аркушин Г. Л. Словник західнополіських говірок. У 2 т. Луцьк: Вежа, 2000 (скан: archive.org slzhdplhv; цитування, один заголовок + уривок тлумачення)', url: 'https://archive.org/details/slzhdplhv', year: '2000' },
   LYSENKO:  { title: 'Лисенко П. С. Словник поліських говорів. К.: Наукова думка, 1974 (скан: archive.org p0lissia; цитуються приклади з Передмови)', url: 'https://archive.org/details/p0lissia', year: '1974' },
   ZAKREV:   { title: 'Закревська Я. (ред.) Гуцульські говірки: Короткий словник. Львів, 1997 (скан: archive.org hutsulslovnyk; цитування)', url: 'https://archive.org/details/hutsulslovnyk', year: '1997' },
   PYRTEY:   { title: 'Пиртей П. С. Словник лемківскої говірки. Матеріали для словника, 2001 (archive.org Pyrtey-2001; ukrainian_lemko.academic.ru; цитування)', url: 'https://archive.org/details/Pyrtey-2001', year: '2001' },
   ONYSH:    { title: 'Онишкевич М. Й. Словник бойківських говірок. Ч. 1–2. К.: Наукова думка, 1984 (скан: archive.org slv1984; OCR зашумлений, цитуються лише чисті фрагменти)', url: 'https://archive.org/details/slv1984', year: '1984' },
   KOLYBA:   { title: 'Колиба — портал про Закарпаття, «Закарпатський словник» (краудсорсинговий; CC BY-NC-ND 3.0 — лише цитування з активним посиланням)', url: 'https://www.kolyba.org.ua/zakarpatskij-slovnik', license: 'CC BY-NC-ND 3.0' },
+}

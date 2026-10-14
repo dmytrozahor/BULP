@@ -45,6 +45,7 @@ import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
 import { writeCognates } from './build-cognates.ts'
+import { writeR2u } from './build-r2u.ts'
 import { writeUsage } from './build-usage.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
 import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
@@ -113,8 +114,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const ids = [pe, pw, ...(sh.value === 'unknown' ? [] : sh.value.overlays), ...(wl.value === 'unknown' ? [] : wl.value.overlays)].filter((x): x is string => !!x)
     return { sh, wl, pe, ids: [...new Set(ids)], cent: century(w.date) }
   })
-  const sizes: Sizes = { N: 0, epoch: {}, century: {}, witnesses: adm.map(({ w }) => ({ id: w.id, n: w.tokens.length })) }
+  const sizes: Sizes = { N: 0, epoch: {}, century: {}, witnesses: adm.filter(({ w }) => !w.noFreq).map(({ w }) => ({ id: w.id, n: w.tokens.length })) }
   adm.forEach(({ w }, i) => {
+    if (w.noFreq) return   // R2U-1: attestation-only witnesses are no running text (core/types.ts WitnessOut.noFreq)
     const n = w.tokens.length; sizes.N += n
     for (const id of meta[i]!.ids) sizes.epoch[id] = (sizes.epoch[id] ?? 0) + n
     const c = String(meta[i]!.cent); sizes.century[c] = (sizes.century[c] ?? 0) + n
@@ -134,7 +136,8 @@ export async function build(opts: { noPy?: boolean } = {}) {
       const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${raw}`
       let x = typeIdx.get(k)
       if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate }); typeCount.push(0) }
-      typeCount[x]!++; a[i] = x
+      if (!w.noFreq) typeCount[x]!++
+      a[i] = x
     })
     return a
   })
@@ -205,24 +208,26 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const unres = new Map<string, number>(), docs: { id: Int32Array; seg: Int32Array }[] = []
   const phraseDocs: PhraseDoc[] = [], rawIds = new Map<string, number>(), rawNames: string[] = []   // BL-12: n-gram input (lemma ids; raw spellings of unlinked tokens in pre-1600 / non-modern texts)
   const wmeta = new Map<string, Loaded>(adm.map(l => [l.w.id, l]))
+  const r2uQueried = new Set<string>(existsSync(resolve(WORK, 'r2u-rows.json')) ? (rd<{ queried?: string[] }>(resolve(WORK, 'r2u-rows.json')).queried ?? []) : [])
   adm.forEach(({ w, nlp }, wi) => {
     const m = meta[wi]!, ids = new Int32Array(w.tokens.length).fill(-1), seg = Int32Array.from(w.tokens.map(t => t.s))
     const rt = routes[w.id] = {} as Record<string, number>
+    const nf = !!w.noFreq   // R2U-1: attests spellings (date, first attestation, one KWIC line) but counts nowhere
     let nl = 0
     w.tokens.forEach((tok, ti) => {
       const L = linked[tix[wi]![ti]!]
-      if (!L) { bump(unres, rawKey(tok.raw)); return }
+      if (!L) { if (!nf) bump(unres, rawKey(tok.raw)); return }
       const { c, route } = L, raw = rawKey(tok.raw), ref: Ref = { wi, ti }
-      nl++; rt[route] = (rt[route] ?? 0) + 1
+      if (!nf) { nl++; rt[route] = (rt[route] ?? 0) + 1 }
       let la = lemmas.get(c.id)
       if (!la) {
         la = { id: c.id, display: c.lemma, tags: c.hit.tags, cls: c.cls, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, dict: false, nm: { nMorph: 0, nNlp: 0 } }
         lemmas.set(c.id, la); lemmaList.push(la)
       }
-      la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e)
+      if (!nf) { la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e) }
       if (w.date[1] < 1400) la.pre1400 = true
-      if (w.witnessType === 'dictionary') la.dict = true
-      ids[ti] = la.idx
+      if (w.witnessType === 'dictionary' && (!nf || r2uQueried.has(c.lemma))) la.dict = true   // R2U-1: an r2u lemma is kept only when it was looked up (the dictionaries' equivalents do not add lemmas)
+      if (!nf) ids[ti] = la.idx
       {   // NP-1: PROIEL Ne (TOROT morph) and Stanza PROPN, counted per lemma
         const nm = la.nm, up = nlp?.tokens[ti]?.upos
         if (tok.morph) { nm.nMorph++; if (/^Ne/.test(tok.morph)) { const t = (nm.torot ??= { w: w.id, loc: tok.loc, raw: tok.raw, morph: tok.morph, n: 0, of: 0 }); t.n++ } }
@@ -236,14 +241,15 @@ export async function build(opts: { noPy?: boolean } = {}) {
           date: w.date, latest: w.date, firstW: w.id, firstLoc: tok.loc, epochs: new Set(), route, chosen: c, ref, first: ref, kwic: [], perW: new Map(), orvVernacular: false, regions: new Set(),
         })
       } else if (ROUTE_RANK[route] < ROUTE_RANK[fa.route]) { fa.route = route; fa.chosen = c; fa.modern = c.own.form || c.form; fa.ref = ref }
-      fa.f++
+      if (!nf) fa.f++
       if (w.date[1] < fa.date[1]) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref }
       if (w.date[1] > fa.latest[1]) fa.latest = w.date
-      if (m.pe) fa.epochs.add(m.pe)
+      if (m.pe && !nf) fa.epochs.add(m.pe)   // a dictionary spelling is no evidence of what the epoch's text looked like (research/30 §4): no epoch, no contact/dialect detection by epoch
       if (w.lang === 'orv') fa.orvVernacular = true
       if (w.region) fa.regions.add(w.id)   // B-3.6: region is provenance evidence for every admitted witness, any date
-      if (fa.kwic.length < 6 && (fa.perW.get(w.id) ?? 0) < 2) fa.kwic.push(ref)
-      bump(fa.perW, w.id)
+      if (nf) { if (fa.kwic.length < 6 && !fa.kwic.some(r => adm[r.wi]!.w.noFreq)) fa.kwic.push(ref) }   // R2U-1: one dictionary line per spelling
+      else if (fa.kwic.length < 6 && (fa.perW.get(w.id) ?? 0) < 2) { fa.kwic.push(ref) }
+      if (!nf) bump(fa.perW, w.id)
     })
     wLinked.set(w.id, nl); docs.push({ id: ids, seg })
     {
@@ -457,6 +463,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
+  { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1
   { const c = writeCognates(cards, ROOT, PUB, generated); lap(`cognates.json (BL-15): ${c.entries} lemmas with Proto-Slavic counterparts, ${c.dated} with a dated counterpart, ${c.flags} ET-3 review flags`) }   // BL-15
 
   const rd2: ReportData = {

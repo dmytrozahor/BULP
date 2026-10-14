@@ -22,7 +22,12 @@ const MAX_T = Q('ENC', UM43, 'Крім етимол. написань з вик�
 const MAX_E = Q('ENC', UM43, 'ё для сполучень йо, ьо (ёго, сёго), е для літер е, є та ъ на місці апострофа')
 const MAX_U = Q('ENC', UM43, 'літера ў для нескладового голосного, середнього між в і у')
 
+// R2U-1 (research/30 §4): the pre-1933 dictionaries print the reflexive particle as a separate word («видава́ти ся, здава́ти ся»); the ingester joins it with a hyphen («видава́ти-ся»,
+// the raw form kept) and this fold writes it as the modern postfix. Cited from the same dictionary page, quote verbatim.
+const SYA = Q('R2U', 'https://r2u.org.ua/html/umanets_pered.html, стаття «Выглядѣть» (цитата зі скріншота користувача, 2026-10-14)', 'видава́ти ся, здава́ти ся', 'Уманець–Спілка 1893–98 пише ся окремо; сучасний правопис: -ся — постфікс, пишеться разом з дієсловом')
+
 export const FOLDS: Fold[] = [
+  { id: 'ORTH-SYA', era: ['желехівка', 'r2u'], branch: false, cite: SYA, apply: R(/-ся$/, 'ся') },
   { id: 'ORTH-YAR-JER', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ъ$/, '') },
   { id: 'ORTH-YAR-YAT', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ѣ/g, 'і') },
   { id: 'ORTH-YAR-Y', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ы/g, 'и') },
