@@ -41,6 +41,7 @@ import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
+import CognatesPanel from '../components/CognatesPanel.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
@@ -229,7 +230,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         </Panel>
 
         <PlaceBlock :card="card" />   <!-- SPEC 60 NP-1/NP-3 «Власна назва · на мапі» (renders only for proper names / gazetteer places) -->
-        <EtymologyBlock :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (collapsible Panel inside) -->
+        <EtymologyBlock :lemma="card.lemma" /><CognatesPanel :lemma="card.lemma" />   <!-- SPEC 60 ET-1…ET-3 «Етимологія» (collapsible Panel inside) -->
 
         <!-- 2. Labels -->
         <Panel id="h-lab" v-model:open="ui.lab" title="Мітки · Labels" :summary="labParts.join(' · ')" :empty="!labParts.length"

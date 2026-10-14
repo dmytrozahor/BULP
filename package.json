@@ -13,6 +13,7 @@
     "data:publish": "tsx pipelines/data-branch.ts publish",
     "data:texts": "tsx pipelines/emit-texts.ts",
     "data:etymology": "tsx pipelines/etymology.ts",
+    "data:cognates": "tsx pipelines/cognates.ts",
     "data:pull": "tsx pipelines/data-branch.ts pull"
   },
   "dependencies": {

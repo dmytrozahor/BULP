@@ -33,7 +33,7 @@ import {
   admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, rankFirst, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
   type AnnEnv, type FirstCand, type FormAcc, type Ref, type StressJson,
 } from './build-annotate.ts'
-import { mine, type PhraseDoc } from '../core/phrasemes.ts'
+import { foldSpelling, mine, type PhraseDoc } from '../core/phrasemes.ts'
 import { writePhrases } from './build-phrases.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
@@ -44,6 +44,7 @@ import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
 import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
+import { writeCognates } from './build-cognates.ts'
 import { writeUsage } from './build-usage.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
 import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
@@ -251,7 +252,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
         if (ids[i]! >= 0) { pk[i] = ids[i]!; continue }
         const r = rawKey(w.tokens[i]!.raw)
         if (!oldText || !/^\p{L}+$/u.test(r)) { pk[i] = -1; continue }
-        let x = rawIds.get(r); if (x === undefined) { x = rawNames.length; rawIds.set(r, x); rawNames.push(r) }
+        const fk = foldSpelling(r); let x = rawIds.get(fk); if (x === undefined) { x = rawNames.length; rawIds.set(fk, x); rawNames.push(r) }   // BL-12b: spelling variants share one key
         pk[i] = -2 - x
       }
       phraseDocs.push({ wid: w.id, date: w.date, old: w.lang !== 'uk' || !!w.oldI, keys: pk, seg })
@@ -450,12 +451,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
   }
   lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated, songVocab)} songs`)   // LW-2 / HT-1 exports for the W10 stream
   {   // BL-12
-    const cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw)
-    const p = writePhrases(ROOT, PUB, generated, cands); lap(`phrases.json (BL-12): ${p.candidates} candidates, ${p.attestedTitles} attested idioms (${p.matched} matched)`)
+    const cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw, { top: 40000 })
+    const p = writePhrases(ROOT, PUB, generated, cands); lap(`phrases.json (BL-12/12b): ${p.candidates} candidates (>= 2 source families or attested), ${p.formulas} single-family formulas, ${p.attestedTitles} attested idioms (${p.matched} matched)`)
   }
   { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
+  { const c = writeCognates(cards, ROOT, PUB, generated); lap(`cognates.json (BL-15): ${c.entries} lemmas with Proto-Slavic counterparts, ${c.dated} with a dated counterpart, ${c.flags} ET-3 review flags`) }   // BL-15
 
   const rd2: ReportData = {
     generated, flags: { py: !opts.noPy, stress: !!stressJson, ru: Object.keys(ruJson).length > 0 }, authors: AUTHORS, witnesses: metas, routes, excluded,

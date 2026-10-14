@@ -162,6 +162,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BL-18 | tests/songs-bl18.test.ts › BL-18 folk songs and максимовичівка |
 | BL-6c | tests/formstats-bl6c.test.ts › BL-6c true form counts |
 | BL-12 | tests/phrasemes-bl12.test.ts › BL-12 phraseme candidates › a formula repeated in 2+ old witnesses outranks a much more frequent modern bigram |
+| BL-15 | tests/cognates-bl15.test.ts › BL-15 dating of a cognate › years, ranges and centuries from the cognate’s own etymology text (research/28 §4) |
+| BL-15 | tests/cognates-bl15.test.ts › BL-15 dating of a cognate › a date in a «Compare …» sentence (another language) is rejected; no date → undefined |
+| BL-15 | tests/cognates-bl15.test.ts › BL-15 ET-3 flag: interval logic, vernacular only, a review prompt › fires only when ours.to < every dated counterpart’s from (a 1350 witness does not antedate «14th century») |
+| BL-15 | tests/cognates-bl15.test.ts › BL-15 ET-3 flag: interval logic, vernacular only, a review prompt › a Church-Slavonic-layer attestation never fires; counterparts borrowed from Ukrainian are not compared |
+| BL-15 | tests/cognates-bl15.test.ts › BL-15 harvested cognates (kaikki, Proto-Slavic graph) › хата ← *xata: Polish chata and Belarusian хата are counterparts, Russian is marked borrowed (from Ukrainian) |
+| BL-12b | tests/phrasemes-bl12b.test.ts › BL-12b source families and spelling variants › Sophia inscriptions are one family, pvl_* redactions one, codex pages one |
+| BL-12b | tests/phrasemes-bl12b.test.ts › BL-12b source families and spelling variants › «своемоу» and «своему» (оу/ѹ, ѣ/е, jers) fold to one spelling key |
+| BL-12b | tests/phrasemes-bl12b.test.ts › BL-12b source families and spelling variants › thirty Sophia inscriptions count as ONE family: nF = 1 and they no longer outrank a formula in three independent chronicles |
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 V2/V1: кінь [kinʲ] → ZAK/HUT/LEM/WPL monophthong [kunʲ], CHN/WPL-N diphthong [ku̯inʲ]; unchanged without paradigm |
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 applicableDialects: кінь → ZAK, CHN, WPL …, not MDN/BOY/POD; a word with no feature → none |
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 every research/27 origin row has codes, a cite and (except G12) a verbatim [Q] quote |

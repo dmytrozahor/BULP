@@ -1,0 +1,12 @@
+kaikki.org (Wiktextract, Tatu Ylonen; en.wiktionary content CC BY-SA 4.0). Pinned 2026-10-14 because the site marks these files DEPRECATED / to be removed (research/28).
+Format: file | size bytes | sha256 | url
+
+kaikki.org-dictionary-ProtoSlavic.jsonl | 50236553 | d946567d5437e1b775f415ab052967d0e4afaacfa15ef57a88ed85cfd9ca4939 | https://kaikki.org/dictionary/Proto-Slavic/kaikki.org-dictionary-ProtoSlavic.jsonl (full)
+kaikki.org-dictionary-OldPolish.jsonl | 21720722 | bfc6afa3c7d622ad455cb4767b234c2ccaf71acc011431f1078a2c5be3579ea1 | https://kaikki.org/dictionary/Old%20Polish/kaikki.org-dictionary-OldPolish.jsonl (full)
+kaikki.org-dictionary-OldEastSlavic.jsonl | 5255360 | ad9ac539d46c5b913d4d83b9d1f560f8f99619157cc333e45eef313badf36bff | https://kaikki.org/dictionary/Old%20East%20Slavic/kaikki.org-dictionary-OldEastSlavic.jsonl (full)
+kaikki.org-dictionary-Belarusian.jsonl | 35692309 | 30072ca0db444d3c07a54eb8a8afa47d830111d47928e9e5d4333fa586771387 | https://kaikki.org/dictionary/Belarusian/kaikki.org-dictionary-Belarusian.jsonl (full)
+uk.jsonl | 300711368 | 887c546d4786224b12885abcc17151719b6473e894deb910a22cecd4c1c7296d | https://kaikki.org/dictionary/Ukrainian/kaikki.org-dictionary-Ukrainian.jsonl (full, downloaded 2026-10-12)
+
+Streamed dumps (raw not stored; filtered by pipelines/kaikki-filter.ts: etymology_text mentions Proto-Slavic|Old Polish|Old East Slavic|Old Ruthenian; kept fields word, lang_code, pos, etymology_text, etymology_templates, first gloss):
+Polish.filtered.jsonl | 27781807 | filtered-sha256 2171e0bd1ac9dbf33bf9db448285d6205858fd8d484a919bcdc0e43c0d0d4520 | raw 827293606 B sha256 c2874e82fac7432d76eaf3cfe31c52a34142a8eb6c4e3f67f89303528b00b273 | https://kaikki.org/dictionary/Polish/kaikki.org-dictionary-Polish.jsonl | 2026-10-14 | 43755 of 199289 entries kept
+Russian.filtered.jsonl | 3492210 | filtered-sha256 c2a5af4315c06b474e62be598e19be27d96f4693935812851817c41a3234dc8a | raw 944699141 B sha256 c11885ee3628630b9d516d5ee56263ae5207b4cd1f87f2071c122ca63bd85259 | https://kaikki.org/dictionary/Russian/kaikki.org-dictionary-Russian.jsonl | 2026-10-14 | 4990 of 442594 entries kept
