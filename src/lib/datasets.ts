@@ -68,7 +68,7 @@ export const songOfWitness = (d: SongsData | undefined, w: string): Song | undef
 export const songLines = (t: string): string[] => t.split(/\s*\/\s*|\n/).filter(Boolean).slice(0, 2)
 
 // ── phraseme candidates (BL-12) ──────────────────────────────────────────────────────────────
-export interface PhrasesData { generated: string; method: string; note: string; attestedSource: { name: string; licence: string; retrieved: string; url: string }; attested: string[]; candidates: Phraseme[]; /** BL-12b: single-family repetitions (graffiti formulas) */ formulas?: Phraseme[] }
+export interface PhrasesData { generated: string; method: string; note: string; attestedSource: { name: string; licence: string; retrieved: string; url: string }; attested: string[]; candidates: Phraseme[]; /** BL-12b: single-family repetitions (graffiti formulas) */ formulas?: Phraseme[]; /** BL-12c: function-word frames («шаблони», debug) */ frames?: Phraseme[] }
 const phrases = shallowRef<PhrasesData>()
 const loadPhrasesOnce = once<PhrasesData>('phrases', v => { phrases.value = v })
 export function usePhrases() { loadPhrasesOnce(); return phrases }

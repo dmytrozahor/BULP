@@ -8,7 +8,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { idiomWords, PHRASE_METHOD, type Phraseme } from '../core/phrasemes.ts'
 
-export function writePhrases(root: string, pub: string, generated: string, cands: Phraseme[]): { candidates: number; formulas: number; attestedTitles: number; matched: number } {
+export function writePhrases(root: string, pub: string, generated: string, cands: Phraseme[], frames: Phraseme[] = []): { candidates: number; formulas: number; attestedTitles: number; matched: number } {
   const p = resolve(root, 'data/work/phraseology-wikt.json')
   const w = existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) as { retrieved: string; categories: Record<string, string[]> } : undefined
   const titles = [...new Set(Object.values(w?.categories ?? {}).flat())].filter(t => idiomWords(t).length >= 2).sort((a, b) => a.localeCompare(b, 'uk'))
@@ -21,7 +21,7 @@ export function writePhrases(root: string, pub: string, generated: string, cands
     format: 1, generated, method: PHRASE_METHOD,
     note: 'кандидати — модель (асоціація logDice × архаїчність), а не словникові факти (P-1.7); «засвідчений фразеологізм» — окремий клас зі словникових категорій',
     attestedSource: { name: 'Вікісловник (uk): Категорія:Фразеологізми, Категорія:Українські фразеологізми', licence: 'CC BY-SA 4.0', retrieved: w?.retrieved ?? '', url: 'https://uk.wiktionary.org/wiki/Категорія:Фразеологізми' },
-    attested: titles, candidates: top, formulas,
+    attested: titles, candidates: top, formulas, frames: frames.slice(0, 500),
   }))
   return { candidates: top.length, formulas: formulas.length, attestedTitles: titles.length, matched }
 }

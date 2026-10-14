@@ -21,7 +21,23 @@ const SPELL_FOLD: Record<string, string> = { 'ѹ': 'у', 'ꙋ': 'у', 'ѡ': 'о'
 export const foldSpelling = (raw: string): string => raw.normalize('NFC').toLowerCase().replace(/[ѹꙋѡѻѣѧꙗѩѫыѵѳꙇїѕѯѱъьꙿ]/g, c => SPELL_FOLD[c]!).replace(/оу/g, 'у').replace(/[\u0300-\u036f\u0483-\u0489]/g, '')
 export interface PhraseComponents { logDice: number; mi: number; pre1400: number; pre1600: number; old: number; archaism: number; witnesses: number; families: number }
 export interface Phraseme { lemmas: string[]; spellings: string[]; f: number; witnesses: string[]; nW: number; /** BL-12b: distinct source families among the witnesses */ families: string[]; nF: number; dates: [number, number]; score: number; components: PhraseComponents; method: typeof PHRASE_METHOD; attested?: string }
-export interface PhraseOpts { minF?: number; minW?: number; maxN?: number; top?: number }
+export interface PhraseOpts { minF?: number; minW?: number; maxN?: number; top?: number; /** BL-12c: receives the raw function-word frames (the «шаблони» debug list) */ frames?: Phraseme[] }
+/**
+ * BL-12c function words (conj / prep / particle / personal-relative pronoun / copula) as FOLDED spellings (foldSpelling: ъ ь dropped, ѣ=е, ы=и, оу=у), modern and Old East Slavic alike.
+ * A closed list stands in for a POS lookup: old unlinked tokens carry no VESUM POS, and the list is exactly the class the backlog row names. Determiners (весь, цей) are content-bearing here.
+ */
+export const FUNCTION_WORDS: ReadonlySet<string> = new Set(('и і й а но ни або чи та да же ж бо ли ль бы би б не ся си мя тя ми ви ти я он она оно они вона воно вони він мы вы ты '
+  + 'на в во у з с со зо до по за од от из о об к ко при про без над под пред меж межи межу между через ради вь къ се то ту те тъ той сей сь иже яже еже что що хто кто какъ як яко ако '
+  + 'есть есмь еси суть буде бути быти бысть бѣ бе будеть оже аже аче если ожь тако так тамо там тут тоже також').split(' ').map(w => foldSpelling(w)))
+const fnKey = (lemma: string) => foldSpelling(lemma.replace(/^~/, '').replace(/\u0301/g, ''))
+export const isFunctionWord = (lemma: string): boolean => FUNCTION_WORDS.has(fnKey(lemma))
+/** BL-12c: the content core of a lemma sequence (leading / trailing function words trimmed) */
+export function contentCore(lemmas: string[]): { lemmas: string[]; trimmed: boolean; nContent: number } {
+  let a = 0, b = lemmas.length
+  while (a < b && isFunctionWord(lemmas[a]!)) a++
+  while (b > a && isFunctionWord(lemmas[b - 1]!)) b--
+  return { lemmas: lemmas.slice(a, b), trimmed: a > 0 || b < lemmas.length, nContent: lemmas.slice(a, b).filter(l => !isFunctionWord(l)).length }
+}
 const r3 = (x: number) => Math.round(x * 1000) / 1000
 
 export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling: (wi: number, ti: number) => string, o: PhraseOpts = {}): Phraseme[] {
@@ -83,6 +99,12 @@ export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling
       components: { logDice: r3(ld), mi: r3(m), pre1400: r3(p14), pre1600: r3(p16), old: r3(old), archaism: r3(arch), witnesses: ws.length, families: nF },
     })
   })
+  // BL-12c: a function-word frame («і син і», «на ~нъ і») leaves the ranking (→ o.frames, the «шаблони» debug list); its content core (≥ 2 content words, e.g. «вся земля») competes under its own counts
+  {
+    const keep: Phraseme[] = []
+    for (const p of out) { const c = contentCore(p.lemmas); if (c.trimmed || c.nContent < 2) o.frames?.push(p); else keep.push(p) }
+    out.length = 0; out.push(...keep)
+  }
   out.sort((a, b) => b.score - a.score || b.f - a.f)
   const byF = new Map<number, Phraseme[]>()
   for (const p of out) { const a = byF.get(p.f) ?? []; a.push(p); byF.set(p.f, a) }

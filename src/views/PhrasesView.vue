@@ -9,8 +9,8 @@ import { PHRASE_EPOCHS, phraseInEpoch } from '../../core/phrasemes.ts'
 import { witnessTo } from '../lib/nav.ts'
 import PhraseWords from '../components/PhraseWords.vue'
 const data = usePhrases()
-const epoch = ref<string>('all'), limit = ref(100), tab = ref<'top' | 'graffiti'>('top')   // BL-12b tab «формули графіті»
-const rows = computed(() => { const m = PHRASE_EPOCHS.find(e => e.id === epoch.value)!.max; return (tab.value === 'graffiti' ? data.value?.formulas ?? [] : data.value?.candidates ?? []).filter(p => phraseInEpoch(p, m)) })
+const epoch = ref<string>('all'), limit = ref(100), tab = ref<'top' | 'graffiti' | 'frames'>('top')   // BL-12b tab «формули графіті»
+const rows = computed(() => { const m = PHRASE_EPOCHS.find(e => e.id === epoch.value)!.max; return (tab.value === 'graffiti' ? data.value?.formulas ?? [] : tab.value === 'frames' ? data.value?.frames ?? [] : data.value?.candidates ?? []).filter(p => phraseInEpoch(p, m)) })
 </script>
 <template>
   <section>
@@ -24,9 +24,11 @@ const rows = computed(() => { const m = PHRASE_EPOCHS.find(e => e.id === epoch.v
       <div class="row sans small" role="group" aria-label="Список">
         <button type="button" class="chip" :aria-pressed="tab === 'top'" @click="tab = 'top'; limit = 100">сполучення (≥ 2 родини джерел)</button>
         <button type="button" class="chip" :aria-pressed="tab === 'graffiti'" @click="tab = 'graffiti'; limit = 100">формули графіті ({{ data.formulas?.length ?? 0 }})</button>
+        <button type="button" class="chip" :aria-pressed="tab === 'frames'" @click="tab = 'frames'; limit = 100">шаблони ({{ data.frames?.length ?? 0 }})</button>
       </div>
+      <p v-if="tab === 'frames'" class="muted sans small">Налагоджувальний список: службові рамки («і син і», «на ~нъ і») — не словосполучення; змістове ядро («вся земля») рахується окремо у списку «сполучення».</p>
       <p v-if="tab === 'graffiti'" class="muted sans small">Повтори в межах однієї родини джерел (усі написи Софії — одна родина; редакції одного літопису — одна): формульні, але не незалежні свідчення.</p>
-      <h2 class="small sans">{{ tab === 'top' ? 'Кандидати' : 'Формули графіті' }} <span class="badge">модель · {{ data.method }}</span> <span class="muted">{{ rows.length }}</span></h2>
+      <h2 class="small sans">{{ tab === 'top' ? 'Кандидати' : tab === 'frames' ? 'Шаблони (службові рамки)' : 'Формули графіті' }} <span class="badge">модель · {{ data.method }}</span> <span class="muted">{{ rows.length }}</span></h2>
       <div class="tablewrap"><table class="sans small">
         <thead><tr><th>#</th><th>сполучення (леми)</th><th>написання</th><th class="num">f</th><th>родини</th><th>пам’ятки</th><th>роки</th><th class="num">оцінка</th></tr></thead>
         <tbody><tr v-for="(p, i) in rows.slice(0, limit)" :key="p.lemmas.join('|')">
