@@ -1,5 +1,11 @@
 /* SPEC 61 UX styles (loaded after style.css). */
 
+/* every width (user 2026-10-14, landscape /corpus): headers, numbers and claim pills never break mid-word; wide tables scroll sideways */
+.tablewrap > table:not(.etable) th,
+.tablewrap > table:not(.etable) td.num,
+.tablewrap > table:not(.etable) td .badge { white-space: nowrap; word-break: keep-all; overflow-wrap: normal; }
+.tablewrap > table:not(.etable) td { min-width: 5rem; }
+
 /* UX defect (user, 2026-10-12): the etymology panel overflowed its container on desktop — long unbroken Wiktionary/ЕСУМ strings, transliterations,
    URLs and cognate chains. Every text-heavy panel wraps inside its box: long tokens break, flex/grid children may shrink, tables/pre never exceed the panel. */
 .card, .evpop, .ev, .kwic, .results a, .wordhead, .panel { overflow-wrap: anywhere; word-break: normal; min-width: 0; max-width: 100%; }
