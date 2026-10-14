@@ -27,7 +27,7 @@ describe('SPEC 63 MU', () => {
     expect(MU_FOLDS.length).toBeGreaterThanOrEqual(20)
     for (const f of MU_FOLDS) {
       expect(f.cite.locator.length, f.id).toBeGreaterThan(3)
-      expect(['RUSL', 'PAVL'], f.id).toContain(f.cite.source)
+      expect(['RUSL', 'PAVL', 'SHEV', 'PRAV'], f.id).toContain(f.cite.source)
       if (f.cite.kind !== 'Q') { expect(doc, f.id).toContain('PAVL ' + f.cite.locator.match(/с\. \d+/)![0]); continue }   // a paraphrased (decoded) table: research/35 names the page
       const q = f.cite.quote.replace(/\s+/g, ' ').slice(0, 45)
       expect(doc.includes(q), `${f.id}: «${q}» not in research/35`).toBe(true)
@@ -73,6 +73,22 @@ describe('SPEC 63 MU', () => {
     expect(tr('великоє')).toBe('MU-CONTR-E'); expect(tr('римськії')).toBe('MU-CONTR-IE'); expect(tr('рушил')).toBe('MU-PAST-L')
     expect(tr('явленіє')).toBeUndefined()   // a participle plural is not accepted for the -іє rule (it is the noun явленіє)
     expect(tr('людех')).toBeUndefined()      // a proper noun does not confirm the loc. pl. rule
+  })
+
+  it('MU-2 spelling and sound folds (кг, -ск-, е/о → і, -ніє → -ння) run in the second pass and are checked by VESUM; closed-syllable о → і is restricted; names and 1st-person verbs are refused', () => {
+    const env = mkEnv({
+      ґрунт: [{ lemma: 'ґрунт', tags: 'noun:inanim:m:v_naz' }], римського: [{ lemma: 'римський', tags: 'adj:m:v_rod' }], білий: [{ lemma: 'білий', tags: 'adj:m:v_naz' }],
+      військо: [{ lemma: 'військо', tags: 'noun:inanim:n:v_naz' }], гіда: [{ lemma: 'гід', tags: 'noun:anim:m:v_rod' }], наставлення: [{ lemma: 'наставлення', tags: 'noun:inanim:n:v_naz' }],
+      опікунів: [{ lemma: 'опікун', tags: 'noun:anim:p:v_rod' }], писаний: [{ lemma: 'писаний', tags: 'adj:m:v_naz:adjp:pasv:imperf' }], всію: [{ lemma: 'всіяти', tags: 'verb:perf:futr:s:1' }],
+      ідиного: [{ lemma: 'Ідин', tags: 'adj:m:v_rod' }],
+    })
+    const tr = (raw: string, phon = true) => { const e = { ...env, phon } as Env; const o = linkOptions(ctx(raw, { orth: 'ізборник-нормалізований' }), e); const c = o && chooseLemma(o.opts, new Map()); return c?.cand.trace.join('+') }
+    expect(tr('кгрунт', false)).toBe('MU-KG-G'); expect(tr('римского', false)).toBe('MU-SK')
+    expect(tr('белий')).toBe('MU-E-I-1'); expect(tr('белий', false)).toBeUndefined()   // е/о → і only in the second pass
+    expect(tr('войсько')).toBe('MU-O-I-1'); expect(tr('года')).toBeUndefined()           // an open syllable is not R10
+    expect(tr('наставленіе')).toBe('MU-NIJE-NNJA'); expect(tr('опекунов')).toBe('MU-E-I-1+MU-GEN-PL-OV'); expect(tr('писан')).toBe('MU-SHORT-AN')
+    expect(tr('всею')).toBeUndefined()    // VESUM «всію» is a 1st-person verb
+    expect(tr('единого')).toBeUndefined() // VESUM «Ідин» is a name
   })
 
   it('MU-3 capitalised unresolved tokens (not paragraph-first, never written lower-case) get name cards with basis capitalisation', () => {

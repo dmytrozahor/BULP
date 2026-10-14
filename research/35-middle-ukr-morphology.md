@@ -45,3 +45,25 @@ Not reachable in this session (not cited for any rule): Жовтобрюх та 
 | pronoun oblique stems (всего, всему, всем, нем, нему, свой→своєго) | yes | PAVL gives only the OCS-period paradigm; no Middle Ukrainian statement found |
 | irregular stems могл → міг, зостал → зостався | yes | irregular; needs the verb paradigm of the dictionary |
 | hyphen artefacts (вели-кого, козако-руськіє, що-кольвек) | yes | an ingest artefact of line breaks, not a language rule |
+
+## 5. Spelling and sound folds added for the normalised izbornyk witnesses (Загоровський 1577 и под., SPEC 63 MU)
+
+Applied in this order, each optional: enclitic split → кг → -ск- → (second VESUM pass only) е/о → і, -ніє → -ння → one morphology rule.
+
+- **MU-KG-G (кг → ґ)** — RUSL ru04, с. 49–50: «нового звука /ґ/, який прийшов в українську мову разом зі словами іншомовного походження; передавався він у цей час буквосполукою кг: буркгомистру, кгвалть, кгды, кголдова[т] (і голдовати), кгрунть, довкговдъ» (кгрунт → ґрунт, кгвалт → ґвалт; кгородский stays unlinked: the source names ґ only in loans).
+- **MU-E-I-n (е written for ѣ → і)** — RUSL ru04, с. 49–50: «на місці етимологічного Ђ уживається е (частіше) або и (вЂчные — вечные, всЂмъ — всемъ, всимъ, всЂхъ — всихъ, дЂтем — детемъ — дитемъ, свЂдци — свидци, рЂцЂ — рЂци)»; ѣ > і is SHEV ch. 32 (R09), the same і from е in a closed syllable SHEV ch. 43 (R10). The letter alone does not tell, so one fold per position (n = 1…3) and VESUM decides.
+- **MU-O-I-n (о → і in a new closed syllable)** — SHEV ch. 43 (R10 in core/phonology.ts): «Буковина першою зініціювала… звуження е та о в новозакритих складах після занепаду єрів (še·st', sto·l > šíst', stu·l)». Applied only to о followed by consonants to the end of the word or by two consonants (the syllable closed by a lost jer): под → під, войсько → військо; года, оному stay out.
+- **MU-NIJE-NNJA / MU-TIJE-TTJA (-ніє → -ння, -тіє → -ття)** — SHEV 37.1 (R13): «скупчення з новопосталим j усунено в XV ст. (див. 37.1)».
+- **MU-SK (-ский/-цкий → -ський/-цький)** — Правопис 2019 § 19: «к, м’який ц, ч + -ськ-(ий), -ство-(о) → -цьк-(ий), -цтв-(о): гірник — гірницький — гірництво; козак — козацький — козацтво»; also «х, ш, с + -ськ-, -ств- → -ськ-, -ств-: волох — волоський; чех — чеський».
+- **MU-SHORT-AN (писан → писаний)** — same description as MU-SHORT-EN (RUSL ru05, с. 116, PAVL с. 102).
+- Not a fold: ы → и is already done by derive() (R03/R05, research/03).
+
+## 6. Requested but not implemented (no citable description found)
+
+| form | reason |
+|---|---|
+| их → їх, его/ее/мое/моих (Russian pronoun forms) | no description of the Middle Ukrainian pronoun paradigm found in RUSL, PAVL, ENC, Shevelov; web search returned school material only |
+| месяца → місяця (-ца → -ця), нароженя, устройствѣ | no source for the soft-sign respelling; lexical |
+| е → и in names (володимерский → володимирський) | RUSL names е/и for ѣ only |
+| ґородский → городський | the source gives ґ for loanwords only |
+| менувати, подстароста, небытность, кастелян | lexical archaisms: they link through the Old Ukrainian dictionary witnesses / archaic cards (SPEC 63 AR), never by a fold |

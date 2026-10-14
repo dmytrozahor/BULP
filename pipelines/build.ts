@@ -169,6 +169,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
   // ── 3. link (B-2) ──────────────────────────────────────────────────────────────────────────────
   const env: Env = { hits: hits1, derive, fold }
   const opts1 = types.map(t => linkOptions(t, env))
+  {   // SPEC 63 MU-2: the phonetic MU folds (е/о → і, -ніє → -ння) multiply candidates, so they run in a second VESUM pass over the Middle Ukrainian token types still unresolved
+    const pend = types.flatMap((t, x) => (!opts1[x] && t.orth && MU_ORTH.has(t.orth) ? [x] : []))
+    const ks = new Set<string>(); for (const x of pend) for (const k of wantedKeys(types[x]!, { derive, fold, phon: true })) if (!hits1.has(k)) ks.add(k)
+    for (const [k, v] of (await vesumIndex(ks, new Set())).hits) hits1.set(k, v)
+    env.phon = true; for (const x of pend) opts1[x] = linkOptions(types[x]!, env)
+    lap(`MU phonetic pass: ${pend.length} unresolved Middle Ukrainian token types, ${ks.size} candidate keys, ${pend.filter(x => opts1[x]).length} linked`)
+  }
   const freq = new Map<string, number>()            // B-2.1(b): lemma frequency among unambiguous direct links of modern witnesses
   opts1.forEach((o, x) => {
     if (o?.route !== 'direct') return
@@ -306,7 +313,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       })
       return { w, n: w.tokens.length, linked: ids.reduce((a, b) => a + (b >= 0 ? 1 : 0), 0), names: cap.tokens.get(w.id) ?? 0, rules, unresolved }
     })
-    muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26'])
+    muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26', 'i14_09'])
     lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
   }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)

@@ -10,6 +10,7 @@
  */
 import { P, Q, type Evidence } from './evidence.ts'
 import { SOURCES } from './sources.ts'
+import { ruleById } from './phonology.ts'
 import type { Fold } from './orthography.ts'
 
 // the registry line belongs to core/sources.ts; registered here so that this change does not touch a file other agents are editing (move it there when convenient)
@@ -18,7 +19,7 @@ if (!SOURCES['RUSL']) SOURCES['RUSL'] = { title: 'Русанівський В. �
 /** Orthographies (WitnessOut.orth) of the witnesses whose text is Middle Ukrainian written in modern letters. */
 export const MU_ORTH = new Set(['modernised', 'ізборник-нормалізований'])
 
-export interface MuFold extends Fold { group: 'encl' | 'main'; expect: (tags: string) => boolean; person?: string }
+export interface MuFold extends Fold { group: 'encl' | 'orth' | 'phon' | 'main'; expect: (tags: string) => boolean; person?: string }
 
 const RU4 = 'http://izbornyk.org.ua/rusaniv/ru04.htm', RU5 = 'http://izbornyk.org.ua/rusaniv/ru05.htm'
 const FEM_GEN = Q('RUSL', `${RU4}, с. 49–51 (мова українських грамот XIV–XV ст.)`, 'у родовому відмінку однини прикметників і прикметникових займенників, уживаних в жіночому роді, виступає закінчення -oЂ/-еЂ, -oi/-ei, що вірогідно позначають /і/ з попереднім /й/: кривавоЂ, мокроЂ, молдавскоЂ, нашеі, никакоЂ, освЂценоі, рускоЂ, вашеЂ.')
@@ -30,12 +31,19 @@ const ENCL = Q('RUSL', `${RU5}, с. 92 (мова українських пане
 const SHORT = Q('RUSL', `${RU5}, с. 116 (панегірики початку XVIII ст.)`, 'пасивні дієприкметники на -нн виступають здебільшого в короткій формі: предложенну, обагренну, принесенну, плЂненна, избранный, изгнанный, возвышенна, возданна, распаленна і под.', 'PAVL с. 102: «Іменні форми якісних прикметників уживаються у фольклорі (дрібен дощик) … група колишніх іменних прикметників … винен, годен, ладен, певен»')
 const CONTR = Q('PAVL', 'с. 103', 'Займенникові прикметники в українській мові зазнали стягнення. Тому в сучасній мові нормою є вживання займенникових стягнених прикметників, що особливо виразно ілюструють форми називного відмінка: добрая > добра. У сучасній мові нестягнені форми вживаються у фольклорі: Зеленеє жито, зелене, хорошії гості у мене.', 'ЕУМ «Історія української мови» (um27): «Проте переважали повні форми, які спершу виступали у нестягненій формі, а з 16 ст. — у стягненій»')
 const GEN_PL = Q('PAVL', 'с. 83', 'Здавна в родовому відмінку множини виступає закінчення -ов іменників з основою на *-ŭ, яке поширюється на іменники з основою на *-ŏ/*-јŏ й поступово закономірно змінюється у флексію -ів')
+const KG = Q('RUSL', `${RU4}, с. 49–50 (мова українських грамот XIV–XV ст.)`, 'нового звука /ґ/, який прийшов в українську мову разом зі словами іншомовного походження; передавався він у цей час буквосполукою кг: буркгомистру, кгвалть, кгды, кголдова[т] (і голдовати), кгрунть, довкговдъ')
+const YAT_E = Q('RUSL', `${RU4}, с. 49–50 (мова українських грамот XIV–XV ст.)`, 'на місці етимологічного Ђ уживається е (частіше) або и (вЂчные — вечные, всЂмъ — всемъ, всимъ, всЂхъ — всихъ, дЂтем — детемъ — дитемъ, свЂдци — свидци, рЂцЂ — рЂци)', 'ѣ > і — Шевельов (core/phonology.ts R09); у новозакритому складі — R10 (SHEV ch. 43)')
+const CLOSED = ruleById['R10']!.cite    // SHEV: е, о > і у новозакритих складах
+const LENGTH = ruleById['R13']!.cite   // SHEV 37.1: скупчення з новопосталим j усунено в XV ст. (-ьѥ > -ття / -ння)
+const SK = Q('PRAV', 'https://slovnyk.ua/pravopys.php, § 19 (research/13 S10c)', 'к, м’який ц, ч + -ськ-(ий), -ство-(о) → -цьк-(ий), -цтв-(о): гірник — гірницький — гірництво; козак — козацький — козацтво', 'також: «х, ш, с + -ськ-, -ств- → -ськ-, -ств-: волох — волоський; чех — чеський»; сучасне написання суфікса — -ськ-(ий)')
 
 const seg = (t: string) => t.split(':')
 const isAdjLike = (t: string) => /^(adj|adjp|numr)\b/.test(t) || (/^noun\b/.test(t) && seg(t).includes('pron'))
 const hasCase = (t: string, ...c: string[]) => c.some(x => seg(t).includes(x))
-const R = (re: RegExp, to: string) => (w: string) => w.replace(re, to)
+const R = (re: RegExp, to: string | ((...m: string[]) => string)) => (w: string) => w.replace(re, to as string)
 
+/** replace the n-th match of `re` (one fold per position, so that a recorded rule id re-applies deterministically in the trace) */
+const nth = (re: RegExp, n: number, to: string) => (w: string) => { let i = 0; return w.replace(re, m => (++i === n ? to : m)) }
 const mk = (id: string, group: MuFold['group'], cite: Evidence, apply: (w: string) => string, expect: MuFold['expect'], person?: string): MuFold => ({ id, era: ['mu'], branch: false, cite, apply, group, expect, ...(person ? { person } : {}) })
 
 export const MU_FOLDS: MuFold[] = [
@@ -63,6 +71,15 @@ export const MU_FOLDS: MuFold[] = [
   mk('MU-GEN-PL-OV', 'main', GEN_PL, R(/ов$/, 'ів'), t => /^noun\b/.test(t) && hasCase(t, 'v_rod') && hasCase(t, 'p')),
   // short (nominal) passive participles / adjectives -ен → -ений
   mk('MU-SHORT-EN', 'main', SHORT, R(/ен$/, 'ений'), t => /^(adj|adjp)\b/.test(t) && hasCase(t, 'm') && hasCase(t, 'v_naz')),
+  mk('MU-SHORT-AN', 'main', SHORT, R(/ан$/, 'аний'), t => /^(adj|adjp)\b/.test(t) && hasCase(t, 'm') && hasCase(t, 'v_naz')),
+  // spelling: кг = ґ; -ский/-цкий → -ський/-цький
+  mk('MU-KG-G', 'orth', KG, R(/кг/g, 'ґ'), () => true),
+  mk('MU-SK', 'orth', SK, R(/(?<=[^ь])([сц])к(?=(?:ий|ого|ому|им|ім|их|ой|ом|ая|ую|ое|ые|ие|ими|ою|ої|ій|ые)$)/, (_m: string, c: string) => c + 'ьк'), () => true),
+  // phonetic (second VESUM pass only): е/о → і (ѣ written е, new ikavism), -ніє/-тіє → -ння/-ття
+  ...[1, 2, 3].map(n => mk(`MU-E-I-${n}`, 'phon', YAT_E, nth(/е/g, n, 'і'), () => true)),
+  ...[1, 2, 3].map(n => mk(`MU-O-I-${n}`, 'phon', CLOSED, nth(/о(?=[бвгґджзйклмнпрстфхцчшщь]+$|[бвгґджзйклмнпрстфхцчшщ]{2})/g, n, 'і'), () => true)),
+  mk('MU-NIJE-NNJA', 'phon', LENGTH, R(/(?<=[аеє])н(?:іє|іе|ие|ія|ье|ьє)$/, 'ння'), () => true),
+  mk('MU-TIJE-TTJA', 'phon', LENGTH, R(/(?<=[аеє])т(?:іє|іе|ие|ія|ье|ьє)$/, 'ття'), () => true),
   // uncontracted full adjectives (-ая → -а, -оє → -е, -ії → -і, -ую → -у …)
   mk('MU-CONTR-A', 'main', CONTR, R(/(?:ая|яя)$/, 'а'), t => isAdjLike(t) && hasCase(t, 'f') && hasCase(t, 'v_naz')),
   mk('MU-CONTR-E', 'main', CONTR, R(/(?:ое|оє|ее|еє)$/, 'е'), t => isAdjLike(t) && (hasCase(t, 'n') || hasCase(t, 'f')) && hasCase(t, 'v_naz', 'v_zna')),
@@ -75,14 +92,19 @@ export const muById = Object.fromEntries(MU_FOLDS.map(f => [f.id, f])) as Record
 const ENCLS = MU_FOLDS.filter(f => f.group === 'encl'), MAINS = MU_FOLDS.filter(f => f.group === 'main')
 
 export interface MuCandidate { form: string; trace: string[]; last: MuFold }
-/** Candidate modern forms of one (lower-cased, modern-letter) token: [enclitic split] then [one main rule]; at least one rule must change the word. */
-export function muCandidates(raw: string): MuCandidate[] {
-  const out: MuCandidate[] = []
-  const bases: { form: string; trace: string[]; last?: MuFold }[] = [{ form: raw, trace: [] }]
-  for (const f of ENCLS) { const o = f.apply(raw); if (o !== raw && o) bases.push({ form: o, trace: [f.id], last: f }) }
-  for (const b of bases) {
-    if (b.last) out.push({ form: b.form, trace: b.trace, last: b.last })       // «дойшов-єм»: the rest is already a modern form
-    for (const f of MAINS) { const o = f.apply(b.form); if (o !== b.form && o && !o.includes('-')) out.push({ form: o, trace: [...b.trace, f.id], last: f }) }
+const ORTH_KG = MU_FOLDS.filter(f => f.id === 'MU-KG-G'), ORTH_SK = MU_FOLDS.filter(f => f.id === 'MU-SK'), PHONS = MU_FOLDS.filter(f => f.group === 'phon')
+/**
+ * Candidate modern forms of one (lower-cased, modern-letter) token. Stages, each optional and at most one rule: [enclitic split] → [кг → ґ] → [-ск- → -ськ-] → [phonetic: е/о → і, -ніє → -ння; only with `phon`,
+ * the build passes it for tokens still unresolved after the first VESUM pass] → [one morphology rule]. At least one rule must change the word; the last rule applied states what VESUM must confirm.
+ */
+export function muCandidates(raw: string, phon = false): MuCandidate[] {
+  const out: MuCandidate[] = [], stages: MuFold[][] = [ENCLS, ORTH_KG, ORTH_SK, ...(phon ? [PHONS] : []), MAINS]
+  let cur: { form: string; trace: string[]; last?: MuFold }[] = [{ form: raw, trace: [] }]
+  for (const st of stages) {
+    const next = [...cur]
+    for (const b of cur) for (const f of st) { const o = f.apply(b.form); if (o !== b.form && o && !o.includes('-')) next.push({ form: o, trace: [...b.trace, f.id], last: f }) }
+    cur = next.slice(0, 600)
   }
+  for (const c of cur) if (c.last) out.push({ form: c.form, trace: c.trace, last: c.last })
   return out
 }

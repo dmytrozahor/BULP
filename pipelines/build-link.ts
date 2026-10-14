@@ -15,7 +15,7 @@ import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
 import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
 import { velarCandidates } from '../core/palatalization.ts'
-import { MU_ORTH, muCandidates } from '../core/mu-fold.ts'
+import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -27,6 +27,8 @@ export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
   fold: (s: string, orth?: string) => Candidate[]
+  /** SPEC 63 MU: also try the phonetic MU folds (second VESUM pass, only for tokens unresolved by the first) */
+  phon?: boolean
 }
 export interface Option { id: string; lemma: string; form: string; hit: VesumHit; cand: Candidate; tier: number; own: Candidate; ownConfirmed: boolean; cls: VClass; corr?: { row: Correspondence; old: string } }
 export interface Chosen extends Option { alternatives: string[]; decidedBy: 'unique' | 'tier' | 'branches' | 'frequency' | 'first' }
@@ -71,13 +73,17 @@ function ownFor(id: string, cands: Candidate[], hits: Env['hits']): { own: Candi
 
 /** SPEC 63 MU-2: last resort for Middle Ukrainian text in modern letters. A cited morphology fold yields a candidate; VESUM must list it with the analysis the fold states (`expect`),
  *  and the token's own POS gate (if any) must agree. Tie-breaks treat every MU rule as a branch, so a plain route always wins. */
+const muAccepts = (m: { trace: string[]; last: { group: string } }, h: VesumHit) =>
+  m.trace.every(id => muById[id]!.expect(h.tags))                               // every rule of the chain states its analysis (an enclitic split needs a past-tense verb)
+  && !/:(prop|abbr|slang|vulg|obsc)\b/.test(':' + h.tags) && h.lemma[0] === h.lemma[0]!.toLowerCase()   // names get name cards instead; no abbreviation / slang homophone
+  && !(m.last.group === 'phon' && /^verb\b/.test(h.tags) && h.tags.split(':').includes('1'))             // phonetic-only candidates never turn a token into a 1st-person verb form (всею ≠ всію «засіваю»)
 function muOptions(t: TypeCtx, env: Env): Option[] {
   if (!t.orth || !MU_ORTH.has(t.orth)) return []
   const out: Option[] = []
-  for (const m of muCandidates(key(t.raw))) {
+  for (const m of muCandidates(key(t.raw), !!env.phon)) {
     const cands: Candidate[] = t.lang === 'uk' ? [{ form: m.form, trace: m.trace, branches: m.trace.length }]
       : env.derive(m.form, t.oldI).candidates.map(d => ({ form: d.form, trace: [...m.trace, ...d.trace], branches: d.branches + m.trace.length }))
-    for (const c of cands) for (const h of env.hits.get(key(c.form)) ?? []) if (m.last.expect(h.tags) && compatible(t.gate, h.tags)) out.push(toOption(key(c.form), h, c, c, true))
+    for (const c of cands) for (const h of env.hits.get(key(c.form)) ?? []) if (muAccepts(m, h) && compatible(t.gate, h.tags)) out.push(toOption(key(c.form), h, c, c, true))
   }
   return out
 }
@@ -123,7 +129,7 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
 }
 
 /** Candidate keys a token type may need from VESUM (collected before the single pass). */
-export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): string[] {
+export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'>): string[] {
   const out: string[] = []
   for (const l of [t.lemma, t.stanza]) if (l) {
     for (const c of env.derive(l, t.oldI).candidates) out.push(key(c.form))
@@ -132,7 +138,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): strin
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
   if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
-  if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw))) { if (t.lang === 'uk') out.push(key(m.form)); else for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) }
+  if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw), !!env.phon)) { if (t.lang === 'uk') out.push(key(m.form)); else for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) }
   return out
 }
 
