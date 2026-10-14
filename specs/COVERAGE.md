@@ -159,6 +159,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | FX-5 | tests/fx.test.ts › paradigm kind by POS |
 | FX-6 | tests/fx.test.ts › FX-6: real nouns place most tagged tokens in cells |
 | FX-8 | tests/epoch-pron.test.ts › tokens are PLACED in the pron grid, not conflicted |
-| BL-18 | tests/songs-bl18.test.ts (максимовичівка folds cited ENC um43; 5 PD Maksymovych-1834 witnesses; vocabulary-only policy) · tests/real-data-bl18.test.ts (songs.json vocab has counts only, alphabetical) |
-| BL-6c | tests/formstats-bl6c.test.ts (witnesses and map from FormCard.byW) · tests/real-data-bl18.test.ts (Σ byW = f in real shards) |
+| BL-18 | tests/songs-bl18.test.ts › BL-18 folk songs and максимовичівка |
+| BL-6c | tests/formstats-bl6c.test.ts › BL-6c true form counts |
 | FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |
