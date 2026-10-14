@@ -25,6 +25,7 @@ import ClaimSet from '../components/ClaimSet.vue'
 import FormLegend from '../components/FormLegend.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Collocations from '../components/Collocations.vue'
+import PhrasePanel from '../components/PhrasePanel.vue'
 import Dots from '../components/Dots.vue'
 import EpochBars from '../components/EpochBars.vue'
 import EvidencePopover from '../components/EvidencePopover.vue'
@@ -321,6 +322,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <RegionMap v-if="full" :card="full" /><div v-else class="skeleton" style="height:6rem" /></Panel>
         <Panel id="h-col" :open="false" title="Типові сполучення" :summary="full ? `${full.stats.colloc.length} сполучень` : 'завантаження…'" :empty="!!full && !full.stats.colloc.length">
           <Collocations v-if="full" :colloc="full.stats.colloc" /><div v-else class="skeleton" style="height:4rem" /></Panel>
+        <PhrasePanel :lemma="props.lemma" />
       </aside>
     </div>
   </template>

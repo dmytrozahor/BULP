@@ -7,6 +7,7 @@
 import { shallowRef } from 'vue'
 import { D, claim, type Claim } from '../../core/evidence.ts'
 import { heteronymKey } from '../../core/heteronyms.ts'
+import type { Phraseme } from '../../core/phrasemes.ts'
 import type { Donor, DonorLabel, LabelLookup } from '../../core/loanwords.ts'
 
 const once = <T>(name: string, set: (v: T) => void): (() => void) => {
@@ -65,3 +66,11 @@ export const KIND_SONG_UK: Record<Song['kind'], string> = { folk: 'народн�
 export const songOfWitness = (d: SongsData | undefined, w: string): Song | undefined => d?.songs.find(s => s.witness === w)
 /** ≤ 2 lines of a quotation (NW-7 lyrics policy) */
 export const songLines = (t: string): string[] => t.split(/\s*\/\s*|\n/).filter(Boolean).slice(0, 2)
+
+// ── phraseme candidates (BL-12) ──────────────────────────────────────────────────────────────
+export interface PhrasesData { generated: string; method: string; note: string; attestedSource: { name: string; licence: string; retrieved: string; url: string }; attested: string[]; candidates: Phraseme[] }
+const phrases = shallowRef<PhrasesData>()
+const loadPhrasesOnce = once<PhrasesData>('phrases', v => { phrases.value = v })
+export function usePhrases() { loadPhrasesOnce(); return phrases }
+/** pure: candidates that contain `lemma` (case-insensitive) */
+export const phrasesOf = (d: PhrasesData | undefined, lemma: string): Phraseme[] => (d?.candidates ?? []).filter(p => p.lemmas.some(l => l.replace(/^~/, '').toLowerCase() === lemma.toLowerCase()))

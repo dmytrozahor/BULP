@@ -33,6 +33,8 @@ import {
   admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, rankFirst, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
   type AnnEnv, type FirstCand, type FormAcc, type Ref, type StressJson,
 } from './build-annotate.ts'
+import { mine, type PhraseDoc } from '../core/phrasemes.ts'
+import { writePhrases } from './build-phrases.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
@@ -200,6 +202,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lemmas = new Map<string, LemmaAcc>(), lemmaList: LemmaAcc[] = []
   const routes: Record<string, Record<string, number>> = {}, wLinked = new Map<string, number>()
   const unres = new Map<string, number>(), docs: { id: Int32Array; seg: Int32Array }[] = []
+  const phraseDocs: PhraseDoc[] = [], rawIds = new Map<string, number>(), rawNames: string[] = []   // BL-12: n-gram input (lemma ids; raw spellings of unlinked tokens in pre-1600 / non-modern texts)
   const wmeta = new Map<string, Loaded>(adm.map(l => [l.w.id, l]))
   adm.forEach(({ w, nlp }, wi) => {
     const m = meta[wi]!, ids = new Int32Array(w.tokens.length).fill(-1), seg = Int32Array.from(w.tokens.map(t => t.s))
@@ -242,6 +245,17 @@ export async function build(opts: { noPy?: boolean } = {}) {
       bump(fa.perW, w.id)
     })
     wLinked.set(w.id, nl); docs.push({ id: ids, seg })
+    {
+      const oldText = w.date[1] < 1600 || w.lang !== 'uk', pk = new Int32Array(ids.length)
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i]! >= 0) { pk[i] = ids[i]!; continue }
+        const r = rawKey(w.tokens[i]!.raw)
+        if (!oldText || !/^\p{L}+$/u.test(r)) { pk[i] = -1; continue }
+        let x = rawIds.get(r); if (x === undefined) { x = rawNames.length; rawIds.set(r, x); rawNames.push(r) }
+        pk[i] = -2 - x
+      }
+      phraseDocs.push({ wid: w.id, date: w.date, old: w.lang !== 'uk' || !!w.oldI, keys: pk, seg })
+    }
     void nlp
   })
   const NL = [...wLinked.values()].reduce((a, b) => a + b, 0), unresolved = sizes.N - NL
@@ -435,6 +449,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
     writeFileSync(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
   }
   lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated, songVocab)} songs`)   // LW-2 / HT-1 exports for the W10 stream
+  {   // BL-12
+    const cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw)
+    const p = writePhrases(ROOT, PUB, generated, cands); lap(`phrases.json (BL-12): ${p.candidates} candidates, ${p.attestedTitles} attested idioms (${p.matched} matched)`)
+  }
   { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
