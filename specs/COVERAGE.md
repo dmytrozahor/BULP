@@ -167,5 +167,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BL-14 | tests/ikavism.test.ts › BL-14 chain: конь → кінь, R10 step = south о > о· > у· > ü > і and north о > о· > уо > уі > і, reconstruction with the Shevelov quote |
 | BL-14 | tests/ikavism.test.ts › BL-14 Львів: chain from the paradigm (Львова) has the stage Львув marked не засвідчено; no attested list contains it |
 | BL-14 | tests/ikavism.test.ts › BL-14 reflexes: every reflex is a Q whose verbatim quote prints the form |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 1: -овъ > -ів (Львовъ → Львів; gen. pl. братовъ → братів, ковалевъ → ковалів) |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 3: -івл- by analogy (будовля → будівля, торговля → торгівля), a lexical branch tagged R10a, not R10 |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 4: pleophonic і is lexically allowed (сторонъ → сторін, берегъ → беріг), the ordinary candidate stays |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 5: open-syllable і in кінець-type words (R10c); the plain candidate stays |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 6: prothesis is shown before the ikavism (окъно → вокно → вікно) |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 7: the trace records which jer followed (ніс < несъ: ъ; ь for the soft jer), and несла has no і |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 9: new ѣ (ѣ₂) is marked for the lexemes WP «Новий ять» names (камѣнь, шѣсть), not for an etymological ѣ (дѣтина, лѣсъ) |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 10: written ô / ê (Galician etymological orthography) read as the ikavism marker (Львôвъ → Львів, мôй → мій, кôнь → кінь) |
+| BL-14 | tests/form-classes.test.ts › BL-14 class 11: prothetic и- before л/р + jer (илвовъ → Львів, ильняний → льняний, ръжа → іржа) |
 | FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |
 | BL-11 | tests/ingest-dict.test.ts › BL-11 dictionary headwords from OCR djvu text |

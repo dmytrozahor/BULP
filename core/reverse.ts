@@ -67,7 +67,6 @@ const ROWS: Row[] = [
     const sib = c.par.find(q => q.startsWith(m[1]! + UNPAL[m[2]!]) && q.length <= w.length + 1)
     return sib ? [{ w, ev: [D('VESUM', 'парадигма леми', `${w} / ${sib}`)], cost: 0 }] : []
   } },
-  { id: 'R21', gen: w => one(w, R('^в(?=у|оC)'), () => '') },                                              // drop prothetic в
   { id: 'R19', gen: w => one(w, /р$/g, () => 'рь') },
   { id: 'R18', gen: w => [...one(w, /([жчшщ])$/g, m => m[1] + 'ь'), ...one(w, /([жчшщ])у/g, m => m[1] + 'ю'), ...one(w, /([жчш])а/g, m => m[1] + 'я')] },
   { id: 'R17', gen: w => one(w, /([жчшй])о/g, m => m[1] + 'е') },
@@ -79,6 +78,7 @@ const ROWS: Row[] = [
   { id: 'R09', gen: (w, c) => expand(w, /[ії]/g, m => ikav(w, m.index!, c).length ? [] : ['ѣ']) },        // not where the paradigm proves о/е
   { id: 'R07', gen: w => [...one(w, R('([бвгдзкпстх])ер(ь?)$'), m => m[1] + 'р' + m[2]), ...one(w, /гонь$/g, () => 'гнь')] },
   { id: 'R10', forced: true, gen: (w, c) => expand(w, /і/g, m => ikav(w, m.index!, c).map(a => ({ ...a, w: a.w[m.index!]! }))) },   // only with paradigm evidence
+  { id: 'R21', gen: w => one(w, R('^в(?=у|оC)'), () => '') },                                              // drop prothetic в (forward R21 runs before R10: вокно → вікно)
   { id: 'R04', forced: true, gen: (w, c) => { const f = fleeting(w, c); return f.length ? f : /[бвгґджзклмнпрстфхцчшщ]$/.test(w) ? [{ w: w + 'ъ', cost: 0 }] : [] } },
   { id: 'R06', gen: w => [...expand(w, R('(C)(ол|ор)(?=C)'), m => [m[1]! + 'ъ' + m[2]!.slice(1), ...(m[2] === 'ол' ? [m[1]! + 'ьл'] : [])]), ...one(w, R('(C)ер(?=C)'), m => m[1] + 'ьр')] },
   { id: 'R13', gen: w => [...one(w, /([тдсзлнцчжш])\1я$/g, m => m[1] + 'ьѥ'), ...one(w, /([рбпвмф])'я$/g, m => m[1] + 'ьѥ')] },

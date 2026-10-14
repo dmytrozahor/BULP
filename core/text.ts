@@ -34,6 +34,8 @@ const SUPERSCRIPT = [...'бвгджзклмнопрстхцчшщѳ', 'ст', '�
 type Repl = string | ((m: string) => string)
 const sub = (s: string, re: RegExp, to: Repl) => typeof to === 'string' ? s.replace(re, to) : s.replace(re, to)
 const N_TABLE: [RegExp, Repl][] = [
+  // N00 (research/27 §3.4 class 10): Galician etymological orthography writes [i] < о / е as о, е with a «дашок» (мôй, жалôбно, ôнъ, матêрью — WP «Ікавізм», «Графіка»): the letter already IS the new і
+  [/[оo]̂|ô/g, 'і'], [/[еe]̂|ê/g, 'і'],
   [/[ⷠ-ⷿ]/g, c => SUPERSCRIPT[c.codePointAt(0)! - 0x2DE0] ?? ''],
   [/[҃-҉꙯-꙽̀̑̾]/g, ''],     // N01 titlo, psili, kamora, accents (after N10)
   [/ѿ/g, 'от'], [/[ѡѽѻꙩꙫꙭꚙꚛ]/g, 'о'],                           // N03
