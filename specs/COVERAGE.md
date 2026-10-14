@@ -187,3 +187,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BL-14 | tests/form-classes.test.ts › BL-14 class 11: prothetic и- before л/р + jer (илвовъ → Львів, ильняний → льняний, ръжа → іржа) |
 | FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |
 | BL-11 | tests/ingest-dict.test.ts › BL-11 dictionary headwords from OCR djvu text |
+| BL-12c | tests/phrasemes-bl12c.test.ts › BL-12c content-word phrases › contentCore trims leading and trailing function words and counts content words |
+| BL-12c | tests/phrasemes-bl12c.test.ts › BL-12c content-word phrases › «і син і» is not in the top list (it is kept only in the frames debug list); «вся земля» content core is kept |
+| BL-15b | tests/cognates-bl15.test.ts › BL-15b informative ET-3 flags only › a pre-1300 East-Slavic flag from the cognate set is suppressed, a pre-1300 flag against a dated Polish donor claim is kept |
+| BL-15b | tests/cognates-bl15.test.ts › BL-15b informative ET-3 flags only › a dating whose wording is East Slavic / Proto-Slavic does not count; an Old East Slavic donor is no Ukrainian-specific claim; a post-1300 genuine flag stays |
