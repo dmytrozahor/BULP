@@ -36,7 +36,11 @@
   .etable td.na { display: none; }
   .etable td[colspan]::before { display: none; }
   .etable .ef { display: inline-block; max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
-  .tablewrap { overflow-x: visible; }
+  .epanel .tablewrap { overflow-x: visible; }
+  /* other tables keep their columns and scroll sideways instead of collapsing to one letter per line */
+  .tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tablewrap > table:not(.etable) { min-width: 40rem; }
+  .tablewrap > table:not(.etable) th { white-space: nowrap; }
   .epanel { padding: .4rem; min-width: 0; }
   /* BL-7: epoch tabs scroll sideways instead of wrapping */
   .etabs { overflow-x: auto; flex-wrap: nowrap; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; padding-bottom: .2rem; }
