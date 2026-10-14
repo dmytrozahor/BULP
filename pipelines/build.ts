@@ -269,7 +269,11 @@ export async function build(opts: { noPy?: boolean } = {}) {
   lap(`linked ${NL}/${sizes.N} tokens (${(100 * NL / sizes.N).toFixed(1)}%), ${lemmaList.length} lemmas`)
 
   const fMax = Math.max(...lemmaList.map(l => l.f))
-  const kept = lemmaList.filter(l => l.f >= 2 || l.pre1400 || l.dict)
+  // CX budget: lemmas attested only in later (post-1400, non-dictionary) texts must reach KEEP_MIN_F tokens; the 15 MiB core limit (B-5a) is held by this threshold, never by dropping fields
+  const KEEP_MIN_F = Number(process.env['KEEP_MIN_F'] ?? 5)
+  lap('kept-lemma histogram (f ≥ k, not pre-1400/dict): ' + [2, 3, 4, 5, 6, 8].map(k => `${k}:${lemmaList.filter(l => l.f >= k && !l.pre1400 && !l.dict).length}`).join(' ') + `; pre-1400 ${lemmaList.filter(l => l.pre1400).length}, dict-only ${lemmaList.filter(l => l.dict && !l.pre1400 && l.f < 2).length}`)
+  if (process.env['HIST_ONLY']) process.exit(0)
+  const kept = lemmaList.filter(l => l.f >= KEEP_MIN_F || l.pre1400 || l.dict)
   const keep = new Uint8Array(lemmaList.length); kept.forEach(l => (keep[l.idx] = 1))
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)
