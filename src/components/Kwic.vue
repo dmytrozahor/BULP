@@ -14,7 +14,8 @@ import MediaPanel from './MediaPanel.vue'
 import { hasMedia, resolveMedia } from '../lib/sophiaData.ts'
 import type { WitnessMedia } from '../lib/media.ts'
 import { useData } from '../composables/useData.ts'
-import { songOfWitness, useSongs } from '../lib/datasets.ts'
+import { phrasesOf, songOfWitness, useSongs, usePhrases } from '../lib/datasets.ts'
+import { phraseTo } from '../lib/nav.ts'
 const { witnessById } = useData()
 const songs = useSongs()   // lazy songs.json: a witness that is a song links to /songs/:id
 const wm = (w: string) => witnessById.value.get(w) as { media?: WitnessMedia; licenceNote?: string } | undefined
@@ -24,7 +25,13 @@ const showMedia = async (i: number, w: string) => {
   mediaErr.value = false; media.value = undefined; mediaOpen.value = i
   try { media.value = await resolveMedia(w, wm(w)) } catch { mediaErr.value = true }
 }
-const props = defineProps<{ lines: Kwic[]; limit?: number; lemma?: string }>()
+const props = defineProps<{ lines: Kwic[]; limit?: number; lemma?: string; /** SPEC 63 PH: the node is a whole phraseme, not one word form (no /f link) */ plain?: boolean }>()
+const phr = props.lemma && !props.plain ? usePhrases() : undefined   // SPEC 63 PH: a line that contains a phraseme candidate of this lemma links to its page (/p/:id)
+const phraseOf = (k: Kwic) => {
+  if (!props.lemma || props.plain) return undefined
+  const t = `${k.left} ${k.node} ${k.right}`.toLowerCase(), n = k.node.toLowerCase()
+  return phrasesOf(phr?.value, props.lemma).find(p => p.id && p.spellings.some(s => s.length > n.length && s.includes(n) && t.includes(s)))
+}
 /** BL-6: the node word links to its form page (/f/:form), the lemma disambiguates shared spellings */
 const formTo = (k: Kwic) => ({ path: `/f/${k.node}`, query: props.lemma ? { lemma: props.lemma } : {} })
 const epochOf = (k: Kwic) => { const a = assignEpoch(k.date, 'shev'); return isKnown(a) ? a.value.epochs[0]! : 'unknown' }
@@ -41,7 +48,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
       <button v-for="e in epochs" :key="e" type="button" class="chip" :aria-pressed="sel === e" @click="sel = e">{{ epochShort(e) }}</button>
     </div>
     <div v-for="(k, i) in view" :key="i" class="kwic">
-      <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span>{{ k.left }}</span></span>{{ ' ' }}<RouterLink :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]">{{ k.right }}</span>
+      <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span>{{ k.left }}</span></span>{{ ' ' }}<span v-if="plain" :class="['n', { old: isOldForm(k.node, k.date[1]) }]">{{ k.node }}</span><RouterLink v-else :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]">{{ k.right }}</span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>
@@ -49,6 +56,7 @@ const view = computed(() => (all.value ? shown.value : shown.value.slice(0, prop
         <MediaPanel v-if="media" :media="media" :licence-note="wm(k.w)?.licenceNote" :refs="[witnessById.get(k.w)?.url, k.w]" @close="mediaOpen = undefined" />
         <p v-else class="muted small sans" role="status">{{ mediaErr ? 'Медіа недоступне.' : 'Завантаження…' }}</p>
       </template>
+        <template v-if="phraseOf(k)"> · <RouterLink class="small" :to="phraseTo(phraseOf(k)!.id!)">сталий зворот →</RouterLink></template>
     </div>
     <p v-if="!view.length" class="muted">Прикладів немає.</p>
     <button v-if="shown.length > view.length" type="button" class="chip sans small" @click="all = true">більше… ({{ shown.length - view.length }})</button>

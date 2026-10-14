@@ -18,6 +18,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/texts', component: () => import('./views/TextsView.vue') },
   { path: '/songs/:id?', component: () => import('./views/SongsView.vue'), props: true },
   { path: '/phrases', component: () => import('./views/PhrasesView.vue') },
+  { path: '/p/:id', component: () => import('./views/PhraseView.vue'), props: true },
   { path: '/sophia', component: () => import('./views/SophiaView.vue') },
   { path: '/map', component: () => import('./views/MapView.vue') },
   { path: '/corpus', component: () => import('./views/CorpusView.vue') },

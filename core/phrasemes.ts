@@ -20,8 +20,8 @@ const SPELL_FOLD: Record<string, string> = { 'ѹ': 'у', 'ꙋ': 'у', 'ѡ': 'о'
 /** BL-12b: spelling-variant key of an unlinked old word — «своемоу» and «своему» (and ѹ/оу, ѣ/е, ы/и, jer variants) fold to one key, so one formula is not counted as many */
 export const foldSpelling = (raw: string): string => raw.normalize('NFC').toLowerCase().replace(/[ѹꙋѡѻѣѧꙗѩѫыѵѳꙇїѕѯѱъьꙿ]/g, c => SPELL_FOLD[c]!).replace(/оу/g, 'у').replace(/[\u0300-\u036f\u0483-\u0489]/g, '')
 export interface PhraseComponents { logDice: number; mi: number; pre1400: number; pre1600: number; old: number; archaism: number; witnesses: number; families: number }
-export interface Phraseme { lemmas: string[]; spellings: string[]; f: number; witnesses: string[]; nW: number; /** BL-12b: distinct source families among the witnesses */ families: string[]; nF: number; dates: [number, number]; score: number; components: PhraseComponents; method: typeof PHRASE_METHOD; attested?: string }
-export interface PhraseOpts { minF?: number; minW?: number; maxN?: number; top?: number; /** BL-12c: receives the raw function-word frames (the «шаблони» debug list) */ frames?: Phraseme[] }
+export interface Phraseme { lemmas: string[]; spellings: string[]; f: number; witnesses: string[]; nW: number; /** BL-12b: distinct source families among the witnesses */ families: string[]; nF: number; dates: [number, number]; score: number; components: PhraseComponents; method: typeof PHRASE_METHOD; attested?: string; /** SPEC 63 PH-1: stable page id (/p/:id), core/phraseme-pages.ts phraseId */ id?: string }
+export interface PhraseOpts { minF?: number; minW?: number; maxN?: number; top?: number; /** BL-12c: receives the raw function-word frames (the «шаблони» debug list) */ frames?: Phraseme[]; /** PH: receives each phraseme's key sequence (for the evidence scan) */ keysOut?: Map<Phraseme, number[]> }
 /**
  * BL-12c function words (conj / prep / particle / personal-relative pronoun / copula) as FOLDED spellings (foldSpelling: ъ ь dropped, ѣ=е, ы=и, оу=у), modern and Old East Slavic alike.
  * A closed list stands in for a POS lookup: old unlinked tokens carry no VESUM POS, and the list is exactly the class the backlog row names. Determiners (весь, цей) are content-bearing here.
@@ -93,11 +93,12 @@ export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling
     if (ld <= 0) return
     const score = (ld / 14) * (0.1 + arch) * Math.min(3, Math.log2(1 + nF))
     const dates = ws.map(([, v]) => v.date), ks = x.g.split(',').map(Number)
-    out.push({
+    const rec: Phraseme = {
       lemmas: ks.map(lemma), spellings: [...sp[i]!].sort((a, b) => b[1] - a[1]).slice(0, 3).map(s => s[0]), f: x.f,
       witnesses: ws.map(w => w[0]).slice(0, 8), nW: ws.length, families: [...fams.keys()].slice(0, 8), nF, dates: [Math.min(...dates.map(d => d[0])), Math.max(...dates.map(d => d[1]))], score: r3(score), method: PHRASE_METHOD,
       components: { logDice: r3(ld), mi: r3(m), pre1400: r3(p14), pre1600: r3(p16), old: r3(old), archaism: r3(arch), witnesses: ws.length, families: nF },
-    })
+    }
+    out.push(rec); o.keysOut?.set(rec, ks)
   })
   // BL-12c: a function-word frame («і син і», «на ~нъ і») leaves the ranking (→ o.frames, the «шаблони» debug list); its content core (≥ 2 content words, e.g. «вся земля») competes under its own counts
   {

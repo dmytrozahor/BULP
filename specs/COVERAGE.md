@@ -292,3 +292,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LA-2 | tests/loan-adapt.test.ts › normative status: VESUM present / absent / unchecked; Правопис § only where a rule cites it |
 | LA-2 | tests/loan-adapt.test.ts › a standard equivalent appears only when a dictionary row gives it |
 | LA-3 | tests/loan-adapt.test.ts › WordView and FormView mount the «запозичення» block; /method lists every rule with an anchor |
+| PH-1 | tests/phraseme-pages.test.ts › PH-1 phraseme page components › PH-1 id is stable across case, stress and apostrophe variants and differs for other words |
+| PH-1 | tests/phraseme-pages.test.ts › PH-1 phraseme page components › PH-1 syntactic pattern is computed from component POS and is unknown (undefined) when any POS is missing |
+| PH-1 | tests/phraseme-pages.test.ts › PH-1 phraseme page components › PH-1 kaikki harvest quotes a gloss with source, licence and locator; a phraseme without an entry gets nothing |
+| PH-1 | tests/phraseme-pages.test.ts › PH-1 phraseme page components › PH-1 built detail shards: ids are unique and every quoted statement has a source and a locator |
+| PH-2 | tests/phraseme-pages.test.ts › PH-2 corpus evidence of a phraseme › PH-2 counts every occurrence, merges per century, keeps the earliest witness and caps the concordance |
+| PH-2 | tests/phraseme-pages.test.ts › PH-2 corpus evidence of a phraseme › PH-2 a phraseme that is absent from the corpus has no evidence record (shown as «невідомо») |
+| PH-2 | tests/phraseme-pages.test.ts › PH-2 corpus evidence of a phraseme › PH-2 component-order and lexical variants are found among the other phrasemes |
+| PH-3 | tests/phraseme-pages.test.ts › PH-3 phraseme relations › PH-3 related phrasemes share a content component and are ranked by score; short function words do not relate |
+| PH-3 | tests/phraseme-pages.test.ts › PH-3 phraseme relations › PH-3 /p/:id is routed and the page marks missing data as «невідомо» and scores as a model |

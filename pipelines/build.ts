@@ -35,6 +35,7 @@ import {
 } from './build-annotate.ts'
 import { foldSpelling, mine, type PhraseDoc, type Phraseme } from '../core/phrasemes.ts'
 import { writePhrases } from './build-phrases.ts'
+import { collectEvidence } from '../core/phraseme-pages.ts'
 import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats.ts'
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
@@ -504,8 +505,19 @@ export async function build(opts: { noPy?: boolean } = {}) {
   }
   lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated, songVocab)} songs`)   // LW-2 / HT-1 exports for the W10 stream
   {   // BL-12
-    const frames: Phraseme[] = [], cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw, { top: 40000, frames })
-    const p = writePhrases(ROOT, PUB, generated, cands, frames); lap(`phrases.json (BL-12/12b): ${p.candidates} candidates (>= 2 source families or attested), ${p.formulas} single-family formulas, ${p.attestedTitles} attested idioms (${p.matched} matched)`)
+    const frames: Phraseme[] = [], keysOut = new Map<Phraseme, number[]>(), cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw, { top: 40000, frames, keysOut })
+    // SPEC 63 PH-2: occurrences (KWIC, century counts, earliest) of the listed phrasemes in one corpus scan; PH-1: component POS from the lemma cards
+    const phPos = new Map(cards.map(c => [c.lemma, c.pos])), listed = new Map<Phraseme, number[]>()
+    for (const c of cands.slice(0, 40000)) listed.set(c, keysOut.get(c)!)
+    const phKwic = (wi: number, ti: number, n: number): Kwic => {
+      const { w } = adm[wi]!, t = w.tokens[ti]!
+      let a = ti, b = ti + n - 1
+      while (a > 0 && ti - a < 6 && w.tokens[a - 1]!.s === t.s) a--
+      while (b + 1 < w.tokens.length && b - (ti + n - 1) < 6 && w.tokens[b + 1]!.s === t.s) b++
+      return { w: w.id, loc: t.loc, left: w.tokens.slice(a, ti).map(x => x.raw).join(' '), node: w.tokens.slice(ti, ti + n).map(x => x.raw).join(' '), right: w.tokens.slice(ti + n, b + 1).map(x => x.raw).join(' '), date: w.date }
+    }
+    const evidence = collectEvidence(phraseDocs, listed, phKwic)
+    const p = writePhrases(ROOT, PUB, generated, cands, frames, { evidence, posOf: l => phPos.get(l) ?? '' }); lap(`phrases.json (BL-12/12b): ${p.candidates} candidates (>= 2 source families or attested), ${p.formulas} single-family formulas, ${p.attestedTitles} attested idioms (${p.matched} matched); PH pages: ${p.details} (${p.withGloss} with gloss, ${p.withEtymology} with etymology, ${p.withEvidence} with corpus evidence)`)
   }
   { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9

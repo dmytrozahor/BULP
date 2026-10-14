@@ -8,6 +8,7 @@ import { shallowRef } from 'vue'
 import { D, claim, type Claim } from '../../core/evidence.ts'
 import { heteronymKey } from '../../core/heteronyms.ts'
 import type { Phraseme } from '../../core/phrasemes.ts'
+import { detailShardOf, type PhraseDetail, type PhrasesDetailShard } from '../../core/phraseme-pages.ts'
 import type { Donor, DonorLabel, LabelLookup } from '../../core/loanwords.ts'
 
 const once = <T>(name: string, set: (v: T) => void): (() => void) => {
@@ -68,9 +69,20 @@ export const songOfWitness = (d: SongsData | undefined, w: string): Song | undef
 export const songLines = (t: string): string[] => t.split(/\s*\/\s*|\n/).filter(Boolean).slice(0, 2)
 
 // ── phraseme candidates (BL-12) ──────────────────────────────────────────────────────────────
-export interface PhrasesData { generated: string; method: string; note: string; attestedSource: { name: string; licence: string; retrieved: string; url: string }; attested: string[]; candidates: Phraseme[]; /** BL-12b: single-family repetitions (graffiti formulas) */ formulas?: Phraseme[]; /** BL-12c: function-word frames («шаблони», debug) */ frames?: Phraseme[] }
+export interface PhrasesData { generated: string; method: string; note: string; attestedSource: { name: string; licence: string; retrieved: string; url: string }; attested: string[]; /** SPEC 63 PH: page id per attested title (parallel) and dictionary-only phrasemes (proverbs, prepositional phrases) */ attestedIds?: string[]; dict?: { id: string; t: string }[]; candidates: Phraseme[]; /** BL-12b: single-family repetitions (graffiti formulas) */ formulas?: Phraseme[]; /** BL-12c: function-word frames («шаблони», debug) */ frames?: Phraseme[] }
 const phrases = shallowRef<PhrasesData>()
 const loadPhrasesOnce = once<PhrasesData>('phrases', v => { phrases.value = v })
 export function usePhrases() { loadPhrasesOnce(); return phrases }
 /** pure: candidates that contain `lemma` (case-insensitive) */
 export const phrasesOf = (d: PhrasesData | undefined, lemma: string): Phraseme[] => (d?.candidates ?? []).filter(p => p.lemmas.some(l => l.replace(/^~/, '').toLowerCase() === lemma.toLowerCase()))
+
+// ── SPEC 63 PH: per-phraseme detail shards (public/data/phr/<hex>.json), fetched per page ──────────
+const phraseShards = new Map<string, Promise<Record<string, PhraseDetail>>>()
+export function loadPhraseDetail(id: string): Promise<PhraseDetail | undefined> {
+  const s = detailShardOf(id)
+  let p = phraseShards.get(s)
+  if (!p) { p = fetch(`./data/phr/${s}.json`).then(r => { if (!r.ok) throw new Error(`phr/${s}.json: HTTP ${r.status}`); return r.json() as Promise<PhrasesDetailShard> }).then(j => j.details); phraseShards.set(s, p); p.catch(() => phraseShards.delete(s)) }
+  return p.then(m => m[id])
+}
+/** the phraseme page id of a lemma sequence's candidate (undefined before phrases.json arrives) */
+export const phraseById = (d: PhrasesData | undefined, id: string): Phraseme | undefined => d?.candidates.find(p => p.id === id) ?? d?.formulas?.find(p => p.id === id)

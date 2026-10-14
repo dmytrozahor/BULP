@@ -8,6 +8,8 @@ export type ElementKind = 'word' | 'form' | 'kwic' | 'token' | 'witness' | 'auth
 const e = encodeURIComponent
 export const wordTo = (lemma: string) => `/w/${e(lemma)}`
 export const formTo = (form: string, lemma?: string) => (lemma ? `/f/${e(form)}?lemma=${e(lemma)}` : `/f/${e(form)}`)
+/** SPEC 63 PH: the page of one phraseme (stable id) */
+export const phraseTo = (id: string) => `/p/${e(id)}`
 export const witnessTo = (id: string) => `/witness/${e(id)}`
 export const authorTo = (id: string) => `/author/${e(id)}`
 export const sourceTo = (id: string) => `/source/${e(id)}`
