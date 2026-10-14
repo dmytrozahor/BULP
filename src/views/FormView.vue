@@ -11,11 +11,12 @@ import { useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
+import SociolectBadges from '../components/SociolectBadges.vue'
 import ClaimSet from '../components/ClaimSet.vue'
-import DerivationSteps from '../components/DerivationSteps.vue'
 import DialectBlock from '../components/DialectBlock.vue'
 import { PRONOUN_VARIANTS, deriveAll } from '../../core/pronoun-variants.ts'
 import { segment } from '../../core/deictics.ts'
+import DerivationSteps from '../components/DerivationSteps.vue'
 import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
@@ -52,7 +53,6 @@ const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron'
 const link = computed(() => fc.value && isKnown(fc.value.link) ? fc.value.link.value : undefined)
 const rusyn = computed(() => fc.value?.claims.rusyn)
 const labelClaims = computed(() => Object.fromEntries(Object.entries(fc.value?.claims ?? {}).filter(([k]) => k !== 'rusyn')))
-const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 /** SPEC 63 DP-2/DX-2: a spelling the corpus lacks may still be a rule-derived pronoun variant or a segmentable deictic: it gets a page too */
 const derivedOnly = computed(() => {
   if (!loaded.value || pick.value) return undefined
@@ -60,23 +60,25 @@ const derivedOnly = computed(() => {
   const sg = segment(props.form)[0]; return sg ? { kind: 'dx' as const, sg } : undefined
 })
 const regionNames = computed(() => byRegion.value.filter(r => r.f).map(r => ({ name: corpus.value?.regions.find(x => x.code === r.code)?.name ?? r.code, f: r.f })))
+const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 </script>
 
 <template>
   <div v-if="!loaded"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
-  <div v-else-if="!pick" class="card" role="status">
   <template v-else-if="!pick && derivedOnly">
     <header class="wordhead headline"><h1 class="lemma">{{ form }}</h1>
       <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у корпусі такого написання немає (P-1.7: виведена форма не є свідченням)</span>
         <template v-if="derivedOnly.kind === 'dp'"> · <span class="muted">зв’язок: </span>dialect-variant «{{ derivedOnly.h.variant }}» → <RouterLink :to="`/w/${derivedOnly.h.std}`">{{ derivedOnly.h.std }}</RouterLink> ({{ derivedOnly.h.rule }})</template></p></header>
     <Panel id="f-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="form" /></Panel>
   </template>
+  <div v-else-if="!pick" class="card" role="status">
     <h1>«{{ form }}» — такого написання немає в корпусі</h1>
     <p class="sans"><RouterLink :to="{ path: '/', query: { q: form } }">шукати «{{ form }}» →</RouterLink> · <RouterLink :to="{ path: '/analyze', query: { q: form } }">аналіз за правилами →</RouterLink></p>
   </div>
   <template v-else>
     <header class="wordhead headline">
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
+      <SociolectBadges :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
@@ -87,9 +89,9 @@ const regionNames = computed(() => byRegion.value.filter(r => r.f).map(r => ({ n
     <div v-if="!fc && !err" class="skeleton" style="height:8rem" />
     <div v-else-if="fc && stats" class="cols">
       <div>
+        <Panel id="f-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
         <Panel id="f-kw" :open="true" title="Приклади · KWIC" :summary="`${fc.kwic.length} із f = ${stats.f}`" :empty="!fc.kwic.length">
           <Kwic :lines="fc.kwic" :lemma="pick.lemma" />
-        <Panel id="f-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
         </Panel>
         <Panel id="f-ep" :open="true" title="Клітинки за епохами" :summary="`розміщено токенів: ${stats.placed}`" :empty="!epochKinds"
           info="Лише клітинки, де стоїть це написання (з парадигм леми); токени без розмітки сюди не потрапляють.">

@@ -13,6 +13,7 @@ import { useData } from '../composables/useData.ts'
 import { collectQuotes, type HeldQuote } from '../lib/sourceQuotes.ts'
 import { epochTo, ruleTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { KIND_UK } from '../lib/format.ts'
+import { loadSociolect, sociolectFile } from '../lib/sociolectData.ts'
 const props = defineProps<{ id: string }>()
 const { loaded, cards, witnessById } = useData()
 const src = computed(() => SOURCES[props.id])
@@ -23,6 +24,11 @@ function scan() {
   for (const r of [...RULES, ...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...RUSYN_RULES, ...REGISTER_RULES]) collectQuotes(r, id, { label: r.id, to: ruleTo(r.id) }, into)
   for (const e of EPOCHS) collectQuotes(e, id, { label: e.id, to: epochTo(e.id) }, into)
   for (const c of cards.value) { if (into.size >= 200) break; collectQuotes(c, id, { label: c.lemma, to: wordTo(c.lemma) }, into) }
+  loadSociolect(); const sf = sociolectFile.value   // SL: Plast entries and process rows are quotes of their sources too
+  if (sf) {
+    for (const e of sf.plast.entries) collectQuotes({ source: sf.plast.source, locator: e.loc, quote: e.g, kind: 'D' }, id, { label: e.w, to: wordTo(e.w) }, into)
+    for (const r of sf.processes) collectQuotes({ source: r.source, locator: r.loc, quote: r.quote, kind: 'Q' }, id, { label: r.w, to: wordTo(r.w) }, into)
+  }
   held.value = [...into.values()]; busy.value = false
 }
 onMounted(() => { const go = () => (loaded.value ? scan() : setTimeout(go, 150)); go() })

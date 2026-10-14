@@ -254,3 +254,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DX-2 | tests/dialect-pronouns.test.ts › the dialect feature of an affix chip carries the affix citation |
 | DX-3 | tests/dialect-pronouns.test.ts › follows «standard» to a form the literary lexicon has |
 | DX-3 | tests/dialect-pronouns.test.ts › FD-4/FD-5 for deictics: the class of forms with the base там |
+| SL-1 | tests/sociolect.test.ts › every listed word has a row in research/33; undocumented ones say unknown |
+| SL-1 | tests/sociolect.test.ts › every process row carries source, verbatim quote and locator, and its source is registered |
+| SL-2 | tests/sociolect.test.ts › parses terms (dash split outside parentheses) and abbreviations, skips captions |
+| SL-2 | tests/sociolect.test.ts › public/data/sociolect.json is cite-only: ≤ 160-char glosses, locators, licence note, no page text |
+| SL-3 | tests/sociolect.test.ts › no dialect attribution is stored; the UI states «діалектна належність не встановлена» |
+| SL-4 | tests/sociolect.test.ts › Plast headwords get the «пластова лексика» badge, computed from the entry (stress/case-insensitive), evidence = the quote |
+| SL-4 | tests/sociolect.test.ts › VESUM presence/absence is reported; unchecked words give null |
+| SL-4 | tests/sociolect.test.ts › badges render on word and form pages through ClaimBadge (evidence popover → /source card); sources are registered |

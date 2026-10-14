@@ -40,12 +40,13 @@ import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
+import SociolectBadges from '../components/SociolectBadges.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
 import CognatesPanel from '../components/CognatesPanel.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
-import HeteronymReadings from '../components/HeteronymReadings.vue'
 import DialectVariants from '../components/DialectVariants.vue'
+import HeteronymReadings from '../components/HeteronymReadings.vue'
 import SensesBlock from '../components/SensesBlock.vue'
 import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
@@ -247,7 +248,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
               <ClaimSet v-if="dialects.length" :claims="Object.fromEntries(dialects)" />
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
             <div v-if="bankForms.length"><BankChip :forms="bankForms" /></div>
-            <div><UsageChips :lemma="card.lemma" label /></div>
+            <div><UsageChips :lemma="card.lemma" label /> <SociolectBadges :word="card.lemma" /></div>
             <div><LoanChip :word="card.lemma" /></div>
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>
@@ -273,8 +274,8 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <IkavismChain :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
         </Panel>
         <DerivativesBlock panel :lemma="card.lemma" />
-        <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <DialectVariants :lemma="card.lemma" />   <!-- SPEC 63 DP-4 -->
+        <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
         <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
         <Panel id="h-sn" :open="false" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
