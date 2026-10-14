@@ -265,7 +265,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <!-- SPEC 60 IP-3 / DV-3 on the word card (not only the annotator): collapsed, one-line summaries -->
         <Panel id="h-ipa" :open="false" title="Вимова · IPA" :summary="ipa1 ? `${ipa1} · виведено за правилами` : 'виведено за правилами (P-1.7)'"
           info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Перемикач: літературна / говір (IP-2).">
-          <IpaRow :variants="full?.stress ?? []" :lemma="card.lemma" />
+          <IpaRow :variants="full?.stress ?? []" :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
         </Panel>
         <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->

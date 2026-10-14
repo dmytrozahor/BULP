@@ -49,6 +49,6 @@ describe('IP-2 dialect override rows (research/04 codes)', () => {
 describe('IP-3 word card IPA row', () => {
   it('IP-3 WordCard includes IpaRow, one IPA per stress variant with a dialect toggle', () => {
     expect(readFileSync('src/components/WordCard.vue', 'utf8')).toContain('<IpaRow ')
-    const v = readFileSync('src/components/IpaRow.vue', 'utf8'); expect(v).toContain('v-for="(it, i) in items"'); expect(v).toContain('IPA_DIALECTS')
+    const v = readFileSync('src/components/IpaRow.vue', 'utf8'); expect(v).toContain('v-for="(it, i) in items"'); expect(v).toContain('applicableDialects')
   })
 })

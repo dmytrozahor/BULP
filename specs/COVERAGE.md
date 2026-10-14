@@ -161,5 +161,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | FX-8 | tests/epoch-pron.test.ts › tokens are PLACED in the pron grid, not conflicted |
 | BL-18 | tests/songs-bl18.test.ts › BL-18 folk songs and максимовичівка |
 | BL-6c | tests/formstats-bl6c.test.ts › BL-6c true form counts |
+| BL-13 | tests/dialect-ipa.test.ts › BL-13 V2/V1: кінь [kinʲ] → ZAK/HUT/LEM/WPL monophthong [kunʲ], CHN/WPL-N diphthong [ku̯inʲ]; unchanged without paradigm |
+| BL-13 | tests/dialect-ipa.test.ts › BL-13 applicableDialects: кінь → ZAK, CHN, WPL …, not MDN/BOY/POD; a word with no feature → none |
+| BL-13 | tests/dialect-ipa.test.ts › BL-13 every research/27 origin row has codes, a cite and (except G12) a verbatim [Q] quote |
 | FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |
 | BL-11 | tests/ingest-dict.test.ts › BL-11 dictionary headwords from OCR djvu text |

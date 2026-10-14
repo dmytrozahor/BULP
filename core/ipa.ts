@@ -7,6 +7,7 @@
  * Every row that fired is returned with its method: 'quoted' (WP wording) or 'derived' (our reading, never a dictionary fact).
  */
 import { stripStress, unifyApostrophe } from './text.ts'
+import type { Origin, Origins } from './origin.ts'
 
 export type IpaMethod = 'quoted' | 'derived'
 export interface IpaRow { id: string; method: IpaMethod; cite: string; quote?: string }
@@ -34,11 +35,13 @@ export const IPA_DIALECTS: { code: string; label: string }[] = [
   { code: 'MDN', label: 'середньонаддніпрянський' }, { code: 'SLB', label: 'слобожанський' }, { code: 'STP', label: 'степовий' },
   { code: 'VOL', label: 'волинський' }, { code: 'POD', label: 'подільський' }, { code: 'NDN', label: 'наддністрянський' },
   { code: 'HUT', label: 'гуцульський' }, { code: 'BOY', label: 'бойківський' }, { code: 'LEM', label: 'лемківський' },
+  // research/27 §2.3 gap 4: described only in WP «Закарпатський говір» / SHEV-62 [P]
+  { code: 'WPL-N', label: 'західнополіський (північ, дифтонги)' }, { code: 'ZAK', label: 'закарпатський' }, { code: 'SIAN', label: 'надсянський' },
 ]
 const expand = (code: string) => new Set(DIALECT_GROUPS[code] ?? [code])
 
 // ── units ───────────────────────────────────────────────────────────────────────────────────────
-interface U { k: 'C' | 'V' | 'X'; ph: string; g: string; soft?: boolean; long?: boolean; apos?: boolean; idx: number; stressed?: boolean }
+interface U { k: 'C' | 'V' | 'X'; ph: string; g: string; soft?: boolean; long?: boolean; apos?: boolean; idx: number; stressed?: boolean; o?: Origin | null }
 const CONS: Record<string, string> = {
   б: 'b', в: 'v', г: 'ɦ', ґ: 'ɡ', д: 'd', ж: 'ʒ', з: 'z', к: 'k', л: 'l', м: 'm', н: 'n', п: 'p', р: 'r', с: 's', т: 't', ф: 'f', х: 'x',
   ц: 't͡s', ч: 't͡ʃ', ш: 'ʃ', щ: 'ʃt͡ʃ', й: 'j',
@@ -53,7 +56,7 @@ const SONORANT = new Set(['v', 'j', 'l', 'm', 'n', 'r'])
 const GH_EXC = /(вогк|легк|кігт|нігт|дігт)/
 const PREFIX_NO_AFFRICATE = new Set(['від', 'під', 'над', 'об', 'без', 'пере'])
 
-function decode(s: string, rows: Map<string, IpaRow>, flags: string[]): U[] {
+function decode(s: string, rows: Map<string, IpaRow>, flags: string[], origins?: Origins): U[] {
   const out: U[] = []
   let apos = false
   const last = () => out[out.length - 1]
@@ -79,7 +82,7 @@ function decode(s: string, rows: Map<string, IpaRow>, flags: string[]): U[] {
     }
     if (c in VOW) {
       if (c === 'і') softenLast()
-      out.push({ k: 'V', ph: VOW[c]!, g: c, idx: i }); rows.set(STD.vowels!.id, STD.vowels!); apos = false; continue
+      out.push({ k: 'V', ph: VOW[c]!, g: c, idx: i, o: origins?.[i] ?? null }); rows.set(STD.vowels!.id, STD.vowels!); apos = false; continue
     }
     if (c in IOT) {
       const p = last()
@@ -123,10 +126,11 @@ function resolveV(us: U[], rows: Map<string, IpaRow>) {
 }
 
 // ── dialect rows (research/13 C') ──────────────────────────────────────────────────────────────
-interface DRow { id: string; codes: string[]; needsStress?: boolean; spell?: RegExp; phase: 'pre' | 'post'; cite: string; apply?: (us: U[]) => boolean }
+interface DRow { id: string; codes: string[]; needsStress?: boolean; spell?: RegExp; phase: 'pre' | 'post'; cite: string; quote?: string; apply?: (us: U[], s: string) => boolean }
 const R4 = (k: string) => `research/04 §1 ${k}; research/13 C'`
 const lastU = (us: U[]) => us[us.length - 1]
 const DROWS: DRow[] = [
+  ...originRows(),
   { id: 'N-DIPH-UO', codes: ['NORTH'], phase: 'pre', cite: R4('N-DIPH-UO'), apply: us => us.reduce((f, u, i) => { const n = us[i + 1]; if (u.k === 'V' && u.g === 'у' && n && n.k === 'V' && 'оеі'.includes(n.g)) { u.ph = 'u̯'; return true } return f }, false) },
   { id: 'N-DIPH-IE', codes: ['CHN', 'MPL', 'WPL'], phase: 'pre', cite: R4('N-DIPH-IE'), apply: us => us.reduce((f, u, i) => { const n = us[i + 1]; if (u.k === 'V' && u.g === 'і' && n && n.k === 'V' && n.g === 'е') { u.ph = 'i̯'; return true } return f }, false) },
   { id: 'N-MONO-UY', codes: ['WPL', 'MPL', 'LEM', 'HUT'], phase: 'pre', spell: /(в[уи]л|к[уи]н|в[уи]з|т[уи]к)/, cite: R4('N-MONO-UY') + ' — читається як написано' },
@@ -140,13 +144,50 @@ const DROWS: DRow[] = [
   { id: 'EPENTH-L-N', codes: ['POD', 'MDN', 'NDN', 'SLB'], phase: 'pre', cite: R4('EPENTH-L-N'), apply: us => us.reduce((f, u, i) => { const p = us[i - 1]; if (u.ph === 'j' && 'яює'.includes(u.g) && p?.k === 'C' && 'bpvmf'.includes(p.ph)) { u.ph = p.ph === 'm' ? 'n' : 'l'; u.soft = true; return true } return f }, false) },
   { id: 'F-TO-X', codes: ['CHN', 'MDN', 'SLB', 'STP'], phase: 'pre', cite: R4('F-TO-X'), apply: us => us.reduce((f, u) => { if (u.ph === 'f') { u.ph = 'xʋ'; return true } return f }, false) },
   { id: 'NDN-A-E', codes: ['NDN', 'HUT'], phase: 'pre', spell: /(чіс\b|шипк|єблук)/, cite: R4('NDN-A-E') + ' — читається як написано' },
-  { id: 'SW-KJ-GJ', codes: ['NDN', 'HUT', 'SW'], phase: 'pre', cite: R4('SW-KJ-GJ'), apply: us => us.reduce((f, u, i) => { const n = us[i + 1]; if (u.k === 'C' && (u.ph === 'k' || u.ph === 'ɡ') && (u.apos || u.soft) && n?.g === 'і') { u.ph = u.ph === 'k' ? 'c' : 'ɡ'; u.soft = true; return true } return f }, false) },
+  { id: 'SW-KJ-GJ', codes: ['NDN', 'HUT', 'SW'], phase: 'pre', cite: R4('SW-KJ-GJ') + ' — д’, т’ перед і > ґ’, к’ (дід > ґід, тісто > кісто)', apply: us => us.reduce((f, u, i) => { const n = us[i + 1]; if (u.k === 'C' && (u.ph === 'd' || u.ph === 't') && u.soft && n?.g === 'і' && n.ph === 'i') { u.ph = u.ph === 'd' ? 'ɡ' : 'c'; return true } return f }, false) },
   { id: 'FINAL-DEVOICE', codes: ['STP', 'SW'], phase: 'post', cite: R4('CHN-VOICED-FINAL vs LEM/STP/SW'), apply: us => { const u = lastU(us); if (u?.k === 'C' && u.ph in DEVOICE) { u.ph = DEVOICE[u.ph]!; return true } return false } },
   { id: 'SW-PALATAL-SIBILANTS', codes: ['VOL', 'POD', 'NDN', 'HUT', 'BOY'], phase: 'post', cite: `${WP}, діалектна група (Погрібний p. 13); research/13 C'`, apply: us => us.reduce((f, u) => { const m: Record<string, string> = { 'd͡ʒ': 'd͡ʑ', 't͡ʃ': 't͡ɕ', ʒ: 'ʑ', ʃ: 'ɕ' }; if (u.k === 'C' && u.ph in m) { u.ph = m[u.ph]!; return true } return f }, false) },
   { id: 'CARP-Y', codes: ['BOY', 'LEM', 'HUT'], phase: 'post', spell: /ы/, cite: R4('CARP-Y') + '; LEM-IJ ий = [ɪj]' },
   { id: 'LEM-SIBILANTS', codes: ['LEM'], phase: 'post', cite: `${WP}, лемківський: шиплячі … [ʂ] і [ʐ]; research/13 C'`, apply: us => us.reduce((f, u) => { if (u.k === 'C' && (u.ph === 'ʃ' || u.ph === 'ʒ')) { u.ph = u.ph === 'ʃ' ? 'ʂ' : 'ʐ'; return true } return f }, false) },
+  // ── research/27 §2: rows that need the ORIGIN of і/и from the derivation trace (`U.o`, core/origin.ts). The feature is a [Q]; the IPA value is our reading [P] ──
 ]
-export const IPA_DIALECT_ROWS = DROWS.map(r => ({ id: r.id, codes: [...expandAll(r.codes)], cite: r.cite }))
+function originRows(): DRow[] {
+  const each = (f: (u: U, i: number, us: U[]) => boolean) => (us: U[]) => us.reduce((fl, u, i) => f(u, i, us) || fl, false)
+  const unsoft = (us: U[], i: number) => { const p = us[i - 1]; if (p?.k === 'C' && p.soft && !p.apos) p.soft = false }
+  /** a stressed і (not yet changed by an earlier row) created by `rule` from the letter `src` */
+  const iFrom = (u: U, rule: Origin['rule'], src?: string) => u.k === 'V' && u.g === 'і' && u.ph === 'i' && !!u.stressed && u.o?.rule === rule && (!src || u.o.src === src)
+  const S62 = 'Шевельов, ІФУМ, розд. 62 (http://litopys.org.ua/shevelov/shev08.htm)', WPW = 'uk.wikipedia «Західнополіський говір»', WPZ = 'uk.wikipedia «Закарпатський говір»'
+  const r27 = (v: string) => `research/27 §2 ${v}`
+  return [
+    { id: 'V1-DIPH-UO', codes: ['CHN', 'WPL-N'], needsStress: true, phase: 'pre', cite: `${r27('V1')}; ${WPW}; uk.wikipedia «Східнополіський говір» п.1 [Q]; IPA — наше [P]`,
+      quote: 'зустрічаються ще й дифтонги [уо], [уе], [уі], (вуол, муой, вуел, муей, вуіл, куін’ та ін.)',
+      apply: each((u, i, us) => { if (!iFrom(u, 'R10', 'о')) return false; const n = us[i + 1]; u.ph = n?.k === 'C' && n.soft ? 'u̯i' : 'u̯ɔ'; unsoft(us, i); return true }) },
+    { id: 'V6-DIPH-IE', codes: ['CHN', 'MPL', 'WPL-N'], needsStress: true, phase: 'pre', cite: `${r27('V6')}; ${WPW} [Q]; IPA — наше [P]`,
+      quote: 'під наголосом зустрічається ще й дифтонг [іе] чи [ие] (с\'и́ено, л\'іес, т\'и́есто та ін.)',
+      apply: each((u, i, us) => { if (!(iFrom(u, 'R10', 'е') || iFrom(u, 'R09'))) return false; u.ph = 'i̯ɛ'; unsoft(us, i); return true }) },
+    { id: 'V2-MONO-U', codes: ['WPL', 'MPL', 'LEM', 'HUT', 'ZAK'], needsStress: true, phase: 'pre', cite: `${r27('V2')}; ${WPW} [Q]; IPA — наше [P]`,
+      quote: 'Відповідно до етимологічного [о] в новозакритих складах під наголосом виступають здебільшого монофтонги [у], [и], [і], [іи] (кун’, вул, кин’, вил, кіин’, віил, кін’, віл та ін.)',
+      apply: each((u, i, us) => { if (!iFrom(u, 'R10', 'о')) return false; u.ph = 'u'; unsoft(us, i); return true }) },
+    { id: 'V5-E-JER-U', codes: ['ZAK', 'SIAN'], needsStress: true, phase: 'pre', cite: `${r27('V5')}; ${WPZ}; ${S62} [Q]; IPA — наше [P]`,
+      quote: 'у складах, після яких занепав давній «ъ», виступають \'у, \'ÿ «мн\'ут „мед“, т’ýтка, прин’ýс, привйýх „привів“; мн’ÿт, т’ÿтка, прин’ÿс, привÿх»',
+      apply: each((u, i) => { if (!(iFrom(u, 'R10', 'е') && u.o!.jer === 'ъ')) return false; u.ph = 'u'; return true }) },
+    { id: 'V9-O-KEPT', codes: ['MDN'], needsStress: true, phase: 'pre', cite: `${r27('V9')}; research/04 MDN-O-KEPT [Q]; лише для названих слів (давня фонема [о] змінилася на [і] непослідовно); IPA — наше [P]`,
+      quote: 'давня фонема [о] в новоутв. закритих складах змінилася на [і] непослідовно, тому тут відзначено форми воз, кóстка. порóг, рáдост’',
+      apply: (us, s) => /^віз$|кіст|поріг|радіст/.test(s) && each((u, i, a) => { if (!iFrom(u, 'R10', 'о')) return false; u.ph = 'ɔ'; unsoft(a, i); return true })(us) },
+    { id: 'V11-YAT-UNSTR-Y', codes: ['WPL'], needsStress: true, phase: 'pre', cite: `${r27('V11')}; ${WPW}; ${S62} [Q]; IPA — наше [P]`,
+      quote: 'у ненаголош. позиції може бути й [и] (мишóк, писóк)',
+      apply: each((u, i, us) => { if (!(u.k === 'V' && u.g === 'і' && u.ph === 'i' && !u.stressed && u.o?.rule === 'R09' && u.o.kind !== 'new')) return false; u.ph = 'ɪ'; unsoft(us, i); return true }) },
+    { id: 'G4-Y-KEPT', codes: ['BOY', 'LEM', 'HUT', 'ZAK'], phase: 'pre', cite: `${r27('G4')}; uk.wikipedia «Закарпатський говір» п.17 [Q]; ы = [ɨ] — наше [P]`,
+      quote: 'Фонема заднього ряду /ɨ/ … від праслов\'янського *y («сын»…)',
+      apply: each(u => { if (!(u.k === 'V' && u.g === 'и' && u.o?.rule === 'R11' && u.o.src === 'ы')) return false; u.ph = 'ɨ'; return true }) },
+    { id: 'G5-LEM-IJ', codes: ['LEM'], phase: 'pre', cite: `${r27('G5')}; uk.wikipedia «Лемківський говір» [Q]; IPA — наше [P]`,
+      quote: 'Вимова на місці давніх [ы] та [і] як [ий] (колий «коли», гусий «гуси», ідий «іди»)',
+      apply: us => { const u = us[us.length - 1]; if (u?.k === 'V' && u.g === 'и' && u.ph === 'ɪ' && us.length > 1) { u.ph = 'ɪj'; return true } return false } },
+    { id: 'G12-NDN-KIJ', codes: ['NDN'], needsStress: true, phase: 'pre', cite: `${r27('G12')}; research/04 NDN-ADJ-KIJ — виведено, цитати немає`,
+      apply: us => { const n = us.length, v = us[n - 2], j = us[n - 1], k = us[n - 3]; if (v?.k === 'V' && v.g === 'и' && !v.stressed && j?.ph === 'j' && k?.ph === 'k') { v.ph = 'i'; return true } return false } },
+  ]
+}
+export const IPA_DIALECT_ROWS = DROWS.map(r => ({ id: r.id, codes: [...expandAll(r.codes)], cite: r.cite, quote: r.quote }))
 function expandAll(codes: string[]) { const s = new Set<string>(); for (const c of codes) for (const e of expand(c)) s.add(e); return s }
 
 // ── main ────────────────────────────────────────────────────────────────────────────────────────
@@ -156,24 +197,26 @@ const render = (u: U) => u.ph + (u.soft && u.ph !== 'u̯' ? 'ʲ' : '') + (u.long
  * @param form      headword or wordform (stress marks tolerated, stripped)
  * @param positions indices (into the unstressed form) of stressed vowels; null/[] = stress unknown
  * @param dialect   research/04 code (CHN … LEM, or a group NORTH/SE/SW); omitted = standard
+ * @param origins   origin of each letter of the unstressed lower-case form (core/origin.ts originsFor); without it the origin-dependent rows (research/27 V1 V2 V5 V6 V9 V11 G4) cannot fire
  */
-export function toIpa(form: string, positions: number[] | null = null, dialect?: string): IpaResult {
+export function toIpa(form: string, positions: number[] | null = null, dialect?: string, origins?: Origins): IpaResult {
   const s = unifyApostrophe(stripStress(form)).toLowerCase()
   const rows = new Map<string, IpaRow>(), flags: string[] = []
-  const us = decode(s, rows, flags)
+  const us = decode(s, rows, flags, origins)
   const vowels = us.filter(u => u.k === 'V')
   let stressKnown = !!positions && positions.length > 0
   if (!stressKnown && vowels.length === 1) { stressKnown = true; vowels[0]!.stressed = true; flags.push('один склад: наголос приймається за очевидний') }
   if (positions) for (const v of vowels) if (positions.includes(v.idx)) v.stressed = true
   if (!stressKnown && vowels.length > 1) flags.push('наголос невідомий: знак наголосу не ставиться, е/и не розрізняються (немає тверджень про редукцію)')
   const dset = dialect ? expand(dialect) : new Set<string>()
+  if (dialect === 'WPL-N') dset.add('WPL')   // the north Nadbuzh variant has every WPL feature plus the diphthongs (research/27 V1, V6)
   const run = (phase: 'pre' | 'post') => {
     for (const r of DROWS) {
       if (r.phase !== phase) continue
       if (!expandAll(r.codes).size || ![...expandAll(r.codes)].some(c => dset.has(c))) continue
       if (r.needsStress && !stressKnown) { flags.push(`${r.id}: потребує наголосу — рядок пропущено`); continue }
-      const fired = r.apply ? r.apply(us) : !!r.spell && r.spell.test(s)
-      if (fired) rows.set(r.id, { id: r.id, method: 'derived', cite: r.cite })
+      const fired = r.apply ? r.apply(us, s) : !!r.spell && r.spell.test(s)
+      if (fired) rows.set(r.id, { id: r.id, method: 'derived', cite: r.cite, ...(r.quote ? { quote: r.quote } : {}) })
     }
   }
   run('pre')
@@ -203,4 +246,10 @@ export function toIpa(form: string, positions: number[] | null = null, dialect?:
     out += render(u)
   })
   return { ipa: `[${out}]`, stressKnown, flags, rows: [...rows.values()], dialect }
+}
+
+/** BL-13: the dialects whose IPA differs from the standard one for at least one of the given forms (a selector never lists a dialect that changes nothing). */
+export function applicableDialects(forms: { form: string; positions: number[] | null; origins?: Origins }[]): { code: string; label: string }[] {
+  const std = forms.map(f => toIpa(f.form, f.positions, undefined, f.origins).ipa)
+  return IPA_DIALECTS.filter(d => forms.some((f, i) => toIpa(f.form, f.positions, d.code, f.origins).ipa !== std[i]))
 }

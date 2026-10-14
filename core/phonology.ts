@@ -111,7 +111,7 @@ export const LINK_RULES: SoundRule[] = [
   { id: 'R24r', name: 'Друга палаталізація навпаки: ц, з, с > к, г, х перед ѣ, и (лема з основою на задньоязичний)', date: 'праслов’янська', scope: 'L', cite: R24_CITE[0]!, apply: restoreVelar },
 ]
 
-const finish = (w: string) => w.replaceAll(STRONG_O, 'о').replaceAll(STRONG_E, 'е').replaceAll(LOST, '').replace(/ъ/g, '').replace(/ѥ/g, 'є')
+export const finish = (w: string) => w.replaceAll(STRONG_O, 'о').replaceAll(STRONG_E, 'е').replaceAll(LOST, '').replace(/ъ/g, '').replace(/ѥ/g, 'є')
 
 export interface Candidate { form: string; trace: string[]; branches: number }
 export interface Derivation { input: string; norm: string; titlo?: string; candidates: Candidate[] }
