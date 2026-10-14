@@ -25,7 +25,7 @@ export const UNITS_18B: Unit[] = [
     lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
   { id: "o18_27", title: "Милость божія (драма, 1728)", author: "anon_o18_27", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_27.htm"],
     date: [1728, 1728], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_27.htm", "написана і поставлена на сцені в Київській академії 1728 р."),
-    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+    lang: 'uk', region: 'Київ', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
   { id: "o18_29", title: "Георгій Кониський. Воскресеніє мертвих", author: "konysky", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_29.htm"],
     date: [1746, 1747], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_29.htm", "написана у 1746 — 1747 рр."),
     lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },

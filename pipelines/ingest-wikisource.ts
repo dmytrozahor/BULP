@@ -56,6 +56,9 @@ export const DROP: Drop[] = [
 const SKIP_PAGE: Record<string, RegExp> = {
   // CX-2: the 1876 Prague Kobzar appends Russian memoirs by other authors and Shevchenko's Russian-language autobiography / preface: not the poet's Ukrainian text
   kobzar1876: /\/(Споминки про Шевченка|Автобіографія Шевченка|Передмова Шевченка|Варъянти)/,
+  // CX-5: index / contents pages and document-heavy chapters (quoted chancery documents) are not the author's own running text
+  pyven1906: /^Веселымъ людямъ на втиху!$|\/(Весели писни|Писни Чорноморськихъ козакивъ)$/, komarova1905: /^Почынокъ\. Писни, думы та мріи$/,
+  bahaliy1918: /\/(Автономія|Вибори до|Библіографичні|Карти слободської|Пояснення до малюнків|Земельна власність|Соціальний устрій)/,
   eneida1798: /\/Словник$/,     // glossary of the first edition ("Словник"): editorial apparatus, not verse
 }
 /**
@@ -65,6 +68,8 @@ const SKIP_PAGE: Record<string, RegExp> = {
  */
 /** Single lines that are not the primary text: a work's heading and the 19th-c. editor's own (Russian) footnote above a song (NW-7). */
 const DROP_LINE: Record<string, RegExp> = {
+  // CX-5: missing-image placeholder of the proofreading layer
+  sumtsov1918: /^На місці цього тексту/, bahaliy1918: /^На місці цього тексту/,
   song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/,
   // CX-2: Russian censor's / printer's / dedication lines on the title pages are not the poet's text
   kobzar1840: /^(ПЕЧАТАТЬ ПОЗВОЛЯЕТСЯ|съ тѣмъ чтобы|Цензоръ|САНКТПЕТЕРБУРГЪ|ВЪ ТИПОГРАФІИ)/,
@@ -82,7 +87,8 @@ const CUT: Record<string, RegExp> = {
 }
 /** Header author must match, else the subpage is somebody else's text (e.g. a translation). Absent header → kept. */
 const AUTHOR: Record<string, RegExp> = { franko: /Франко/, kulish: /Куліш|Кулїш/, lesya: /Леся|Лесї|Українка|Косач/, kotliarevsky: /Котляревськ/, hrinchenko: /Грінченк|Чайченк/,
-  shevchenko: /Шевченк/, nechuy: /Левіцьк|Левицьк|Нечуй/ }
+  shevchenko: /Шевченк/, nechuy: /Левіцьк|Левицьк|Нечуй/,
+  yavornytsky: /Яворницьк/, sumtsov: /Сумцов/, bahaliy: /Багалі/, pyven: /Півень|Пивень/, komarova: /Комарова/ }
 
 // ── page → tokens ───────────────────────────────────────────────────────────────────────────────
 const BLOCK = new Set(['p', 'div', 'li', 'tr', 'table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 'ol', 'ul', 'dd', 'dt', 'hr', 'br', 'center'])

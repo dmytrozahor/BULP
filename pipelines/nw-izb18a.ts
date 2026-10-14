@@ -13,7 +13,7 @@ export const UNITS_18A: Unit[] = [
     lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
   { id: "o18_17", title: "«Іоанн». Героїчні стихи о славних воєнних дійствіях войськ запорозьких (1784)", author: "ioann", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_17.htm"],
     date: [1784, 1784], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_17.htm", "Писано года 1784, місяця августа, дня 21, в Ключу Уманськом."),
-    lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
+    lang: 'uk', region: 'Черкащина', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
   { id: "o18_19", title: "Юліан Добриловський. Пісні", author: "dobrylovsky", kind: 'izbornyk-page', urls: ["http://izbornyk.org.ua/old18/old18_19.htm"],
     date: [1760, 1825], dateCite: Q('IZB', "http://izbornyk.org.ua/old18/old18_19.htm", "український поет і проповідник кінця XVIII — початку XIX ст."),
     lang: 'uk', witnessType: 'scholarly_ed', edition: "Українська література XVIII ст., К.: Наукова думка, 1983 (Ізборник; правопис модернізовано)", orth: 'modernised' },
