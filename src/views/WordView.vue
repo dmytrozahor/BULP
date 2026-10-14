@@ -47,6 +47,7 @@ import SensesBlock from '../components/SensesBlock.vue'
 import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
+import IkavismChain from '../components/IkavismChain.vue'
 import DerivativesBlock from '../components/DerivativesBlock.vue'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
@@ -266,6 +267,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <Panel id="h-ipa" :open="false" title="Вимова · IPA" :summary="ipa1 ? `${ipa1} · виведено за правилами` : 'виведено за правилами (P-1.7)'"
           info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Перемикач: літературна / говір (IP-2).">
           <IpaRow :variants="full?.stress ?? []" :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
+          <IkavismChain :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
         </Panel>
         <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->

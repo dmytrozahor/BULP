@@ -164,5 +164,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 V2/V1: кінь [kinʲ] → ZAK/HUT/LEM/WPL monophthong [kunʲ], CHN/WPL-N diphthong [ku̯inʲ]; unchanged without paradigm |
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 applicableDialects: кінь → ZAK, CHN, WPL …, not MDN/BOY/POD; a word with no feature → none |
 | BL-13 | tests/dialect-ipa.test.ts › BL-13 every research/27 origin row has codes, a cite and (except G12) a verbatim [Q] quote |
+| BL-14 | tests/ikavism.test.ts › BL-14 chain: конь → кінь, R10 step = south о > о· > у· > ü > і and north о > о· > уо > уі > і, reconstruction with the Shevelov quote |
+| BL-14 | tests/ikavism.test.ts › BL-14 Львів: chain from the paradigm (Львова) has the stage Львув marked не засвідчено; no attested list contains it |
+| BL-14 | tests/ikavism.test.ts › BL-14 reflexes: every reflex is a Q whose verbatim quote prints the form |
 | FX-7 | manual — stress reaches the data (build writes stress-request.json, runs nlp/stress.py via UV_BIN, merges per B-3.7, warns on a stale stress.json); tests/gaps.test.ts › B-3.7 stress status is unknown |
 | BL-11 | tests/ingest-dict.test.ts › BL-11 dictionary headwords from OCR djvu text |

@@ -8,6 +8,8 @@ import type { Evidence } from '../../core/evidence.ts'
 import { ruleById } from '../../core/phonology.ts'
 import type { TraceStep } from '../../core/types.ts'
 import EvidenceList from './EvidenceList.vue'
+import IkavismChain from './IkavismChain.vue'
+import { chainsForStep } from '../../core/ikavism.ts'
 const props = defineProps<{ steps: TraceStep[]; extra?: Evidence[][]; uid: string }>()
 const open = ref<number | null>(null)
 const toggle = (i: number) => (open.value = open.value === i ? null : i)
@@ -22,6 +24,7 @@ const toggle = (i: number) => (open.value = open.value === i ? null : i)
       <div v-if="open === i && ruleById[s.rule]" class="card" style="margin:.3rem 0">
         <div class="small"><strong>{{ s.rule }}</strong> {{ ruleById[s.rule]!.name }} · {{ ruleById[s.rule]!.date }} · сфера {{ ruleById[s.rule]!.scope }}</div>
         <EvidenceList :evidence="[ruleById[s.rule]!.cite, ...(props.extra?.[i] ?? [])]" />
+        <IkavismChain v-if="s.rule === 'R10' || s.rule === 'R09'" :chains="chainsForStep(s)" />
       </div>
     </li>
     <li v-if="!props.steps.length" class="small muted">змін немає</li>
