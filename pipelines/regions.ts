@@ -12,6 +12,7 @@
  * UA-74 Chernihiv, UA-53 Poltava, UA-59 Sumy, UA-63 Kharkiv).
  */
 import { TERRITORIES } from '../core/territories.ts'
+import { SOUTH_EAST } from './regions-cx.ts'
 export interface Region { code: string; name: string; oblasts: string[]; match: RegExp }
 /** SPEC 63 MP-2: the historical Ukrainian territories (core/territories.ts) are valid witness regions, counted per territory; `oblasts` = their polygon code in public/geo/historical.json. */
 const HISTORICAL: Region[] = TERRITORIES.map(t => ({ code: t.id, name: ` (історична територія)`, oblasts: [t.code], match: t.match }))
@@ -24,6 +25,7 @@ export const REGIONS: Region[] = [
   { code: 'poltavshchyna', name: 'Полтавщина', oblasts: ['UA-53'], match: /^Полтав(а|щина)$/ },
   { code: 'chernihivshchyna', name: 'Чернігівщина', oblasts: ['UA-74'], match: /^Чернігівщина$/ },
   { code: 'slobozhanshchyna', name: 'Слобожанщина', oblasts: ['UA-63', 'UA-59'], match: /^Слобожанщина$/ },
+  ...SOUTH_EAST,   // SPEC 63 CX-5
   ...HISTORICAL,
 ]
 
