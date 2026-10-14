@@ -13,13 +13,14 @@ export interface TorotIn {
   ids: Int32Array                        // lemma index per token (-1 = not linked)
   reasonOf: (ti: number) => string       // why a token with a TOROT lemma did not link (gate / no VESUM form …)
   lemmaOf: (idx: number) => { display: string; tags: string }
+  model?: boolean                        // PV-8: lemma/morph are Stanza ORV output
 }
 export interface TorotWitnessStat { id: string; title: string; n: number; withLemma: number; linked: number; names: number; orv: number; none: number; topOrv: { lemma: string; n: number; reason: string; ex: string }[]; reasons: Record<string, number> }
 
 export function scanTorot(ins: TorotIn[], generated: string): { file: TorotFile; refs: Map<string, string[]>; stats: TorotWitnessStat[] } {
   const scan = new TorotScan(), refs = new Map<string, string[]>(), stats: TorotWitnessStat[] = []
-  for (const { w, ids, reasonOf, lemmaOf } of ins) {
-    const st: TorotWitnessStat = { id: w.id, title: w.title, n: w.tokens.length, withLemma: 0, linked: 0, names: 0, orv: 0, none: 0, topOrv: [], reasons: {} }
+  for (const { w, ids, reasonOf, lemmaOf, model } of ins) {
+    const st: TorotWitnessStat = { id: w.id, title: w.title + (model ? " [Stanza ORV, модель]" : ""), n: w.tokens.length, withLemma: 0, linked: 0, names: 0, orv: 0, none: 0, topOrv: [], reasons: {} }
     const r: string[] = [], per = new Map<string, { n: number; reason: string; ex: string }>()
     w.tokens.forEach((t, ti) => {
       const linked = ids[ti]! >= 0, b: Bucket = bucketOf(t, linked)
@@ -27,7 +28,7 @@ export function scanTorot(ins: TorotIn[], generated: string): { file: TorotFile;
       st[b === 'linked' ? 'linked' : b === 'name' ? 'names' : b === 'orv' ? 'orv' : 'none']++
       const reason = b === 'orv' ? reasonOf(ti) : undefined
       const L = linked ? lemmaOf(ids[ti]!) : undefined
-      const ref = scan.add(b, w.id, t, { reason, modern: L && /:prop\b/.test(':' + L.tags) ? L.display : undefined })
+      const ref = scan.add(b, w.id, t, { model, reason, modern: L && /:prop\b/.test(':' + L.tags) ? L.display : undefined })
       r.push(ref ?? (b === 'linked' && L ? 'w:' + L.display : ''))
       if (b === 'orv' && reason) { st.reasons[reason] = (st.reasons[reason] ?? 0) + 1; const p = per.get(t.lemma!) ?? per.set(t.lemma!, { n: 0, reason, ex: `${t.raw} @${t.loc}` }).get(t.lemma!)!; p.n++ }
     })

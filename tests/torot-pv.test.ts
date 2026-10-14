@@ -9,6 +9,7 @@ import { TorotScan, bucketOf } from '../core/torot.ts'
 import { lightIndex, scanTorot, torotReport } from '../pipelines/build-torot.ts'
 import { textShard } from '../pipelines/build-texts.ts'
 import { rowRef, type Row } from '../src/lib/witnessText.ts'
+import { oesVariants, oesFoldById } from '../core/oes-folds.ts'
 import { makeRouter } from '../src/router.ts'
 
 const XML = `<sentence id="9001"><token id="1" form="киевѣ" citation-part="0.3" lemma="кыевъ" part-of-speech="Ne" morphology="-s---ml--i"/><token id="2" form="ѿ" citation-part="0.3" lemma="отъ" part-of-speech="R-" morphology="---------n"/><token id="3" form="хоумъ" citation-part="0.4" lemma="хоумъ" part-of-speech="Nb" morphology="-s---mn--i"/></sentence>`
@@ -61,5 +62,13 @@ describe('SPEC 63 PV', () => {
     expect(expandTitlo('ісъ').word).toBe('иисусъ'); expect(expandTitlo('двдъ').word).toBe('давидъ'); expect(expandTitlo('рства').word).toBe('рождьства')
     expect(expandTitlo('сна').expanded).toBeUndefined()   // сна = gen. of сон: not expanded without a titlo
     expect(derive('цръ', { oldI: true }).candidates.map(c => c.form)).toContain('цар')
+  })
+  it('PV-8 non-TOROT witnesses: cited OES folds (instr. -мь → -мъ, -ѣмъ → -емъ) propose candidates; Stanza ORV PROPN/NOUN become model-labelled name / ORV cards', () => {
+    expect(oesVariants('конь' + 'мь')).toEqual([{ form: 'коньмъ', trace: ['OES-MJER'] }])
+    expect(oesVariants('сыномъ')).toEqual([]); expect(oesVariants('данѣмъ').map(v => v.form)).toContain('данемъ')
+    expect(oesFoldById['OES-MJER']!.cite.quote).toContain('коньмь (-емь)')
+    const s = new TorotScan(), m = { raw: 'Моисѣомъ', loc: 'a', lemma: 'моисеи', morph: 'PROPN Case=Ins' }
+    expect(bucketOf(m, false)).toBe('name'); expect(s.add('name', 'ilarion', m, { model: true })).toBe('n:моисеи')
+    expect(s.names.get('моисеи')).toMatchObject({ model: true, pos: 'PROPN (Stanza ORV, модель)' })
   })
 })

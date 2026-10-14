@@ -40,6 +40,7 @@ import { collocations, lemmaStats, type Counts, type Sizes } from './build-stats
 import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
+import { oesVariants } from '../core/oes-folds.ts'
 import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
@@ -131,7 +132,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
   // ── 2. token types, candidates, ONE VESUM pass ─────────────────────────────────────────────────
   const dmemo = new Map<string, Derivation>(), fmemo = new Map<string, ReturnType<typeof foldRaw>>()
-  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = deriveRaw(s, { oldI })); return d }
+  // SPEC 63 PV-8: cited OES inflection spellings (core/oes-folds.ts) are extra candidates of every Old-Cyrillic token; VESUM still decides
+  const deriveOes = (s: string, oldI: boolean): Derivation => {
+    const d = deriveRaw(s, { oldI }); if (!/[ъьѣ]/.test(d.norm)) return d
+    const seen = new Set(d.candidates.map(c => c.form)), extra = oesVariants(d.norm).flatMap(v => deriveRaw(v.form, { oldI }).candidates.map(c => ({ ...c, trace: [...v.trace, ...c.trace], branches: c.branches + v.trace.length }))).filter(c => !seen.has(c.form) && seen.add(c.form))
+    return extra.length ? { ...d, candidates: [...d.candidates, ...extra] } : d
+  }
+  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = deriveOes(s, oldI)); return d }
   const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = foldRaw(s, orth)); return d }
 
   const types: TypeCtx[] = [], typeIdx = new Map<string, number>(), typeCount: number[] = []
@@ -282,8 +289,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const NL = [...wLinked.values()].reduce((a, b) => a + b, 0), unresolved = sizes.N - NL
   lap(`linked ${NL}/${sizes.N} tokens (${(100 * NL / sizes.N).toFixed(1)}%), ${lemmaList.length} lemmas`)
   // SPEC 63 PV: TOROT witnesses — every token with a TOROT lemma is linked, a name (Ne) or an ORV-only card; strict VESUM link unchanged
-  const torot = scanTorot(adm.flatMap(({ w }, wi) => w.lang !== 'uk' && w.tokens.some(t => t.lemma) ? [{
-    w, ids: docs[wi]!.id,
+  const torot = scanTorot(adm.flatMap(({ w, nlp }, wi) => w.lang !== 'uk' && (w.tokens.some(t => t.lemma) || nlp) ? [{
+    w: w.tokens.some(t => t.lemma) || !nlp ? w : { ...w, tokens: w.tokens.map((t, i) => { const n = nlp.tokens[i]; return n?.lemma ? { ...t, lemma: n.lemma, morph: [n.upos, n.feats].filter(Boolean).join(' ') } : t }) },
+    model: !w.tokens.some(t => t.lemma), ids: docs[wi]!.id,
     reasonOf: (ti: number) => { const x = tix[wi]![ti]!, t = types[x]!; return opts1[x] ? 'POS agreement (FX-3)' : linkOptions({ ...t, gate: undefined }, env) ? `POS gate (TOROT ${t.gate})` : 'no VESUM-attested fold/derivation candidate' },
     lemmaOf: (i: number) => lemmaList[i]!,
   }] : []), new Date().toISOString())

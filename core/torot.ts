@@ -19,7 +19,7 @@ export const TOROT_POS: Record<string, string> = {
 }
 /** morph string of the ingester = `${pos} ${morphology}` */
 export const posOf = (morph?: string) => (morph ?? '').split(' ')[0] ?? ''
-export const isName = (morph?: string) => posOf(morph) === 'Ne'
+export const isName = (morph?: string) => posOf(morph) === 'Ne' || posOf(morph) === 'PROPN'   // PROPN = Stanza ORV (PV-8, model output)
 export const torotId = (lemma: string) => lemma.normalize('NFC').toLowerCase()
 
 export type Bucket = 'linked' | 'name' | 'orv' | 'none'
@@ -29,7 +29,7 @@ export const bucketOf = (t: { lemma?: string; morph?: string }, linked: boolean)
 
 export interface TorotEvidence { w: string; loc: string; raw: string; morph: string }
 export interface TorotForm { raw: string; f: number }
-interface CardBase { id: string; lemma: string; pos: string; morph: string; n: number; forms: TorotForm[]; evidence: TorotEvidence[] }
+interface CardBase { /** PV-8: true when lemma/POS/morphology are Stanza ORV model output, not TOROT gold */ model?: true; id: string; lemma: string; pos: string; morph: string; n: number; forms: TorotForm[]; evidence: TorotEvidence[] }
 export interface NameCard extends CardBase {
   /** `place` only when the cited gazetteer (core/places.ts, Wikidata) knows the stem; TOROT Ne does not say person/place/people → `unknown` (SPEC 00) */
   kind: 'place' | 'unknown'; place?: string
@@ -43,13 +43,13 @@ export interface TorotFile { generated: string; source: string; names: NameCard[
 
 export class TorotScan {
   readonly names = new Map<string, NameCard>(); readonly orv = new Map<string, OrvCard>()
-  add(b: Bucket, w: string, t: { raw: string; lemma?: string; morph?: string; loc: string }, extra: { modern?: string; reason?: string } = {}): string | undefined {
+  add(b: Bucket, w: string, t: { raw: string; lemma?: string; morph?: string; loc: string }, extra: { modern?: string; reason?: string; model?: boolean } = {}): string | undefined {
     if ((b !== 'name' && b !== 'orv') || !t.lemma) return undefined
     const id = torotId(t.lemma), m = (b === 'name' ? this.names : this.orv) as Map<string, CardBase>
     let c = m.get(id)
     if (!c) {
       const pos = posOf(t.morph)
-      const base: CardBase = { id, lemma: t.lemma, pos: `${pos} ${TOROT_POS[pos] ?? ''}`.trim(), morph: (t.morph ?? '').split(' ').slice(1).join(' '), n: 0, forms: [], evidence: [] }
+      const base: CardBase = { ...(extra.model ? { model: true as const } : {}), id, lemma: t.lemma, pos: extra.model ? `${pos} (Stanza ORV, модель)` : `${pos} ${TOROT_POS[pos] ?? ''}`.trim(), morph: (t.morph ?? '').split(' ').slice(1).join(' '), n: 0, forms: [], evidence: [] }
       c = b === 'name'
         ? ((): NameCard => { const p = placeOf(t.raw.charAt(0).toUpperCase() + t.raw.slice(1)); return { ...base, kind: p ? 'place' : 'unknown', ...(p ? { place: p.id } : {}) } })()
         : { ...base, gloss: 'unknown', reason: extra.reason ?? 'unknown' } as OrvCard
