@@ -43,7 +43,7 @@ const err = computed(() => pick.value ? detailError.get(pick.value.lemma) : unde
 const epochs = computed(() => restrictEpochs(full.value?.epochs, pick.value?.raw ?? ''))
 const stats = computed(() => fc.value && full.value && corpus.value
   ? formStats(fc.value, full.value.stats, epochs.value, { N: corpus.value.N, epoch: corpus.value.epochSizes }) : undefined)
-const byRegion = computed(() => fc.value ? formRegions(fc.value.kwic, corpus.value?.regions, w => witnessById.value.get(w)?.region) : [])
+const byRegion = computed(() => fc.value ? formRegions(fc.value.byW ?? fc.value.kwic, corpus.value?.regions, w => witnessById.value.get(w)?.region) : [])
 const kind = computed(() => paradigmKindOf(core.value))
 const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron')
 const link = computed(() => fc.value && isKnown(fc.value.link) ? fc.value.link.value : undefined)
@@ -79,17 +79,18 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <EpochParadigm v-if="epochKinds" no-legend :kind="kind" :epochs="epochs" :spellings="[pick.raw]" />
           <p v-else class="small sans muted">Історичні парадигми для цієї частини мови ще не побудовано.</p>
         </Panel>
-        <Panel id="f-wit" :open="true" title="Пам’ятки" :summary="`${stats.witnesses.length} у прикладах`" :empty="!stats.witnesses.length">
+        <Panel id="f-wit" :open="true" title="Пам’ятки" :summary="stats.trueCounts ? `${stats.witnesses.length} пам’яток, усі ${stats.f} токенів` : `${stats.witnesses.length} у прикладах`" :empty="!stats.witnesses.length">
           <ul class="sans small" style="list-style:none;padding:0;margin:0">
             <li v-for="w in stats.witnesses" :key="w.w" style="margin:.2rem 0"><RouterLink v-if="witnessById.get(w.w)" :to="witnessTo(w.w)">{{ wTitle(w.w) }}</RouterLink><template v-else>{{ wTitle(w.w) }}</template>
-              <span class="count-n"> · прикладів: {{ w.lines }}</span></li>
+              <span class="count-n"> · {{ stats.trueCounts ? 'токенів' : 'прикладів' }}: {{ w.lines }}</span></li>
           </ul>
-          <p class="small sans muted">Перелік за наведеними прикладами (≤ 6); повний розподіл за пам’ятками для окремого написання в даних не зберігається.</p>
+          <p v-if="stats.trueCounts" class="small sans muted">Точні лічильники: кожен пов’язаний токен цього написання, за пам’ятками (BL-6c).</p>
+          <p v-else class="small sans muted">Перелік за наведеними прикладами (≤ 6): ці дані збудовано до BL-6c — нижня межа.</p>
         </Panel>
-        <Panel id="f-reg" :open="true" title="Карта · регіон пам’ятки" :summary="`${byRegion.filter(r => r.f).length} регіонів у прикладах`" :empty="!byRegion.length"
+        <Panel id="f-reg" :open="true" title="Карта · регіон пам’ятки" :summary="`${byRegion.filter(r => r.f).length} регіонів${fc.byW ? '' : ' у прикладах'}`" :empty="!byRegion.length"
           info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
           <RegionMap :by="byRegion" />
-          <p class="small sans muted">f у регіоні — це наведені приклади (≤ 6): нижня межа; N — токени всіх пам’яток регіону.</p>
+          <p class="small sans muted">f у регіоні — <template v-if="fc.byW">усі токени цього написання в пам’ятках регіону</template><template v-else>наведені приклади (≤ 6): нижня межа</template>; N — токени всіх пам’яток регіону.</p>
         </Panel>
         <Panel id="f-der" :open="true" title="Виведення · Derivation" :summary="fc.derivation.length ? `${fc.derivation.length} кроків → ${fc.modern}` : `без змін → ${fc.modern}`">
           <p class="sans small"><span class="muted">норма: </span>{{ fc.norm }} <span class="muted"> · сучасна: </span>{{ fc.modern }}</p>

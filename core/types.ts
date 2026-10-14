@@ -51,6 +51,8 @@ export interface FormCard {
   hints: string[]                              // weight-0 rule ids (P-3.1)
   epochs: string[]                             // epochs of the witnesses this spelling occurs in
   kwic: Kwic[]                                 // ≤ 6
+  /** BL-6c: true token count of THIS spelling per witness id (every linked token, not only the ≤ 6 KWIC lines); absent in data built before BL-6c */
+  byW?: Record<string, number>
 }
 
 export interface StressVariant {

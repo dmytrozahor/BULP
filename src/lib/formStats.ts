@@ -14,6 +14,8 @@ export interface FormEpochStat { epoch: string; f: number; N: number; ipm: numbe
 export interface FormStats {
   f: number; N: number; ipm: number; hk: number; dots: number; shareOfLemma: number
   byEpoch: FormEpochStat[]; placed: number; dp?: number; evenness?: number; epochRange: number
+  /** `witnesses[].lines` = true tokens of this spelling (BL-6c); false = KWIC lines only (data built before BL-6c: a lower bound) */
+  trueCounts: boolean
   witnesses: { w: string; lines: number }[]
 }
 
@@ -24,7 +26,7 @@ export function restrictEpochs(ep: EpochParadigms | undefined, raw: string): Epo
 }
 
 export function formStats(
-  form: Pick<FormCard, 'raw' | 'f' | 'kwic'>, lemma: { f: number; hk: number }, epochs: EpochParadigms | undefined,
+  form: Pick<FormCard, 'raw' | 'f' | 'kwic' | 'byW'>, lemma: { f: number; hk: number }, epochs: EpochParadigms | undefined,
   sizes: { N: number; epoch: Record<string, number> },
 ): FormStats {
   const f = form.f, N = sizes.N
@@ -37,9 +39,10 @@ export function formStats(
   const placed = byEpoch.reduce((s, e) => s + e.f, 0)
   const parts = Object.entries(sizes.epoch).filter(([, n]) => n > 0).map(([e, n]) => ({ y: byEpoch.find(b => b.epoch === e)?.f ?? 0, n }))
   const d = placed ? dispersion(parts) : undefined
-  const by = new Map<string, number>()
-  for (const k of form.kwic as Kwic[]) by.set(k.w, (by.get(k.w) ?? 0) + 1)
+  const by = new Map<string, number>(form.byW ? Object.entries(form.byW) : [])   // BL-6c: true per-witness counts when the shard has them, else the KWIC lines (lower bound)
+  if (!form.byW) for (const k of form.kwic as Kwic[]) by.set(k.w, (by.get(k.w) ?? 0) + 1)
   return {
+    trueCounts: !!form.byW,
     f, N, ipm: ipm(f, N), hk, dots: dots(hk), shareOfLemma: lemma.f ? f / lemma.f : 0, byEpoch, placed,
     dp: d?.dp, evenness: d?.evenness, epochRange: d?.range ?? 0,
     witnesses: [...by].map(([w, lines]) => ({ w, lines })).sort((a, b) => b.lines - a.lines || a.w.localeCompare(b.w)),
@@ -52,9 +55,10 @@ export function formStats(
  * is unknown or matches no region row is left out (unknown stays unknown, P-3.1). Rows are shaped like LemmaStats.byRegion, so RegionMap / regionRows apply.
  */
 export function formRegions(
-  kwic: Pick<Kwic, 'w'>[], regions: CorpusMeta['regions'] | undefined, witnessRegion: (w: string) => string | undefined,
+  src: Pick<Kwic, 'w'>[] | Record<string, number>, regions: CorpusMeta['regions'] | undefined, witnessRegion: (w: string) => string | undefined,
 ): NonNullable<LemmaStats['byRegion']> {
   const f = new Map<string, number>()
-  for (const k of kwic) { const c = regionOf(witnessRegion(k.w)); if (c) f.set(c, (f.get(c) ?? 0) + 1) }
+  // BL-6c: `src` = FormCard.byW (true tokens per witness) or, for older data, the KWIC lines (one per line, a lower bound)
+  for (const [w, n] of Array.isArray(src) ? src.map(k => [k.w, 1] as const) : Object.entries(src)) { const c = regionOf(witnessRegion(w)); if (c) f.set(c, (f.get(c) ?? 0) + n) }
   return (regions ?? []).filter(r => r.N > 0).map(r => ({ code: r.code, f: f.get(r.code) ?? 0, N: r.N }))
 }
