@@ -49,3 +49,9 @@ export const SOURCES: Record<string, Source> = {
   SOPHIA: { title: 'Saint Sophia’s Inscriptions — University of Gothenburg & НЗ «Софія Київська» (saintsophia.dh.gu.se, API)', url: 'https://saintsophia.dh.gu.se/', license: 'зображення CC BY-NC; ліцензія тексту транскрипцій порталом не вказана (див. licenceNote)' },
   GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
 }
+  ARKUSHYN: { title: 'Аркушин Г. Л. Словник західнополіських говірок. У 2 т. Луцьк: Вежа, 2000 (скан: archive.org slzhdplhv; цитування, один заголовок + уривок тлумачення)', url: 'https://archive.org/details/slzhdplhv', year: '2000' },
+  LYSENKO:  { title: 'Лисенко П. С. Словник поліських говорів. К.: Наукова думка, 1974 (скан: archive.org p0lissia; цитуються приклади з Передмови)', url: 'https://archive.org/details/p0lissia', year: '1974' },
+  ZAKREV:   { title: 'Закревська Я. (ред.) Гуцульські говірки: Короткий словник. Львів, 1997 (скан: archive.org hutsulslovnyk; цитування)', url: 'https://archive.org/details/hutsulslovnyk', year: '1997' },
+  PYRTEY:   { title: 'Пиртей П. С. Словник лемківскої говірки. Матеріали для словника, 2001 (archive.org Pyrtey-2001; ukrainian_lemko.academic.ru; цитування)', url: 'https://archive.org/details/Pyrtey-2001', year: '2001' },
+  ONYSH:    { title: 'Онишкевич М. Й. Словник бойківських говірок. Ч. 1–2. К.: Наукова думка, 1984 (скан: archive.org slv1984; OCR зашумлений, цитуються лише чисті фрагменти)', url: 'https://archive.org/details/slv1984', year: '1984' },
+  KOLYBA:   { title: 'Колиба — портал про Закарпаття, «Закарпатський словник» (краудсорсинговий; CC BY-NC-ND 3.0 — лише цитування з активним посиланням)', url: 'https://www.kolyba.org.ua/zakarpatskij-slovnik', license: 'CC BY-NC-ND 3.0' },
