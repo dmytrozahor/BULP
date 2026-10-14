@@ -215,3 +215,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | UX-6 | tests/ui.test.ts › nav is a single non-wrapping scroll row under 700px |
 | UX-7 | tests/ui.test.ts › UX-7 a word outside the lexicon gets a rule-based analysis banner in search and on the word page |
 | GA-1 | manual — specs/GAPS.md is the audit document itself (re-audited by GA-2); no executable check |
+| DL-1 | tests/dialect-books.test.ts › each rule cite is a Q quote from an ЕУМ article (litopys um<N>.htm) and rule ids are unique |
+| DL-1 | tests/dialect-books.test.ts › the example table covers every rule:code of DIALECT_BOOK_RULES and nothing else |
+| DL-1 | tests/dialect-books.test.ts › a normative VESUM hit vetoes every new row (no standard word is tagged dialectal) |
+| DL-2 | tests/dialect-books.test.ts › DL-2 per dialect group: each new rule fires on its example and stays silent on the standard word |
+| DL-3 | tests/dialect-books.test.ts › the a > e/i-after-soft-consonants rows are dated 1401 (XV c.) with the Shevelov quote; NDN/PKB/WPL/SYAN do not fire earlier |
+| DL-3 | tests/dialect-books.test.ts › HUT ukanye is dated XIV c. (1301) and Volhynian ukanye XVI c. (1501); the dating quote joins the evidence |
+| DL-3 | tests/dialect-books.test.ts › new dialect codes are named and the new groups are gated by Shevelov Q quotes |
+| DL-4 | tests/dialect-books.test.ts › each lexical entry fires for its dialect(s) on its exact form and carries the book quote as the cite |
+| DL-4 | tests/dialect-books.test.ts › has entries for every dialect group of the book sources, each with a Q quote, a registered source and a locator |
+| DL-4 | tests/dialect-books.test.ts › Polissian rows: Arkushin (WPL) and Lysenko (MPL, CHN) entries quote the dictionary with the book locator |
+| DL-5 | manual — research/31-dialect-books.md §1 logs every source with URL, access method, robots.txt/licence verdict and the sources skipped or failed; reviewed by reading it |
