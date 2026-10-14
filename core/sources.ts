@@ -19,6 +19,7 @@ export const SOURCES: Record<string, Source> = {
   WS:     { title: 'Українські Вікіджерела', url: 'https://uk.wikisource.org', license: 'PD / CC BY-SA 4.0' },
   WIKT:   { title: 'Вікісловник (uk.wiktionary)', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
   SUM20:  { title: 'Словник української мови у 20 т. Т. 1. Київ, 2010', url: 'https://archive.org/details/SUM-20', year: '2010' },
+  SUSM14: { title: 'Словник староукраїнської мови XIV–XV ст. у 2 т. К.: Наукова думка, 1977–78 (OCR: archive.org staroukr1, staroukr2; беруться лише заголовні слова)', url: 'https://archive.org/details/staroukr1', year: '1977' },
   WUK:    { title: 'Українська Вікіпедія (статті про говори; тексти збігаються з енц. «Українська мова», 2000)', url: 'https://uk.wikipedia.org', license: 'CC BY-SA 4.0' },
   DWDS:   { title: 'DWDS — Digitales Wörterbuch der deutschen Sprache (Hilfe: Wortprofil, Verlaufskurve, Worthäufigkeit)', url: 'https://www.dwds.de' },
   RYCHLY: { title: 'Rychlý P. A Lexicographer-Friendly Association Score. RASLAN 2008', url: 'https://www.fi.muni.cz/usr/sojka/download/raslan2008/13.pdf', year: '2008' },

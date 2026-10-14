@@ -12,11 +12,12 @@ import { UNITS_14B } from './nw-izb14b.ts'
 import { UNITS_18A } from './nw-izb18a.ts'
 import { UNITS_18B } from './nw-izb18b.ts'
 import { UNITS_SONGS } from './nw-songs.ts'
+import { UNITS_DICT } from './nw-dict.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
-export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed'
+export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary'
 
 export interface Unit {
   id: string; title: string; author: string; kind: Kind
@@ -96,7 +97,8 @@ export const MANIFEST: Unit[] = [
   ...UNITS_18A,
   ...UNITS_18B,
   ...UNITS_SONGS,
+  ...UNITS_DICT,
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */
-export const rawPath = (u: Unit, i: number) => `data/raw/${u.kind}/${u.id}/${String(i).padStart(3, '0')}.${u.kind === 'torot' ? 'xml' : 'html'}`
+export const rawPath = (u: Unit, i: number) => `data/raw/${u.kind}/${u.id}/${String(i).padStart(3, '0')}.${u.kind === 'torot' ? 'xml' : u.kind === 'dict' ? 'txt' : 'html'}`

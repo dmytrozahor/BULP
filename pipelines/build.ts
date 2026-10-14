@@ -82,6 +82,7 @@ interface LemmaAcc {
   forms: Map<string, FormAcc>
   firstByW: Map<string, { wid: string; ref: Ref; raw: string; route: Route; loc: string; n: number }>   // FX-3: key = witness id + spelling
   pre1400: boolean
+  dict: boolean                  // BL-11: attested as a headword of a historical dictionary (witnessType dictionary) — kept even at f = 1
   nm: { torot?: NameEvidence['torot']; stanza?: NameEvidence['stanza']; nMorph: number; nNlp: number }   // NP-1 counters
 }
 
@@ -211,11 +212,12 @@ export async function build(opts: { noPy?: boolean } = {}) {
       nl++; rt[route] = (rt[route] ?? 0) + 1
       let la = lemmas.get(c.id)
       if (!la) {
-        la = { id: c.id, display: c.lemma, tags: c.hit.tags, cls: c.cls, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, nm: { nMorph: 0, nNlp: 0 } }
+        la = { id: c.id, display: c.lemma, tags: c.hit.tags, cls: c.cls, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, dict: false, nm: { nMorph: 0, nNlp: 0 } }
         lemmas.set(c.id, la); lemmaList.push(la)
       }
       la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e)
       if (w.date[1] < 1400) la.pre1400 = true
+      if (w.witnessType === 'dictionary') la.dict = true
       ids[ti] = la.idx
       {   // NP-1: PROIEL Ne (TOROT morph) and Stanza PROPN, counted per lemma
         const nm = la.nm, up = nlp?.tokens[ti]?.upos
@@ -246,11 +248,11 @@ export async function build(opts: { noPy?: boolean } = {}) {
   lap(`linked ${NL}/${sizes.N} tokens (${(100 * NL / sizes.N).toFixed(1)}%), ${lemmaList.length} lemmas`)
 
   const fMax = Math.max(...lemmaList.map(l => l.f))
-  const kept = lemmaList.filter(l => l.f >= 2 || l.pre1400)
+  const kept = lemmaList.filter(l => l.f >= 2 || l.pre1400 || l.dict)
   const keep = new Uint8Array(lemmaList.length); kept.forEach(l => (keep[l.idx] = 1))
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)
-  lap(`${kept.length} lemmas kept (f ≥ 2 or pre-1400); collocations for ${coll.size}`)
+  lap(`${kept.length} lemmas kept (f ≥ 2, pre-1400 or dictionary headword); collocations for ${coll.size}`)
 
   // ── 5. selection, requests for the Python stages, LT corpus keys ──────────────────────────────
   const lt = await ltIndex()
