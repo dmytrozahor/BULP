@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **620 590**.
+Generated 2026-10-14T13:40:25.083Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **988 770**.
 
 ## 1. Corpus
 
@@ -1145,6 +1145,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-296 | sophia_graffiti | undetermined | 1025–1599 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 1 | 0 |
 | sophia-302 | sophia_graffiti | chu-rus | 1025–1599 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 14 | 1 | 0 |
 | sophia-894 | sophia_graffiti | chu-rus | 1025–1599 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 1 | 0 |
+| i14_05b | danylo_korsunsky | ruthenian | 1580–1600 | shev.middle (high) | wl.ruthenian | 4 412 | 0 | 52 |
 | sophia-1047 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-107 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
 | sophia-1097 | sophia_graffiti | chu-rus | 1025–1600 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
@@ -1283,6 +1284,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-3847 | sophia_graffiti | ruthenian | 1605 | shev.middle (high) | wl.ruthenian | 3 | 1 | 1 |
 | sophia-4023 | sophia_graffiti | undetermined | 1605 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-2982 | sophia_graffiti | ruthenian | 1606 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| i17_01 | anon_i17_01 | ruthenian | 1603–1607 | shev.middle (high) | wl.ruthenian | 15 746 | 2 | 132 |
 | sophia-3342 | sophia_graffiti | ruthenian | 1608 | shev.middle (high) | wl.ruthenian | 3 | 4 | 0 |
 | sophia-3346 | sophia_graffiti | ruthenian | 1608 | shev.middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | i14_39 | anon_i14_39 | ruthenian | 1609 | shev.middle (high) | wl.ruthenian | 436 | 0 | 0 |
@@ -1300,6 +1302,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-4053 | sophia_graffiti | ruthenian | 1619 | shev.middle (high) | wl.ruthenian | 5 | 1 | 0 |
 | sophia-1003 | sophia_graffiti | ruthenian | 1620 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-437 | sophia_graffiti | ruthenian | 1620 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
+| i17_03 | kopystensky | ruthenian | 1621 | shev.middle (high) | wl.ruthenian | 5 289 | 10 | 88 |
 | sophia-2183 | sophia_graffiti | ruthenian | 1621 | shev.middle (high) | wl.ruthenian | 4 | 0 | 1 |
 | sophia-3619 | sophia_graffiti | ruthenian | 1624 | shev.middle (high) | wl.ruthenian | 2 | 1 | 0 |
 | sophia-4034 | sophia_graffiti | ruthenian | 1626 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
@@ -1329,10 +1332,12 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2713 | sophia_graffiti | undetermined | 1664 | shev.middle (high) | wl.ruthenian | 4 | 4 | 0 |
 | sophia-128 | sophia_graffiti | ruthenian | 1670 | shev.middle (high) | wl.ruthenian | 9 | 0 | 0 |
 | sophia-2017 | sophia_graffiti | ruthenian | 1670 | shev.middle (high) | wl.ruthenian | 8 | 0 | 0 |
+| i17_29 | anon_i17_29 | ruthenian | 1668–1671 | shev.middle (high) | wl.ruthenian | 4 046 | 1 | 33 |
 | sophia-2806 | sophia_graffiti | ruthenian | 1671 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-163 | sophia_graffiti | chu-rus | 1675 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-208 | sophia_graffiti | chu-rus | 1590–1675 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
 | sophia-4066 | sophia_graffiti | undetermined | 1679 | shev.middle (high) | wl.ruthenian | 1 | 1 | 0 |
+| i17_06 | radyvylovsky | ruthenian | 1676–1683 | shev.middle (high) | wl.ruthenian | 2 149 | 1 | 13 |
 | sophia-135 | sophia_graffiti | chu-rus | 1687 | shev.middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-384 | sophia_graffiti | ruthenian | 1687 | shev.middle (high) | wl.ruthenian | 4 | 1 | 0 |
 | sophia-44 | sophia_graffiti | ruthenian | 1688 | shev.middle (high) | wl.ruthenian | 10 | 0 | 0 |
@@ -1379,8 +1384,10 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-334 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-338 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-339 | sophia_graffiti | ruthenian | 1590–1690 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
+| i17_20 | velychkovsky | ruthenian | 1680–1691 | shev.middle (high) | wl.ruthenian | 3 305 | 8 | 5 |
 | sophia-1383 | sophia_graffiti | ruthenian | 1691 | shev.middle (high) | wl.ruthenian | 3 | 0 | 0 |
 | i14_32 | anon_i14_32 | ruthenian | 1600–1699 | shev.middle (high) | wl.ruthenian | 6 164 | 0 | 0 |
+| i17_28 | anon_i17_28 | ruthenian | 1600–1699 | shev.middle (high) | wl.ruthenian | 3 450 | 0 | 15 |
 | sophia-902 | sophia_graffiti | chu-rus | 1500–1699 | shev.early_middle+shev.middle (low) | wl.ruthenian | 5 | 0 | 0 |
 | sophia-1014 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1038 | sophia_graffiti | ruthenian | 1585–1700 | shev.middle (high) | wl.ruthenian | 4 | 0 | 0 |
@@ -1843,6 +1850,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-997 | sophia_graffiti | ruthenian | 1570–1700 | shev.middle (medium) | wl.ruthenian | 2 | 0 | 0 |
 | samovydets | samovydets | ruthenian | 1672–1702 | shev.middle (high) | wl.ruthenian | 37 974 | 2 | 1357 |
 | o18_26 | prokopovych | uk | 1705 | shev.middle (high) | wl.ruthenian | 9 404 | 0 | 21 |
+| i17_24 | zinoviiv | ruthenian | 1700–1709 | shev.middle (high) | wl.ruthenian | 3 902 | 0 | 0 |
 | pripovisti | zinoviiv | ruthenian | 1700–1709 | shev.middle (high) | wl.ruthenian | 9 180 | 5 | 268 |
 | o18_37 | hrabianka | uk | 1710 | shev.middle (high) | wl.ruthenian | 11 821 | 0 | 64 |
 | o18_01 | prokopovych | uk | 1709–1711 | shev.middle (high) | wl.ruthenian | 1 269 | 0 | 7 |
@@ -1861,6 +1869,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | o18_24 | pastelii | uk | 1741–1799 | shev.late_middle (high) | wl.ruthenian | 174 | 0 | 0 |
 | o18_25 | nekrashevych | uk | 1750–1799 | shev.late_middle (high) | wl.ruthenian | 3 235 | 0 | 0 |
 | sophia-351 | sophia_graffiti | uk | 1670–1800 | shev.middle+shev.late_middle (low) | wl.ruthenian | 9 | 1 | 0 |
+| eneida1808 | kotliarevsky | uk | 1808 | shev.late_middle (high) | wl.new | 12 397 | 0 | 32 |
 | o18_19 | dobrylovsky | uk | 1760–1825 | shev.late_middle (medium) | wl.ruthenian+wl.new | 191 | 0 | 0 |
 | song_baida | folk_maksymovych | uk | 1834 | shev.modern (high) | wl.new | 191 | 0 | 19 |
 | song_yikhav | folk_maksymovych | uk | 1834 | shev.modern (high) | wl.new | 87 | 0 | 12 |
@@ -1877,6 +1886,7 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | shevchenko_112 | shevchenko | uk | 1839 | shev.modern (high) | wl.new | 780 | 0 | 0 |
 | shevchenko_113 | shevchenko | uk | 1839 | shev.modern (high) | wl.new | 368 | 0 | 0 |
 | shevchenko_114 | shevchenko | uk | 1839 | shev.modern (high) | wl.new | 219 | 1 | 0 |
+| kobzar1840 | shevchenko | uk | 1840 | shev.modern (high) | wl.new | 5 202 | 0 | 10 |
 | shevchenko_115 | shevchenko | uk | 1840 | shev.modern (high) | wl.new | 67 | 0 | 0 |
 | shevchenko_116 | shevchenko | uk | 1840 | shev.modern (high) | wl.new | 109 | 0 | 0 |
 | shevchenko_118 | shevchenko | uk | 1841 | shev.modern (high) | wl.new | 77 | 0 | 0 |
@@ -1912,36 +1922,45 @@ Generated 2026-10-14T04:22:35.176Z by `pipelines/build.ts` (SPEC 20). Every numb
 | shevchenko_148 | shevchenko | uk | 1846 | shev.modern (high) | wl.new | 306 | 0 | 0 |
 | shevchenko_149 | shevchenko | uk | 1846 | shev.modern (high) | wl.new | 215 | 0 | 0 |
 | shevchenko_150 | shevchenko | uk | 1847 | shev.modern (high) | wl.new | 2 320 | 0 | 0 |
+| kulish1862 | kulish | uk | 1862 | shev.modern (high) | wl.new | 5 961 | 0 | 0 |
+| kobzar1876 | shevchenko | uk | 1876 | shev.modern (high) | wl.new | 88 813 | 0 | 4887 |
+| nechuy1879 | nechuy | uk | 1879 | shev.modern (high) | wl.new | 51 427 | 0 | 0 |
 | kulish1882 | kulish | uk | 1882 | shev.modern (high) | wl.new | 18 720 | 0 | 352 |
+| boa1884 | franko | uk | 1884 | shev.modern (high) | wl.new | 26 196 | 0 | 0 |
 | lesya1892 | lesya | uk | 1892 | shev.modern (high) | wl.new | 13 544 | 0 | 208 |
+| chaichenko1893 | hrinchenko | uk | 1893 | shev.modern (high) | wl.new | 31 972 | 0 | 1090 |
 | franko1893 | franko | uk | 1893 | shev.modern (high) | wl.new | 36 521 | 0 | 928 |
+| lesya1899 | lesya | uk | 1899 | shev.modern (high) | wl.new | 18 341 | 0 | 158 |
+| franko1902 | franko | uk | 1902 | shev.modern (high) | wl.new | 25 278 | 0 | 582 |
+| franko1903 | franko | uk | 1903 | shev.modern (high) | wl.new | 28 878 | 0 | 500 |
 | franko1905 | franko | uk | 1905 | shev.modern (high) | wl.new | 7 656 | 0 | 0 |
+| franko1906 | franko | uk | 1906 | shev.modern (high) | wl.new | 31 416 | 0 | 220 |
 | hrinchenko1908 | hrinchenko | uk | 1908 | shev.modern (high) | wl.new | 6 527 | 0 | 3414 |
 
-Admitted witnesses: 1912; N = 620 590. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 1931; N = 988 770. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=620 590 |
+| epoch | name | scheme | N | share of N=988 770 |
 |---|---|---|---|---|
-| shev.proto | протоукраїнська доба | shev | 7 214 | 1.2% |
-| shev.old | давньоукраїнська доба | shev | 244 715 | 39.4% |
-| shev.early_middle | ранньосередньоукраїнська доба | shev | 23 790 | 3.8% |
-| shev.middle | середньоукраїнська доба | shev | 152 857 | 24.6% |
-| shev.late_middle | пізньосередньоукраїнська доба | shev | 73 665 | 11.9% |
-| shev.modern | новітня доба | shev | 118 349 | 19.1% |
-| wl.rus | давньоруська (княжа доба) | wl | 250 878 | 40.4% |
-| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 238 725 | 38.5% |
-| wl.ruthenian.chancery | ділова староукраїнська | wl | 23 610 | 3.8% |
-| wl.new | нова українська літературна мова | wl | 130 987 | 21.1% |
+| shev.proto | протоукраїнська доба | shev | 7 214 | 0.7% |
+| shev.old | давньоукраїнська доба | shev | 244 715 | 24.7% |
+| shev.early_middle | ранньосередньоукраїнська доба | shev | 23 790 | 2.4% |
+| shev.middle | середньоукраїнська доба | shev | 195 156 | 19.7% |
+| shev.late_middle | пізньосередньоукраїнська доба | shev | 86 062 | 8.7% |
+| shev.modern | новітня доба | shev | 431 833 | 43.7% |
+| wl.rus | давньоруська (княжа доба) | wl | 250 878 | 25.4% |
+| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 281 024 | 28.4% |
+| wl.ruthenian.chancery | ділова староукраїнська | wl | 23 610 | 2.4% |
+| wl.new | нова українська літературна мова | wl | 456 868 | 46.2% |
 | wl.contemporary | сучасна українська літературна мова | wl | 0 | 0.0% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 885 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 2 102 · 15 ст.: 11 487 · 16 ст.: 83 970 · 17 ст.: 49 116 · 18 ст.: 105 339 · 19 ст.: 104 166 · 20 ст.: 14 183
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 885 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 2 102 · 15 ст.: 11 487 · 16 ст.: 88 382 · 17 ст.: 83 101 · 18 ст.: 109 241 · 19 ст.: 344 475 · 20 ст.: 99 755
 
 ### Exclusions (B-1.1)
 
 No witness was excluded by the admission rule.
-Authors with a vetting record but **no admitted witness** (27): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); nechuy (vetted); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
+Authors with a vetting record but **no admitted witness** (39): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); dict_umanets (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_zheleh (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_nikovsky (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_hrinch27 (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_holoskevych (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_krymsky (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_izyumov (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_doroshenko (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_yakubski (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); anon_i17_12 (excluded; на сторінці лише «віру нашу святую» (конфесія, без Русі/України в голосі автора)); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
 
 ## 2. Linking coverage (B-2)
 
@@ -1949,1210 +1968,1211 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 
 | witness | N | torot-lemma | stanza-lemma | token | direct | unresolved | coverage |
 |---|---|---|---|---|---|---|---|
-| sophia-112 | 12 | 0 | 0 | 8 | 0 | 4 | 66.7% |
-| sophia-150 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-347 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-112 | 12 | 0 | 5 | 2 | 0 | 5 | 58.3% |
+| sophia-150 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-347 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
 | sophia-89 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-99 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2070 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-275 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3816 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-99 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2070 | 3 | 0 | 3 | 0 | 0 | 0 | 100.0% |
+| sophia-275 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3816 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1309 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-279 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-297 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-298 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-458 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-459 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-279 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-297 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-298 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-458 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-459 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-286 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-291 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-292 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| ilarion | 6 807 | 0 | 3051 | 443 | 0 | 3313 | 51.3% |
-| ostromir | 193 | 113 | 0 | 12 | 0 | 68 | 64.8% |
-| sophia-147 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
-| sophia-67 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
-| sophia-90 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| arch | 59 953 | 0 | 24658 | 7742 | 0 | 27553 | 54.0% |
-| sophia-85 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-291 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-292 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| ilarion | 6 807 | 0 | 2949 | 443 | 0 | 3415 | 49.8% |
+| ostromir | 193 | 110 | 0 | 12 | 0 | 71 | 63.2% |
+| sophia-147 | 14 | 0 | 7 | 5 | 0 | 2 | 85.7% |
+| sophia-67 | 11 | 0 | 4 | 1 | 0 | 6 | 45.5% |
+| sophia-90 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| arch | 59 953 | 0 | 23904 | 7723 | 0 | 28326 | 52.8% |
+| sophia-85 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-879 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| kiev-mis | 352 | 220 | 0 | 10 | 0 | 122 | 65.3% |
-| sophia-1534 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1821 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-364 | 18 | 0 | 0 | 11 | 0 | 7 | 61.1% |
+| kiev-mis | 352 | 216 | 0 | 10 | 0 | 126 | 64.2% |
+| sophia-1534 | 5 | 0 | 3 | 0 | 0 | 2 | 60.0% |
+| sophia-1821 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-364 | 18 | 0 | 5 | 2 | 0 | 11 | 38.9% |
 | sophia-3788 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-420 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-87 | 15 | 0 | 0 | 8 | 0 | 7 | 53.3% |
-| sophia-84 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
-| sophia-86 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-116 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
-| sophia-117 | 18 | 0 | 0 | 11 | 0 | 7 | 61.1% |
-| sophia-118 | 16 | 0 | 0 | 8 | 0 | 8 | 50.0% |
+| sophia-420 | 5 | 0 | 2 | 3 | 0 | 0 | 100.0% |
+| sophia-87 | 15 | 0 | 6 | 1 | 0 | 8 | 46.7% |
+| sophia-84 | 11 | 0 | 4 | 0 | 0 | 7 | 36.4% |
+| sophia-86 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-116 | 10 | 0 | 3 | 1 | 0 | 6 | 40.0% |
+| sophia-117 | 18 | 0 | 5 | 2 | 0 | 11 | 38.9% |
+| sophia-118 | 16 | 0 | 3 | 1 | 0 | 12 | 25.0% |
 | sophia-1773 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1787 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
-| sophia-1788 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1787 | 7 | 0 | 3 | 0 | 0 | 4 | 42.9% |
+| sophia-1788 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-1792 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1837 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1863 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1863 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1864 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1870 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1870 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1876 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1878 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1878 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1884 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1885 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1889 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1890 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1980 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-260 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-1885 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1889 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1890 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
+| sophia-1980 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-260 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
 | sophia-2765 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3425 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-3425 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-4249 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-88 | 59 | 0 | 0 | 36 | 0 | 23 | 61.0% |
-| sophia-96 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
-| monomakh | 4 585 | 0 | 2176 | 532 | 0 | 1877 | 59.1% |
-| pvl_lav | 55 088 | 33278 | 0 | 3421 | 0 | 18389 | 66.6% |
-| sophia-1256 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1257 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-88 | 59 | 0 | 24 | 5 | 0 | 30 | 49.2% |
+| sophia-96 | 10 | 0 | 3 | 1 | 0 | 6 | 40.0% |
+| monomakh | 4 585 | 0 | 2067 | 531 | 0 | 1987 | 56.7% |
+| pvl_lav | 55 088 | 32220 | 0 | 3415 | 0 | 19453 | 64.7% |
+| sophia-1256 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1257 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1259 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1260 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1262 | 15 | 0 | 0 | 11 | 0 | 4 | 73.3% |
-| sophia-1263 | 11 | 0 | 0 | 7 | 0 | 4 | 63.6% |
-| sophia-1264 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1266 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1268 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1260 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1262 | 15 | 0 | 4 | 4 | 0 | 7 | 53.3% |
+| sophia-1263 | 11 | 0 | 4 | 1 | 0 | 6 | 45.5% |
+| sophia-1264 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1266 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1268 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1269 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1270 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1272 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1272 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1295 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1300 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1301 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1302 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1303 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1304 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
-| sophia-1305 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1306 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1308 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1314 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1316 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1319 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1323 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1329 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1300 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1301 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
+| sophia-1302 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1303 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1304 | 7 | 0 | 3 | 0 | 0 | 4 | 42.9% |
+| sophia-1305 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1306 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1308 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1314 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1316 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1319 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1323 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1329 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1334 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1346 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1397 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1346 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1397 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-1718 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1719 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1720 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1721 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
-| sophia-1722 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1723 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1724 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1720 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1721 | 8 | 0 | 5 | 0 | 0 | 3 | 62.5% |
+| sophia-1722 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1723 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1724 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1725 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1727 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1956 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2549 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2583 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3451 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-3501 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3511 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-4217 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-1956 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2549 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2583 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2736 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3451 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-3501 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3511 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-4217 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
 | sophia-477 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-791 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-791 | 6 | 0 | 1 | 3 | 0 | 2 | 66.7% |
 | sophia-3512 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4181 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2695 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-999 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-287 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
-| sophia-102 | 16 | 0 | 0 | 13 | 0 | 3 | 81.3% |
+| sophia-4181 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2695 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-999 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-287 | 7 | 0 | 2 | 4 | 0 | 1 | 85.7% |
+| sophia-102 | 16 | 0 | 9 | 1 | 0 | 6 | 62.5% |
 | sophia-1095 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-119 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-120 | 11 | 0 | 0 | 8 | 0 | 3 | 72.7% |
-| sophia-1200 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1224 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-126 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
-| sophia-127 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1317 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1377 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-145 | 12 | 0 | 0 | 5 | 0 | 7 | 41.7% |
-| sophia-1565 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1566 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
-| sophia-1581 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1639 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-119 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-120 | 11 | 0 | 5 | 3 | 0 | 3 | 72.7% |
+| sophia-1200 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1224 | 3 | 0 | 3 | 0 | 0 | 0 | 100.0% |
+| sophia-126 | 11 | 0 | 5 | 0 | 0 | 6 | 45.5% |
+| sophia-127 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-1317 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1377 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
+| sophia-145 | 12 | 0 | 3 | 1 | 0 | 8 | 33.3% |
+| sophia-1565 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1566 | 7 | 0 | 4 | 2 | 0 | 1 | 85.7% |
+| sophia-1581 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-1639 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-1737 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-1741 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1748 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
-| sophia-1803 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1741 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1748 | 10 | 0 | 3 | 0 | 0 | 7 | 30.0% |
+| sophia-1803 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1817 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1820 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1822 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1820 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1822 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1849 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1850 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1851 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
-| sophia-188 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1892 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-1963 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1964 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2032 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2038 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
-| sophia-205 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-2411 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2424 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1850 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-1851 | 8 | 0 | 3 | 3 | 0 | 2 | 75.0% |
+| sophia-188 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1892 | 7 | 0 | 1 | 3 | 0 | 3 | 57.1% |
+| sophia-1963 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-1964 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2032 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
+| sophia-2038 | 7 | 0 | 2 | 3 | 0 | 2 | 71.4% |
+| sophia-205 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-2411 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2424 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-254 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2571 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2577 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2590 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2641 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-2571 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2577 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2590 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-2641 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | sophia-2680 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2685 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2685 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2709 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-277 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-2774 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-2810 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-277 | 7 | 0 | 4 | 1 | 0 | 2 | 71.4% |
+| sophia-2774 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-2810 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2858 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3017 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3179 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3208 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3228 | 24 | 0 | 0 | 18 | 0 | 6 | 75.0% |
-| sophia-328 | 10 | 0 | 0 | 6 | 0 | 4 | 60.0% |
-| sophia-3397 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-348 | 20 | 0 | 0 | 12 | 0 | 8 | 60.0% |
-| sophia-3605 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-368 | 19 | 0 | 0 | 11 | 0 | 8 | 57.9% |
-| sophia-4151 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3017 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3179 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-3208 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3228 | 24 | 0 | 13 | 2 | 0 | 9 | 62.5% |
+| sophia-328 | 10 | 0 | 4 | 2 | 0 | 4 | 60.0% |
+| sophia-3397 | 7 | 0 | 3 | 2 | 0 | 2 | 71.4% |
+| sophia-348 | 20 | 0 | 9 | 2 | 0 | 9 | 55.0% |
+| sophia-3605 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-368 | 19 | 0 | 7 | 2 | 0 | 10 | 47.4% |
+| sophia-4151 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4175 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4190 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4219 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-4190 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4219 | 6 | 0 | 1 | 1 | 0 | 4 | 33.3% |
 | sophia-4326 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-493 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-510 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-533 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-493 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-510 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-533 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-591 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-66 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-780 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-782 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-784 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-80 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-887 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-928 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-1232 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-66 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-780 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-782 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-784 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-80 | 7 | 0 | 5 | 0 | 0 | 2 | 71.4% |
+| sophia-887 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-928 | 9 | 0 | 3 | 1 | 0 | 5 | 44.4% |
+| sophia-1232 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
 | sophia-1735 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1916 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-2037 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
-| sophia-2152 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
+| sophia-1916 | 6 | 0 | 1 | 2 | 0 | 3 | 50.0% |
+| sophia-2037 | 8 | 0 | 2 | 3 | 0 | 3 | 62.5% |
+| sophia-2152 | 7 | 0 | 6 | 0 | 0 | 1 | 85.7% |
 | sophia-2522 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2815 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2957 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3435 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
-| sophia-3780 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2815 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2957 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-3435 | 9 | 0 | 4 | 1 | 0 | 4 | 55.6% |
+| sophia-3780 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-3786 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4075 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1832 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2139 | 27 | 0 | 0 | 15 | 0 | 12 | 55.6% |
-| sophia-2437 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3291 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-3381 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
-| sophia-3718 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-900 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
-| sophia-912 | 21 | 0 | 0 | 18 | 0 | 3 | 85.7% |
-| sophia-972 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
+| sophia-4075 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1832 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2139 | 27 | 0 | 8 | 4 | 0 | 15 | 44.4% |
+| sophia-2437 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3291 | 7 | 0 | 1 | 1 | 0 | 5 | 28.6% |
+| sophia-3381 | 7 | 0 | 2 | 1 | 0 | 4 | 42.9% |
+| sophia-3718 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-900 | 9 | 0 | 4 | 2 | 0 | 3 | 66.7% |
+| sophia-912 | 21 | 0 | 9 | 7 | 0 | 5 | 76.2% |
+| sophia-972 | 9 | 0 | 3 | 1 | 0 | 5 | 44.4% |
 | sophia-1807 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1887 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1082 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1297 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1856 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-2100 | 21 | 0 | 0 | 10 | 0 | 11 | 47.6% |
-| sophia-244 | 13 | 0 | 0 | 7 | 0 | 6 | 53.8% |
-| sophia-1001 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1887 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1082 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-1297 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-1856 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-2100 | 21 | 0 | 8 | 1 | 0 | 12 | 42.9% |
+| sophia-244 | 13 | 0 | 5 | 0 | 0 | 8 | 38.5% |
+| sophia-1001 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1004 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-392 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-418 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-880 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-985 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-418 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-880 | 5 | 0 | 2 | 3 | 0 | 0 | 100.0% |
+| sophia-985 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-986 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-988 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-991 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-988 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-991 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| kievchr | 79 458 | 0 | 32496 | 6996 | 0 | 39966 | 49.7% |
-| sophia-103 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-1037 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-105 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1051 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1069 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1094 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1100 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1133 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-115 | 35 | 0 | 0 | 19 | 0 | 16 | 54.3% |
-| sophia-1152 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1157 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1177 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
-| sophia-1178 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1179 | 10 | 0 | 0 | 7 | 0 | 3 | 70.0% |
-| sophia-1191 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-1197 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1228 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1275 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1285 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1376 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| kievchr | 79 458 | 0 | 30908 | 6998 | 0 | 41552 | 47.7% |
+| sophia-103 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-1037 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-105 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1051 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1069 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1094 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1100 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1133 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-115 | 35 | 0 | 14 | 5 | 0 | 16 | 54.3% |
+| sophia-1152 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1157 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1177 | 10 | 0 | 4 | 0 | 0 | 6 | 40.0% |
+| sophia-1178 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1179 | 10 | 0 | 7 | 0 | 0 | 3 | 70.0% |
+| sophia-1191 | 7 | 0 | 2 | 2 | 0 | 3 | 57.1% |
+| sophia-1197 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-1228 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1275 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1285 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1376 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1418 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1514 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1516 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1538 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1615 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-1538 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1615 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
 | sophia-1620 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1663 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1710 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1663 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
+| sophia-1710 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1742 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1760 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1761 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1764 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1767 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-1760 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1761 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1764 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1767 | 9 | 0 | 4 | 2 | 0 | 3 | 66.7% |
 | sophia-1783 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1785 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1786 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1786 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1799 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-1808 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1809 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1824 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1824 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1828 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1841 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1865 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1871 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1841 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1865 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1871 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1907 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1922 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1928 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-193 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1922 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1928 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-193 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
 | sophia-1962 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1968 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-1971 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1972 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1974 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-1981 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-1983 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1968 | 7 | 0 | 3 | 0 | 0 | 4 | 42.9% |
+| sophia-1971 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-1972 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
+| sophia-1974 | 7 | 0 | 4 | 1 | 0 | 2 | 71.4% |
+| sophia-1981 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-1983 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2014 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2035 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2040 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2035 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2040 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2069 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2076 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2076 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2088 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2146 | 16 | 0 | 0 | 8 | 0 | 8 | 50.0% |
+| sophia-2146 | 16 | 0 | 5 | 2 | 0 | 9 | 43.8% |
 | sophia-224 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2313 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2326 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-2346 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2417 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2313 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-2326 | 9 | 0 | 3 | 0 | 0 | 6 | 33.3% |
+| sophia-2346 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2417 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2426 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2455 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
-| sophia-2460 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2467 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2555 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2573 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2578 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2586 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2455 | 9 | 0 | 2 | 2 | 0 | 5 | 44.4% |
+| sophia-2460 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-2467 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2555 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2573 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-2578 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-2586 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2606 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2626 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2628 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-264 | 10 | 0 | 0 | 6 | 0 | 4 | 60.0% |
-| sophia-2677 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2700 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2731 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2764 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-281 | 9 | 0 | 0 | 3 | 0 | 6 | 33.3% |
-| sophia-3197 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3205 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3210 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-3234 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3243 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3275 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-33 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3325 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
-| sophia-3341 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3351 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3358 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3374 | 12 | 0 | 0 | 5 | 0 | 7 | 41.7% |
-| sophia-3394 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2628 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-264 | 10 | 0 | 4 | 0 | 0 | 6 | 40.0% |
+| sophia-2677 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2700 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-2731 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2764 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-281 | 9 | 0 | 2 | 0 | 0 | 7 | 22.2% |
+| sophia-3197 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3205 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-3210 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
+| sophia-3234 | 3 | 0 | 3 | 0 | 0 | 0 | 100.0% |
+| sophia-3243 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3275 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-33 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3321 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3325 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-3341 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3351 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3358 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-3374 | 12 | 0 | 3 | 1 | 0 | 8 | 33.3% |
+| sophia-3394 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3405 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3423 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-3433 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-3434 | 27 | 0 | 0 | 20 | 0 | 7 | 74.1% |
-| sophia-3466 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-3483 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3485 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3487 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-3509 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
+| sophia-3423 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-3433 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-3434 | 27 | 0 | 17 | 1 | 0 | 9 | 66.7% |
+| sophia-3466 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-3483 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-3485 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3487 | 7 | 0 | 0 | 1 | 0 | 6 | 14.3% |
+| sophia-3509 | 11 | 0 | 3 | 2 | 0 | 6 | 45.5% |
 | sophia-3523 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3524 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3524 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3570 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3573 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
+| sophia-3573 | 8 | 0 | 2 | 2 | 0 | 4 | 50.0% |
 | sophia-3574 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3577 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-3589 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3606 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3577 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-3589 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3606 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-3618 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3627 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-365 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3627 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-365 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
 | sophia-367 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3671 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3745 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3770 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3770 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3804 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4082 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4127 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-4127 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | sophia-4128 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-4168 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
-| sophia-4169 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-4182 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-4184 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-4191 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4168 | 8 | 0 | 2 | 1 | 0 | 5 | 37.5% |
+| sophia-4169 | 5 | 0 | 3 | 2 | 0 | 0 | 100.0% |
+| sophia-4182 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-4184 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-4191 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4199 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4202 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4211 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4233 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4234 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4234 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4237 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4255 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-4255 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-4264 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4295 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4304 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-451 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-452 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-503 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-4295 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4304 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-451 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-452 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
+| sophia-503 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-547 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-653 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-758 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-794 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-803 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
+| sophia-653 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
+| sophia-758 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-794 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-803 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
 | sophia-813 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-93 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| sophia-94 | 13 | 0 | 0 | 10 | 0 | 3 | 76.9% |
-| sophia-956 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-94 | 13 | 0 | 4 | 0 | 0 | 9 | 30.8% |
+| sophia-956 | 7 | 0 | 3 | 2 | 0 | 2 | 71.4% |
 | sophia-963 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| spi | 2 778 | 1658 | 0 | 195 | 0 | 925 | 66.7% |
-| sophia-825 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| spi | 2 778 | 1574 | 0 | 195 | 0 | 1009 | 63.7% |
+| sophia-825 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-947 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-952 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
-| sophia-1223 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-394 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
+| sophia-952 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
+| sophia-1223 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-394 | 5 | 0 | 3 | 2 | 0 | 0 | 100.0% |
 | sophia-409 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-419 | 10 | 0 | 0 | 9 | 0 | 1 | 90.0% |
-| sophia-100 | 15 | 0 | 0 | 10 | 0 | 5 | 66.7% |
-| sophia-1033 | 11 | 0 | 0 | 8 | 0 | 3 | 72.7% |
-| sophia-106 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1075 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-111 | 12 | 0 | 0 | 5 | 0 | 7 | 41.7% |
+| sophia-419 | 10 | 0 | 4 | 3 | 0 | 3 | 70.0% |
+| sophia-100 | 15 | 0 | 8 | 2 | 0 | 5 | 66.7% |
+| sophia-1033 | 11 | 0 | 5 | 1 | 0 | 5 | 54.5% |
+| sophia-106 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1075 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-111 | 12 | 0 | 4 | 1 | 0 | 7 | 41.7% |
 | sophia-1137 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1158 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1183 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-1208 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-121 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
-| sophia-1230 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-1355 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
-| sophia-1357 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1401 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-144 | 9 | 0 | 0 | 4 | 0 | 5 | 44.4% |
-| sophia-1544 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-1555 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1158 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-1183 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-1208 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-121 | 8 | 0 | 3 | 0 | 0 | 5 | 37.5% |
+| sophia-1230 | 7 | 0 | 5 | 0 | 0 | 2 | 71.4% |
+| sophia-1355 | 10 | 0 | 2 | 1 | 0 | 7 | 30.0% |
+| sophia-1357 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-1401 | 5 | 0 | 2 | 3 | 0 | 0 | 100.0% |
+| sophia-144 | 9 | 0 | 3 | 1 | 0 | 5 | 44.4% |
+| sophia-1544 | 6 | 0 | 3 | 2 | 0 | 1 | 83.3% |
+| sophia-1555 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-160 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1605 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1606 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1605 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1606 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1626 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-1637 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-164 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1734 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1759 | 9 | 0 | 0 | 2 | 0 | 7 | 22.2% |
-| sophia-1780 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1791 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
-| sophia-1812 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1840 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1845 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1855 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1862 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1875 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1896 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
-| sophia-1897 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1899 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1900 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1902 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1909 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-1914 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1921 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1923 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1955 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
-| sophia-1957 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-1958 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-1960 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-1973 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1975 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
-| sophia-1976 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-1977 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
-| sophia-1978 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-1984 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-2011 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1637 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-164 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1734 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1736 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1759 | 9 | 0 | 2 | 0 | 0 | 7 | 22.2% |
+| sophia-1780 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-1791 | 8 | 0 | 3 | 1 | 0 | 4 | 50.0% |
+| sophia-1812 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1840 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1845 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1855 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1862 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1875 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1896 | 8 | 0 | 3 | 2 | 0 | 3 | 62.5% |
+| sophia-1897 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1899 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1900 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-1902 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1909 | 9 | 0 | 3 | 3 | 0 | 3 | 66.7% |
+| sophia-1914 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1921 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-1923 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1955 | 8 | 0 | 6 | 0 | 0 | 2 | 75.0% |
+| sophia-1957 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-1958 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
+| sophia-1960 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
+| sophia-1973 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-1975 | 7 | 0 | 5 | 0 | 0 | 2 | 71.4% |
+| sophia-1976 | 9 | 0 | 4 | 1 | 0 | 4 | 55.6% |
+| sophia-1977 | 8 | 0 | 4 | 1 | 0 | 3 | 62.5% |
+| sophia-1978 | 7 | 0 | 4 | 0 | 0 | 3 | 57.1% |
+| sophia-1984 | 8 | 0 | 2 | 3 | 0 | 3 | 62.5% |
+| sophia-2011 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2068 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2074 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2099 | 23 | 0 | 0 | 13 | 0 | 10 | 56.5% |
-| sophia-2121 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2131 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-2074 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2099 | 23 | 0 | 7 | 3 | 0 | 13 | 43.5% |
+| sophia-2121 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2131 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-2153 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2192 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2199 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2200 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-226 | 7 | 0 | 0 | 3 | 0 | 4 | 42.9% |
-| sophia-2325 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2429 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2453 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-2454 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-2496 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-261 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-265 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-2702 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-272 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-2722 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2762 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-2192 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2199 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2200 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-226 | 7 | 0 | 1 | 1 | 0 | 5 | 28.6% |
+| sophia-2325 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2429 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2453 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-2454 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-2496 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-261 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-265 | 6 | 0 | 3 | 2 | 0 | 1 | 83.3% |
+| sophia-2702 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-272 | 9 | 0 | 3 | 2 | 0 | 4 | 55.6% |
+| sophia-2722 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2762 | 6 | 0 | 1 | 2 | 0 | 3 | 50.0% |
 | sophia-2766 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2808 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
-| sophia-2811 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2842 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2846 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3021 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-3027 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3229 | 14 | 0 | 0 | 9 | 0 | 5 | 64.3% |
-| sophia-3264 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3276 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-2808 | 8 | 0 | 2 | 1 | 0 | 5 | 37.5% |
+| sophia-2811 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2842 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-2846 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3021 | 9 | 0 | 4 | 1 | 0 | 4 | 55.6% |
+| sophia-3027 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3229 | 14 | 0 | 8 | 1 | 0 | 5 | 64.3% |
+| sophia-3264 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3276 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-329 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | sophia-3339 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3396 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3400 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3402 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3436 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3443 | 10 | 0 | 0 | 7 | 0 | 3 | 70.0% |
-| sophia-3444 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-3448 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
-| sophia-3467 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-3513 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3518 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3546 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-3602 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3604 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-3607 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3771 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3772 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3779 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-40 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3396 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-3400 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-3402 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3436 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-3443 | 10 | 0 | 3 | 3 | 0 | 4 | 60.0% |
+| sophia-3444 | 5 | 0 | 3 | 2 | 0 | 0 | 100.0% |
+| sophia-3448 | 8 | 0 | 2 | 2 | 0 | 4 | 50.0% |
+| sophia-3467 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
+| sophia-3513 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3518 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3546 | 5 | 0 | 2 | 3 | 0 | 0 | 100.0% |
+| sophia-3602 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3604 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3607 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3771 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3772 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3779 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-40 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-4089 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-4092 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-4134 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4144 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4148 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-4167 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-421 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-4092 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-4134 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4144 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4148 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-4167 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-421 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-4225 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4250 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4254 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-4310 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-460 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4250 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4254 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-4310 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-460 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-480 | 10 | 0 | 0 | 5 | 0 | 5 | 50.0% |
 | sophia-499 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-507 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-546 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-618 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-761 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-796 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
-| sophia-91 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-92 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-95 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-893 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-898 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-975 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-976 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-977 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-507 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-546 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-618 | 9 | 0 | 6 | 0 | 0 | 3 | 66.7% |
+| sophia-761 | 8 | 0 | 4 | 1 | 0 | 3 | 62.5% |
+| sophia-796 | 8 | 0 | 4 | 0 | 0 | 4 | 50.0% |
+| sophia-91 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-92 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-95 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
+| sophia-893 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-898 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-975 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-976 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-977 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-978 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-979 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-981 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-982 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-983 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-899 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-1002 | 13 | 0 | 0 | 10 | 0 | 3 | 76.9% |
-| sophia-1027 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1092 | 12 | 0 | 0 | 10 | 0 | 2 | 83.3% |
+| sophia-981 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-982 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-983 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-899 | 7 | 0 | 3 | 1 | 0 | 3 | 57.1% |
+| sophia-1002 | 13 | 0 | 6 | 1 | 0 | 6 | 53.8% |
+| sophia-1027 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1092 | 12 | 0 | 7 | 2 | 0 | 3 | 75.0% |
 | sophia-1368 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1462 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1563 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1564 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1578 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1563 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1564 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-1578 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
 | sophia-1810 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-1898 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-2046 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2616 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2800 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-3164 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3373 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-3520 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-3628 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3675 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-1898 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-2046 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2616 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2800 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-3164 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3373 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-3520 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-3628 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3675 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-4095 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4117 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-4147 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-756 | 11 | 0 | 0 | 4 | 0 | 7 | 36.4% |
-| sophia-1193 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-131 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2053 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4117 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-4147 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-756 | 11 | 0 | 3 | 1 | 0 | 7 | 36.4% |
+| sophia-1193 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-131 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2053 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2449 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-306 | 8 | 0 | 0 | 4 | 0 | 4 | 50.0% |
-| sophia-344 | 7 | 0 | 0 | 7 | 0 | 0 | 100.0% |
-| sophia-3440 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-3496 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-350 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-357 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-306 | 8 | 0 | 2 | 1 | 0 | 5 | 37.5% |
+| sophia-344 | 7 | 0 | 2 | 2 | 0 | 3 | 57.1% |
+| sophia-3440 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-3496 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-350 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-357 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-3582 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-438 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3424 | 10 | 0 | 0 | 6 | 0 | 4 | 60.0% |
-| sophia-101 | 6 | 0 | 0 | 2 | 0 | 4 | 33.3% |
+| sophia-438 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3424 | 10 | 0 | 4 | 1 | 0 | 5 | 50.0% |
+| sophia-101 | 6 | 0 | 1 | 1 | 0 | 4 | 33.3% |
 | sophia-1096 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1211 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-1246 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
+| sophia-1211 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-1246 | 9 | 0 | 3 | 3 | 0 | 3 | 66.7% |
 | sophia-1674 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1818 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2461 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-2698 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2718 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3165 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3380 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-3382 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1818 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2461 | 9 | 0 | 6 | 1 | 0 | 2 | 77.8% |
+| sophia-2698 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2718 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-3165 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3380 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-3382 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
 | sophia-3437 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3508 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3782 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-428 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4289 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3508 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3782 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-428 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4289 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4374 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-504 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-505 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-504 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-505 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-588 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-700 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-81 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-863 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-98 | 14 | 0 | 0 | 11 | 0 | 3 | 78.6% |
+| sophia-700 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-81 | 6 | 0 | 5 | 0 | 0 | 1 | 83.3% |
+| sophia-863 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-98 | 14 | 0 | 7 | 1 | 0 | 6 | 57.1% |
 | sophia-3271 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-146 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-146 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1273 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1982 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1982 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1112 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1209 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2539 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
+| sophia-2539 | 7 | 0 | 2 | 0 | 0 | 5 | 28.6% |
 | sophia-4189 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-757 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-760 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-757 | 5 | 0 | 1 | 3 | 0 | 1 | 80.0% |
+| sophia-760 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-882 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1074 | 17 | 0 | 0 | 11 | 0 | 6 | 64.7% |
-| sophia-148 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-155 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| gvl | 37 568 | 0 | 14918 | 4105 | 0 | 18545 | 50.6% |
-| sophia-397 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-881 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-990 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1000 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1088 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1074 | 17 | 0 | 7 | 2 | 0 | 8 | 52.9% |
+| sophia-148 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-155 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| gvl | 37 568 | 0 | 14178 | 4105 | 0 | 19285 | 48.7% |
+| sophia-397 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-881 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-990 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1000 | 6 | 0 | 1 | 2 | 0 | 3 | 50.0% |
+| sophia-1088 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1093 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1159 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
+| sophia-1159 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-1169 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1181 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-1199 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1210 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1229 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1598 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1701 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1830 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
-| sophia-1833 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1877 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-1906 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1994 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2055 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2064 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2140 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-2150 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-1181 | 8 | 0 | 5 | 0 | 0 | 3 | 62.5% |
+| sophia-1199 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1210 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1229 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1598 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1701 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1830 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-1833 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1877 | 6 | 0 | 2 | 3 | 0 | 1 | 83.3% |
+| sophia-1906 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1994 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
+| sophia-2055 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2064 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2140 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-2150 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-2151 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-234 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-235 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2427 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-234 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-235 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2427 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
 | sophia-2502 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-266 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2712 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-266 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2712 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
 | sophia-278 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2856 | 13 | 0 | 0 | 11 | 0 | 2 | 84.6% |
-| sophia-2863 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-2865 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2856 | 13 | 0 | 6 | 3 | 0 | 4 | 69.2% |
+| sophia-2863 | 6 | 0 | 1 | 1 | 0 | 4 | 33.3% |
+| sophia-2865 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2873 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3160 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3217 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3273 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3304 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3367 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3388 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3160 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-3217 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3273 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
+| sophia-3304 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3367 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3388 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
 | sophia-3389 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3392 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3413 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-3413 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
 | sophia-3420 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-346 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3482 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3536 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3540 | 8 | 0 | 0 | 3 | 0 | 5 | 37.5% |
-| sophia-3584 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3613 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3781 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4091 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-4116 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4123 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-42 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-346 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-3482 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
+| sophia-3536 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3540 | 8 | 0 | 3 | 0 | 0 | 5 | 37.5% |
+| sophia-3584 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3613 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3781 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-4091 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-4116 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-4123 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-42 | 7 | 0 | 2 | 1 | 0 | 4 | 42.9% |
 | sophia-4292 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-494 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-501 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-517 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-522 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-537 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-552 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-494 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-501 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-517 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
+| sophia-522 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-537 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-552 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-582 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-62 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-701 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-701 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-789 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-793 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-795 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-801 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-805 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-808 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-793 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-795 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-801 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-805 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-808 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
 | sophia-1440 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2792 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-719 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-740 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-763 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2792 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-719 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
+| sophia-740 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-763 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-833 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1185 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-1185 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-1192 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1201 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1225 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1353 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1372 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1201 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1225 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1353 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1372 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1466 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1528 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1539 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1577 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1590 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-1539 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-1577 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1590 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1611 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1612 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1612 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1632 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1657 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1661 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1675 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1679 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1704 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1714 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1730 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1731 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1749 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1752 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-1754 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1781 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1790 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1811 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-1844 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1879 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1880 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-1679 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1704 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1714 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1730 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1731 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1749 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1752 | 8 | 0 | 4 | 0 | 0 | 4 | 50.0% |
+| sophia-1754 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1781 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1790 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1811 | 9 | 0 | 3 | 2 | 0 | 4 | 55.6% |
+| sophia-1844 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-1879 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-1880 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
 | sophia-1894 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1895 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-1924 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-1925 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-1926 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-2078 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2080 | 8 | 0 | 0 | 5 | 0 | 3 | 62.5% |
-| sophia-2169 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2347 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2405 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2438 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-2574 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2619 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1895 | 9 | 0 | 3 | 1 | 0 | 5 | 44.4% |
+| sophia-1924 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-1925 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-1926 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-2078 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2080 | 8 | 0 | 3 | 0 | 0 | 5 | 37.5% |
+| sophia-2169 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2347 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2405 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-2438 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-2574 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2619 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-262 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2814 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2860 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-2958 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2814 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-2860 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-2958 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-3022 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3026 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3033 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3196 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3199 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3211 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3216 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3196 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3199 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3211 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3216 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3259 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3301 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3368 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3383 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3395 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3301 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3368 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3383 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3395 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3469 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-3519 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3519 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-3521 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3522 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3525 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3548 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3522 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-3525 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3548 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-3784 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4149 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-4215 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-495 | 10 | 0 | 0 | 3 | 0 | 7 | 30.0% |
+| sophia-4215 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-495 | 10 | 0 | 2 | 1 | 0 | 7 | 30.0% |
 | sophia-623 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-654 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-655 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-661 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-654 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-655 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-661 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-668 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-764 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1025 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-764 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1025 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1059 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1136 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1136 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1138 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-1150 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-122 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-167 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-197 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-122 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-167 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-197 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
 | sophia-1998 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-2007 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2061 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2067 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2007 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2061 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-2067 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2118 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2267 | 9 | 0 | 0 | 6 | 0 | 3 | 66.7% |
-| sophia-231 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2327 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-236 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2465 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2267 | 9 | 0 | 4 | 2 | 0 | 3 | 66.7% |
+| sophia-231 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2327 | 7 | 0 | 1 | 1 | 0 | 5 | 28.6% |
+| sophia-236 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2465 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-2505 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-2724 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3300 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3404 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3300 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-3404 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-3418 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3458 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3486 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3486 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-3661 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4071 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4074 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-408 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4104 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4105 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-4187 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-4188 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-828 | 9 | 0 | 0 | 8 | 0 | 1 | 88.9% |
+| sophia-4105 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-4187 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-4188 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-828 | 9 | 0 | 7 | 1 | 0 | 1 | 88.9% |
 | sophia-878 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-957 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-984 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_1320 | 134 | 0 | 0 | 46 | 0 | 88 | 34.3% |
-| dsu14_2_1320 | 118 | 0 | 0 | 39 | 0 | 79 | 33.1% |
+| sophia-957 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
+| sophia-984 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| dsu14_1_1320 | 134 | 0 | 21 | 13 | 0 | 100 | 25.4% |
+| dsu14_2_1320 | 118 | 0 | 16 | 10 | 0 | 92 | 22.0% |
 | sophia-361 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-901 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-901 | 7 | 0 | 3 | 1 | 0 | 3 | 57.1% |
 | dsu14_1_1330 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3427 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| dsu14_1_1340 | 58 | 0 | 0 | 15 | 0 | 43 | 25.9% |
-| dsu14_2_1340 | 50 | 0 | 0 | 12 | 0 | 38 | 24.0% |
+| sophia-3427 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| dsu14_1_1340 | 58 | 0 | 6 | 3 | 0 | 49 | 15.5% |
+| dsu14_2_1340 | 50 | 0 | 4 | 1 | 0 | 45 | 10.0% |
 | sophia-1234 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-149 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-149 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1920 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2086 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2086 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-2499 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2817 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3306 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2817 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3306 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
 | sophia-3495 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3547 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4186 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-4196 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4223 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4293 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-473 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4186 | 5 | 0 | 1 | 2 | 0 | 2 | 60.0% |
+| sophia-4196 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-4223 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4293 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-473 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-474 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-528 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_1350 | 95 | 0 | 0 | 24 | 0 | 71 | 25.3% |
-| dsu14_2_1350 | 102 | 0 | 0 | 24 | 0 | 78 | 23.5% |
-| sophia-2376 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| dsu14_1_1360 | 84 | 0 | 0 | 17 | 0 | 67 | 20.2% |
-| dsu14_2_1360 | 113 | 0 | 0 | 23 | 0 | 90 | 20.4% |
-| sophia-924 | 19 | 0 | 0 | 14 | 0 | 5 | 73.7% |
-| sophia-1145 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1146 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1350 | 95 | 0 | 10 | 3 | 0 | 82 | 13.7% |
+| dsu14_2_1350 | 102 | 0 | 9 | 2 | 0 | 91 | 10.8% |
+| sophia-2376 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| dsu14_1_1360 | 84 | 0 | 5 | 2 | 0 | 77 | 8.3% |
+| dsu14_2_1360 | 113 | 0 | 10 | 3 | 0 | 100 | 11.5% |
+| sophia-924 | 19 | 0 | 4 | 7 | 0 | 8 | 57.9% |
+| sophia-1145 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-1146 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1212 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2012 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_1370 | 87 | 0 | 0 | 15 | 0 | 72 | 17.2% |
-| dsu14_2_1370 | 87 | 0 | 0 | 18 | 0 | 69 | 20.7% |
-| dsu14_1_1380 | 242 | 0 | 0 | 60 | 0 | 182 | 24.8% |
-| dsu14_2_1380 | 212 | 0 | 0 | 44 | 0 | 168 | 20.8% |
-| dsu14_1_1390 | 218 | 0 | 0 | 52 | 0 | 166 | 23.9% |
-| dsu14_2_1390 | 168 | 0 | 0 | 30 | 0 | 138 | 17.9% |
-| sophia-1015 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-909 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-914 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2012 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| dsu14_1_1370 | 87 | 0 | 8 | 2 | 0 | 77 | 11.5% |
+| dsu14_2_1370 | 87 | 0 | 9 | 3 | 0 | 75 | 13.8% |
+| dsu14_1_1380 | 242 | 0 | 25 | 20 | 0 | 197 | 18.6% |
+| dsu14_2_1380 | 212 | 0 | 19 | 4 | 0 | 189 | 10.8% |
+| dsu14_1_1390 | 218 | 0 | 22 | 9 | 0 | 187 | 14.2% |
+| dsu14_2_1390 | 168 | 0 | 10 | 4 | 0 | 154 | 8.3% |
+| sophia-1015 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-909 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-914 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-989 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1036 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1043 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1049 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1050 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1054 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1060 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1049 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1050 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1054 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1060 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1066 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1067 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1067 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1105 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-114 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1168 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1194 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-114 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1168 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1194 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-1195 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1221 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1233 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1388 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1532 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1576 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1580 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1583 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1610 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1660 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1233 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1388 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1532 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1576 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1580 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1583 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1610 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1660 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1668 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1915 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1917 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1915 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1917 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1995 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1999 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2052 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2161 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-232 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-232 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-2443 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2488 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2548 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2625 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2710 | 12 | 0 | 0 | 7 | 0 | 5 | 58.3% |
-| sophia-2726 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2625 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2710 | 12 | 0 | 5 | 1 | 0 | 6 | 50.0% |
+| sophia-2726 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2837 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2839 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3206 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3213 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3277 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-2839 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3206 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3213 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3277 | 5 | 0 | 3 | 1 | 0 | 1 | 80.0% |
 | sophia-3303 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3315 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3315 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-3369 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3370 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-3370 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
 | sophia-3384 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3403 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3439 | 8 | 0 | 0 | 8 | 0 | 0 | 100.0% |
-| sophia-3450 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3514 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3535 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3439 | 8 | 0 | 4 | 3 | 0 | 1 | 87.5% |
+| sophia-3450 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3514 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
+| sophia-3535 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3549 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3571 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3571 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3581 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3586 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3596 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3654 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3656 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3708 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3709 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3737 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3709 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3737 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-3801 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-3802 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3817 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4183 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4183 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4222 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4236 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4280 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4308 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-498 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| sophia-4280 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-4308 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-498 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
 | sophia-500 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-536 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-540 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-540 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-589 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-590 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-614 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-614 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-640 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-786 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| dsu14_1_1400 | 259 | 0 | 0 | 58 | 0 | 201 | 22.4% |
-| dsu14_2_1400 | 274 | 0 | 0 | 54 | 0 | 220 | 19.7% |
-| i14_04 | 2 239 | 0 | 836 | 278 | 0 | 1125 | 49.8% |
-| sophia-2711 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-786 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1400 | 259 | 0 | 16 | 16 | 0 | 227 | 12.4% |
+| dsu14_2_1400 | 274 | 0 | 20 | 11 | 0 | 243 | 11.3% |
+| i14_04 | 2 239 | 0 | 818 | 278 | 0 | 1143 | 49.0% |
+| sophia-2711 | 7 | 0 | 2 | 0 | 0 | 5 | 28.6% |
 | sophia-2714 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2715 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2778 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-456 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_1410 | 146 | 0 | 0 | 25 | 0 | 121 | 17.1% |
-| dsu14_2_1410 | 122 | 0 | 0 | 12 | 0 | 110 | 9.8% |
-| sophia-110 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-199 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2778 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-456 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| dsu14_1_1410 | 146 | 0 | 6 | 6 | 0 | 134 | 8.2% |
+| dsu14_2_1410 | 122 | 0 | 2 | 3 | 0 | 117 | 4.1% |
+| sophia-110 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
+| sophia-199 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-2363 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-237 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
+| sophia-237 | 9 | 0 | 5 | 0 | 0 | 4 | 55.6% |
 | sophia-2554 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3815 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3815 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-457 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| dsu14_1_1420 | 209 | 0 | 0 | 33 | 0 | 176 | 15.8% |
-| dsu14_2_1420 | 186 | 0 | 0 | 33 | 0 | 153 | 17.7% |
-| sophia-342 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| dsu14_1_1430 | 374 | 0 | 0 | 59 | 0 | 315 | 15.8% |
-| dsu14_2_1430 | 337 | 0 | 0 | 49 | 0 | 288 | 14.5% |
-| dsu14_1_1440 | 357 | 0 | 0 | 52 | 0 | 305 | 14.6% |
-| dsu14_2_1440 | 296 | 0 | 0 | 45 | 0 | 251 | 15.2% |
-| sophia-257 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2813 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| dsu14_1_1420 | 209 | 0 | 12 | 9 | 0 | 188 | 10.0% |
+| dsu14_2_1420 | 186 | 0 | 13 | 7 | 0 | 166 | 10.8% |
+| sophia-342 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1430 | 374 | 0 | 14 | 18 | 0 | 342 | 8.6% |
+| dsu14_2_1430 | 337 | 0 | 16 | 15 | 0 | 306 | 9.2% |
+| dsu14_1_1440 | 357 | 0 | 15 | 7 | 0 | 335 | 6.2% |
+| dsu14_2_1440 | 296 | 0 | 13 | 8 | 0 | 275 | 7.1% |
+| sophia-257 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2813 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-417 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-466 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-466 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-579 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-602 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_1450 | 240 | 0 | 0 | 46 | 0 | 194 | 19.2% |
-| dsu14_2_1450 | 218 | 0 | 0 | 37 | 0 | 181 | 17.0% |
-| dsu14_1_1460 | 165 | 0 | 0 | 25 | 0 | 140 | 15.2% |
-| dsu14_2_1460 | 182 | 0 | 0 | 23 | 0 | 159 | 12.6% |
-| dsu14_1_1470 | 164 | 0 | 0 | 23 | 0 | 141 | 14.0% |
-| dsu14_2_1470 | 168 | 0 | 0 | 26 | 0 | 142 | 15.5% |
-| dsu14_1_1480 | 148 | 0 | 0 | 29 | 0 | 119 | 19.6% |
-| dsu14_2_1480 | 162 | 0 | 0 | 11 | 0 | 151 | 6.8% |
+| dsu14_1_1450 | 240 | 0 | 12 | 12 | 0 | 216 | 10.0% |
+| dsu14_2_1450 | 218 | 0 | 11 | 8 | 0 | 199 | 8.7% |
+| dsu14_1_1460 | 165 | 0 | 7 | 4 | 0 | 154 | 6.7% |
+| dsu14_2_1460 | 182 | 0 | 4 | 6 | 0 | 172 | 5.5% |
+| dsu14_1_1470 | 164 | 0 | 7 | 5 | 0 | 152 | 7.3% |
+| dsu14_2_1470 | 168 | 0 | 6 | 7 | 0 | 155 | 7.7% |
+| dsu14_1_1480 | 148 | 0 | 7 | 5 | 0 | 136 | 8.1% |
+| dsu14_2_1480 | 162 | 0 | 6 | 2 | 0 | 154 | 4.9% |
 | sophia-472 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-229 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-345 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| dsu14_1_1490 | 286 | 0 | 0 | 32 | 0 | 254 | 11.2% |
-| dsu14_2_1490 | 289 | 0 | 0 | 33 | 0 | 256 | 11.4% |
-| sophia-390 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-395 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-398 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-406 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| dsu14_1_nd | 2 175 | 0 | 0 | 341 | 0 | 1834 | 15.7% |
-| dsu14_2_nd | 2 386 | 0 | 0 | 305 | 0 | 2081 | 12.8% |
+| sophia-345 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1490 | 286 | 0 | 11 | 12 | 0 | 263 | 8.0% |
+| dsu14_2_1490 | 289 | 0 | 9 | 8 | 0 | 272 | 5.9% |
+| sophia-390 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-395 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-398 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-406 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| dsu14_1_nd | 2 175 | 0 | 108 | 88 | 0 | 1979 | 9.0% |
+| dsu14_2_nd | 2 386 | 0 | 111 | 58 | 0 | 2217 | 7.1% |
 | sophia-1021 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1030 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1032 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1091 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1144 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1156 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1163 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1030 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-1032 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1091 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1144 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1156 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1163 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-1214 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1215 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1216 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1219 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1235 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1240 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1243 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1215 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1216 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1219 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1235 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1240 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-1243 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1247 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1249 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1250 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1249 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1250 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1364 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1374 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1382 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1455 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1382 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1455 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1499 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1500 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1505 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1508 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1509 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1527 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-157 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1572 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1579 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1582 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1592 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1508 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1509 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1527 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-157 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1572 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1579 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1582 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1592 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1673 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1687 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1744 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1766 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1769 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1776 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1782 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1823 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1744 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1766 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1769 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1776 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1782 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1823 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-1835 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1836 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1854 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1836 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1852 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1854 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1881 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1888 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1904 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1918 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1888 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1904 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1918 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1961 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1970 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-2033 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1970 | 9 | 0 | 4 | 3 | 0 | 2 | 77.8% |
+| sophia-2033 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2041 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2083 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2168 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2173 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2318 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2383 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2083 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2168 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2173 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2318 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-2383 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-2423 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2463 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2475 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2476 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2543 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2476 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2543 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-2544 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2572 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2575 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2572 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-2575 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-2581 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2585 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2588 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2589 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2588 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2589 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2605 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2655 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2674 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2675 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2655 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2674 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2675 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2703 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2708 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2723 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2738 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2708 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2723 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2738 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2741 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2760 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2760 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2801 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2821 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2976 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2821 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2852 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2976 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2978 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3020 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3103 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3174 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3020 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3103 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3174 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3176 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3198 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3207 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3209 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3198 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3207 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3209 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3212 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3241 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3274 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
+| sophia-3274 | 7 | 0 | 2 | 2 | 0 | 3 | 57.1% |
 | sophia-3297 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3317 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3329 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3317 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3329 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3357 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3387 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3414 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3454 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3455 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3481 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3493 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3526 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3527 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3414 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3454 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3455 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3481 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3493 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3526 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3527 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3533 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3551 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3553 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3578 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3579 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3600 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3551 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3553 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3578 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3579 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3600 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-3655 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3768 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3774 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3775 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3787 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3795 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4097 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3775 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3787 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3792 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3795 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4097 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4139 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4170 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4170 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4180 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4197 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4200 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-427 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-427 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-430 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4316 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4317 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4396 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-4396 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-657 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-658 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-662 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-663 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-681 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-658 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-662 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-663 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-681 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-682 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-717 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-717 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-718 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-737 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-737 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-738 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-743 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-802 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-811 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-743 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-802 | 3 | 0 | 3 | 0 | 0 | 0 | 100.0% |
+| sophia-811 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | dsu14_1_1500 | 13 | 0 | 0 | 2 | 0 | 11 | 15.4% |
-| dsu14_2_1500 | 10 | 0 | 0 | 1 | 0 | 9 | 10.0% |
-| sophia-3658 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1423 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_2_1500 | 10 | 0 | 1 | 0 | 0 | 9 | 10.0% |
+| sophia-3658 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-1423 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1117 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2166 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3225 | 9 | 0 | 0 | 7 | 0 | 2 | 77.8% |
-| sophia-3226 | 26 | 0 | 0 | 14 | 0 | 12 | 53.8% |
+| sophia-3225 | 9 | 0 | 5 | 2 | 0 | 2 | 77.8% |
+| sophia-3226 | 26 | 0 | 7 | 4 | 0 | 15 | 42.3% |
 | sophia-596 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-617 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| i14_07 | 896 | 0 | 388 | 112 | 0 | 396 | 55.8% |
-| sophia-321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| i14_07 | 896 | 0 | 368 | 111 | 0 | 417 | 53.5% |
+| sophia-321 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-322 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| i14_10 | 1 243 | 0 | 488 | 198 | 0 | 557 | 55.2% |
-| i14_06 | 3 558 | 0 | 1498 | 498 | 0 | 1562 | 56.1% |
-| i14_09 | 7 151 | 0 | 2669 | 1214 | 0 | 3268 | 54.3% |
-| sophia-1476 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| i14_13 | 109 | 0 | 44 | 9 | 0 | 56 | 48.6% |
-| i14_27 | 733 | 0 | 292 | 102 | 0 | 339 | 53.8% |
-| i14_14 | 12 813 | 0 | 5241 | 2040 | 0 | 5532 | 56.8% |
-| i14_15 | 4 594 | 0 | 1782 | 559 | 0 | 2253 | 51.0% |
-| sophia-341 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| i14_29 | 816 | 0 | 254 | 162 | 0 | 400 | 51.0% |
-| sophia-461 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| i14_16 | 1 525 | 0 | 646 | 248 | 0 | 631 | 58.6% |
-| i14_18 | 6 037 | 0 | 2272 | 1034 | 0 | 2731 | 54.8% |
-| i14_36 | 86 | 0 | 28 | 4 | 0 | 54 | 37.2% |
-| i14_17 | 12 564 | 0 | 5056 | 2186 | 0 | 5322 | 57.6% |
-| i14_21 | 6 119 | 0 | 2546 | 1909 | 0 | 1664 | 72.8% |
+| i14_10 | 1 243 | 0 | 479 | 198 | 0 | 566 | 54.5% |
+| i14_06 | 3 558 | 0 | 1387 | 499 | 0 | 1672 | 53.0% |
+| i14_09 | 7 151 | 0 | 2486 | 1214 | 0 | 3451 | 51.7% |
+| sophia-1476 | 7 | 0 | 2 | 1 | 0 | 4 | 42.9% |
+| i14_13 | 109 | 0 | 43 | 9 | 0 | 57 | 47.7% |
+| i14_27 | 733 | 0 | 283 | 101 | 0 | 349 | 52.4% |
+| i14_14 | 12 813 | 0 | 5052 | 2039 | 0 | 5722 | 55.3% |
+| i14_15 | 4 594 | 0 | 1719 | 559 | 0 | 2316 | 49.6% |
+| sophia-341 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| i14_29 | 816 | 0 | 243 | 162 | 0 | 411 | 49.6% |
+| sophia-461 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| i14_16 | 1 525 | 0 | 604 | 247 | 0 | 674 | 55.8% |
+| i14_18 | 6 037 | 0 | 2122 | 1034 | 0 | 2881 | 52.3% |
+| i14_36 | 86 | 0 | 27 | 4 | 0 | 55 | 36.0% |
+| i14_17 | 12 564 | 0 | 4740 | 2184 | 0 | 5640 | 55.1% |
+| i14_21 | 6 119 | 0 | 2365 | 1941 | 0 | 1813 | 70.4% |
 | sophia-296 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-302 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
+| sophia-302 | 14 | 0 | 2 | 5 | 0 | 7 | 50.0% |
 | sophia-894 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1047 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-107 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1097 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1130 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1135 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1139 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1142 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1182 | 8 | 0 | 0 | 7 | 0 | 1 | 87.5% |
+| i14_05b | 4 412 | 0 | 1664 | 1023 | 0 | 1725 | 60.9% |
+| sophia-1047 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-107 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1097 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1130 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1135 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1139 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1142 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1182 | 8 | 0 | 7 | 0 | 0 | 1 | 87.5% |
 | sophia-1184 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1198 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1202 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1202 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1206 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1218 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1227 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1241 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1241 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-125 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1251 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1251 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1276 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1464 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1477 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1510 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1464 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1477 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1510 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-152 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1550 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1550 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1593 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1603 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1603 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1618 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1635 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1665 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1711 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1756 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1756 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1794 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1813 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1813 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1826 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1853 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1860 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1853 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-1860 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1891 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1910 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1919 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1932 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1952 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1965 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1966 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1979 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-2000 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2004 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1966 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1979 | 7 | 0 | 2 | 0 | 0 | 5 | 28.6% |
+| sophia-2000 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2004 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2006 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2049 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2063 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2072 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2353 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2369 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2369 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2370 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2386 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2386 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2398 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2445 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2479 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2498 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2517 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2552 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2563 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2563 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2584 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2607 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2785 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2793 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2785 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2793 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2825 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2829 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2838 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -3163,33 +3183,33 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3156 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3157 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3175 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3191 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3191 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3200 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3253 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3286 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3253 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3286 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-3307 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3350 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3355 | 5 | 0 | 0 | 1 | 0 | 4 | 20.0% |
+| sophia-3355 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
 | sophia-3363 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3430 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-3430 | 5 | 0 | 1 | 2 | 0 | 2 | 60.0% |
 | sophia-3510 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3530 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3565 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3583 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3585 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3587 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3595 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3595 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3631 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3667 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3700 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3667 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3700 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3710 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3733 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3736 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3741 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4162 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3741 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4162 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4164 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4176 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4179 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4179 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4201 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4203 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-4205 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -3198,613 +3218,621 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4246 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4253 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4297 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4298 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4299 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4298 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-4299 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4306 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4319 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4360 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-4319 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4360 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
 | sophia-4372 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-489 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-49 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-502 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-509 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-49 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-502 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-509 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-534 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-620 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-63 | 20 | 0 | 0 | 20 | 0 | 0 | 100.0% |
-| sophia-696 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-699 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-716 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-696 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-699 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-716 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
 | sophia-785 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-788 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-792 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-792 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-806 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-82 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-83 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| vyshensky | 25 620 | 0 | 10956 | 3811 | 0 | 10853 | 57.6% |
-| sophia-173 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-82 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
+| sophia-83 | 6 | 0 | 2 | 3 | 0 | 1 | 83.3% |
+| vyshensky | 25 620 | 0 | 10539 | 3808 | 0 | 11273 | 56.0% |
+| sophia-173 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | i14_38 | 61 | 0 | 32 | 5 | 0 | 24 | 60.7% |
 | sophia-2980 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3847 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-3847 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-4023 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2982 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3342 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3346 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| i14_39 | 436 | 0 | 176 | 75 | 0 | 185 | 57.6% |
-| i14_20 | 3 230 | 0 | 1255 | 390 | 0 | 1585 | 50.9% |
+| sophia-2982 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| i17_01 | 15 746 | 0 | 6004 | 4320 | 0 | 5422 | 65.6% |
+| sophia-3342 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-3346 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| i14_39 | 436 | 0 | 163 | 75 | 0 | 198 | 54.6% |
+| i14_20 | 3 230 | 0 | 1199 | 390 | 0 | 1641 | 49.2% |
 | i14_40 | 38 | 0 | 25 | 2 | 0 | 11 | 71.1% |
-| sophia-1294 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-1294 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
 | sophia-3143 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-3322 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3846 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1292 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2310 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-2215 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-1938 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2229 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4053 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-1003 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1292 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2310 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-2215 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-1938 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2229 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-4053 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
+| sophia-1003 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-437 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2183 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3619 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4034 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| i17_03 | 5 289 | 0 | 1951 | 1330 | 0 | 2008 | 62.0% |
+| sophia-2183 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-3619 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-4034 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3863 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3864 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2775 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-3889 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-239 | 9 | 0 | 0 | 8 | 0 | 1 | 88.9% |
-| sophia-1908 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-865 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-870 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3973 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2132 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2775 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-3889 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-239 | 9 | 0 | 5 | 2 | 0 | 2 | 77.8% |
+| sophia-1908 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-865 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-870 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3973 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-2132 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-3647 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3648 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3857 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3648 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3857 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-1245 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-446 | 11 | 0 | 0 | 9 | 0 | 2 | 81.8% |
-| sophia-182 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3866 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-180 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2019 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-3902 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-283 | 7 | 0 | 0 | 2 | 0 | 5 | 28.6% |
-| sophia-129 | 11 | 0 | 0 | 7 | 0 | 4 | 63.6% |
-| sophia-725 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-446 | 11 | 0 | 4 | 3 | 0 | 4 | 63.6% |
+| sophia-182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3866 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-180 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2019 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-3902 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-283 | 7 | 0 | 1 | 1 | 0 | 5 | 28.6% |
+| sophia-129 | 11 | 0 | 2 | 4 | 0 | 5 | 54.5% |
+| sophia-725 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
 | sophia-2713 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-128 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-2017 | 8 | 0 | 0 | 6 | 0 | 2 | 75.0% |
-| sophia-2806 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-128 | 9 | 0 | 2 | 2 | 0 | 5 | 44.4% |
+| sophia-2017 | 8 | 0 | 0 | 2 | 0 | 6 | 25.0% |
+| i17_29 | 4 046 | 0 | 1677 | 1028 | 0 | 1341 | 66.9% |
+| sophia-2806 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-163 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-208 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4066 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-135 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-384 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-44 | 10 | 0 | 0 | 5 | 0 | 5 | 50.0% |
+| i17_06 | 2 149 | 0 | 847 | 526 | 0 | 776 | 63.9% |
+| sophia-135 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-384 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-44 | 10 | 0 | 4 | 1 | 0 | 5 | 50.0% |
 | sophia-136 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-153 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-156 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-162 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-166 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-162 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-166 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-168 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-170 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-175 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-177 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-184 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-185 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-186 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-187 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-189 | 5 | 0 | 0 | 5 | 0 | 0 | 100.0% |
-| sophia-192 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-195 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-196 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-206 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-209 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-212 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-213 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-215 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-217 | 7 | 0 | 0 | 7 | 0 | 0 | 100.0% |
-| sophia-219 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-220 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-240 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-241 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-175 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-177 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-184 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-185 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-186 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-187 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-189 | 5 | 0 | 4 | 1 | 0 | 0 | 100.0% |
+| sophia-192 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-195 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
+| sophia-196 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
+| sophia-206 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-209 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-212 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-213 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-215 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
+| sophia-217 | 7 | 0 | 3 | 4 | 0 | 0 | 100.0% |
+| sophia-219 | 7 | 0 | 3 | 1 | 0 | 3 | 57.1% |
+| sophia-220 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-240 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-241 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-243 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-251 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-253 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-256 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-308 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
+| sophia-253 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-256 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-308 | 6 | 0 | 4 | 0 | 0 | 2 | 66.7% |
 | sophia-310 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-311 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-313 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-315 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-311 | 3 | 0 | 3 | 0 | 0 | 0 | 100.0% |
+| sophia-313 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-315 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-324 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-330 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-331 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-332 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-330 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-331 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-332 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-334 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-338 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-339 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1383 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| i14_32 | 6 164 | 0 | 3141 | 961 | 0 | 2062 | 66.5% |
-| sophia-902 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-338 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-339 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
+| i17_20 | 3 305 | 0 | 1112 | 823 | 0 | 1370 | 58.5% |
+| sophia-1383 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| i14_32 | 6 164 | 0 | 3037 | 961 | 0 | 2166 | 64.9% |
+| i17_28 | 3 450 | 0 | 1502 | 922 | 0 | 1026 | 70.3% |
+| sophia-902 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1014 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1038 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-1038 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
 | sophia-1077 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-1080 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1164 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-1080 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1164 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-1170 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1172 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1242 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1244 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1290 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1291 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-1293 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1298 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1244 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1290 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-1291 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
+| sophia-1293 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1298 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-130 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1339 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1341 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1354 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1358 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1339 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1341 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1354 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1358 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1361 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1362 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1370 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1384 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1391 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1362 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-1370 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-1384 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1391 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1392 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1393 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1393 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1398 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1402 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-1410 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
-| sophia-1439 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1441 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1442 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1402 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-1410 | 7 | 0 | 2 | 1 | 0 | 4 | 42.9% |
+| sophia-1439 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1441 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-1442 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1473 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1475 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1480 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-1482 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1485 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1489 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-1493 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| sophia-1502 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1480 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-1482 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-1485 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-1489 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-1493 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
+| sophia-1502 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1503 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-1513 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-1543 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-1513 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-1543 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-1546 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1547 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1548 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1549 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1549 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-1554 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1557 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-1557 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
 | sophia-1558 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1567 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-1569 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-1567 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-1569 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
 | sophia-1591 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1595 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-1599 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1599 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1600 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1601 | 6 | 0 | 0 | 4 | 0 | 2 | 66.7% |
-| sophia-1607 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1601 | 6 | 0 | 3 | 1 | 0 | 2 | 66.7% |
+| sophia-1607 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1717 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1931 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1933 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1936 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-1939 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1940 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-1936 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-1939 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-1940 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1941 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1953 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-1954 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-1986 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-1954 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-1986 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-1987 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1988 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-1989 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-201 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2015 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2016 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-202 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2020 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2021 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-2022 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-2023 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2027 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2028 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
+| sophia-1989 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-201 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-2015 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2016 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-202 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2020 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2021 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-2022 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-2023 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2027 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-2028 | 6 | 0 | 2 | 1 | 0 | 3 | 50.0% |
 | sophia-2101 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2105 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2110 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2113 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2105 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2110 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
+| sophia-2113 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2116 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2130 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2143 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2130 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2143 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2147 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2154 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2157 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2167 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2157 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2167 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-2171 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2184 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2185 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2186 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2187 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2188 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2190 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
+| sophia-2185 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2186 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2187 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-2188 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2190 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
 | sophia-2191 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2193 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2195 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2193 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2195 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-2201 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2202 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2206 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2209 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2202 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2206 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2209 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2211 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2212 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2213 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2222 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| sophia-2213 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2222 | 7 | 0 | 3 | 1 | 0 | 3 | 57.1% |
 | sophia-2223 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2227 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2227 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2235 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2238 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2245 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2245 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2246 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-2247 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2247 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2252 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2256 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2257 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2258 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2262 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2262 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2263 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2264 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2265 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-2266 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-2265 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-2266 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-2269 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2271 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2272 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-2271 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2272 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2274 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2275 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2275 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2276 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2277 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-2278 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-2277 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
+| sophia-2278 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
 | sophia-228 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2280 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2285 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2286 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2287 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2286 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-2287 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2293 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2298 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-230 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2305 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2311 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-247 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-247 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2546 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2547 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2551 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2547 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2551 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-2560 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-267 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-268 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-2693 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
+| sophia-267 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-268 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
+| sophia-2693 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
 | sophia-2697 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2699 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-2704 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2716 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2699 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-2704 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-2716 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2717 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2719 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2727 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2727 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2728 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2729 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2729 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-273 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-274 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2747 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2769 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-274 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2747 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-2769 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2776 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2777 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2787 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2795 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2796 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-2798 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2799 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2802 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
+| sophia-2777 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2787 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2795 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-2796 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-2798 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2799 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2802 | 7 | 0 | 3 | 2 | 0 | 2 | 71.4% |
 | sophia-2804 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-2805 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2807 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2824 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2832 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2824 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2832 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2841 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2845 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2857 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-2861 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-2845 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-2857 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-2861 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2868 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2910 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2912 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2913 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-2912 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-2913 | 3 | 0 | 1 | 2 | 0 | 0 | 100.0% |
 | sophia-2915 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2917 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-2924 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2917 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-2924 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2929 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2945 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2959 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-2959 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-2979 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2981 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2986 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-2990 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2981 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-2986 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-2990 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-2991 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-2992 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-2993 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-2994 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-2992 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-2993 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
+| sophia-2994 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2995 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-2997 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-2997 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3000 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3004 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3005 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3008 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3025 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3005 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3008 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3025 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3028 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-304 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-304 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-3127 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-3128 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3128 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3130 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3139 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3144 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3139 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
+| sophia-3144 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3145 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3146 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3147 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3150 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-3152 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3158 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3171 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3152 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3158 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3171 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3181 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3184 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3184 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-3192 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3195 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3215 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3215 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-3219 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3224 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3242 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3224 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
+| sophia-3242 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-3278 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3279 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3285 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-3331 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3348 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3279 | 4 | 0 | 4 | 0 | 0 | 0 | 100.0% |
+| sophia-3285 | 5 | 0 | 2 | 0 | 0 | 3 | 40.0% |
+| sophia-3331 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3348 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3372 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3475 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3475 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3476 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3478 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3478 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-3479 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3480 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-352 | 9 | 0 | 0 | 5 | 0 | 4 | 55.6% |
-| sophia-356 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
+| sophia-3480 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-352 | 9 | 0 | 3 | 2 | 0 | 4 | 55.6% |
+| sophia-356 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
 | sophia-359 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3609 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3610 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3609 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3610 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3614 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3616 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3616 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-362 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3624 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3624 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3625 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3629 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-363 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3634 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3629 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-363 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3634 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-3635 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3636 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3639 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3640 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3636 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3639 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3640 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3643 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3645 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3649 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3666 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
+| sophia-3645 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3649 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3666 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-3672 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3676 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3679 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3676 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3679 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3681 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-3686 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-369 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3691 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3693 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3691 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3693 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3694 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3698 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3699 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-370 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3699 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-370 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-371 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3719 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3720 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3732 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3734 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3738 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3719 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-3720 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3732 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-3734 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-3738 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3743 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3744 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3766 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3767 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3796 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-381 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3813 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3767 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3796 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-381 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3813 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3818 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3819 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-382 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-3820 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-3821 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-3822 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3826 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3819 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-382 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
+| sophia-3820 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3821 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-3822 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3826 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3827 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3829 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-383 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-3831 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3832 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-383 | 5 | 0 | 2 | 2 | 0 | 1 | 80.0% |
+| sophia-3831 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3832 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3836 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3839 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3842 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-3839 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3842 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
 | sophia-3849 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-385 | 6 | 0 | 0 | 3 | 0 | 3 | 50.0% |
-| sophia-3851 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3853 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-387 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3873 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3876 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
-| sophia-3880 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3883 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-385 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
+| sophia-3851 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3852 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3853 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-387 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-3873 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3876 | 5 | 0 | 0 | 0 | 0 | 5 | 0.0% |
+| sophia-3880 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3883 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3884 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3886 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3891 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3897 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3886 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3891 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3897 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3900 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3901 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3901 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-3905 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3906 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3907 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3907 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3909 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3910 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3915 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3916 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3915 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3916 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3917 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3918 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3919 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3925 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3926 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3927 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3933 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3935 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-3925 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3926 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-3927 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3933 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3935 | 5 | 0 | 3 | 0 | 0 | 2 | 60.0% |
 | sophia-3937 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-3939 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3941 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3942 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3942 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3943 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3944 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3945 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-3945 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
 | sophia-3948 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-3954 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-3954 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-3955 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3959 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-396 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-396 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
 | sophia-3960 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3962 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3964 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3965 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-3962 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3964 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3965 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
 | sophia-3967 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3969 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-3970 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-3969 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-3970 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3972 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-3979 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
-| sophia-3981 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3984 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-3987 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-3991 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-3992 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-3979 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
+| sophia-3981 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-3984 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-3987 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-3991 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-3992 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-3996 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4002 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4007 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4007 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4008 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
-| sophia-4014 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4018 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4014 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-4018 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-4025 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4028 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-4028 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-4039 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4041 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-4042 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4043 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4043 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4047 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4048 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4051 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
-| sophia-4052 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
-| sophia-4057 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4058 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4059 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4060 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4051 | 4 | 0 | 2 | 0 | 0 | 2 | 50.0% |
+| sophia-4052 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
+| sophia-4057 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4058 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4059 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4060 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4061 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4064 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4065 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-4171 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4172 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4173 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-4174 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-4065 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-4171 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-4172 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-4173 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-4174 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-4206 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-425 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-4257 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-4258 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4268 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
+| sophia-4257 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-4258 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4268 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
 | sophia-4269 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4284 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-4285 | 7 | 0 | 0 | 5 | 0 | 2 | 71.4% |
-| sophia-4294 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-43 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-4284 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-4285 | 7 | 0 | 3 | 1 | 0 | 3 | 57.1% |
+| sophia-4294 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
+| sophia-43 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-4303 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4309 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-4321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-4321 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4324 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-436 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-443 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-448 | 5 | 0 | 0 | 4 | 0 | 1 | 80.0% |
-| sophia-450 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-601 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-603 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-608 | 7 | 0 | 0 | 6 | 0 | 1 | 85.7% |
+| sophia-436 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-443 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-448 | 5 | 0 | 4 | 0 | 0 | 1 | 80.0% |
+| sophia-450 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-601 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-603 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-608 | 7 | 0 | 5 | 1 | 0 | 1 | 85.7% |
 | sophia-612 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-644 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-651 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-688 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-694 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
+| sophia-688 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| sophia-694 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-695 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-703 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-705 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-710 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-721 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-703 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-705 | 2 | 0 | 2 | 0 | 0 | 0 | 100.0% |
+| sophia-710 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
+| sophia-721 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-726 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-731 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-731 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-736 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-748 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-748 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-750 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-817 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-818 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
+| sophia-817 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-818 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-819 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-826 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-827 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| sophia-826 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
+| sophia-827 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-837 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-839 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-840 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| sophia-842 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| sophia-839 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| sophia-840 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
+| sophia-842 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-843 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-844 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-848 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-848 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-849 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-850 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-851 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
+| sophia-851 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-852 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-853 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-854 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| sophia-856 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-864 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-866 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
-| sophia-915 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
-| sophia-916 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-856 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-864 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-866 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
+| sophia-915 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-916 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-917 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-918 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-920 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| sophia-933 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
-| sophia-936 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-937 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
+| sophia-933 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
+| sophia-936 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
+| sophia-937 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-950 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-953 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| sophia-962 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-962 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-965 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-968 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-968 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-997 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| samovydets | 37 974 | 0 | 15196 | 7238 | 0 | 15540 | 59.1% |
-| o18_26 | 9 404 | 0 | 0 | 0 | 6013 | 3391 | 63.9% |
-| pripovisti | 9 180 | 0 | 3080 | 1960 | 0 | 4140 | 54.9% |
+| sophia-997 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
+| samovydets | 37 974 | 0 | 13872 | 7215 | 0 | 16887 | 55.5% |
+| o18_26 | 9 404 | 0 | 0 | 0 | 6012 | 3392 | 63.9% |
+| i17_24 | 3 902 | 0 | 1570 | 957 | 0 | 1375 | 64.8% |
+| pripovisti | 9 180 | 0 | 2919 | 1956 | 0 | 4305 | 53.1% |
 | o18_37 | 11 821 | 0 | 0 | 0 | 8029 | 3792 | 67.9% |
 | o18_01 | 1 269 | 0 | 0 | 0 | 843 | 426 | 66.4% |
-| sophia-56 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| sophia-56 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | o18_33 | 17 416 | 0 | 0 | 0 | 12497 | 4919 | 71.8% |
-| o18_27 | 4 257 | 0 | 0 | 0 | 2841 | 1416 | 66.7% |
-| sophia-69 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
+| o18_27 | 4 257 | 0 | 0 | 0 | 2843 | 1414 | 66.8% |
+| sophia-69 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | o18_29 | 3 645 | 0 | 0 | 0 | 2416 | 1229 | 66.3% |
-| o18_35 | 4 175 | 0 | 0 | 0 | 2924 | 1251 | 70.0% |
-| o18_30 | 4 875 | 0 | 0 | 0 | 4187 | 688 | 85.9% |
-| o18_17 | 2 504 | 0 | 0 | 0 | 1825 | 679 | 72.9% |
-| sophia-132 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| eneida1798 | 12 638 | 0 | 0 | 0 | 10258 | 2380 | 81.2% |
-| o18_20 | 6 848 | 0 | 0 | 0 | 5907 | 941 | 86.3% |
+| o18_35 | 4 175 | 0 | 0 | 0 | 2923 | 1252 | 70.0% |
+| o18_30 | 4 875 | 0 | 0 | 0 | 4186 | 689 | 85.9% |
+| o18_17 | 2 504 | 0 | 0 | 0 | 1824 | 680 | 72.8% |
+| sophia-132 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
+| eneida1798 | 12 638 | 0 | 0 | 0 | 10259 | 2379 | 81.2% |
+| o18_20 | 6 848 | 0 | 0 | 0 | 5908 | 940 | 86.3% |
 | o18_23 | 13 694 | 0 | 0 | 0 | 11827 | 1867 | 86.4% |
 | o18_24 | 174 | 0 | 0 | 0 | 144 | 30 | 82.8% |
 | o18_25 | 3 235 | 0 | 0 | 0 | 2877 | 358 | 88.9% |
 | sophia-351 | 9 | 0 | 0 | 0 | 6 | 3 | 66.7% |
+| eneida1808 | 12 397 | 0 | 0 | 0 | 10075 | 2322 | 81.3% |
 | o18_19 | 191 | 0 | 0 | 0 | 179 | 12 | 93.7% |
 | song_baida | 191 | 0 | 0 | 0 | 175 | 16 | 91.6% |
 | song_yikhav | 87 | 0 | 0 | 0 | 77 | 10 | 88.5% |
@@ -3821,30 +3849,31 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | shevchenko_112 | 780 | 0 | 0 | 0 | 774 | 6 | 99.2% |
 | shevchenko_113 | 368 | 0 | 0 | 0 | 364 | 4 | 98.9% |
 | shevchenko_114 | 219 | 0 | 0 | 0 | 209 | 10 | 95.4% |
+| kobzar1840 | 5 202 | 0 | 0 | 0 | 4331 | 871 | 83.3% |
 | shevchenko_115 | 67 | 0 | 0 | 0 | 66 | 1 | 98.5% |
 | shevchenko_116 | 109 | 0 | 0 | 0 | 109 | 0 | 100.0% |
 | shevchenko_118 | 77 | 0 | 0 | 0 | 76 | 1 | 98.7% |
-| shevchenko_119 | 1 595 | 0 | 0 | 0 | 1577 | 18 | 98.9% |
+| shevchenko_119 | 1 595 | 0 | 0 | 0 | 1578 | 17 | 98.9% |
 | shevchenko_120 | 673 | 0 | 0 | 0 | 660 | 13 | 98.1% |
-| shevchenko_121 | 4 519 | 0 | 0 | 0 | 2155 | 2364 | 47.7% |
+| shevchenko_121 | 4 519 | 0 | 0 | 0 | 2156 | 2363 | 47.7% |
 | shevchenko_122 | 716 | 0 | 0 | 0 | 689 | 27 | 96.2% |
 | shevchenko_123 | 2 335 | 0 | 0 | 0 | 926 | 1409 | 39.7% |
 | shevchenko_124 | 169 | 0 | 0 | 0 | 163 | 6 | 96.4% |
 | shevchenko_125 | 307 | 0 | 0 | 0 | 297 | 10 | 96.7% |
 | shevchenko_126 | 848 | 0 | 0 | 0 | 833 | 15 | 98.2% |
 | shevchenko_127 | 160 | 0 | 0 | 0 | 157 | 3 | 98.1% |
-| shevchenko_128 | 2 133 | 0 | 0 | 0 | 2066 | 67 | 96.9% |
+| shevchenko_128 | 2 133 | 0 | 0 | 0 | 2065 | 68 | 96.8% |
 | shevchenko_129 | 267 | 0 | 0 | 0 | 263 | 4 | 98.5% |
 | shevchenko_130 | 46 | 0 | 0 | 0 | 46 | 0 | 100.0% |
 | shevchenko_131 | 91 | 0 | 0 | 0 | 86 | 5 | 94.5% |
 | shevchenko_132 | 106 | 0 | 0 | 0 | 104 | 2 | 98.1% |
 | shevchenko_133 | 75 | 0 | 0 | 0 | 75 | 0 | 100.0% |
 | shevchenko_134 | 63 | 0 | 0 | 0 | 63 | 0 | 100.0% |
-| shevchenko_135 | 1 361 | 0 | 0 | 0 | 1304 | 57 | 95.8% |
-| shevchenko_136 | 2 578 | 0 | 0 | 0 | 2518 | 60 | 97.7% |
+| shevchenko_135 | 1 361 | 0 | 0 | 0 | 1303 | 58 | 95.7% |
+| shevchenko_136 | 2 578 | 0 | 0 | 0 | 2520 | 58 | 97.8% |
 | shevchenko_137 | 2 031 | 0 | 0 | 0 | 1931 | 100 | 95.1% |
 | shevchenko_138 | 1 919 | 0 | 0 | 0 | 1886 | 33 | 98.3% |
-| shevchenko_139 | 758 | 0 | 0 | 0 | 738 | 20 | 97.4% |
+| shevchenko_139 | 758 | 0 | 0 | 0 | 737 | 21 | 97.2% |
 | shevchenko_140 | 954 | 0 | 0 | 0 | 916 | 38 | 96.0% |
 | shevchenko_141 | 289 | 0 | 0 | 0 | 277 | 12 | 95.8% |
 | shevchenko_142 | 961 | 0 | 0 | 0 | 912 | 49 | 94.9% |
@@ -3856,59 +3885,68 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | shevchenko_148 | 306 | 0 | 0 | 0 | 295 | 11 | 96.4% |
 | shevchenko_149 | 215 | 0 | 0 | 0 | 211 | 4 | 98.1% |
 | shevchenko_150 | 2 320 | 0 | 0 | 0 | 2285 | 35 | 98.5% |
-| kulish1882 | 18 720 | 0 | 0 | 0 | 15598 | 3122 | 83.3% |
-| lesya1892 | 13 544 | 0 | 0 | 0 | 12906 | 638 | 95.3% |
-| franko1893 | 36 521 | 0 | 0 | 0 | 33626 | 2895 | 92.1% |
-| franko1905 | 7 656 | 0 | 0 | 0 | 7156 | 500 | 93.5% |
+| kulish1862 | 5 961 | 0 | 0 | 0 | 4133 | 1828 | 69.3% |
+| kobzar1876 | 88 813 | 0 | 0 | 0 | 83493 | 5320 | 94.0% |
+| nechuy1879 | 51 427 | 0 | 0 | 0 | 47942 | 3485 | 93.2% |
+| kulish1882 | 18 720 | 0 | 0 | 0 | 15600 | 3120 | 83.3% |
+| boa1884 | 26 196 | 0 | 0 | 0 | 21065 | 5131 | 80.4% |
+| lesya1892 | 13 544 | 0 | 0 | 0 | 12908 | 636 | 95.3% |
+| chaichenko1893 | 31 972 | 0 | 0 | 0 | 30256 | 1716 | 94.6% |
+| franko1893 | 36 521 | 0 | 0 | 0 | 33631 | 2890 | 92.1% |
+| lesya1899 | 18 341 | 0 | 0 | 0 | 17567 | 774 | 95.8% |
+| franko1902 | 25 278 | 0 | 0 | 0 | 23427 | 1851 | 92.7% |
+| franko1903 | 28 878 | 0 | 0 | 0 | 26960 | 1918 | 93.4% |
+| franko1905 | 7 656 | 0 | 0 | 0 | 7153 | 503 | 93.4% |
+| franko1906 | 31 416 | 0 | 0 | 0 | 29266 | 2150 | 93.2% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5706 | 821 | 87.4% |
-| **total** | 620 590 | 35269 | 135200 | 53616 | 178617 | 217888 | 64.9% |
+| **total** | 988 770 | 34120 | 147326 | 60721 | 477139 | 269464 | 72.7% |
 
-Linked 402 702 of 620 590 tokens (64.9%); unresolved 217 888 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 719 306 of 988 770 tokens (72.7%); unresolved 269 464 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (217 888) |
+| form | f | % of unresolved (269 464) |
 |---|---|---|
-| с | 2296 | 1.1% |
-| к | 1845 | 0.8% |
-| и | 1822 | 0.8% |
-| его | 1480 | 0.7% |
-| къ | 1271 | 0.6% |
-| съ | 1028 | 0.5% |
-| ни | 1006 | 0.5% |
-| аще | 921 | 0.4% |
-| ли | 915 | 0.4% |
-| тако | 909 | 0.4% |
-| имъ | 901 | 0.4% |
-| что | 723 | 0.3% |
+| на | 6944 | 2.6% |
+| и | 4233 | 1.6% |
+| с | 2311 | 0.9% |
+| до | 2017 | 0.7% |
+| к | 1900 | 0.7% |
+| его | 1485 | 0.6% |
+| къ | 1350 | 0.5% |
+| ни | 1072 | 0.4% |
+| съ | 1055 | 0.4% |
+| имъ | 950 | 0.4% |
+| аще | 930 | 0.3% |
+| ли | 928 | 0.3% |
+| тако | 925 | 0.3% |
+| так | 792 | 0.3% |
+| что | 741 | 0.3% |
+| ихъ | 735 | 0.3% |
 | бѣ | 681 | 0.3% |
-| ихъ | 620 | 0.3% |
-| своего | 620 | 0.3% |
-| так | 605 | 0.3% |
-| ему | 540 | 0.2% |
-| со | 540 | 0.2% |
+| своего | 622 | 0.2% |
+| як | 602 | 0.2% |
+| со | 554 | 0.2% |
+| ему | 542 | 0.2% |
+| под | 529 | 0.2% |
+| то | 519 | 0.2% |
 | приде | 485 | 0.2% |
-| емоу | 483 | 0.2% |
-| под | 480 | 0.2% |
-| то | 449 | 0.2% |
-| як | 447 | 0.2% |
+| емоу | 484 | 0.2% |
+| где | 476 | 0.2% |
+| том | 450 | 0.2% |
 | посла | 446 | 0.2% |
-| их | 422 | 0.2% |
-| где | 411 | 0.2% |
-| свои | 399 | 0.2% |
-| тогда | 385 | 0.2% |
-| ӕко | 383 | 0.2% |
-| много | 380 | 0.2% |
-| кто | 362 | 0.2% |
-| мѧ | 350 | 0.2% |
-| или | 348 | 0.2% |
-| реч | 345 | 0.2% |
-| поиде | 327 | 0.2% |
-| реч̑ | 324 | 0.1% |
-| како | 321 | 0.1% |
-| вси | 314 | 0.1% |
-| земли | 313 | 0.1% |
-| нъ | 308 | 0.1% |
+| много | 443 | 0.2% |
+| их | 426 | 0.2% |
+| свои | 416 | 0.2% |
+| там | 415 | 0.2% |
+| тогда | 406 | 0.2% |
+| кто | 388 | 0.1% |
+| ту | 387 | 0.1% |
+| о̂нъ | 386 | 0.1% |
+| ӕко | 383 | 0.1% |
+| реч | 352 | 0.1% |
+| или | 350 | 0.1% |
+| мѧ | 350 | 0.1% |
 
 The top-200 list is stored in corpus.json (`topUnresolved`). Typical misses: proper names and foreign words (not in VESUM), Old Rus' lexemes with no modern descendant, scribal variants and spellings that no rule maps to a VESUM form.
 
@@ -3917,88 +3955,88 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 
 | epoch | epoch N (corpus tokens) | tag source | tagged tokens | placed (% of tagged) | conflict | underspecified | untagged (linked, no tag) | lemmas with ≥ 1 cell | cells | cell spellings |
 |---|---|---|---|---|---|---|---|---|---|---|
-| shev.proto | 7 214 | TOROT (manual) | 162 | 162 (100.0%) | 0 | 0 | 150 | 294 | 563 | 657 |
-| shev.proto | 7 214 | Stanza (model, P-1.7) | 1 634 | 1 221 (74.7%) | 384 | 29 |  |  |  |  |
-| shev.old | 244 715 | TOROT (manual) | 22 532 | 22 287 (98.9%) | 233 | 12 | 2 649 | 2 467 | 7 362 | 11 290 |
-| shev.old | 244 715 | Stanza (model, P-1.7) | 44 421 | 27 764 (62.5%) | 15 696 | 961 |  |  |  |  |
-| shev.early_middle | 23 790 | Stanza (model, P-1.7) | 4 403 | 2 526 (57.4%) | 1 852 | 25 | 1 516 | 495 | 907 | 976 |
-| shev.middle | 152 857 | Stanza (model, P-1.7) | 33 561 | 19 097 (56.9%) | 14 431 | 33 | 671 | 3 094 | 8 994 | 10 851 |
-| shev.middle | 152 857 | VESUM (modern spelling) | 10 737 | 9 825 (91.5%) | 45 | 867 |  |  |  |  |
-| shev.late_middle | 73 665 | VESUM (modern spelling) | 33 057 | 29 780 (90.1%) | 78 | 3 199 | 3 | 4 314 | 14 056 | 15 563 |
-| shev.modern | 118 349 | VESUM (modern spelling) | 64 793 | 59 268 (91.5%) | 224 | 5 301 | 0 | 5 382 | 20 744 | 25 294 |
+| shev.proto | 7 214 | TOROT (manual) | 162 | 162 (100.0%) | 0 | 0 | 8 | 301 | 575 | 671 |
+| shev.proto | 7 214 | Stanza (model, P-1.7) | 1 767 | 1 306 (73.9%) | 431 | 30 |  |  |  |  |
+| shev.old | 244 715 | TOROT (manual) | 22 526 | 22 281 (98.9%) | 233 | 12 | 58 | 2 556 | 7 506 | 11 521 |
+| shev.old | 244 715 | Stanza (model, P-1.7) | 46 330 | 28 894 (62.4%) | 16 463 | 973 |  |  |  |  |
+| shev.early_middle | 23 790 | Stanza (model, P-1.7) | 5 134 | 2 961 (57.7%) | 2 133 | 40 | 30 | 667 | 1 139 | 1 240 |
+| shev.middle | 195 156 | Stanza (model, P-1.7) | 46 142 | 25 582 (55.4%) | 20 482 | 78 | 27 | 2 955 | 9 245 | 11 530 |
+| shev.middle | 195 156 | VESUM (modern spelling) | 10 481 | 9 497 (90.6%) | 38 | 946 |  |  |  |  |
+| shev.late_middle | 86 062 | VESUM (modern spelling) | 38 497 | 34 093 (88.6%) | 87 | 4 317 | 0 | 3 716 | 12 731 | 14 201 |
+| shev.modern | 431 833 | VESUM (modern spelling) | 241 366 | 217 354 (90.1%) | 760 | 23 252 | 0 | 6 216 | 34 958 | 46 184 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 29 129 · stanza:gender: 3 203 · vesum:grid:noun: 225 · torot:grid:none: 195 · vesum:grid:none: 122 · torot:grid:adj: 38 · stanza:grid:none: 25 · stanza:grid:adj: 6.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 35 561 · stanza:gender: 3 906 · vesum:grid:noun: 659 · vesum:grid:none: 222 · torot:grid:none: 195 · torot:grid:adj: 38 · stanza:grid:none: 31 · stanza:grid:adj: 11 · vesum:grid:adj: 4.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
 | lemma | kind | tokens | placed | conflict | underspecified | untagged | main conflict reasons |
 |---|---|---|---|---|---|---|---|
-| він | pron | 4 875 | 2 228 | 2 642 | 0 | 5 | stanza:lemma 2642 |
-| я | pron | 3 848 | 3 731 | 86 | 0 | 31 | stanza:lemma 86 |
-| земля | noun | 1 192 | 1 081 | 3 | 104 | 4 | stanza:gender 2, stanza:lemma 1 |
-| син | noun | 1 220 | 1 146 | 71 | 0 | 3 | stanza:gender 42, stanza:lemma 29 |
-| да | uninflected | 1 803 | 0 | 1 453 | 345 | 5 | stanza:grid:none 1150, torot:grid:none 303 |
-| себе | pron | 2 739 | 2 739 | 0 | 0 | 0 | — |
-| ви | pron | 2 142 | 2 129 | 6 | 0 | 7 | stanza:lemma 6 |
-| ти | pron | 3 513 | 3 477 | 23 | 0 | 13 | stanza:lemma 23 |
-| ми | pron | 2 731 | 2 327 | 389 | 0 | 15 | stanza:lemma 389 |
-| рука | noun | 760 | 739 | 20 | 0 | 1 | stanza:gender 15, stanza:lemma 5 |
-| князь | noun | 1 526 | 1 500 | 19 | 0 | 7 | stanza:gender 12, stanza:lemma 7 |
-| город | noun | 819 | 716 | 101 | 0 | 2 | stanza:gender 53, stanza:lemma 48 |
-| аз | noun | 64 | 62 | 0 | 0 | 2 | — |
+| він | pron | 9 361 | 6 607 | 2 754 | 0 | 0 | stanza:lemma 2754 |
+| я | pron | 8 991 | 8 903 | 88 | 0 | 0 | stanza:lemma 88 |
+| земля | noun | 1 692 | 1 420 | 3 | 269 | 0 | stanza:gender 2, stanza:lemma 1 |
+| син | noun | 1 661 | 1 556 | 105 | 0 | 0 | stanza:lemma 63, stanza:gender 42 |
+| да | uninflected | 1 904 | 0 | 1 476 | 428 | 0 | stanza:grid:none 1173, torot:grid:none 303 |
+| себе | pron | 3 973 | 3 973 | 0 | 0 | 0 | — |
+| ви | pron | 3 348 | 3 341 | 7 | 0 | 0 | stanza:lemma 7 |
+| ти | pron | 6 428 | 6 397 | 31 | 0 | 0 | stanza:lemma 31 |
+| ми | pron | 4 086 | 3 660 | 425 | 0 | 1 | stanza:lemma 425 |
+| рука | noun | 1 601 | 1 580 | 21 | 0 | 0 | stanza:gender 16, stanza:lemma 5 |
+| князь | noun | 1 614 | 1 590 | 24 | 0 | 0 | stanza:gender 13, stanza:lemma 11 |
+| город | noun | 928 | 827 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
+| аз | noun | 62 | 62 | 0 | 0 | 0 | — |
 
-**Stem types** (EP-4): 8 826 lemmas carry epoch paradigms; stem claim known for 1 516 (of which 321 from a Stanza lemma, model-based per decision D4), `unknown` for 3 867. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 21 · ST-08: 95 · ST-09: 649 · ST-10: 228 · ST-11: 75 · ST-12: 91 · ST-13: 264 · ST-14: 64.
+**Stem types** (EP-4): 8 243 lemmas carry epoch paradigms; stem claim known for 1 572 (of which 379 from a Stanza lemma, model-based per decision D4), `unknown` for 3 444. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 95 · ST-09: 668 · ST-10: 244 · ST-11: 77 · ST-12: 92 · ST-13: 277 · ST-14: 67.
 
-**Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 457 lemmas, 46 272 reconstructed cells with 48 974 forms; **confirmed** by an attested spelling of the same cell and epoch: 2 960 cells (6.4%), 2 969 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
+**Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 510 lemmas, 47 962 reconstructed cells with 50 734 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 017 cells (6.3%), 3 026 forms (6.0%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 16.21 MB of 93.32 MB shard total (17.4%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 20.86 MB of 112.53 MB shard total (18.5%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 58 925), *token* = occurrences (denominator linked tokens 402 702). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 87 816), *token* = occurrences (denominator linked tokens 719 306). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
-| R02 | Деназалізація ѧ > я, ѫ > у | G | 1662 | 2.8% | 10861 | 2.7% |
-| R14 | бы > бу (губне огублення) | L | 91 | 0.2% | 1278 | 0.3% |
-| R03 | ky, gy, xy > k'i, g'i, x'i | G | 205 | 0.3% | 673 | 0.2% |
-| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 467 | 0.8% | 1402 | 0.3% |
-| R13 | C + j: подовження, -ьѥ > -ття | G | 185 | 0.3% | 367 | 0.1% |
+| R02 | Деназалізація ѧ > я, ѫ > у | G | 1644 | 1.9% | 10816 | 1.5% |
+| R14 | бы > бу (губне огублення) | L | 91 | 0.1% | 1278 | 0.2% |
+| R03 | ky, gy, xy > k'i, g'i, x'i | G | 202 | 0.2% | 691 | 0.1% |
+| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 460 | 0.5% | 1394 | 0.2% |
+| R13 | C + j: подовження, -ьѥ > -ття | G | 185 | 0.2% | 367 | 0.1% |
 | R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 82 | 0.1% | 129 | 0.0% |
 | R21c | Зняття протетичного и- перед л, р (илвов > львов, ильняний > льняний) | L | 1 | 0.0% | 1 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 6397 | 10.9% | 39204 | 9.7% |
-| R21 | Протетичні в, г | L | 440 | 0.7% | 1711 | 0.4% |
+| R04 | Занепад єрів (закон Гавліка) | G | 6802 | 7.7% | 51882 | 7.2% |
+| R21 | Протетичні в, г | L | 433 | 0.5% | 1774 | 0.2% |
 | R21d | Протетичне и- перед л, р + редукований голосний (иржа) | L | 2 | 0.0% | 3 | 0.0% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1011 | 1.7% | 4474 | 1.1% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1007 | 1.1% | 4684 | 0.7% |
 | R10a | Аналогійне о > і в -овл- (будівля, торгівля, зимівля) | L | 4 | 0.0% | 4 | 0.0% |
 | R10b | Повноголосне і: беріг, сторін (лексична перевизначеність винятку R10) | L | 0 | 0.0% | 0 | 0.0% |
-| R10c | і у відкритому складі: кінець-тип (-ьць) | L | 2 | 0.0% | 8 | 0.0% |
-| R07 | Вставні о, е в кінцевих групах | L | 34 | 0.1% | 194 | 0.0% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 3618 | 6.1% | 17298 | 4.3% |
-| R12 | ѥ у новозакритому складі > ї | G | 29 | 0.0% | 680 | 0.2% |
-| R11 | Злиття і та у > и | G | 2909 | 4.9% | 43864 | 10.9% |
-| R15 | Ствердіння губних у кінці складу | G | 765 | 1.3% | 3011 | 0.7% |
-| R16 | l > w після о, е | G | 198 | 0.3% | 447 | 0.1% |
-| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.4% | 702 | 0.2% |
-| R17 | е > о після шиплячих перед твердим | L | 162 | 0.3% | 1093 | 0.3% |
-| R18 | Ствердіння ж, ч, ш | G | 537 | 0.9% | 1845 | 0.5% |
-| R19 | Ствердіння кінцевого р' | G | 176 | 0.3% | 621 | 0.2% |
-| R23 | Стягнення прикметникових закінчень | L | 851 | 1.4% | 3020 | 0.7% |
+| R10c | і у відкритому складі: кінець-тип (-ьць) | L | 1 | 0.0% | 7 | 0.0% |
+| R07 | Вставні о, е в кінцевих групах | L | 30 | 0.0% | 195 | 0.0% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 3610 | 4.1% | 18667 | 2.6% |
+| R12 | ѥ у новозакритому складі > ї | G | 29 | 0.0% | 680 | 0.1% |
+| R11 | Злиття і та у > и | G | 2885 | 3.3% | 45461 | 6.3% |
+| R15 | Ствердіння губних у кінці складу | G | 696 | 0.8% | 2928 | 0.4% |
+| R16 | l > w після о, е | G | 196 | 0.2% | 462 | 0.1% |
+| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.2% | 700 | 0.1% |
+| R17 | е > о після шиплячих перед твердим | L | 164 | 0.2% | 1121 | 0.2% |
+| R18 | Ствердіння ж, ч, ш | G | 510 | 0.6% | 1814 | 0.3% |
+| R19 | Ствердіння кінцевого р' | G | 153 | 0.2% | 595 | 0.1% |
+| R23 | Стягнення прикметникових закінчень | L | 982 | 1.1% | 4047 | 0.6% |
 | R24 | Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається | G | 0 | 0.0% | 0 | 0.0% |
 
-Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 343 types / 436 tokens · ORTH-YAR-JER: 680 types / 1472 tokens · ORTH-YAR-I: 167 types / 341 tokens · ORTH-MAX-JO: 3 types / 5 tokens · ORTH-MAX-JER-END: 43 types / 55 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-MAX-YAT: 29 types / 37 tokens · ORTH-YAR-E: 57 types / 77 tokens · ORTH-MAX-E: 10 types / 35 tokens · ORTH-KUL-I: 226 types / 640 tokens · ORTH-KUL-E: 195 types / 308 tokens · ORTH-YAR-YAT: 307 types / 411 tokens · ORTH-MAX-Y: 16 types / 18 tokens · ORTH-MAX-I: 24 types / 36 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-MAX-YAT-J: 2 types / 2 tokens · ORTH-YAR-EH: 2 types / 2 tokens
+Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 905 types / 2066 tokens · ORTH-ZHEL-TY: 2208 types / 9047 tokens · ORTH-YAR-JER: 796 types / 4374 tokens · ORTH-YAR-I: 227 types / 866 tokens · ORTH-MAX-JO: 95 types / 780 tokens · ORTH-MAX-JER-END: 1267 types / 2392 tokens · ORTH-MAX-YAT: 724 types / 1299 tokens · ORTH-YAR-E: 127 types / 334 tokens · ORTH-MAX-E: 22 types / 49 tokens · ORTH-KUL-I: 423 types / 1830 tokens · ORTH-KUL-E: 194 types / 307 tokens · ORTH-MAX-YAT-J: 24 types / 64 tokens · ORTH-MAX-I: 723 types / 1666 tokens · ORTH-ZHEL-TE: 159 types / 361 tokens · ORTH-YAR-YAT: 311 types / 911 tokens · ORTH-MAX-Y: 727 types / 1083 tokens · ORTH-KUL-JER: 32 types / 43 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 4 types / 5 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 44 453 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 54 767 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 302 | 0 |
-| CS-C3 | cs | church_slavonic | 0.7 | 87 | 0 |
-| CS-C4 | cs | church_slavonic | 0.7 | 21 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 293 | 0 |
+| CS-C3 | cs | church_slavonic | 0.7 | 94 | 0 |
+| CS-C4 | cs | church_slavonic | 0.7 | 18 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 23 | 0 |
-| CS-C11 | cs | church_slavonic | 0.6 | 86 | 0 |
-| CS-C12 | cs | church_slavonic | 0 | 0 | 18 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 350 |
+| CS-C11 | cs | church_slavonic | 0.6 | 87 | 0 |
+| CS-C12 | cs | church_slavonic | 0 | 0 | 15 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 375 |
 | LEX-LT | contact | nonnormative | 0.8 | 0 | 0 |
 | LEX-LT-SOFT | contact | not_recommended | 0.4 | 0 | 0 |
 | LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 0 | 0 |
@@ -4006,7 +4044,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 7767 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 8928 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
 | MOR-PART-UCH | contact | calque_participle | 0.6 | 0 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
@@ -4019,40 +4057,286 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | N-DIPH-UO:CHN | dialect | CHN | 0.8 | 0 | 0 |
 | N-DIPH-UO:MPL | dialect | MPL | 0.8 | 0 | 0 |
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 0 | 0 |
-| N-DIPH-IE:CHN | dialect | CHN | 0.8 | 3 | 0 |
-| N-DIPH-IE:MPL | dialect | MPL | 0.8 | 3 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 234 | 0 |
+| N-DIPH-IE:CHN | dialect | CHN | 0.8 | 4 | 0 |
+| N-DIPH-IE:MPL | dialect | MPL | 0.8 | 4 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 352 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
-| 3SG-HARD-T:POD | dialect | POD | 0.4 | 0 | 0 |
-| 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 0 | 0 |
+| 3SG-HARD-T:POD | dialect | POD | 0.4 | 1 | 0 |
+| 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 1 | 0 |
 | SE-TRUNC-3SG:SE | dialect | SE | 0.7 | 1 | 0 |
 | SE-TRUNC-3SG:MDN | dialect | MDN | 0.7 | 1 | 0 |
-| SE-1SG-NOALT:SE | dialect | SE | 0.5 | 3 | 0 |
-| SE-1SG-NOALT:POD | dialect | POD | 0.5 | 3 | 0 |
+| SE-1SG-NOALT:SE | dialect | SE | 0.5 | 5 | 0 |
+| SE-1SG-NOALT:POD | dialect | POD | 0.5 | 5 | 0 |
 | SW-DAT-OVY:WPL | dialect | WPL | 0.5 | 0 | 0 |
 | SW-DAT-OVY:NDN | dialect | NDN | 0.5 | 0 | 0 |
 | NORTH-ADJ-UNCONTR:CHN | dialect | CHN | 0.6 | 0 | 0 |
 | NORTH-ADJ-UNCONTR:NORTH | dialect | NORTH | 0.6 | 0 | 0 |
-| NDN-ADJ-KIJ:NDN | dialect | NDN | 0.6 | 0 | 0 |
-| CHN-INSTR-SHORT:CHN | dialect | CHN | 0.4 | 0 | 0 |
+| NDN-ADJ-KIJ:NDN | dialect | NDN | 0.6 | 1 | 0 |
+| CHN-INSTR-SHORT:CHN | dialect | CHN | 0.4 | 1 | 0 |
 | SW-INSTR-OW:SW | dialect | SW | 0.7 | 0 | 0 |
-| CARP-Y:BOY | dialect | BOY | 0.5 | 19 | 0 |
-| CARP-Y:LEM | dialect | LEM | 0.5 | 19 | 0 |
+| CARP-Y:BOY | dialect | BOY | 0.5 | 66 | 0 |
+| CARP-Y:LEM | dialect | LEM | 0.5 | 66 | 0 |
 | HARD-C-FINAL:NDN | dialect | NDN | 0.5 | 0 | 0 |
 | HARD-C-FINAL:POD | dialect | POD | 0.5 | 0 | 0 |
 | R-SOFT-FINAL:MDN | dialect | MDN | 0.3 | 0 | 0 |
 | R-SOFT-FINAL:SE | dialect | SE | 0.3 | 0 | 0 |
-| EPENTH-L-N:POD | dialect | POD | 0.4 | 16 | 0 |
-| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 16 | 0 |
+| EPENTH-L-N:POD | dialect | POD | 0.4 | 18 | 0 |
+| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 18 | 0 |
 | F-TO-X:CHN | dialect | CHN | 0.2 | 2 | 0 |
 | F-TO-X:MDN | dialect | MDN | 0.2 | 2 | 0 |
 | CHN-PREP:CHN | dialect | CHN | 0.7 | 0 | 0 |
 | MPL-YON:MPL | dialect | MPL | 0.7 | 0 | 0 |
 | ZAK-Y-VELAR:ZAK | dialect | ZAK | 0.6 | 0 | 0 |
+| SW-LABIAL-J:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| SW-LABIAL-J:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| SW-LABIAL-J:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| SW-LABIAL-J:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
+| SW-NOM-PL-OVE:BOY | dialect | BOY | 0.4 | 0 | 0 |
+| SW-NOM-PL-OVE:ZAK | dialect | ZAK | 0.4 | 0 | 0 |
+| SW-NOM-PL-OVE:SYAN | dialect | SYAN | 0.4 | 0 | 0 |
+| SW-1PL-ME:BOY | dialect | BOY | 0.3 | 0 | 0 |
+| SW-1PL-ME:ZAK | dialect | ZAK | 0.3 | 0 | 0 |
+| SW-3SG-CONTRACT:BOY | dialect | BOY | 0.4 | 0 | 0 |
+| SW-3SG-CONTRACT:ZAK | dialect | ZAK | 0.4 | 0 | 0 |
+| SW-3SG-CONTRACT:SYAN | dialect | SYAN | 0.4 | 0 | 0 |
+| SW-3SG-CONTRACT:HUT | dialect | HUT | 0.4 | 0 | 0 |
+| BOY-DZH:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| SW-VN-MN:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| SW-VN-MN:POD | dialect | POD | 0.5 | 0 | 0 |
+| SW-VN-MN:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
+| SW-KJ-GJ:HUT | dialect | HUT | 0.4 | 0 | 0 |
+| SW-KJ-GJ:PKB | dialect | PKB | 0.4 | 0 | 0 |
+| SW-KJ-GJ:NDN | dialect | NDN | 0.4 | 0 | 0 |
+| SW-KJ-GJ:SLB | dialect | SLB | 0.4 | 0 | 0 |
+| SW-KJ-GJ:STP | dialect | STP | 0.4 | 0 | 0 |
+| SW-KJ-GJ:MDN | dialect | MDN | 0.4 | 0 | 0 |
+| PKB-DEPAL-S:PKB | dialect | PKB | 0.4 | 0 | 0 |
+| PKB-DEPAL-S:HUT | dialect | HUT | 0.4 | 0 | 0 |
+| MONO-UY:HUT | dialect | HUT | 0.4 | 0 | 0 |
+| MONO-UY:WPL | dialect | WPL | 0.4 | 0 | 0 |
+| MONO-UY:ZAK | dialect | ZAK | 0.4 | 0 | 0 |
+| MPL-CLOSED-VOWEL:MPL | dialect | MPL | 0.3 | 0 | 0 |
+| MPL-CLOSED-VOWEL:BOY | dialect | BOY | 0.3 | 0 | 0 |
+| MPL-CLOSED-VOWEL:ZAK | dialect | ZAK | 0.3 | 0 | 0 |
+| SW-A-SOFT:NDN | dialect | NDN | 0.4 | 0 | 0 |
+| SW-A-SOFT:PKB | dialect | PKB | 0.4 | 0 | 0 |
+| SW-A-SOFT:WPL | dialect | WPL | 0.4 | 0 | 0 |
+| SW-A-SOFT:SYAN | dialect | SYAN | 0.4 | 0 | 0 |
+| WPL-YA-E:WPL | dialect | WPL | 0.6 | 0 | 0 |
+| WPL-YA-E:MPL | dialect | MPL | 0.6 | 0 | 0 |
+| SW-PROTH:WPL | dialect | WPL | 0.4 | 0 | 0 |
+| SW-PROTH:NDN | dialect | NDN | 0.4 | 0 | 0 |
+| SW-PROTH:POD | dialect | POD | 0.4 | 0 | 0 |
+| SW-DEVOICE:WPL | dialect | WPL | 0.3 | 0 | 0 |
+| SW-DEVOICE:LEM | dialect | LEM | 0.3 | 0 | 0 |
+| SW-DEVOICE:STP | dialect | STP | 0.3 | 0 | 0 |
+| SW-DEVOICE:PKB | dialect | PKB | 0.3 | 0 | 0 |
+| SW-UKANYE:MDN | dialect | MDN | 0.3 | 0 | 0 |
+| SW-UKANYE:SLB | dialect | SLB | 0.3 | 0 | 0 |
+| SW-UKANYE:STP | dialect | STP | 0.3 | 0 | 0 |
+| SW-UKANYE:HUT | dialect | HUT | 0.3 | 0 | 0 |
+| SW-UKANYE:LEM | dialect | LEM | 0.3 | 0 | 0 |
+| SW-UKANYE:WPL | dialect | WPL | 0.3 | 0 | 0 |
+| SW-UKANYE:VOL | dialect | VOL | 0.3 | 0 | 0 |
+| CHN-AKANYE:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| CHN-AKANYE:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| F-VARIANTS:STP | dialect | STP | 0.4 | 0 | 0 |
+| F-VARIANTS:MDN | dialect | MDN | 0.4 | 0 | 0 |
+| EPENTH-2:NDN | dialect | NDN | 0.4 | 1 | 0 |
+| EPENTH-2:ZAK | dialect | ZAK | 0.4 | 1 | 0 |
+| EPENTH-2:SLB | dialect | SLB | 0.4 | 1 | 0 |
+| EPENTH-2:STP | dialect | STP | 0.4 | 1 | 0 |
+| SFX-ISKO:WPL | dialect | WPL | 0.3 | 0 | 0 |
+| SFX-ISKO:NDN | dialect | NDN | 0.3 | 0 | 0 |
+| SFX-ISHCHE:MPL | dialect | MPL | 0.3 | 0 | 0 |
+| SFX-ISHCHE:CHN | dialect | CHN | 0.3 | 0 | 0 |
+| SFX-ISHCHE:SE | dialect | SE | 0.3 | 0 | 0 |
+| SFX-ISHCH-CMP:POD | dialect | POD | 0.5 | 0 | 0 |
+| SFX-ISHCH-CMP:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| SW-NO-LENGTH:POD | dialect | POD | 0.3 | 2 | 0 |
+| SW-NO-LENGTH:NDN | dialect | NDN | 0.3 | 2 | 0 |
+| SW-NO-LENGTH:SYAN | dialect | SYAN | 0.3 | 2 | 0 |
+| SW-NO-LENGTH:VOL | dialect | VOL | 0.3 | 2 | 0 |
+| SW-IM-CLITIC-PAST:ZAK | dialect | ZAK | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:PKB | dialect | PKB | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:NDN | dialect | NDN | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:WPL | dialect | WPL | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:VOL | dialect | VOL | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:POD | dialect | POD | 0.5 | 1 | 0 |
+| SW-IM-CLITIC-PAST:SYAN | dialect | SYAN | 0.5 | 1 | 0 |
+| SW-COND-BIM:NDN | dialect | NDN | 0.5 | 0 | 0 |
+| SW-COND-BIM:ZAK | dialect | ZAK | 0.5 | 0 | 0 |
+| HUT-COND:HUT | dialect | HUT | 0.6 | 0 | 0 |
+| PKB-VI-PREFIX:HUT | dialect | HUT | 0.4 | 0 | 0 |
+| PKB-VI-PREFIX:PKB | dialect | PKB | 0.4 | 0 | 0 |
+| LEM-IJ:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEM-W-L:LEM | dialect | LEM | 0.6 | 0 | 0 |
+| LEM-CLITIC-V:LEM | dialect | LEM | 0.6 | 0 | 0 |
+| LEM-CLITIC-V:SYAN | dialect | SYAN | 0.6 | 0 | 0 |
+| LEM-DA:LEM | dialect | LEM | 0.6 | 0 | 0 |
+| LEM-PREPS:LEM | dialect | LEM | 0.3 | 0 | 0 |
+| ADJ-UNCONTR-NEUT:ZAK | dialect | ZAK | 0.4 | 0 | 0 |
+| ADJ-UNCONTR-NEUT:VOL | dialect | VOL | 0.4 | 0 | 0 |
+| VOL-FEM-EJI:VOL | dialect | VOL | 0.3 | 0 | 0 |
+| WPL-INF-ODD:WPL | dialect | WPL | 0.6 | 0 | 0 |
+| WPL-PHON-VAR:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ENC:пожаливник:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ENC:віблиця:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ENC:партиця:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ENC:рубата:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ENC:цинівка:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:постіў:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:устигва:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:старинє:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:покоренок:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:гомбалка:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:гомбачка:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:ґрулі:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:жидлик:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:керпці:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:марадик:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:кукуріца:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:мишпергач:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ENC:нецьки:NDN | dialect | NDN | 0.5 | 0 | 0 |
+| LEX-ENC:барабольянка:NDN | dialect | NDN | 0.5 | 0 | 0 |
+| LEX-ENC:глушмай:NDN | dialect | NDN | 0.5 | 0 | 0 |
+| LEX-ENC:ліўкут:NDN | dialect | NDN | 0.5 | 0 | 0 |
+| LEX-ENC:вертані:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
+| LEX-ENC:пацір:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
+| LEX-ENC:ґуц:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:доўбач:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:магливниця:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:вевирица:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:ворошка:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:коутач:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:порекло:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:дармой:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:дзестри:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:клака:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:матуша:PKB | dialect | PKB | 0.5 | 0 | 0 |
+| LEX-ENC:книгиня:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ENC:ріща:SW | dialect | SW | 0.5 | 0 | 0 |
+| LEX-ENC:ламанка:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| LEX-ENC:кобушка:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| LEX-ENC:неудобиця:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| LEX-ENC:наст’ільник:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| LEX-ENC:глушпей:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| LEX-ENC:кирд:STP | dialect | STP | 0.5 | 0 | 0 |
+| LEX-ENC:ґард:STP | dialect | STP | 0.5 | 0 | 0 |
+| LEX-ENC:зборник:MDN | dialect | MDN | 0.5 | 0 | 0 |
+| LEX-ENC:пшинка:MDN | dialect | MDN | 0.5 | 0 | 0 |
+| LEX-ENC:лилега:MDN | dialect | MDN | 0.5 | 0 | 0 |
+| LEX-ENC:конашок:MDN | dialect | MDN | 0.5 | 0 | 0 |
+| LEX-ENC:гайшан:MDN | dialect | MDN | 0.5 | 0 | 0 |
+| LEX-ENC:мармуль:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:намозколь:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:сумеж:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:шалгун:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:суноздка:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:бамбуляка:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:чваковина:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:лутиця:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:здвіж:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:ствіга:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-ENC:морочня:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ENC:тлань:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:адючина:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:гринжі:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:грабрини:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:гардебоша:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:голянка:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:джимачка:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:жовтак:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:звередувати:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:колодай:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:кругана:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:кузаватися:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:пценьки:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:покліт:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:муркваса:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:негить:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:наподсвіт:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:норниця:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:ластинятко:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:опаца:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:парайитися:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:побігалка:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:прогуменне:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:стремп:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:тулуватий:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:щамкать:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:янота:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:вемпити:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:втулець:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:бобринюк:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:бутвинне:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:качинюк:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:кікати:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:краєць:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:линєк:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:марнейкий:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-ARKUSHYN:шкєлко:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:бережник:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:бережник:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:гуталка:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:гуталка:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:денша:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:денша:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:літашній:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:літашній:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:бучон:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:бучон:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:глумить:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:глумить:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:крашняк:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:крашняк:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:горщишник:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:горщишник:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:васеліца:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:васеліца:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:арол:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:арол:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-LYSENKO:чекмень:MPL | dialect | MPL | 0.5 | 0 | 0 |
+| LEX-LYSENKO:чекмень:CHN | dialect | CHN | 0.5 | 0 | 0 |
+| LEX-ZAKREV:будулів:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:дошпента:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:кавуш:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:крумильга:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:кумбук:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:лемсати:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:путера:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:кошур:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:ґотур:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:помана:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-ZAKREV:нулька:HUT | dialect | HUT | 0.5 | 0 | 0 |
+| LEX-PYRTEY:дзядівка:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:докля:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:качулка:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:брыдкый:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:зарці:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:мінутка:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:надпсутий:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:панта:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:стрыйко:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:ватралька:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:лайняк:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:снітяк:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:сяговина:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:муцикы:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:трайкотати:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-PYRTEY:брещати:LEM | dialect | LEM | 0.5 | 0 | 0 |
+| LEX-ONYSH:вечеркуватися:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:затили:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:звеличь:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:потропити:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:тиборити:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:маштарня:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-ONYSH:шварь:BOY | dialect | BOY | 0.5 | 0 | 0 |
+| LEX-KOLYBA:кылавий:ZAK | dialect | ZAK | 0.5 | 0 | 0 |
 | RUE-Y-VELAR | rusyn | rusyn | 0.8 | 0 | 0 |
 | RUE-Y-SOFT | rusyn | rusyn | 0.9 | 0 | 0 |
-| RUE-Y-MIX | rusyn | rusyn | 0.8 | 0 | 0 |
-| RUE-Y-INF | rusyn | rusyn | 0.6 | 0 | 0 |
+| RUE-Y-MIX | rusyn | rusyn | 0.8 | 1 | 0 |
+| RUE-Y-INF | rusyn | rusyn | 0.6 | 1 | 0 |
 | RUE-ADJ-SKYJ | rusyn | rusyn:subcarpathian | 0.8 | 0 | 0 |
 | RUE-ADJ-NSKYJ | rusyn | rusyn:presov | 0.6 | 0 | 0 |
 | RUE-UE | rusyn | rusyn:subcarpathian | 0.9 | 0 | 0 |
@@ -4066,12 +4350,12 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | SW-DAT-OVY:WPL>rusyn | rusyn | rusyn | 0.5 | 0 | 0 |
 | SW-DAT-OVY:NDN>rusyn | rusyn | rusyn | 0.5 | 0 | 0 |
 | SW-INSTR-OW:SW>rusyn | rusyn | rusyn | 0.7 | 0 | 0 |
-| CARP-Y:BOY>rusyn | rusyn | rusyn | 0.5 | 0 | 0 |
+| CARP-Y:BOY>rusyn | rusyn | rusyn | 0.5 | 2 | 0 |
 | HARD-C-FINAL:NDN>rusyn | rusyn | rusyn | 0.5 | 0 | 0 |
 
 ## 4. Lexical statistics (M-5)
 
-Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 36351, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
+Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 46926, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
 
 ### 4.1 Top 30 lemmas per Shevelov epoch (ipm = f / N_epoch · 10⁶)
 
@@ -4087,239 +4371,239 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 5 | яко | сполучник | 121 | 16773 |
 | 6 | бог | іменник, ч.р. | 113 | 15664 |
 | 7 | ти | займенник | 96 | 13307 |
-| 8 | на | частка | 94 | 13030 |
-| 9 | от | частка | 86 | 11921 |
-| 10 | господь | іменник, ч.р. | 69 | 9565 |
-| 11 | ми | займенник | 63 | 8733 |
-| 12 | по | прийменник | 59 | 8179 |
-| 13 | наш | займенник | 55 | 7624 |
-| 14 | бо | сполучник | 53 | 7347 |
-| 15 | о | прийменник | 48 | 6654 |
-| 16 | весь | займенник | 47 | 6515 |
-| 17 | да | частка | 45 | 6238 |
-| 18 | син | іменник, ч.р. | 43 | 5961 |
-| 19 | чоловік | іменник, ч.р. | 38 | 5268 |
-| 20 | а | сполучник | 25 | 3465 |
-| 21 | сей | займенник | 25 | 3465 |
-| 22 | закон | іменник, ч.р. | 24 | 3327 |
-| 23 | земля | іменник, ж.р. | 24 | 3327 |
-| 24 | раб | іменник, ч.р. | 24 | 3327 |
-| 25 | язик | іменник, ч.р. | 24 | 3327 |
-| 26 | бути | дієслово | 21 | 2911 |
-| 27 | він | займенник, ч.р. | 21 | 2911 |
-| 28 | Христос | іменник, ч.р. | 21 | 2911 |
-| 29 | віра | іменник, ж.р. | 20 | 2772 |
-| 30 | град | іменник, ч.р. | 20 | 2772 |
+| 8 | от | частка | 86 | 11921 |
+| 9 | господь | іменник, ч.р. | 69 | 9565 |
+| 10 | ми | займенник | 63 | 8733 |
+| 11 | по | прийменник | 59 | 8179 |
+| 12 | наш | займенник | 55 | 7624 |
+| 13 | бо | сполучник | 53 | 7347 |
+| 14 | о | прийменник | 48 | 6654 |
+| 15 | весь | займенник | 47 | 6515 |
+| 16 | да | частка | 45 | 6238 |
+| 17 | син | іменник, ч.р. | 43 | 5961 |
+| 18 | чоловік | іменник, ч.р. | 38 | 5268 |
+| 19 | а | сполучник | 25 | 3465 |
+| 20 | сей | займенник | 25 | 3465 |
+| 21 | закон | іменник, ч.р. | 24 | 3327 |
+| 22 | земля | іменник, ж.р. | 24 | 3327 |
+| 23 | язик | іменник, ч.р. | 24 | 3327 |
+| 24 | бути | дієслово | 21 | 2911 |
+| 25 | він | займенник, ч.р. | 21 | 2911 |
+| 26 | Христос | іменник, ч.р. | 21 | 2911 |
+| 27 | віра | іменник, ж.р. | 20 | 2772 |
+| 28 | град | іменник, ч.р. | 20 | 2772 |
+| 29 | дух | іменник, ч.р. | 20 | 2772 |
+| 30 | іже | незмінне | 20 | 2772 |
 
 **shev.old** — давньоукраїнська доба, N = 244 715
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 19245 | 78643 |
+| 1 | і | сполучник | 19238 | 78614 |
 | 2 | же | сполучник | 7348 | 30027 |
-| 3 | в | прийменник | 5814 | 23758 |
-| 4 | на | частка | 3912 | 15986 |
-| 5 | не | частка | 3700 | 15120 |
-| 6 | а | сполучник | 2731 | 11160 |
-| 7 | він | займенник, ч.р. | 2493 | 10187 |
-| 8 | сей | займенник | 2033 | 8308 |
-| 9 | бути | дієслово | 2006 | 8197 |
-| 10 | от | частка | 1917 | 7834 |
-| 11 | себе | займенник | 1782 | 7282 |
-| 12 | по | прийменник | 1465 | 5987 |
-| 13 | бо | сполучник | 1451 | 5929 |
-| 14 | ти | займенник | 1384 | 5656 |
-| 15 | яко | сполучник | 1274 | 5206 |
-| 16 | весь | займенник | 1012 | 4135 |
-| 17 | да | частка | 1000 | 4086 |
-| 18 | брат | іменник, ч.р. | 993 | 4058 |
-| 19 | літо | іменник, с.р. | 934 | 3817 |
-| 20 | ви | займенник | 917 | 3747 |
-| 21 | князь | іменник, ч.р. | 875 | 3576 |
-| 22 | у | прийменник | 874 | 3572 |
-| 23 | ми | займенник | 863 | 3527 |
-| 24 | той | займенник | 846 | 3457 |
-| 25 | Ізяслав | іменник, ч.р. | 836 | 3416 |
-| 26 | іти | дієслово | 830 | 3392 |
-| 27 | ректи | дієслово | 815 | 3330 |
-| 28 | син | іменник, ч.р. | 810 | 3310 |
-| 29 | я | займенник | 803 | 3281 |
-| 30 | свій | займенник | 781 | 3191 |
+| 3 | в | прийменник | 5800 | 23701 |
+| 4 | не | частка | 3700 | 15120 |
+| 5 | а | сполучник | 2712 | 11082 |
+| 6 | він | займенник, ч.р. | 2493 | 10187 |
+| 7 | сей | займенник | 2028 | 8287 |
+| 8 | бути | дієслово | 2006 | 8197 |
+| 9 | от | частка | 1917 | 7834 |
+| 10 | себе | займенник | 1782 | 7282 |
+| 11 | по | прийменник | 1465 | 5987 |
+| 12 | бо | сполучник | 1451 | 5929 |
+| 13 | ти | займенник | 1381 | 5643 |
+| 14 | яко | сполучник | 1274 | 5206 |
+| 15 | весь | займенник | 1012 | 4135 |
+| 16 | да | частка | 1000 | 4086 |
+| 17 | брат | іменник, ч.р. | 993 | 4058 |
+| 18 | літо | іменник, с.р. | 934 | 3817 |
+| 19 | ви | займенник | 913 | 3731 |
+| 20 | князь | іменник, ч.р. | 874 | 3572 |
+| 21 | у | прийменник | 874 | 3572 |
+| 22 | ми | займенник | 862 | 3522 |
+| 23 | той | займенник | 842 | 3441 |
+| 24 | Ізяслав | іменник, ч.р. | 836 | 3416 |
+| 25 | іти | дієслово | 830 | 3392 |
+| 26 | ректи | дієслово | 818 | 3343 |
+| 27 | син | іменник, ч.р. | 810 | 3310 |
+| 28 | я | займенник | 786 | 3212 |
+| 29 | свій | займенник | 781 | 3191 |
+| 30 | о | прийменник | 752 | 3073 |
 
 **shev.early_middle** — ранньосередньоукраїнська доба, N = 23 790
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 1006 | 42287 |
-| 2 | князь | іменник, ч.р. | 400 | 16814 |
-| 3 | на | частка | 299 | 12568 |
-| 4 | великий | прикметник | 233 | 9794 |
-| 5 | в | прийменник | 197 | 8281 |
-| 6 | же | сполучник | 178 | 7482 |
-| 7 | не | частка | 163 | 6852 |
-| 8 | а | сполучник | 158 | 6641 |
-| 9 | з | прийменник | 147 | 6179 |
-| 10 | він | займенник, ч.р. | 145 | 6095 |
-| 11 | той | займенник | 118 | 4960 |
-| 12 | от | частка | 112 | 4708 |
-| 13 | ми | займенник | 105 | 4414 |
-| 14 | сей | займенник | 104 | 4372 |
-| 15 | свій | займенник | 97 | 4077 |
-| 16 | Дмитрій | іменник, ч.р. | 87 | 3657 |
-| 17 | о | прийменник | 79 | 3321 |
-| 18 | бог | іменник, ч.р. | 74 | 3111 |
-| 19 | весь | займенник | 73 | 3069 |
-| 20 | во | прийменник | 73 | 3069 |
-| 21 | земля | іменник, ж.р. | 67 | 2816 |
-| 22 | за | прислівник | 64 | 2690 |
-| 23 | цар | іменник, ч.р. | 59 | 2480 |
-| 24 | бо | сполучник | 57 | 2396 |
-| 25 | ви | займенник | 57 | 2396 |
-| 26 | по | прийменник | 57 | 2396 |
-| 27 | бути | дієслово | 51 | 2144 |
-| 28 | брат | іменник, ч.р. | 48 | 2018 |
-| 29 | святий | прикметник | 48 | 2018 |
-| 30 | господь | іменник, ч.р. | 46 | 1934 |
+| 1 | і | сполучник | 1005 | 42245 |
+| 2 | князь | іменник, ч.р. | 399 | 16772 |
+| 3 | великий | прикметник | 233 | 9794 |
+| 4 | в | прийменник | 197 | 8281 |
+| 5 | же | сполучник | 178 | 7482 |
+| 6 | не | частка | 163 | 6852 |
+| 7 | а | сполучник | 158 | 6641 |
+| 8 | з | прийменник | 147 | 6179 |
+| 9 | він | займенник, ч.р. | 145 | 6095 |
+| 10 | той | займенник | 116 | 4876 |
+| 11 | от | частка | 112 | 4708 |
+| 12 | ми | займенник | 105 | 4414 |
+| 13 | сей | займенник | 105 | 4414 |
+| 14 | свій | займенник | 97 | 4077 |
+| 15 | Дмитрій | іменник, ч.р. | 87 | 3657 |
+| 16 | о | прийменник | 78 | 3279 |
+| 17 | весь | займенник | 73 | 3069 |
+| 18 | бог | іменник, ч.р. | 72 | 3026 |
+| 19 | во | прийменник | 72 | 3026 |
+| 20 | земля | іменник, ж.р. | 67 | 2816 |
+| 21 | за | прислівник | 64 | 2690 |
+| 22 | цар | іменник, ч.р. | 58 | 2438 |
+| 23 | бо | сполучник | 57 | 2396 |
+| 24 | по | прийменник | 57 | 2396 |
+| 25 | ви | займенник | 56 | 2354 |
+| 26 | бути | дієслово | 51 | 2144 |
+| 27 | брат | іменник, ч.р. | 48 | 2018 |
+| 28 | святий | прикметник | 48 | 2018 |
+| 29 | господь | іменник, ч.р. | 46 | 1934 |
+| 30 | руський | прикметник | 45 | 1892 |
 
-**shev.middle** — середньоукраїнська доба, N = 152 857
+**shev.middle** — середньоукраїнська доба, N = 195 156
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 9105 | 59565 |
-| 2 | не | частка | 2870 | 18776 |
-| 3 | в | прийменник | 2816 | 18422 |
-| 4 | на | частка | 2402 | 15714 |
-| 5 | а | сполучник | 2006 | 13123 |
-| 6 | той | займенник | 1841 | 12044 |
-| 7 | з | прийменник | 1758 | 11501 |
-| 8 | от | частка | 1491 | 9754 |
-| 9 | же | сполучник | 1304 | 8531 |
-| 10 | бути | дієслово | 1186 | 7759 |
-| 11 | сей | займенник | 1159 | 7582 |
-| 12 | до | прийменник | 1059 | 6928 |
-| 13 | яко | сполучник | 775 | 5070 |
-| 14 | о | прийменник | 773 | 5057 |
-| 15 | по | прийменник | 744 | 4867 |
-| 16 | за | прислівник | 742 | 4854 |
-| 17 | которий | займенник | 729 | 4769 |
-| 18 | весь | займенник | 674 | 4409 |
-| 19 | бог | іменник, ч.р. | 673 | 4403 |
-| 20 | але | сполучник | 628 | 4108 |
-| 21 | у | прийменник | 624 | 4082 |
-| 22 | бо | сполучник | 599 | 3919 |
-| 23 | нє | частка | 546 | 3572 |
-| 24 | він | займенник, ч.р. | 542 | 3546 |
-| 25 | ми | займенник | 524 | 3428 |
-| 26 | ви | займенник | 516 | 3376 |
-| 27 | сам | займенник | 507 | 3317 |
-| 28 | да | частка | 479 | 3134 |
-| 29 | свій | займенник | 460 | 3009 |
-| 30 | то | сполучник | 456 | 2983 |
+| 1 | і | сполучник | 11642 | 59655 |
+| 2 | в | прийменник | 3718 | 19051 |
+| 3 | не | частка | 3641 | 18657 |
+| 4 | а | сполучник | 2673 | 13697 |
+| 5 | той | займенник | 2373 | 12160 |
+| 6 | з | прийменник | 2250 | 11529 |
+| 7 | же | сполучник | 1654 | 8475 |
+| 8 | от | частка | 1574 | 8065 |
+| 9 | сей | займенник | 1429 | 7322 |
+| 10 | бути | дієслово | 1413 | 7240 |
+| 11 | о | прийменник | 1056 | 5411 |
+| 12 | яко | сполучник | 1006 | 5155 |
+| 13 | по | прийменник | 1000 | 5124 |
+| 14 | за | прислівник | 986 | 5052 |
+| 15 | которий | займенник | 936 | 4796 |
+| 16 | весь | займенник | 921 | 4719 |
+| 17 | бог | іменник, ч.р. | 892 | 4571 |
+| 18 | свій | займенник | 834 | 4274 |
+| 19 | але | сполучник | 801 | 4104 |
+| 20 | у | прийменник | 775 | 3971 |
+| 21 | бо | сполучник | 706 | 3618 |
+| 22 | ми | займенник | 662 | 3392 |
+| 23 | то | сполучник | 654 | 3351 |
+| 24 | він | займенник, ч.р. | 650 | 3331 |
+| 25 | святий | прикметник | 641 | 3285 |
+| 26 | сам | займенник | 635 | 3254 |
+| 27 | ви | займенник | 598 | 3064 |
+| 28 | себе | займенник | 572 | 2931 |
+| 29 | ж | сполучник | 571 | 2926 |
+| 30 | нє | частка | 546 | 2798 |
 
-**shev.late_middle** — пізньосередньоукраїнська доба, N = 73 665
+**shev.late_middle** — пізньосередньоукраїнська доба, N = 86 062
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 3320 | 45069 |
-| 2 | не | частка | 1595 | 21652 |
-| 3 | в | прийменник | 1541 | 20919 |
-| 4 | на | частка | 1103 | 14973 |
-| 5 | з | прийменник | 1042 | 14145 |
-| 6 | бути | дієслово | 899 | 12204 |
-| 7 | той | займенник | 848 | 11512 |
-| 8 | я | займенник | 828 | 11240 |
-| 9 | а | сполучник | 793 | 10765 |
-| 10 | що | сполучник | 671 | 9109 |
-| 11 | як | займенник | 609 | 8267 |
-| 12 | весь | займенник | 606 | 8226 |
-| 13 | до | прийменник | 572 | 7765 |
-| 14 | він | займенник, ч.р. | 571 | 7751 |
-| 15 | ти | займенник | 540 | 7330 |
-| 16 | от | частка | 480 | 6516 |
-| 17 | за | прислівник | 472 | 6407 |
-| 18 | ми | займенник | 465 | 6312 |
-| 19 | ж | сполучник | 412 | 5593 |
-| 20 | сей | займенник | 410 | 5566 |
-| 21 | же | сполучник | 403 | 5471 |
-| 22 | то | сполучник | 400 | 5430 |
-| 23 | по | прийменник | 371 | 5036 |
-| 24 | свій | займенник | 351 | 4765 |
-| 25 | о | прийменник | 349 | 4738 |
-| 26 | вони | займенник | 329 | 4466 |
-| 27 | у | прийменник | 314 | 4263 |
-| 28 | так | займенник | 306 | 4154 |
-| 29 | Хмельницький | іменник, ч.р. | 277 | 3760 |
-| 30 | сам | займенник | 255 | 3462 |
+| 1 | і | сполучник | 3934 | 45711 |
+| 2 | не | частка | 1919 | 22298 |
+| 3 | в | прийменник | 1816 | 21101 |
+| 4 | на | вигук | 1330 | 15454 |
+| 5 | з | прийменник | 1170 | 13595 |
+| 6 | бути | дієслово | 1092 | 12689 |
+| 7 | я | займенник | 907 | 10539 |
+| 8 | той | займенник | 899 | 10446 |
+| 9 | а | сполучник | 889 | 10330 |
+| 10 | що | сполучник | 860 | 9993 |
+| 11 | весь | займенник | 821 | 9540 |
+| 12 | як | займенник | 820 | 9528 |
+| 13 | до | іменник, с.р. | 652 | 7576 |
+| 14 | ти | займенник | 649 | 7541 |
+| 15 | він | займенник, ч.р. | 643 | 7471 |
+| 16 | за | прислівник | 541 | 6286 |
+| 17 | от | частка | 513 | 5961 |
+| 18 | ми | займенник | 502 | 5833 |
+| 19 | сей | займенник | 467 | 5426 |
+| 20 | то | сполучник | 453 | 5264 |
+| 21 | по | прийменник | 442 | 5136 |
+| 22 | же | сполучник | 439 | 5101 |
+| 23 | ж | сполучник | 425 | 4938 |
+| 24 | у | прийменник | 399 | 4636 |
+| 25 | так | займенник | 384 | 4462 |
+| 26 | свій | займенник | 381 | 4427 |
+| 27 | о | прийменник | 356 | 4137 |
+| 28 | вони | займенник | 350 | 4067 |
+| 29 | сам | займенник | 298 | 3463 |
+| 30 | ви | займенник | 279 | 3242 |
 
-**shev.modern** — новітня доба, N = 118 349
+**shev.modern** — новітня доба, N = 431 833
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 3047 | 25746 |
-| 2 | не | частка | 2692 | 22746 |
-| 3 | в | прийменник | 2593 | 21910 |
-| 4 | той | займенник | 2544 | 21496 |
-| 5 | я | займенник | 1941 | 16401 |
-| 6 | на | частка | 1776 | 15006 |
-| 7 | що | сполучник | 1587 | 13409 |
-| 8 | а | сполучник | 1324 | 11187 |
-| 9 | з | прийменник | 1244 | 10511 |
-| 10 | він | займенник, ч.р. | 1103 | 9320 |
-| 11 | ти | займенник | 1078 | 9109 |
-| 12 | сей | займенник | 1073 | 9066 |
-| 13 | як | займенник | 1023 | 8644 |
-| 14 | й | сполучник | 998 | 8433 |
-| 15 | бути | дієслово | 979 | 8272 |
-| 16 | у | прийменник | 958 | 8095 |
-| 17 | весь | займенник | 809 | 6836 |
-| 18 | до | прийменник | 791 | 6684 |
-| 19 | за | прислівник | 731 | 6177 |
-| 20 | ми | займенник | 711 | 6008 |
-| 21 | мій | займенник | 688 | 5813 |
-| 22 | мова | іменник | 676 | 5712 |
-| 23 | свій | займенник | 516 | 4360 |
-| 24 | то | сполучник | 488 | 4123 |
-| 25 | так | займенник | 481 | 4064 |
-| 26 | по | прийменник | 454 | 3836 |
-| 27 | вони | займенник | 439 | 3709 |
-| 28 | серце | іменник, с.р. | 408 | 3447 |
-| 29 | ви | займенник | 400 | 3380 |
-| 30 | вона | займенник, ж.р. | 393 | 3321 |
+| 1 | і | сполучник | 10479 | 24266 |
+| 2 | не | частка | 10258 | 23755 |
+| 3 | той | займенник | 9395 | 21756 |
+| 4 | в | прийменник | 8275 | 19163 |
+| 5 | на | вигук | 7954 | 18419 |
+| 6 | я | займенник | 6937 | 16064 |
+| 7 | що | сполучник | 5960 | 13802 |
+| 8 | а | сполучник | 5674 | 13139 |
+| 9 | сей | займенник | 5441 | 12600 |
+| 10 | він | займенник, ч.р. | 5409 | 12526 |
+| 11 | з | прийменник | 4824 | 11171 |
+| 12 | бути | дієслово | 4108 | 9513 |
+| 13 | як | займенник | 3814 | 8832 |
+| 14 | ти | займенник | 3809 | 8821 |
+| 15 | й | сполучник | 3694 | 8554 |
+| 16 | до | іменник, с.р. | 3609 | 8357 |
+| 17 | у | прийменник | 3411 | 7899 |
+| 18 | вона | займенник, ж.р. | 2845 | 6588 |
+| 19 | за | прислівник | 2728 | 6317 |
+| 20 | весь | займенник | 2493 | 5773 |
+| 21 | мій | займенник | 2316 | 5363 |
+| 22 | то | сполучник | 2195 | 5083 |
+| 23 | свій | займенник | 1968 | 4557 |
+| 24 | ми | займенник | 1892 | 4381 |
+| 25 | так | займенник | 1802 | 4173 |
+| 26 | вони | займенник | 1800 | 4168 |
+| 27 | по | прийменник | 1719 | 3981 |
+| 28 | ви | займенник | 1495 | 3462 |
+| 29 | ще | прислівник | 1469 | 3402 |
+| 30 | сам | займенник | 1451 | 3360 |
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (3030 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (4619 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| як | shev.middle → shev.late_middle | 4 (26) | 609 (8267) | 1323.1 | 8.30 | 0.0001 |
-| я | shev.middle → shev.late_middle | 239 (1564) | 828 (11240) | 913.1 | 2.85 | 0.0001 |
-| що | shev.middle → shev.late_middle | 250 (1636) | 671 (9109) | 627.2 | 2.48 | 0.0001 |
-| з | shev.old → shev.early_middle | 16 (65) | 147 (6179) | 610.9 | 6.56 | 0.0001 |
-| так | shev.middle → shev.late_middle | 11 (72) | 306 (4154) | 600.6 | 5.85 | 0.0001 |
-| князь | shev.old → shev.early_middle | 875 (3576) | 400 (16814) | 515.0 | 2.23 | 0.0001 |
-| Дмитрій | shev.old → shev.early_middle | 4 (16) | 87 (3657) | 389.6 | 7.81 | 0.0001 |
-| там | shev.middle → shev.late_middle | 13 (85) | 202 (2742) | 365.9 | 5.01 | 0.0001 |
-| великий | shev.old → shev.early_middle | 473 (1933) | 233 (9794) | 321.7 | 2.34 | 0.0001 |
-| й | shev.late_middle → shev.modern | 174 (2362) | 998 (8433) | 314.8 | 1.84 | 0.0001 |
-| мова | shev.late_middle → shev.modern | 74 (1005) | 676 (5712) | 312.8 | 2.51 | 0.0001 |
-| б | shev.middle → shev.late_middle | 29 (190) | 201 (2729) | 300.1 | 3.85 | 0.0001 |
-| Еней | shev.middle → shev.late_middle | 0 (0) | 129 (1751) | 289.8 | 9.06 | 0.0001 |
-| й | shev.middle → shev.late_middle | 18 (118) | 174 (2362) | 285.6 | 4.33 | 0.0001 |
-| той | shev.late_middle → shev.modern | 848 (11512) | 2544 (21496) | 272.2 | 0.90 | 0.0001 |
+| як | shev.middle → shev.late_middle | 4 (20) | 820 (9528) | 1894.2 | 8.86 | 0.0001 |
+| на | shev.middle → shev.late_middle | 340 (1742) | 1330 (15454) | 1710.2 | 3.15 | 0.0001 |
+| до | shev.middle → shev.late_middle | 84 (430) | 652 (7576) | 1082.7 | 4.14 | 0.0001 |
+| я | shev.middle → shev.late_middle | 324 (1660) | 907 (10539) | 965.6 | 2.67 | 0.0001 |
+| так | shev.middle → shev.late_middle | 11 (56) | 384 (4462) | 816.9 | 6.31 | 0.0001 |
+| що | shev.middle → shev.late_middle | 374 (1916) | 860 (9993) | 795.9 | 2.38 | 0.0001 |
+| з | shev.old → shev.early_middle | 13 (53) | 147 (6179) | 624.8 | 6.86 | 0.0001 |
+| Еней | shev.middle → shev.late_middle | 0 (0) | 257 (2986) | 608.6 | 10.19 | 0.0001 |
+| там | shev.middle → shev.late_middle | 13 (67) | 270 (3137) | 543.4 | 5.56 | 0.0001 |
+| той | shev.late_middle → shev.modern | 899 (10446) | 9395 (21756) | 541.0 | 1.06 | 0.0001 |
+| вона | shev.late_middle → shev.modern | 100 (1162) | 2845 (6588) | 519.9 | 2.50 | 0.0001 |
+| князь | shev.old → shev.early_middle | 874 (3572) | 399 (16772) | 513.1 | 2.23 | 0.0001 |
+| й | shev.late_middle → shev.modern | 189 (2196) | 3694 (8554) | 509.8 | 1.96 | 0.0001 |
+| тут | shev.middle → shev.late_middle | 3 (15) | 220 (2556) | 491.4 | 7.38 | 0.0001 |
+| щоб | shev.middle → shev.late_middle | 6 (31) | 228 (2649) | 488.5 | 6.43 | 0.0001 |
 **Falling** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| князь | shev.early_middle → shev.middle | 400 (16814) | 224 (1465) | 854.0 | -3.52 | 0.0001 |
+| і | shev.late_middle → shev.modern | 3934 (45711) | 10479 (24266) | 1032.6 | -0.91 | 0.0001 |
+| Хмельницький | shev.late_middle → shev.modern | 277 (3219) | 1 (2) | 981.4 | -10.44 | 0.0001 |
+| от | shev.late_middle → shev.modern | 513 (5961) | 275 (637) | 921.9 | -3.23 | 0.0001 |
+| князь | shev.early_middle → shev.middle | 399 (16772) | 282 (1445) | 912.2 | -3.54 | 0.0001 |
+| Еней | shev.late_middle → shev.modern | 257 (2986) | 2 (5) | 899.8 | -9.33 | 0.0001 |
+| но | shev.late_middle → shev.modern | 246 (2858) | 57 (132) | 610.7 | -4.44 | 0.0001 |
+| да | shev.late_middle → shev.modern | 264 (3068) | 79 (183) | 606.1 | -4.07 | 0.0001 |
 | же | shev.old → shev.early_middle | 7348 (30027) | 178 (7482) | 541.5 | -2.00 | 0.0001 |
-| Хмельницький | shev.late_middle → shev.modern | 277 (3760) | 0 (0) | 530.8 | -9.80 | 0.0001 |
-| і | shev.late_middle → shev.modern | 3320 (45069) | 3047 (25746) | 495.6 | -0.81 | 0.0001 |
-| от | shev.late_middle → shev.modern | 480 (6516) | 111 (938) | 456.2 | -2.80 | 0.0001 |
-| і | shev.old → shev.early_middle | 19245 (78643) | 1006 (42287) | 445.6 | -0.90 | 0.0001 |
-| нє | shev.middle → shev.late_middle | 546 (3572) | 0 (0) | 429.5 | -9.04 | 0.0001 |
-| Дмитрій | shev.early_middle → shev.middle | 87 (3657) | 2 (13) | 330.3 | -8.13 | 0.0001 |
-| в | shev.old → shev.early_middle | 5814 (23758) | 197 (8281) | 299.5 | -1.52 | 0.0001 |
-| же | shev.late_middle → shev.modern | 403 (5471) | 144 (1217) | 280.9 | -2.17 | 0.0001 |
-| великий | shev.early_middle → shev.middle | 233 (9794) | 350 (2290) | 251.0 | -2.10 | 0.0001 |
-| но | shev.late_middle → shev.modern | 227 (3082) | 39 (330) | 251.0 | -3.23 | 0.0001 |
-| яко | shev.middle → shev.late_middle | 775 (5070) | 87 (1181) | 241.2 | -2.10 | 0.0001 |
-| Еней | shev.late_middle → shev.modern | 129 (1751) | 1 (8) | 236.4 | -7.70 | 0.0001 |
-| бог | shev.proto → shev.old | 113 (15664) | 562 (2297) | 225.8 | -2.77 | 0.0001 |
+| же | shev.late_middle → shev.modern | 439 (5101) | 446 (1033) | 511.0 | -2.30 | 0.0001 |
+| і | shev.old → shev.early_middle | 19238 (78614) | 1005 (42245) | 446.1 | -0.90 | 0.0001 |
+| нє | shev.middle → shev.late_middle | 546 (2798) | 0 (0) | 398.9 | -8.91 | 0.0001 |
+| Дмитрій | shev.early_middle → shev.middle | 87 (3657) | 2 (10) | 367.5 | -8.48 | 0.0001 |
+| яко | shev.middle → shev.late_middle | 1006 (5155) | 87 (1011) | 333.8 | -2.35 | 0.0001 |
+| в | shev.old → shev.early_middle | 5800 (23701) | 197 (8281) | 297.8 | -1.52 | 0.0001 |
+| хан | shev.late_middle → shev.modern | 88 (1023) | 2 (5) | 297.4 | -7.79 | 0.0001 |
 
 Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shevchenko corpus is poetry, the old epochs are chronicles and sermons) — a shift is a statement about *this corpus*, not about the language (research/06 §3.5).
 
@@ -4327,50 +4611,50 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-499 spellings with a church_slavonic label (denominator: 44 453 stored spellings); 111 lemmas with origin = church_slavonic.
+494 spellings with a church_slavonic label (denominator: 54 767 stored spellings); 85 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
-| градъ | град | 1037–1050 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| плаче | плакати | 1728 | CS-C1 | ↔ полоче (полокати: verb:imperf:pres:s:3:arch) | not in lexicon |
 | града | град | 1037–1050 | CS-C1 | ↔ города (город: noun:inanim:m:v_rod:subst) | 1096–1117 |
+| градъ | град | 1037–1050 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| плачу | плакати | 1710 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | not in lexicon |
 | град̑ | град | 1117–1200 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | градѣ | град | 1037–1050 | CS-C1 | ↔ городі (город: noun:inanim:m:v_mis) | 1096–1117 |
-| брань | брань | 1092 | CS-C1 | ↔ боронь (боронити: verb:imperf:impr:s:2) | 1301–1500 |
-| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| брати | брат | 1110–1118 | CS-C1 | ↔ бороти (бороти: verb:imperf:inf) | 1110–1118 |
 | власть | власть | 1037–1050 | CS-C1 | ↔ волость (волость: noun:inanim:f:v_naz) | 1096–1117 |
-| плаче | плакати | 1728 | CS-C1 | ↔ полоче (полокати: verb:imperf:pres:s:3:arch) | not in lexicon |
+| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| брань | брань | 1092 | CS-C1 | ↔ боронь (боронити: verb:imperf:impr:s:2) | 1301–1500 |
+| власне | власний | 1720 | CS-C1 | ↔ волосне (волосний: adj:n:v_naz) | 1879 |
+| краще | кращий | 1845 | CS-C11 |  | not in lexicon |
 | власти | власть | 1056–1057 | CS-C1 | ↔ волости (волость: noun:inanim:f:v_rod:up19) | 1096–1117 |
-| глава | глава | 1110–1118 | CS-C1 | ↔ голова (голова: noun:anim:m:v_naz) | 1096–1117 |
-| главу | глава | 1092 | CS-C1 | ↔ голову (голова: noun:anim:m:v_zna) | 1096–1117 |
-| плачу | плакати | 1710 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | not in lexicon |
-| граду | град | 1037–1050 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
-| злато | злато | 1092 | CS-C1 | ↔ золото (золото: noun:inanim:n:v_naz) | 1096–1117 |
-| глас | глас | 1110–1118 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1185–1200 |
-| брані | брань | 1705 | CS-C1 | ↔ бороні (борона: noun:inanim:f:v_dav) | 1185–1200 |
-| врата | врата | 1092 | CS-C1 | ↔ ворота (ворота: noun:inanim:p:v_naz:ns) | 1110–1118 |
-| гради | град | 1037–1050 | CS-C1 | ↔ городи (город: noun:inanim:p:v_naz) | 1096–1117 |
-| грады | град | 1037–1050 | CS-C1 | ↔ городи (город: noun:inanim:p:v_naz) | 1096–1117 |
-| главы | глава | 1092 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
-| права | право | 1092 | CS-C1 | ↔ порова (поровий: adj:f:v_naz) | not in lexicon |
-| злата | злато | 1092 | CS-C1 | ↔ золота (золотий: adj:f:v_naz:compb) | 1110–1118 |
-| градоу | град | 1117–1200 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
-| плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | 1110–1118 |
-| брани | Брани | 1092 | CS-C1 | ↔ борони (борона: noun:inanim:f:v_rod) | 1185–1200 |
-| братья | браття | 1096–1117 | CS-C1 | ↔ бороття (бороття: noun:inanim:n:v_naz:arch) | not in lexicon |
-| праці | праця | 1720 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1200–1292 |
-| врагъ | враг | 1092 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
-| плачем | плач | 1110–1118 | CS-C1 | ↔ полочем (полокати: verb:imperf:pres:p:1:arch:subst) | not in lexicon |
 | плакала | плакати | 1117–1200 | CS-C1 | ↔ полокала (полокати: verb:imperf:past:f:arch) | not in lexicon |
-| врагы | враг | 1092 | CS-C1 | ↔ вороги (ворог: noun:anim:p:v_naz) | 1110–1118 |
-| враги | враг | 1110–1118 | CS-C1 | ↔ вороги (ворог: noun:anim:p:v_naz) | 1110–1118 |
-| плъть | плоть | 1092 | CS-C9 |  | not in lexicon |
-| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | not in lexicon |
+| главу | глава | 1092 | CS-C1 | ↔ голову (голова: noun:anim:m:v_zna) | 1096–1117 |
+| права | право | 1092 | CS-C1 | ↔ порова (поровий: adj:f:v_naz) | not in lexicon |
+| глава | глава | 1110–1118 | CS-C1 | ↔ голова (голова: noun:anim:m:v_naz) | 1096–1117 |
 | плакать | плакати | 1117–1200 | CS-C1 | ↔ полокать (полокати: verb:imperf:inf:short:arch) | not in lexicon |
+| глас | глас | 1110–1118 | CS-C1 | ↔ голос (голос: noun:inanim:m:v_naz) | 1185–1200 |
+| граду | град | 1037–1050 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
+| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | not in lexicon |
+| злато | злато | 1092 | CS-C1 | ↔ золото (золото: noun:inanim:n:v_naz) | 1096–1117 |
+| врата | врата | 1092 | CS-C1 | ↔ ворота (ворота: noun:inanim:p:v_naz:ns) | 1110–1118 |
+| справу | справа | 1581–1587 | CS-C1 | ↔ спорову (споровий: adj:f:v_zna) | not in lexicon |
+| плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | 1110–1118 |
+| плачем | плач | 1110–1118 | CS-C1 | ↔ полочем (полокати: verb:imperf:pres:p:1:arch:subst) | not in lexicon |
+| браття | браття | 1603–1607 | CS-C1 | ↔ бороття (бороття: noun:inanim:n:v_naz:arch) | not in lexicon |
+| гради | град | 1037–1050 | CS-C1 | ↔ городи (город: noun:inanim:p:v_naz) | 1096–1117 |
+| главы | глава | 1092 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
+| брані | брань | 1705 | CS-C1 | ↔ бороні (борона: noun:inanim:f:v_dav) | 1185–1200 |
+| грады | град | 1037–1050 | CS-C1 | ↔ городи (город: noun:inanim:p:v_naz) | 1096–1117 |
+| праці | праця | 1680–1691 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1200–1292 |
 | храм | храм | 1430–1439 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | 1110–1118 |
-| враг | враг | 1705 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
-| прав | право | 1705 | CS-C1 | ↔ поров (пороти: verb:imperf:past:m) | 1746–1747 |
-| глави | глава | 1705 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
-| хощю | хостити | 1092 | CS-C3 | ↔ хочу (хотіти: verb:imperf:pres:s:1) | 1092 |
+| врагъ | враг | 1092 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
+| злата | злато | 1092 | CS-C1 | ↔ золота (золотий: adj:f:v_naz:compb) | 1110–1118 |
+| брани | Брани | 1092 | CS-C1 | ↔ борони (борона: noun:inanim:f:v_rod) | 1185–1200 |
+| градоу | град | 1117–1200 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
+| власної | власний | 1893 | CS-C1 | ↔ волосної (волосний: adj:f:v_rod) | 1879 |
+| власних | власний | 1581–1587 | CS-C1 | ↔ волосних (волосний: adj:p:v_rod) | 1879 |
+| власного | власний | 1605–1610 | CS-C1 | ↔ волосного (волосний: adj:m:v_rod) | 1879 |
 
 ## 6. Earliest attestations
 
@@ -4382,10 +4666,10 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | він | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | нимъ | 0 |
 | я | 1019 | sophia_graffiti | sophia-150 | 120-17/150 | Я | 0 |
 | господь | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | Господи | 1 |
-| раб | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | рабоу | 1 |
 | помогти | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | помози | 0 |
-| с | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | съ | 0 |
+| раб | 1019 | sophia_graffiti | sophia-347 | 120-19c/347 | рабꙋ | 0 |
 | Іван | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | Иванѫ | 0 |
+| раба | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | рабоу | 0 |
 | отрок | 1019 | sophia_graffiti | sophia-112 | 118-02/112 | отроку | 2 |
 | названий | 1019 | sophia_graffiti | sophia-150 | 120-17/150 | названий | 0 |
 | в | 1022 | sophia_graffiti | sophia-2070 | 114-34/2070 | Вь | 0 |
@@ -4396,42 +4680,42 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | свій | 1020–1025 | sophia_graffiti | sophia-297 | 110-01/297 | своємоу | 0 |
 | рик | 1036 | sophia_graffiti | sophia-269 | 110-01/269 | рік | 0 |
 | не | 1037–1050 | ilarion | ilarion | абз. 3 | не | 0 |
-| на | 1037–1050 | ilarion | ilarion | абз. 3 | на | 0 |
-| же | 1037–1050 | ilarion | ilarion | абз. 1 | же | 0 |
-| а | 1037–1050 | ilarion | ilarion | абз. 3 | а | 0 |
 | той | 1037–1050 | ilarion | ilarion | абз. 8 | томь | 2 |
-| бути | 1037–1050 | ilarion | ilarion | абз. 3 | быти | 0 |
+| а | 1037–1050 | ilarion | ilarion | абз. 3 | а | 0 |
+| же | 1037–1050 | ilarion | ilarion | абз. 1 | же | 0 |
 | сей | 1037–1050 | ilarion | ilarion | абз. 15 | ся | 0 |
-| от | 1037–1050 | ilarion | ilarion | абз. 1 | от | 0 |
+| бути | 1037–1050 | ilarion | ilarion | абз. 3 | быти | 0 |
 | ти | 1037–1050 | ilarion | ilarion | абз. 50 | ты | 0 |
-| весь | 1037–1050 | ilarion | ilarion | абз. 1 | вся | 0 |
-| по | 1037–1050 | ilarion | ilarion | абз. 8 | по | 0 |
-| до | 1037–1050 | ilarion | ilarion | абз. 1 | до | 0 |
 | у | 1037–1050 | ilarion | ilarion | абз. 12 | у | 0 |
+| весь | 1037–1050 | ilarion | ilarion | абз. 1 | вся | 0 |
+| за | 1037–1050 | ilarion | ilarion | абз. 3 | за | 0 |
+| по | 1037–1050 | ilarion | ilarion | абз. 8 | по | 0 |
+| от | 1037–1050 | ilarion | ilarion | абз. 1 | от | 0 |
+| ми | 1037–1050 | ilarion | ilarion | абз. 56 | насъ | 0 |
 
-12267 of 12267 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+10810 of 10810 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 1908. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 440 of 12267 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); клятва (derived: russianism_or_hybrid); чрево (derived: russianism_or_hybrid)
+Surzhyk claims: 355 of 10810 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); троха (derived: russianism_or_hybrid); память (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); горячий (derived: russianism_or_hybrid+calque_participle); королевський (derived: russianism_or_hybrid)
 
-Dialect labels (lemmas): CHN: 231 · MPL: 3 · SE: 4 · POD: 11 · MDN: 10 · BOY: 17 · LEM: 17
+Dialect labels (lemmas): CHN: 345 · MPL: 4 · SE: 6 · POD: 16 · MDN: 11 · NDN: 5 · SYAN: 2 · VOL: 2 · BOY: 52 · LEM: 52 · ZAK: 2 · SLB: 1 · STP: 1 · PKB: 1 · WPL: 1
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 44453. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn: 2; stored spellings with a rusyn claim: 2 of 54767. Rule hits (forms): CARP-Y:BOY>rusyn 2, RUE-Y-INF 1, RUE-Y-MIX 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
-LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 297 types (1 239 tokens). Top: да (235, replace), єсть (193, replace), да (57, replace), тай (46, replace), щож (29, replace), будучи (27, replace), да (23, replace), да (22, replace), даже (17, replace), враг (12, replace), куда (9, replace), тай (9, replace), далече (8, replace), получивши (8, soft), государ (8, replace), єсть (8, replace), да (8, replace), власть (8, replace), тоже (7, replace), тута (7, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
+LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 426 types (2 078 tokens). Top: да (235, replace), єсть (193, replace), тай (143, replace), да (116, replace), щож (108, replace), по-над (42, replace), троха (42, replace), да (36, replace), будучи (27, replace), єсть (27, replace), гонта (26, soft), чуть (25, replace), деж (25, replace), тай (24, replace), єсть (24, replace), зза (23, replace), да (22, replace), куда (18, replace), да (18, replace), тай (18, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 41 476 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 270 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 47 272 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 799 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 1912 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 1931 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
-- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (35.1%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 12 267 of 19 522 lemmas; 12 267 written, none dropped. Core lexicon.json 13.02 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 366 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 041 shards lex/<bucket>.json: max 200 KB, median 43 KB, total 93.3 MiB (limit 192 KiB each). lexindex.json 3.67 MB (3509 corpus-attested flagged forms added).
+- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (27.3%).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 10 810 of 27 376 lemmas; 10 810 written, none dropped. Core lexicon.json 12.67 MiB (limit 15 MiB), Evidence stored once in a shared pool (28 664 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 037 shards lex/<bucket>.json: max 225 KB, median 53 KB, total 112.5 MiB (limit 192 KiB each). lexindex.json 3.74 MB (4130 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
