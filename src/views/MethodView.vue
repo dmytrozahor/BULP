@@ -6,6 +6,7 @@
 import { RULES } from '../../core/phonology.ts'
 import { DIALECTS } from '../../core/rules.ts'
 import { EPOCHS } from '../../core/epochs.ts'
+import { LOAN_RULES, ROUTE_UK } from '../../core/loan-adapt.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { CS_RULES, CONTACT_RULES, DIALECT_RULES, REGISTER_RULES, RUSYN_RULES, REGISTER_DEF, SURZHYK_DEF, RUSYN_STATUS, ruleGate } from '../../core/rules.ts'
 import spec from '../../specs/00-principles.md?raw'
@@ -68,6 +69,11 @@ const formulas: [string, string, string][] = [
 
   <section class="card"><h2><span>Говори (діалектні групи)</span></h2>
     <ul class="sans small"><li v-for="(name, code) in DIALECTS" :id="`dialect-${code}`" :key="code"><code>{{ code }}</code> {{ name }}</li></ul>
+  </section>
+
+  <section id="loan-adapt" class="card"><h2><span>Адаптація запозичень (LA) — {{ LOAN_RULES.length }}</span></h2>
+    <ul class="sans small"><li v-for="r in LOAN_RULES" :id="`la-${r.id}`" :key="r.id"><code>{{ r.id }}</code> <code>{{ r.uk }}</code> ← <code>{{ r.src }}</code> · {{ ROUTE_UK[r.route] }}
+      <ul><li v-for="(e, i) in r.ev" :key="i"><RouterLink :to="`/source/${e.source}`">{{ e.source }}</RouterLink> {{ e.locator }}: «{{ e.quote }}»</li></ul></li></ul>
   </section>
 
   <section id="fonts" class="card"><h2><span>Шрифти й ліцензії</span></h2>

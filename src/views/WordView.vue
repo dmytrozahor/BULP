@@ -41,6 +41,7 @@ import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
+import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
 import CognatesPanel from '../components/CognatesPanel.vue'
 import TimeCurve from '../components/TimeCurve.vue'
@@ -249,6 +250,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
               <span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">невідомо</span></div>
             <div v-if="bankForms.length"><BankChip :forms="bankForms" /></div>
             <div><UsageChips :lemma="card.lemma" label /> <SociolectBadges :word="card.lemma" /></div>
+      <LoanAdaptBlock :word="card.lemma" />
             <div><LoanChip :word="card.lemma" /></div>
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>

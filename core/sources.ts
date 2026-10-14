@@ -20,6 +20,7 @@ export const SOURCES: Record<string, Source> = {
   PLSEA:  { title: 'Пластові «Пластологізми» та абревіації, упорядкував Я. Запотоцький, 14.05.2021. Пласт Сієтл (лише цитати)', url: 'https://plastseattle.org/plast-101/dictionary/', year: '2021', license: '© Пласт Сієтл (cite-only)' },
   PL100:  { title: 'Дуда М. Гутірка для юнацтва «Пластове назовництво» (Третя проба). 100krokiv.info, 30.12.2011 (лише цитати)', url: 'https://100krokiv.info/2011/12/tretya-proba-hutirka-dlya-yunatstva-plastove-nazovnytstvo/', year: '2011', license: 'без ліцензії (cite-only)' },
   FBRU:   { title: 'Крылова И. Всмысле или в смысле — как правильно пишется. fb.ru, 16.10.2023', url: 'https://fb.ru/article/486712/2023-vsmyisle-ili-v-smyisle---kak-pravilno-pishetsya/amp/', year: '2023' },
+  EWIKT:  { title: 'Wiktionary (en): статті про суфікси -ity, -able, -ability та українські -ація, -ізм, -ичний; слово університет', url: 'https://en.wiktionary.org', license: 'CC BY-SA 4.0', year: '2026' },
   WIKT:   { title: 'Вікісловник (uk.wiktionary)', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
   SUM20:  { title: 'Словник української мови у 20 т. Т. 1. Київ, 2010', url: 'https://archive.org/details/SUM-20', year: '2010' },
   R2U:    { title: 'Словниковий портал r2u.org.ua — російсько-українські словники (оцифровка друкованих словників 1886–1933; зберігаються лише написання та цитата ≤ 300 знаків)', url: 'https://r2u.org.ua/main/dicts', license: 'без ліцензії (© r2u.org.ua), repo brown-uk/r2u.org.ua порожній — лише цитування (research/30)', year: '2026' },

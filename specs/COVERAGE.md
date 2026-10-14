@@ -280,3 +280,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | UI-3 | tests/ui-graph.test.ts › UI-3 renders without localStorage: blocked / throwing storage falls back to graph and never throws |
 | UI-3 | tests/ui-graph.test.ts › UI-3 nodes link: chain stages go to /f/<form>, rule edges are buttons (open the same evidence as the list), chronology dots link to their target |
 | UI-3 | tests/ui-graph.test.ts › UI-3 graphs use theme tokens only: no hard-coded colours in the graph CSS or components |
+| LA-1 | tests/loan-adapt.test.ts › every rule has a registered source, a locator, a quote and a row in research/34 |
+| LA-1 | tests/loan-adapt.test.ts › the Правопис quotes are verbatim paragraphs of §§ 33, 129, 133, 134 |
+| LA-2 | tests/loan-adapt.test.ts › екстремітет: -ітет ← -ity, Latin/German route |
+| LA-2 | tests/loan-adapt.test.ts › екстреміті: -іті ← -ity, direct English |
+| LA-2 | tests/loan-adapt.test.ts › аплікейбіліті: phonetic (ей = [eɪ], § 133) + -іті |
+| LA-2 | tests/loan-adapt.test.ts › аплікабіліті: graphic (a → а, лат. -abil-) + -іті |
+| LA-2 | tests/loan-adapt.test.ts › всм is an abbreviation, not a loan adaptation: no rule fires |
+| LA-2 | tests/loan-adapt.test.ts › the other suffix rules fire: ація, ізм, ичн-, -абельність, -абельн- |
+| LA-2 | tests/loan-adapt.test.ts › normative status: VESUM present / absent / unchecked; Правопис § only where a rule cites it |
+| LA-2 | tests/loan-adapt.test.ts › a standard equivalent appears only when a dictionary row gives it |
+| LA-3 | tests/loan-adapt.test.ts › WordView and FormView mount the «запозичення» block; /method lists every rule with an anchor |

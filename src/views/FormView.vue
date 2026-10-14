@@ -12,6 +12,7 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
 import ClaimBadge from '../components/ClaimBadge.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
+import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import DialectBlock from '../components/DialectBlock.vue'
 import { PRONOUN_VARIANTS, deriveAll } from '../../core/pronoun-variants.ts'
@@ -80,6 +81,7 @@ const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.
       <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у корпусі такого написання немає (P-1.7: виведена форма не є свідченням)</span>
         <template v-if="derivedOnly.kind === 'dp'"> · <span class="muted">зв’язок: </span>dialect-variant «{{ derivedOnly.h.variant }}» → <RouterLink :to="`/w/${derivedOnly.h.std}`">{{ derivedOnly.h.std }}</RouterLink> ({{ derivedOnly.h.rule }})</template></p></header>
     <Panel id="f-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="form" /></Panel>
+    <LoanAdaptBlock :word="form" />
   </template>
   <div v-else-if="!pick" class="card" role="status">
     <h1>«{{ form }}» — такого написання немає в корпусі</h1>
@@ -88,7 +90,7 @@ const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.
   <template v-else>
     <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
-      <SociolectBadges :word="pick.raw" />
+      <SociolectBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
