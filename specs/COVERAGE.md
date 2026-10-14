@@ -274,7 +274,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | UI-1 | tests/ui-graph.test.ts › UI-1 compact header: both pages use the compact header (flex row, no heading padding), at most 3 header blocks (h1 line, first-attestation line, chips) |
 | UI-1 | tests/ui-graph.test.ts › UI-1 secondary panels are accordions with counts: form page opens only KWIC / witnesses / derivation, the rest collapse and carry :count |
 | UI-2 | tests/ui-graph.test.ts › UI-2 chain layout: n steps → n+1 stage nodes and n rule edges laid left to right |
-| UI-2 | tests/ui-graph.test.ts › UI-2 chronology layout: x by year, radius grows with f, overlapping dots go to different lanes |
+| UI-2 | tests/ui-graph.test.ts › UI-2 chronology plates: no two plates overlap, arrows run chronologically, the compressed axis keeps close years apart, wide labels get wide plates |
+| UI-2 | tests/ui-graph.test.ts › UI-2 legend: HTML chips with full dots and Ukrainian labels (давня / сучасна), outside the SVG so it is never clipped |
 | UI-3 | tests/ui-graph.test.ts › UI-3 graph is the default: the chain renders as an SVG graph with the switch, the list is not mounted |
 | UI-3 | tests/ui-graph.test.ts › UI-3 toggle switches and persists: set(list) renders the text list, is stored per panel and survives a reload; setDefault changes every panel |
 | UI-3 | tests/ui-graph.test.ts › UI-3 renders without localStorage: blocked / throwing storage falls back to graph and never throws |

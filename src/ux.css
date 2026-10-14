@@ -80,10 +80,6 @@
 .g-label { fill: var(--ink); font-size: 14px; } .g-date { fill: var(--muted); font-size: 10px; } .g-rule { fill: var(--accent); font-size: 11px; font-weight: 600; }
 .g-edge { cursor: pointer; } .g-edge line { stroke: var(--muted); stroke-width: 1.5; } .g-edge:hover line, .g-edge[aria-pressed=true] line { stroke: var(--accent); }
 .g-arrow { fill: var(--muted); } .g-axis { stroke: var(--line); stroke-width: 1; }
-.g-dot circle { fill: var(--accent); fill-opacity: .55; stroke: var(--accent); cursor: pointer; } .g-dot:hover circle { fill-opacity: .9; }
-.g-dot .g-label { font-size: 11px; }
-.g-dot[data-kind=old] circle { fill: var(--m-archaic); stroke: var(--m-archaic); } .g-dot[data-kind=modern] circle { fill: var(--m-dialect); stroke: var(--m-dialect); }
-.g-dot[data-kind=chronicle] circle { fill: var(--m-cs); stroke: var(--m-cs); } .g-dot[data-kind=folk] circle { fill: var(--m-rusyn); stroke: var(--m-rusyn); } .g-dot[data-kind=other] circle { fill: var(--m-colloquial); stroke: var(--m-colloquial); }
 .gleg-i { margin-right: .6rem; white-space: nowrap; }
 /* compact word / form header: 8-px grid, ≤ 3 lines at 360 px */
 .wordhead.compact { padding: 0 0 .5rem; gap: .125rem; } .wordhead.compact .lemma { font-size: 1.7rem; line-height: 1.15; display: inline; }
@@ -91,3 +87,8 @@
 .panel.card { padding: .5rem .75rem; margin-bottom: .5rem; }
 .wordhead.compact { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .75rem; } .wordhead.compact > .hl-chips, .wordhead.compact > .chips, .wordhead.compact > .allforms, .wordhead.compact > p.small { flex-basis: 100%; margin: 0; }
 .wordhead.compact > .hl-line { flex: 1 1 auto; }
+.g-plate { --k: var(--accent); } .g-plate[data-kind=old], .gleg-dot[data-kind=old] { --k: var(--m-archaic); } .g-plate[data-kind=modern], .gleg-dot[data-kind=modern] { --k: var(--m-dialect); }
+.g-plate[data-kind=chronicle], .gleg-dot[data-kind=chronicle] { --k: var(--m-cs); } .g-plate[data-kind=folk], .gleg-dot[data-kind=folk] { --k: var(--m-rusyn); } .g-plate[data-kind=other], .gleg-dot[data-kind=other] { --k: var(--m-colloquial); }
+.g-plate rect { fill: var(--surface); stroke: var(--k); cursor: pointer; } .g-plate:hover rect, .g-plate:focus rect { fill: var(--accent-soft); }
+.g-plate .g-label { font-size: 14px; } .g-link { fill: none; stroke: var(--muted); stroke-width: 1.25; }
+.gleg-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--k, var(--accent)); vertical-align: baseline; }

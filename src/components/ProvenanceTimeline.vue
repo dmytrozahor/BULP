@@ -29,7 +29,7 @@ const claimsInfo = (f: FormCard) => { const s = claimSignature(f.claims); return
 /** SPEC 63 UI-2: one dot per dated spelling (x = year, r ∝ √f); a dot links to the same /f page as the list */
 const points = computed(() => items.value.filter(i => i.date).slice(0, 120).map(({ f, date }) => ({
   id: f.raw, label: f.raw, year: (date![0] + date![1]) / 2, f: f.f, kind: isOldForm(f.raw, date![1]) ? 'old' : 'modern',
-  to: formTo(f.raw, props.card?.lemma), title: `${f.raw} · ${fmtDate(date!)}` })))
+  to: formTo(f.raw, props.card?.lemma), when: fmtDate(date!), title: `${f.raw} · ${fmtDate(date!)}` })))
 const toggle = (k: string) => (open.value = open.value === k ? null : k)
 </script>
 

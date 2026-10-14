@@ -44,13 +44,29 @@ describe('UI-2 graph views', () => {
     expect(g.nodes[0]!.label).toBe('конь'); expect(g.nodes[0]!.date).toBe('1187')
     for (let i = 1; i < g.nodes.length; i++) expect(g.nodes[i]!.x).toBeGreaterThan(g.nodes[i - 1]!.x)
   })
-  it('UI-2 chronology layout: x by year, radius grows with f, overlapping dots go to different lanes', () => {
-    const t = timelineLayout([{ id: 'a', label: 'a', year: 1100, f: 1, kind: 'old', to: '/f/a' }, { id: 'b', label: 'b', year: 1101, f: 100, kind: 'old', to: '/f/b' }, { id: 'c', label: 'c', year: 1900, f: 10, kind: 'modern', to: '/f/c' }])
-    const d = Object.fromEntries(t.dots.map(x => [x.id, x]))
-    expect(d.b!.r).toBeGreaterThan(d.a!.r); expect(d.c!.cx).toBeGreaterThan(d.a!.cx); expect(d.a!.cy).not.toBe(d.b!.cy)
+  it('UI-2 chronology plates: no two plates overlap, arrows run chronologically, the compressed axis keeps close years apart, wide labels get wide plates', () => {
+    const mk = (id: string, label: string, year: number, f: number) => ({ id, label, year, f, kind: 'old', to: `/f/${id}` })
+    const pts = [mk('a', 'ною', 1037, 3), mk('b', 'нь', 1037, 1), mk('c', 'нѣ', 1110, 9), mk('d', 'ни', 1111, 2), mk('e', 'не', 1120, 40), mk('f', 'нея', 1121, 1), mk('g', 'не', 1900, 500)]
+    const t = timelineLayout(pts)
+    expect(t.plates.length).toBe(pts.length); expect(t.arrows.length).toBe(pts.length - 1)
+    for (const a of t.plates) for (const b of t.plates) if (a.id < b.id) {
+      const sepX = a.x + a.w + 1 <= b.x || b.x + b.w + 1 <= a.x, sepY = a.y + a.h + 1 <= b.y || b.y + b.h + 1 <= a.y
+      expect(sepX || sepY, `${a.id}/${b.id} overlap`).toBe(true)
+    }
+    expect(t.plates.map(p => p.id)).toEqual(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
+    expect(t.arrows.map(x => x.from + x.to)).toEqual(['ab', 'bc', 'cd', 'de', 'ef', 'fg'])
+    expect(t.plates.every(p => p.y >= 0 && p.y + p.h <= t.height && p.x + p.w <= t.width)).toBe(true)
+    expect(t.width).toBeLessThan(900)   // 1037…1900 is not stretched linearly
+    expect(t.plates.find(p => p.id === 'g')!.sw).toBeGreaterThan(t.plates.find(p => p.id === 'b')!.sw)
+    expect(timelineLayout([mk('x', 'довге-слово-форма', 1200, 1)]).plates[0]!.w).toBeGreaterThan(timelineLayout([mk('y', 'а', 1200, 1)]).plates[0]!.w)
+  })
+  it('UI-2 legend: HTML chips with full dots and Ukrainian labels (давня / сучасна), outside the SVG so it is never clipped', async () => {
+    const html = await render(AttestGraph, { points: [{ id: 'a', label: 'нѣ', year: 1110, f: 3, kind: 'old', to: '/f/a', when: '1110' }, { id: 'b', label: 'не', year: 1900, f: 3, kind: 'modern', to: '/f/b', when: '1900' }] })
+    const legend = html.slice(html.indexOf('class="small sans muted gleg"'))
+    expect(legend).toContain('давня'); expect(legend).toContain('сучасна'); expect(legend).not.toContain('<svg'); expect(legend).toContain('class="gleg-dot"')
+    expect(html).toContain('>нѣ</text>'); expect(html).toContain('>1110</text>'); expect(html).toContain('marker-end="url(#tg-arr)"')
   })
 })
-
 describe('UI-3 view switch «граф / список»', () => {
   it('UI-3 graph is the default: the chain renders as an SVG graph with the switch, the list is not mounted', async () => {
     const html = await render(DerivationSteps, { steps, uid: 'конь' })
@@ -83,7 +99,7 @@ describe('UI-3 view switch «граф / список»', () => {
     expect(html).toContain(`>${steps[0]!.rule}</text>`); expect(html).toMatch(/class="g-edge" role="button"/)
     const dots = await render(AttestGraph, { points: [{ id: 'w1', label: 'Остр.', year: 1056, f: 12, kind: 'chronicle', to: '/witness/ostromir', title: 'Остромирове' }, { id: 'w2', label: 'Іст.', year: 1700, f: 2, kind: 'other', to: '/witness/x' }] })
     expect(dots).toContain('href="/witness/ostromir"'); expect(dots).toContain('href="/witness/x"'); expect(dots).toContain('data-kind="chronicle"')
-    expect((dots.match(/<circle/g) ?? []).length).toBeGreaterThanOrEqual(2)
+    expect((dots.match(/<rect/g) ?? []).length).toBe(2)
   })
   it('UI-3 graphs use theme tokens only: no hard-coded colours in the graph CSS or components', () => {
     const css = src('../src/ux.css'), block = css.slice(css.indexOf('SPEC 63 UI-1'))

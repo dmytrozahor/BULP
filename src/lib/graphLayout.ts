@@ -20,20 +20,35 @@ export function chainLayout(steps: TraceStep[], dates: Record<string, string> = 
 }
 
 export interface TPoint { id: string; label: string; year: number; f: number; kind: string; to: string; title?: string }
-export interface TDot extends TPoint { cx: number; cy: number; r: number }
-/** timeline: x by year, r by √f, overlapping dots are stacked into lanes */
-export function timelineLayout(points: TPoint[], width = 640) {
-  const ps = [...points].sort((a, b) => a.year - b.year)
-  if (!ps.length) return { dots: [] as TDot[], ticks: [] as { x: number; label: string }[], width, height: 60 }
-  const lo = Math.floor(ps[0]!.year / 100) * 100, hi = Math.max(lo + 100, Math.ceil(ps[ps.length - 1]!.year / 100) * 100)
-  const maxF = Math.max(1, ...ps.map(p => p.f)), L = 18, span = width - 2 * L
-  const lanes: number[] = []; const dots: TDot[] = []
+/** legend labels of the plate kinds (HTML chips, never clipped) */
+export const PLATE_KIND_UK: Record<string, string> = { old: 'давня', modern: 'сучасна', chronicle: 'літопис', folk: 'фольклор', other: 'інша пам’ятка' }
+/** a plate: rounded card with the form and its year; x is a compressed time axis (the gap grows with √Δyear, so a century of silence is not a blank screen) */
+export const PLATE_H = 38, LANE_H = 46, LANES = 3
+export interface TPlate extends TPoint { x: number; y: number; w: number; h: number; lane: number; when: string; sw: number }
+export interface TArrow { from: string; to: string; d: string }
+const plateW = (label: string, when: string) => Math.max(56, Math.max(label.length * 9.2, when.length * 6.4) + 22)
+export function timelineLayout(points: (TPoint & { when?: string })[]) {
+  const ps = [...points].sort((a, b) => a.year - b.year || b.f - a.f)
+  const maxF = Math.max(1, ...ps.map(p => p.f))
+  const laneEnd = new Array<number>(LANES).fill(-Infinity)
+  const plates: TPlate[] = []; let prev: TPlate | undefined
   for (const p of ps) {
-    const r = 4 + 10 * Math.sqrt(Math.max(0, p.f) / maxF), cx = L + (p.year - lo) / (hi - lo) * span
-    let lane = lanes.findIndex(end => cx - r > end + 2); if (lane < 0) { lane = lanes.length; lanes.push(0) }
-    lanes[lane] = cx + r; dots.push({ ...p, cx, cy: 18 + lane * 28, r })
+    const when = p.when ?? String(Math.round(p.year)), w = plateW(p.label, when)
+    const want = prev ? prev.x + 14 + Math.min(60, Math.sqrt(Math.max(0, p.year - prev.year)) * 6) : 8
+    let best = 0, bx = Infinity
+    for (let k = 0; k < LANES; k++) { const x = Math.max(want, laneEnd[k]! + 10), pen = k === prev?.lane ? 1e-3 : 0; if (x + pen < bx) { bx = x + pen; best = k } }
+    const x = Math.max(want, laneEnd[best]! + 10)
+    const pl: TPlate = { ...p, x, y: 6 + best * LANE_H, w, h: PLATE_H, lane: best, when, sw: 1 + 2 * Math.sqrt(Math.max(0, p.f) / maxF) }
+    laneEnd[best] = x + w; plates.push(pl); prev = pl
   }
-  const ticks: { x: number; label: string }[] = []
-  for (let y = lo; y <= hi; y += hi - lo > 600 ? 200 : 100) ticks.push({ x: L + (y - lo) / (hi - lo) * span, label: String(y) })
-  return { dots, ticks, width, height: 18 + lanes.length * 28 + 14 }
+  const arrows: TArrow[] = []
+  for (let i = 1; i < plates.length; i++) {
+    const a = plates[i - 1]!, b = plates[i]!
+    let d: string
+    if (b.x >= a.x + a.w + 6) { const x1 = a.x + a.w, y1 = a.y + a.h / 2, x2 = b.x - 1, y2 = b.y + b.h / 2, m = (x1 + x2) / 2; d = `M${x1} ${y1} C${m} ${y1} ${m} ${y2} ${x2} ${y2}` }
+    else { const x1 = a.x + a.w / 2, x2 = b.x + b.w / 2, down = b.y > a.y, y1 = down ? a.y + a.h : a.y, y2 = down ? b.y - 1 : b.y + b.h + 1, m = (y1 + y2) / 2; d = `M${x1} ${y1} C${x1} ${m} ${x2} ${m} ${x2} ${y2}` }
+    arrows.push({ from: a.id, to: b.id, d })
+  }
+  const width = Math.max(0, ...plates.map(p => p.x + p.w)) + 12, used = Math.max(0, ...plates.map(p => p.lane)) + 1
+  return { plates, arrows, width, height: 12 + used * LANE_H }
 }
