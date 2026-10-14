@@ -226,3 +226,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DL-4 | tests/dialect-books.test.ts › has entries for every dialect group of the book sources, each with a Q quote, a registered source and a locator |
 | DL-4 | tests/dialect-books.test.ts › Polissian rows: Arkushin (WPL) and Lysenko (MPL, CHN) entries quote the dictionary with the book locator |
 | DL-5 | manual — research/31-dialect-books.md §1 logs every source with URL, access method, robots.txt/licence verdict and the sources skipped or failed; reviewed by reading it |
+| AC-1 | tests/autolabel.test.ts › every table row has a verbatim meaning and the table a registered source and a locator |
+| AC-1 | tests/autolabel.test.ts › articleLabels returns a verbatim slice of the article for each abbreviation and ignores look-alikes |
+| AC-1 | tests/autolabel.test.ts › r2u: parseCell reads Грінченко labels from the FULL article, quote ⊂ article |
+| AC-1 | tests/autolabel.test.ts › en.wiktionary sense tags → usage rows with the dataset quote + the glossary definition; unlabelled tags and non-table tags give nothing |
+| AC-2 | tests/autolabel.test.ts › every stem of a gazetteer row occurs in the quote of that row (stress marks ignored) |
+| AC-2 | tests/autolabel.test.ts › a region label becomes a claim carrying the article quote, the abbreviation entry of the source and the gazetteer quote |
+| AC-3 | tests/autolabel.test.ts › all conditions met → a claim with the r2u quote, the VESUM absence and the Russian-dictionary verdict |
+| AC-3 | tests/autolabel.test.ts › each missing condition → no claim (unknown, never a guess) |
+| AC-4 | tests/autolabel.test.ts › no automatic channel imports the hand list; only the AC-5 report reads it for evaluation |
+| AC-4 | tests/autolabel.test.ts › build.ts recomputes the automatic channels on every build |
+| AC-5 | tests/autolabel.test.ts › analysis/auto-classification.md has coverage before/after per label type, the hand-list agreement and the tables |

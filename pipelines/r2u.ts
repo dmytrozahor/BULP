@@ -10,6 +10,7 @@
  * KrymUkrBold = Ukrainian headword, KrymRusPlain = Russian gloss, *Italic = example/label, KrymUkAux = author sigla, `u.quote` = example quotation, `num` = sense number).
  */
 import { stripStress } from '../core/text.ts'
+import { R2U_ABBR, articleLabels } from '../core/autolabel.ts'
 
 export type R2uDir = 'ru-uk' | 'uk-ru' | 'uk-de' | 'orth'
 export interface R2uDict {
@@ -88,6 +89,8 @@ export interface R2uRow {
   eq: string[]
   /** ≤ 300 characters of the article, verbatim (whitespace collapsed) */
   text: string
+  /** SPEC 63 AC-1: the dictionary's own label abbreviations found in the FULL article (core/autolabel.ts), each with a verbatim slice around it */
+  labels?: { abbr: string; quote: string }[]
 }
 
 const SKIP_EQ = new Set(['quote', 'KrymUkAux', 'KrymRusItalic', 'KrymUkrItalic', 'i', 'u'])
@@ -154,7 +157,8 @@ export function parseCell(dict: number, rowId: number, html: string): R2uRow | n
     if (cur.trim()) senses.push(cur)
     eq = senses.flatMap(s => wordList(s.replace(/^\s*[;:]\s*/, ''))).filter((w, k, a) => a.indexOf(w) === k).slice(0, 24)
   }
-  return { dict, rowId, head, eq, text }
+  const abbr = R2U_ABBR[dict] ? articleLabels(R2U_ABBR[dict]!, plainOf(nodes)) : []
+  return { dict, rowId, head, eq, text, ...(abbr.length ? { labels: abbr.map(a => ({ abbr: a.row.abbr, quote: a.quote })) } : {}) }
 }
 
 /** A whole search-result page → rows of the ingested dictionaries. */

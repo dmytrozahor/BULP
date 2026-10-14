@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
-import { claim, D, unknown, type Claim, type Evidence } from '../core/evidence.ts'
+import { claim, D, isKnown, unknown, type Claim, type Evidence } from '../core/evidence.ts'
 import { derive as deriveRaw, ruleById, type Derivation } from '../core/phonology.ts'
 import { fold as foldRaw } from '../core/orthography.ts'
 import { assignEpoch, epochById } from '../core/epochs.ts'
@@ -47,6 +47,8 @@ import { writeEtymology } from './build-etymology.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
 import { writeUsage } from './build-usage.ts'
+import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
+import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
 import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
 
@@ -283,6 +285,8 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lt = await ltIndex()
   const sel = new Map<string, FormAcc[]>(kept.map(l => [l.id, selectForms([...l.forms.values()], 12)]))
   const stressReq = new Set<string>(), ruReq = new Set<string>()
+  const auto = await buildAutoLabels(ROOT, kept.map(l => l.display))   // SPEC 63 AC: labels from the sources' own abbreviations, recomputed on every build
+  lap(`autolabels: kaikki ${auto.stats.kaikkiLemmas} lemmas / ${auto.stats.kaikkiSenses} tagged senses, r2u ${auto.stats.r2uRows} articles (${auto.stats.r2uLabelled} with a regional label → ${auto.stats.dialectLemmas} lemmas), ${auto.stats.ruHeads} Russian headwords`)
   const ltCorpus: ReportData['ltCorpus'] = []
   types.forEach((t, x) => { const e = lt[key(t.raw)]; if (e && t.lang === 'uk' && typeCount[x]! > 0) { ltCorpus.push({ form: key(t.raw), f: typeCount[x]!, file: e[0] }); ruReq.add(key(t.raw)) } })
   for (const l of kept) {
@@ -291,7 +295,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       if (fa.modern) stressReq.add(fa.modern)
       if (fa.chosen.tier > 0 || lt[key(fa.raw)]) ruReq.add(key(fa.raw))
     }
-    if (lt[l.id] || /:(bad|subst|slang|alt)\b/.test(':' + l.tags)) ruReq.add(l.id)
+    if (lt[l.id] || /:(bad|subst|slang|alt)\b/.test(':' + l.tags) || auto.ruPairs.has(key(l.display))) ruReq.add(l.id)   // AC-3: a lemma that is a Russian headword in r2u gets the Russian-dictionary check
   }
   mkdirSync(WORK, { recursive: true })
   writeFileSync(resolve(WORK, 'stress-request.json'), JSON.stringify([...stressReq]))
@@ -407,6 +411,12 @@ export async function build(opts: { noPy?: boolean } = {}) {
     }
     const regionEv = [...regionWs].slice(0, 3).map(wid => D(wid, 'region', witMap.get(wid)!.region ?? ''))
     for (const [l, c] of Object.entries(dia)) dia[l] = claim(true as const, [...c.evidence, ...regionEv], { score: c.score, method: c.method })
+    const diaBase = Object.keys(dia).length
+    dia = mergeClaims(dia, auto.dialect.get(la.display) ?? {})   // AC-1 + AC-2: dictionary region label → gazetteer group (own quote; no witness-region evidence)
+    const szBase = surzhykClaim(modernCards.map(p => p.card.claims), lc)
+    const szAuto = autoContactClaim(la.display, (annEnv.hits.get(key(la.display)) ?? []).length > 0, annEnv.ru[key(la.display)], auto.ruPairs.get(key(la.display)) ?? [], VESUM_LOC, 'data/work/ru.json (nlp/russian_check.py)')   // AC-3
+    const sz = withAutoContact(szBase, szAuto)
+    const ac = auto.counts; ac.lemmas++; if (diaBase) ac.diaBase++; if (Object.keys(dia).length) ac.diaAfter++; if (isKnown(szBase)) ac.szBase++; if (isKnown(sz)) ac.szAfter++; if (szAuto) ac.szAuto++
     const order = lemmaStatsInput(la)
     const stats = lemmaStats(order, fMax, sizes, coll.get(la.idx) ?? [])
     stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
@@ -420,7 +430,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       lemma: la.display, pos: posLabel(lemmaPos), paradigmKind: paradigmKindOf(lemmaPos), paradigm, ...(epochRes.epochs.has(la.id) ? { epochs: epochRes.epochs.get(la.id)! } : {}),
       stress: stressVariants([la.display, ...new Set(accs.map(a => a.modern))].slice(0, 4), stressJson),
       forms: pairs.map(p => p.card), first, stats,
-      claims: { register: registerClaim(paradigm, la.display), surzhyk: surzhykClaim(modernCards.map(p => p.card.claims), lc), origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}), ...(pal ? { palatalization: pal } : {}) },
+      claims: { register: registerClaim(paradigm, la.display), surzhyk: sz, origin: originClaim(pairs), oldest, dialect: dia, rusyn: lemmaRusyn(modernCards.map(p => p.card)), ...(proper ? { proper } : {}), ...(pal ? { palatalization: pal } : {}) },
     })
   }
   cards.sort((a, b) => b.stats.f - a.stats.f || a.lemma.localeCompare(b.lemma, 'uk'))
@@ -464,7 +474,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const frames: Phraseme[] = [], cands = mine(phraseDocs, k => (k >= 0 ? names[k]! : '~' + rawNames[-2 - k]!), (wi, ti) => adm[wi]!.w.tokens[ti]!.raw, { top: 40000, frames })
     const p = writePhrases(ROOT, PUB, generated, cands, frames); lap(`phrases.json (BL-12/12b): ${p.candidates} candidates (>= 2 source families or attested), ${p.formulas} single-family formulas, ${p.attestedTitles} attested idioms (${p.matched} matched)`)
   }
-  { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
+  { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1

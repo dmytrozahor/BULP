@@ -9,6 +9,7 @@
  * The project does not label by sense (neither source is read per sense here): a usage claim is lemma-level, and says so.
  */
 import { claim, D, Q, type Claim, type Evidence } from './evidence.ts'
+import { enWiktUrl, kaikkiTag, abbrEvidence, KAIKKI_TAGS } from './autolabel.ts'
 
 export type UsageAxis = 'stylistic' | 'sociolect' | 'territorial' | 'chronological' | 'thematic'
 export const AXIS_UK: Record<UsageAxis, string> = { stylistic: 'стилістична', sociolect: 'соціолект', territorial: 'територіальна', chronological: 'хронологічна', thematic: 'тематична / обрядова' }
@@ -62,17 +63,18 @@ export const WIKT_CATEGORIES: { cat: string; label: string }[] = [
 /** VESUM lemma tag → label (slang, arch, vulg, obsc only; `bad`/`subst`/`err` are the surzhyk/nonstandard axes, `rare` is grammatical — research/08). */
 export const VESUM_USAGE: Record<string, string> = { slang: 'zharh', arch: 'arkh', vulg: 'vulg', obsc: 'obsc' }
 
-/** wire row of public/data/usage.json: [label id, 'v' + VESUM tag line | 'w' + wiktionary category] */
-export type UsageRow = [label: string, src: 'v' | 'w', detail: string]
+/** wire row of public/data/usage.json: [label id, 'v' + VESUM tag line | 'w' + uk.wiktionary category | 'k' + en.wiktionary sense tag and gloss as "tag<TAB>gloss" (SPEC 63 AC-1)] */
+export type UsageRow = [label: string, src: 'v' | 'w' | 'k', detail: string]
 export interface UsageFile { format: 1; generated: string; vesumLoc: string; wikt: { retrieved: string; licence: string; attribution: string }; lemmas: Record<string, UsageRow[]> }
 
 export const wiktUrl = (lemma: string) => `https://uk.wiktionary.org/wiki/${encodeURIComponent(lemma)}`
 
 /** Rows for one lemma from its VESUM tag line and the harvested Wiktionary category members (index category → set of titles). */
-export function usageRows(lemma: string, vesumTags: string, wikt: Map<string, Set<string>>): UsageRow[] {
+export function usageRows(lemma: string, vesumTags: string, wikt: Map<string, Set<string>>, kaikki?: [tag: string, gloss: string][]): UsageRow[] {
   const rows: UsageRow[] = [], tags = new Set(vesumTags.split(':'))
   for (const [t, label] of Object.entries(VESUM_USAGE)) if (tags.has(t)) rows.push([label, 'v', vesumTags])
   for (const { cat, label } of WIKT_CATEGORIES) if (wikt.get(cat)?.has(lemma)) rows.push([label, 'w', cat])
+  for (const [tag, gloss] of kaikki ?? []) { const r = kaikkiTag[tag]; if (r?.usage) rows.push([r.usage, 'k', `${tag}\t${gloss}`]) }   // AC-1: en.wiktionary sense tags through the KAIKKI_TAGS table
   return rows
 }
 
@@ -83,6 +85,11 @@ export function usageRows(lemma: string, vesumTags: string, wikt: Map<string, Se
 export function usageClaims(lemma: string, rows: UsageRow[], vesumLoc: string, retrieved: string): { label: UsageLabel; claim: Claim<string> }[] {
   const by = new Map<string, Evidence[]>()
   for (const [id, src, detail] of rows) {
+    if (src === 'k') {   // en.wiktionary (kaikki) sense tag: the dataset row + the glossary definition of the tag
+      const [tag, gloss] = detail.split('\t'), r = kaikkiTag[tag!]
+      ;(by.get(id) ?? by.set(id, []).get(id)!).push(D('KAIKKI', enWiktUrl(lemma), `[${tag}] ${gloss ?? ''}`.trim(), 'en.wiktionary через kaikki.org, CC BY-SA 4.0; мітка належить значенню, але береться на рівні леми'), ...(r ? [abbrEvidence(KAIKKI_TAGS, r)] : []))
+      continue
+    }
     const ev = src === 'v' ? D('VESUM', vesumLoc, `${lemma} ${detail}`, 'позначка словника (CC BY-NC-SA 4.0)')
       : D('WIKTUK', wiktUrl(lemma), `Категорія:${detail}`, `uk.wiktionary, CC BY-SA 4.0, отримано ${retrieved}; мітка належить статті, не конкретному значенню`)
     ;(by.get(id) ?? by.set(id, []).get(id)!).push(ev)
