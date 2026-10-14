@@ -16,7 +16,9 @@ export const textTo = (id: string, loc?: string) => (loc ? `/texts?w=${e(id)}&lo
 export const epochTo = (id: string) => `/method#epoch-${e(id)}`
 export const dialectTo = (id: string) => `/method#dialect-${e(id)}`
 export const ruleTo = (id: string) => `/method#rule-${e(id)}`
-export const placeTo = (lemma: string) => wordTo(lemma)
+/** SPEC 63 FD-5: the list of lexicon forms on which a dialect feature (rule id or feature id) fires */
+export const ruleFormsTo = (id: string) => `/forms/${e(id)}`
+export const placeTo =(lemma: string) => wordTo(lemma)
 
 /** evidence «джерело»: a registry source -> its card; a witness id -> the witness's text at the locator. Never an external URL. */
 export const evidenceTo = (source: string, locator?: string, isWitness = false) =>

@@ -6,10 +6,21 @@ import { isOldForm } from '../lib/nav.ts'
  * built from cited parts (P-1.7), never a dictionary form. Each part has its own evidence popover. Renders nothing when the word does not parse (P-3.1).
  */
 import { computed } from 'vue'
-import { DX_KIND_UK, segment } from '../../core/deictics.ts'
+import { isKnown } from '../../core/evidence.ts'
+import { DIALECTS } from '../../core/rules.ts'
+import { DX_KIND_UK, segment, type DxSegmentation } from '../../core/deictics.ts'
+import { dxChips, dxClass, dxLiterary } from '../../core/form-class.ts'
+import { useData } from '../composables/useData.ts'
+import { dialectTo, formTo, wordTo } from '../lib/nav.ts'
+import FormClassTable from './FormClassTable.vue'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ word: string; bare?: boolean }>()
 const segs = computed(() => segment(props.word))
+const { byLemma, annData } = useData()
+/** SPEC 63 DX-2/DX-3: dialect feature chips of the affixes, the literary counterpart (ВЕСУМ lookup) and the class of forms sharing the base */
+const lookup = (f: string) => annData.value.paradigmMap.get(f)?.[0]?.tags
+const corpus = (f: string) => { const c = byLemma.value.get(f); return c ? { f: c.stats.f, date: isKnown(c.first) ? (c.first.value as { date: [number, number] }).date : undefined } : undefined }
+const more = (s: DxSegmentation) => { const base = s.parts.find(p => p.role === 'base'); return { chips: dxChips(s), lit: dxLiterary(s.form, lookup), base, members: base ? dxClass(base.id, corpus) : [] } }
 </script>
 
 <template>
@@ -33,6 +44,19 @@ const segs = computed(() => segment(props.word))
           </EvidencePopover></template>
       </div>
       <p v-if="s.note" class="small muted" style="margin:.2rem 0">{{ s.note }}</p>
+      <template v-for="x in [more(s)]" :key="s.form">
+        <p v-if="x.chips.length" class="small" style="margin:.2rem 0"><span class="muted">діалектна ознака: </span>
+          <template v-for="c in x.chips" :key="c.via + c.code"><RouterLink :to="dialectTo(c.code)" class="badge dialect">{{ DIALECTS[c.code] ?? c.code }}</RouterLink>
+            <EvidencePopover :evidence="c.evidence" :heading="`Ознака ${c.via}`" :label="c.via"><span class="badge">ⓘ</span></EvidencePopover>{{ ' ' }}</template></p>
+        <p v-else class="small muted" style="margin:.2rem 0">діалектна належність афіксів у джерелах не названа</p>
+        <p v-if="x.base" class="small" style="margin:.2rem 0"><span class="muted">основа: </span><RouterLink v-if="byLemma.get(x.base.text)" :to="wordTo(x.base.text)">{{ x.base.text }}</RouterLink><template v-else>{{ x.base.text }}</template>
+          <span class="muted"> · у літературній мові: </span>
+          <template v-if="x.lit.form"><RouterLink :to="formTo(x.lit.form)" class="lang">{{ x.lit.form }}</RouterLink>
+            <EvidencePopover :evidence="x.lit.evidence" heading="Літературна мова (ВЕСУМ)" :label="x.lit.form"><span class="badge">ⓘ ВЕСУМ</span></EvidencePopover>
+            <span v-if="x.lit.chain.length > 1" class="muted"> ← {{ x.lit.chain.join(' → ') }}</span></template>
+          <template v-else>у літературній мові не зафіксовано <span class="muted">(у ВЕСУМ немає форм ланцюга {{ x.lit.chain.join(' → ') }}); записано в: {{ x.lit.recordedIn.join(', ') || '—' }}</span></template></p>
+        <FormClassTable v-if="x.members.length > 1" :members="x.members" :current="s.form" :caption="`Клас: вказівні прислівники з основою «${x.base?.text}»`" />
+      </template>
       <p v-if="s.status === 'reconstruction'" class="small muted" style="margin:.2rem 0">Не засвідчено в жодному з прочитаних джерел: складено за зразком
         <template v-for="(x, i) in s.support" :key="x.part"><template v-if="x.attestedIn.length"><template v-if="i">; </template>«{{ x.text }}» ← {{ x.attestedIn.slice(0, 3).join(', ') }}</template></template>.
         <template v-if="!s.fullySupported"> Частина компонентів не має засвідченого прикладу.</template></p>

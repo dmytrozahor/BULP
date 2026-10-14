@@ -237,3 +237,20 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AC-4 | tests/autolabel.test.ts › no automatic channel imports the hand list; only the AC-5 report reads it for evaluation |
 | AC-4 | tests/autolabel.test.ts › build.ts recomputes the automatic channels on every build |
 | AC-5 | tests/autolabel.test.ts › analysis/auto-classification.md has coverage before/after per label type, the hand-list agreement and the tables |
+| DP-1 | tests/dialect-pronouns.test.ts › each variant has attestations with registered source |
+| DP-1 | tests/dialect-pronouns.test.ts › research/32 states the evidence, the counter-evidence and what is unknown |
+| DP-2 | tests/dialect-pronouns.test.ts › prefix variants prefix every standard form, tags kept verbatim |
+| DP-2 | tests/dialect-pronouns.test.ts › scope: тот gets nominative forms only |
+| DP-3 | tests/dialect-pronouns.test.ts › Lemko dictionary → LEM, Boyko article → BOY |
+| DP-4 | tests/dialect-pronouns.test.ts › the block is on the lemma card and every derived form links |
+| DP-4 | tests/dialect-pronouns.test.ts › a derived form absent from the corpus still has a /f page |
+| FD-1 | tests/dialect-pronouns.test.ts › firedRules reads the build |
+| FD-2 | tests/dialect-pronouns.test.ts › FD-2/FD-3 UI: regions «засвідчено в» apart from labels |
+| FD-3 | tests/dialect-pronouns.test.ts › nothing fired → empty list and the list of checked rules is non-empty |
+| FD-4 | tests/dialect-pronouns.test.ts › the cell groups spellings and DP-derived variants, with chips, dating and f |
+| FD-4 | tests/dialect-pronouns.test.ts › UI: table component highlights the current spelling |
+| FD-5 | tests/dialect-pronouns.test.ts › ruleForms counts the lexicon forms on which a rule |
+| DX-1 | tests/dialect-pronouns.test.ts › the user |
+| DX-2 | tests/dialect-pronouns.test.ts › the dialect feature of an affix chip carries the affix citation |
+| DX-3 | tests/dialect-pronouns.test.ts › follows «standard» to a form the literary lexicon has |
+| DX-3 | tests/dialect-pronouns.test.ts › FD-4/FD-5 for deictics: the class of forms with the base там |

@@ -5,6 +5,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/', component: () => import('./views/SearchView.vue') },
   { path: '/w/:lemma', component: () => import('./views/WordView.vue'), props: true },
   { path: '/f/:form', component: () => import('./views/FormView.vue'), props: true },
+  { path: '/forms/:rule', component: () => import('./views/RuleFormsView.vue'), props: true },
   { path: '/witness/:id', component: () => import('./views/WitnessView.vue'), props: true },
   { path: '/author/:id', component: () => import('./views/AuthorView.vue'), props: true },
   { path: '/source/:id', component: () => import('./views/SourceView.vue'), props: true },

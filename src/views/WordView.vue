@@ -45,6 +45,7 @@ import CognatesPanel from '../components/CognatesPanel.vue'
 import TimeCurve from '../components/TimeCurve.vue'
 import DeicticStructure from '../components/DeicticStructure.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
+import DialectVariants from '../components/DialectVariants.vue'
 import SensesBlock from '../components/SensesBlock.vue'
 import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
@@ -273,6 +274,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         </Panel>
         <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
+        <DialectVariants :lemma="card.lemma" />   <!-- SPEC 63 DP-4 -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
         <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
         <Panel id="h-sn" :open="false" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
