@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **609 654**.
+Generated 2026-10-14T03:49:42.938Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **620 590**.
 
 ## 1. Corpus
 
@@ -796,9 +796,14 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-878 | sophia_graffiti | chu-rus | 1125–1325 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-957 | sophia_graffiti | chu-rus | 1275–1325 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-984 | sophia_graffiti | chu-rus | 1025–1325 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1320 | dict_sum14 | ruthenian | 1320–1329 | shev.old (high) | wl.rus | 134 | 0 | 0 |
+| dsu14_2_1320 | dict_sum14 | ruthenian | 1320–1329 | shev.old (high) | wl.rus | 118 | 0 | 0 |
 | sophia-361 | sophia_graffiti | chu-rus | 1175–1330 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-901 | sophia_graffiti | chu-rus | 1329–1333 | shev.old (high) | wl.rus | 7 | 0 | 0 |
+| dsu14_1_1330 | dict_sum14 | ruthenian | 1330–1339 | shev.old (high) | wl.rus | 2 | 0 | 0 |
 | sophia-3427 | sophia_graffiti | ruthenian | 1347 | shev.old (high) | wl.rus | 3 | 1 | 1 |
+| dsu14_1_1340 | dict_sum14 | ruthenian | 1340–1349 | shev.old (high) | wl.rus | 58 | 0 | 0 |
+| dsu14_2_1340 | dict_sum14 | ruthenian | 1340–1349 | shev.old (high) | wl.rus | 50 | 0 | 0 |
 | sophia-1234 | sophia_graffiti | chu-rus | 1170–1350 | shev.old (high) | wl.rus | 3 | 0 | 0 |
 | sophia-149 | sophia_graffiti | chu-rus | 1025–1350 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-1920 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 2 | 0 | 0 |
@@ -815,13 +820,23 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-473 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 3 | 0 | 1 |
 | sophia-474 | sophia_graffiti | chu-rus | 1125–1350 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-528 | sophia_graffiti | chu-rus | 1150–1350 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1350 | dict_sum14 | ruthenian | 1350–1359 | shev.old (high) | wl.ruthenian | 95 | 0 | 0 |
+| dsu14_2_1350 | dict_sum14 | ruthenian | 1350–1359 | shev.old (high) | wl.ruthenian | 102 | 0 | 0 |
 | sophia-2376 | sophia_graffiti | ruthenian | 1330–1360 | shev.old (high) | wl.rus | 2 | 1 | 0 |
+| dsu14_1_1360 | dict_sum14 | ruthenian | 1360–1369 | shev.old (high) | wl.ruthenian | 84 | 0 | 0 |
+| dsu14_2_1360 | dict_sum14 | ruthenian | 1360–1369 | shev.old (high) | wl.ruthenian | 113 | 0 | 0 |
 | sophia-924 | sophia_graffiti | chu-rus | 1330–1370 | shev.old (high) | wl.rus | 19 | 0 | 0 |
 | sophia-1145 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 4 | 0 | 0 |
 | sophia-1146 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 1 | 1 | 0 |
 | sophia-1147 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-1212 | sophia_graffiti | chu-rus | 1125–1375 | shev.old (high) | wl.rus | 1 | 0 | 0 |
 | sophia-2012 | sophia_graffiti | chu-rus | 1150–1375 | shev.old (high) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1370 | dict_sum14 | ruthenian | 1370–1379 | shev.old (high) | wl.ruthenian | 87 | 0 | 0 |
+| dsu14_2_1370 | dict_sum14 | ruthenian | 1370–1379 | shev.old (high) | wl.ruthenian | 87 | 0 | 0 |
+| dsu14_1_1380 | dict_sum14 | ruthenian | 1380–1389 | shev.old (medium) | wl.ruthenian | 242 | 0 | 0 |
+| dsu14_2_1380 | dict_sum14 | ruthenian | 1380–1389 | shev.old (medium) | wl.ruthenian | 212 | 0 | 0 |
+| dsu14_1_1390 | dict_sum14 | ruthenian | 1390–1399 | shev.early_middle (high) | wl.ruthenian | 218 | 0 | 0 |
+| dsu14_2_1390 | dict_sum14 | ruthenian | 1390–1399 | shev.early_middle (high) | wl.ruthenian | 168 | 0 | 0 |
 | sophia-1015 | sophia_graffiti | chu-rus | 1025–1399 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-909 | sophia_graffiti | chu-rus | 1125–1399 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-914 | sophia_graffiti | chu-rus | 1125–1399 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
@@ -906,12 +921,16 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-614 | sophia_graffiti | chu-rus | 1175–1400 | shev.old (medium) | wl.rus | 2 | 0 | 1 |
 | sophia-640 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-786 | sophia_graffiti | chu-rus | 1025–1400 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| dsu14_1_1400 | dict_sum14 | ruthenian | 1400–1409 | shev.early_middle (high) | wl.ruthenian | 259 | 0 | 0 |
+| dsu14_2_1400 | dict_sum14 | ruthenian | 1400–1409 | shev.early_middle (high) | wl.ruthenian | 274 | 0 | 0 |
 | i14_04 | tsamblak | ruthenian | 1408–1410 | shev.early_middle (high) | wl.ruthenian | 2 239 | 1 | 18 |
 | sophia-2711 | sophia_graffiti | ruthenian | 1350–1415 | shev.old+shev.early_middle (low) | wl.ruthenian | 7 | 0 | 0 |
 | sophia-2714 | sophia_graffiti | ruthenian | 1385–1415 | shev.early_middle (medium) | wl.ruthenian | 2 | 0 | 1 |
 | sophia-2715 | sophia_graffiti | ruthenian | 1385–1415 | shev.early_middle (medium) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-2778 | sophia_graffiti | ruthenian | 1350–1415 | shev.old+shev.early_middle (low) | wl.ruthenian | 3 | 0 | 0 |
 | sophia-456 | sophia_graffiti | chu-rus | 1025–1415 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1410 | dict_sum14 | ruthenian | 1410–1419 | shev.early_middle (high) | wl.ruthenian | 146 | 0 | 0 |
+| dsu14_2_1410 | dict_sum14 | ruthenian | 1410–1419 | shev.early_middle (high) | wl.ruthenian | 122 | 0 | 0 |
 | sophia-110 | sophia_graffiti | chu-rus | 1250–1425 | shev.old (medium) | wl.rus | 4 | 0 | 0 |
 | sophia-199 | sophia_graffiti | chu-rus | 1175–1425 | shev.old (medium) | wl.rus | 3 | 0 | 0 |
 | sophia-2363 | sophia_graffiti | chu-rus | 1150–1425 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
@@ -919,20 +938,38 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-2554 | sophia_graffiti | undetermined | 1201–1425 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-3815 | sophia_graffiti | ruthenian | 1301–1425 | shev.old (medium) | wl.ruthenian | 2 | 1 | 1 |
 | sophia-457 | sophia_graffiti | chu-rus | 1025–1425 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1420 | dict_sum14 | ruthenian | 1420–1429 | shev.early_middle (high) | wl.ruthenian | 209 | 0 | 0 |
+| dsu14_2_1420 | dict_sum14 | ruthenian | 1420–1429 | shev.early_middle (high) | wl.ruthenian | 186 | 0 | 0 |
 | sophia-342 | sophia_graffiti | ruthenian | 1350–1430 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 | 0 | 0 |
+| dsu14_1_1430 | dict_sum14 | ruthenian | 1430–1439 | shev.early_middle (high) | wl.ruthenian | 374 | 0 | 0 |
+| dsu14_2_1430 | dict_sum14 | ruthenian | 1430–1439 | shev.early_middle (high) | wl.ruthenian | 337 | 0 | 0 |
+| dsu14_1_1440 | dict_sum14 | ruthenian | 1440–1449 | shev.early_middle (high) | wl.ruthenian | 357 | 0 | 0 |
+| dsu14_2_1440 | dict_sum14 | ruthenian | 1440–1449 | shev.early_middle (high) | wl.ruthenian | 296 | 0 | 0 |
 | sophia-257 | sophia_graffiti | ruthenian | 1325–1450 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-2813 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-417 | sophia_graffiti | chu-rus | 1125–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-466 | sophia_graffiti | chu-rus | 1150–1450 | shev.old (medium) | wl.rus | 2 | 1 | 0 |
 | sophia-579 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
 | sophia-602 | sophia_graffiti | chu-rus | 1025–1450 | shev.old (medium) | wl.rus | 1 | 0 | 0 |
+| dsu14_1_1450 | dict_sum14 | ruthenian | 1450–1459 | shev.early_middle (high) | wl.ruthenian | 240 | 0 | 0 |
+| dsu14_2_1450 | dict_sum14 | ruthenian | 1450–1459 | shev.early_middle (high) | wl.ruthenian | 218 | 0 | 0 |
+| dsu14_1_1460 | dict_sum14 | ruthenian | 1460–1469 | shev.early_middle (high) | wl.ruthenian | 165 | 0 | 0 |
+| dsu14_2_1460 | dict_sum14 | ruthenian | 1460–1469 | shev.early_middle (high) | wl.ruthenian | 182 | 0 | 0 |
+| dsu14_1_1470 | dict_sum14 | ruthenian | 1470–1479 | shev.early_middle (high) | wl.ruthenian | 164 | 0 | 0 |
+| dsu14_2_1470 | dict_sum14 | ruthenian | 1470–1479 | shev.early_middle (high) | wl.ruthenian | 168 | 0 | 0 |
+| dsu14_1_1480 | dict_sum14 | ruthenian | 1480–1489 | shev.early_middle (high) | wl.ruthenian | 148 | 0 | 0 |
+| dsu14_2_1480 | dict_sum14 | ruthenian | 1480–1489 | shev.early_middle (high) | wl.ruthenian | 162 | 0 | 0 |
 | sophia-472 | sophia_graffiti | undetermined | 1480–1489 | shev.early_middle (high) | wl.ruthenian | 3 | 1 | 1 |
 | sophia-229 | sophia_graffiti | chu-rus | 1025–1490 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
 | sophia-345 | sophia_graffiti | chu-rus | 1025–1490 | shev.old (medium) | wl.rus | 2 | 0 | 0 |
+| dsu14_1_1490 | dict_sum14 | ruthenian | 1490–1499 | shev.early_middle (high) | wl.ruthenian | 286 | 0 | 0 |
+| dsu14_2_1490 | dict_sum14 | ruthenian | 1490–1499 | shev.early_middle (high) | wl.ruthenian | 289 | 0 | 0 |
 | sophia-390 | sophia_graffiti | chu-rus | 1025–1499 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-395 | sophia_graffiti | chu-rus | 1025–1499 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-398 | sophia_graffiti | chu-rus | 1275–1499 | shev.old+shev.early_middle (low) | wl.ruthenian | 4 | 0 | 0 |
 | sophia-406 | sophia_graffiti | chu-rus | 1025–1499 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 1 |
+| dsu14_1_nd | dict_sum14 | ruthenian | 1301–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 175 | 0 | 0 |
+| dsu14_2_nd | dict_sum14 | ruthenian | 1301–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 2 386 | 0 | 0 |
 | sophia-1021 | sophia_graffiti | ruthenian | 1325–1500 | shev.old+shev.early_middle (low) | wl.ruthenian | 1 | 0 | 0 |
 | sophia-1030 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-1032 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
@@ -1076,6 +1113,8 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sophia-743 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 1 | 0 | 0 |
 | sophia-802 | sophia_graffiti | chu-rus | 1125–1500 | shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 3 | 0 | 0 |
 | sophia-811 | sophia_graffiti | chu-rus | 1025–1500 | shev.proto+shev.old+shev.early_middle (low) | wl.rus+wl.ruthenian | 2 | 0 | 0 |
+| dsu14_1_1500 | dict_sum14 | ruthenian | 1500–1509 | shev.early_middle (high) | wl.ruthenian | 13 | 0 | 0 |
+| dsu14_2_1500 | dict_sum14 | ruthenian | 1500–1509 | shev.early_middle (high) | wl.ruthenian | 10 | 0 | 0 |
 | sophia-3658 | sophia_graffiti | ruthenian | 1510 | shev.early_middle (high) | wl.ruthenian | 3 | 1 | 0 |
 | sophia-1423 | sophia_graffiti | ruthenian | 1425–1514 | shev.early_middle (high) | wl.ruthenian | 2 | 0 | 0 |
 | sophia-1117 | sophia_graffiti | ruthenian | 1425–1515 | shev.early_middle (high) | wl.ruthenian | 1 | 0 | 0 |
@@ -1879,25 +1918,25 @@ Generated 2026-10-14T03:30:56.391Z by `pipelines/build.ts` (SPEC 20). Every numb
 | franko1905 | franko | uk | 1905 | shev.modern (high) | wl.new | 7 656 | 0 | 0 |
 | hrinchenko1908 | hrinchenko | uk | 1908 | shev.modern (high) | wl.new | 6 527 | 0 | 3414 |
 
-Admitted witnesses: 1873; N = 609 654. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 1912; N = 620 590. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=609 654 |
+| epoch | name | scheme | N | share of N=620 590 |
 |---|---|---|---|---|
 | shev.proto | протоукраїнська доба | shev | 7 214 | 1.2% |
-| shev.old | давньоукраїнська доба | shev | 243 331 | 39.9% |
-| shev.early_middle | ранньосередньоукраїнська доба | shev | 14 238 | 2.3% |
-| shev.middle | середньоукраїнська доба | shev | 152 857 | 25.1% |
-| shev.late_middle | пізньосередньоукраїнська доба | shev | 73 665 | 12.1% |
-| shev.modern | новітня доба | shev | 118 349 | 19.4% |
-| wl.rus | давньоруська (княжа доба) | wl | 250 516 | 41.1% |
-| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 228 151 | 37.4% |
-| wl.ruthenian.chancery | ділова староукраїнська | wl | 13 036 | 2.1% |
-| wl.new | нова українська літературна мова | wl | 130 987 | 21.5% |
+| shev.old | давньоукраїнська доба | shev | 244 715 | 39.4% |
+| shev.early_middle | ранньосередньоукраїнська доба | shev | 23 790 | 3.8% |
+| shev.middle | середньоукраїнська доба | shev | 152 857 | 24.6% |
+| shev.late_middle | пізньосередньоукраїнська доба | shev | 73 665 | 11.9% |
+| shev.modern | новітня доба | shev | 118 349 | 19.1% |
+| wl.rus | давньоруська (княжа доба) | wl | 250 878 | 40.4% |
+| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 238 725 | 38.5% |
+| wl.ruthenian.chancery | ділова староукраїнська | wl | 23 610 | 3.8% |
+| wl.new | нова українська літературна мова | wl | 130 987 | 21.1% |
 | wl.contemporary | сучасна українська літературна мова | wl | 0 | 0.0% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 885 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 332 · 15 ст.: 2 344 · 16 ст.: 83 947 · 17 ст.: 49 116 · 18 ст.: 105 339 · 19 ст.: 104 166 · 20 ст.: 14 183
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 67 885 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 2 102 · 15 ст.: 11 487 · 16 ст.: 83 970 · 17 ст.: 49 116 · 18 ст.: 105 339 · 19 ст.: 104 166 · 20 ст.: 14 183
 
 ### Exclusions (B-1.1)
 
@@ -1933,7 +1972,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-147 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
 | sophia-67 | 11 | 0 | 0 | 5 | 0 | 6 | 45.5% |
 | sophia-90 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| arch | 59 953 | 0 | 24632 | 7730 | 0 | 27591 | 54.0% |
+| arch | 59 953 | 0 | 24631 | 7730 | 0 | 27592 | 54.0% |
 | sophia-85 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-879 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | kiev-mis | 352 | 220 | 0 | 10 | 0 | 122 | 65.3% |
@@ -1969,8 +2008,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4249 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-88 | 59 | 0 | 0 | 36 | 0 | 23 | 61.0% |
 | sophia-96 | 10 | 0 | 0 | 4 | 0 | 6 | 40.0% |
-| monomakh | 4 585 | 0 | 2177 | 531 | 0 | 1877 | 59.1% |
-| pvl_lav | 55 088 | 33263 | 0 | 3422 | 0 | 18403 | 66.6% |
+| monomakh | 4 585 | 0 | 2176 | 531 | 0 | 1878 | 59.0% |
+| pvl_lav | 55 088 | 33259 | 0 | 3422 | 0 | 18407 | 66.6% |
 | sophia-1256 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1257 | 5 | 0 | 0 | 3 | 0 | 2 | 60.0% |
 | sophia-1259 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
@@ -2134,7 +2173,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-991 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| kievchr | 79 458 | 0 | 32497 | 6989 | 0 | 39972 | 49.7% |
+| kievchr | 79 458 | 0 | 32495 | 6989 | 0 | 39974 | 49.7% |
 | sophia-103 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-1037 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-105 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
@@ -2509,7 +2548,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1074 | 17 | 0 | 0 | 11 | 0 | 6 | 64.7% |
 | sophia-148 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-155 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| gvl | 37 568 | 0 | 14918 | 4099 | 0 | 18551 | 50.6% |
+| gvl | 37 568 | 0 | 14917 | 4099 | 0 | 18552 | 50.6% |
 | sophia-397 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-881 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-990 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2701,9 +2740,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-878 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-957 | 4 | 0 | 0 | 3 | 0 | 1 | 75.0% |
 | sophia-984 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1320 | 134 | 0 | 0 | 46 | 0 | 88 | 34.3% |
+| dsu14_2_1320 | 118 | 0 | 0 | 38 | 0 | 80 | 32.2% |
 | sophia-361 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-901 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
+| dsu14_1_1330 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3427 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
+| dsu14_1_1340 | 58 | 0 | 0 | 15 | 0 | 43 | 25.9% |
+| dsu14_2_1340 | 50 | 0 | 0 | 12 | 0 | 38 | 24.0% |
 | sophia-1234 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-149 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-1920 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
@@ -2720,13 +2764,23 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-473 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-474 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-528 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1350 | 95 | 0 | 0 | 24 | 0 | 71 | 25.3% |
+| dsu14_2_1350 | 102 | 0 | 0 | 24 | 0 | 78 | 23.5% |
 | sophia-2376 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_1_1360 | 84 | 0 | 0 | 17 | 0 | 67 | 20.2% |
+| dsu14_2_1360 | 113 | 0 | 0 | 23 | 0 | 90 | 20.4% |
 | sophia-924 | 19 | 0 | 0 | 14 | 0 | 5 | 73.7% |
 | sophia-1145 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-1146 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1147 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1212 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-2012 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1370 | 87 | 0 | 0 | 15 | 0 | 72 | 17.2% |
+| dsu14_2_1370 | 87 | 0 | 0 | 18 | 0 | 69 | 20.7% |
+| dsu14_1_1380 | 242 | 0 | 0 | 60 | 0 | 182 | 24.8% |
+| dsu14_2_1380 | 212 | 0 | 0 | 44 | 0 | 168 | 20.8% |
+| dsu14_1_1390 | 218 | 0 | 0 | 52 | 0 | 166 | 23.9% |
+| dsu14_2_1390 | 168 | 0 | 0 | 30 | 0 | 138 | 17.9% |
 | sophia-1015 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-909 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-914 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -2811,12 +2865,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-614 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-640 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-786 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_1_1400 | 259 | 0 | 0 | 58 | 0 | 201 | 22.4% |
+| dsu14_2_1400 | 274 | 0 | 0 | 54 | 0 | 220 | 19.7% |
 | i14_04 | 2 239 | 0 | 836 | 278 | 0 | 1125 | 49.8% |
 | sophia-2711 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | sophia-2714 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-2715 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2778 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-456 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1410 | 146 | 0 | 0 | 25 | 0 | 121 | 17.1% |
+| dsu14_2_1410 | 122 | 0 | 0 | 12 | 0 | 110 | 9.8% |
 | sophia-110 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-199 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-2363 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
@@ -2824,20 +2882,38 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2554 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3815 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-457 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| dsu14_1_1420 | 209 | 0 | 0 | 33 | 0 | 176 | 15.8% |
+| dsu14_2_1420 | 186 | 0 | 0 | 33 | 0 | 153 | 17.7% |
 | sophia-342 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_1_1430 | 374 | 0 | 0 | 59 | 0 | 315 | 15.8% |
+| dsu14_2_1430 | 337 | 0 | 0 | 49 | 0 | 288 | 14.5% |
+| dsu14_1_1440 | 357 | 0 | 0 | 52 | 0 | 305 | 14.6% |
+| dsu14_2_1440 | 296 | 0 | 0 | 45 | 0 | 251 | 15.2% |
 | sophia-257 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-2813 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-417 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-466 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-579 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-602 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_1450 | 240 | 0 | 0 | 46 | 0 | 194 | 19.2% |
+| dsu14_2_1450 | 218 | 0 | 0 | 37 | 0 | 181 | 17.0% |
+| dsu14_1_1460 | 165 | 0 | 0 | 25 | 0 | 140 | 15.2% |
+| dsu14_2_1460 | 182 | 0 | 0 | 23 | 0 | 159 | 12.6% |
+| dsu14_1_1470 | 164 | 0 | 0 | 23 | 0 | 141 | 14.0% |
+| dsu14_2_1470 | 168 | 0 | 0 | 26 | 0 | 142 | 15.5% |
+| dsu14_1_1480 | 148 | 0 | 0 | 29 | 0 | 119 | 19.6% |
+| dsu14_2_1480 | 162 | 0 | 0 | 11 | 0 | 151 | 6.8% |
 | sophia-472 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-229 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-345 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_1_1490 | 286 | 0 | 0 | 32 | 0 | 254 | 11.2% |
+| dsu14_2_1490 | 289 | 0 | 0 | 33 | 0 | 256 | 11.4% |
 | sophia-390 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-395 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-398 | 4 | 0 | 0 | 4 | 0 | 0 | 100.0% |
 | sophia-406 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
+| dsu14_1_nd | 2 175 | 0 | 0 | 339 | 0 | 1836 | 15.6% |
+| dsu14_2_nd | 2 386 | 0 | 0 | 304 | 0 | 2082 | 12.7% |
 | sophia-1021 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1030 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | sophia-1032 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
@@ -2981,6 +3057,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-743 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-802 | 3 | 0 | 0 | 3 | 0 | 0 | 100.0% |
 | sophia-811 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
+| dsu14_1_1500 | 13 | 0 | 0 | 2 | 0 | 11 | 15.4% |
+| dsu14_2_1500 | 10 | 0 | 0 | 1 | 0 | 9 | 10.0% |
 | sophia-3658 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-1423 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-1117 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -2993,7 +3071,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-321 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-322 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | i14_10 | 1 243 | 0 | 488 | 198 | 0 | 557 | 55.2% |
-| i14_06 | 3 558 | 0 | 1498 | 499 | 0 | 1561 | 56.1% |
+| i14_06 | 3 558 | 0 | 1498 | 498 | 0 | 1562 | 56.1% |
 | i14_09 | 7 151 | 0 | 2669 | 1214 | 0 | 3268 | 54.3% |
 | sophia-1476 | 7 | 0 | 0 | 4 | 0 | 3 | 57.1% |
 | i14_13 | 109 | 0 | 44 | 9 | 0 | 56 | 48.6% |
@@ -3001,13 +3079,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | i14_14 | 12 813 | 0 | 5241 | 2040 | 0 | 5532 | 56.8% |
 | i14_15 | 4 594 | 0 | 1782 | 559 | 0 | 2253 | 51.0% |
 | sophia-341 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
-| i14_29 | 816 | 0 | 255 | 163 | 0 | 398 | 51.2% |
+| i14_29 | 816 | 0 | 254 | 162 | 0 | 400 | 51.0% |
 | sophia-461 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | i14_16 | 1 525 | 0 | 646 | 248 | 0 | 631 | 58.6% |
 | i14_18 | 6 037 | 0 | 2272 | 1034 | 0 | 2731 | 54.8% |
 | i14_36 | 86 | 0 | 28 | 4 | 0 | 54 | 37.2% |
 | i14_17 | 12 564 | 0 | 5056 | 2186 | 0 | 5322 | 57.6% |
-| i14_21 | 6 119 | 0 | 2547 | 1910 | 0 | 1662 | 72.8% |
+| i14_21 | 6 119 | 0 | 2546 | 1909 | 0 | 1664 | 72.8% |
 | sophia-296 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-302 | 14 | 0 | 0 | 12 | 0 | 2 | 85.7% |
 | sophia-894 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3142,7 +3220,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-806 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-82 | 5 | 0 | 0 | 2 | 0 | 3 | 40.0% |
 | sophia-83 | 6 | 0 | 0 | 5 | 0 | 1 | 83.3% |
-| vyshensky | 25 620 | 0 | 10963 | 3813 | 0 | 10844 | 57.7% |
+| vyshensky | 25 620 | 0 | 10956 | 3811 | 0 | 10853 | 57.6% |
 | sophia-173 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | i14_38 | 61 | 0 | 32 | 5 | 0 | 24 | 60.7% |
 | sophia-2980 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3707,9 +3785,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-968 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-997 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| samovydets | 37 974 | 0 | 15197 | 7238 | 0 | 15539 | 59.1% |
+| samovydets | 37 974 | 0 | 15196 | 7238 | 0 | 15540 | 59.1% |
 | o18_26 | 9 404 | 0 | 0 | 0 | 6013 | 3391 | 63.9% |
-| pripovisti | 9 180 | 0 | 3083 | 1960 | 0 | 4137 | 54.9% |
+| pripovisti | 9 180 | 0 | 3080 | 1960 | 0 | 4140 | 54.9% |
 | o18_37 | 11 821 | 0 | 0 | 0 | 8029 | 3792 | 67.9% |
 | o18_01 | 1 269 | 0 | 0 | 0 | 843 | 426 | 66.4% |
 | sophia-56 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -3723,7 +3801,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-132 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | eneida1798 | 12 638 | 0 | 0 | 0 | 10258 | 2380 | 81.2% |
 | o18_20 | 6 848 | 0 | 0 | 0 | 5907 | 941 | 86.3% |
-| o18_23 | 13 694 | 0 | 0 | 0 | 11828 | 1866 | 86.4% |
+| o18_23 | 13 694 | 0 | 0 | 0 | 11827 | 1867 | 86.4% |
 | o18_24 | 174 | 0 | 0 | 0 | 144 | 30 | 82.8% |
 | o18_25 | 3 235 | 0 | 0 | 0 | 2877 | 358 | 88.9% |
 | sophia-351 | 9 | 0 | 0 | 0 | 6 | 3 | 66.7% |
@@ -3783,42 +3861,42 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | franko1893 | 36 521 | 0 | 0 | 0 | 33626 | 2895 | 92.1% |
 | franko1905 | 7 656 | 0 | 0 | 0 | 7156 | 500 | 93.5% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5706 | 821 | 87.4% |
-| **total** | 609 654 | 35252 | 135188 | 51822 | 178618 | 208774 | 65.8% |
+| **total** | 620 590 | 35248 | 135170 | 53586 | 178617 | 217969 | 64.9% |
 
-Linked 400 880 of 609 654 tokens (65.8%); unresolved 208 774 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 402 621 of 620 590 tokens (64.9%); unresolved 217 969 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (208 774) |
+| form | f | % of unresolved (217 969) |
 |---|---|---|
 | с | 2296 | 1.1% |
-| к | 1845 | 0.9% |
-| и | 1822 | 0.9% |
+| к | 1845 | 0.8% |
+| и | 1822 | 0.8% |
 | его | 1480 | 0.7% |
 | къ | 1271 | 0.6% |
 | съ | 1028 | 0.5% |
 | ни | 1006 | 0.5% |
 | аще | 921 | 0.4% |
-| ли | 913 | 0.4% |
+| ли | 915 | 0.4% |
 | тако | 909 | 0.4% |
 | имъ | 901 | 0.4% |
-| что | 722 | 0.3% |
+| что | 723 | 0.3% |
 | бѣ | 681 | 0.3% |
 | ихъ | 620 | 0.3% |
 | своего | 620 | 0.3% |
 | так | 605 | 0.3% |
-| ему | 540 | 0.3% |
-| со | 540 | 0.3% |
+| ему | 540 | 0.2% |
+| со | 540 | 0.2% |
 | приде | 485 | 0.2% |
 | емоу | 483 | 0.2% |
-| под | 479 | 0.2% |
+| под | 480 | 0.2% |
 | то | 449 | 0.2% |
 | як | 447 | 0.2% |
 | посла | 446 | 0.2% |
 | их | 422 | 0.2% |
 | где | 411 | 0.2% |
 | свои | 399 | 0.2% |
-| тогда | 384 | 0.2% |
+| тогда | 385 | 0.2% |
 | ӕко | 383 | 0.2% |
 | много | 380 | 0.2% |
 | кто | 362 | 0.2% |
@@ -3826,9 +3904,9 @@ Linked 400 880 of 609 654 tokens (65.8%); unresolved 208 774 — never guessed (
 | или | 348 | 0.2% |
 | реч | 345 | 0.2% |
 | поиде | 327 | 0.2% |
-| реч̑ | 324 | 0.2% |
-| како | 321 | 0.2% |
-| вси | 314 | 0.2% |
+| реч̑ | 324 | 0.1% |
+| како | 321 | 0.1% |
+| вси | 314 | 0.1% |
 | земли | 313 | 0.1% |
 | нъ | 308 | 0.1% |
 
@@ -3841,15 +3919,15 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 |---|---|---|---|---|---|---|---|---|---|---|
 | shev.proto | 7 214 | TOROT (manual) | 162 | 162 (100.0%) | 0 | 0 | 150 | 293 | 562 | 656 |
 | shev.proto | 7 214 | Stanza (model, P-1.7) | 1 631 | 1 218 (74.7%) | 384 | 29 |  |  |  |  |
-| shev.old | 243 331 | TOROT (manual) | 22 331 | 22 086 (98.9%) | 233 | 12 | 1 851 | 2 465 | 7 347 | 11 263 |
-| shev.old | 243 331 | Stanza (model, P-1.7) | 44 152 | 27 520 (62.3%) | 15 671 | 961 |  |  |  |  |
-| shev.early_middle | 14 238 | Stanza (model, P-1.7) | 4 396 | 2 524 (57.4%) | 1 847 | 25 | 296 | 493 | 905 | 974 |
-| shev.middle | 152 857 | Stanza (model, P-1.7) | 33 539 | 19 089 (56.9%) | 14 417 | 33 | 668 | 3 081 | 8 977 | 10 833 |
-| shev.middle | 152 857 | VESUM (modern spelling) | 10 731 | 9 819 (91.5%) | 45 | 867 |  |  |  |  |
-| shev.late_middle | 73 665 | VESUM (modern spelling) | 33 032 | 29 758 (90.1%) | 78 | 3 196 | 3 | 4 294 | 14 022 | 15 529 |
-| shev.modern | 118 349 | VESUM (modern spelling) | 64 746 | 59 223 (91.5%) | 224 | 5 299 | 0 | 5 356 | 20 694 | 25 243 |
+| shev.old | 244 715 | TOROT (manual) | 22 331 | 22 086 (98.9%) | 233 | 12 | 2 643 | 2 465 | 7 347 | 11 263 |
+| shev.old | 244 715 | Stanza (model, P-1.7) | 44 152 | 27 520 (62.3%) | 15 671 | 961 |  |  |  |  |
+| shev.early_middle | 23 790 | Stanza (model, P-1.7) | 4 403 | 2 526 (57.4%) | 1 852 | 25 | 1 513 | 495 | 907 | 976 |
+| shev.middle | 152 857 | Stanza (model, P-1.7) | 33 560 | 19 096 (56.9%) | 14 431 | 33 | 671 | 3 094 | 8 994 | 10 850 |
+| shev.middle | 152 857 | VESUM (modern spelling) | 10 737 | 9 825 (91.5%) | 45 | 867 |  |  |  |  |
+| shev.late_middle | 73 665 | VESUM (modern spelling) | 33 057 | 29 780 (90.1%) | 78 | 3 199 | 3 | 4 314 | 14 056 | 15 563 |
+| shev.modern | 118 349 | VESUM (modern spelling) | 64 793 | 59 268 (91.5%) | 224 | 5 301 | 0 | 5 382 | 20 744 | 25 294 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 29 091 · stanza:gender: 3 197 · vesum:grid:noun: 225 · torot:grid:none: 195 · vesum:grid:none: 122 · torot:grid:adj: 38 · stanza:grid:none: 25 · stanza:grid:adj: 6.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 29 104 · stanza:gender: 3 203 · vesum:grid:noun: 225 · torot:grid:none: 195 · vesum:grid:none: 122 · torot:grid:adj: 38 · stanza:grid:none: 25 · stanza:grid:adj: 6.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
@@ -3857,65 +3935,65 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 |---|---|---|---|---|---|---|---|
 | він | pron | 4 451 | 1 805 | 2 642 | 0 | 4 | stanza:lemma 2642 |
 | я | pron | 3 848 | 3 731 | 86 | 0 | 31 | stanza:lemma 86 |
-| земля | noun | 1 191 | 1 081 | 3 | 104 | 3 | stanza:gender 2, stanza:lemma 1 |
-| син | noun | 1 218 | 1 146 | 71 | 0 | 1 | stanza:gender 42, stanza:lemma 29 |
+| земля | noun | 1 192 | 1 081 | 3 | 104 | 4 | stanza:gender 2, stanza:lemma 1 |
+| син | noun | 1 220 | 1 146 | 71 | 0 | 3 | stanza:gender 42, stanza:lemma 29 |
 | да | uninflected | 1 803 | 0 | 1 453 | 345 | 5 | stanza:grid:none 1150, torot:grid:none 303 |
 | себе | pron | 2 739 | 2 739 | 0 | 0 | 0 | — |
-| ви | pron | 2 140 | 2 129 | 6 | 0 | 5 | stanza:lemma 6 |
-| ти | pron | 3 510 | 3 477 | 23 | 0 | 10 | stanza:lemma 23 |
+| ви | pron | 2 142 | 2 129 | 6 | 0 | 7 | stanza:lemma 6 |
+| ти | pron | 3 513 | 3 477 | 23 | 0 | 13 | stanza:lemma 23 |
 | ми | pron | 2 731 | 2 327 | 389 | 0 | 15 | stanza:lemma 389 |
-| рука | noun | 759 | 739 | 20 | 0 | 0 | stanza:gender 15, stanza:lemma 5 |
-| князь | noun | 1 522 | 1 500 | 19 | 0 | 3 | stanza:gender 12, stanza:lemma 7 |
-| город | noun | 817 | 716 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
-| аз | noun | 63 | 62 | 0 | 0 | 1 | — |
+| рука | noun | 760 | 739 | 20 | 0 | 1 | stanza:gender 15, stanza:lemma 5 |
+| князь | noun | 1 526 | 1 500 | 19 | 0 | 7 | stanza:gender 12, stanza:lemma 7 |
+| город | noun | 819 | 716 | 101 | 0 | 2 | stanza:gender 53, stanza:lemma 48 |
+| аз | noun | 64 | 62 | 0 | 0 | 2 | — |
 
-**Stem types** (EP-4): 8 738 lemmas carry epoch paradigms; stem claim known for 1 515 (of which 321 from a Stanza lemma, model-based per decision D4), `unknown` for 3 788. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 21 · ST-08: 95 · ST-09: 649 · ST-10: 228 · ST-11: 75 · ST-12: 91 · ST-13: 264 · ST-14: 63.
+**Stem types** (EP-4): 8 822 lemmas carry epoch paradigms; stem claim known for 1 515 (of which 321 from a Stanza lemma, model-based per decision D4), `unknown` for 3 865. By rule: ST-01: 13 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 21 · ST-08: 95 · ST-09: 649 · ST-10: 228 · ST-11: 75 · ST-12: 91 · ST-13: 264 · ST-14: 63.
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 456 lemmas, 46 240 reconstructed cells with 48 942 forms; **confirmed** by an attested spelling of the same cell and epoch: 2 959 cells (6.4%), 2 968 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 16.16 MB of 91.13 MB shard total (17.7%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 16.20 MB of 93.30 MB shard total (17.4%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 57 967), *token* = occurrences (denominator linked tokens 400 880). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 58 908), *token* = occurrences (denominator linked tokens 402 621). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
-| R02 | Деназалізація ѧ > я, ѫ > у | G | 1662 | 2.9% | 10861 | 2.7% |
+| R02 | Деназалізація ѧ > я, ѫ > у | G | 1662 | 2.8% | 10861 | 2.7% |
 | R14 | бы > бу (губне огублення) | L | 91 | 0.2% | 1278 | 0.3% |
-| R03 | ky, gy, xy > k'i, g'i, x'i | G | 205 | 0.4% | 673 | 0.2% |
+| R03 | ky, gy, xy > k'i, g'i, x'i | G | 205 | 0.3% | 673 | 0.2% |
 | R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 467 | 0.8% | 1402 | 0.3% |
-| R13 | C + j: подовження, -ьѥ > -ття | G | 182 | 0.3% | 361 | 0.1% |
-| R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 79 | 0.1% | 126 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 5956 | 10.3% | 38362 | 9.6% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 891 | 1.5% | 4020 | 1.0% |
-| R07 | Вставні о, е в кінцевих групах | L | 30 | 0.1% | 189 | 0.0% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 3617 | 6.2% | 17296 | 4.3% |
-| R12 | ѥ у новозакритому складі > ї | G | 29 | 0.1% | 680 | 0.2% |
-| R11 | Злиття і та у > и | G | 2882 | 5.0% | 43813 | 10.9% |
-| R15 | Ствердіння губних у кінці складу | G | 604 | 1.0% | 2827 | 0.7% |
-| R16 | l > w після о, е | G | 186 | 0.3% | 426 | 0.1% |
+| R13 | C + j: подовження, -ьѥ > -ття | G | 185 | 0.3% | 367 | 0.1% |
+| R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 82 | 0.1% | 129 | 0.0% |
+| R04 | Занепад єрів (закон Гавліка) | G | 6385 | 10.8% | 39132 | 9.7% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 998 | 1.7% | 4156 | 1.0% |
+| R07 | Вставні о, е в кінцевих групах | L | 34 | 0.1% | 194 | 0.0% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 3617 | 6.1% | 17296 | 4.3% |
+| R12 | ѥ у новозакритому складі > ї | G | 29 | 0.0% | 680 | 0.2% |
+| R11 | Злиття і та у > и | G | 2907 | 4.9% | 43861 | 10.9% |
+| R15 | Ствердіння губних у кінці складу | G | 762 | 1.3% | 3008 | 0.7% |
+| R16 | l > w після о, е | G | 198 | 0.3% | 447 | 0.1% |
 | R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.4% | 702 | 0.2% |
-| R17 | е > о після шиплячих перед твердим | L | 161 | 0.3% | 1092 | 0.3% |
-| R18 | Ствердіння ж, ч, ш | G | 474 | 0.8% | 1760 | 0.4% |
-| R19 | Ствердіння кінцевого р' | G | 119 | 0.2% | 551 | 0.1% |
-| R21 | Протетичні в, г | L | 391 | 0.7% | 1222 | 0.3% |
-| R23 | Стягнення прикметникових закінчень | L | 831 | 1.4% | 2994 | 0.7% |
+| R17 | е > о після шиплячих перед твердим | L | 162 | 0.3% | 1093 | 0.3% |
+| R18 | Ствердіння ж, ч, ш | G | 537 | 0.9% | 1845 | 0.5% |
+| R19 | Ствердіння кінцевого р' | G | 175 | 0.3% | 620 | 0.2% |
+| R21 | Протетичні в, г | L | 397 | 0.7% | 1232 | 0.3% |
+| R23 | Стягнення прикметникових закінчень | L | 851 | 1.4% | 3020 | 0.8% |
 | R24 | Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається | G | 0 | 0.0% | 0 | 0.0% |
 
 Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 343 types / 436 tokens · ORTH-YAR-JER: 680 types / 1472 tokens · ORTH-YAR-I: 167 types / 341 tokens · ORTH-MAX-JO: 3 types / 5 tokens · ORTH-MAX-JER-END: 43 types / 55 tokens · ORTH-ZHEL-TY: 231 types / 408 tokens · ORTH-MAX-YAT: 29 types / 37 tokens · ORTH-YAR-E: 57 types / 77 tokens · ORTH-MAX-E: 10 types / 35 tokens · ORTH-KUL-I: 226 types / 640 tokens · ORTH-KUL-E: 195 types / 308 tokens · ORTH-YAR-YAT: 307 types / 411 tokens · ORTH-MAX-Y: 16 types / 18 tokens · ORTH-MAX-I: 24 types / 36 tokens · ORTH-KUL-JER: 19 types / 25 tokens · ORTH-ZHEL-TE: 37 types / 92 tokens · ORTH-MAX-YAT-J: 2 types / 2 tokens · ORTH-YAR-EH: 2 types / 2 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 43 488 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 44 448 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 293 | 0 |
-| CS-C3 | cs | church_slavonic | 0.7 | 86 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 302 | 0 |
+| CS-C3 | cs | church_slavonic | 0.7 | 87 | 0 |
 | CS-C4 | cs | church_slavonic | 0.7 | 21 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 23 | 0 |
-| CS-C11 | cs | church_slavonic | 0.6 | 84 | 0 |
+| CS-C11 | cs | church_slavonic | 0.6 | 86 | 0 |
 | CS-C12 | cs | church_slavonic | 0 | 0 | 18 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 346 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 350 |
 | LEX-LT | contact | nonnormative | 0.8 | 0 | 0 |
 | LEX-LT-SOFT | contact | not_recommended | 0.4 | 0 | 0 |
 | LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 0 | 0 |
@@ -3923,7 +4001,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 7766 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 7768 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
 | MOR-PART-UCH | contact | calque_participle | 0.6 | 0 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
@@ -4028,73 +4106,73 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 29 | град | іменник, ч.р. | 20 | 2772 |
 | 30 | дух | іменник, ч.р. | 20 | 2772 |
 
-**shev.old** — давньоукраїнська доба, N = 243 331
+**shev.old** — давньоукраїнська доба, N = 244 715
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 19245 | 79090 |
-| 2 | же | сполучник | 7347 | 30193 |
-| 3 | в | прийменник | 5813 | 23889 |
-| 4 | на | частка | 3912 | 16077 |
-| 5 | не | частка | 3700 | 15206 |
-| 6 | а | сполучник | 2731 | 11223 |
-| 7 | він | займенник, ч.р. | 2073 | 8519 |
-| 8 | сей | займенник | 2033 | 8355 |
-| 9 | бути | дієслово | 2006 | 8244 |
-| 10 | от | частка | 1917 | 7878 |
-| 11 | себе | займенник | 1782 | 7323 |
-| 12 | по | прийменник | 1464 | 6016 |
-| 13 | бо | сполучник | 1451 | 5963 |
-| 14 | ти | займенник | 1384 | 5688 |
-| 15 | яко | сполучник | 1274 | 5236 |
-| 16 | весь | займенник | 1012 | 4159 |
-| 17 | да | частка | 1000 | 4110 |
-| 18 | брат | іменник, ч.р. | 992 | 4077 |
-| 19 | літо | іменник, с.р. | 934 | 3838 |
-| 20 | ви | займенник | 916 | 3764 |
-| 21 | князь | іменник, ч.р. | 874 | 3592 |
-| 22 | у | прийменник | 873 | 3588 |
-| 23 | ми | займенник | 863 | 3547 |
-| 24 | той | займенник | 844 | 3469 |
-| 25 | Ізяслав | іменник, ч.р. | 836 | 3436 |
-| 26 | іти | дієслово | 830 | 3411 |
-| 27 | ректи | дієслово | 815 | 3349 |
-| 28 | син | іменник, ч.р. | 810 | 3329 |
-| 29 | я | займенник | 803 | 3300 |
-| 30 | свій | займенник | 781 | 3210 |
+| 1 | і | сполучник | 19245 | 78643 |
+| 2 | же | сполучник | 7348 | 30027 |
+| 3 | в | прийменник | 5814 | 23758 |
+| 4 | на | частка | 3912 | 15986 |
+| 5 | не | частка | 3700 | 15120 |
+| 6 | а | сполучник | 2731 | 11160 |
+| 7 | він | займенник, ч.р. | 2073 | 8471 |
+| 8 | сей | займенник | 2033 | 8308 |
+| 9 | бути | дієслово | 2006 | 8197 |
+| 10 | от | частка | 1917 | 7834 |
+| 11 | себе | займенник | 1782 | 7282 |
+| 12 | по | прийменник | 1465 | 5987 |
+| 13 | бо | сполучник | 1451 | 5929 |
+| 14 | ти | займенник | 1384 | 5656 |
+| 15 | яко | сполучник | 1274 | 5206 |
+| 16 | весь | займенник | 1012 | 4135 |
+| 17 | да | частка | 1000 | 4086 |
+| 18 | брат | іменник, ч.р. | 993 | 4058 |
+| 19 | літо | іменник, с.р. | 934 | 3817 |
+| 20 | ви | займенник | 917 | 3747 |
+| 21 | князь | іменник, ч.р. | 875 | 3576 |
+| 22 | у | прийменник | 874 | 3572 |
+| 23 | ми | займенник | 863 | 3527 |
+| 24 | той | займенник | 846 | 3457 |
+| 25 | Ізяслав | іменник, ч.р. | 836 | 3416 |
+| 26 | іти | дієслово | 830 | 3392 |
+| 27 | ректи | дієслово | 815 | 3330 |
+| 28 | син | іменник, ч.р. | 810 | 3310 |
+| 29 | я | займенник | 803 | 3281 |
+| 30 | свій | займенник | 781 | 3191 |
 
-**shev.early_middle** — ранньосередньоукраїнська доба, N = 14 238
+**shev.early_middle** — ранньосередньоукраїнська доба, N = 23 790
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 1006 | 70656 |
-| 2 | князь | іменник, ч.р. | 397 | 27883 |
-| 3 | на | частка | 299 | 21000 |
-| 4 | великий | прикметник | 233 | 16365 |
-| 5 | в | прийменник | 196 | 13766 |
-| 6 | же | сполучник | 178 | 12502 |
-| 7 | не | частка | 163 | 11448 |
-| 8 | а | сполучник | 158 | 11097 |
-| 9 | з | прийменник | 147 | 10324 |
-| 10 | він | займенник, ч.р. | 145 | 10184 |
-| 11 | той | займенник | 115 | 8077 |
-| 12 | от | частка | 111 | 7796 |
-| 13 | ми | займенник | 105 | 7375 |
-| 14 | сей | займенник | 104 | 7304 |
-| 15 | свій | займенник | 97 | 6813 |
-| 16 | Дмитрій | іменник, ч.р. | 86 | 6040 |
-| 17 | о | прийменник | 79 | 5549 |
-| 18 | бог | іменник, ч.р. | 73 | 5127 |
-| 19 | весь | займенник | 73 | 5127 |
-| 20 | во | прийменник | 72 | 5057 |
-| 21 | земля | іменник, ж.р. | 67 | 4706 |
-| 22 | за | прислівник | 64 | 4495 |
-| 23 | цар | іменник, ч.р. | 58 | 4074 |
-| 24 | по | прийменник | 57 | 4003 |
-| 25 | ви | займенник | 56 | 3933 |
-| 26 | бо | сполучник | 55 | 3863 |
-| 27 | бути | дієслово | 50 | 3512 |
-| 28 | святий | прикметник | 48 | 3371 |
-| 29 | брат | іменник, ч.р. | 46 | 3231 |
-| 30 | господь | іменник, ч.р. | 45 | 3161 |
+| 1 | і | сполучник | 1006 | 42287 |
+| 2 | князь | іменник, ч.р. | 400 | 16814 |
+| 3 | на | частка | 299 | 12568 |
+| 4 | великий | прикметник | 233 | 9794 |
+| 5 | в | прийменник | 197 | 8281 |
+| 6 | же | сполучник | 178 | 7482 |
+| 7 | не | частка | 163 | 6852 |
+| 8 | а | сполучник | 158 | 6641 |
+| 9 | з | прийменник | 147 | 6179 |
+| 10 | він | займенник, ч.р. | 145 | 6095 |
+| 11 | той | займенник | 118 | 4960 |
+| 12 | от | частка | 112 | 4708 |
+| 13 | ми | займенник | 105 | 4414 |
+| 14 | сей | займенник | 104 | 4372 |
+| 15 | свій | займенник | 97 | 4077 |
+| 16 | Дмитрій | іменник, ч.р. | 87 | 3657 |
+| 17 | о | прийменник | 79 | 3321 |
+| 18 | бог | іменник, ч.р. | 74 | 3111 |
+| 19 | весь | займенник | 73 | 3069 |
+| 20 | во | прийменник | 73 | 3069 |
+| 21 | земля | іменник, ж.р. | 67 | 2816 |
+| 22 | за | прислівник | 64 | 2690 |
+| 23 | цар | іменник, ч.р. | 59 | 2480 |
+| 24 | бо | сполучник | 57 | 2396 |
+| 25 | ви | займенник | 57 | 2396 |
+| 26 | по | прийменник | 57 | 2396 |
+| 27 | бути | дієслово | 51 | 2144 |
+| 28 | брат | іменник, ч.р. | 48 | 2018 |
+| 29 | святий | прикметник | 48 | 2018 |
+| 30 | господь | іменник, ч.р. | 46 | 1934 |
 
 **shev.middle** — середньоукраїнська доба, N = 152 857
 | # | lemma | POS | f | ipm |
@@ -4200,19 +4278,19 @@ Function words dominate the top of any frequency list; this is the expected shap
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2806 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (3030 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
 | як | shev.middle → shev.late_middle | 4 (26) | 609 (8267) | 1323.1 | 8.30 | 0.0001 |
 | я | shev.middle → shev.late_middle | 239 (1564) | 828 (11240) | 913.1 | 2.85 | 0.0001 |
-| князь | shev.old → shev.early_middle | 874 (3592) | 397 (27883) | 819.8 | 2.96 | 0.0001 |
-| з | shev.old → shev.early_middle | 16 (66) | 147 (10324) | 748.4 | 7.29 | 0.0001 |
 | що | shev.middle → shev.late_middle | 250 (1636) | 671 (9109) | 627.2 | 2.48 | 0.0001 |
+| з | shev.old → shev.early_middle | 16 (65) | 147 (6179) | 610.9 | 6.56 | 0.0001 |
 | так | shev.middle → shev.late_middle | 11 (72) | 306 (4154) | 600.6 | 5.85 | 0.0001 |
-| великий | shev.old → shev.early_middle | 473 (1944) | 233 (16365) | 507.6 | 3.07 | 0.0001 |
-| Дмитрій | shev.old → shev.early_middle | 4 (16) | 86 (6040) | 465.7 | 8.52 | 0.0001 |
+| князь | shev.old → shev.early_middle | 875 (3576) | 400 (16814) | 515.0 | 2.23 | 0.0001 |
+| Дмитрій | shev.old → shev.early_middle | 4 (16) | 87 (3657) | 389.6 | 7.81 | 0.0001 |
 | там | shev.middle → shev.late_middle | 13 (85) | 202 (2742) | 365.9 | 5.01 | 0.0001 |
+| великий | shev.old → shev.early_middle | 473 (1933) | 233 (9794) | 321.7 | 2.34 | 0.0001 |
 | й | shev.late_middle → shev.modern | 174 (2362) | 998 (8433) | 314.8 | 1.84 | 0.0001 |
 | мова | shev.late_middle → shev.modern | 74 (1005) | 676 (5712) | 312.8 | 2.51 | 0.0001 |
 | б | shev.middle → shev.late_middle | 29 (190) | 201 (2729) | 300.1 | 3.85 | 0.0001 |
@@ -4222,21 +4300,21 @@ Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (2806 shifts). Log Ratio > 0 = more freq
 **Falling** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| князь | shev.early_middle → shev.middle | 397 (27883) | 224 (1465) | 1183.2 | -4.25 | 0.0001 |
+| князь | shev.early_middle → shev.middle | 400 (16814) | 224 (1465) | 854.0 | -3.52 | 0.0001 |
+| же | shev.old → shev.early_middle | 7348 (30027) | 178 (7482) | 541.5 | -2.00 | 0.0001 |
 | Хмельницький | shev.late_middle → shev.modern | 277 (3760) | 0 (0) | 530.8 | -9.80 | 0.0001 |
 | і | shev.late_middle → shev.modern | 3320 (45069) | 3047 (25746) | 495.6 | -0.81 | 0.0001 |
 | от | shev.late_middle → shev.modern | 480 (6516) | 111 (938) | 456.2 | -2.80 | 0.0001 |
+| і | shev.old → shev.early_middle | 19245 (78643) | 1006 (42287) | 445.6 | -0.90 | 0.0001 |
 | нє | shev.middle → shev.late_middle | 546 (3572) | 0 (0) | 429.5 | -9.04 | 0.0001 |
-| великий | shev.early_middle → shev.middle | 233 (16365) | 350 (2290) | 425.4 | -2.84 | 0.0001 |
-| Дмитрій | shev.early_middle → shev.middle | 86 (6040) | 2 (13) | 404.8 | -8.85 | 0.0001 |
+| Дмитрій | shev.early_middle → shev.middle | 87 (3657) | 2 (13) | 330.3 | -8.13 | 0.0001 |
+| в | shev.old → shev.early_middle | 5814 (23758) | 197 (8281) | 299.5 | -1.52 | 0.0001 |
 | же | shev.late_middle → shev.modern | 403 (5471) | 144 (1217) | 280.9 | -2.17 | 0.0001 |
+| великий | shev.early_middle → shev.middle | 233 (9794) | 350 (2290) | 251.0 | -2.10 | 0.0001 |
 | но | shev.late_middle → shev.modern | 227 (3082) | 39 (330) | 251.0 | -3.23 | 0.0001 |
 | яко | shev.middle → shev.late_middle | 775 (5070) | 87 (1181) | 241.2 | -2.10 | 0.0001 |
 | Еней | shev.late_middle → shev.modern | 129 (1751) | 1 (8) | 236.4 | -7.70 | 0.0001 |
-| бог | shev.proto → shev.old | 113 (15664) | 561 (2306) | 225.0 | -2.76 | 0.0001 |
-| которий | shev.middle → shev.late_middle | 729 (4769) | 86 (1167) | 217.3 | -2.03 | 0.0001 |
-| але | shev.middle → shev.late_middle | 628 (4108) | 66 (896) | 206.2 | -2.20 | 0.0001 |
-| військо | shev.early_middle → shev.middle | 42 (2950) | 1 (7) | 197.5 | -8.82 | 0.0001 |
+| бог | shev.proto → shev.old | 113 (15664) | 562 (2297) | 225.8 | -2.77 | 0.0001 |
 
 Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shevchenko corpus is poetry, the old epochs are chronicles and sermons) — a shift is a statement about *this corpus*, not about the language (research/06 §3.5).
 
@@ -4244,7 +4322,7 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-488 spellings with a church_slavonic label (denominator: 43 488 stored spellings); 106 lemmas with origin = church_slavonic.
+499 spellings with a church_slavonic label (denominator: 44 448 stored spellings); 111 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
@@ -4252,13 +4330,13 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | града | град | 1037–1050 | CS-C1 | ↔ города (город: noun:inanim:m:v_rod:subst) | 1096–1117 |
 | град̑ | град | 1117–1200 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | градѣ | град | 1037–1050 | CS-C1 | ↔ городі (город: noun:inanim:m:v_mis) | 1096–1117 |
-| брань | брань | 1092 | CS-C1 | ↔ боронь (боронити: verb:imperf:impr:s:2) | 1440–1569 |
+| брань | брань | 1092 | CS-C1 | ↔ боронь (боронити: verb:imperf:impr:s:2) | 1301–1500 |
 | град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | власть | власть | 1037–1050 | CS-C1 | ↔ волость (волость: noun:inanim:f:v_naz) | 1096–1117 |
 | плаче | плакати | 1728 | CS-C1 | ↔ полоче (полокати: verb:imperf:pres:s:3:arch) | not in lexicon |
 | власти | власть | 1056–1057 | CS-C1 | ↔ волости (волость: noun:inanim:f:v_rod:up19) | 1096–1117 |
-| главу | глава | 1092 | CS-C1 | ↔ голову (голова: noun:anim:m:v_zna) | 1096–1117 |
 | глава | глава | 1110–1118 | CS-C1 | ↔ голова (голова: noun:anim:m:v_naz) | 1096–1117 |
+| главу | глава | 1092 | CS-C1 | ↔ голову (голова: noun:anim:m:v_zna) | 1096–1117 |
 | плачу | плакати | 1710 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | not in lexicon |
 | граду | град | 1037–1050 | CS-C1 | ↔ городу (город: noun:inanim:m:v_rod) | 1096–1117 |
 | злато | злато | 1092 | CS-C1 | ↔ золото (золото: noun:inanim:n:v_naz) | 1096–1117 |
@@ -4283,10 +4361,10 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | плъть | плоть | 1092 | CS-C9 |  | not in lexicon |
 | плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | not in lexicon |
 | плакать | плакати | 1117–1200 | CS-C1 | ↔ полокать (полокати: verb:imperf:inf:short:arch) | not in lexicon |
+| храм | храм | 1430–1439 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | 1110–1118 |
 | враг | враг | 1705 | CS-C1 | ↔ ворог (ворог: noun:anim:m:v_naz) | 1110–1118 |
 | прав | право | 1705 | CS-C1 | ↔ поров (пороти: verb:imperf:past:m) | 1746–1747 |
 | глави | глава | 1705 | CS-C1 | ↔ голови (голова: noun:anim:m:v_rod) | 1096–1117 |
-| храм | храм | 1581–1587 | CS-C1 | ↔ хором (хор: noun:inanim:m:v_oru) | 1110–1118 |
 | хощю | хостити | 1092 | CS-C3 | ↔ хочу (хотіти: verb:imperf:pres:s:1) | 1092 |
 
 ## 6. Earliest attestations
@@ -4326,29 +4404,29 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | до | 1037–1050 | ilarion | ilarion | абз. 1 | до | 0 |
 | у | 1037–1050 | ilarion | ilarion | абз. 12 | у | 0 |
 
-11731 of 11731 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+12264 of 12264 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 1908. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 430 of 11731 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); чрево (derived: russianism_or_hybrid); зостаючий (derived: russianism_or_hybrid+calque_participle)
+Surzhyk claims: 441 of 12264 lexicon lemmas. Examples: да (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid); бивший (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); даже (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); Вкраїна (derived: russianism_or_hybrid); далече (derived: russianism_or_hybrid); тоже (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); клятва (derived: russianism_or_hybrid); чрево (derived: russianism_or_hybrid)
 
 Dialect labels (lemmas): CHN: 231 · MPL: 3 · SE: 4 · POD: 11 · MDN: 10 · BOY: 17 · LEM: 17
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 43488. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: none; stored spellings with a rusyn claim: 0 of 44448. Rule hits (forms): none. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 297 types (1 239 tokens). Top: да (235, replace), єсть (193, replace), да (57, replace), тай (46, replace), щож (29, replace), будучи (27, replace), да (23, replace), да (22, replace), даже (17, replace), враг (12, replace), куда (9, replace), тай (9, replace), далече (8, replace), получивши (8, soft), государ (8, replace), єсть (8, replace), да (8, replace), власть (8, replace), тоже (7, replace), тута (7, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 40 435 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 186 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 41 473 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 4 272 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 1873 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 1912 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
-- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (34.2%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 11 731 of 19 078 lemmas; 11 731 written, none dropped. Core lexicon.json 12.67 MiB (limit 15 MiB), Evidence stored once in a shared pool (26 923 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 040 shards lex/<bucket>.json: max 194 KB, median 42 KB, total 91.1 MiB (limit 192 KiB each). lexindex.json 3.67 MB (3462 corpus-attested flagged forms added).
+- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (35.1%).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 12 264 of 19 519 lemmas; 12 264 written, none dropped. Core lexicon.json 13.02 MiB (limit 15 MiB), Evidence stored once in a shared pool (27 363 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 2 041 shards lex/<bucket>.json: max 200 KB, median 43 KB, total 93.3 MiB (limit 192 KiB each). lexindex.json 3.67 MB (3509 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
