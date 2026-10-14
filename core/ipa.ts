@@ -46,7 +46,9 @@ const CONS: Record<string, string> = {
   б: 'b', в: 'v', г: 'ɦ', ґ: 'ɡ', д: 'd', ж: 'ʒ', з: 'z', к: 'k', л: 'l', м: 'm', н: 'n', п: 'p', р: 'r', с: 's', т: 't', ф: 'f', х: 'x',
   ц: 't͡s', ч: 't͡ʃ', ш: 'ʃ', щ: 'ʃt͡ʃ', й: 'j',
 }
-const VOW: Record<string, string> = { а: 'ɑ', е: 'ɛ', и: 'ɪ', і: 'i', о: 'ɔ', у: 'u', ы: 'ɨ' }
+const VOW: Record<string, string> = { а: 'ɑ', е: 'ɛ', и: 'ɪ', і: 'i', о: 'ɔ', у: 'u', ы: 'ɨ',
+  // OR-2 (core/ocirc.ts): reading-only symbols, never produced by a standard spelling: ü/ÿ = rounded front [y] (ЕУМ «ÿ (лабіалізований і)»), ŭ = the diphthong [u̯ɔ] (вуол)
+  ü: 'y', ÿ: 'y', ŭ: 'u̯ɔ' }
 const IOT: Record<string, string> = { я: 'ɑ', ю: 'u', є: 'ɛ' }
 const HARD = new Set(['ʒ', 't͡ʃ', 'ʃ', 'ʃt͡ʃ', 'd͡ʒ', 'j'])
 const DEVOICE: Record<string, string> = { b: 'p', d: 't', ɦ: 'x', ɡ: 'k', ʒ: 'ʃ', z: 's', 'd͡ʒ': 't͡ʃ', 'd͡z': 't͡s' }

@@ -15,6 +15,8 @@ import SociolectBadges from '../components/SociolectBadges.vue'
 import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import DialectBlock from '../components/DialectBlock.vue'
+import CircReadings from '../components/CircReadings.vue'
+import { hasCirc } from '../../core/ocirc.ts'
 import { PRONOUN_VARIANTS, deriveAll } from '../../core/pronoun-variants.ts'
 import { segment } from '../../core/deictics.ts'
 import DerivationSteps from '../components/DerivationSteps.vue'
@@ -102,6 +104,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
     <div v-else-if="fc && stats" class="cols">
       <div>
         <Panel id="f-dia" :open="false" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
+        <Panel v-if="hasCirc(pick.raw)" id="f-circ" :open="true" title="Можливі читання · ô/ê" summary="читання літери з джерелами; IPA як говіркові варіанти"><CircReadings :spelling="pick.raw" /></Panel>
         <Panel id="f-kw" :open="true" :count="fc.kwic.length" title="Приклади · KWIC" :summary="`${fc.kwic.length} із f = ${stats.f}`" :empty="!fc.kwic.length">
           <Kwic :lines="fc.kwic" :lemma="pick.lemma" />
         </Panel>
