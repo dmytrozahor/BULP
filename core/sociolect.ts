@@ -7,7 +7,9 @@ import { claim, D, Q, type Claim } from './evidence.ts'
 import { key } from './text.ts'
 
 /** a Plast entry: w headword, g gloss (≤ 1 sentence, quoted), k 'term' (glossary part) | 'abbr' (abbreviation part), loc locator */
-export interface PlastEntry { w: string; g: string; k: 'term' | 'abbr'; loc: string }
+export interface PlastEntry { w: string; g: string; k: 'term' | 'abbr'; loc: string; /** source id when not the file's main one */ s?: string }
+/** a dialect attribution stated by a study (SL-3): quote + locator; group only when the gazetteer (AC-2) maps the stated region, else label-only «діал.» */
+export interface DialectRow { w: string; region?: string; group?: string; label: string; source: string; loc: string; quote: string; gaz?: { loc: string; quote: string } }
 /** a documented process of a word: kind 'abbreviation' | 'anglicism' | 'jargon'; every row has a source, a verbatim quote and a locator */
 export interface ProcessRow { w: string; kind: 'abbreviation' | 'anglicism' | 'jargon'; source: string; loc: string; quote: string; note?: string }
 export interface LiteraryRow { w: string; vesum: string | null }
@@ -15,6 +17,7 @@ export interface SociolectFile {
   format: 1; generated: string
   plast: { source: string; url: string; retrieved: string; licence: string; compiler: string; entries: PlastEntry[] }
   processes: ProcessRow[]
+  dialect?: DialectRow[]
   /** VESUM lookup per checked word (tag line of the lemma line, or null = absent); СУМ-11/СУМ-20 not reachable from the build host — see research/33 */
   literary: LiteraryRow[]
 }
@@ -52,8 +55,8 @@ export const plastOf = (word: string, f: SociolectFile) => f.plast.entries.filte
 export function sociolectBadges(word: string, f: SociolectFile): SocBadge[] {
   const out: SocBadge[] = []
   const pl = plastOf(word, f)
-  if (pl.length) out.push({ id: 'plast', text: SOC_UK.plast, claim: claim('plast', pl.map(e => D(f.plast.source, e.loc, e.g, `${f.plast.compiler}; ${f.plast.licence}`)), { method: 'ingest-plast: запис у пластовому словнику (лише цитата)' }) })
-  if (pl.some(e => e.k === 'abbr')) out.push({ id: 'abbreviation', text: SOC_UK.abbreviation, claim: claim('abbreviation', pl.filter(e => e.k === 'abbr').map(e => D(f.plast.source, e.loc, e.g)), { method: 'розділ «абревіатури» пластового словника' }) })
+  if (pl.length) out.push({ id: 'plast', text: SOC_UK.plast, claim: claim('plast', pl.map(e => D(e.s ?? f.plast.source, e.loc, e.g, e.s ? 'cite-only' : `${f.plast.compiler}; ${f.plast.licence}`)), { method: 'ingest-plast: запис у пластовому словнику (лише цитата)' }) })
+  if (pl.some(e => e.k === 'abbr')) out.push({ id: 'abbreviation', text: SOC_UK.abbreviation, claim: claim('abbreviation', pl.filter(e => e.k === 'abbr').map(e => D(e.s ?? f.plast.source, e.loc, e.g)), { method: 'розділ «абревіатури» пластового словника' }) })
   for (const kind of ['jargon', 'anglicism', 'abbreviation'] as const) {
     const rows = f.processes.filter(r => key(r.w) === key(word) && r.kind === kind)
     if (!rows.length) continue
@@ -68,4 +71,12 @@ export function sociolectBadges(word: string, f: SociolectFile): SocBadge[] {
 export function literaryStatus(word: string, f: SociolectFile): { status: 'present' | 'absent'; tags?: string } | null {
   const r = f.literary.find(x => key(x.w) === key(word))
   return r ? (r.vesum ? { status: 'present', tags: r.vesum } : { status: 'absent' }) : null
+}
+
+/** SL-3: dialect claims of a word, stated by a study (empty → «діалектна належність не встановлена»). */
+export function dialectClaims(word: string, f: SociolectFile): { row: DialectRow; text: string; claim: Claim<string> }[] {
+  return (f.dialect ?? []).filter(r => key(r.w) === key(word)).map(r => ({
+    row: r, text: r.group ? `${r.label}: ${r.region} (${r.group})` : r.label,
+    claim: claim(r.group ?? 'dialectal', [Q(r.source, r.loc, r.quote), ...(r.gaz ? [Q('WUK', r.gaz.loc, r.gaz.quote, `регіон «${r.region}» → група ${r.group} (AC-2)`)] : [])], { method: 'ingest-plast: твердження дослідження, регіон через AC-gazetteer' }),
+  }))
 }

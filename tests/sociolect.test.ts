@@ -2,8 +2,8 @@
 import { describe, expect, it } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
 import { SOURCES } from '../core/sources.ts'
-import { DIALECT_UNKNOWN, SOC_UK, literaryStatus, parsePlastLines, plastOf, sociolectBadges, type SociolectFile } from '../core/sociolect.ts'
-import { PROCESSES, SL1_WORDS, htmlLines } from '../pipelines/ingest-plast.ts'
+import { DIALECT_UNKNOWN, SOC_UK, dialectClaims, literaryStatus, parsePlastLines, plastOf, sociolectBadges, type SociolectFile } from '../core/sociolect.ts'
+import { PROCESSES, SL1_WORDS, htmlLines, parseKroki } from '../pipelines/ingest-plast.ts'
 
 const rd = (p: string) => readFileSync(new URL('../' + p, import.meta.url), 'utf8')
 const real = existsSync(new URL('../public/data/sociolect.json', import.meta.url)) ? JSON.parse(rd('public/data/sociolect.json')) as SociolectFile : undefined
@@ -46,11 +46,25 @@ describe('SL-2 Plast ingest', () => {
 })
 
 describe('SL-3 dialect characterisation', () => {
-  it('no dialect attribution is stored; the UI states «діалектна належність не встановлена»', () => {
-    if (real) expect(JSON.stringify(real)).not.toMatch(/"dialect"/)
+  it('dialect claims exist only where the study states them: quote + locator, region mapped through the AC gazetteer', () => {
+    if (!real) return
+    const d = real.dialect ?? []
+    expect(d.length).toBeGreaterThanOrEqual(2)
+    for (const r of d) { expect(r.source).toBe('PL100'); expect(r.quote.length).toBeLessThanOrEqual(160); expect(r.loc).toBeTruthy() }
+    const v = dialectClaims('вірлиця', real)
+    expect(v[0]!.row).toMatchObject({ region: 'Наддністрянщини', group: 'NDN' }); expect(v[0]!.claim.evidence.map(e => e.source)).toEqual(['PL100', 'WUK'])
+    expect(dialectClaims('гутірка', real)[0]!.row.group).toBeUndefined()   // «діалектного» without a region: label only
+    expect(dialectClaims('ватра', real)).toEqual([])
+  })
+  it('parseKroki extracts the numbered list, strict gloss pairs and the regional statement from page lines', () => {
+    const k = parseKroki(['слово «сходини» – «зібрання» тут.', 'Це слово є типовим для жителів Наддністрянщини, у говірці яких вживається приставний [в] – ворел, і відповідно множина – вірли.', 'Нижче подаємо список слів, які вже є у словнику:', '1.Абсолюторій'])
+    expect(k.entries.map(e => e.w)).toEqual(['сходини', 'Абсолюторій']); expect(k.dialect.map(r => r.w)).toEqual(['ворел', 'вірли'])
+    expect(k.dialect[0]!.group).toBe('NDN')
+  })
+  it('the UI states «діалектна належність не встановлена» when no study claim exists', () => {
     expect(DIALECT_UNKNOWN).toBe('діалектна належність не встановлена')
     expect(rd('src/components/SociolectBadges.vue')).toContain('DIALECT_UNKNOWN')
-    expect(rd('research/33-sociolects-plast.md')).toMatch(/Disallow: \//)
+    expect(rd('research/33-sociolects-plast.md')).toContain('100krokiv.info')
   })
 })
 
