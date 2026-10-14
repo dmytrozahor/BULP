@@ -62,7 +62,10 @@ const SKIP_PAGE: Record<string, RegExp> = {
  * «Чи справді важко вивчити правопис з ї?» (research/06b §3: "Includes Krymsky's appendices: exclude those sections").
  */
 /** Single lines that are not the primary text: a work's heading and the 19th-c. editor's own (Russian) footnote above a song (NW-7). */
-const DROP_LINE: Record<string, RegExp> = { song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/ }
+const DROP_LINE: Record<string, RegExp> = {
+  song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/,
+  song_zazhuryla: /^Пѣсня сія сложена/, song_baida: /^(О КОЗАКѢ БАЙДѢ|Полубаснословная пѣсня)/, song_yikhav: /^Пѣсня сія и еще/,   // Maksymovych's Russian headings / footnotes (BL-18)
+}
 const CUT: Record<string, RegExp> = {
   hrinchenko1908: /^Додаток до статі Б\. Д\. Грінченка/,
   // tables of contents / errata of the 1882, 1892, 1893 volumes duplicate the poem titles: «Реєстрик», «ЗМІСТ», «ПОМИЛКИ»
@@ -122,6 +125,7 @@ export const renderUrl = (title: string) => `https://uk.wikisource.org/w/index.p
 const sleep = (ms: number) => new Promise(r => setTimeout(r, ms))
 
 async function discover(u: Unit, fetchText: (url: string) => Promise<string>): Promise<string[]> {
+  if (!u.discover) return []     // single-page units (songs) list their render URL in `urls`
   const main = wikiTitle(u.urls[0]!).replace(/_/g, ' ')
   const titles: string[] = []; let cont = ''
   do {

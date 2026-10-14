@@ -2,7 +2,7 @@
 import { annotate, type AnnotateData } from './annotate.ts'
 
 export type Tok = [string, string, string | boolean]
-export interface Row { raw: string; loc: string; sep: string; lemma?: string; status: string; provenance?: string }
+export interface Row { raw: string; loc: string; sep: string; lemma?: string; form?: string; status: string; provenance?: string }
 
 export async function loadTokens(id: string): Promise<Tok[] | null> {
   try {
@@ -16,7 +16,7 @@ export async function loadTokens(id: string): Promise<Tok[] | null> {
 export function rowsOf(toks: Tok[], from: number, to: number, data: AnnotateData): Row[] {
   return toks.slice(from, to).map(([raw, loc, s]) => {
     const a = annotate(raw, data)[0]
-    return { raw, loc, sep: typeof s === 'string' ? s : s === false ? '' : ' ', lemma: a?.lemma, status: a?.status ?? 'unknown', provenance: a?.provenance }
+    return { raw, loc, sep: typeof s === 'string' ? s : s === false ? '' : ' ', lemma: a?.lemma, form: a?.form?.raw, status: a?.status ?? 'unknown', provenance: a?.provenance }
   })
 }
 

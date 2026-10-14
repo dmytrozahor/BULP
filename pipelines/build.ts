@@ -44,6 +44,7 @@ import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../c
 import { writeEtymology } from './build-etymology.ts'
 import { writeUsage } from './build-usage.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
+import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
@@ -133,7 +134,19 @@ export async function build(opts: { noPy?: boolean } = {}) {
     })
     return a
   })
-  lap(`${types.length} token types`)
+  // BL-18: words of authored-song lyrics (analysis only) join the type table with count 0 — they are linked by the same stage but belong to no witness and add to no frequency
+  const lyrics = loadLyrics(ROOT), lyricTypes = new Map<string, Map<string, { x: number; n: number }>>()
+  for (const [sid, words] of lyrics) {
+    const m = new Map<string, { x: number; n: number }>()
+    for (const wd of words) {
+      const raw = rawKey(wd), k = `uk|0|||||${raw}`      // the key shape of the witnesses' tokens: lang|oldI|orth|lemma|stanza|gate|raw
+      let x = typeIdx.get(k)
+      if (x === undefined) { x = types.length; typeIdx.set(k, x); types.push({ lang: 'uk', oldI: false, orth: undefined, raw, lemma: undefined, stanza: undefined, gate: undefined }); typeCount.push(0) }
+      const e = m.get(raw); if (e) e.n++; else m.set(raw, { x, n: 1 })
+    }
+    lyricTypes.set(sid, m)
+  }
+  lap(`${types.length} token types (${lyrics.size} analysis-only lyric files)`)
   const forms = new Set<string>()
   for (const t of types) for (const k of wantedKeys(t, { derive, fold })) forms.add(k)
   lap(`${forms.size} candidate keys; VESUM pass 1`)
@@ -174,6 +187,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
     })
     lap(`POS agreement (FX-3): ${moved} token types re-linked, ${dropped} left unresolved`)
   }
+  const songVocab: Record<string, SongVocab> = {}   // BL-18: per authored song, lemma/form counts only (pipelines/song-vocab.ts)
+  for (const [sid, m] of lyricTypes) {
+    const counts = new Map<string, { n: number; lemma?: string }>()
+    for (const [raw, { x, n }] of m) counts.set(raw, { n, lemma: linked[x]?.c.lemma })
+    songVocab[sid] = vocabOf(LYRICS_SOURCES[sid]!, counts)
+  }
+  if (lyricTypes.size) lap(`authored-song vocabularies: ${Object.entries(songVocab).map(([s, v]) => `${s} ${v.linked}/${v.tokens} tokens, ${v.lemmas.length} lemmas`).join('; ')}`)
 
   // ── 4. aggregate tokens into lemmas / spellings ────────────────────────────────────────────────
   const lemmas = new Map<string, LemmaAcc>(), lemmaList: LemmaAcc[] = []
@@ -237,7 +257,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const sel = new Map<string, FormAcc[]>(kept.map(l => [l.id, selectForms([...l.forms.values()], 12)]))
   const stressReq = new Set<string>(), ruReq = new Set<string>()
   const ltCorpus: ReportData['ltCorpus'] = []
-  types.forEach((t, x) => { const e = lt[key(t.raw)]; if (e && t.lang === 'uk') { ltCorpus.push({ form: key(t.raw), f: typeCount[x]!, file: e[0] }); ruReq.add(key(t.raw)) } })
+  types.forEach((t, x) => { const e = lt[key(t.raw)]; if (e && t.lang === 'uk' && typeCount[x]! > 0) { ltCorpus.push({ form: key(t.raw), f: typeCount[x]!, file: e[0] }); ruReq.add(key(t.raw)) } })
   for (const l of kept) {
     stressReq.add(l.display)
     for (const fa of sel.get(l.id)!) {
@@ -332,6 +352,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
       const card: FormCard = {
         raw: fa.raw, norm: fa.norm, modern: fa.modern, f: fa.f, date: fa.date, link,
         derivation: traceSteps(fa.norm, c.own), claims: det.claims, hints: det.hints, epochs: [...fa.epochs], kwic: fa.kwic.map(kwicOf),
+        byW: Object.fromEntries([...fa.perW].sort((a, b) => a[0].localeCompare(b[0]))),   // BL-6c: true per-witness counts of this spelling
       }
       return { card, acc: fa }
     })
@@ -411,7 +432,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     }
     writeFileSync(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
   }
-  lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated)} songs`)   // LW-2 / HT-1 exports for the W10 stream
+  lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated, songVocab)} songs`)   // LW-2 / HT-1 exports for the W10 stream
   { const u = writeUsage(lemTags, ROOT, PUB, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} Wiktionary)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3

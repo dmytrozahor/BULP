@@ -8,6 +8,7 @@ import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { ARTISTS, SONGS, SONGS_POLICY } from '../core/songs.ts'
 import { parseSenses, type SensesFile } from '../core/senses.ts'
+import type { SongVocab } from './song-vocab.ts'
 
 const rdj = <T>(p: string): T | undefined => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) as T : undefined)
 const SINGLE = /^[а-яіїєґ'’-]+$/i
@@ -33,8 +34,8 @@ export function writeLoanLabels(root: string, pub: string): number {
 
 interface StressJson { source: string; forms: Record<string, { stressed: string; positions: number[]; ambiguous?: boolean }[]> }
 /** NW-7: public/data/songs.json (song metadata, ≤ 2-line quotations, YouTube ids) for the media views. */
-export function writeSongs(pub: string, generated: string): number {
-  writeFileSync(resolve(pub, 'songs.json'), JSON.stringify({ format: 1, generated, policy: SONGS_POLICY, songs: SONGS, artists: ARTISTS }))
+export function writeSongs(pub: string, generated: string, vocab: Record<string, SongVocab> = {}): number {
+  writeFileSync(resolve(pub, 'songs.json'), JSON.stringify({ format: 1, generated, policy: SONGS_POLICY, songs: SONGS, artists: ARTISTS, vocab }))
   return SONGS.length
 }
 

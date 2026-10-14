@@ -54,7 +54,9 @@ export interface Song {
   earliest?: { date: string; what: string; check: string }; authorship?: string; licence: string; witness?: string
   quotes: { text: string; evidence: SongEvidence }[]; media: SongMedia[]; note?: string; evidence: SongEvidence[]
 }
-export interface SongsData { generated: string; policy: string; songs: Song[] }
+/** BL-18: vocabulary of an authored song — counts only (pipelines/song-vocab.ts); `source` is where the lyrics were read for analysis */
+export interface SongVocabData { source: { url: string; what: string }; tokens: number; linked: number; lemmas: [string, number, [string, number][]][]; unresolved: [string, number][] }
+export interface SongsData { generated: string; policy: string; songs: Song[]; vocab?: Record<string, SongVocabData> }
 const songs = shallowRef<SongsData>()
 const loadSongsOnce = once<SongsData>('songs', v => { songs.value = v })
 export function useSongs() { loadSongsOnce(); return songs }

@@ -8,6 +8,10 @@ import { computed, ref, watch } from 'vue'
 import { useSongs, KIND_SONG_UK, songLines, type Song } from '../lib/datasets.ts'
 import type { WitnessMedia } from '../lib/media.ts'
 import { evidenceTo } from '../lib/nav.ts'
+import { useData } from '../composables/useData.ts'
+import { loadTokens, rowsOf, type Tok } from '../lib/witnessText.ts'
+import { witnessTo, wordTo } from '../lib/nav.ts'
+import SongVocab from '../components/SongVocab.vue'
 import Panel from '../components/Panel.vue'
 import MediaPanel from '../components/MediaPanel.vue'
 import EvidenceList from '../components/EvidenceList.vue'
@@ -22,6 +26,18 @@ const mediaOf = (s: Song, i: number): WitnessMedia => {
   const m = s.media[i]!
   return { kind: 'youtube', url: m.id, id: m.id, title: m.title, attribution: `YouTube${m.uploader ? ` — завантажив(ла) ${m.uploader}` : ''} (сторонній відеозапис; лише вбудовування, аудіо не зберігається)`, licence: 'на розсуд правовласника відео' }
 }
+// BL-18: a public-domain song's own text (the corpus witness) as clickable tokens, and its vocabulary; an authored song shows its vocabulary only (counts, no text)
+const { loaded, annData, witnessById } = useData()
+const toks = ref<Tok[] | null>(null)
+watch(() => song.value?.witness, async w => { toks.value = null; if (!w) return; const t = await loadTokens(w); if (w === song.value?.witness) toks.value = t }, { immediate: true })
+const wit = computed(() => (song.value?.witness ? witnessById.value.get(song.value.witness) : undefined))
+const textRows = computed(() => (toks.value && loaded.value ? rowsOf(toks.value, 0, toks.value.length, annData.value) : []))
+const folkVocab = computed(() => {
+  const by = new Map<string, Map<string, number>>()
+  for (const r of textRows.value) if (r.lemma) { const m = by.get(r.lemma) ?? by.set(r.lemma, new Map()).get(r.lemma)!; const f = r.form ?? r.raw; m.set(f, (m.get(f) ?? 0) + 1) }
+  return [...by].map(([l, m]) => [l, [...m.values()].reduce((a, b) => a + b, 0), [...m]] as [string, number, [string, number][]]).sort((a, b) => a[0].localeCompare(b[0], 'uk'))
+})
+const vocab = computed(() => (song.value ? data.value?.vocab?.[song.value.id] : undefined))
 const lines = (s: Song) => s.quotes.flatMap(q => songLines(q.text).map(t => ({ t, q }))).slice(0, 2)
 </script>
 
@@ -63,7 +79,23 @@ const lines = (s: Song) => s.quotes.flatMap(q => songLines(q.text).map(t => ({ t
           <p class="small muted sans">Цитата (не більше 2 рядків) за <RouterLink :to="evidenceTo(song.quotes[0]!.evidence.source, song.quotes[0]!.evidence.locator)">джерелом</RouterLink><template v-if="/^https?:/.test(song.quotes[0]!.evidence.locator)"> (<a :href="song.quotes[0]!.evidence.locator" target="_blank" rel="noopener">оригінал ↗</a>)</template>.</p>
         </div>
         <p v-else class="small muted sans">Тексту не наведено: {{ song.licence === 'link-only' ? 'лише посилання (права на текст не підтверджено)' : 'немає цитати' }}.</p>
-        <p v-if="song.witness" class="small sans">Текст у корпусі: <RouterLink :to="{ path: '/texts', query: { w: song.witness } }">пам’ятка {{ song.witness }}</RouterLink></p>
+        <p v-if="song.witness" class="small sans">Текст у корпусі: <RouterLink :to="{ path: '/texts', query: { w: song.witness } }">пам’ятка {{ song.witness }}</RouterLink> · <RouterLink :to="witnessTo(song.witness)">картка пам’ятки</RouterLink></p>
+        <div v-if="song.witness && textRows.length" class="card">
+          <h2 class="small sans" style="margin:0 0 .3rem">Текст друку {{ wit?.date?.[0] ?? '' }} (суспільне надбання), правопис {{ wit?.orth ?? 'оригіналу' }} — кожне слово веде до картки</h2>
+          <p class="reader" style="font-family:var(--serif);line-height:2">
+            <template v-for="(t, i) in textRows" :key="i">
+              <RouterLink v-if="t.lemma" :class="['tok', t.status]" :to="wordTo(t.lemma)" :title="`лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
+              <RouterLink v-else class="tok unknown" :to="{ path: '/analyze', query: { q: t.raw } }">{{ t.raw }}</RouterLink>{{ t.sep }}
+            </template>
+          </p>
+        </div>
+        <Panel v-if="song.witness && folkVocab.length" id="s-fvocab" title="Слова пісні · леми й форми" :summary="`${folkVocab.length} лем у тексті 1834`" :open="false">
+          <SongVocab :lemmas="folkVocab" />
+        </Panel>
+        <Panel v-if="vocab" id="s-vocab" title="Слова пісні · лише лічильники" :summary="`${vocab.lemmas.length} лем, ${vocab.linked} з ${vocab.tokens} слововживань пов’язано`" :open="false">
+          <p class="small muted sans">Авторський текст не зберігається й не показується: лише леми та форми з лічильниками (аналіз тексту, прочитаного з <a :href="vocab.source.url" target="_blank" rel="noopener">{{ vocab.source.what }} ↗</a>); порядок слів у пісні не відновлюється.</p>
+          <SongVocab :lemmas="vocab.lemmas" :unresolved="vocab.unresolved" />
+        </Panel>
         <p v-if="song.note" class="small muted sans">{{ song.note }}</p>
 
         <Panel id="s-media" :title="'Записи · YouTube'" :summary="`${song.media.length} відео (сторонні завантаження; відтворення лише за кліком)`" :empty="!song.media.length" :open="false">

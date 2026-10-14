@@ -16,6 +16,11 @@ const R = (re: RegExp, to: string) => (w: string) => w.replace(re, to)
 const KUL = Q('ENC', 'http://litopys.org.ua/ukrmova/um35.htm', 'КУЛІШІВКА — укр. фонет. правопис, застосований П. Кулішем у «Записках о Южной Руси» (т. 1, 1856) та в «Граматці» (1857)')
 const ZHEL = Q('ENC', 'http://litopys.org.ua/ukrmova/um17.htm', 'ЖЕЛЕХІВКА — укр. фонет. правопис у Зх. Україні в ост. чв. 19 ст., який створив … Є. Желехівський для власного «Малоруськонімецького словаря» (1886).')
 const YAR = P('WUK', 'https://uk.wikipedia.org/wiki/Ярижка', 'ярижка — запис української мови російською абеткою; і з о, е, ѣ передавано через и або ѣ', 'приклади: Енеида 1798 «винъ» = він, «Троянцивъ» = троянців (research/01)')
+const UM43 = 'http://litopys.org.ua/ukrmova/um43.htm'
+const MAX_I = Q('ENC', UM43, 'запроваджувалися позначення голосного і етимол. літерами ô, ê, û, î з діакритичним знаком')
+const MAX_T = Q('ENC', UM43, 'Крім етимол. написань з використанням традиц. літер рос. алфавіту ы, и, Ђ , ъ')
+const MAX_E = Q('ENC', UM43, 'ё для сполучень йо, ьо (ёго, сёго), е для літер е, є та ъ на місці апострофа')
+const MAX_U = Q('ENC', UM43, 'літера ў для нескладового голосного, середнього між в і у')
 
 export const FOLDS: Fold[] = [
   { id: 'ORTH-YAR-JER', era: ['ярижка'], branch: false, cite: YAR, apply: R(/ъ$/, '') },
@@ -32,6 +37,16 @@ export const FOLDS: Fold[] = [
   { id: 'ORTH-KUL-JER', era: ['кулішівка', 'желехівка'], branch: false, cite: KUL, apply: R(/ъ/g, "'") },
   { id: 'ORTH-ZHEL-TY', era: ['желехівка'], branch: true, cite: ZHEL, apply: R(/(?<=[дтзсцлн])ї/g, 'і') },
   { id: 'ORTH-ZHEL-TE', era: ['желехівка'], branch: true, cite: ZHEL, apply: R(/(?<=[дтзсцлн])є/g, 'е') },
+  // BL-18: максимовичівка (Максимович 1827/1841; ENC um43): ô ê û î = [і]; ѣ ы ъ traditional; ъ = apostrophe inside a word; ё = йо/ьо; ў = non-syllabic в/у
+  { id: 'ORTH-MAX-I', era: ['максимовичівка'], branch: false, cite: MAX_I, apply: R(/[оеуи]̂|[ôêûî]/g, 'і') },
+  { id: 'ORTH-MAX-YAT-J', era: ['максимовичівка'], branch: true, cite: MAX_T, apply: R(/(?<=^|[аеиіоуюяїє'])ѣ/g, 'ї') },   // ѣхати = їхати (ѣ → і, after a vowel / word-initially also ї)
+  { id: 'ORTH-MAX-YAT', era: ['максимовичівка'], branch: false, cite: MAX_T, apply: R(/ѣ/g, 'і') },
+  { id: 'ORTH-MAX-Y', era: ['максимовичівка'], branch: false, cite: MAX_T, apply: R(/ы/g, 'и') },
+  { id: 'ORTH-MAX-JER-END', era: ['максимовичівка'], branch: false, cite: MAX_T, apply: R(/ъ$/, '') },
+  { id: 'ORTH-MAX-JER', era: ['максимовичівка'], branch: false, cite: MAX_E, apply: R(/ъ/g, "'") },
+  { id: 'ORTH-MAX-JO', era: ['максимовичівка'], branch: false, cite: MAX_E, apply: w => w.replace(/(?<=^|[аеиіоуюяїє'])ё/g, 'йо').replace(/ё/g, 'ьо') },
+  { id: 'ORTH-MAX-E', era: ['максимовичівка'], branch: true, cite: MAX_E, apply: R(/^е|(?<=[аеиіоуюяїє'])е/g, 'є') },
+  { id: 'ORTH-MAX-U', era: ['максимовичівка'], branch: false, cite: MAX_U, apply: R(/ў/g, 'в') },
 ]
 
 /** Candidates of a pre-1919 spelling in modern orthography, with fold trace (ids). */
