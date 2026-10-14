@@ -55,7 +55,7 @@ All values for IPA are [P] (our transcription of a [Q] description) unless state
 | G11 | -ті/-ть finals | see §4 | | | | |
 | G12 | -кій/-хій (adj.) | NDN | -кий unstressed | глибокий → [ɦlɪˈbɔkij] | IMP | 04 NDN-ADJ-KIJ |
 | G13 | epenthetic л’/н’ after labial | POD, MDN, NDN, SLB | м'я в'я | здоров'я → [zdɔˈrɔu̯lʲa] | REC | 04 EPENTH-L-N |
-| G14 | unstressed о > у | LEM, HUT, NDN, SW | unstressed о | говорити → [ɦuvɔˈrɪtɪ]; кожух → [kuˈʒux] | IMP (std already [ʊ] before stressed у/і) | HUT: «укання відзначається перед складом з голосним високого підняття у, і (хоудíм, гуд’íўл'а, кужýх)»; SHEV-43: «"укання" (ko≥uxž) …» (ch. 43 lines 327–330); LEM: «перехід [о] в [уо], [у] … у ненаголошеній позиції» (WP-Лемківський) |
+| G14 | unstressed о > у | LEM, HUT, NDN, SW | unstressed о | говорити → [ɦuvɔˈrɪtɪ]; кожух → [kuˈʒux] | IMP (std already [ʊ] before stressed у/і) | HUT: «укання відзначається перед складом з голосним високого підняття у, і (хоудíм, гуд’íўл'а, кужýх)»; SHEV-43: «"укання" (kožúx > k[u]žúx)»; LEM: «перехід [о] в [уо], [у] … у ненаголошеній позиції» (WP-Лемківський) |
 | G15 | unstressed е > у/и | SW | unstressed е | | | WP-Наддністрянський / SHEV-62 «ненаголошений о … як u, а ненаголошений е — як у» |
 | G16 | **акання** | CHN (Desna), WPL north, STP/SLB margin | unstressed о | голова → [ɦɑˈlɔvɑ] | REC (галава́) / IMP | WP-Східнополіський: «Акання: ненаголошене «о» → «а» (галава́, пабіегла, вада́)»; SHEV-62: «говірки, поширені на північ від Десни, з характерним для них аканням … є в ґрунті речі білоруські» |
 | G17 | ф > х / хв | CHN, MDN, SE | всі ф | фабрика → [ˈxʋabrɪka] | REC | 04 F-TO-X |
@@ -122,11 +122,11 @@ Date caps (all [Q] SHEV-62): fall of jers 1050–1150; reflexes of closed syllab
 
 ### 3.4 Form classes our derivation currently misses (core/phonology.ts R10 `(?<![ое][рл])[ое]((?:C){1,2}ь?)LOST`)
 
-1. **-овъ > -ів** (Львів, Київ? no — Київ < Кыєвъ; it is Львів, Борів, Тернів-type toponyms; **the common class is gen. pl. -овъ > -ів**: братовъ → братів, ковалевъ → ковалів). Requires the nominal ending's jer-fall context; check that LOST sees the final ъ of an ending, not only stem jers. [P]
+1. **-овъ > -ів** (Львів < Львовъ; the large class is gen. pl. -овъ > -ів: братовъ → братів, ковалевъ → ковалів). Requires the nominal ending's jer-fall context; check that LOST sees the final ъ of an ending, not only stem jers. [P]
 2. **Vowel alternation with analogical restoration** (R10 levelled): кінь/коня, але стола — the genitive keeps о because the following syllable is open. Fine in trace, but dialect "стул" (V2) must apply *only* to the stressed closed-syllable member of the alternation. [P]
 3. **-івл- suffix** (будівля, зимівля, куплівля): о > і *by analogy* (WP-Ікавізм: «нефонетично, бо в наступому складі ніколи не було зредукованого ь чи ъ»); R10 will not derive it — needs a lexicalised analogy tag; and the **hypercorrect** «куп'увл'я, торг'увл'я» in the Hutsul area. [Q: WP-Ікавізм]
 4. **Pleophonic і** (беріг, сторін gen. pl.): SHEV-57 «бéрег > діал. бéріг, storon > сторíн ґен. мн.» — R10 blocks them (exception b), but the standard *has* сторін, зсторін, тощо; so exception b must be **lexically overridden** for gen. pl. and for dialect forms (беріг, холодів?). [Q]
-5. **Open-syllable і < е/о** (кінéць, пісок < пѣсъкъ? no — кінéць): SHEV-57 «появу і у відкритих складах замість о та е в словах типу кінéць». Classed as *later accommodation*, not R10; our trace does not mark it. [Q]
+5. **Open-syllable і < е/о** (кінéць): SHEV-57 «появу і у відкритих складах замість о та е в словах типу кінéць». Classed as *later accommodation*, not R10; our trace does not mark it. [Q]
 6. **Prothesis + і** (вікно, вісім, вітер?): R21 and R10 interplay; ok but the **prothetic stage ordering** (вокно → вікно) should be shown. [P]
 7. **е before ъ-syllable vs ь-syllable** (мед → мід(діал.) / мед; ніс (masc. past) vs несла): SHEV-62 «двоїстість рефлексів … (мед : меду проти ніс : несла)» — standard is mostly е/і, but the R10 trace should record which jer followed so dialect V5 can fire. [Q]
 8. **е > о after sibilants (R17) before R10** (шість < шесть; жінка < жена-; чотири), ordering; **шість** vs «шоста» etc. [P]
