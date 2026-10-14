@@ -82,5 +82,10 @@ function axisTicks(plates: TPlate[]): { x: number; label: string }[] {
     for (let i = 1; i < pts.length; i++) { const a = pts[i - 1]!, b = pts[i]!; if (y <= b.y) return b.y === a.y ? b.x : a.x + (b.x - a.x) * (y - a.y) / (b.y - a.y) }
     return pts[pts.length - 1]!.x
   }
-  return niceTicks(lo - pad, hi + pad).map(y => ({ x: Math.max(MARGIN, at(y)), label: String(y) }))
+  if (hi === lo) return [{ x: Math.max(MARGIN, pts[0]!.x), label: String(lo) }]
+  // keep only ticks ≥ TICK_GAP px apart, so labels never pile up (user 2026-10-14, /w/язичний: «1092» drawn five times on top of itself)
+  const out: { x: number; label: string }[] = []
+  for (const y of niceTicks(lo - pad, hi + pad)) { const x = Math.max(MARGIN, at(y)); if (!out.length || x - out[out.length - 1]!.x >= TICK_GAP) out.push({ x, label: String(y) }) }
+  return out
 }
+const TICK_GAP = 48

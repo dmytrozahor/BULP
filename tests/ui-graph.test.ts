@@ -67,6 +67,10 @@ describe('UI-2 graph views', () => {
     expect(t.width).toBeLessThan(900)   // 1037…1900 is not stretched linearly
     expect(t.plates.find(p => p.id === 'g')!.sw).toBeGreaterThan(t.plates.find(p => p.id === 'b')!.sw)
     expect(timelineLayout([mk('x', 'довге-слово-форма', 1200, 1)]).plates[0]!.w).toBeGreaterThan(timelineLayout([mk('y', 'а', 1200, 1)]).plates[0]!.w)
+    // a single attestation (/w/язичний, 1092) has exactly one tick; ticks never sit closer than 48 px
+    expect(timelineLayout([mk('s', 'ꙗзычьнии', 1092, 1)]).ticks.map(k => k.label)).toEqual(['1092'])
+    const tk = timelineLayout([mk('a', 'а', 1092, 1), mk('b', 'б', 1093, 1), mk('c', 'в', 1900, 1)]).ticks
+    for (let i = 1; i < tk.length; i++) expect(tk[i]!.x - tk[i - 1]!.x).toBeGreaterThanOrEqual(48)
   })
   it('UI-2 viewBox fits: it contains every plate bbox (with border and margin), the axis and its labels — nothing is clipped, also for one plate and heavy plates', () => {
     const mk = (id: string, label: string, year: number, f: number) => ({ id, label, year, f, kind: 'modern', to: `/f/${id}` })
@@ -84,7 +88,7 @@ describe('UI-2 graph views', () => {
       for (let i = 1; i < t.length; i++) expect(t[i]).toBeGreaterThan(t[i - 1]!)
     }
     const g = timelineLayout([{ id: 'a', label: 'міна', year: 1862, f: 1, kind: 'old', to: '/f/a' }, { id: 'b', label: 'мін', year: 1900, f: 1, kind: 'modern', to: '/f/b' }])
-    expect(g.ticks.length).toBeGreaterThanOrEqual(3)
+    expect(g.ticks.length).toBeGreaterThanOrEqual(2)   // nice ticks thinned to ≥ 48 px apart on the compressed axis
   })
   it('UI-1 panel summaries break at a word boundary with «…» and show in full as the tooltip; the CSS wraps them to 2 lines instead of cutting mid-word', () => {
     const s = 'From Proto-Balto-Slavic *mainā, from Proto-Indo-European *mey- (to change), a borrowing'
