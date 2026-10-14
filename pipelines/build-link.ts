@@ -15,6 +15,7 @@ import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
 import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
 import { velarCandidates } from '../core/palatalization.ts'
+import { MU_ORTH, muCandidates } from '../core/mu-fold.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -68,6 +69,19 @@ function ownFor(id: string, cands: Candidate[], hits: Env['hits']): { own: Candi
   return ok ? { own: ok, ok: true } : { own: [...cands].sort(better)[0] ?? { form: '', trace: [], branches: 0 }, ok: false }
 }
 
+/** SPEC 63 MU-2: last resort for Middle Ukrainian text in modern letters. A cited morphology fold yields a candidate; VESUM must list it with the analysis the fold states (`expect`),
+ *  and the token's own POS gate (if any) must agree. Tie-breaks treat every MU rule as a branch, so a plain route always wins. */
+function muOptions(t: TypeCtx, env: Env): Option[] {
+  if (!t.orth || !MU_ORTH.has(t.orth)) return []
+  const out: Option[] = []
+  for (const m of muCandidates(key(t.raw))) {
+    const cands: Candidate[] = t.lang === 'uk' ? [{ form: m.form, trace: m.trace, branches: m.trace.length }]
+      : env.derive(m.form, t.oldI).candidates.map(d => ({ form: d.form, trace: [...m.trace, ...d.trace], branches: d.branches + m.trace.length }))
+    for (const c of cands) for (const h of env.hits.get(key(c.form)) ?? []) if (m.last.expect(h.tags) && compatible(t.gate, h.tags)) out.push(toOption(key(c.form), h, c, c, true))
+  }
+  return out
+}
+
 /** First successful route for one token type (B-2). Returns the route with ALL its options (disambiguated later by chooseLemma). */
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   // FX-1: every route keeps only analyses whose POS class is compatible with the token's own POS annotation; an empty route falls through to the next
@@ -104,6 +118,7 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
     const opts = env.fold(key(t.raw), t.orth).flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true)))
     if (opts.length) return { route: 'direct', opts }
   }
+  const mu = muOptions(t, env); if (mu.length) return { route: t.lang === 'uk' ? 'direct' : 'token', opts: mu }
   return undefined
 }
 
@@ -117,6 +132,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold'>): strin
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
   if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
+  if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw))) { if (t.lang === 'uk') out.push(key(m.form)); else for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) }
   return out
 }
 

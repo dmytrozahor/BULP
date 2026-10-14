@@ -40,6 +40,8 @@ import { renderReport, type ReportData } from './build-report.ts'
 import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
+import { capNames, muReport, type MuWitness } from './build-mu.ts'
+import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
 import { corrEvidence } from '../core/correspondences.ts'
@@ -289,6 +291,23 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const light = lightIndex(adm.map(({ w }) => w), docs.map(d => d.id), lemmaList, keep)
   for (const [wid, r] of light.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
   lap(`light cards: ${light.file.lemmas.length} lemmas dropped by KEEP_MIN_F`)
+  {   // SPEC 63 MU-3: capitalised unresolved tokens of Middle Ukrainian witnesses get name cards; analysis/middle-ukr-extraction.md
+    const muWs = adm.flatMap(({ w }, wi) => w.orth && MU_ORTH.has(w.orth) ? [{ w, ids: docs[wi]!.id, wi }] : [])
+    const cap = capNames(muWs, new Set(torot.file.names.map(n => n.id)))
+    for (const [wid, r] of cap.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
+    torot.file.names.push(...cap.names)
+    const rows: MuWitness[] = muWs.map(({ w, ids, wi }) => {
+      const rules: Record<string, number> = {}, unresolved = new Map<string, number>(), refs = cap.refs.get(w.id)
+      w.tokens.forEach((t, ti) => {
+        const L = linked[tix[wi]![ti]!]
+        if (L) { for (const r of L.c.cand.trace) if (r.startsWith('MU-')) rules[r] = (rules[r] ?? 0) + 1; return }
+        if (!refs?.[ti]) bump(unresolved, rawKey(t.raw))
+      })
+      return { w, n: w.tokens.length, linked: ids.reduce((a, b) => a + (b >= 0 ? 1 : 0), 0), names: cap.tokens.get(w.id) ?? 0, rules, unresolved }
+    })
+    muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26'])
+    lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
+  }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)
   lap(`${kept.length} lemmas kept (f ≥ 2, pre-1400 or dictionary headword); collocations for ${coll.size}`)

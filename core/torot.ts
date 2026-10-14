@@ -35,6 +35,8 @@ export interface NameCard extends CardBase {
   kind: 'place' | 'unknown'; place?: string
   /** modern Ukrainian form: only when the token also linked to a VESUM proper-noun lemma */
   modern?: string
+  /** SPEC 63 MU-3: no TOROT annotation; the card rests on capitalisation alone (capNames in build-torot.ts) */
+  basis?: 'capitalisation'
 }
 export interface OrvCard extends CardBase { gloss: 'unknown'; reason: string }
 export interface TorotFile { generated: string; source: string; names: NameCard[]; orv: OrvCard[] }
