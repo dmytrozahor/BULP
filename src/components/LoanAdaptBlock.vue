@@ -9,6 +9,7 @@ import ClaimBadge from './ClaimBadge.vue'
 const props = defineProps<{ word: string }>()
 const { annData } = useData()
 const a = computed(() => analyzeLoan(props.word, {
+  stemKnown: s => lexHas(annData.value)(s) !== null,
   vesum: w => { const l = literaryOf(w); if (l) return l.status === 'present' ? l.tags ?? 'є' : null; return lexHas(annData.value)(w) === 'vesum' ? 'є у даних ВЕСУМ у браузері' : undefined },
 }))
 const vesumText = computed(() => ({ present: 'є у ВЕСУМ', absent: 'немає у ВЕСУМ', unchecked: 'у ВЕСУМ не перевірено (у браузері повного списку немає)' }[a.value!.status.vesum]))

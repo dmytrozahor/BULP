@@ -12,11 +12,11 @@ export type LoanRoute = 'phonetic' | 'graphic' | 'latin' | 'direct-en'
 export const ROUTE_UK: Record<LoanRoute, string> = { phonetic: 'фонетичне (за вимовою)', graphic: 'графічне (за написанням)', latin: 'латинський (німецький) шлях', 'direct-en': 'пряме з англійської' }
 const ROUTE_RANK: LoanRoute[] = ['phonetic', 'graphic', 'latin', 'direct-en']
 
-export interface LoanRule { id: string; re: RegExp; uk: string; src: string; route: LoanRoute; ev: Evidence[] }
+export interface LoanRule { id: string; re: RegExp; uk: string; src: string; route: LoanRoute; ev: Evidence[]; /** fires only when the stem is itself a word (opts.stemKnown) */ needsStem?: boolean }
 
 const PR = (n: number) => `https://slovnyk.ua/pravopys.php?prav_ver=2019&prav_par=${n}`
 const W = (t: string) => `https://en.wiktionary.org/wiki/${t}`
-const NOUN = '(?:а|у|ові|ом|і|ів|ам|ами|ах|е)?'
+const NOUN = '(?:а|у|и|ові|ом|і|ів|ам|ами|ах|е)?'
 const ADJ = '(?:ий|а|е|і|ого|ому|им|ої|ою|их|ими)?'
 
 export const LOAN_RULES: LoanRule[] = [
@@ -43,7 +43,25 @@ export const LOAN_RULES: LoanRule[] = [
   { id: 'LA-abil', re: /^(.{2,})абіл$/, uk: '-абіл-', src: '-abil- (лат. -abilis)', route: 'graphic', ev: [
     Q('EWIKT', W('-ity'), 'Final -ble changes to -bil before this suffix due to its Latin origin; compare, for example, noble and nobility.'),
     Q('PRAV', PR(134), 'Англійський звук [æ], якому на письмі відповідає англійська буква а, звичайно передаємо українською буквою а', '§ 134: за буквою, а не за вимовою [ə]') ] },
-]
+  { id: 'LA-cija', re: /^(.{2,})ці(?:я|ї|ю|єю|ям|ями|ях|й)$/, uk: '-ція', src: '-tion', route: 'latin', ev: [
+    Q('EWIKT', W('-ція'), 'abstract noun-forming suffix: -tion (used in adapted borrowings of Latinate nouns ending in -tion)'),
+    Q('EWIKT', W('-ція'), 'Ultimately from Latin -tiō.') ] },
+  { id: 'LA-ing', re: new RegExp(`^(.{3,})[іи]нг${NOUN}$`), uk: '-інг/-инг', src: '-ing', route: 'direct-en', ev: [
+    Q('EWIKT', W('маркетинг'), 'Borrowed from English marketing.'),
+    Q('EWIKT', W('моніторинг'), 'Borrowed from English monitoring.'),
+    Q('EWIKT', W('тренінг'), 'Borrowed from English training.') ] },
+  { id: 'LA-ment', re: new RegExp(`^(.{2,})мент${NOUN}$`), uk: '-мент', src: '-ment (лат. -mentum)', route: 'direct-en', ev: [
+    Q('EWIKT', W('менеджмент'), 'Borrowed from English management.'),
+    Q('EWIKT', W('-ment'), 'From Middle English -ment, from Old French -ment, from Latin -mentum.') ] },
+  { id: 'LA-izuvaty', re: /^(.{2,})[іи]зу(?:вати|вання|ватися|вав|вала|вали|вало|ю|є|ють)$/, uk: '-ізувати/-изувати', src: '-ize (фр. -iser)', route: 'latin', ev: [
+    Q('EWIKT', W('модернізувати'), 'From French moderniser + Ukrainian -ува́ти (-uváty).'),
+    Q('EWIKT', W('-ize'), 'from Middle French -iser, from Late Latin -izāre, from Ancient Greek -ίζω (-ízō)') ] },
+  { id: 'LA-ist', re: new RegExp(`^(.{4,})[іи]ст${NOUN}$|^(.{4,})[іи]стк(?:а|и|у|ою|і)$`), uk: '-іст/-ист', src: '-ist (лат. -ista)', route: 'latin', ev: [
+    Q('EWIKT', W('-ist'), 'From Middle English -ist, -iste, from Old French -iste and Latin -ista, from Ancient Greek -ιστής (-istḗs)'),
+    Q('EWIKT', W('програміст'), 'From програ́ма (prohráma) + -і́ст (-íst).') ] },
+  { id: 'LA-er', re: new RegExp(`^(.{3,})ер${NOUN}$`), uk: '-ер', src: '-er (агентивний)', route: 'direct-en', needsStem: true, ev: [
+    Q('EWIKT', W('-ер'), 'masculine agent suffix mimicking similar in numerous languages'),
+    Q('EWIKT', W('-ер'), 'ліфт (lift, “elevator”) + -ер (-er) → ліфтер (lifter, “liftboy, liftman”)', 'спрацьовує лише коли основа сама є словом (ліфт+ер), інакше -ер у рідних словах (тепер)') ] },]
 export const LOAN_RULE_IDS = LOAN_RULES.map(r => r.id)
 export const ruleById = (id: string) => LOAN_RULES.find(r => r.id === id)
 
@@ -64,16 +82,17 @@ export interface LoanAnalysis {
 }
 
 /** Peel the word with the rules (outermost suffix first); null = no rule fires (then nothing is shown). */
-export function analyzeLoan(word: string, opts: { vesum?: VesumLookup; equivalents?: LoanEquiv[] } = {}): LoanAnalysis | null {
+export function analyzeLoan(word: string, opts: { vesum?: VesumLookup; equivalents?: LoanEquiv[]; stemKnown?: (stem: string) => boolean } = {}): LoanAnalysis | null {
   const w = key(word)
   let rest = w
   const steps: LoanStepOut[] = []
   for (let guard = 0; guard < 3; guard++) {
-    const rule = LOAN_RULES.find(r => r.re.test(rest))
+    const rule = LOAN_RULES.find(r => { const m = r.re.exec(rest); return !!m && (!r.needsStem || !!opts.stemKnown?.(m[1] ?? m[2]!)) })
     if (!rule) break
     const m = rule.re.exec(rest)!
-    steps.push({ id: rule.id, matched: rest.slice(m[1]!.length), uk: rule.uk, src: rule.src, route: rule.route, claim: claim(rule.id, rule.ev, { method: 'core/loan-adapt: суфікс за цитованим правилом' }) })
-    rest = m[1]!
+    const stem = m[1] ?? m[2]!
+    steps.push({ id: rule.id, matched: rest.slice(stem.length), uk: rule.uk, src: rule.src, route: rule.route, claim: claim(rule.id, rule.ev, { method: 'core/loan-adapt: суфікс за цитованим правилом' }) })
+    rest = stem
   }
   if (!steps.length) return null
   const routes = ROUTE_RANK.filter(r => steps.some(s => s.route === r))

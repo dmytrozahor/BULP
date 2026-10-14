@@ -65,6 +65,32 @@ describe('LA-2 engine', () => {
   })
 })
 
+describe('LA-4 remaining suffix rules', () => {
+  const ids = (w: string, o = {}) => analyzeLoan(w, o)?.steps.map(s => s.id)
+  it('-ція, -інг, -мент, -ізувати, -іст fire with their source suffix', () => {
+    expect(analyzeLoan('станція')).toMatchObject({ stem: 'стан', source: 'стан… + -tion' }); expect(ids('станція')).toEqual(['LA-cija'])
+    expect(analyzeLoan('маркетинг')).toMatchObject({ stem: 'маркет', source: 'маркет… + -ing' })
+    expect(analyzeLoan('менеджмент')).toMatchObject({ stem: 'менедж', source: 'менедж… + -ment' }); expect(ids('менеджмент')).toEqual(['LA-ment'])
+    expect(analyzeLoan('модернізувати')).toMatchObject({ stem: 'модерн', route: 'latin' }); expect(ids('модернізувати')).toEqual(['LA-izuvaty'])
+    expect(ids('програміст')).toEqual(['LA-ist']); expect(ids('програмісти')).toEqual(['LA-ist'])
+    expect(ids('лист')).toBeUndefined(); expect(ids('хвіст')).toBeUndefined()
+  })
+  it('-ація still wins over -ція; every new rule has quote, locator and registered source', () => {
+    expect(ids('індустріалізація')![0]).toBe('LA-acija')
+    for (const id of ['LA-cija', 'LA-ing', 'LA-ment', 'LA-izuvaty', 'LA-ist', 'LA-er']) {
+      const r = LOAN_RULES.find(x => x.id === id)!; expect(r.ev.length).toBeGreaterThan(0)
+      for (const e of r.ev) { expect(SOURCES[e.source]).toBeTruthy(); expect(e.locator).toMatch(/^https?:/); expect(e.quote.length).toBeGreaterThan(10) }
+    }
+  })
+  it('agentive -ер fires only when the stem is itself a word (ліфтер yes, тепер no)', () => {
+    const known = (s: string) => ['ліфт'].includes(s)
+    expect(ids('ліфтер')).toBeUndefined(); expect(ids('ліфтер', { stemKnown: known })).toEqual(['LA-er']); expect(ids('тепер', { stemKnown: known })).toBeUndefined()
+  })
+  it('no calque equivalent is asserted without a dictionary row (застосовність for аплікабельність has none)', () => {
+    expect(analyzeLoan('аплікабельність')!.equivalent).toBeUndefined()
+    expect(rd('research/34-loan-adaptation.md')).toContain('no bilingual entry')
+  })
+})
 describe('LA-3 UI', () => {
   it('WordView and FormView mount the «запозичення» block; /method lists every rule with an anchor', () => {
     for (const v of ['WordView', 'FormView']) expect(rd(`src/views/${v}.vue`)).toContain('<LoanAdaptBlock')

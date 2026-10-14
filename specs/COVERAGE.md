@@ -347,3 +347,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GZ-4 | tests/gz.test.ts › GZ-4 light cards › standard ikavism gets its trace: покірність ~ покора proves о > і |
 | GZ-5 | tests/gz.test.ts › GZ-5 cognates: same word vs same etymon › a borrowing / doublet with another meaning (пол. ksiądz «priest» vs «prince») is another word; a cousin with the same meaning is not; no gloss → no claim |
 | GZ-5 | tests/gz.test.ts › GZ-5 cognates: same word vs same etymon › the panel lists such rows apart, with their meaning, and counts only correspondences |
+| LA-4 | tests/loan-adapt.test.ts › -ція, -інг, -мент, -ізувати, -іст fire with their source suffix |
+| LA-4 | tests/loan-adapt.test.ts › -ація still wins over -ція; every new rule has quote, locator and registered source |
+| LA-4 | tests/loan-adapt.test.ts › agentive -ер fires only when the stem is itself a word (ліфтер yes, тепер no) |
+| LA-4 | tests/loan-adapt.test.ts › no calque equivalent is asserted without a dictionary row (застосовність for аплікабельність has none) |
