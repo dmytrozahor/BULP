@@ -1,5 +1,6 @@
 /** SPEC 63 DL: features mined from the ЕУМ dialect entries and dialect dictionaries (research/31). Every new rule fires on its example and not on a standard word. */
 import { describe, it, expect } from 'vitest'
+import { readFileSync } from 'node:fs'
 import { detect, type Ctx } from '../core/detect.ts'
 import { DIALECT_RULES, DIALECT_BOOK_RULES, DIALECT_LEX_RULES, DIALECTS, DIALECT_GROUP_FROM, ruleGate } from '../core/rules.ts'
 import { DIALECT_LEX } from '../core/dialect-lex.ts'
@@ -166,5 +167,17 @@ describe('DL-6 Авдеева, Словарь украинских говоро�
   it('no dialect group is asserted: the preface (p. 4) names none, so codes stay empty and no rule is generated', () => {
     for (const e of av) { expect(e.codes).toEqual([]); expect(DIALECT_LEX_RULES.some(r => r.id.startsWith(`LEX-AVDEEVA:${e.w[0]}`))).toBe(false) }
     expect(claims('вутя', 1900)).toEqual({})
+  })
+})
+
+describe('DL-7 Залеський 1973 / Шило 1957: access log, no unverifiable rows', () => {
+  const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+  it('both books are logged in research/31 §1 with the route tried and the owner decision', () => {
+    for (const k of ['DL-7a', 'DL-7b', 'Вокалізм південно-західних говорів', 'на північ від Дністра', 'chtyvo.org.ua', 'UKR0009552']) expect(log, k).toContain(k)
+    expect(log.match(/needs owner's decision/g)!.length).toBeGreaterThanOrEqual(2)
+  })
+  it('no rule or lexical entry cites a book that was not read', () => {
+    const cites = [...DIALECT_BOOK_RULES.map(r => r.cite?.source), ...DIALECT_LEX.map(e => e.src)]
+    expect(cites.filter(s => /ZALES|SHYLO|ZALESKYI/i.test(String(s)))).toEqual([])
   })
 })

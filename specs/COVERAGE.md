@@ -230,6 +230,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DL-6 | tests/dialect-books.test.ts › DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020 › every entry: headword, one-sentence quoted gloss, village label, volume + page locator, region = a real MP territory |
 | DL-6 | tests/dialect-books.test.ts › DL-6 Авдеева, Словарь украинских говоров Воронежской области (2008/2012), cite-only via Сьянова 2020 › no dialect group is asserted: the preface (p. 4) names none, so codes stay empty and no rule is generated |
 | DL-6 | manual — research/31-dialect-books.md §1 logs the access search (НЭБ 403, Google Books record only, third-party PDF not opened: owner's decision) |
+| DL-7 | tests/dialect-books.test.ts › DL-7 Залеський 1973 / Шило 1957: access log, no unverifiable rows › both books are logged in research/31 §1 with the route tried and the owner decision |
+| DL-7 | tests/dialect-books.test.ts › DL-7 Залеський 1973 / Шило 1957: access log, no unverifiable rows › no rule or lexical entry cites a book that was not read |
 | AC-1 | tests/autolabel.test.ts › every table row has a verbatim meaning and the table a registered source and a locator |
 | AC-1 | tests/autolabel.test.ts › articleLabels returns a verbatim slice of the article for each abbreviation and ignores look-alikes |
 | AC-1 | tests/autolabel.test.ts › r2u: parseCell reads Грінченко labels from the FULL article, quote ⊂ article |
