@@ -13,6 +13,7 @@ import { UNITS_18A } from './nw-izb18a.ts'
 import { UNITS_18B } from './nw-izb18b.ts'
 import { UNITS_SONGS } from './nw-songs.ts'
 import { UNITS_DICT } from './nw-dict.ts'
+import { UNITS_17 } from './nw-izb17.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict'
@@ -98,6 +99,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_18B,
   ...UNITS_SONGS,
   ...UNITS_DICT,
+  ...UNITS_17,
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */

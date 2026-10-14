@@ -24,6 +24,8 @@ import { witnessOf } from './ingest-torot.ts'
 export interface PageCfg {
   /** keep only the file whose URL matches (a unit may also list a second page used only as dating/vetting evidence) */
   pick?: RegExp
+  /** drop everything before the first match (a page whose first work is not part of the witness, e.g. a Greek translation before Danylo's Peregrinatsiia on old14_05) */
+  start?: RegExp
   /** cut the page at the first paragraph/heading matching this (applied to the decoded page html) */
   end?: RegExp
   /** K1first headings (cleaned text) of the works to keep; paragraphs before the first heading are dropped */
@@ -36,6 +38,8 @@ export const PAGE_CFG: Record<string, PageCfg> = {
   pripovisti: { pick: /kly08\.htm$/, fix: 'kly', folio: true },
   // old14_09: Загоровський «Духовное завѣщаніе» only; the next work («СЛОВО ЄДНОГО СТАРОГО КАРПАТОРУСКОГО БОЯРА ИМЕНЕМ ГОРЗОВА», XVI–XVIII [U]) is held back (research/19)
   i14_09: { end: /<h1[^>]*>\s*(?:<[^>]*>\s*)*СЛОВО\s/ },
+  // old14_05: «Поклоненіє св. града Ієрусалима» (1531) is a translation of a Greek text — only Danylo's Ruthenian redaction «Перегринація» (h2 heading) is the witness
+  i14_05b: { start: /<h2[^>]*>\s*(?:<[^>]*>\s*)*ПЕРЕГРИНАЦІЯ/ },
   // old18_01: the vernacular poems dated by the edition; «Плачет пастушок» is Russian-leaning [U], the Latin/Polish pieces are modern translations (research/21 §2)
   o18_01: { sections: [/^ЕПІНІКІОН/, /^СІЄСТЬ ПІСНЬ ПОБІДНАЯ/, /^ЗА МОГИЛОЮ РЯБОЮ/] },
   // old18_18: stop before the «Додаток для сайту «Ізборник»» (1848 print in old spelling)
@@ -62,6 +66,7 @@ export const klyText = (s: string) => s
 export function pageParagraphs(html: string, cfg: PageCfg = {}): { paras: string[]; apps: number[] } {
   const a = html.search(/<div class="dop3">/)
   let region = a < 0 ? '' : html.slice(a)
+  if (cfg.start) { const b = region.search(cfg.start); if (b > 0) region = region.slice(b) }
   if (cfg.end) { const b = region.search(cfg.end); if (b > 0) region = region.slice(0, b) }
   if (cfg.fix === 'kly') region = klyHtml(region)
   const paras: string[] = [], apps: number[] = []
