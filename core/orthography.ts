@@ -10,6 +10,7 @@
 import { P, Q, type Evidence } from './evidence.ts'
 import type { Candidate } from './phonology.ts'
 import { MU_FOLDS } from './mu-fold.ts'
+import { ZHEL_FOLDS } from './zhel-folds.ts'
 
 export interface Fold { id: string; era: string[]; branch: boolean; cite: Evidence; apply: (w: string) => string }
 
@@ -53,6 +54,7 @@ export const FOLDS: Fold[] = [
   { id: 'ORTH-MAX-JO', era: ['максимовичівка'], branch: false, cite: MAX_E, apply: w => w.replace(/(?<=^|[аеиіоуюяїє'])ё/g, 'йо').replace(/ё/g, 'ьо') },
   { id: 'ORTH-MAX-E', era: ['максимовичівка'], branch: true, cite: MAX_E, apply: R(/^е|(?<=[аеиіоуюяїє'])е/g, 'є') },
   { id: 'ORTH-MAX-U', era: ['максимовичівка'], branch: false, cite: MAX_U, apply: R(/ў/g, 'в') },
+  ...ZHEL_FOLDS,   // SPEC 63 GZ-2 (core/zhel-folds.ts)
   ...MU_FOLDS,   // SPEC 63 MU: era 'mu' is never an orth, so fold() skips them; they are applied by muCandidates (build-link.ts) and resolved by foldById for the trace
 ]
 

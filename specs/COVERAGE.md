@@ -338,3 +338,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AR-3 | tests/archaic.test.ts › AR-3 dictionary-backed lemmas are always kept; recurring unresolved clusters (≥ 3) become labelled unverified candidates; counts per epoch |
 | PV-8 | tests/torot-pv.test.ts › PV-8b cited OES endings: gen. -аго, long -ыи, aorist / imperfect with stem agreement and the quoted sources in research/37 |
 | DL-6 | manual — pending: DL-6 (Авдеева, Воронеж 2008) is being located and ingested; the test row replaces this line when it lands |
+| GZ-1 | tests/gz.test.ts › GZ-1 ordinary VESUM forms are never bare words › an unresolved token whose own spelling is a VESUM form (FX-3 homonym loser: мати noun vs verb, раз noun vs adverb) gets a light-card ref; linked, ref-holding, non-uk and non-VESUM tokens do not |
+| GZ-1 | tests/gz.test.ts › GZ-1 ordinary VESUM forms are never bare words › build wires it after the PV-6 light index and adds the raw spelling to the VESUM pass |
+| GZ-2 | tests/gz.test.ts › GZ-2 cited Желехівка folds › every fold quotes its source statement and locator; there is no rule without one |
+| GZ-2 | tests/gz.test.ts › GZ-2 cited Желехівка folds › refused for want of a source: -ою → -'ю, е/і (трівожу), и/і lexical, participles -уч- are not folded |
+| GZ-3 | tests/gz.test.ts › GZ-3 report › analysis/galician-extraction.md states the GZ-1 root cause, before/after counts and the refused features |
+| GZ-4 | tests/gz.test.ts › GZ-4 light cards › never say «рідкісна»; «мало засвідчена в нашому корпусі (f = n)» |
+| GZ-4 | tests/gz.test.ts › GZ-4 light cards › standard ikavism gets its trace: покірність ~ покора proves о > і |
+| GZ-5 | tests/gz.test.ts › GZ-5 cognates: same word vs same etymon › a borrowing / doublet with another meaning (пол. ksiądz «priest» vs «prince») is another word; a cousin with the same meaning is not; no gloss → no claim |
+| GZ-5 | tests/gz.test.ts › GZ-5 cognates: same word vs same etymon › the panel lists such rows apart, with their meaning, and counts only correspondences |

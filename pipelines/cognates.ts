@@ -7,7 +7,7 @@
 import { createHash } from 'node:crypto'
 import { readFileSync, statSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { cognateDating, stripAccent, treeTagDating, type CogLang, type CogRow } from '../core/cognates.ts'
+import { cognateDating, otherWord, stripAccent, treeTagDating, type CogLang, type CogRow } from '../core/cognates.ts'
 
 const ROOT = resolve(import.meta.dirname, '..'), RAW = resolve(ROOT, 'data/raw/kaikki')
 const FILES: { file: string; url: string; lang?: CogLang }[] = [
@@ -26,8 +26,10 @@ interface Tree { lang_code?: string; descendants?: Node[] }
 
 // 1. dates of cognate entries: lang|word → earliest dating
 const dates = new Map<string, { from: number; to: number; quote: string }>()
+const info = new Map<string, { gloss?: string; etym?: string }>()   // GZ-5: lang|word → first gloss, etymology text
 for (const f of FILES.filter(x => x.lang)) {
   for (const e of lines(f.file)) {
+    { const ik = `${e.lang_code}|${stripAccent(e.word)}`, g = e.gloss ?? e.senses?.[0]?.glosses?.[0]; if (!info.has(ik) || (g && !info.get(ik)!.gloss)) info.set(ik, { gloss: g, etym: e.etymology_text }) }
     const d = e.etymology_text ? cognateDating(e.etymology_text) : undefined
     if (!d) continue
     const k = `${e.lang_code}|${stripAccent(e.word)}`, o = dates.get(k)
@@ -60,7 +62,8 @@ for (const e of lines(FILES[0]!.file)) {
   walk(e.descendants as Node[], false)
   if (!uks.size) continue
   withUk++
-  const rs = [...rows.values()]
+  const pg0 = e.senses?.[0]?.glosses?.[0] as string | undefined
+  const rs = [...rows.values()].map(r => { const i = info.get(`${r.l}|${stripAccent(r.w)}`); return !r.b && otherWord(i?.gloss, pg0, i?.etym) ? { ...r, o: 1 as const, g: String(i!.gloss).slice(0, 100) } : r })
   if (!rs.length) continue
   const pivot = String(e.word), gloss = e.senses?.[0]?.glosses?.[0] as string | undefined
   for (const u of uks) {

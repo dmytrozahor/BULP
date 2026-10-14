@@ -31,7 +31,7 @@ export function writeCognates(cards: Pick<LemmaCard, 'lemma' | 'forms' | 'first'
   for (const c of cards) {
     const k = kk.pivots[stripAccent(c.lemma)]; if (!k) continue
     const rows = k.rows.slice().sort((a, b) => a.l.localeCompare(b.l))
-    const ev = [cogEvidence(k.pivot, `*${k.pivot.replace(/^\*/, '')}: ${rows.map(r => `${r.l} ${r.w}${r.b ? ' (запозичено)' : ''}`).join(', ')}`, '2026-10-14')]
+    const ev = [cogEvidence(k.pivot, `*${k.pivot.replace(/^\*/, '')}: ${rows.map(r => `${r.l} ${r.w}${r.b ? ' (запозичено)' : r.o ? ' (інше слово)' : ''}`).join(', ')}`, '2026-10-14')]
     const e: CognateFile['entries'][string] = { pivot: k.pivot, ...(k.gloss ? { gloss: k.gloss } : {}), rows, evidence: ev }
     if (rows.some(r => r.d)) dated++
     if (isKnown(c.first) && isVernacular(c)) {

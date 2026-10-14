@@ -16,6 +16,8 @@ export interface CogRow {
   l: CogLang; w: string
   /** the tree marks it as borrowed (below the Ukrainian node = from Ukrainian): excluded from the antedating comparison */
   b?: 1
+  /** SPEC 63 GZ-5: same etymon, another word: a borrowing/doublet whose own Wiktionary gloss differs from the Proto-Slavic one (ksiądz «priest» ≠ князь «prince»); listed apart, never as a correspondence */
+  o?: 1; g?: string
   /** earliest dating interval [from,to] the source gives, with the verbatim clause and where it came from */
   d?: [number, number]; q?: string; k?: 'etym' | 'tree'
 }
@@ -70,7 +72,7 @@ export interface VernInput { ours: [number, number]; vernacular: boolean }
 export function cognateFlag(v: VernInput, rows: CogRow[], donor?: CogLang): CogFlag | undefined {
   if (!v.vernacular) return undefined
   // BL-15b: a dating whose own wording is East Slavic / Proto-Slavic already covers the Old Rus' period — it is no Ukrainian-specific claim to antedate
-  const dated = rows.filter(r => r.d && !r.b && !EAST_WORDING.test(r.q ?? ''))
+  const dated = rows.filter(r => r.d && !r.b && !r.o && !EAST_WORDING.test(r.q ?? ''))
   if (!dated.length) return undefined
   const east = v.ours[1] < 1300
   const pre = east ? 'давньоруська (східнослов’янська) фіксація' : 'українська (рутенська) фіксація'
@@ -92,4 +94,17 @@ export function cognateFlag(v: VernInput, rows: CogRow[], donor?: CogLang): CogF
 export const FLAG_UK: Record<CogFlagCode, string> = {
   'uk-antedates-donor': 'українська фіксація давніша за датування джерела запозичення — перевірити',
   'uk-antedates-cognates': 'українська фіксація давніша за датування відповідників — перевірити',
+}
+
+/**
+ * SPEC 63 GZ-5: is a descendant row another WORD of the same etymon (borrowing / doublet with a different meaning) rather than the same word in a cousin language?
+ * Evidence, all from Wiktionary: the row's own etymology says «Borrowed from» / «Doublet of» AND its first gloss shares no content word with the Proto-Slavic gloss.
+ * Without a gloss nothing is claimed (the row stays a correspondence).
+ */
+const WORDS = (s: string) => (s.toLowerCase().match(/[a-z]{4,}/g) ?? []).filter(w => !['with', 'from', 'that', 'this', 'title', 'used', 'form', 'part'].includes(w))
+export function otherWord(rowGloss: string | undefined, pslGloss: string | undefined, etym: string | undefined): boolean {
+  if (!rowGloss || !pslGloss || !etym) return false
+  if (!/(Borrowed from|Doublet of)/.test(etym)) return false
+  const a = WORDS(pslGloss), b = WORDS(rowGloss)
+  return a.length > 0 && !a.some(w => b.some(x => x.startsWith(w.slice(0, 5)) || w.startsWith(x.slice(0, 5))))
 }

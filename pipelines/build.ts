@@ -42,6 +42,7 @@ import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { oesVariants } from '../core/oes-folds.ts'
 import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
+import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
@@ -171,6 +172,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   lap(`${types.length} token types (${lyrics.size} analysis-only lyric files)`)
   const forms = new Set<string>()
   for (const t of types) for (const k of wantedKeys(t, { derive, fold })) forms.add(k)
+  for (const t of types) if (t.lang === 'uk') forms.add(key(t.raw))   // SPEC 63 GZ-1: the spelling itself, for the light-card reference of unresolved VESUM-form tokens
   lap(`${forms.size} candidate keys; VESUM pass 1`)
   const hits1 = (await vesumIndex(forms, new Set())).hits
   lap(`VESUM pass 1 done: ${hits1.size} keys with analyses`)
@@ -309,6 +311,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const light = lightIndex(adm.map(({ w }) => w), docs.map(d => d.id), lemmaList, keep)
   for (const [wid, r] of light.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
   lap(`light cards: ${light.file.lemmas.length} lemmas dropped by KEEP_MIN_F`)
+  {   // SPEC 63 GZ-1: unresolved tokens whose own spelling is a VESUM form (FX-3 homonym losers, gate-free leftovers) get a light-card ref too; strict link counts unchanged
+    const byLemma = new Map(light.file.lemmas.map(l => [l[0], l]))
+    const gz = vesumFormLight(adm.map(({ w }) => w), docs.map(d => d.id), (wid, ti) => !!torot.refs.get(wid)?.[ti], hits1, byLemma)
+    for (const [wid, r] of gz.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
+    light.file.lemmas.push(...gz.lemmas)
+    lap(`GZ-1: ${gz.tokens} unresolved VESUM-form tokens got a light card (${gz.lemmas.length} new light lemmas)`)
+  }
   {   // SPEC 63 MU-3: capitalised unresolved tokens of Middle Ukrainian witnesses get name cards; analysis/middle-ukr-extraction.md
     const muWs = adm.flatMap(({ w }, wi) => w.orth && MU_ORTH.has(w.orth) ? [{ w, ids: docs[wi]!.id, wi }] : [])
     const cap = capNames(muWs, new Set(torot.file.names.map(n => n.id)))
