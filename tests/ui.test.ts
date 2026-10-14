@@ -620,3 +620,19 @@ describe('BL-17 theme tokens (light default, dark toggle) and WCAG AA contrast',
   }
 })
 
+
+describe('SPEC 61 UX-1 / UX-2 / UX-7 wiring (GA-2)', () => {
+  const wv = readFileSync('src/views/WordView.vue', 'utf8')
+  it('UX-1 headline and UX-2 collapsible panels each with a one-line summary', () => {
+    expect(wv).toContain('class="wordhead headline"')
+    const panels = [...wv.matchAll(/<Panel [^>]*>/g)].map(m => m[0])
+    expect(panels.length).toBeGreaterThanOrEqual(10)
+    for (const p of panels) expect(p, p).toMatch(/:?summary=/)
+  })
+  it('UX-7 a word outside the lexicon gets a rule-based analysis banner in search and on the word page', () => {
+    expect(readFileSync('src/views/SearchView.vue', 'utf8')).toContain('немає в корпусі, аналіз за правилами')
+    expect(wv).toContain('немає в корпусі')
+    expect(wv).toContain('<DeicticStructure')
+    expect(wv).toContain('<HeteronymReadings')
+  })
+})

@@ -191,3 +191,27 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BL-12c | tests/phrasemes-bl12c.test.ts › BL-12c content-word phrases › «і син і» is not in the top list (it is kept only in the frames debug list); «вся земля» content core is kept |
 | BL-15b | tests/cognates-bl15.test.ts › BL-15b informative ET-3 flags only › a pre-1300 East-Slavic flag from the cognate set is suppressed, a pre-1300 flag against a dated Polish donor claim is kept |
 | BL-15b | tests/cognates-bl15.test.ts › BL-15b informative ET-3 flags only › a dating whose wording is East Slavic / Proto-Slavic does not count; an Old East Slavic donor is no Ukrainian-specific claim; a post-1300 genuine flag stays |
+| BL-1 | tests/ui.test.ts › джерело не нормативне |
+| BL-2 | manual — SearchView keeps one stable input element across keyboard-language switches (f6844aa2); the IME/keyboard event cannot be simulated in SSR tests |
+| BL-3 | manual — MH-nn change rows sit in a collapsed <details> in EpochParadigm.vue; tests/ui.test.ts EP-6.4 tests split the panel HTML at that spoiler |
+| BL-4 | tests/numerals.test.ts › 6564 |
+| BL-5 | tests/derivation.test.ts › BL-5 an existing prefix is stripped to the base verb before re-prefixing |
+| BL-6 | tests/formstats.test.ts › BL-6 form statistics |
+| BL-7 | tests/ui.test.ts › the grid collapses (≤ 600 px) into stacked case cards |
+| BL-8 | tests/verb-paradigm.test.ts › BL-8 modern verb paradigm: робити |
+| BL-9 | tests/senses.test.ts › BL-9 uk.wiktionary parser |
+| BL-10 | tests/ingest-sophia.test.ts › analysis text = interpretative edition; private-use glyphs (BL-10 follow-up) |
+| BL-16 | tests/nav.test.ts › BL-16 router walk: no element type is a dead end |
+| BL-17 | tests/ui.test.ts › BL-17 theme tokens (light default, dark toggle) and WCAG AA contrast |
+| BL-17b | tests/ui.test.ts › BL-17 theme tokens (light default, dark toggle) and WCAG AA contrast |
+| BL-17c | tests/nav.test.ts › BL-17c old-letter face |
+| BL-19 | tests/fx.test.ts › BL-19 а / албо / а. / á |
+| BL-20 | tests/palatalization.test.ts › BL-20 second palatalization (R24) |
+| UX-1 | tests/ui.test.ts › UX-1 headline and UX-2 collapsible panels each with a one-line summary |
+| UX-2 | tests/ui.test.ts › UX-1 headline and UX-2 collapsible panels each with a one-line summary |
+| UX-3 | tests/ui.test.ts › UX-3 placedCells counts cells with attested forms only |
+| UX-4 | tests/ui.test.ts › UX-4 identical claim sets across spellings collapse into one group |
+| UX-5 | tests/ui.test.ts › UX-5 the 6 most frequent spellings |
+| UX-6 | tests/ui.test.ts › nav is a single non-wrapping scroll row under 700px |
+| UX-7 | tests/ui.test.ts › UX-7 a word outside the lexicon gets a rule-based analysis banner in search and on the word page |
+| GA-1 | manual — specs/GAPS.md is the audit document itself (re-audited by GA-2); no executable check |
