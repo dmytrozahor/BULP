@@ -22,7 +22,7 @@ const state = reactive({
 })
 const searchIdx = shallowRef<SearchIndex>(emptyIndex()), paradigmMap = shallowRef(new Map<string, VesumHit[]>())
 
-export const toCards = unpackCore   // lexicon.json is the core { format: 3, … }; a packed format 2 or a plain LemmaCard[] (fixture: detail embedded) is still accepted
+export const toCards = unpackCore   // lexicon.json is the core { format: 4 (3 still read), … }; a packed format 2 or a plain LemmaCard[] (fixture: detail embedded) is still accepted
 
 /** fetch + JSON.parse; streams the body so a large file reports download progress (Content-Length; indeterminate otherwise). */
 const get = async (name: string, onFrac?: (f: number, bytes: number) => void) => {

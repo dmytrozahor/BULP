@@ -46,17 +46,19 @@ const isDef = (x: unknown, d: unknown) => JSON.stringify(x) === JSON.stringify(d
 
 /**
  * Wire card = [lemma, pos, paradigm, forms, first, claims, [f, ipm, hk, dots]].
- * paradigm: ["form", tag, tag, "form2", tag …] — a string starts a form, the numbers after it index the file's tag table (VESUM tag strings repeat across 200 000 entries).
+ * paradigm: ["<k>suffix", tag, tag, "<k>suffix2", tag …] — a string starts a form (format 4: its first character is a digit k = how many leading characters (0–9) it shares with the lemma, the rest is the suffix; format 3 stored the whole form), the numbers after it index the file's tag table (VESUM tag strings repeat across 200 000 entries).
  * forms[i]: just the raw string when norm = modern = raw and there are no claims/hints, else [raw, norm, modern, claims, hints].
  * claims: register / surzhyk / dialect are left out when they hold their empty default (unknown, unknown, {}).
  */
+/** Format 4: a paradigm form is written as <k><suffix>, k = common leading characters with the lemma (0–9). Every wire form carries the digit, so a form is recognised as a string and its tags as numbers. */
+const prefixCode = (lemma: string, form: string) => { let k = 0; while (k < 9 && k < lemma.length && k < form.length && form[k] === lemma[k]) k++; return k + form.slice(k) }
 export function packCore(cards: CoreCard[]): PackedCore {
   const p = packer(), tags = new Map<string, number>(), cnt = new Map<string, number>()
   for (const c of cards) for (const q of c.paradigm) cnt.set(q.tags, (cnt.get(q.tags) ?? 0) + 1)
   const table = [...cnt].sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1)).map(e => e[0]); table.forEach((t, i) => tags.set(t, i))   // frequent tags get short indices
   const wire = cards.map(c => {
     const par: (string | number)[] = []; let last: string | undefined
-    for (const q of c.paradigm) { if (q.form !== last) { par.push(q.form); last = q.form } par.push(tags.get(q.tags)!) }
+    for (const q of c.paradigm) { if (q.form !== last) { par.push(prefixCode(c.lemma, q.form)); last = q.form } par.push(tags.get(q.tags)!) }
     const forms = c.forms.map(f => (f.norm === f.raw && f.modern === f.raw && !Object.keys(f.claims).length && !f.hints.length ? f.raw : [f.raw, f.norm, f.modern, p.one(f.claims).card, f.hints]))
     const { register, surzhyk, dialect, ...cl } = c.claims, k: Record<string, unknown> = { ...cl }
     if (!isDef(register, JSON.parse(UNKNOWN))) k['register'] = register
@@ -67,16 +69,16 @@ export function packCore(cards: CoreCard[]): PackedCore {
     const first = ft ? [fv.author, fv.witness, fv.date![0], fv.date![1], fv.form] : p.one(c.first).card
     return [c.lemma, c.pos, par, forms, first, p.one(k).card, [f, ipm, hk, dots], ...(c.paradigmKind ? [c.paradigmKind] : [])]   // 8th element (FX-5) optional
   })
-  return { format: 3, ev: p.ev, tags: table, cards: wire }
+  return { format: 4, ev: p.ev, tags: table, cards: wire }
 }
 export function unpackCore(j: unknown): CoreCard[] {
   const p = j as PackedCore
-  if (!(p && !Array.isArray(p) && p.format === 3 && Array.isArray(p.ev) && Array.isArray(p.tags) && Array.isArray(p.cards))) return unpack(j)
+  if (!(p && !Array.isArray(p) && (p.format === 3 || p.format === 4) && Array.isArray(p.ev) && Array.isArray(p.tags) && Array.isArray(p.cards))) return unpack(j)
   const R = <T>(x: T) => restore(p.ev, x)
   return p.cards.map(w => {
     const [lemma, pos, par, forms, first, claims, st, pk] = w as [string, string, (string | number)[], (string | unknown[])[], CoreCard['first'] | (string | number)[], Record<string, unknown>, number[], CoreCard['paradigmKind']?]
     const paradigm: CoreCard['paradigm'] = []; let form = ''
-    for (const x of par) typeof x === 'string' ? (form = x) : paradigm.push({ form, tags: p.tags[x]! })
+    for (const x of par) typeof x === 'string' ? (form = p.format === 4 ? lemma.slice(0, +x[0]!) + x.slice(1) : x) : paradigm.push({ form, tags: p.tags[x]! })
     return {
       lemma, pos, ...(pk ? { paradigmKind: pk } : {}), paradigm,
       forms: forms.map(f => (typeof f === 'string' ? { raw: f, norm: f, modern: f, claims: {}, hints: [] } : { raw: f[0], norm: f[1], modern: f[2], claims: R(f[3]), hints: f[4] }) as CoreCard['forms'][number]),

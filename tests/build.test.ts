@@ -161,7 +161,8 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
   })
   it('core wire form (tag table, omitted defaults, pooled evidence) and a shard round-trip through JSON', () => {
     const parts = cards.map(splitCard), p = packCore(parts.map(x => x.core))
-    expect(p.format).toBe(3); expect(JSON.stringify(p.cards)).not.toContain('"source"')
+    expect(p.format).toBe(4); expect(p.cards.every(w => (w[2] as (string | number)[]).every(x => typeof x === 'number' || /^\d/.test(x)))).toBe(true)   // format 4: paradigm forms are <k><suffix> (prefix shared with the lemma)
+    expect(JSON.stringify(p.cards)).not.toContain('"source"')
     expect(unpackCore(JSON.parse(JSON.stringify(p)))).toEqual(parts.map(x => x.core))
     const sh = packShard(parts.map(x => [x.core.lemma, x.detail])), back = unpackShard(JSON.parse(JSON.stringify(sh)))
     expect(sh.ev.length).toBeLessThan(JSON.stringify(parts.map(x => x.detail)).match(/"source"/g)!.length)   // a shard has its own pool: shared Evidence is stored once

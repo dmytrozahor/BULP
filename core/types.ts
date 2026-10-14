@@ -114,7 +114,7 @@ export type FirstDetail = Omit<Claim<FirstAttestation>, 'value'> & { value: Pick
 export type FormDetail = Omit<FormCard, keyof CoreForm>
 export interface LemmaDetail { first?: FirstDetail; stress: StressVariant[]; oldest: LemmaCard['claims']['oldest']; forms: FormDetail[]; stats: Omit<LemmaStats, keyof CoreStats>; epochs?: EpochParadigms }   // forms[i] belongs to core.forms[i]
 /** public/data/lexicon.json (format 3): CoreCard[] in the compact wire form of core/pack.ts (tag table, defaults omitted) with the shared evidence pool. */
-export interface PackedCore { format: 3; ev: Evidence[]; tags: string[]; cards: unknown[][] }
+export interface PackedCore { format: 3 | 4; ev: Evidence[]; tags: string[]; cards: unknown[][] }
 /** public/data/lex/<bucket>.json (format 1): the details of the lemmas hashing to the bucket, own evidence pool. */
 export interface Shard { format: 1; ev: Evidence[]; lemmas: string[]; details: LemmaDetail[] }
 
