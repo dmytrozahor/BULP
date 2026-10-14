@@ -54,6 +54,8 @@ export const DROP: Drop[] = [
 ]
 /** Whole subpages/headings that are not the author's primary text. */
 const SKIP_PAGE: Record<string, RegExp> = {
+  // CX-2: the 1876 Prague Kobzar appends Russian memoirs by other authors and Shevchenko's Russian-language autobiography / preface: not the poet's Ukrainian text
+  kobzar1876: /\/(Споминки про Шевченка|Автобіографія Шевченка|Передмова Шевченка|Варъянти)/,
   eneida1798: /\/Словник$/,     // glossary of the first edition ("Словник"): editorial apparatus, not verse
 }
 /**
@@ -64,6 +66,9 @@ const SKIP_PAGE: Record<string, RegExp> = {
 /** Single lines that are not the primary text: a work's heading and the 19th-c. editor's own (Russian) footnote above a song (NW-7). */
 const DROP_LINE: Record<string, RegExp> = {
   song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/,
+  // CX-2: Russian censor's / printer's / dedication lines on the title pages are not the poet's text
+  kobzar1840: /^(ПЕЧАТАТЬ ПОЗВОЛЯЕТСЯ|съ тѣмъ чтобы|Цензоръ|САНКТПЕТЕРБУРГЪ|ВЪ ТИПОГРАФІИ)/,
+  eneida1808: /^(Изданіе второе|Въ Санктпетербургѣ|печатано въ|года$|Любителямъ|Малороссійскаго слова|усерднѣйше)/,
   song_zazhuryla: /^Пѣсня сія сложена/, song_baida: /^(О КОЗАКѢ БАЙДѢ|Полубаснословная пѣсня)/, song_yikhav: /^Пѣсня сія и еще/,   // Maksymovych's Russian headings / footnotes (BL-18)
 }
 const CUT: Record<string, RegExp> = {
@@ -71,9 +76,13 @@ const CUT: Record<string, RegExp> = {
   // tables of contents / errata of the 1882, 1892, 1893 volumes duplicate the poem titles: «Реєстрик», «ЗМІСТ», «ПОМИЛКИ»
   eneida1798: /^КНИГИ(\s|$)/,   // title page of 1798 ends with the printer's book-sale advertisement «КНИГИ Продающїяся в Типографїи…»
   kulish1882: /^Рее?стрик[.:]?$/, lesya1892: /^(ЗМІСТ|ПОМИЛКИ)[.:]?$/, franko1893: /^ЗМІСТ[.:]?$/,
+  // CX-2: contents / errata / publisher's lists of the later editions
+  franko1902: /^(ЗМІС\s?Т|Того самого автора)/, franko1903: /^(ЗМІС\s?Т|Того самого автора)/, franko1906: /^(ЗМІС\s?Т|Того самого автора)/,
+  lesya1899: /^(ЗМІС\s?Т|ПОМИЛКИ)[.:]?$/, chaichenko1893: /^(ЗМІС\s?Т|ПОМИЛКИ)[.:]?$/, boa1884: /^(ЗМІС\s?Т|СОДЕРЖАНІЕ|ПОПРАВКИ)/,
 }
 /** Header author must match, else the subpage is somebody else's text (e.g. a translation). Absent header → kept. */
-const AUTHOR: Record<string, RegExp> = { franko: /Франко/, kulish: /Куліш/, lesya: /Леся|Українка|Косач/, kotliarevsky: /Котляревськ/, hrinchenko: /Грінченк/ }
+const AUTHOR: Record<string, RegExp> = { franko: /Франко/, kulish: /Куліш|Кулїш/, lesya: /Леся|Лесї|Українка|Косач/, kotliarevsky: /Котляревськ/, hrinchenko: /Грінченк|Чайченк/,
+  shevchenko: /Шевченк/, nechuy: /Левіцьк|Левицьк|Нечуй/ }
 
 // ── page → tokens ───────────────────────────────────────────────────────────────────────────────
 const BLOCK = new Set(['p', 'div', 'li', 'tr', 'table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 'ol', 'ul', 'dd', 'dt', 'hr', 'br', 'center'])

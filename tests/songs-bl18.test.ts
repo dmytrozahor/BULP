@@ -21,7 +21,7 @@ describe('BL-18 folk songs and максимовичівка', () => {
     for (const f of fold('мо̂й', 'максимовичівка').flatMap(c => c.trace)) expect(foldById[f]!.cite.kind).toBe('Q')
   })
   it('every Maksymovych song is an admissible institutional «народна пісня» witness dated by the print, with a Q-checked page quote', () => {
-    const us = MANIFEST.filter(u => u.orth === 'максимовичівка'), a = authorById['folk_maksymovych']!
+    const us = MANIFEST.filter(u => u.orth === 'максимовичівка' && u.id.startsWith('song_')), a = authorById['folk_maksymovych']!
     expect(us.map(u => u.id).sort()).toEqual(['song_baida', 'song_yikhav', 'song_zasvystaly', 'song_zazhuryla', 'song_zhentsi'])
     expect(a.label).toBe('institutional'); expect(admissible(a)).toBe(true)
     for (const u of us) {
