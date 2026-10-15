@@ -13,6 +13,7 @@ import { authorInfo, useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
+import { plastSearch } from '../lib/sociolectData.ts'
 const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
@@ -35,6 +36,8 @@ const keepFocus = (e: FocusEvent) => {
 const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed(() => cards.value.length))
 watch(q, () => { if (route.query.p !== undefined) pgR.go(1) })
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
+/** Plast vocabulary (SL-2) is searchable too — its words are mostly not corpus lemmas, so they never reached the lemma index */
+const plast = computed(() => (q.value.trim() ? plastSearch(q.value) : []))
 </script>
 
 <template>
@@ -46,6 +49,19 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
     <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ cards.length }} лем у словнику.</template></p>
   </section>
 
+  <section v-if="plast.length" class="card" aria-live="polite">
+    <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
+    <ul class="results">
+      <li v-for="e in plast" :key="e.src + e.loc">
+        <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">
+          <span class="lem">{{ e.w }}</span>
+          <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
+          <span class="small sans">«{{ e.g }}»</span>
+          <span class="small muted sans">{{ e.loc }}<template v-if="e.byGloss"> · знайдено в тлумаченні</template></span>
+        </RouterLink>
+      </li>
+    </ul>
+  </section>
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
     <li v-for="{ r, c, fa, who } in pgR.slice(rows)" :key="c.lemma">

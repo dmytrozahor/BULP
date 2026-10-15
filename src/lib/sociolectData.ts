@@ -1,6 +1,7 @@
 /** SL: lazy loader for public/data/sociolect.json and reactive badge / literary-status lookups (empty until the file arrives or when it is absent). */
 import { shallowRef } from 'vue'
-import { dialectClaims, literaryStatus, sociolectBadges, type SociolectFile } from '../../core/sociolect.ts'
+import { dialectClaims, literaryStatus, sociolectBadges, type PlastEntry, type SociolectFile } from '../../core/sociolect.ts'
+import { key } from '../../core/text.ts'
 
 export const sociolectFile = shallowRef<SociolectFile>()
 let started = false
@@ -12,3 +13,15 @@ export function loadSociolect(): void {
 export function socBadgesOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? sociolectBadges(word, f) : [] }
 export function dialectOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? dialectClaims(word, f) : [] }
 export function literaryOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? literaryStatus(word, f) : null }
+/** search (user 2026-10-15: «why can't i find вишкіл, впр which are in plast lexicon?»): Plast entries whose headword or quoted gloss
+ *  matches the query, case- and stress-insensitive (key()); headword hits first. Each hit keeps its own source id for the /source card. */
+export function plastSearch(q: string, max = 30): (PlastEntry & { src: string; byGloss: boolean })[] {
+  loadSociolect(); const f = sociolectFile.value, k = key(q.trim())
+  if (!f || k.length < 2) return []
+  const out: (PlastEntry & { src: string; byGloss: boolean })[] = []
+  for (const e of f.plast.entries) {
+    const w = key(e.w), head = w === k || (k.length >= 3 && w.includes(k)), gloss = k.length >= 3 && key(e.g).includes(k)
+    if (head || gloss) out.push({ ...e, src: e.s ?? f.plast.source, byGloss: !head })
+  }
+  return out.sort((a, b) => Number(a.byGloss) - Number(b.byGloss)).slice(0, max)
+}
