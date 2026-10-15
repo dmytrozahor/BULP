@@ -7,17 +7,18 @@ import { resolve } from 'node:path'
 import { CvScan, buildCardIndex, isCvWord, shardsOfCv, type CardIndexFile, type CvEntry } from '../core/cv.ts'
 import { archId } from '../core/archaic.ts'
 import { key } from '../core/text.ts'
+import { lk } from '../core/cv.ts'
 import type { WitnessOut } from '../core/types.ts'
 
 export interface CvWitness { w: Pick<WitnessOut, 'id' | 'tokens' | 'witnessType'> }
 /** what the linker says about token `ti` of witness `wi`: its VESUM lemma and whether that lemma has a full lexicon card */
 export type CvLookup = (wi: number, ti: number) => { lemma: string; tags: string; full: boolean } | undefined
 
-export interface CvResult { entries: [string, CvEntry][]; forms: [string, string][]; refs: Map<string, string[]>; stats: { vesum: number; asIs: number; tokens: number; skippedArchaic: number; skippedFull: number; refTokens: number } }
+export interface CvResult { entries: [string, CvEntry][]; forms: [string, string][]; refs: Map<string, string[]>; stats: { vesum: number; asIs: number; tokens: number; skippedArchaic: number; skippedFull: number; refTokens: number; plastBare: number } }
 
-export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySet<string>, hasRef: (wid: string, ti: number) => boolean): CvResult {
+export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySet<string>, hasRef: (wid: string, ti: number) => boolean, extra?: { words: string[]; owned: ReadonlySet<string> }): CvResult {
   const scan = new CvScan(), own = new Map<string, string[]>()
-  const st = { vesum: 0, asIs: 0, tokens: 0, skippedArchaic: 0, skippedFull: 0, refTokens: 0 }
+  const st = { vesum: 0, asIs: 0, tokens: 0, skippedArchaic: 0, skippedFull: 0, refTokens: 0, plastBare: 0 }
   ins.forEach(({ w }, wi) => {
     if (w.witnessType !== 'dictionary') return
     const r: string[] = new Array(w.tokens.length).fill('')
@@ -33,6 +34,9 @@ export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySe
     })
     if (r.some(Boolean)) own.set(w.id, r)
   })
+  // SL / CV: every Plast headword gets a card unless a card of another kind already owns it (that card shows the Plast sense, joined at runtime)
+  let plastBare = 0
+  for (const w of extra?.words ?? []) if (!extra!.owned.has(lk(w)) && scan.addBare(w)) plastBare++
   const entries = scan.entries()
   // text links: an unresolved token of any other witness whose spelling is a CV word links to its card ('l:<word>')
   const byKey = new Map<string, string>()
@@ -47,6 +51,7 @@ export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySe
     })
     if (any) refs.set(w.id, r)
   })
+  st.plastBare = plastBare
   return { entries, forms: scan.forms(), refs, stats: st }
 }
 

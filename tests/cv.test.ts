@@ -1,7 +1,9 @@
 ﻿/** SPEC 63 CV: a card for every attested word (запобігти, рушничний, парада, плавний + a sample of dictionary equivalents). */
 import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
-import { CV_BUCKETS, CvScan, buildCardIndex, cardMap, cardRoute, cvBucket, shardsOfCv, type CardIndexFile, type CvEntry } from '../core/cv.ts'
+import { plastOf } from '../core/sociolect.ts'
+import { wordCardTo } from '../src/lib/cardIndex.ts'
+import { lk, CV_BUCKETS, CvScan, buildCardIndex, cardMap, cardRoute, cvBucket, shardsOfCv, type CardIndexFile, type CvEntry } from '../core/cv.ts'
 import { buildCv } from '../pipelines/build-cv.ts'
 import { analyzeLink } from '../src/lib/analyze-links.ts'
 import { cardSearchIndex, hitRoute } from '../src/lib/cardIndex.ts'
@@ -93,3 +95,37 @@ real('CV-2 the real data: every attested word opens a non-empty card', () => {
     expect(bad).toEqual([])
   })
 })
+
+describe('CV-3 Plast headwords are word cards with their sense (user 2026-10-15: «for plast include the senses, all words must have cards»)', () => {
+  const f = existsSync('public/data/sociolect.json') ? JSON.parse(rd('public/data/sociolect.json')) : undefined
+  it('CV-3 lookup is case-insensitive and tolerant of the Latin B of «BЮВ» and the stress capitals of «ВИшкіл»; the source spelling is kept', () => {
+    expect(lk('BЮВ')).toBe(lk('ВЮВ')); expect(lk('ВИшкіл')).toBe('вишкіл'); expect(lk('Wi-Fi')).toBe('wi-fi')
+    const s = new CvScan(); expect(s.addBare('ВИшкіл')).toBe(true); expect(s.addBare('вишкіл')).toBe(false); expect(s.entries()[0]![1][0]).toBe('ВИшкіл')
+  })
+  it('CV-3 a Plast headword owned by a full lemma / light / archaic card gets no second card; any other gets a bare card', () => {
+    const r = buildCv([], () => undefined, new Set(), () => false, { words: ['ВПР', 'Вода', 'BЮВ'], owned: new Set([lk('вода')]) })
+    expect(r.entries.map(e => e[1][0]).sort()).toEqual(['BЮВ', 'ВПР']); expect(r.stats.plastBare).toBe(2)
+  })
+  it('CV-3 the Plast links go to the word card, the source card is the secondary link', () => {
+    const lex = { map: new Map(), keys: [] }, cards = cardMap(buildCardIndex('t', [], ['ВПР'], []))
+    expect(wordCardTo('ВПР', lex, cards)).toBe(`/lw/${encodeURIComponent('ВПР')}`); expect(wordCardTo('Невідоме', lex, cards)).toBe(`/lw/${encodeURIComponent('Невідоме')}`)
+    expect(wordCardTo('вода', { map: new Map([['вода', [{ lemma: 'вода', form: 'вода', via: 'lemma' as const }]]]), keys: ['вода'] }, cards)).toBe(`/w/${encodeURIComponent('вода')}`)
+    for (const p of ['src/views/PlastView.vue', 'src/views/SearchView.vue']) { expect(rd(p)).toMatch(/wordCardTo\(e\.w/); expect(rd(p)).toMatch(/джерело/) }
+    for (const p of ['src/views/WordView.vue', 'src/views/LightWordView.vue', 'src/views/ArchaicView.vue']) expect(rd(p)).toMatch(/<PlastSenses/)
+  })
+  const rl = have && f ? it : it.skip
+  rl('CV-3 вишкіл, ВПР and КВТ each open a card that carries the Plast sense (abbreviations with their expansion); every Plast entry has a card', () => {
+    const ci = JSON.parse(rd('public/data/cardindex.json')) as CardIndexFile, cards = cardMap(ci)
+    const core = unpackCore(JSON.parse(rd('public/data/lexicon.json'))), lemmas = new Set(core.map(c => lk(c.lemma)))
+    const arch = new Set((JSON.parse(rd('public/data/archaic.json')) as { entries: { id: string }[] }).entries.map(e => e.id))
+    const light = new Set((JSON.parse(rd('public/data/light.json')) as { lemmas: [string][] }).lemmas.map(l => lk(l[0])))
+    const has = (w: string) => lemmas.has(lk(w)) || light.has(lk(w)) || (cards.get(lk(w)) ?? []).some(h => (h.kind === 'ar' ? arch.has(h.id) : true))
+    for (const e of f.plast.entries) expect(has(e.w), e.w).toBe(true)
+    for (const [w, abbr, g] of [['вишкіл', false, 'пластовий тренінг'], ['ВПР', true, 'Відкриття пластового року'], ['КВТ', true, 'Крайовий вишкільний табір']] as const) {
+      expect(has(w), w).toBe(true)
+      const hit = plastOf(w, f).find((e: { g: string }) => e.g === g); expect(hit, w).toBeTruthy(); expect(hit!.k === 'abbr').toBe(abbr)
+    }
+    expect(plastOf('ВЮВ', f).length).toBe(plastOf('BЮВ', f).length); expect(plastOf('ВЮВ', f).length).toBeGreaterThan(0)
+  })
+})
+

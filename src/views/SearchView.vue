@@ -14,7 +14,8 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
 import { plastSearch } from '../lib/sociolectData.ts'
-import { cardSearchIndex, hitRoute, hitWord, loadCardIndex } from '../lib/cardIndex.ts'
+import { cardSearchIndex, hitRoute, hitWord, loadCardIndex, wordCardTo } from '../lib/cardIndex.ts'
+import { cardMap } from '../../core/cv.ts'
 import { emptyIndex, type SearchIndex } from '../lib/search.ts'
 const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
 const route = useRoute(), router = useRouter()
@@ -41,7 +42,8 @@ const viaUk = { lemma: 'лема', form: 'історична форма', paradi
 /** Plast vocabulary (SL-2) is searchable too — its words are mostly not corpus lemmas, so they never reached the lemma index */
 /** SPEC 63 CV-2: light (/lw), dictionary-attested (CV) and archaic (/ar) cards are searched too, case-insensitively, with the same ranking */
 const cardIdx = ref<SearchIndex>(emptyIndex())
-loadCardIndex().then(ci => { cardIdx.value = cardSearchIndex(ci) }, () => undefined)
+const cardMp = ref<ReturnType<typeof cardMap>>()
+loadCardIndex().then(ci => { cardIdx.value = cardSearchIndex(ci); cardMp.value = cardMap(ci) }, () => undefined)
 const cardHits = computed(() => (q.value.trim() ? search(cardIdx.value, q.value, 30).filter(r => !byLemma.value.has(hitWord(r.lemma))) : []))
 const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
 </script>
@@ -59,12 +61,13 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
     <ul class="results">
       <li v-for="e in plast.slice(0, 3)" :key="e.src + e.loc">
-        <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">
+        <RouterLink :to="wordCardTo(e.w, searchIdx, cardMp)">
           <span class="lem">{{ e.w }}</span>
           <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
           <span class="small sans">«{{ e.g }}»</span>
           <span class="small muted sans">{{ e.loc }}<template v-if="e.byGloss"> · знайдено в тлумаченні</template></span>
         </RouterLink>
+        <span class="small sans"> · <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">джерело</RouterLink></span>
       </li>
     </ul>
     <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>

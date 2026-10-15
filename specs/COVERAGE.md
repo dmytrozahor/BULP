@@ -440,3 +440,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-2 | tests/cv.test.ts › CV-2 SearchView, LightWordView, AnalyzeView and UnlinkedSpelling are wired to the card index |
 | CV-2 | tests/cv.test.ts › CV-2 запобігти, рушничний, парада, плавний |
 | CV-2 | tests/cv.test.ts › CV-2 a sample of 200 random dictionary equivalents each opens a non-empty card |
+| CV-3 | tests/cv.test.ts › CV-3 lookup is case-insensitive and tolerant of the Latin B of «BЮВ» and the stress capitals of «ВИшкіл»; the source spelling is kept |
+| CV-3 | tests/cv.test.ts › CV-3 a Plast headword owned by a full lemma / light / archaic card gets no second card; any other gets a bare card |
+| CV-3 | tests/cv.test.ts › CV-3 the Plast links go to the word card, the source card is the secondary link |
+| CV-3 | tests/cv.test.ts › CV-3 вишкіл, ВПР and КВТ each open a card that carries the Plast sense (abbreviations with their expansion); every Plast entry has a card |

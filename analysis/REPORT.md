@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-15T22:10:20.613Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 242 899**.
+Generated 2026-10-15T22:21:10.304Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 242 899**.
 
 ## 1. Corpus
 
@@ -4549,6 +4549,15 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | SW-UKANYE:VOL | dialect | VOL | 0.3 | 0 | 0 |
 | CHN-AKANYE:CHN | dialect | CHN | 0.5 | 0 | 0 |
 | CHN-AKANYE:SLB | dialect | SLB | 0.5 | 0 | 0 |
+| WPL-DIPH-O:WPL | dialect | WPL | 0.7 | 0 | 0 |
+| WPL-DIPH-E:WPL | dialect | WPL | 0.7 | 0 | 0 |
+| WPL-DIPH-YAT:WPL | dialect | WPL | 0.7 | 0 | 0 |
+| WPL-KI-GI:WPL | dialect | WPL | 0.5 | 0 | 0 |
+| WPL-E-I-NEUTRAL:WPL | dialect | WPL | 0.6 | 0 | 0 |
+| CHN-DIPH:CHN | dialect | CHN | 0.7 | 0 | 0 |
+| CHN-SOFT-LABIAL:CHN | dialect | CHN | 0.6 | 0 | 0 |
+| CHN-PRON-NOH:CHN | dialect | CHN | 0.6 | 0 | 0 |
+| NORTH-A-E:NORTH | dialect | NORTH | 0.5 | 0 | 0 |
 | F-VARIANTS:STP | dialect | STP | 0.4 | 0 | 0 |
 | F-VARIANTS:MDN | dialect | MDN | 0.4 | 0 | 0 |
 | EPENTH-2:NDN | dialect | NDN | 0.4 | 1 | 0 |
@@ -5116,7 +5125,7 @@ Dialect labels (lemmas): CHN: 382 · MPL: 5 · BOY: 86 · LEM: 86 · SE: 6 · PO
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 540 types (3 613 tokens). Top: тай (1061, replace), да (235, replace), єсть (193, replace), тай (143, replace), да (117, replace), щож (108, replace), ше (91, replace), тай (68, replace), да (43, replace), по-над (42, replace), троха (42, replace), да (39, replace), будучи (27, replace), єсть (27, replace), гонта (26, soft), чуть (25, replace), деж (25, replace), єсть (24, replace), зза (23, replace), туда (23, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 60 205 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 7 296 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 60 205 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 7 305 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 

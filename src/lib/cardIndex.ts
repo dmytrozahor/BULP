@@ -1,5 +1,5 @@
 /** SPEC 63 CV-2: the index of every non-lexicon card (light /lw, CV /lw, archaic /ar) and the CV attestation shards. */
-import { cardMap, cardRoute, cvBucket, cvShardUrl, type CardHit, type CardIndexFile, type CvEntry } from '../../core/cv.ts'
+import { cardMap, cardRoute, cvBucket, cvShardUrl, lk, type CardHit, type CardIndexFile, type CvEntry } from '../../core/cv.ts'
 import { key } from '../../core/text.ts'
 import type { SearchIndex } from './search.ts'
 
@@ -23,5 +23,13 @@ const shards = new Map<number, Promise<Record<string, CvEntry>>>()
 export async function loadCv(word: string): Promise<CvEntry | undefined> {
   const b = cvBucket(word); let p = shards.get(b)
   if (!p) shards.set(b, p = fetch(cvShardUrl(word)).then(r => (r.ok ? r.json() : {})).catch(() => ({})) as Promise<Record<string, CvEntry>>)
-  return (await p)[key(word)]
+  return (await p)[lk(word)]
+}
+
+/** SPEC 63 SL / CV: the word card of a Plast headword (a lexicon lemma, else a light / CV / archaic card, else its own /lw card); lookup via lk(), the source spelling is not altered */
+export function wordCardTo(w: string, lex: SearchIndex, cards?: Map<string, CardHit[]>): string {
+  const k = lk(w), h = lex.map.get(k)?.find(x => x.via === 'lemma')
+  if (h) return `/w/${encodeURIComponent(h.lemma)}`
+  const c = cards?.get(k)?.[0]
+  return c ? cardRoute(c) : `/lw/${encodeURIComponent(w)}`
 }

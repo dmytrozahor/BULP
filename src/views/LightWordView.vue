@@ -11,6 +11,7 @@ import type { LightFile } from '../../pipelines/build-torot.ts'
 import type { CvEntry } from '../../core/cv.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
+import PlastSenses from '../components/PlastSenses.vue'
 import IkavismChain from '../components/IkavismChain.vue'
 import { ikavismBase } from '../lib/lightcard.ts'
 const props = defineProps<{ lemma: string }>()
@@ -40,10 +41,12 @@ const wd = (id: string) => { const d = witnessById.value.get(id)?.date; return d
     <p v-if="tags" class="sans small">VESUM: <code>{{ tags }}</code><template v-if="row"> · вжив. у корпусі: {{ row[2] }}</template></p>
     <p v-else class="sans small"><b>Написання як засвідчене:</b> ВЕСУМ такої форми не підтверджує, лематизацію не вгадано; картка подає лише рядки словників.</p>
     <p v-if="row" class="sans small muted">Мало засвідчена в нашому корпусі (f = {{ row[2] }}): повної картки немає, бо лема трапляється рідше за поріг лексикону (KEEP_MIN_F). Це не рідкісне слово мови: VESUM її знає.</p>
+    <p v-else-if="cv && cv[2] === 0" class="sans small muted">Слово засвідчене у пластових словниках (значення вище); у корпусі текстів і в історичних словниках не трапляється.</p>
     <p v-else class="sans small muted">Слово засвідчене лише в словниках (заголовне слово або цитований відповідник); у корпусі текстів не трапляється, тому повної картки з частотами немає.</p>
+    <PlastSenses :word="word" />
     <IkavismChain v-if="row && base.length" :lemma="row[0]" :paradigm="base" />
     <p v-if="ex" class="sans small">Приклад: <RouterLink :to="textTo(ex.w, ex.loc)">«{{ ex.raw }}»</RouterLink> · {{ ex.loc }} · <RouterLink :to="witnessTo(ex.w)">{{ ex.w }}</RouterLink></p>
-    <template v-if="cv">
+    <template v-if="cv && cv[3].length">
       <h2>Засвідчення у словниках <small class="muted sans">{{ cv[2] }}</small></h2>
       <ul class="sans small">
         <li v-for="(a, i) in cv[3]" :key="i"><b>{{ a[2] }}</b> · <RouterLink :to="witnessTo(a[0])">{{ wt(a[0]) }}</RouterLink><template v-if="wd(a[0])">, {{ wd(a[0]) }}</template> · <RouterLink :to="textTo(a[0], a[1])">{{ a[1] }}</RouterLink></li>

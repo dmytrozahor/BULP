@@ -46,6 +46,7 @@ import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
 import { buildCv, writeCv } from './build-cv.ts'
+import { lk } from '../core/cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
@@ -345,7 +346,12 @@ export async function build(opts: { noPy?: boolean } = {}) {
     lap(`archaic lemmas: ${ar.file.entries.filter(e => e.status === 'dictionary').length} dictionary, ${ar.file.entries.filter(e => e.status === 'unverified').length} unverified; ${ar.counts.dictionaryTokens + ar.counts.unverifiedTokens} corpus tokens linked`)
     // SPEC 63 CV: every word attested in a dictionary witness (headwords AND quoted equivalents) without a full card gets a light card /lw/:word with its attestation lines
     const cv = buildCv(adm.map(({ w }) => ({ w })), (wi, ti) => { const L = linked[tix[wi]![ti]!]; if (!L) return undefined; const la = lemmas.get(L.c.id); return { lemma: L.c.lemma, tags: L.c.hit.tags, full: !!la && keep[la.idx] === 1 } },
-      new Set(ar.file.entries.flatMap(e => [e.id, ...e.variants])), (wid, ti) => !!torot.refs.get(wid)?.[ti])
+      new Set(ar.file.entries.flatMap(e => [e.id, ...e.variants])), (wid, ti) => !!torot.refs.get(wid)?.[ti],
+      (() => {   // SL: Plast headwords (public/data/sociolect.json, ingest-plast) get a card unless a full lemma, a light card or an /ar card already owns the word
+        const sp = resolve(PUB, 'sociolect.json'); if (!existsSync(sp)) return undefined
+        const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
+        return { words: rd<{ plast: { entries: { w: string }[] } }>(sp).plast.entries.map(e => e.w), owned }
+      })())
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvLater = () => { const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
     lap(`CV cards: ${cv.entries.length} words from ${cv.stats.tokens} dictionary tokens (${cv.stats.vesum} VESUM-linked, ${cv.stats.asIs} as-is spellings; ${cv.stats.skippedFull} already full cards, ${cv.stats.skippedArchaic} owned by /ar); ${cv.stats.refTokens} text tokens linked; cv/ ${wc.shards} shards ${(wc.bytes / 1048576).toFixed(2)} MB (max ${(wc.maxShard / 1024).toFixed(0)} KB), cardindex.json ${(wc.indexBytes / 1048576).toFixed(2)} MB (${wc.index.lw.length} /lw, ${wc.index.ar.length} /ar)`) }

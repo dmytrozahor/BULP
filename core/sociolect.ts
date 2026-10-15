@@ -5,6 +5,7 @@
  */
 import { claim, D, Q, type Claim } from './evidence.ts'
 import { key } from './text.ts'
+import { lk } from './cv.ts'
 
 /** a Plast entry: w headword, g gloss (≤ 1 sentence, quoted), k 'term' (glossary part) | 'abbr' (abbreviation part), loc locator */
 export interface PlastEntry { w: string; g: string; k: 'term' | 'abbr'; loc: string; /** source id when not the file's main one */ s?: string }
@@ -49,7 +50,7 @@ export function parsePlastLines(lines: string[]): PlastEntry[] {
 const cut = (g: string) => { const s = /^.*?(?<!(?:^|\s)[а-яіїєґ]{1,3})[.!?](?=\s|$)/.exec(g)?.[0] ?? g; return s.length > 160 ? s.slice(0, 159).trimEnd() + '…' : s }
 
 /** Entries of one word (case/stress-insensitive; Plast headwords carry stress capitals, so `key` lower-cases and strips). */
-export const plastOf = (word: string, f: SociolectFile) => f.plast.entries.filter(e => key(e.w) === key(word))
+export const plastOf = (word: string, f: SociolectFile) => f.plast.entries.filter(e => lk(e.w) === lk(word))
 
 /** Badges of a word, each a Claim whose evidence is the ingested quote (clickable to /source/:id through the evidence list). */
 export function sociolectBadges(word: string, f: SociolectFile): SocBadge[] {

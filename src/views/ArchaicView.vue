@@ -6,6 +6,7 @@
 import { computed, ref, watch } from 'vue'
 import { archId, type ArchDict, type ArchEntry, type ArchFile } from '../../core/archaic.ts'
 import { useData } from '../composables/useData.ts'
+import PlastSenses from '../components/PlastSenses.vue'
 import { loadArchaic } from '../lib/torotData.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
 const props = defineProps<{ id: string }>()
@@ -33,6 +34,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
   <p v-else-if="!e" class="muted sans">Архаїчної картки «{{ id }}» немає.</p>
   <template v-else>
     <h1>{{ e.head }} <small class="muted sans">{{ badge }}</small></h1>
+    <PlastSenses :word="e.head" />
     <p v-if="e.status === 'unverified'" class="sans small"><b>Неперевірено:</b> повторюване нерозпізнане слово середньоукраїнського тексту (≥ 3 вживань); словникового запису для нього не знайдено, значення та частина мови — невідомо.</p>
     <template v-else-if="e.dict">
       <p class="sans small">Заголовне слово: <b>{{ e.head }}</b><template v-if="e.variants.length > 1"> · варіанти: {{ e.variants.slice(1).join(', ') }}</template><template v-if="e.dict.pos"> · частина мови за джерелом: {{ e.dict.pos }}.</template>

@@ -41,6 +41,7 @@ import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
+import PlastSenses from '../components/PlastSenses.vue'
 import ModernBadges from '../components/ModernBadges.vue'
 import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
 import EtymologyBlock from '../components/EtymologyBlock.vue'
@@ -253,6 +254,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
             <div><UsageChips :lemma="card.lemma" label /> <SociolectBadges :word="card.lemma" /> <ModernBadges :word="card.lemma" /></div>
       <LoanAdaptBlock :word="card.lemma" />
             <div><LoanChip :word="card.lemma" /></div>
+            <PlastSenses :word="card.lemma" />
           </div>
           <h3 class="sans small muted" style="margin-top:.9rem">Епохи першої фіксації — дві схеми (можуть не збігатися за задумом)</h3>
           <div class="grid2 sans">

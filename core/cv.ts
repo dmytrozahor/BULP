@@ -15,9 +15,13 @@
 import { bucketOf } from './shard.ts'
 import { key } from './text.ts'
 
+/** lookup key: key() plus Latin look-alikes folded to Cyrillic inside a Cyrillic word (source quirk «BЮВ» with a Latin B); used for LOOKUP only, the source spelling is shown as is */
+const LAT: Record<string, string> = { a: 'а', b: 'в', c: 'с', e: 'е', h: 'н', i: 'і', k: 'к', m: 'м', o: 'о', p: 'р', t: 'т', x: 'х', y: 'у' }
+export const lk = (s: string): string => { const k = key(s); return /\p{Script=Cyrillic}/u.test(k) && /[a-z]/.test(k) ? k.replace(/[a-z]/g, c => LAT[c] ?? c) : k }
+
 export const CV_BUCKETS = 256
 /** public/data/cv/<bucket>.json holds { [key(word)]: CvEntry } */
-export const cvBucket = (word: string) => bucketOf(key(word), CV_BUCKETS)
+export const cvBucket = (word: string) => bucketOf(lk(word), CV_BUCKETS)
 export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
 
 /** [witness id, locator (dictionary + lookup + quoted article start), attested spelling] */
@@ -33,7 +37,7 @@ export class CvScan {
   readonly m = new Map<string, { word: string; tags: string; seen: Set<string>; n: number; atts: CvAtt[]; forms: Set<string> }>()
   /** one attestation; a VESUM-linked reading (tags) wins over an as-is spelling that shares the key */
   add(word: string, tags: string, w: string, loc: string, raw: string): void {
-    const k = key(word); if (!k) return
+    const k = lk(word); if (!k) return
     let e = this.m.get(k)
     if (!e) this.m.set(k, e = { word, tags, seen: new Set(), n: 0, atts: [], forms: new Set() })
     else if (tags && !e.tags) { e.word = word; e.tags = tags }
@@ -44,7 +48,9 @@ export class CvScan {
     if (e.atts.length < MAX_ATT) e.atts.push([w, loc, raw])
   }
   /** attested spellings that differ from the card word (inflected forms, pre-reform spellings): [spelling, word] */
-  forms(): [string, string][] { return [...this.m].flatMap(([k, e]) => [...e.forms].filter(f => key(f) !== k).map(f => [f, e.word] as [string, string])) }
+  forms(): [string, string][] { return [...this.m].flatMap(([k, e]) => [...e.forms].filter(f => lk(f) !== k).map(f => [f, e.word] as [string, string])) }
+  /** a card without dictionary lines (e.g. a Plast headword): the word is attested by another source that the card view joins */
+  addBare(word: string): boolean { const k = lk(word); if (!k || this.m.has(k)) return false; this.m.set(k, { word, tags: '', seen: new Set(), n: 0, atts: [], forms: new Set() }); return true }
   entries(): [string, CvEntry][] { return [...this.m].map(([k, e]) => [k, [e.word, e.tags, e.n, e.atts]] as [string, CvEntry]) }
 }
 
@@ -70,7 +76,7 @@ export function buildCardIndex(generated: string, light: Iterable<string>, cv: I
 export function cardMap(ci: CardIndexFile): Map<string, CardHit[]> {
   const m = new Map<string, CardHit[]>()
   const put = (form: string, kind: CardKind, id: string) => {
-    const k = key(form); if (!k) return
+    const k = lk(form); if (!k) return
     const l = m.get(k) ?? []; if (!l.some(h => h.kind === kind && h.id === id)) l.push({ kind, id, form }); m.set(k, l)
   }
   for (const w of ci.lw) put(w, 'lw', w)
