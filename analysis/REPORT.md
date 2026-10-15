@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-15T05:53:08.453Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 131 021**.
+Generated 2026-10-15T05:55:54.638Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 131 021**.
 
 ## 1. Corpus
 
@@ -4362,7 +4362,7 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 510 lemmas, 47 962 reconstructed cells with 50 730 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 015 cells (6.3%), 3 024 forms (6.0%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 25.43 MB of 139.50 MB shard total (18.2%); shards that needed ctx dropped: 1, cell cap 2: 1.
+**Shard bytes added by `epochs`**: 25.43 MB of 139.54 MB shard total (18.2%); shards that needed ctx dropped: 1, cell cap 2: 1.
 
 ## 3. Rule firing statistics
 
@@ -5066,7 +5066,7 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | от | 1037–1050 | ilarion | ilarion | абз. 1 | от | 0 |
 | ми | 1037–1050 | ilarion | ilarion | абз. 56 | насъ | 0 |
 
-12379 of 12438 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+12438 of 12438 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
