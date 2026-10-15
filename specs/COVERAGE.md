@@ -394,3 +394,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NV-3 | tests/unlinked.test.ts › NV-3 the Сумцов «Слобожане» 1918 page: «призвичкою» and every other word token leads to a page with content |
 | NV-3 | tests/unlinked.test.ts › NV-3 every text shard word token is a lexicon spelling or in the unlinked index (all witnesses) |
 | NV-3 | tests/unlinked.test.ts › NV-3 the committed index is within the size budget |
+| NV-4 | tests/attest.test.ts › NV-4 the term locator is parsed: row ref, quote and the quoted ru | cs | de equivalents |
+| NV-4 | tests/attest.test.ts › NV-4 lookup is case-insensitive: Приборниця = приборниця = ПРИБОРНИЦЯ |
+| NV-4 | tests/attest.test.ts › NV-4 the build makes a card of an unlinked term-list headword and refs its text tokens; a VESUM-linked token keeps its lemma |
+| NV-4 | tests/attest.test.ts › NV-4 the card shows the badge «технічний термін <рік>», the quoted equivalents and a case-insensitive id |
+| NV-4 | tests/attest.test.ts › NV-4 a dictionary headword form → «засвідчено: <пам’ятка, дата>» with the card link (any letter case) |
+| NV-4 | tests/attest.test.ts › NV-4 a form found nowhere stays unattested (the «гіпотеза» label is only for such rule outputs) |
+| NV-4 | tests/attest.test.ts › NV-4 a spelling that occurs only in a text (unlinked index) is attested too, linking its spelling page |
+| NV-4 | tests/attest.test.ts › NV-4 AnalyzeView renders the «засвідчено» badge before the «реконструкція (гіпотеза)» one |
+| NV-4 | tests/attest.test.ts › NV-4 every unlinked headword of mtt1925 has an archaic.json card with its equivalents and the text token refs it |

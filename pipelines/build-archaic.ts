@@ -6,7 +6,7 @@
 import { writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { WitnessOut } from '../core/types.ts'
-import { ArchScan, archId, archStats, type ArchFile } from '../core/archaic.ts'
+import { ArchScan, archId, archStats, isTermLoc, type ArchFile } from '../core/archaic.ts'
 import { MU_ORTH, muCandidates } from '../core/mu-fold.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
 import { key } from '../core/text.ts'
@@ -26,14 +26,15 @@ export function buildArchaic(ins: ArchIn[], derive: Derive, generated: string): 
   // 1. dictionary headwords nobody linked to VESUM
   const dictRefs = new Map<string, string[]>()
   for (const { w, linked, epoch } of ins) {
-    if (w.witnessType !== 'dictionary' || w.date[0] >= 1800) continue   // CX-6: a 20th-century glossary (Prague 1925) is a terminology source, not an archaic-lemma source
+    if (w.witnessType !== 'dictionary') continue   // NV-4: a 20th-century term list (Prague 1925) is a dictionary witness too: its headwords are attested lemmas (kind 'term' on the card)
     const groups = new Map<string, { ti: number[]; raws: string[]; any: boolean }>()
     w.tokens.forEach((t, ti) => { const g = groups.get(t.loc) ?? groups.set(t.loc, { ti: [], raws: [], any: false }).get(t.loc)!; g.ti.push(ti); g.raws.push(t.raw); g.any ||= linked(ti) })
     const r: string[] = new Array(w.tokens.length).fill('')
     for (const [loc, g] of groups) {
-      if (g.any) continue                                   // a variant has a VESUM continuant: an ordinary word, not an archaic lemma
+      const term = isTermLoc(loc)                           // NV-4: term-list headwords are cards unless the very token is already a VESUM-linked lemma
+      if (term ? g.ti.every(linked) : g.any) continue       // archaic: a variant has a VESUM continuant: an ordinary word, not an archaic lemma
       const id = scan.addDictEntry({ id: w.id, date: w.date, ...(epoch ? { epoch } : {}) }, loc, g.raws); if (!id) continue
-      for (const ti of g.ti) r[ti] = 'a:' + id
+      for (const ti of g.ti) if (!term || !linked(ti)) r[ti] = 'a:' + id
     }
     dictRefs.set(w.id, r)
   }

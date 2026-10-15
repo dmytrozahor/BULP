@@ -12,24 +12,34 @@
 export interface HeadLine { variants: string[]; pos?: string; count?: number; marks: string[]; text: string; rowRef: string }
 /** Locator of the ingester: «т.N ряд. L: <header line>» → the line without the locator and a leading «. */
 export function parseLoc(loc: string): { rowRef: string; text: string } {
-  const m = /^(т\.\d+ ряд\. \d+):\s*[«"“]?(.*)$/.exec(loc)
+  const m = /^(т\.\d+ ряд\. \d+):\s*[«"“]?(.*)$/.exec(loc) ?? /^(с\. \d+, № \d+):\s*(.*)$/.exec(loc)   // 2nd form: term list (mtt1925) «с. 1, № 1: …»
   return m ? { rowRef: m[1]!, text: m[2]!.trim() } : { rowRef: loc, text: loc }
+}
+/** NV-4: a term-list locator («с. N, № M: Приборниця, пристрійниця = Готовальня | Rýsovadlo | Reiszeug») → the equivalents after «=», verbatim, in the list's own order (uk, then ru | cs | de) */
+export const isTermLoc = (loc: string) => /^с\. \d+, № \d+:/.test(loc)
+export function termGloss(loc: string): string[] {
+  const { text } = parseLoc(loc), i = text.indexOf(' = ')
+  return i < 0 ? [] : text.slice(i + 3).split(' | ').map(s => s.trim()).filter(Boolean)
 }
 const POS_RE = /\s(ч|ж|с|мн|прикм|дієсл|присл|прийм|спол|част|займ|числ|вигук|виг|дієпр|незм)\.\s*(?:\((\d+)\))?/
 /** Bracketed marks of the header line, verbatim («(особова назва, молд., пор. Ананий)»). */
 export function parseHead(loc: string, variants: string[]): HeadLine {
-  const { rowRef, text } = parseLoc(loc), pm = POS_RE.exec(text)
+  const { rowRef, text } = parseLoc(loc), pm = isTermLoc(loc) ? null : POS_RE.exec(text)
   const marks = [...text.matchAll(/\(([^()\d][^()]*)\)/g)].map(m => m[1]!.trim()).filter(s => !/^\d+$/.test(s)).slice(0, 3)
   return { variants, ...(pm ? { pos: pm[1]! } : {}), ...(pm?.[2] ? { count: Number(pm[2]) } : {}), marks, text: text.slice(0, 240), rowRef }
 }
 
 export type ArchStatus = 'dictionary' | 'unverified'
+/** `kind: 'term'` (NV-4) = a headword of a 20th-century term list (not an archaic word); `gloss` = its quoted equivalents (ru | cs | de for mtt1925) */
+export interface ArchDict { w: string; epoch?: string; quote: string; locator: string; pos?: string; marks: string[]; date: [number, number]; kind?: 'term'; gloss?: string[] }
 export interface ArchForm { raw: string; f: number }
 /** One archaic lemma card (public/data/archaic.json). */
 export interface ArchEntry {
   id: string; head: string; variants: string[]; status: ArchStatus
   /** dictionary entries: the header line as printed (quote), its locator, the dictionary witness and its period */
-  dict?: { w: string; epoch?: string; quote: string; locator: string; pos?: string; marks: string[]; date: [number, number] }
+  dict?: ArchDict
+  /** NV-4: the same headword in further dictionary witnesses */
+  more?: ArchDict[]
   /** corpus tokens (outside the dictionary witnesses) linked to this lemma */
   n: number; forms: ArchForm[]; epochs: Record<string, number>; witnesses: Record<string, number>
   first?: { w: string; loc: string; raw: string; date: [number, number] }
@@ -44,10 +54,14 @@ export class ArchScan {
   /** register a dictionary entry (variants = spellings sharing the header line); returns its id */
   addDictEntry(w: { id: string; date: [number, number]; epoch?: string }, loc: string, variants: string[]): string | undefined {
     const vs = [...new Set(variants.map(archId).filter(Boolean))]; if (!vs.length) return undefined
-    const id = vs[0]!, ex = this.byId.get(id)
-    if (ex) { for (const v of vs) if (!ex.variants.includes(v)) { ex.variants.push(v); this.index.set(v, id) } return id }
-    const h = parseHead(loc, vs)
-    this.byId.set(id, { id, head: vs[0]!, variants: vs, status: 'dictionary', dict: { w: w.id, ...(w.epoch ? { epoch: w.epoch } : {}), quote: h.text, locator: h.rowRef, ...(h.pos ? { pos: h.pos } : {}), marks: h.marks, date: w.date }, n: 0, forms: [], epochs: {}, witnesses: {}, kwic: [] })
+    const id = vs[0]!, ex = this.byId.get(id), h = parseHead(loc, vs)
+    const dict: ArchDict = { w: w.id, ...(w.epoch ? { epoch: w.epoch } : {}), quote: h.text, locator: h.rowRef, ...(h.pos ? { pos: h.pos } : {}), marks: h.marks, date: w.date, ...(isTermLoc(loc) ? { kind: 'term' as const, gloss: termGloss(loc) } : {}) }
+    if (ex) {
+      for (const v of vs) if (!ex.variants.includes(v)) { ex.variants.push(v); this.index.set(v, id) }
+      if (ex.dict && ex.dict.w !== w.id && !(ex.more ?? []).some(m => m.w === w.id)) (ex.more ??= []).push(dict)   // NV-4: same headword, another dictionary
+      return id
+    }
+    this.byId.set(id, { id, head: vs[0]!, variants: vs, status: 'dictionary', dict, n: 0, forms: [], epochs: {}, witnesses: {}, kwic: [] })
     for (const v of vs) if (!this.index.has(v)) this.index.set(v, id)
     return id
   }

@@ -28,11 +28,12 @@ import HeteronymReadings from '../components/HeteronymReadings.vue'
 import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
 import { loanLabels } from '../lib/datasets.ts'
-import { analyzeLink, analyzeTarget } from '../lib/analyze-links.ts'
+import { analyzeLink } from '../lib/analyze-links.ts'
+import { attestationOf, type Attested } from '../lib/attest.ts'
 import { formTo } from '../lib/nav.ts'
-import { loadLight } from '../lib/torotData.ts'
+import { loadArchaic, loadLight } from '../lib/torotData.ts'
 const route = useRoute(), router = useRouter()
-const { annData, loaded, byLemma, searchIdx } = useData()
+const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
 const props = defineProps<{ embed?: string }>()
 const q = ref(props.embed ?? String(route.query.q ?? '')), word = ref(q.value.trim()), year = ref('')
@@ -58,9 +59,18 @@ const open = ref<string | null>(null)
 const light = ref<ReadonlySet<string>>()
 loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
 const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value })
-const to = (form: string) => analyzeTarget(form, ctx())
-/** NV-3: «сторінка слова» only when a lemma / light card stands behind the form, else «сторінка написання» */
-const linkLabel = (form: string) => (analyzeLink(form, ctx()).kind === 'word' ? '→ сторінка слова' : '→ сторінка написання')
+/** NV-4: a form found in a witness (dictionary headword card or unlinked text spelling) is «засвідчено», not a hypothesis; filled for the input, the normalised form and every candidate */
+const att = ref(new Map<string, Attested>())
+watch([d, word], async () => {
+  if (!d.value) return
+  const forms = [...new Set([word.value, d.value.norm, ...d.value.candidates.map(c => c.form)])], arch = await loadArchaic().catch(() => undefined), m = new Map<string, Attested>()
+  await Promise.all(forms.map(async f => { const r = await attestationOf(f, { arch, witness: id => witnessById.value.get(id) }); if (r) m.set(f, r) }))
+  att.value = m
+}, { immediate: true })
+const to = (form: string) => { const l = analyzeLink(form, ctx()); return l.kind === 'word' ? l.to : att.value.get(form)?.to ?? l.to }
+/** NV-3/NV-4: «сторінка слова» only when a lemma / light card stands behind the form; a dictionary headword → «картка слова»; else «сторінка написання» */
+const linkLabel = (form: string) => (analyzeLink(form, ctx()).kind === 'word' ? '→ сторінка слова' : att.value.get(form)?.kind === 'card' ? '→ картка слова' : '→ сторінка написання')
+const isAtt = (form: string) => att.value.has(form) && analyzeLink(form, ctx()).kind !== 'word'
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
 
@@ -80,11 +90,13 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
   <div v-if="!word" class="card muted">Введіть слово.</div>
   <template v-else-if="d && a">
     <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: <RouterLink :to="to(d.norm)" class="lang">{{ d.norm }}</RouterLink></span></h2>
-      <p class="sans small">Введена форма: <RouterLink :to="formTo(word)" class="lang">{{ word }}</RouterLink></p>
+      <p class="sans small">Введена форма: <RouterLink :to="formTo(word)" class="lang">{{ word }}</RouterLink>
+        <template v-if="isAtt(word)"> · <span class="attested-badge">засвідчено: {{ att.get(word)!.text }}</span> <RouterLink :to="att.get(word)!.to">{{ linkLabel(word) }}</RouterLink></template></p>
       <p v-if="inLex.length" class="sans small">У словнику: <span v-for="h in inLex" :key="h.lemma" style="margin-right:.6rem"><RouterLink :to="`/w/${encodeURIComponent(h.lemma)}`">{{ h.lemma }}</RouterLink> ({{ h.via }})</span></p>
       <ul style="list-style:none;padding:0;margin:0">
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
           <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
+          <FormBadge v-else-if="isAtt(c.form)" kind="attested" :form="c.form" :label="'засвідчено: ' + att.get(c.form)!.text" />
           <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
           <RouterLink :to="to(c.form)" class="small sans"> {{ linkLabel(c.form) }}</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
