@@ -193,3 +193,13 @@ describe('DL-8 Лукашенко–Похилевич 2006 (Північне П
     expect(DIALECT_BOOK_RULES.filter(r => /LUKASH|POKHYL|PIDLIASH/i.test(String(r.cite?.source)))).toEqual([])
   })
 })
+
+describe('DL-9 Словник говірок Бузько-Інгульського межиріччя (Миколаїв, 2018): access log, nothing ingested without a locatable open copy', () => {
+  it('imprint, access search and the owner decision are logged', () => {
+    const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+    for (const k of ['**DL-9**', 'Бузько-Інгульського межиріччя', 'Іліон', '1020 settlements', "needs owner's decision"]) expect(log, k).toContain(k)
+  })
+  it('no lexical entry cites the dictionary (no copy was read)', () => {
+    expect(DIALECT_LEX.filter(e => /BUZKO|INGUL|SPANAT/i.test(e.src))).toEqual([])
+  })
+})

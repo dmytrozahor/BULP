@@ -234,6 +234,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DL-7 | tests/dialect-books.test.ts › DL-7 Залеський 1973 / Шило 1957: access log, no unverifiable rows › no rule or lexical entry cites a book that was not read |
 | DL-8 | tests/dialect-books.test.ts › DL-8 Лукашенко–Похилевич 2006 (Північне Підляшшя): access log, nothing ingested from an unread copyrighted book › the access route and the owner decision are logged, and the target region is a real MP territory |
 | DL-8 | tests/dialect-books.test.ts › DL-8 Лукашенко–Похилевич 2006 (Північне Підляшшя): access log, nothing ingested from an unread copyrighted book › no lexical entry or rule cites the edition (it was not read) |
+| DL-9 | tests/dialect-books.test.ts › DL-9 Словник говірок Бузько-Інгульського межиріччя (Миколаїв, 2018): access log, nothing ingested without a locatable open copy › imprint, access search and the owner decision are logged |
+| DL-9 | tests/dialect-books.test.ts › DL-9 Словник говірок Бузько-Інгульського межиріччя (Миколаїв, 2018): access log, nothing ingested without a locatable open copy › no lexical entry cites the dictionary (no copy was read) |
 | AC-1 | tests/autolabel.test.ts › every table row has a verbatim meaning and the table a registered source and a locator |
 | AC-1 | tests/autolabel.test.ts › articleLabels returns a verbatim slice of the article for each abbreviation and ignores look-alikes |
 | AC-1 | tests/autolabel.test.ts › r2u: parseCell reads Грінченко labels from the FULL article, quote ⊂ article |
