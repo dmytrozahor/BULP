@@ -14,6 +14,7 @@ import ClaimBadge from '../components/ClaimBadge.vue'
 import SociolectBadges from '../components/SociolectBadges.vue'
 import ModernBadges from '../components/ModernBadges.vue'
 import LoanAdaptBlock from '../components/LoanAdaptBlock.vue'
+import UnlinkedSpelling from '../components/UnlinkedSpelling.vue'
 import ClaimSet from '../components/ClaimSet.vue'
 import DialectBlock from '../components/DialectBlock.vue'
 import CircReadings from '../components/CircReadings.vue'
@@ -81,15 +82,13 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
   <div v-if="!loaded"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <template v-else-if="!pick && derivedOnly">
     <header class="wordhead headline"><h1 class="lemma">{{ form }}</h1>
-      <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у корпусі такого написання немає (P-1.7: виведена форма не є свідченням)</span>
+      <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у словнику такого написання немає (P-1.7: виведена форма не є свідченням)</span>
         <template v-if="derivedOnly.kind === 'dp'"> · <span class="muted">зв’язок: </span>dialect-variant «{{ derivedOnly.h.variant }}» → <RouterLink :to="`/w/${derivedOnly.h.std}`">{{ derivedOnly.h.std }}</RouterLink> ({{ derivedOnly.h.rule }})</template></p></header>
     <Panel id="f-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="form" /></Panel>
     <LoanAdaptBlock :word="form" />
+    <UnlinkedSpelling :form="form" quiet />
   </template>
-  <div v-else-if="!pick" class="card" role="status">
-    <h1>«{{ form }}» — такого написання немає в корпусі</h1>
-    <p class="sans"><RouterLink :to="{ path: '/', query: { q: form } }">шукати «{{ form }}» →</RouterLink> · <RouterLink :to="{ path: '/analyze', query: { q: form } }">аналіз за правилами →</RouterLink></p>
-  </div>
+  <UnlinkedSpelling v-else-if="!pick" :form="form" />
   <template v-else>
     <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>

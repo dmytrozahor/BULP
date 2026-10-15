@@ -2,8 +2,9 @@ import { key } from '../../core/text.ts'
 import { formTo, wordTo } from './nav.ts'
 
 /**
- * SPEC 63 NV-2: where a form shown by «Аналіз слова» leads. /w/:lemma if it is a lemma of the lexicon, /f/:form?lemma= if the lexicon attests the spelling,
- * /lw/:lemma if only the light card (rare VESUM lemma) exists, else /f/:form (the form page derives what it can; BL-16: never a dead end).
+ * SPEC 63 NV-2 / NV-3: where a form shown by «Аналіз слова» leads. /w/:lemma if it is a lemma of the lexicon, /f/:form?lemma= if the lexicon attests the spelling
+ * or its paradigm, /lw/:lemma if only the light card (rare VESUM lemma) exists. Anything else goes to the SPELLING page /f/:form (kind 'spelling'), which
+ * shows the unlinked-spelling record (core/unlinked.ts) — never a dead end (BL-16), and never labelled «сторінка слова» because no lemma stands behind it.
  */
 export interface LinkCtx {
   lemmas: { has(l: string): boolean }
@@ -11,10 +12,12 @@ export interface LinkCtx {
   hits: { get(k: string): { lemma: string; via: string }[] | undefined }
   light?: ReadonlySet<string>
 }
-export const analyzeTarget = (form: string, ctx: LinkCtx): string => {
-  if (ctx.lemmas.has(form)) return wordTo(form)
+export interface AnalyzeLink { to: string; kind: 'word' | 'spelling' }
+export const analyzeLink = (form: string, ctx: LinkCtx): AnalyzeLink => {
+  if (ctx.lemmas.has(form)) return { to: wordTo(form), kind: 'word' }
   const h = ctx.hits.get(key(form))?.[0]
-  if (h) return h.via === 'lemma' ? wordTo(h.lemma) : formTo(form, h.lemma)
-  if (ctx.light?.has(form)) return `/lw/${encodeURIComponent(form)}`
-  return formTo(form)
+  if (h) return { to: h.via === 'lemma' ? wordTo(h.lemma) : formTo(form, h.lemma), kind: 'word' }
+  if (ctx.light?.has(form)) return { to: `/lw/${encodeURIComponent(form)}`, kind: 'word' }
+  return { to: formTo(form), kind: 'spelling' }
 }
+export const analyzeTarget = (form: string, ctx: LinkCtx): string => analyzeLink(form, ctx).to

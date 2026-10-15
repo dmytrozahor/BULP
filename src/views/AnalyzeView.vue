@@ -28,7 +28,7 @@ import HeteronymReadings from '../components/HeteronymReadings.vue'
 import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
 import { loanLabels } from '../lib/datasets.ts'
-import { analyzeTarget } from '../lib/analyze-links.ts'
+import { analyzeLink, analyzeTarget } from '../lib/analyze-links.ts'
 import { formTo } from '../lib/nav.ts'
 import { loadLight } from '../lib/torotData.ts'
 const route = useRoute(), router = useRouter()
@@ -57,7 +57,10 @@ const open = ref<string | null>(null)
 /** SPEC 63 NV-2: every form shown here leads to its page (/w, /lw or /f); the rare-lemma set loads lazily */
 const light = ref<ReadonlySet<string>>()
 loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
-const to = (form: string) => analyzeTarget(form, { lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value })
+const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value })
+const to = (form: string) => analyzeTarget(form, ctx())
+/** NV-3: «сторінка слова» only when a lemma / light card stands behind the form, else «сторінка написання» */
+const linkLabel = (form: string) => (analyzeLink(form, ctx()).kind === 'word' ? '→ сторінка слова' : '→ сторінка написання')
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
 
@@ -83,7 +86,7 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
           <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
           <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
-          <RouterLink :to="to(c.form)" class="small sans"> → сторінка слова</RouterLink>
+          <RouterLink :to="to(c.form)" class="small sans"> {{ linkLabel(c.form) }}</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>
           <div v-if="c.steps.length" class="small sans chain-links">ланцюг: <template v-for="(s, i) in c.steps" :key="'cl' + i"><RouterLink v-if="i === 0" :to="to(s.from)" class="lang">{{ s.from }}</RouterLink> → <RouterLink :to="to(s.to)" class="lang">{{ s.to }}</RouterLink> </template></div>

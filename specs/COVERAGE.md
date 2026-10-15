@@ -383,4 +383,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MD-3 | tests/modern.test.ts › the date kind is spelled out: crawl is not publication, entry is not first use |
 | MD-3 | tests/modern.test.ts › the report counts distinct words per source and per first-attestation year |
 | MD-3 | tests/modern.test.ts › the badges are wired into the word and form pages |
-| NV-3 | manual — pending: NV-3 (no dead spelling links) is being implemented; the test row replaces this line when it lands |
+| NV-3 | tests/unlinked.test.ts › NV-3 the accumulator keeps count, witness count and at most 3 witnesses with token indexes |
+| NV-3 | tests/unlinked.test.ts › NV-3 sharding is stable and every key lands in exactly one of the shards |
+| NV-3 | tests/unlinked.test.ts › NV-3 only word tokens are indexed (no digits or punctuation) |
+| NV-3 | tests/unlinked.test.ts › NV-3 a KWIC line is cut around the token index from the text shard |
+| NV-3 | tests/unlinked.test.ts › NV-3 the lookup finds an indexed spelling through the injected shard fetch |
+| NV-3 | tests/unlinked.test.ts › NV-3 /f/:form for a spelling no lemma owns renders the «незв’язане написання» page, never «немає в корпусі» |
+| NV-3 | tests/unlinked.test.ts › NV-3 the analyser says «сторінка слова» only for a lemma / light card, else «сторінка написання» |
+| NV-3 | tests/unlinked.test.ts › NV-3 the index is on the code branch, within the size budget |
+| NV-3 | tests/unlinked.test.ts › NV-3 the Сумцов «Слобожане» 1918 page: «призвичкою» and every other word token leads to a page with content |
+| NV-3 | tests/unlinked.test.ts › NV-3 every text shard word token is a lexicon spelling or in the unlinked index (all witnesses) |
+| NV-3 | tests/unlinked.test.ts › NV-3 the committed index is within the size budget |
