@@ -47,6 +47,15 @@ const EX: Record<string, [string[], string, string]> = {
   'VOL-FEM-EJI': [['VOL'], 'старейі', 'старої'],
   'WPL-INF-ODD': [['WPL'], 'бігті', 'бігти'],
   'WPL-PHON-VAR': [['WPL'], 'кень', 'кінь'],
+  'WPL-DIPH-O': [['WPL'], 'вуол', 'віл'],
+  'WPL-DIPH-E': [['WPL'], 'хміел', 'хміль'],
+  'WPL-DIPH-YAT': [['WPL'], 'ліес', 'ліс'],
+  'WPL-KI-GI': [['WPL'], 'рокі', 'роки'],
+  'WPL-E-I-NEUTRAL': [['WPL'], 'теипер', 'тепер'],
+  'CHN-DIPH': [['CHN'], 'діед', 'дід'],
+  'CHN-SOFT-LABIAL': [['CHN'], 'нуч’', 'ніч'],
+  'CHN-PRON-NOH': [['CHN'], 'йійі', 'неї'],
+  'NORTH-A-E': [['NORTH'], 'пети', 'п’яті'],
 }
 
 describe('DL-1 every ЕУМ-mined row has a verbatim ЕУМ cite of its own dialect, an example and a standard counterpart', () => {
@@ -74,7 +83,7 @@ describe('DL-1 every ЕУМ-mined row has a verbatim ЕУМ cite of its own dial
 })
 
 describe('DL-2 per dialect group: each new rule fires on its example and stays silent on the standard word', () => {
-  const groups = ['BOY', 'HUT', 'LEM', 'ZAK', 'SYAN', 'PKB', 'NDN', 'POD', 'VOL', 'WPL', 'MPL', 'CHN', 'SLB', 'STP', 'MDN', 'SE', 'SW']
+  const groups = ['BOY', 'HUT', 'LEM', 'ZAK', 'SYAN', 'PKB', 'NDN', 'POD', 'VOL', 'WPL', 'MPL', 'CHN', 'SLB', 'STP', 'MDN', 'SE', 'SW', 'NORTH']
   for (const g of groups) {
     it(`${g}: ${DIALECTS[g] ?? g}`, () => {
       const mine = Object.entries(EX).filter(([, [codes]]) => codes.includes(g))
@@ -201,5 +210,43 @@ describe('DL-9 Словник говірок Бузько-Інгульськог
   })
   it('no lexical entry cites the dictionary (no copy was read)', () => {
     expect(DIALECT_LEX.filter(e => /BUZKO|INGUL|SPANAT/i.test(e.src))).toEqual([])
+  })
+})
+
+describe('PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it', () => {
+  const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+  const rules = DIALECT_BOOK_RULES.filter(r => /^(WPL-DIPH|WPL-KI|WPL-E-I|CHN-DIPH|CHN-SOFT|CHN-PRON|NORTH-A-E)/.test(r.id))
+  it('every PL row cites its own ЕУМ article (um155 East, um161 North, um168 West) with a verbatim quote that contains its example', () => {
+    expect(rules.length).toBe(9)
+    const um = { WPL: 168, CHN: 155, NORTH: 161 } as Record<string, number>
+    for (const r of rules) { expect(r.cite.locator, r.id).toBe(`http://litopys.org.ua/ukrmova/um${um[r.label]}.htm`); expect(r.cite.kind, r.id).toBe('Q') }
+    for (const [id, ex] of [['WPL-DIPH-O', 'вуол'], ['WPL-DIPH-E', 'хміел'], ['WPL-DIPH-YAT', 'л’іес'], ['WPL-KI-GI', 'рокí'], ['WPL-E-I-NEUTRAL', 'теипéр'], ['CHN-DIPH', 'діед'], ['CHN-SOFT-LABIAL', 'нуч’'], ['CHN-PRON-NOH', 'йійі'], ['NORTH-A-E', 'пети́']] as const)
+      expect(rules.find(r => r.id.startsWith(id + ':'))!.cite.quote, id).toContain(ex)
+  })
+  it('gates: the rows are undated (no dating quote), so the blanket 1798 applies; the group gates (CHN 1501, WPL 1301) lie below it', () => {
+    for (const r of rules) expect(ruleGate(r), r.id).toBe(1798)
+    expect(claims('діед', 1797).CHN).toBeUndefined(); expect(claims('діед', 1798).CHN).toBeDefined()
+    expect(claims('вуол', 1797).WPL).toBeUndefined(); expect(claims('вуол', 1798).WPL).toBeDefined()
+  })
+  it('no row claims akanye, hard р or ы for MPL/WPL: ЕУМ um167/um168 attest none of them; the only akanye rows are CHN (um155) and SLB (um169)', () => {
+    expect(DIALECT_BOOK_RULES.filter(r => /AKANYE/.test(r.id)).map(r => r.id).sort()).toEqual(['CHN-AKANYE:CHN', 'CHN-AKANYE:SLB'])
+    for (const k of ['**PL-2**', 'акання', 'um167', 'hard р', '«акавізм»', 'author user', 'no source used the word']) expect(log, k).toContain(k)
+  })
+})
+
+describe('SV southern dialect vocabularies: access log, nothing ingested without a readable institutional copy', () => {
+  const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+  it('Чабаненко, Москаленко (Одещина) and the Одещина/Таврія/Запоріжжя search are logged with the owner decision', () => {
+    for (const k of ['**SV-2a**', '**SV-2b**', 'Чабаненко', 'Нижньої Наддніпрянщини', 'Москаленко', 'Slovnyk_dialektyzmiv_ukrainskyh_hovirok_Odeskoi_oblasti', 'Бондар', "needs owner's decision"]) expect(log, k).toContain(k)
+  })
+  it('no lexical entry cites a southern dictionary (no readable copy)', () => {
+    expect(DIALECT_LEX.filter(e => /CHABAN|MOSKAL|NIZHN|ODES|SPANAT|BUZKO/i.test(e.src))).toEqual([])
+  })
+})
+
+describe('SG song «Занедбай мене, я о тя не дбаю»: identification logged, no witness without a public-domain edition', () => {
+  const log = readFileSync(new URL('../research/31-dialect-books.md', import.meta.url), 'utf8')
+  it('the identification attempt (folk-song category, title «Занехай ти мене», no author/edition/year found) and the owner decision are logged', () => {
+    for (const k of ['**SG-2**', 'Занехай ти мене', 'pisennyk.com.ua', 'no earliest publication', "needs owner's decision"]) expect(log, k).toContain(k)
   })
 })
