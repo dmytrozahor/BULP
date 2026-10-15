@@ -444,3 +444,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-3 | tests/cv.test.ts › CV-3 a Plast headword owned by a full lemma / light / archaic card gets no second card; any other gets a bare card |
 | CV-3 | tests/cv.test.ts › CV-3 the Plast links go to the word card, the source card is the secondary link |
 | CV-3 | tests/cv.test.ts › CV-3 вишкіл, ВПР and КВТ each open a card that carries the Plast sense (abbreviations with their expansion); every Plast entry has a card |
+| CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
