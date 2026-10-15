@@ -88,7 +88,7 @@ const CUT: Record<string, RegExp> = {
 /** Header author must match, else the subpage is somebody else's text (e.g. a translation). Absent header → kept. */
 const AUTHOR: Record<string, RegExp> = { franko: /Франко/, kulish: /Куліш|Кулїш/, lesya: /Леся|Лесї|Українка|Косач/, kotliarevsky: /Котляревськ/, hrinchenko: /Грінченк|Чайченк/,
   shevchenko: /Шевченк/, nechuy: /Левіцьк|Левицьк|Нечуй/,
-  yavornytsky: /Яворницьк/, sumtsov: /Сумцов/, bahaliy: /Багалі/, pyven: /Півень|Пивень/, komarova: /Комарова/ }
+  yavornytsky: /Яворницьк/, sumtsov: /Сумцов/, bahaliy: /Багалі/, pyven: /Півень|Пивень/, komarova: /Комарова/, chuzhbynsky: /Чужбинськ|Афанасьєв/, mohyla: /Могила|Метлинськ/ }
 
 // ── page → tokens ───────────────────────────────────────────────────────────────────────────────
 const BLOCK = new Set(['p', 'div', 'li', 'tr', 'table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 'ol', 'ul', 'dd', 'dt', 'hr', 'br', 'center'])
