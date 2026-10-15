@@ -26,7 +26,7 @@ export function buildArchaic(ins: ArchIn[], derive: Derive, generated: string): 
   // 1. dictionary headwords nobody linked to VESUM
   const dictRefs = new Map<string, string[]>()
   for (const { w, linked, epoch } of ins) {
-    if (w.witnessType !== 'dictionary') continue
+    if (w.witnessType !== 'dictionary' || w.date[0] >= 1800) continue   // CX-6: a 20th-century glossary (Prague 1925) is a terminology source, not an archaic-lemma source
     const groups = new Map<string, { ti: number[]; raws: string[]; any: boolean }>()
     w.tokens.forEach((t, ti) => { const g = groups.get(t.loc) ?? groups.set(t.loc, { ti: [], raws: [], any: false }).get(t.loc)!; g.ti.push(ti); g.raws.push(t.raw); g.any ||= linked(ti) })
     const r: string[] = new Array(w.tokens.length).fill('')

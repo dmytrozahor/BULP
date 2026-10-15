@@ -22,6 +22,7 @@ export const INGESTERS: Partial<Record<Kind, () => Promise<Ingester>>> = {
   vira: () => import('./ingest-vira.ts').then(m => m.default),
   dict: () => import('./ingest-dict.ts').then(m => m.default),
   r2u: () => import('./ingest-r2u.ts').then(m => m.default),
+  termlist: () => import('./ingest-termlist.ts').then(m => m.default),
   wikisource: () => import('./ingest-wikisource.ts').then(m => m.default),
 }
 

@@ -1,0 +1,358 @@
+# page	no	uk	ru	cs	de
+1	1	Приборниця, пристрійниця	Готовальня	Rýsovadlo	Reiszeug
+1	2	Круж, /циркель/	Циркуль	Kružitko	Zirkel
+1	3	Головка кружа	Головка циркуля	Hlava kružitka	Zirkelkopf
+1	4	Рамено кружа	Ножка циркуля	Rameno kružitka	Zirkelschenkel
+1	5	Стопа кружа	Нижняя часть циркульной ножки	Pata kružítka	Zirkelfuss
+1	6	Вістря кружа	Остріе циркуля	Špička kružítka	Zirkelspitze
+1	7	Круж з всадками	Циркуль с вставными ножками	Nástavné kružítko	Einsatzzirkel, Stückzirkel
+1	8	Всадка з оливцем, околишник	Вставка с карандашем	Násadka na tužku	Bleieinsatz
+1	9	Всадка з рисівкою для тушу, чорнила	Вставка с чертежным пером	Nastavovací, vytahovací péro inkoustové, tušové	Ziehfeder-, Tinten-, Tusch-einsatz
+1	10	Всадка з голкою	Вставочная игла	Nasazovací jehla	Nadeleinsatz
+1	11	Вістря голки	Острие иглы	Hrot /špička/ jehly	Nadelspitze, Nadelfuss
+1	12	Надовжка кружа	Удлиненіе циркульной ножки	Nastavování kružítka	Zirkelverlaengerung
+1	13	Ключ для кружа	Циркульный ключ	Klíč ke kružitku	Zirkelschlüssel
+1	14	Оливцевий круж	Карандашный циркуль	Tužkové kružítko	Bleistiftzirkel
+2	1	Розмірач	Измѣрительный циркуль	Píchatko, Odpíchovací kružítko	Handzirkel, Stechzirkel
+2	2	Круж-дрібномір	Дѣлительный циркуль	Pružinové /pérové/ hmatadlo	Federzirkel, Teilzirkel
+2	3	Нулька	Кронциркуль	Nulka, nulátko	Nullenzirkel
+2	4	Редукційний круж	Редукціонный циркуль	Redukční kružítko	Reduktionszirkel
+2	5	Кружило	Рычажный циркуль	Tyčové kružidlo	Stangelzirkel
+2	6	Підсердечник	Центрик	Středovka	Zentrumscheibe, Zentrumstift
+2	7	Точківка, голка для точок	Пунктирная игла	Tečkovací jehla	Punktiernadel
+2	8	Колисцатко для точкування	Пунктирное колесико	Tečkovací kolečko	Punktierraedchen
+2	9	Олівник	футлярчик для карандашей	Pouzdro na tužky	Bleibüchse
+2	10	Кутомір	Транспортир	Úhloměr	Transporteur
+2	11	Кутомір з косинцем	Транспортир с угольником	Úhelník	Winkeltransporteur
+2	12	Рисівка	Рейсфедер, чертежное перо	Rýsovací, vytahovací péro	Ziehfeder, Reisfeder
+2	13	Рисівка для кривих	Перо для вичерчиванія кривых	Péro na vytahování křivek	Kurvenziehfeder
+2	14	Рисівка подвійна	Двойной рейсфедер	Dvojité vytahovací péro	Doppelziehfeder
+2	15	Точкованка	Пунктирное перо	Vytahovací tečkovací péro	Punktierfeder
+2	16	Наострити рисівку	Наточить рейсфедер	Nabrousiti vytahovací péro	Ziehfeder anschleifen
+2	17	Оливець	карандаш	Tužka	Bleistift
+3	1	Баревний оливець	Цвѣтной карандаш	Barévná tužka	Farbstift
+3	2	Червоний оливець	Красный карандаш	Červená tužka	Rotstift
+3	3	Синій оливець	Синій карандаш	Modrá tužka	Blaustift
+3	4	Заострити оливець	Очинить карандаш	Zaostřiti tužku	Bleistift anspitzen
+3	5	Машинка для заострювання оливців	Машинка для очинки карандашей	Strojek na ořezávání tužek	Bleistiftspitzer
+3	6	Пильничок для заострювання оливців	Напильник для точки карандашей	Pilníček na tužku	Bleistiftfeile
+3	7	Брусок для оливців	Оселок для точки карандашей	Brousek na tužky	Bleistiftschaerfer
+3	8	Скребачка	Ножичек для подчистки чертежей	Nožík na vyškrabování	Radiermesser
+3	9	Напинка	Кнопка, черток	Napínáčky, připínáčky	Reiszwecke, Reisnadel, Heftzwecke
+3	10	Перо	Перо	Péro	Feder
+3	11	Насадка на перо	Собачка	Jezdec	Ueberfeder
+3	12	Стояче письмо	прямой шрифт	Stojaté písmo	Steilschrift
+3	13	Рисункове перо	Чертежное перышко	Rýsovací péro	Zeichenfeder
+3	14	Рондове перо	Перо для круглаго шрифта	Francouzké péro	Rundschriftfeder
+3	15	Рондове письмо	Круглый шрифт	Francouzké písmo, okrouhlé písmo	Rundschrift
+3	16	Туш, плинний туш	Тушь, китайская тушь	Tuš, tekutá tuš	Ausziehtusche, flüssige Tusche
+4	1	Витягати тушом	Затушевать	Vytahovati tuši	Ausziehen
+4	2	Розпускати туш, /барву/	Развести тушь /краску/	Rozdělati tuš /barvu/	Tusche /Farbe/ anrühren
+4	3	Пензель, пензлик для тушу	Кисть для туши	Štětec na tuš	Pinsel, Tuschpinsel
+4	4	Скринка з тушом /барвами/	Ящик с тушью /красками/	Skřínka na tuš /barvy/	Tuschkasten, Farbenkasten
+4	5	Мисочка для тушу	Чашечка для разведенія туши	Miska na tuš	Tuschnapf, Tuschschalle
+4	6	Гума	Резина	Radírka, pryž	Radiergummi
+4	7	Гума до оливця	Резина для карандаша	Pryž na tužku	Bleigummi
+4	8	Гума до тушу /чорнила/	Резина для туши /чернил/	Pryž na inkoust	Tintengummi, Tuschgummi
+4	9	Витирати гумою	Стирать резиной	Vymazati	Radieren
+4	10	Водяні барви	акварельная краска	Vodní barva, vodová barva	Feuchtwasserfarbe
+4	11	Барви в тубах	Краски в трубках	Barva v tubě	Farbentube
+4	12	Барви в плитах	Краски в плитках	Barvička	Stückfarben
+4	13	Губка	Губка	Houba, hubka	Schwamm
+4	14	Змити рисунок губкою	Смыть чертеж губкой	Spláchnouti rys vodou	Zeichnung mit Schwamm auswaschen
+4	15	Рис, рисунок	Чертеж	Rys	Zeichnung
+4	16	Чолорис	Вид спереди	Pohled s předu	Stirnansicht
+4	17	Низорис	Вертикальный вид	Půdorys	Aufriss
+4	18	Бокорис	Вид сбоку	Bokorys	Seitenansicht
+5	1	Перепіз	Разрѣз	Řez	Schnitt
+5	2	Подовжний перепіз	Продольный разрѣз	Podélný řez	Laengsschnitt
+5	3	Поперечний перепіз	Поперечное сѣченіе	Příčný řez, průřez	Querschnitt
+5	4	Нарисувати в поглядї	Представить в перспективѣ	Představiti v pohledu	In Ansicht darstellen
+5	5	Повздовжний погляд	Продольный вид	Podélný nárys	Laengenaufriss
+5	6	Машиновий рисунок	Чертеж машины	Strojový výkres	Maschinenzeichnung
+5	7	Машинове рисування	Машинное чертеніе	Strojnické rýsování	Maschinenzeichnen
+5	8	Барстатовий рисунок	Рабочій чертеж	Dílenský výkres	Werkzeichnung
+5	9	Частевий /детайльний/ рисунок	Детальный чертеж	Podrobný výkres	Detailzeichnung
+5	10	Рисівник	Чертежник	Kreslič	Zeichner
+5	11	Рисівня	Чертежная комната	Rýsovna	Zeichensaal
+5	12	Бюро конструктивне /рисівниче/	Чертежное бюро	Konstrukční kancelář, kreslírna	Zeichen-Konstruktionsbüro
+5	13	Стіл рисунковий	Чертежный стол	Kreslicí /rysovací/ stůl	Zeichentisch
+5	14	Рисунковий стіл наставний	Передвижной чертежный стол	Rýsovací nastavovací stůl	verstellbarer Zeichentisch
+5	15	Рисункова дошка, рисниця	Чертежная доска	Rýsovací deska, prkno	Reissbrett
+5	16	Прикладниця	Рейсшина	Příložník	Reisschiene
+6	1	Голова прикладниці	Головка рейсшины	Hlava příložníku	Kopf der Reisschiene
+6	2	Напрямник прикладниці	линейка рейсшины	Pravítko příložníku	Zunge der Reisschiene
+6	3	Трикутник	Треугольник, угольник	Trojúhelník, úhelník	Dreieck, Winkel
+6	4	Напрямник, прямичка	Линейка	Pravítko	Lineal
+6	5	Кривинка	Лекало	Křivítko	Kurvenlineal, Kurvenschiene
+6	6	Кривинка гнучка	Гибкая планка	Křivítko	Kurvenstab, Latte
+6	7	Шкіца, начерк	Ескиз, набросок	Nácrt	Skizze
+6	8	Загальне розміщення	общее расположеніе	Všeobecné umístění	Gesamtanordnung
+6	9	Начерк проекту	Ескиз проекта	Nácrt návrhu	Entwurfskizze
+6	10	Шкіцувати, начеркувати	Набросить ескиз	Načrtovati	Skizzieren
+6	11	Рисунок від руки	Чертеж от руки	Výkres od ruky	Handzeichnung
+6	12	Проект	Проект	Návrh	Entwurfzeichnung
+6	13	Проектувати	Проектировать	Navrhovati	Entwerfen
+6	14	Конструктор	Конструктор	Konstrukter	Konstrukteur
+6	15	Конструкція	Конструкція	Konstrukce, sestrojování	Konstruktion
+6	16	Конструувати	Построить	Konstruovati, Sestrojovati	Konstruiren
+6	17	Хиба конструкційна	Конструкціонная ошибка	Konstrukční chyba	Konstruktionsfehler
+6	18	Міра	Мѣра	Míra	Mass
+6	19	Нормальна міра	Нормальная мѣра	Normální měřítko	Normalmass
+7	1	Метрова міра	Метрическая мѣра	Metrová míra	Metermass
+7	2	Вимір метровий	Масштаб в метрах	Metrové měřítko	Metermasstab
+7	3	Вимірник	Масштабная линейка	Měřítko	Anlegemasstab
+7	4	Мірило, вимірник	Масштаб	Měřítko	Masstab
+7	5	Цалевий вимірник	Шток	Palcové měřítko	Zollstock, Zollstab
+7	6	Цалева міра	Дюймовая мѣра	Palcová míra	Zollmass
+7	7	Вимір трансверзальний	Масштаб раздѣленный по діагоналѣ	Příčné měřítko	Transversalmasstab
+7	8	Вимірник складаний	Складной масштаб	Skládací míra	Glieder-Faltmasstab
+7	9	Помір, вимір	Масштаб	Měřítko, míra	Massstab
+7	10	Мірнича лента	Рулетка	Měřící pásmo	Bandmass
+7	11	Помірсвий начерк	Ескиз с соблюденіем размѣров	Kotovaný náčrtek	Masskizze
+7	12	Міряти	Измѣрить	Měřiti	Messen
+7	13	Рисувати	чертить	Kresliti	Zeichnen
+7	14	Рисувати в дійсній величині	Чертить в натуральную величину	Rýsovati ve skutečné velikosti, ve skutečném měřítku	Zeichnen in natürlicher Grösse, Masstabe
+7	15	Рисувати в помiру	чертить в уменьшеном масштабѣ	Rýsovati v poměru	Masstaeblich zeichnen, in verjüngten Masstabe
+7	16	Вісь	Ось	Osa	Mittellinie
+8	1	Розмірна лінія, котова лінія	Размѣрная линія	Kotová čára	Masslinie
+8	2	Розмір кота	/Цифровой/ размѣр	Rozměr, kota	Masszahl
+8	3	Головні розміри	Главные размѣры	Hlavní koty	Hauptmasse
+8	4	Числування, котування	Внесеніе размѣров	Kotovaní	Mass-eintragung
+8	5	Стрілка	Размѣрная стрѣлка	Šipka	Masspfeil
+8	6	Наносити розміри	Внести размѣры	Kotovati	Masse eintragen
+8	7	Список предметів	Список предметов	Seznam kusů	Stückliste
+8	8	Описати рисунок	Надписать чертеж	Popsati výkres	Zeichnung beschreiben
+8	9	Нарисувати рис в оливці	Изготовить чертеж в карандашѣ	Rys nakresliti v tužce	Eine Zeichnung in Blei anfertigen
+8	10	Рисунок корчиться	Чертеж коробится	Rys se bortí	Die Zeichnung verzieht sich
+8	11	Черткования	Штрафировка	Šrafování	Schrafierung
+8	12	Черткувати	Штриховать, штрафировать	Cárkovati	Schrafieren
+8	13	Черточкувати	Нанести смѣшанный пунктир	Cárka-tečka	Strichpunktieren
+8	14	Точкувати	пунктировать	Tečkovati	Punktieren
+8	15	Рисунковий папір	Чертежная бумага	Rýsovací papír	Zeichenpapier
+8	16	Лист рисункового паперу	Лист чертежной бумаги	Arch rys. papíru	Zeichenbogen
+8	17	Шкіцовий папір	Бумага для ескиза	Skizzovací papír	Skizierpapier
+9	1	Прозорий папір	Восковая бумага	Průhledný papír	Pauspapier
+9	2	Прозоре полотно, калька	Калька	Průhledné plátno	Pausleinwand
+9	3	Відбиток	Чертеж на калькѣ	Snímek, otisk, kopie	Pause, Pauszeichnung
+9	4	Відбивати, висвітлювати	Калькировать	Rozmnožovati, kopírovati	Pausen, durchpausen
+9	5	Біла відбитка	Бѣлая копія	Bílý snímek	Weispause
+9	6	Синя відбитка	Синяя копія	Modrák	Blaupause
+9	7	Світливяний папір	Свѣточувствительная бумага	Snímkový papír	Lichtpauspapier
+9	8	Світляна відбитка	Копія /на свѣточувствительной бумаги	Světelný snímek	Lichtpause
+9	9	Прилад до висвітлювання відбиток	Аппарат для свѣтопечатанія	Snímkovací přístroj	Lichtpausapparat
+9	10	Шкіцовий бльок	Блок для ескизов	Náčrtník, skicář	Skizzierblock
+9	11	Бібула	Пропускная бумага	Ssavý papír, pijak	Löschpapier
+9	12	Рисункова обгортка	папка для чертежей	Desky na výkresy	Zeichnungsmappe
+9	13	Стояк для обгорток	Стойка для папок	Polička na desky	Mappenständer
+9	14	Льогаритмічний сурак	Расчетная линейка	Logarytmické pravítko	Rechenschieber
+10	1	Ніт, нют	Заклепка	Nýt	Niete
+10	2	Сворень ніту	Стержень заклепки	Svorník nýtu	Nietschaft
+10	3	Головка ніту	Головка заклепки	Nýtová hlava	Nietkopf
+10	4	Насадна головка	Начальная головка	Přípěrná hlava	Setzkopf
+10	5	Головка заклепна, /склепка/	Замыкающая головка заклепки	Závěrná hlava	Schliesskopf
+10	6	Нітова діра	Заклепочная дыра, отверстие	Nýtový otvor	Nietloch
+10	7	Кут впущення	Угол зинкованія отверстие	Úhel zapuštění	Versenkungswinkel
+10	8	Ніт шільний	Заклепка с головкой под обжимку	Kulovitá hlava	Niete mit geschelltem Kopf
+10	9	Ручно закований ніт, ніт з ручно кованою головкою	Заклепка с головкой под молоток	Nýt s kovanou hlavou	Niete mit gehämmertem Kopf
+10	10	Ніт зі запущеною головкою	Заклепка с потайной головкой	Zapuštěný nýt	Niete mit versenktem Kopf
+10	11	Ніт з півзапущеною головкою	Заклепка с полупотайной головкой	Polozapuštěný nýt	Niete mit halbversenktem Kopf
+10	12	Нітовання	Склепка, клепка	Nýtování	Vernietung
+11	1	Ручне нітовання	Ручная клепка	Ruční nýtování	Hangnietung
+11	2	Машинове нітовання	Машинная склепка	Strojní nýtování	Maschienennietung
+11	3	Нітования за горяча	Горячая клепка	Nýtování za horka	Warme Nietung
+11	4	Нітования за холодна	Холодная склепка	Nýtování za studena	Kalte Nietung
+11	5	Сильне нітовання	Прочная склепка	Nýtování pevné	Feste Nietung
+11	6	Щільне нітовання	Котельная склепка	Nýtování kotlové	Kesselnietung
+11	7	Нітовий шев	Заклепочный шов	Nýtový šev	Nietnaht
+11	8	Однорізне нітовання	Заклепочный шов одиночным перерѣзываніем	Jednostřižné nýtování	Einschnittige Nietung
+11	9	Многорізне нітовання	Заклепочный шов с многократным перерѣзываніем	Několikastřižné nýtování	Mehrschnittige Nietung
+11	10	Площа перерізу	Площадь среза	Ústřižná plocha	Abscherungsquerschnitt
+11	11	Однорядове нітовання	Одиночный шов	Jednořádové nýtování	Einreihige Nietung
+11	12	Дворядове нітовання	Двойной шов	Dvojřádové nýtování	Zweireihige Nietung
+11	13	Многорядове нітовання	Многорядный шов	Několikařádové nýtování	Mehrreihige Nietung
+11	14	Рівнобіжне нітовання	Заклепочное соединеніе с параллельным расположеніем заклепок	Rovnoběžné /řetězové/ nýtování	Kettennietung, Paralellnietung
+12	1	Переміинне нітовання	Заклепочное соединеніе с шахматным расположеніем заклепок	Střídavé nýtování	Zickzack-Nietung
+12	2	Ступеневе нітовання	Ступенчатая склепка	Stupňované nýtování	Verjüngte Nietung
+12	3	Нітовання на переклад	Заклепочное соединеніе в нахлестку	Nýtové spojení přeplátováním	Ueberlapungsnietung
+12	4	Нітовання з накладкою	Заклепочное соединеніе с одной накладкой	Styčnicové nýtování s 1. deskou stykovou	Laschennietung
+12	5	Нітовання з подвійною накладкою	Заклепочное соединеніе с двумя накладками	Nýtování s 2. deskami stykovými	Doppellaschennietung
+12	6	Накладка	Накладка	Pas, styková des.	Lasche
+12	7	Рубцеве нітовання	Склепка бортов	Bortové nýtování	Bördelnietung
+12	8	Кутівка	Угольник	Úhelník	Winkeleisen
+12	9	Відступ від рамен кутівки	Расстояніе от полок угольника	Vzdálenost od ramen úhelníka	Schenkelabstand
+12	10	Віддаль, крок нітів	Шаг шва	Rozteč	Nietteilung
+12	11	Віддаль від краю	Расстояніе от края листа	Vzdálenost od okraje	Randabstand
+12	12	Тимчасовий ніт	Временная заклепка	Žatímní nýt, přídržný nýt	Heftniete
+12	13	Підбивак	Чеканка	Tužík, tužlík	Stemmeisen
+13	1	Дотискач	Зажим	Utahovák, přitahovák	Nietenzieher
+13	2	Молоток до нітовання	Клепало, заклепник	Nýtovák, záklepník	Niethammer
+13	3	Молот-головкач	Кантовка	Hlavičkář /kladivo/	Schellhammer
+13	4	Підпірка	Поддержка для заклепок	Podpěradlo	Vorhalter
+13	5	Головкач	Обжим, державка	Hlavičkář	Schelleisen, Döpper
+13	6	Шрубова підпірка	Подпорка для заклепок		Nietwinde
+13	7	Журавлик	Журав, журавлик		Nietwippe
+13	8	Кліщі до нітів	Заклепочные клещи	Nýtovký	Nietzange
+13	9	Пружинові кліщі до нітів	Клупп для заклепок		Nietkluppe
+13	10	Горно	Горн для нагрѣванія заклепок	Nýtovka	Nietenglühofen
+13	11	Машина до нітовання	Клепальная машина	Nýtovačka, nýtovka	Nietmaschine
+13	12	Нітувати, занітувати	Заклепать	Nýtovati	Nieten, Vernieten
+13	13	Запускати ніт	Углублять заклепку	Zapouštěti nýty	Niete einlassen, versenken
+13	14	Втискати ніти	Вогнать заклепки	Zařážeti nýty	Niete eintreiben
+13	15	Підбивати ніти	Подчеканивать	Zatužiti nýty	Niete verstemmen
+13	16	Рознітувати	Расклепать	Roznýtovati	Entnieten, Niete losschlagen
+13	17	Вирубати нітову головку	Вырубить заклепочную головку	Vysekati nýtovou hlavu	Nietenkopf auskreuzen
+14	1	Злучка перстенева		Zděř	Schrumpfring
+14	2	Злучка плоска		Zděra plochá	Schrumpfanker
+14	3	Шрубовий хід	Ход винта	Chod závitu	Schraubengang
+14	4	Правохідний /Винт/	с правым ходом	Pravochodý	Rechtsgaengig
+14	5	Лівохідний /Винт/	с левым ходом	Levochodý	Linksgaengig
+14	6	Шрубова лінія, нитка	Ход винта	Šroubovice	Schraubenwindung
+14	7	Кут склону	Угол уклона, подема	Úhel sklonu	Neigungswinkel
+14	8	Склін	Подем	Stoupání	Steigung
+14	9	Шрубовий крок, крок шруби	Высота хода	Výška závitu	Ganghöhe
+14	10	Глубина нарізки	Глубина нарезки	Hloubka závitu	Gangtiefe
+14	11	Ширина нарізки	Ширина нарезки	Šířka závitu	Gangbreite
+14	12	Шрубовий нарізок	Винтовая нарезка	Šroubový závit	Schraubengewinde
+14	13	Шрубова поверхня	Винтовая поверхность	Šroubová plocha	Schraubenflaeche
+14	14	Правий нарізок	Правый виток	Pravý závit	Rechtsgewinde
+14	15	Лівий нарізок	Левый виток	Levý závit	Linksgewinde
+14	16	Многоходий нарізок		Vícechodý závit	Mehrgaengiges Gewinde
+14	17	Острокутний нарізок	Остроугольная нарезка	Ostrý závit	Scharfes Gewinde
+15	1	Плоский, прямокутний нарізок	Прямоугольная нарезка	Závit plochý	Flaches Gewinde
+15	2	Півтрапезовий нарізок	Полутрапецевидная нарезка	Závit lichoběžníkový pravoúhlý	Halbtrapezförmiges Gewinde
+15	3	Трапезовий нарізок	Трапецевидная нарезка	Závit lichoběžníkový	Trapezgewinde
+15	4	Округлий нарізок	Круглая нарезка	Závit kulatý	Rundes Gewinde
+15	5	Газовий нарізок, нарезка газовых труб		Závit plynový	Gasgewinde
+15	6	Одноходий нарізок	Однооборотная нарезка	Jednoduchý závit	Eingaengiges Gewinde
+15	7	Двоходий нарізок	Двухходная нарезка	Dvojchodý závit	Doppeltes Gewinde
+15	8	Многоходий нарізок	Многооборотная нарезка	Vícechodý závit	Mehrgaengiges Gewinde
+15	9	Сворінь з головкою і гайкою, шруба	Болт с головкой и гайкой, винт	Šroub s matkou a hlavou	Mutterschraube
+15	10	Сворінь	Болт	Svorník	Bolzen
+15	11	Промір сворня	Диаметр болта	Průměr svorníku	Bolzendurchmesser
+15	12	Зовнішний промір нарізки	Внешній диаметр нарезки	Vnější průměr závitu	Aeusserer Gewindedurchmesser
+15	13	Ядро шруби	Стержень винта	Jádro šroubu	Schraubenkörn
+15	14	Промір ядра	Диаметр стержня	Průměr jádra	Kerndurchmesser
+15	15	Головка шрубова	Головка	Hlava šroubu	Schraubenkopf
+15	16	Шостигранна головка	шестигранная головка	Šestihranná hlava	Sechskantkopf
+16	1	Чотирогранна головка	Четерехгранная головка	Čtyrhranná hlava	Vierkantkopf
+16	2	Півкулиста головка	Полушаровидная головка	Polokulovitá hlava	Halbkugelförmiges Kopf
+16	3	Кругла головка	Круглая головка	Kulatá hlava	Rundkopf
+16	4	Т-головка	Тавровая головка	Čeres, T-hlava	Hammerkopf
+16	5	Запущена головка, стіжкова головка	Потайная головка	Zapuštěná hlava, konická hlava	Versenkter Kopf
+16	6	Лучна шруба	Установочный, закрепляющий винт	Upevňovací šroub	Befestigungsschraube
+16	7	Тискова шруба	Пресующий винт	Přitužný šroub	Druckschraube, Pressschraube
+16	8	Посувна шруба	Винт передающій движеніе	Pohybový šroub	Bewegungsschraube
+16	9	Гайка, матка /мутра/	Гайка	Matka	Mutter, Schraubenmutter
+16	10	Нарізок матки	Нарезка гайки	Matkový závit	Muttergewinde, Hohlgewinde
+16	11	Шостигранна матка, -гайка	Шестигранная гайка	Šestihranná matka	Sechskantmutter
+16	12	Осьмигранна матка, -гайка	Восьмигранная гайка	Osmihranná matka	Achtkantmutter
+16	13	Гайка-шапка	Гаечный затвор кожуха	Uzavřená matka	Ueberwurfmutter
+16	14	Крилатка	Барашек, крылатая гайка	Křídlová, ušatá matka	Flügelmutter
+16	15	Наставна матка, гайка	Регулировочная гайка	Stavěcí matka	Stellmutter
+16	16	Матка з насічками, ручна матка	Гайка с накаткой	Drážkovaná matka	Geripte, geraendete Mutter
+17	1	Коронова матка	Тычковая гайка	Korunová matka, zařezová	Kronenmutter
+17	2	Різницева матка	Дифференціальная гайка	Diferenciální, dvojitá matka	Doppelmutter
+17	3	Вкрутка	Винт с головкой	Šroub s hlavou	Kopfschraube
+17	4	Шпеньова вкрутка	Шпилька	Zavrtaný, kolíkový šroub	Stiftschraube
+17	5	Розпірка	Распорный болт	Rozpěra, rozpěrací svorník	Stehbolzen
+17	6	Якорна шруба	Фундаментный болт	Základový šroub	Fundamentschraube, Grundschraube
+17	7	Якорна підкладка	Анкерная доска, плита	Kotevní deska, kotevnice	Ankerplatte
+17	8	Наставний сворінь	Болтовая связь	Rozporka, rozpěrací svorník	Distanubolzen
+17	9	Наставна цівка /рурка/	Распорная труба	Rozpěrací pochva	Distanzröhre, Distanzhülse
+17	10	Мікрометрична шруба	Микрометрическій винт	Mikrometrický šroub	Mikrometerschraube
+17	11	Крилаткова шруба	Винт с лапками, барашка, барашковый винт	Křidlový, ušatý šroub	Flügelschraube
+17	15	Випускова шруба	Выпускной винт	Vypouštěcí šroub	Ablassschraube
+17	16	Шруба з ушком	Винт с петлей	Šroub s okem	Oesenschraube
+17	17	Наставна шруба, придержка	Нажимной винт	Stavěcí, přitužný šroub	Stallschraube, Klemmschraube
+17	18	Шруба завісна	Шарнирный болт, перекидной винт	Šarnýrový šroub	Klappschraube
+18	1	Шруба держакова /варстатова/	Верстачный винт, тисковый винт		Knebelschraube
+18	2	Шруба-затичка	Скрепляющий винт		Verschlussschraube
+18	3	Нарізний кілок	Винт с прорезом	Šroubový kolíček	Schnittschraube, Gewindestift
+18	4	Відтискова шруба		Odtlačovací šroub	Abdruckschraube
+18	5	Шруба до дерева	Шуруп	Šroub do dřeva, vrut	Holzschraube
+18	6	Шруба до залізничих порогів		Šroub pražcový	Schwellenschraube
+18	7	Забезпечення шруби	Приспособленіе противъ одвинчиваня	Pojištění šroubu	Schraubenversicherung
+18	8	Забезпечення тертям	Обезпеченіе трением	Pojištění třením	Reibungssicherung
+18	9	Забезпечення пруживе	Обезпеченіе пружинное	Pojištění elastické	Elastische Sicherung
+18	10	Пеннове забезпечення	Пенновое приспособленіе против отвинчиванія	Pennovo pojištění	Pennsche Sicherung
+18	11	Протиматка, протигайка	Контргайка	Protimatka, pojistná matka	Gegenmutter
+18	12	Заволічка	шплинт	Závlačka	Splint
+18	13	Зарвіздка	штифт	Závlačník	Stift
+18	14	Шрубовий ключ	Винтовой, гаечный ключ	Klíč na matku, šroubový klíč	Mutterschlüssel, Schraubenschlüssel
+19	1	Отвір ключа	Зев ключа	Otvor klíče	Maul des Schraubenschlüssels
+19	2	Ширина отвору	Беличина, отверстіе ключа	Rozvržení, světlost, rozvor	Maulweite
+19	3	Ключ односторонній	Ординарный ключ	Klíč jednoduchý	Einfachmauliger Schlüssel
+19	4	Ключ двосторонній	Двойной ключ	Klíč dvojitý	Doppelmauliger Schlüssel
+19	5	Придержуючий ключ	Ключ для подвинчиванія		Stellschraubenschlüssel
+19	6	Наставний ключ	Раздвижной ключ	Stavěcí klíč	Verstellbarer Schraubenschlüssel
+19	7	Французький ключ	Англійскій ключ	Francouzký klíč	Englischer Schraubenschlüssel
+19	8	Сторчевий ключ	Торцовый ключ	Zásuvný, trubkový klíč	Stackschlüssel, Aufsatzschlüssel
+19	9	Накладний ключ	Ключ с замкнутым зевом	Dutý klíč	Hülsenschlüssel
+19	10	Вилковий ключ	Циркульный, вилочный ключ		Gabelschraubenschlüssel
+19	11	Гаковий ключ	Ключ для круглых головок	Hákový klíč	Hackenschlüssel
+19	12	Когутовий ключ	Ключ от крана	Kohoutový klíč	Hahnenschlüssel
+19	13	Шрубник	Отвертка	Vývrtník, závrtka	Schraubenzieher
+19	14	Отвір на шрубу	Отверстіе для винта, болта	Otvor na šroub	Schraubenloch
+19	15	Підкладка	Шайба	Podložka šroubová	Unterlagscheibe
+19	16	Мертвий, ялови хід	Мертвый ход	Jalový chod	Totergang
+20	1	Нарізкове свердло, нарізник		Závitník	Gewindebohrer
+20	2	Нарізниця		Závitnice	Wendeisen
+20	3	Фреза для нарізок	Фреза для нарезок	Freza na závity	Gewindefraeser
+20	4	Машина до нарізування шруб		Šroubořezy	Schraubenschneidmaschine
+20	5	Гребінка нарізкова	Гребенка		Schraubstahl, Gewindestrehler
+20	6	Нарізувати	Нарезать резьбу метчиком	Řezání závitník	Gewinde bohren
+20	7	Нарізувати ручно шрубу	Нарезать винт от руки	Ruční řezání závitů	Schraube aus freier Hand schneiden
+20	8	Нарізувати шрубу на токарці	Нарезать винт на токарном станке	Řezání závitů na soustruhu	Schraube mit dem Drehstahl schneiden
+20	9	Закрутити, зашрубувати	Ввинтить, ввинчивать	Zašroubovati	Einschrauben
+20	10	Пришрубовати	Привинтить	Přišroubovati	Festschrauben
+20	11	Зішрубувати	Свинтить	Sešroubovati	Zusammenschrauben
+20	12	Дошрубувати, дотягнути шрубу		Utáhnouti šroub	Zuschrauben
+20	13	Притягнути шрубу		Dotáhnouti šroub	Schraube nachspannen
+20	14	Відшрубувати	Отвинтить	Odšroubovati	Abschrauben
+20	15	Попустити шрубу	отпустить винт	Povoliti šroub	Schraube lokkern
+20	16	Перекрутити шрубу	Сорвать резьбу	Strhnouti šroub	Schraube überdrehen
+21	1	Клин	Клин	Klín	Keil
+21	2	Клиновий отвір	Отверстіе для клина	Otvor na klín	Keilloch
+21	3	Кут клина	Угол клина	Úhel klínu	Keilwinkel
+21	4	Склін клина	Натяг клина	Úkos klínu	Anzug, Steigung des Keiles
+21	5	Головка клина	Основаніе, головка клина	Hlava klínu	Keilrücken
+21	6	Площа, рамя клина	Цека клина	Plocha klínu	Keilflaeche
+21	7	Вістря клина	Острие клина	Ostří klínu	Keilschneide
+21	8	Натискова площа клина	Опорная плоскость клина	Dosedací plocha klínu	Keilauflager
+21	9	Клинове получення	Клиновое соединеніе	Klínové spojení	Keilverbindung
+21	10	Довжина клина	Длина клина	Délka klínu	Keillaenge
+21	11	Ширина клина	Ширина клина	Šířka klínu	Keilbreite
+21	12	Висота клина	Высота клина	Výška klínu	Keilhöhe
+21	13	Клин поперечний	Поперечный клин	Příčný klín	Querkeil
+21	14	Подовжний клин, плішка	Шпонка	Drážkový, podélný klín	Laengskeil
+21	15	Залізний клин	Железный клин	Železný klín	Eisenkeil
+21	16	Сталевий клин	Стальной клин	Ocelový klín	Stahlkeil
+21	17	Деревяний клин	Деревяный клин	Dřevěný klín	Holzkeil
+21	18	Наставний клин	Натяжная чека	Stavěcí klín	Stellkeil
+21	19	Перстеневий клин	Чека кольцевая		Ringkeil
+21	20	Заклинок	Чека	Vorsteckkeil	Schliesse
+22	1	Клинова прикладка	Причека	Klínová příložka	Keilbeilage
+22	2	Плішка з виступом	клин с выступом	Klín s hlavou, hlavatý klín	Nasenkeil
+22	3	Виступ плішки	Выступ клина	Výstupek, ozub	Nase
+22	4	Доріжка плішки, жолобок	Паз сквозной прорез	Klínová drážka	Keilnut
+22	5	Площева плішка	Шпонка на лыске	Plochý klín	Flachkeil
+22	6	Вгнута плішка	фрикционная шпонка	Dutý, torný klín	Hohlkeil, Schlusskeil
+22	7	Кругла плішка	Круглая шпонка	Kruhový klín	Rundkeil
+22	8	Квадратова плішка	Квадратный клин	Čtvercový klín	Quadratkeil
+22	9	Впущена плішка	Шпунтовый клин	Drážkový klín	Nutenkeil
+22	10	Плішка Бехтельсгайма	Клин Бехтельсгайма	Klín Bechtelsheima	Bechtelsheimskeil
+22	11	Відрізкова, Вудрофа плішка	Клин Вудрофа	Segmentový klín /Woodruff/	Woodruff-s Keil
+22	12	Тангенціяльна плішка	Тангенциальная шпонка	Tangenciální klín	Tangentialkeil
+22	13	Подвійна плішка	Шпонка с контрклином	Dvojdílný klín	Doppelkeil
+22	14	Протиплішка	Контрклин	Protiklín	Gegenkeil
+22	15	Язичок	Шпонка	Péro, jazyk	Federkeil
+22	16	Клинове забезчення	Замок клина	Klínové pojištění	Keilsicherung
+22	17	Виколоблювати доріжку	Долбить, жолобить	Drážkovati, žlábkovati	Nuten
+22	18	Фрезувати доріжку	нарезать пази, желоба	Frézovati drážku	Nuten, fraesen
+23	1	Долітце до жолоблення, жолобняк	Долбежное зубило	Drážkař, žlábník	Nuteisen
+23	2	Машина до жолоблення, жолобнярка	долбежная машина	Drážkovačka	Nutenstossmaschine
+23	3	Підбивати клин	Подтянуть клин	Zarazití klín	Einen Keil antreiben
+23	4	Розклинувати	Розклинить	Uvolniti klín	Loskeilen
+23	5	Наклинувати	Наклинить	Naklínovati	Aufkeilen
+23	6	Заклинувати	Вогнать клин	Zaklínovati	Einen Keil eintreiben

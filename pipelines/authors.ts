@@ -13,6 +13,7 @@ import { AUTHORS_SOPHIA } from './nw-sophia.ts'
 import { AUTHORS_DICT } from './nw-dict.ts'
 import { AUTHORS_R2U } from './nw-r2u.ts'
 import { AUTHORS_17 } from './nw-izb17.ts'
+import { AUTHORS_TERMLIST } from './nw-termlist.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -91,6 +92,7 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_DICT,
   ...AUTHORS_R2U,
   ...AUTHORS_17,
+  ...AUTHORS_TERMLIST,   // CX-6
 ]
 
 export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>

@@ -15,9 +15,10 @@ import { UNITS_SONGS } from './nw-songs.ts'
 import { UNITS_DICT } from './nw-dict.ts'
 import { UNITS_R2U } from './nw-r2u.ts'
 import { UNITS_17 } from './nw-izb17.ts'
+import { UNITS_TERMLIST } from './nw-termlist.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary' | 'ocr'
 
@@ -102,6 +103,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_DICT,
   ...UNITS_R2U,
   ...UNITS_17,
+  ...UNITS_TERMLIST,   // CX-6
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */
