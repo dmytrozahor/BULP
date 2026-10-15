@@ -16,11 +16,12 @@ import { UNITS_DICT } from './nw-dict.ts'
 import { UNITS_R2U } from './nw-r2u.ts'
 import { UNITS_17 } from './nw-izb17.ts'
 import { UNITS_TERMLIST } from './nw-termlist.ts'
+import { UNITS_TRANSLIT } from './nw-translit.ts'
 import type { WitnessMedia } from '../core/types.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist' | 'translit'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
-export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary' | 'ocr'
+export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary' | 'liturgical-transliteration' | 'ocr'
 
 export interface Unit {
   id: string; title: string; author: string; kind: Kind
@@ -104,6 +105,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_R2U,
   ...UNITS_17,
   ...UNITS_TERMLIST,   // CX-6
+  ...UNITS_TRANSLIT,   // CX-6
 ]
 
 /** Raw cache path: one directory per kind, never executed (P-4.5). */
