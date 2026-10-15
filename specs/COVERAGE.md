@@ -247,6 +247,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AC-4 | tests/autolabel.test.ts › no automatic channel imports the hand list; only the AC-5 report reads it for evaluation |
 | AC-4 | tests/autolabel.test.ts › build.ts recomputes the automatic channels on every build |
 | AC-5 | tests/autolabel.test.ts › analysis/auto-classification.md has coverage before/after per label type, the hand-list agreement and the tables |
+| R2U-2 | tests/r2u2.test.ts › R2U-2 every r2u dictionary is a dated dictionary unit with a quoted dateCite |
+| R2U-2 | tests/r2u2.test.ts › R2U-2 the Голоскевич label table quotes its own list and is wired to dictionary 11 |
+| R2U-2 | tests/r2u2.test.ts › R2U-2 a Якубські headword with the leading «*» is parsed |
+| R2U-2 | tests/r2u2.test.ts › R2U-2 ORTH-SYA joins the detached reflexive and folds it to modern «ся» |
+| R2U-2 | tests/r2u2.test.ts › R2U-2 the real dump (when present): all pages are read, rows exist for every modelled dictionary, witnesses are noFreq |
 | DP-1 | tests/dialect-pronouns.test.ts › each variant has attestations with registered source |
 | DP-1 | tests/dialect-pronouns.test.ts › research/32 states the evidence, the counter-evidence and what is unknown |
 | DP-2 | tests/dialect-pronouns.test.ts › prefix variants prefix every standard form, tags kept verbatim |

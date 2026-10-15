@@ -71,7 +71,7 @@ export function wordList(s: string, max = 12): string[] {
   const cleaned = s.replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ').replace(/[«»"“”„]/g, ' ')
   for (const part of cleaned.split(/[,;]/)) {
     if (/^\s*-(?!\s*ся\s*$)/.test(part)) continue   // an inflection ending («-да́ю»), not a word
-    const t = part.replace(/^[\s.:–—-]+|[\s.:–—-]+$/g, '').replace(/\s+/g, ' ')
+    const t = part.replace(/^[\s.:*–—-]+|[\s.:–—-]+$/g, '').replace(/\s+/g, ' ')
     if (!t || NOISE.has(t.toLowerCase())) continue
     if (/^-?ся$/.test(t)) { const p = out[out.length - 1]; if (p && !/-ся$/.test(p)) out.push(p + '-ся'); continue }
     const w = t.replace(/\s+ся$/, '-ся').replace(/\s*-\s*ся$/, '-ся')
@@ -130,7 +130,8 @@ export function parseCell(dict: number, rowId: number, html: string): R2uRow | n
   }
   if (d.dir === 'orth') {   // Голоскевич: «вигляда́ти, -да́ю, -да́єш; ви́глянути, -гляну, -неш, -не» — one headword per «;» group
     const head = plainOf(nodes).split(';').map(g => wordList(g.split(',')[0] ?? '', 1)[0]).filter((w): w is string => !!w)
-    return head.length ? { dict, rowId, head, eq: [], text } : null
+    const ab = R2U_ABBR[dict] ? articleLabels(R2U_ABBR[dict]!, plainOf(nodes)) : []
+    return head.length ? { dict, rowId, head, eq: [], text, ...(ab.length ? { labels: ab.map(a => ({ abbr: a.row.abbr, quote: a.quote })) } : {}) } : null
   }
   // uk-ru, uk-de: the leading bold run is the Ukrainian headword; the Russian gloss (uk-ru) is the plain Russian text after the first sense number
   const boldCls = d.dir === 'uk-de' ? 'b' : 'KrymUkrBold'

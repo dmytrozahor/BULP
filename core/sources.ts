@@ -39,6 +39,7 @@ export const SOURCES: Record<string, Source> = {
   BILANIUK: { title: 'Bilaniuk L. Contested Tongues. Cornell UP, 2005 (quoted via en.wikipedia «Surzhyk»)', year: '2005' },
   INPUT:  { title: 'Введене слово / дані проєкту (вхід правила, SPEC 60 DV/MO)' },
   CORPUS: { title: 'Корпус пам’яток проєкту (лема або форма в словнику)' },
+  HOLOSK: { title: 'Голоскевич Г. Правописний словник, Київ 1929 (r2u.org.ua; «Пояснення деяких скорочень»)', url: 'https://r2u.org.ua/html/goloskevych_pered.html', year: '1929' },
   HRINCH: { title: 'Грінченко Б. Словарь української мови, 1907–09 (hrinchenko.com)', url: 'https://hrinchenko.com', year: '1907' },
   ESUM:   { title: 'Етимологічний словник української мови (Мельничук ред., 1982–2012; картки через goroh.pp.ua, лише цитування)', url: 'https://goroh.pp.ua/Етимологія' },
   HROMYK: { title: 'Громик Ю. Західнополіські прислівники (Наук. вісник УжНУ, Сер. Філологія, вип. 24; Східноєвроп. нац. ун-т ім. Лесі Українки)', url: 'https://evnuir.vnu.edu.ua' },

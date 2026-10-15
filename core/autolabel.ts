@@ -40,8 +40,17 @@ export const HRINCH_ABBR: AbbrTable = {
     { abbr: 'Угор.', meaning: 'Угор. — Угорщина', region: 'Угорщина' },
   ],
 }
-/** r2u dictionary id → the abbreviation table of that dictionary (Грінченко 1907–09 and its 3rd edition). */
-export const R2U_ABBR: Record<number, AbbrTable> = { 12: HRINCH_ABBR, 18: HRINCH_ABBR }
+/** Голоскевич, «Правописний словник» 1929, «Пояснення деяких скорочень» (r2u.org.ua/html/goloskevych_pered.html, fetched 2026-10-15): the labels that name usage or area. */
+export const HOLOSK_ABBR: AbbrTable = {
+  id: 'holosk', source: 'HOLOSK', list: 'https://r2u.org.ua/html/goloskevych_pered.html (Пояснення деяких скорочень)',
+  rows: [
+    { abbr: 'діял.', meaning: 'діял. – діялектичний', usage: 'dial' },
+    { abbr: 'гал.', meaning: 'гал. – галицький', region: 'Галиція' },
+    { abbr: 'стар.', meaning: 'ст., стар. – старий', usage: 'zast' },
+  ],
+}
+/** r2u dictionary id → the abbreviation table of that dictionary (Грінченко 1907–09 and its 3rd edition; Голоскевич 1929). */
+export const R2U_ABBR: Record<number, AbbrTable> = { 12: HRINCH_ABBR, 18: HRINCH_ABBR, 11: HOLOSK_ABBR }
 
 const GLOSS = 'https://en.wiktionary.org/wiki/Appendix:Glossary'
 /**

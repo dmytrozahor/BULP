@@ -552,7 +552,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const evidence = collectEvidence(phraseDocs, listed, phKwic)
     const p = writePhrases(ROOT, PUB, generated, cands, frames, { evidence, posOf: l => phPos.get(l) ?? '' }); lap(`phrases.json (BL-12/12b): ${p.candidates} candidates (>= 2 source families or attested), ${p.formulas} single-family formulas, ${p.attestedTitles} attested idioms (${p.matched} matched); PH pages: ${p.details} (${p.withGloss} with gloss, ${p.withEtymology} with etymology, ${p.withEvidence} with corpus evidence)`)
   }
-  { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
+  { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki, auto.usage); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1

@@ -15,6 +15,7 @@ import { mergeClaims } from './build-annotate.ts'
 import { D, type Claim } from '../core/evidence.ts'
 import { GAZETTEER, HRINCH_ABBR, KAIKKI_KEEP, KAIKKI_TAGS, R2U_ABBR, regionDialectClaims, type R2uPair } from '../core/autolabel.ts'
 import { DIALECT_LEX } from '../core/dialect-lex.ts'
+import type { UsageRow } from '../core/usage.ts'
 import { R2U_DIR, storedRows, tokenRaw } from './ingest-r2u.ts'
 import { r2uDictById, rowUrl } from './r2u.ts'
 
@@ -51,6 +52,8 @@ export interface AutoLabels {
   dialect: Map<string, Record<string, Claim<true>>>
   /** key of a Russian headword → r2u ru→uk articles (AC-3 input) */
   ruPairs: Map<string, R2uPair[]>
+  /** key of a kept lemma → usage rows read from the r2u dictionaries' own labels (R2U-2, src 'r') */
+  usage: Map<string, UsageRow[]>
   stats: { kaikkiLemmas: number; kaikkiSenses: number; r2uRows: number; r2uLabelled: number; dialectLemmas: number; ruHeads: number }
   /** filled by build.ts per lemma card: lemmas, dialect (before/after the automatic channel), surzhyk (rule-derived before / after / computed by AC-3) */
   counts: { lemmas: number; diaBase: number; diaAfter: number; szBase: number; szAfter: number; szAuto: number }
@@ -59,7 +62,7 @@ export interface AutoLabels {
 /** Loads every automatic-label input for the kept lemmas (displays). */
 export async function buildAutoLabels(root: string, lemmas: string[]): Promise<AutoLabels> {
   const k = await loadKaikki(root)
-  const want = new Map(lemmas.map(l => [key(l), l])), dialect = new Map<string, Record<string, Claim<true>>>(), ruPairs = new Map<string, R2uPair[]>()
+  const want = new Map(lemmas.map(l => [key(l), l])), dialect = new Map<string, Record<string, Claim<true>>>(), ruPairs = new Map<string, R2uPair[]>(), usage = new Map<string, UsageRow[]>()
   let r2uRows = 0, r2uLabelled = 0
   if (existsSync(resolve(root, R2U_DIR, 'index.jsonl'))) {
     const { rows } = storedRows(resolve(root, R2U_DIR), 'pages/')   // the open dump: pages/<file>.html.gz beside index.jsonl
@@ -68,8 +71,10 @@ export async function buildAutoLabels(root: string, lemmas: string[]): Promise<A
       const d = r2uDictById[r.dict]; if (!d) continue
       if (d.dir === 'ru-uk') {   // AC-3: the Russian headword's Ukrainian equivalents
         for (const h of r.head) {
-          const kk = key(tokenRaw(h)), p: R2uPair = { dict: d.short, url: rowUrl(r.q, r.scope, r), head: h, eq: r.eq, text: r.text }
-          if (r.eq.length && !(ruPairs.get(kk) ?? ruPairs.set(kk, []).get(kk)!).some(x => x.url === p.url)) ruPairs.get(kk)!.push(p)
+          const raw = tokenRaw(h), p: R2uPair = { dict: d.short, url: rowUrl(r.q, r.scope, r), head: h, eq: r.eq, text: r.text }
+          // R2U-2: the 1893–1933 Russian headwords are pre-reform («выглядѣть», «слѣдующій», «объ»): also keyed by the modern Russian spelling (ѣ→е, і→и, ѳ→ф, final ъ dropped)
+          const modern = raw.replace(/ѣ/g, 'е').replace(/і/g, 'и').replace(/ѳ/g, 'ф').replace(/ъ$/, '')
+          for (const kk of new Set([key(raw), key(modern)])) if (r.eq.length && !(ruPairs.get(kk) ?? ruPairs.set(kk, []).get(kk)!).some(x => x.url === p.url)) ruPairs.get(kk)!.push(p)
         }
         continue
       }
@@ -82,18 +87,19 @@ export async function buildAutoLabels(root: string, lemmas: string[]): Promise<A
         const row = table.rows.find(x => x.abbr === l.abbr)!
         const art = D('R2U', rowUrl(r.q, r.scope, r), l.quote, `${d.short} (${d.years[0]}–${d.years[1]}), стаття цілком; мітка «${l.abbr}» стоїть у статті`)
         const c = regionDialectClaims(art, table, row)
+        if (row.usage) { const ur = usage.get(key(lemma)) ?? usage.set(key(lemma), []).get(key(lemma))!; const url = rowUrl(r.q, r.scope, r); if (!ur.some(x => x[0] === row.usage && x[2].includes(`\t${url}\t`))) ur.push([row.usage, 'r', [l.abbr, l.quote, url, `${d.short} (${d.years[0]}–${d.years[1]})`, row.meaning, table.source, table.list].join('\t')]) }
         if (Object.keys(c).length) dialect.set(lemma, mergeClaims(dialect.get(lemma) ?? {}, c))
       }
     }
   }
-  return { kaikki: k.words, dialect, ruPairs, counts: { lemmas: 0, diaBase: 0, diaAfter: 0, szBase: 0, szAfter: 0, szAuto: 0 }, stats: { kaikkiLemmas: k.words.size, kaikkiSenses: k.senses, r2uRows, r2uLabelled, dialectLemmas: dialect.size, ruHeads: ruPairs.size } }
+  return { kaikki: k.words, dialect, ruPairs, usage, counts: { lemmas: 0, diaBase: 0, diaAfter: 0, szBase: 0, szAfter: 0, szAuto: 0 }, stats: { kaikkiLemmas: k.words.size, kaikkiSenses: k.senses, r2uRows, r2uLabelled, dialectLemmas: dialect.size, ruHeads: ruPairs.size } }
 }
 
 /**
  * SPEC 63 AC-5 → analysis/auto-classification.md: coverage per label type before (without the automatic channel) / after, and agreement with the old hand list
  * (core/dialect-lex.ts, now a fixture with its own quotes; it is NOT an input of any channel above).
  */
-export function writeAutoReport(root: string, auto: AutoLabels, lemmas: string[], usage: { lemmas: number; wikt: number; vesum: number; kaikki: number; kaikkiOnly: number }, generated: string): void {
+export function writeAutoReport(root: string, auto: AutoLabels, lemmas: string[], usage: { lemmas: number; wikt: number; vesum: number; kaikki: number; kaikkiOnly: number; r2u: number }, generated: string): void {
   const c = auto.counts, N = c.lemmas || 1, pc = (n: number) => `${n} (${((100 * n) / N).toFixed(1)} %)`
   const have = new Map(lemmas.map(l => [key(l), l]))
   let inKept = 0, grp = 0, agree = 0, disagree = 0, kk = 0
@@ -113,7 +119,7 @@ export function writeAutoReport(root: string, auto: AutoLabels, lemmas: string[]
     `Generated by the build (${generated}). Every label below is computed from a source's own abbreviation / tag / region name and carries a verbatim quote; no word is classified by hand.`, '',
     `## Coverage of ${c.lemmas} kept lemmas, before → after the automatic channels`, '',
     '| label type | before | after | channel added |', '|---|---|---|---|',
-    `| usage / register (rozm., dial., zast., arkh., …) | ${pc(usage.lemmas - usage.kaikkiOnly)} | ${pc(usage.lemmas)} | AC-1 en.wiktionary sense tags via KAIKKI_TAGS: ${usage.kaikki} lemmas (${usage.kaikkiOnly} with no other label) |`,
+    `| usage / register (rozm., dial., zast., arkh., …) | ${pc(usage.lemmas - usage.kaikkiOnly)} | ${pc(usage.lemmas)} | AC-1 en.wiktionary sense tags via KAIKKI_TAGS: ${usage.kaikki} lemmas; R2U-2 r2u dictionary labels (Голоскевич діял./стар.): ${usage.r2u} lemmas (${usage.kaikkiOnly} lemmas have only automatic labels) |`,
     `| dialect group | ${pc(c.diaBase)} | ${pc(c.diaAfter)} | AC-1 + AC-2 Грінченко regional abbreviations → gazetteer: ${auto.stats.dialectLemmas} lemmas (${auto.stats.r2uLabelled} labelled r2u articles of ${auto.stats.r2uRows}) |`,
     `| surzhyk / contact | ${pc(c.szBase)} | ${pc(c.szAfter)} | AC-3 ∉ ВЕСУМ ∧ pymorphy3-ru ∧ r2u equivalent: ${c.szAuto} lemmas (${auto.stats.ruHeads} Russian headwords read from r2u) |`, '',
     '"before" = the same build with the automatic channel switched off (VESUM tags + uk.wiktionary categories for usage; phonetic rules, DIALECT_BOOK/LEX quotes and witness regions for dialect; DETECT contact rules for surzhyk).', '',

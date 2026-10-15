@@ -64,17 +64,18 @@ export const WIKT_CATEGORIES: { cat: string; label: string }[] = [
 export const VESUM_USAGE: Record<string, string> = { slang: 'zharh', arch: 'arkh', vulg: 'vulg', obsc: 'obsc' }
 
 /** wire row of public/data/usage.json: [label id, 'v' + VESUM tag line | 'w' + uk.wiktionary category | 'k' + en.wiktionary sense tag and gloss as "tag<TAB>gloss" (SPEC 63 AC-1)] */
-export type UsageRow = [label: string, src: 'v' | 'w' | 'k', detail: string]
+export type UsageRow = [label: string, src: 'v' | 'w' | 'k' | 'r', detail: string]   // 'r' (SPEC 63 R2U-2): a dictionary's own label in an r2u article; detail = "abbr<TAB>quote<TAB>url<TAB>dictionary<TAB>meaning<TAB>table source<TAB>table list"
 export interface UsageFile { format: 1; generated: string; vesumLoc: string; wikt: { retrieved: string; licence: string; attribution: string }; lemmas: Record<string, UsageRow[]> }
 
 export const wiktUrl = (lemma: string) => `https://uk.wiktionary.org/wiki/${encodeURIComponent(lemma)}`
 
 /** Rows for one lemma from its VESUM tag line and the harvested Wiktionary category members (index category → set of titles). */
-export function usageRows(lemma: string, vesumTags: string, wikt: Map<string, Set<string>>, kaikki?: [tag: string, gloss: string][]): UsageRow[] {
+export function usageRows(lemma: string, vesumTags: string, wikt: Map<string, Set<string>>, kaikki?: [tag: string, gloss: string][], r2u?: UsageRow[]): UsageRow[] {
   const rows: UsageRow[] = [], tags = new Set(vesumTags.split(':'))
   for (const [t, label] of Object.entries(VESUM_USAGE)) if (tags.has(t)) rows.push([label, 'v', vesumTags])
   for (const { cat, label } of WIKT_CATEGORIES) if (wikt.get(cat)?.has(lemma)) rows.push([label, 'w', cat])
   for (const [tag, gloss] of kaikki ?? []) { const r = kaikkiTag[tag]; if (r?.usage) rows.push([r.usage, 'k', `${tag}\t${gloss}`]) }   // AC-1: en.wiktionary sense tags through the KAIKKI_TAGS table
+  rows.push(...(r2u ?? []))   // R2U-2: the labels of the r2u dictionaries (build-autolabel.ts)
   return rows
 }
 
@@ -88,6 +89,11 @@ export function usageClaims(lemma: string, rows: UsageRow[], vesumLoc: string, r
     if (src === 'k') {   // en.wiktionary (kaikki) sense tag: the dataset row + the glossary definition of the tag
       const [tag, gloss] = detail.split('\t'), r = kaikkiTag[tag!]
       ;(by.get(id) ?? by.set(id, []).get(id)!).push(D('KAIKKI', enWiktUrl(lemma), `[${tag}] ${gloss ?? ''}`.trim(), 'en.wiktionary через kaikki.org, CC BY-SA 4.0; мітка належить значенню, але береться на рівні леми'), ...(r ? [abbrEvidence(KAIKKI_TAGS, r)] : []))
+      continue
+    }
+    if (src === 'r') {   // R2U-2: the dictionary's abbreviation in the article (verbatim slice) + the dictionary's own explanation of it
+      const [abbr, quote, url, dict, meaning, tsrc, tlist] = detail.split('\t')
+      ;(by.get(id) ?? by.set(id, []).get(id)!).push(D('R2U', url!, quote!, `${dict}: мітка «${abbr}» стоїть у статті`), Q(tsrc!, tlist!, meaning!))
       continue
     }
     const ev = src === 'v' ? D('VESUM', vesumLoc, `${lemma} ${detail}`, 'позначка словника (CC BY-NC-SA 4.0)')

@@ -59,7 +59,7 @@ export function r2uWitness(unit: Parameters<typeof witnessOf>[0], dictId: number
 export default {
   parse: (u, _files) => {
     const d = Object.values(r2uDictById).find(x => x.unitId === u.id)!
-    memo ??= storedRows()
+    memo ??= storedRows(R2U_DIR, 'pages/')
     if (!wrote) {
       mkdirSync('data/work', { recursive: true })
       const out: RowsFile = { format: 1, lookups: memo.lookups, queried: memo.queried, rows: memo.rows }
