@@ -76,7 +76,7 @@ const bump = <K>(m: Map<K, number>, k: K, n = 1) => m.set(k, (m.get(k) ?? 0) + n
 export function loadWitnesses(dir = WORK): Loaded[] {
   const out: Loaded[] = []
   for (const f of readdirSync(dir).sort()) {
-    if (!f.endsWith('.json') || /\.nlp\.json$|^stress|^ru|request/.test(f)) continue
+    if (!f.endsWith('.json') || /\.nlp\.json$|^stress|^ru\.json$|request/.test(f)) continue
     let w: WitnessOut
     try { w = rd<WitnessOut>(resolve(dir, f)) } catch (e) { console.warn(`  ! ${f}: unreadable (${(e as Error).message}), skipped`); continue }   // an empty / half-written work file (another ingest in progress) must not stop the build
     if (!Array.isArray(w.tokens) || !w.id || !w.author) continue
