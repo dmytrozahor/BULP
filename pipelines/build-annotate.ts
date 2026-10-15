@@ -110,7 +110,7 @@ export function lookupKeys(f: Pick<FormAcc, 'raw' | 'norm' | 'modern' | 'oldI' |
 // ── B-3.5 first attestation ─────────────────────────────────────────────────────────────────────
 /** FX-3: one candidate per (witness, spelling); `n` = tokens of that spelling in that witness (the last tie-break: the commoner spelling of the same witness, then text order). */
 export interface FirstCand { witness: string; author: Author; date: [number, number]; witnessType: string; loc: string; form: string; route: Route; n?: number }
-const WT = ['autograph', 'ms_copy', 'first_ed', 'scholarly_ed', 'dictionary']   // research/06 §3.5: a dictionary is the weakest tie-break witness
+const WT = ['autograph', 'ms_copy', 'first_ed', 'scholarly_ed', 'dictionary', 'ocr']   // research/06 §3.5: a dictionary is the weakest tie-break witness; CX-8: unproofread archive.org OCR is weaker still
 const rankKey = (c: FirstCand) => [c.date[1], c.author.status === 'vetted' ? 0 : 1, c.date[1] - c.date[0], Math.min(WT.indexOf(c.witnessType) < 0 ? WT.length : WT.indexOf(c.witnessType), WT.length), c.author.label === 'institutional' ? 1 : 0, -(c.n ?? 0)]
 const cmpKey = (a: number[], b: number[]) => { for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) return a[i]! - b[i]!; return 0 }
 /** Earliest date.to; ties: vetted > provisional, narrower range, autograph > ms_copy > first_ed > scholarly_ed, person > institution; else coFirst. */
