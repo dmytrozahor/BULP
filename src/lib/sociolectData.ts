@@ -15,6 +15,11 @@ export function dialectOf(word: string) { loadSociolect(); const f = sociolectFi
 export function literaryOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? literaryStatus(word, f) : null }
 /** search (user 2026-10-15: «why can't i find вишкіл, впр which are in plast lexicon?»): Plast entries whose headword or quoted gloss
  *  matches the query, case- and stress-insensitive (key()); headword hits first. Each hit keeps its own source id for the /source card. */
+/** every Plast entry with its source id, alphabetical — the /plast page (user: «add another page of plast vocabulary») */
+export function plastAll(): (PlastEntry & { src: string; byGloss: boolean })[] {
+  loadSociolect(); const f = sociolectFile.value
+  return f ? f.plast.entries.map(e => ({ ...e, src: e.s ?? f.plast.source, byGloss: false })).sort((a, b) => key(a.w).localeCompare(key(b.w), 'uk')) : []
+}
 export function plastSearch(q: string, max = 30): (PlastEntry & { src: string; byGloss: boolean })[] {
   loadSociolect(); const f = sociolectFile.value, k = key(q.trim())
   if (!f || k.length < 2) return []

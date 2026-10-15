@@ -37,7 +37,7 @@ const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed((
 watch(q, () => { if (route.query.p !== undefined) pgR.go(1) })
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
 /** Plast vocabulary (SL-2) is searchable too — its words are mostly not corpus lemmas, so they never reached the lemma index */
-const plast = computed(() => (q.value.trim() ? plastSearch(q.value) : []))
+const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
 </script>
 
 <template>
@@ -52,7 +52,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value) : []))
   <section v-if="plast.length" class="card" aria-live="polite">
     <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
     <ul class="results">
-      <li v-for="e in plast" :key="e.src + e.loc">
+      <li v-for="e in plast.slice(0, 3)" :key="e.src + e.loc">
         <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">
           <span class="lem">{{ e.w }}</span>
           <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
@@ -61,6 +61,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value) : []))
         </RouterLink>
       </li>
     </ul>
+    <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>
   </section>
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">

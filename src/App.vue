@@ -40,6 +40,7 @@ apply()
       <RouterLink to="/texts">Тексти</RouterLink>
       <RouterLink to="/songs">Пісні</RouterLink>
       <RouterLink to="/phrases">Сполучення</RouterLink>
+      <RouterLink to="/plast">Пласт</RouterLink>
       <RouterLink to="/sophia">Софія</RouterLink>
       <RouterLink to="/map">Мапа</RouterLink>
       <RouterLink to="/corpus">Корпус</RouterLink>
