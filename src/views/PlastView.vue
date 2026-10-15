@@ -7,7 +7,7 @@ import { usePage } from '../composables/usePage.ts'
 import { plastAll, plastSearch, sociolectFile } from '../lib/sociolectData.ts'
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
-watch(q, v => { const query = { ...route.query, q: v || undefined }; delete query.p; router.replace({ path: route.path, query }) })
+watch(q, v => { const query: Record<string, unknown> = { ...route.query, q: v || undefined }; delete query.p; router.replace({ path: route.path, query: query as typeof route.query }) })
 const rows = computed(() => { void sociolectFile.value; return q.value.trim() ? plastSearch(q.value, 10_000) : plastAll() })
 const pg = usePage(computed(() => rows.value.length))
 </script>
