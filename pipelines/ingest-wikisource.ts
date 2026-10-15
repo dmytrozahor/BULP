@@ -60,6 +60,9 @@ const SKIP_PAGE: Record<string, RegExp> = {
   pyven1906: /^Веселымъ людямъ на втиху!$|\/(Весели писни|Писни Чорноморськихъ козакивъ)$/, komarova1905: /^Почынокъ\. Писни, думы та мріи$/,
   bahaliy1918: /\/(Автономія|Вибори до|Библіографичні|Карти слободської|Пояснення до малюнків|Земельна власність|Соціальний устрій)/,
   eneida1798: /\/Словник$/,     // glossary of the first edition ("Словник"): editorial apparatus, not verse
+  // CX-9: the main page of these books transcludes the title page / the whole book (+ the 1940 editor's preface): the stories come from their own subpages
+  stefanyk1917: /^Новина та инші оповідання$/, cheremshyna1940: /^Верховина і інші оповідання$/,
+  rusalka1837: /^Русалка Днѣстровая$/,   // main page = cover + contents; the almanac's items are the subpages
 }
 /**
  * Cut point inside a page: everything from the first line matching is dropped (counted as apparatus).
@@ -88,7 +91,35 @@ const CUT: Record<string, RegExp> = {
 /** Header author must match, else the subpage is somebody else's text (e.g. a translation). Absent header → kept. */
 const AUTHOR: Record<string, RegExp> = { franko: /Франко/, kulish: /Куліш|Кулїш/, lesya: /Леся|Лесї|Українка|Косач/, kotliarevsky: /Котляревськ/, hrinchenko: /Грінченк|Чайченк/,
   shevchenko: /Шевченк/, nechuy: /Левіцьк|Левицьк|Нечуй/,
-  yavornytsky: /Яворницьк/, sumtsov: /Сумцов/, bahaliy: /Багалі/, pyven: /Півень|Пивень/, komarova: /Комарова/, chuzhbynsky: /Чужбинськ|Афанасьєв/, mohyla: /Могила|Метлинськ/ }
+  yavornytsky: /Яворницьк/, sumtsov: /Сумцов/, bahaliy: /Багалі/, pyven: /Півень|Пивень/, komarova: /Комарова/, chuzhbynsky: /Чужбинськ|Афанасьєв/, mohyla: /Могила|Метлинськ/,
+  stefanyk: /Стефаник/, cheremshyna: /Черемшин|Семанюк/ }
+
+// ── CX-9: direct speech vs narration ─────────────────────────────────────────────────────────────
+/**
+ * Splits one paragraph into direct speech and author's narration (heuristic, documented in research/40):
+ *  - a paragraph that starts with a dash is speech up to the next « — » (the author's remark), then speech again, alternately («— Тату, — сказала, — ми хочемо істи.»);
+ *  - a dash inside narration opens speech only after a colon («Він сказав: — Не піду.»); otherwise it is narrative punctuation;
+ *  - quoted spans „…“ «…» "…" inside narration are speech (quote-introduced direct speech).
+ */
+export function splitSpeech(text: string): { speech: string[]; narr: string[] } {
+  const speech: string[] = [], narr: string[] = []
+  const t = text.trim()
+  const parts = t.split(/(?:^|\s)[—–―](?:\s+|$)/)
+  const led = /^[—–―]/.test(t)
+  let engaged = led, mode: 's' | 'n' = led ? 's' : 'n'
+  const addNarr = (p: string) => {
+    let rest = p
+    for (const m of p.matchAll(/[„«"“]([^„«"“”»]{2,}?)[”»"“]/g)) { speech.push(m[1]!); rest = rest.replace(m[0], ' ') }
+    if (rest.trim()) narr.push(rest)
+  }
+  parts.forEach((p, i) => {
+    if (i === 0 && led) return                      // empty piece before a leading dash
+    if (!p.trim()) return
+    if (mode === 's') { speech.push(p); mode = 'n' }
+    else { addNarr(p); mode = engaged ? 's' : /:\s*$/.test(p) ? ((engaged = true), 's') : 'n' }
+  })
+  return { speech, narr }
+}
 
 // ── page → tokens ───────────────────────────────────────────────────────────────────────────────
 const BLOCK = new Set(['p', 'div', 'li', 'tr', 'table', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'section', 'ol', 'ul', 'dd', 'dt', 'hr', 'br', 'center'])
@@ -96,7 +127,7 @@ const clean = (s: string) => s.replace(/[­​‌‍]/g, '').replace(/\s+/g, ' '
 
 export interface PageOut { tokens: TokenRec[]; apparatus: number; skipped?: string }
 /** Parse one rendered page. `s0` = first segment index; returns tokens with loc "<title>, с. N". */
-export function parsePage(html: string, title: string, unitId = '', authorId = '', s0 = 0): PageOut {
+export function parsePage(html: string, title: string, unitId = '', authorId = '', s0 = 0, dlg?: { tokens: TokenRec[]; s: number }): PageOut {
   const root = parseHtml(html)
   const authorEl = (function find(e: El): El | undefined { if (e.a.id === 'header_author_text') return e; for (const k of e.c) if (typeof k !== 'string') { const r = find(k); if (r) return r } })(root)
   const want = AUTHOR[authorId]
@@ -110,8 +141,15 @@ export function parsePage(html: string, title: string, unitId = '', authorId = '
       const pg = page
       if (cutRe?.test(stripStress(text))) cut = true
       const toks = tokenize(text)
+      const loc = pg ? `${title}, с. ${pg}` : title
       if (cut || DROP_LINE[unitId]?.test(stripStress(text))) apparatus += toks.length
-      else { for (const t of toks) out.push({ raw: t.raw, loc: pg ? `${title}, с. ${pg}` : title, s }); if (toks.length) s++ }
+      else if (dlg) {   // CX-9: speech and narration are separate witnesses with their own segment counters
+        const sp = splitSpeech(text)
+        const nt = sp.narr.flatMap(p => tokenize(p)), st = sp.speech.flatMap(p => tokenize(p))
+        for (const t of nt) out.push({ raw: t.raw, loc, s }); if (nt.length) s++
+        for (const t of st) dlg.tokens.push({ raw: t.raw, loc, s: dlg.s }); if (st.length) dlg.s++
+      }
+      else { for (const t of toks) out.push({ raw: t.raw, loc, s }); if (toks.length) s++ }
     }
     line = ''
   }
@@ -157,19 +195,27 @@ async function discover(u: Unit, fetchText: (url: string) => Promise<string>): P
 // ── parse ───────────────────────────────────────────────────────────────────────────────────────
 function parse(u: Unit, files: RawFile[]): WitnessOut[] {
   const tokens: TokenRec[] = []; let apparatus = 0, s = 0
+  const dlg = u.split === 'dialogue' ? { tokens: [] as TokenRec[], s: 0 } : undefined
   for (const f of files) {
     if (!f.url.includes('action=render')) continue      // fetch.ts also downloads u.urls (plain /wiki/ page): not used
     const title = decodeURIComponent(new URL(f.url).searchParams.get('title') ?? '').replace(/_/g, ' ')
     if (SKIP_PAGE[u.id]?.test(title)) continue
-    const r = parsePage(f.body.toString('utf8'), title, u.id, u.author, s)
+    const r = parsePage(f.body.toString('utf8'), title, u.id, u.author, s, dlg)
     if (r.skipped) { console.warn(`  skip ${title}: ${r.skipped}`); continue }
     tokens.push(...r.tokens); apparatus += r.apparatus; s = (r.tokens.at(-1)?.s ?? s - 1) + 1
   }
-  return [{
-    id: u.id, unit: u.id, title: u.title, author: u.author, url: u.urls[0]!.replace('&action=render', ''), date: u.date, dateCite: u.dateCite, msDate: u.msDate,
+  const base = {
+    unit: u.id, author: u.author, url: u.urls[0]!.replace('&action=render', ''), date: u.date, dateCite: u.dateCite, msDate: u.msDate,
     lang: u.lang, region: u.region, witnessType: u.witnessType, edition: u.edition, orth: u.orth, license: u.license,
-    ...(u.media ? { media: u.media } : {}), dropped: { unmapped: 0, apparatus }, tokens,
-  }]
+    ...(u.media ? { media: u.media } : {}),
+  }
+  if (dlg) {   // CX-9: the dialect statements concern the speech of the characters; the narration is a separate (standard-language) witness
+    return [
+      { ...base, id: `${u.id}_dlg`, title: `${u.title} — пряма мова`, ...(u.dialect ? { dialect: u.dialect } : {}), dropped: { unmapped: 0, apparatus }, tokens: dlg.tokens },
+      { ...base, id: `${u.id}_nar`, title: `${u.title} — авторське мовлення`, dropped: { unmapped: 0, apparatus: 0 }, tokens },
+    ]
+  }
+  return [{ ...base, id: u.id, title: u.title, ...(u.dialect ? { dialect: u.dialect } : {}), dropped: { unmapped: 0, apparatus }, tokens }]
 }
 
 export default { discover, parse } satisfies Ingester

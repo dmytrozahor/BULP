@@ -10,6 +10,7 @@ import { Q } from '../core/evidence.ts'
 import type { Unit } from './manifest.ts'
 import type { Author } from './authors.ts'
 import { UNITS_CX, AUTHORS_CX } from './nw-cx.ts'
+import { UNITS_DL, AUTHORS_DL } from './nw-dl.ts'
 
 const IZ17 = (n: string) => `http://izbornyk.org.ua/old17/old17_${n}.htm`
 const ED17 = 'Українська література XVII ст., К.: Наукова думка, 1987 (Ізборник; правопис модернізовано)'
@@ -34,10 +35,12 @@ export const UNITS_17: Unit[] = [
   { id: 'i17_29', title: 'Житіє князя Володимира (Києво-Печерський друк близько 1670)', author: 'anon_i17_29', kind: 'izbornyk-page', urls: [IZ17('29')],
     date: [1668, 1671], dateCite: Q('IZB', IZ17('29'), 'виданий друкарнею Києво-Печерської лаври близько 1670 р.'), lang: 'ruthenian', region: 'Київ', witnessType: 'scholarly_ed', edition: ED17, orth: 'modernised' },
   ...UNITS_CX,   // CX-2/CX-3: Wikisource first editions and further witnesses (nw-cx.ts)
+  ...UNITS_DL,   // CX-9: dialect literature (nw-dl.ts)
 ]
 
 export const AUTHORS_17: Author[] = [
   ...AUTHORS_CX,
+  ...AUTHORS_DL,
   { id: 'danylo_korsunsky', name: 'Данило Корсунський (укладач ruthenian-редакції «Перегринації»)', life: 'кін. XVI ст.', label: 'ruthenian', status: 'vetted', confidence: 'explicit', region: 'Корсунь / Сяноччина',
     evidence: [Q('IZB', 'http://izbornyk.org.ua/old14_16/old14_05.htm', 'От нашої Русі, міста Корсуня до Каменця-Подольського — 20 миль')],
     note: 'редакція XVI ст. давнішого «Хожденія» ігумена Данила (1106–1108); «Поклоненіє св. града» тієї ж сторінки (переклад з грецької) не ingestується' },

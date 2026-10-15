@@ -17,7 +17,7 @@ import { UNITS_R2U } from './nw-r2u.ts'
 import { UNITS_17 } from './nw-izb17.ts'
 import { UNITS_TERMLIST } from './nw-termlist.ts'
 import { UNITS_TRANSLIT } from './nw-translit.ts'
-import type { WitnessMedia } from '../core/types.ts'
+import type { DialectStatement, WitnessMedia } from '../core/types.ts'
 
 export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist' | 'translit'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
@@ -27,7 +27,8 @@ export interface Unit {
   id: string; title: string; author: string; kind: Kind
   urls: string[]                         // fixed URLs; discovery units list their TOC/prefix here
   discover?: 'shevchenko-toc' | 'wikisource-prefix' | 'vira-chapters'
-  split?: 'hypatian'
+  split?: 'hypatian' | 'dialogue' | 'signed'   // CX-9 dialogue: direct speech and narration become two witnesses; signed: only the records signed by the unit's collector
+  dialect?: DialectStatement[]           // CX-9
   date: [number, number]; dateCite: Evidence; datePerPage?: boolean
   msDate?: number; lang: Lang; region?: string; witnessType: WitnessType; edition: string; orth?: string; license?: string
   oldI?: boolean                         // N06: Old Rus' і = и (pre-1400 texts)

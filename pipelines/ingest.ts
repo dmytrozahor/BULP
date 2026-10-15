@@ -25,6 +25,7 @@ export const INGESTERS: Partial<Record<Kind, () => Promise<Ingester>>> = {
   termlist: () => import('./ingest-termlist.ts').then(m => m.default),
   translit: () => import('./ingest-translit.ts').then(m => m.default),
   wikisource: () => import('./ingest-wikisource.ts').then(m => m.default),
+  'ia-ocr': () => import('./ingest-iaocr.ts').then(m => m.default),
 }
 
 /** Files of a unit as cached by fetch.ts: data/raw/<kind>/<unit>/NNN.* plus urls.json (index → url). */

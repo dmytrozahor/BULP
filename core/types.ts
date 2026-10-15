@@ -17,6 +17,11 @@ export interface TokenRec {
   /** P-1.7: set when the token was inferred, not read: 'segmentation' = word boundaries of continuous (unspaced) text found by dictionary segmentation (pipelines/sophia-segment.ts) */
   method?: 'segmentation'
 }
+/**
+ * SPEC 63 CX-9: a statement about the dialect of a witness text. `status: hypothesis` = the user's own statement (BL-20/ET-1 model: author, date, status) —
+ * it is shown but NEVER becomes a dialect label; `status: sourced` = a published statement with a verbatim quote and locator (the only kind that is a label).
+ */
+export interface DialectStatement { group: string; author: string; status: 'hypothesis' | 'sourced'; date: string; said?: string; evidence: Evidence[]; note?: string }
 export interface WitnessOut {
   id: string; unit: string; title: string; author: string; url: string
   date: [number, number]; dateCite: Evidence; msDate?: number
@@ -32,6 +37,8 @@ export interface WitnessOut {
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
   /** SPEC 60 MV-1 / NW-7: the witness's media (a song's YouTube video; Sophia IIIF image). `id` = video id for youtube. Inherited by WitnessMeta. */
   media?: WitnessMedia
+  /** CX-9: user hypotheses and sourced statements about the dialect of this text (DialectStatement) */
+  dialect?: DialectStatement[]
   dropped: { unmapped: number; apparatus: number }
   tokens: TokenRec[]
 }
