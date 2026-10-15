@@ -383,3 +383,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MD-3 | tests/modern.test.ts › the date kind is spelled out: crawl is not publication, entry is not first use |
 | MD-3 | tests/modern.test.ts › the report counts distinct words per source and per first-attestation year |
 | MD-3 | tests/modern.test.ts › the badges are wired into the word and form pages |
+| NV-3 | manual — pending: NV-3 (no dead spelling links) is being implemented; the test row replaces this line when it lands |
