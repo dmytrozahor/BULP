@@ -22,7 +22,9 @@ export const INGESTERS: Partial<Record<Kind, () => Promise<Ingester>>> = {
   vira: () => import('./ingest-vira.ts').then(m => m.default),
   dict: () => import('./ingest-dict.ts').then(m => m.default),
   r2u: () => import('./ingest-r2u.ts').then(m => m.default),
+  pamjatky: () => import('./ingest-pamjatky.ts').then(m => m.default),
   wikisource: () => import('./ingest-wikisource.ts').then(m => m.default),
+  'ia-ocr': () => import('./ingest-iaocr.ts').then(m => m.default),
 }
 
 /** Files of a unit as cached by fetch.ts: data/raw/<kind>/<unit>/NNN.* plus urls.json (index → url). */

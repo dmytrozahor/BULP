@@ -241,7 +241,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
     let nl = 0
     w.tokens.forEach((tok, ti) => {
       const L = linked[tix[wi]![ti]!]
-      if (!L) { if (!nf) bump(unres, rawKey(tok.raw)); return }
+      if (!L) { if (!nf && w.witnessType !== 'ocr') bump(unres, rawKey(tok.raw)); return }   // CX-8: unproofread OCR never feeds the unresolved / neologism lists
       const { c, route } = L, raw = rawKey(tok.raw), ref: Ref = { wi, ti }
       if (!nf) { nl++; rt[route] = (rt[route] ?? 0) + 1 }
       let la = lemmas.get(c.id)
@@ -455,8 +455,8 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const lc = lemmaContact(la.display, annEnv)
     const modernCards = pairs.filter(p => p.card.epochs.includes('shev.modern'))
     // first (B-3.5): one candidate per (witness, spelling) over ALL spellings of the lemma, ranked by rankFirst
-    const cands: FirstCand[] = [...la.firstByW.values()].map(x => ({ witness: x.wid, author: authorById[witMap.get(x.wid)!.author]!, date: witMap.get(x.wid)!.date, witnessType: witMap.get(x.wid)!.witnessType, loc: x.loc, form: x.raw, route: x.route, n: x.n }))
-    const refOf = new Map(cands.map((c, i) => [c, [...la.firstByW.values()][i]!.ref]))
+    const cands: FirstCand[] = [...la.firstByW.values()].filter(x => witMap.get(x.wid)!.witnessType !== 'ocr').map(x => ({ witness: x.wid, author: authorById[witMap.get(x.wid)!.author]!, date: witMap.get(x.wid)!.date, witnessType: witMap.get(x.wid)!.witnessType, loc: x.loc, form: x.raw, route: x.route, n: x.n }))
+    const refOf = new Map(cands.map((c, i) => [c, [...la.firstByW.values()].filter(x => witMap.get(x.wid)!.witnessType !== 'ocr')[i]!.ref]))   // CX-8: an OCR witness (not proofread) never becomes a lemma's first attestation
     const first = firstClaim(cands, witMap, c => kline(refOf.get(c)!))
     // oldest (B-3.4) and first attestation use ONE tie-break (FX-3): the oldest spelling IS the spelling of the ranked first attestation. Fallback (no vetted first): min date.to, commoner spelling.
     const ranked = rankFirst(cands)

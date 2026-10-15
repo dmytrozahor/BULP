@@ -31,7 +31,7 @@ export const AUTHOR_LABEL_UK: Record<AuthorLabel, string> = {
 }
 export const STATUS_UK: Record<string, string> = { vetted: 'перевірений', provisional: 'попередній', unverified: 'неперевірений', excluded: 'виключений' }
 export const WTYPE_UK: Record<string, string> = {
-  autograph: 'автограф', ms_copy: 'рукописна копія', first_ed: 'перше видання', later_ed: 'пізніше видання', scholarly_ed: 'наукове видання', edition: 'видання',
+  autograph: 'автограф', ms_copy: 'рукописна копія', first_ed: 'перше видання', later_ed: 'пізніше видання', scholarly_ed: 'наукове видання', edition: 'видання', ocr: 'OCR archive.org, не вичитано',
 }
 export const LANG_UK: Record<string, string> = { orv: 'давньоруська', 'chu-rus': 'церк.-слов. руської редакції', chu: 'церковнослов’янська (не руської редакції)', ruthenian: 'староукраїнська (руська)', uk: 'українська', undetermined: 'мова не визначена (кирилиця)' }
 export const KIND_UK: Record<string, string> = { Q: 'цитата', P: 'переказ', D: 'дані' }

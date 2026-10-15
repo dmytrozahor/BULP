@@ -16,6 +16,7 @@ export const SOURCES: Record<string, Source> = {
   EOU:    { title: 'Encyclopedia of Ukraine (CIUS), статті «Kyiv Missal» тощо', url: 'https://www.encyclopediaofukraine.com/' },
   WPEN:   { title: 'Wikipedia (en), стаття «Kiev Missal»', url: 'https://en.wikipedia.org/wiki/Kiev_Missal', license: 'CC BY-SA 4.0' },
   VIRA:   { title: 'Віра.Укр — Архангельське Євангеліє 1092 (онлайн-видання)', url: 'https://віра.укр/b/arch-gospel' },
+  IA:     { title: 'Internet Archive (OCR, не вичитано)', url: 'https://archive.org', license: 'PD (текст скану); OCR archive.org' },
   WS:     { title: 'Українські Вікіджерела', url: 'https://uk.wikisource.org', license: 'PD / CC BY-SA 4.0' },
   PLSEA:  { title: 'Пластові «Пластологізми» та абревіації, упорядкував Я. Запотоцький, 14.05.2021. Пласт Сієтл (лише цитати)', url: 'https://plastseattle.org/plast-101/dictionary/', year: '2021', license: '© Пласт Сієтл (cite-only)' },
   PL100:  { title: 'Дуда М. Гутірка для юнацтва «Пластове назовництво» (Третя проба). 100krokiv.info, 30.12.2011 (лише цитати)', url: 'https://100krokiv.info/2011/12/tretya-proba-hutirka-dlya-yunatstva-plastove-nazovnytstvo/', year: '2011', license: 'без ліцензії (cite-only)' },

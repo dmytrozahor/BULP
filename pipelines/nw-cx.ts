@@ -74,6 +74,11 @@ export const UNITS_CX: Unit[] = [
   { id: 'molodyk1843_mohyla', title: 'А. Могила (Метлинський). Розмова зъ покійными, Молодик на 1843 годъ, ч. II (Харків 1843)', author: 'mohyla', kind: 'wikisource', urls: [WS('Молодик/II/Розмова_зъ_покійными')], discover: 'wikisource-prefix',
     date: [1843, 1843], dateCite: Q('WS', WS('Молодик/II/Розмова_зъ_покійными'), 'Молодик. Частина II — Розмова зъ покійными А. Могила 1843'),
     lang: 'uk', region: 'Слобожанщина', witnessType: 'first_ed', edition: 'Молодик на 1843 годъ, Харьковъ 1843 (підпис «А. Могила»; Вікіджерела атрибутують Амвросію Метлинському); ранній фонетичний правопис до кулішівки, фолди максимовичівки — найближчі', orth: 'максимовичівка', license: 'PD' },
+  // ── CX-8: archive.org OCR witnesses (witnessType ocr: not proofread; see pipelines/ingest-iaocr.ts) ──
+  { id: 'sumtsov_slobozhane1918', title: 'Сумцов. Слобожане: історично-етноґрафічна розвідка (Харків 1918) - OCR archive.org', author: 'sumtsov', kind: 'ia-ocr',
+    urls: ['https://archive.org/download/slobozhane/slobozhane_djvu.xml', 'https://archive.org/download/slobozhane/slobozhane_page_numbers.json'],
+    date: [1918, 1918], dateCite: Q('IA', 'https://archive.org/details/slobozhane', 'Сумцов М.Ф. Слобожане: Історично-етноґрафічна розвідка / М.Ф. Сумцов. – Харків : Видавництво «Союз», 1918. – 240 с. : іл.'),
+    lang: 'uk', region: 'Слобожанщина', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано: Харків 1918, вид. «Союз» (Культурно-історична бібліотека під ред. Д. Багалія); скан Internet Archive slobozhane', license: 'PD' },
 ]
 
 export const AUTHORS_CX: Author[] = [
