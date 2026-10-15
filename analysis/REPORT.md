@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-15T09:57:08.785Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 242 899**.
+Generated 2026-10-15T10:22:38.916Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **1 242 899**.
 
 ## 1. Corpus
 
@@ -1930,9 +1930,11 @@ Generated 2026-10-15T09:57:08.785Z by `pipelines/build.ts` (SPEC 20). Every numb
 | nechuy1879 | nechuy | uk | 1879 | shev.modern (high) | wl.new | 51 427 | 0 | 0 |
 | kulish1882 | kulish | uk | 1882 | shev.modern (high) | wl.new | 18 720 | 0 | 352 |
 | boa1884 | franko | uk | 1884 | shev.modern (high) | wl.new | 26 196 | 0 | 0 |
+| r2u_zheleh | dict_zheleh | uk | 1886 | shev.modern (high) | wl.new | 6 859 | 0 | 0 |
 | lesya1892 | lesya | uk | 1892 | shev.modern (high) | wl.new | 13 544 | 0 | 208 |
 | chaichenko1893 | hrinchenko | uk | 1893 | shev.modern (high) | wl.new | 31 972 | 0 | 1090 |
 | franko1893 | franko | uk | 1893 | shev.modern (high) | wl.new | 36 521 | 0 | 928 |
+| r2u_umanets | dict_umanets | uk | 1893–1898 | shev.modern (high) | wl.new | 51 894 | 0 | 0 |
 | lesya1899 | lesya | uk | 1899 | shev.modern (high) | wl.new | 18 341 | 0 | 158 |
 | franko1902 | franko | uk | 1902 | shev.modern (high) | wl.new | 25 278 | 0 | 582 |
 | franko1903 | franko | uk | 1903 | shev.modern (high) | wl.new | 28 878 | 0 | 500 |
@@ -1941,6 +1943,7 @@ Generated 2026-10-15T09:57:08.785Z by `pipelines/build.ts` (SPEC 20). Every numb
 | franko1906 | franko | uk | 1906 | shev.modern (high) | wl.new | 31 416 | 0 | 220 |
 | pyven1906 | folk_kuban | uk | 1906 | shev.modern (high) | wl.new | 19 211 | 0 | 0 |
 | hrinchenko1908 | hrinchenko | uk | 1908 | shev.modern (high) | wl.new | 6 527 | 0 | 3414 |
+| r2u_hrinch09 | hrinchenko | uk | 1907–1909 | shev.modern (high) | wl.new | 6 481 | 0 | 0 |
 | ez26_shekerik | shekerik | uk | 1910 | shev.modern (high) | wl.new | 51 782 | 743 | 49251 |
 | yavornytsky1912 | yavornytsky | uk | 1912 | shev.modern (high) | wl.new | 4 020 | 0 | 0 |
 | stefanyk1917_dlg | stefanyk | uk | 1917 | shev.modern (high) | wl.new | 1 621 | 0 | 6 |
@@ -1950,10 +1953,17 @@ Generated 2026-10-15T09:57:08.785Z by `pipelines/build.ts` (SPEC 20). Every numb
 | sumtsov1918 | sumtsov | uk | 1918 | shev.modern (high) | wl.new | 3 690 | 0 | 71 |
 | yavornytsky1923 | yavornytsky | uk | 1923 | shev.modern (high) | wl.new | 5 329 | 0 | 41 |
 | mtt1925 | komisiia_term_praha | uk | 1925 | shev.modern (high) | wl.new | 763 | 1 | 0 |
+| r2u_nikovsky | dict_nikovsky | uk | 1927 | shev.modern (high) | wl.new | 3 708 | 0 | 0 |
+| r2u_hrinch27 | dict_hrinch27 | uk | 1927–1928 | shev.modern (high) | wl.new | 719 | 0 | 0 |
+| r2u_yakubski | dict_yakubski | uk | 1928 | shev.modern (high) | wl.new | 1 692 | 0 | 0 |
+| r2u_holoskevych | dict_holoskevych | uk | 1929 | shev.modern (high) | wl.new | 3 282 | 0 | 0 |
+| r2u_doroshenko | dict_doroshenko | uk | 1930 | shev.modern (high) | wl.new | 3 268 | 0 | 0 |
+| r2u_izyumov | dict_izyumov | uk | 1930 | shev.modern (high) | wl.new | 11 170 | 0 | 0 |
+| r2u_krymsky | dict_krymsky | uk | 1924–1933 | shev.modern (high) | wl.new | 56 473 | 0 | 0 |
 | cheremshyna1940_dlg | cheremshyna | uk | 1940 | shev.modern (high) | wl.new | 4 214 | 0 | 441 |
 | cheremshyna1940_nar | cheremshyna | uk | 1940 | shev.modern (high) | wl.new | 7 289 | 0 | 0 |
 
-Admitted witnesses: 1947; N = 1 242 899. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 1957; N = 1 242 899. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
@@ -2333,7 +2343,7 @@ Admitted witnesses: 1947; N = 1 242 899. Witnesses with a Shevchenko poem each a
 | lyst18_99 | pum18 | 235 | автор «pum18» не має запису верифікації (P-2.2) |
 | shevchenko_121 | shevchenko | 4519 | текст написано російською мовою, не українською (лексикон українських форм) — «Поэма Кого, рыдая, призову я Делить тоску, печаль мою В чужом краю, кому, тоскуя…» (http://izbornyk.org.ua/shevchenko/shev121.htm) |
 | shevchenko_123 | shevchenko | 2335 | текст написано російською мовою, не українською (лексикон українських форм) — «На память 9-го ноября 1843 года княжне Варваре Николаевне Репниной ПОСВЯЩЕНИЕ Ду…» (http://izbornyk.org.ua/shevchenko/shev123.htm) |
-Authors with a vetting record but **no admitted witness** (39): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); dict_umanets (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_zheleh (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_nikovsky (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_hrinch27 (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_holoskevych (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_krymsky (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_izyumov (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_doroshenko (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); dict_yakubski (provisional; укладач словника: свідчення знання лексикографа (research/06 §3.5), witnessType=); anon_i17_12 (excluded; на сторінці лише «віру нашу святую» (конфесія, без Русі/України в голосі автора)); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
+Authors with a vetting record but **no admitted witness** (30): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); anon_i17_12 (excluded; на сторінці лише «віру нашу святую» (конфесія, без Русі/України в голосі автора)); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
 
 ## 2. Linking coverage (B-2)
 
@@ -4266,9 +4276,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | nechuy1879 | 51 427 | 0 | 0 | 0 | 47941 | 3486 | 93.2% |
 | kulish1882 | 18 720 | 0 | 0 | 0 | 15601 | 3119 | 83.3% |
 | boa1884 | 26 196 | 0 | 0 | 0 | 21065 | 5131 | 80.4% |
+| r2u_zheleh | 6 859 | 0 | 0 | 0 | 0 | 6859 | 0.0% |
 | lesya1892 | 13 544 | 0 | 0 | 0 | 12907 | 637 | 95.3% |
 | chaichenko1893 | 31 972 | 0 | 0 | 0 | 30551 | 1421 | 95.6% |
 | franko1893 | 36 521 | 0 | 0 | 0 | 33657 | 2864 | 92.2% |
+| r2u_umanets | 51 894 | 0 | 0 | 0 | 0 | 51894 | 0.0% |
 | lesya1899 | 18 341 | 0 | 0 | 0 | 17679 | 662 | 96.4% |
 | franko1902 | 25 278 | 0 | 0 | 0 | 23579 | 1699 | 93.3% |
 | franko1903 | 28 878 | 0 | 0 | 0 | 27111 | 1767 | 93.9% |
@@ -4277,6 +4289,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | franko1906 | 31 416 | 0 | 0 | 0 | 29485 | 1931 | 93.9% |
 | pyven1906 | 19 211 | 0 | 0 | 0 | 15664 | 3547 | 81.5% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5706 | 821 | 87.4% |
+| r2u_hrinch09 | 6 481 | 0 | 0 | 0 | 0 | 6481 | 0.0% |
 | ez26_shekerik | 51 782 | 0 | 0 | 0 | 37894 | 13888 | 73.2% |
 | yavornytsky1912 | 4 020 | 0 | 0 | 0 | 3707 | 313 | 92.2% |
 | stefanyk1917_dlg | 1 621 | 0 | 0 | 0 | 1512 | 109 | 93.3% |
@@ -4286,6 +4299,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sumtsov1918 | 3 690 | 0 | 0 | 0 | 3219 | 471 | 87.2% |
 | yavornytsky1923 | 5 329 | 0 | 0 | 0 | 5107 | 222 | 95.8% |
 | mtt1925 | 763 | 0 | 0 | 0 | 544 | 219 | 71.3% |
+| r2u_nikovsky | 3 708 | 0 | 0 | 0 | 0 | 3708 | 0.0% |
+| r2u_hrinch27 | 719 | 0 | 0 | 0 | 0 | 719 | 0.0% |
+| r2u_yakubski | 1 692 | 0 | 0 | 0 | 0 | 1692 | 0.0% |
+| r2u_holoskevych | 3 282 | 0 | 0 | 0 | 0 | 3282 | 0.0% |
+| r2u_doroshenko | 3 268 | 0 | 0 | 0 | 0 | 3268 | 0.0% |
+| r2u_izyumov | 11 170 | 0 | 0 | 0 | 0 | 11170 | 0.0% |
+| r2u_krymsky | 56 473 | 0 | 0 | 0 | 0 | 56473 | 0.0% |
 | cheremshyna1940_dlg | 4 214 | 0 | 0 | 0 | 3838 | 376 | 91.1% |
 | cheremshyna1940_nar | 7 289 | 0 | 0 | 0 | 6845 | 444 | 93.9% |
 | **total** | 1 242 899 | 34360 | 151789 | 83312 | 673724 | 299714 | 75.9% |
@@ -4352,93 +4372,93 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 | shev.middle | 223 990 | Stanza (model, P-1.7) | 49 613 | 26 884 (54.2%) | 22 093 | 636 | 11 288 | 3 225 | 10 028 | 12 610 |
 | shev.middle | 223 990 | VESUM (modern spelling) | 11 413 | 10 389 (91.0%) | 40 | 984 |  |  |  |  |
 | shev.late_middle | 86 062 | VESUM (modern spelling) | 40 785 | 36 278 (88.9%) | 101 | 4 406 | 0 | 4 092 | 13 763 | 15 568 |
-| shev.modern | 657 128 | VESUM (modern spelling) | 357 693 | 318 941 (89.2%) | 1 055 | 37 697 | 0 | 8 235 | 48 083 | 64 592 |
+| shev.modern | 657 128 | VESUM (modern spelling) | 408 280 | 367 233 (89.9%) | 1 317 | 39 730 | 0 | 8 643 | 51 112 | 69 158 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 37 014 · stanza:gender: 3 967 · vesum:grid:noun: 790 · vesum:grid:none: 389 · stanza:grid:adj: 273 · torot:grid:none: 195 · torot:grid:adj: 50 · stanza:grid:none: 32 · vesum:grid:adj: 17.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): stanza:lemma: 37 014 · stanza:gender: 3 967 · vesum:grid:noun: 837 · vesum:grid:none: 603 · stanza:grid:adj: 273 · torot:grid:none: 195 · torot:grid:adj: 50 · stanza:grid:none: 32 · vesum:grid:adj: 18.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
 | lemma | kind | tokens | placed | conflict | underspecified | untagged | main conflict reasons |
 |---|---|---|---|---|---|---|---|
-| він | pron | 12 324 | 8 891 | 2 826 | 0 | 607 | stanza:lemma 2826 |
+| він | pron | 12 339 | 8 906 | 2 826 | 0 | 607 | stanza:lemma 2826 |
 | я | pron | 10 600 | 10 358 | 88 | 0 | 154 | stanza:lemma 88 |
-| земля | noun | 2 156 | 1 585 | 3 | 377 | 191 | stanza:gender 2, stanza:lemma 1 |
-| син | noun | 1 953 | 1 802 | 106 | 0 | 45 | stanza:lemma 63, stanza:gender 43 |
-| да | uninflected | 2 197 | 0 | 1 476 | 461 | 260 | stanza:grid:none 1173, torot:grid:none 303 |
-| себе | pron | 4 653 | 4 645 | 0 | 0 | 8 | — |
-| ви | pron | 3 935 | 3 915 | 7 | 0 | 13 | stanza:lemma 7 |
-| ти | pron | 7 571 | 7 225 | 31 | 0 | 315 | stanza:lemma 31 |
-| ми | pron | 5 146 | 4 515 | 425 | 0 | 206 | stanza:lemma 425 |
-| рука | noun | 1 960 | 1 828 | 21 | 0 | 111 | stanza:gender 16, stanza:lemma 5 |
-| князь | noun | 1 656 | 1 606 | 25 | 0 | 25 | stanza:gender 13, stanza:lemma 12 |
-| город | noun | 1 069 | 968 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
-| аз | noun | 145 | 69 | 0 | 0 | 76 | — |
+| земля | noun | 2 171 | 1 600 | 3 | 377 | 191 | stanza:gender 2, stanza:lemma 1 |
+| син | noun | 1 963 | 1 812 | 106 | 0 | 45 | stanza:lemma 63, stanza:gender 43 |
+| да | uninflected | 2 200 | 0 | 1 476 | 464 | 260 | stanza:grid:none 1173, torot:grid:none 303 |
+| себе | pron | 4 657 | 4 649 | 0 | 0 | 8 | — |
+| ви | pron | 3 936 | 3 916 | 7 | 0 | 13 | stanza:lemma 7 |
+| ти | pron | 7 573 | 7 227 | 31 | 0 | 315 | stanza:lemma 31 |
+| ми | pron | 5 150 | 4 519 | 425 | 0 | 206 | stanza:lemma 425 |
+| рука | noun | 1 977 | 1 845 | 21 | 0 | 111 | stanza:gender 16, stanza:lemma 5 |
+| князь | noun | 1 665 | 1 615 | 25 | 0 | 25 | stanza:gender 13, stanza:lemma 12 |
+| город | noun | 1 084 | 983 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
+| аз | noun | 148 | 72 | 0 | 0 | 76 | — |
 
-**Stem types** (EP-4): 9 976 lemmas carry epoch paradigms; stem claim known for 1 573 (of which 379 from a Stanza lemma, model-based per decision D4), `unknown` for 4 637. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 94 · ST-09: 670 · ST-10: 243 · ST-11: 78 · ST-12: 92 · ST-13: 277 · ST-14: 67.
+**Stem types** (EP-4): 9 977 lemmas carry epoch paradigms; stem claim known for 1 573 (of which 379 from a Stanza lemma, model-based per decision D4), `unknown` for 4 637. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 94 · ST-09: 670 · ST-10: 243 · ST-11: 78 · ST-12: 92 · ST-13: 277 · ST-14: 67.
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 511 lemmas, 47 992 reconstructed cells with 50 762 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 018 cells (6.3%), 3 027 forms (6.0%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 27.33 MB of 149.31 MB shard total (18.3%); shards that needed ctx dropped: 0, cell cap 2: 0.
+**Shard bytes added by `epochs`**: 29.13 MB of 156.05 MB shard total (18.7%); shards that needed ctx dropped: 0, cell cap 2: 0.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 111 972), *token* = occurrences (denominator linked tokens 943 185). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 146 104), *token* = occurrences (denominator linked tokens 943 185). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
-| R02 | Деназалізація ѧ > я, ѫ > у | G | 1778 | 1.6% | 11467 | 1.2% |
+| R02 | Деназалізація ѧ > я, ѫ > у | G | 1778 | 1.2% | 11467 | 1.2% |
 | R14 | бы > бу (губне огублення) | L | 107 | 0.1% | 1943 | 0.2% |
-| R03 | ky, gy, xy > k'i, g'i, x'i | G | 209 | 0.2% | 789 | 0.1% |
-| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 465 | 0.4% | 1397 | 0.1% |
-| R13 | C + j: подовження, -ьѥ > -ття | G | 203 | 0.2% | 396 | 0.0% |
+| R03 | ky, gy, xy > k'i, g'i, x'i | G | 209 | 0.1% | 789 | 0.1% |
+| R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 465 | 0.3% | 1397 | 0.1% |
+| R13 | C + j: подовження, -ьѥ > -ття | G | 203 | 0.1% | 396 | 0.0% |
 | R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 89 | 0.1% | 138 | 0.0% |
 | R21c | Зняття протетичного и- перед л, р (илвов > львов, ильняний > льняний) | L | 1 | 0.0% | 1 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 7347 | 6.6% | 58937 | 6.2% |
-| R21 | Протетичні в, г | L | 501 | 0.4% | 1920 | 0.2% |
+| R04 | Занепад єрів (закон Гавліка) | G | 7347 | 5.0% | 58937 | 6.2% |
+| R21 | Протетичні в, г | L | 501 | 0.3% | 1920 | 0.2% |
 | R21d | Протетичне и- перед л, р + редукований голосний (иржа) | L | 2 | 0.0% | 3 | 0.0% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1105 | 1.0% | 5369 | 0.6% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1105 | 0.8% | 5369 | 0.6% |
 | R10a | Аналогійне о > і в -овл- (будівля, торгівля, зимівля) | L | 5 | 0.0% | 5 | 0.0% |
 | R10b | Повноголосне і: беріг, сторін (лексична перевизначеність винятку R10) | L | 0 | 0.0% | 0 | 0.0% |
 | R10c | і у відкритому складі: кінець-тип (-ьць) | L | 1 | 0.0% | 7 | 0.0% |
 | R07 | Вставні о, е в кінцевих групах | L | 30 | 0.0% | 214 | 0.0% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 3788 | 3.4% | 20587 | 2.2% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 3788 | 2.6% | 20587 | 2.2% |
 | R12 | ѥ у новозакритому складі > ї | G | 29 | 0.0% | 680 | 0.1% |
-| R11 | Злиття і та у > и | G | 3070 | 2.7% | 47083 | 5.0% |
-| R15 | Ствердіння губних у кінці складу | G | 706 | 0.6% | 2939 | 0.3% |
+| R11 | Злиття і та у > и | G | 3070 | 2.1% | 47083 | 5.0% |
+| R15 | Ствердіння губних у кінці складу | G | 706 | 0.5% | 2939 | 0.3% |
 | R16 | l > w після о, е | G | 223 | 0.2% | 523 | 0.1% |
-| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.2% | 700 | 0.1% |
-| R17 | е > о після шиплячих перед твердим | L | 177 | 0.2% | 1172 | 0.1% |
-| R18 | Ствердіння ж, ч, ш | G | 526 | 0.5% | 1848 | 0.2% |
+| R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.1% | 700 | 0.1% |
+| R17 | е > о після шиплячих перед твердим | L | 177 | 0.1% | 1172 | 0.1% |
+| R18 | Ствердіння ж, ч, ш | G | 526 | 0.4% | 1848 | 0.2% |
 | R19 | Ствердіння кінцевого р' | G | 159 | 0.1% | 601 | 0.1% |
-| R23 | Стягнення прикметникових закінчень | L | 1098 | 1.0% | 4488 | 0.5% |
+| R23 | Стягнення прикметникових закінчень | L | 1098 | 0.8% | 4488 | 0.5% |
 | R24 | Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається | G | 0 | 0.0% | 0 | 0.0% |
 
-Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 2734 types / 6053 tokens · ORTH-ZHEL-TY: 2232 types / 9186 tokens · ORTH-YAR-JER: 1571 types / 7417 tokens · ORTH-YAR-I: 554 types / 2046 tokens · ORTH-MAX-YAT: 1215 types / 2149 tokens · ORTH-MAX-JO: 95 types / 782 tokens · ORTH-MAX-JER-END: 1291 types / 2529 tokens · ORTH-ZHEL-JE: 117 types / 477 tokens · ORTH-MAX-U: 298 types / 438 tokens · ORTH-YAR-E: 227 types / 585 tokens · ORTH-MAX-E: 51 types / 90 tokens · ORTH-MAX-YAT-J: 106 types / 249 tokens · ORTH-KUL-I: 467 types / 1944 tokens · ORTH-KUL-E: 194 types / 309 tokens · ORTH-MAX-I: 723 types / 1666 tokens · ORTH-ZHEL-TE: 143 types / 284 tokens · ORTH-YAR-YAT: 311 types / 933 tokens · ORTH-MAX-Y: 739 types / 1176 tokens · ORTH-ZHEL-SOFT: 278 types / 802 tokens · ORTH-KUL-JER: 39 types / 50 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-ZHEL-INIT-I: 13 types / 42 tokens · ORTH-ZHEL-SKY: 20 types / 24 tokens
+Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 2734 types / 6053 tokens · ORTH-ZHEL-TY: 3604 types / 9186 tokens · ORTH-YAR-JER: 1571 types / 7417 tokens · ORTH-YAR-I: 554 types / 2046 tokens · ORTH-ZHEL-INIT-I: 33 types / 42 tokens · ORTH-MAX-YAT: 1215 types / 2149 tokens · ORTH-MAX-JO: 95 types / 782 tokens · ORTH-MAX-JER-END: 1291 types / 2529 tokens · ORTH-ZHEL-JE: 129 types / 477 tokens · ORTH-MAX-U: 298 types / 438 tokens · ORTH-YAR-E: 227 types / 585 tokens · ORTH-MAX-E: 51 types / 90 tokens · ORTH-MAX-YAT-J: 106 types / 249 tokens · ORTH-KUL-I: 467 types / 1944 tokens · ORTH-KUL-E: 194 types / 309 tokens · ORTH-MAX-I: 723 types / 1666 tokens · ORTH-ZHEL-TE: 159 types / 284 tokens · ORTH-YAR-YAT: 311 types / 933 tokens · ORTH-MAX-Y: 739 types / 1176 tokens · ORTH-SYA: 3103 types / 0 tokens · ORTH-ZHEL-SOFT: 462 types / 802 tokens · ORTH-KUL-JER: 185 types / 50 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-ZHEL-SKY: 45 types / 24 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 69 570 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 72 955 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 311 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 314 | 0 |
 | CS-C3 | cs | church_slavonic | 0.7 | 92 | 0 |
-| CS-C4 | cs | church_slavonic | 0.7 | 18 | 0 |
+| CS-C4 | cs | church_slavonic | 0.7 | 19 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 30 | 0 |
-| CS-C11 | cs | church_slavonic | 0.6 | 84 | 0 |
+| CS-C11 | cs | church_slavonic | 0.6 | 88 | 0 |
 | CS-C12 | cs | church_slavonic | 0 | 0 | 27 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 485 |
-| LEX-LT | contact | nonnormative | 0.8 | 15 | 0 |
-| LEX-LT-SOFT | contact | not_recommended | 0.4 | 1 | 0 |
-| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 48 | 0 |
-| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 13 | 0 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 500 |
+| LEX-LT | contact | nonnormative | 0.8 | 66 | 0 |
+| LEX-LT-SOFT | contact | not_recommended | 0.4 | 11 | 0 |
+| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 134 | 0 |
+| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 17 | 0 |
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 10782 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 10790 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
-| MOR-PART-UCH | contact | calque_participle | 0.6 | 1 | 0 |
+| MOR-PART-UCH | contact | calque_participle | 0.6 | 5 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
 | MOR-SHIISIA | contact | russianism_morph | 0.5 | 0 | 0 |
-| MOR-TSIA | contact | russianism_orth | 0.8 | 0 | 0 |
+| MOR-TSIA | contact | russianism_orth | 0.8 | 1 | 0 |
 | PFX-VS | contact | russianism_morph | 0.4 | 0 | 0 |
 | SFX-YVA | contact | russianism_morph | 0.2 | 0 | 0 |
 | PFX-RAZ | contact | russianism_morph | 0 | 0 | 0 |
@@ -4448,7 +4468,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 0 | 0 |
 | N-DIPH-IE:CHN | dialect | CHN | 0.8 | 5 | 0 |
 | N-DIPH-IE:MPL | dialect | MPL | 0.8 | 5 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 384 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 387 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
 | 3SG-HARD-T:POD | dialect | POD | 0.4 | 1 | 0 |
 | 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 1 | 0 |
@@ -4461,7 +4481,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | NORTH-ADJ-UNCONTR:CHN | dialect | CHN | 0.6 | 0 | 0 |
 | NORTH-ADJ-UNCONTR:NORTH | dialect | NORTH | 0.6 | 0 | 0 |
 | NDN-ADJ-KIJ:NDN | dialect | NDN | 0.6 | 10 | 0 |
-| CHN-INSTR-SHORT:CHN | dialect | CHN | 0.4 | 6 | 0 |
+| CHN-INSTR-SHORT:CHN | dialect | CHN | 0.4 | 7 | 0 |
 | SW-INSTR-OW:SW | dialect | SW | 0.7 | 1 | 0 |
 | CARP-Y:BOY | dialect | BOY | 0.5 | 105 | 0 |
 | CARP-Y:LEM | dialect | LEM | 0.5 | 105 | 0 |
@@ -4469,10 +4489,10 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | HARD-C-FINAL:POD | dialect | POD | 0.5 | 0 | 0 |
 | R-SOFT-FINAL:MDN | dialect | MDN | 0.3 | 0 | 0 |
 | R-SOFT-FINAL:SE | dialect | SE | 0.3 | 0 | 0 |
-| EPENTH-L-N:POD | dialect | POD | 0.4 | 32 | 0 |
-| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 32 | 0 |
-| F-TO-X:CHN | dialect | CHN | 0.2 | 4 | 0 |
-| F-TO-X:MDN | dialect | MDN | 0.2 | 4 | 0 |
+| EPENTH-L-N:POD | dialect | POD | 0.4 | 36 | 0 |
+| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 36 | 0 |
+| F-TO-X:CHN | dialect | CHN | 0.2 | 5 | 0 |
+| F-TO-X:MDN | dialect | MDN | 0.2 | 5 | 0 |
 | CHN-PREP:CHN | dialect | CHN | 0.7 | 0 | 0 |
 | MPL-YON:MPL | dialect | MPL | 0.7 | 0 | 0 |
 | ZAK-Y-VELAR:ZAK | dialect | ZAK | 0.6 | 5 | 0 |
@@ -5000,7 +5020,7 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-515 spellings with a church_slavonic label (denominator: 69 570 stored spellings); 82 lemmas with origin = church_slavonic.
+523 spellings with a church_slavonic label (denominator: 72 955 stored spellings); 82 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
@@ -5088,23 +5108,23 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 
 This is a literary corpus; the latest admitted witness is dated 1940. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 420 of 13096 lexicon lemmas. Examples: вони (derived: russianism_or_hybrid); да (derived: russianism_or_hybrid); Тая (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); шо (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); класти (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); напр (derived: russianism_or_hybrid); ше (derived: russianism_or_hybrid); дань (derived: russianism_or_hybrid)
+Surzhyk claims: 428 of 13096 lexicon lemmas. Examples: вони (derived: russianism_or_hybrid); да (derived: russianism_or_hybrid); Тая (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); шо (derived: russianism_or_hybrid); нє (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); враг (derived: russianism_or_hybrid); около (derived: russianism_or_hybrid); імя (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); будучи (derived: russianism_or_hybrid); оставити (derived: russianism_or_hybrid); приняти (derived: russianism_or_hybrid); множество (derived: russianism_or_hybrid); прочий (derived: russianism_or_hybrid); класти (derived: russianism_or_hybrid); щож (derived: russianism_or_hybrid); отсей (derived: russianism_orth); вон (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); ласкавий (derived: russianism_or_hybrid); напр (derived: russianism_or_hybrid)
 
-Dialect labels (lemmas): CHN: 381 · MPL: 5 · BOY: 86 · LEM: 86 · SE: 6 · POD: 23 · NDN: 24 · MDN: 17 · SYAN: 3 · VOL: 3 · SW: 1 · ZAK: 9 · HUT: 2 · SLB: 1 · STP: 1 · PKB: 2 · WPL: 3
+Dialect labels (lemmas): CHN: 382 · MPL: 5 · BOY: 86 · LEM: 86 · SE: 6 · POD: 24 · NDN: 24 · MDN: 18 · SYAN: 3 · VOL: 3 · SW: 1 · ZAK: 9 · HUT: 2 · SLB: 1 · STP: 1 · PKB: 2 · WPL: 3
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 1 · rusyn: 6; stored spellings with a rusyn claim: 7 of 69570. Rule hits (forms): CARP-Y:BOY>rusyn 6, RUE-Y-VELAR 5, PAN-SHE 1, RUE-Y-MIX 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 1 · rusyn: 6; stored spellings with a rusyn claim: 7 of 72955. Rule hits (forms): CARP-Y:BOY>rusyn 6, RUE-Y-VELAR 5, PAN-SHE 1, RUE-Y-MIX 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
 LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 540 types (3 613 tokens). Top: тай (1061, replace), да (235, replace), єсть (193, replace), тай (143, replace), да (117, replace), щож (108, replace), ше (91, replace), тай (68, replace), да (43, replace), по-над (42, replace), троха (42, replace), да (39, replace), будучи (27, replace), єсть (27, replace), гонта (26, soft), чуть (25, replace), деж (25, replace), єсть (24, replace), зза (23, replace), туда (23, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 59 826 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 7 065 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 60 205 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 7 290 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 1947 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 1957 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
 - **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (24.1%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 13 096 of 33 046 lemmas; 13 096 written, none dropped. Core lexicon.json 12.77 MiB (limit 15 MiB), Evidence stored once in a shared pool (32 857 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 3 926 shards lex/<bucket>.json: max 185 KB, median 35 KB, total 149.3 MiB (limit 192 KiB each). lexindex.json 3.84 MB (5017 corpus-attested flagged forms added).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 13 096 of 54 951 lemmas; 13 096 written, none dropped. Core lexicon.json 12.90 MiB (limit 15 MiB), Evidence stored once in a shared pool (32 988 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 3 926 shards lex/<bucket>.json: max 186 KB, median 37 KB, total 156.0 MiB (limit 192 KiB each). lexindex.json 3.85 MB (5038 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
