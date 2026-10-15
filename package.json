@@ -15,7 +15,10 @@
     "data:unlinked": "tsx pipelines/build-unlinked.ts",
     "data:etymology": "tsx pipelines/etymology.ts",
     "data:cognates": "tsx pipelines/cognates.ts",
-    "data:pull": "tsx pipelines/data-branch.ts pull"
+    "data:pull": "tsx pipelines/data-branch.ts pull",
+    "harvest:ingest": "tsx pipelines/ingest-harvest.ts",
+    "harvest:launch": "powershell -NoProfile -File harvest/launch.ps1",
+    "harvest:status": "powershell -NoProfile -File harvest/status.ps1"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

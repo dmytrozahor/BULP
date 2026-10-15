@@ -3,6 +3,9 @@
  * > "An author counts as vetted only with one fetched self-identification quote or self-chosen act" — research/06 §2.2
  * > "Never fabricate or reconstruct quotes from memory" — brief to the vetting agents
  */
+import { readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { Q, P, type Evidence } from '../core/evidence.ts'
 import { AUTHORS_14A } from './nw-izb14a.ts'
 import { AUTHORS_14B } from './nw-izb14b.ts'
@@ -97,5 +100,8 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_TRANSLIT,   // CX-6
 ]
 
-export const authorById = Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
+// HV-3: provisional authors of the harvested works (written by pipelines/ingest-harvest.ts; absent file = none)
+try { AUTHORS.push(...(JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../data/work/harvest-authors.json'), 'utf8')) as Author[])) } catch { /* no harvest ingest yet */ }
+
+export const authorById =Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
 export const admissible = (a?: Author) => !!a && (a.status === 'vetted' || a.status === 'provisional')

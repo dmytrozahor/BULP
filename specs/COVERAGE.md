@@ -408,3 +408,18 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NV-4 | tests/attest.test.ts › NV-4 a spelling that occurs only in a text (unlinked index) is attested too, linking its spelling page |
 | NV-4 | tests/attest.test.ts › NV-4 AnalyzeView renders the «засвідчено» badge before the «реконструкція (гіпотеза)» one |
 | NV-4 | tests/attest.test.ts › NV-4 every unlinked headword of mtt1925 has an archaic.json card with its equivalents and the text token refs it |
+| HV-1 | tests/harvest.test.ts › HV-1 an item batch is written as items/<file>.gz with an index line; a new run sees it as done |
+| HV-1 | tests/harvest.test.ts › HV-1 a torn last index line (killed mid-write) does not break the resume |
+| HV-1 | tests/harvest.test.ts › HV-1 the launcher starts hidden detached processes, writes pids.json and logs; the status script reports items/bytes/alive |
+| HV-1 | tests/harvest.test.ts › HV-1 pacing: r2u 10 s, wikis/archive ≥ 2 s; r2u/ stops on 403/429/5xx, the cap is 2 GB by default |
+| HV-1 | tests/harvest.test.ts › HV-1 DECISIONS-NEEDED lists pisni.org.ua (robots Disallow /), Reddit, YouTube and modern lyrics with the reason |
+| HV-2 | tests/harvest.test.ts › HV-2 wikisource: the {{заголовок}} header gives author/year/place; categories «Роботи NNNN» are the fallback date |
+| HV-2 | tests/harvest.test.ts › HV-2 wikipedia/wiktionary: wikitext → plain words, vocab-only, rue region, date = touched (terminus ante quem) |
+| HV-2 | tests/harvest.test.ts › HV-2 archive.org: presets are PD-dated (≤ 1925; Грушевський ≤ 1934), doc → index item with date/author/region/ocr flag |
+| HV-2 | tests/harvest.test.ts › HV-2 gramoty: document links, date and word-split transcription; tagged comparative East Slavic, vocab-only |
+| HV-2 | tests/harvest.test.ts › HV-2 poets (ukrlib): ≥ 30 poets of the 1980s–2000s incl. Андрухович, Бу-Ба-Бу, Лугосад; only form counts + a ≤ 2-line quote are produced |
+| HV-2 | tests/harvest.test.ts › HV-2 Лукаш «Фауст»: ukrlib pagination found, translation 1955 witness metadata, vocabulary only |
+| HV-2 | tests/harvest.test.ts › HV-2 Грушевський: izbornyk volume pages found, volume from the file name, first-edition years 1923–1927 |
+| HV-3 | tests/harvest.test.ts › HV-3 dates: «1380-1400», «1893-05-01», archive timestamps; no year → null (undated works are not ingested) |
+| HV-3 | tests/harvest.test.ts › HV-3 OCR rules and language gate: Cyrillic-only tokens kept, Latin/digit/mixed dropped as unmapped, Russian lines dropped as apparatus |
+| HV-3 | tests/harvest.test.ts › HV-3 end to end on a synthetic archive dump: witness with date/licence/author/region from the index, OCR rules applied; vocab-only sources give counts only |
