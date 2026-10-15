@@ -4,7 +4,7 @@
  * the witnesses with dates, the analyser's candidates and the reason it is unlinked. A spelling in a lemma's PARADIGM (VESUM) says so and links the lemma.
  * Only a spelling found in no text and no paradigm gets the plain «не знайдено» — never the dead-end wording for a spelling that occurs in a text.
  */
-import { computed, ref, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { key } from '../../core/text.ts'
 import { occurrencesOf, type UnlinkedEntry } from '../../core/unlinked.ts'
 import { useData } from '../composables/useData.ts'
@@ -15,11 +15,15 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import { formTo, textTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { lookupUnlinked, occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
 import { loadLight } from '../lib/torotData.ts'
+import { loadCardIndex } from '../lib/cardIndex.ts'
+import { cardMap } from '../../core/cv.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
 const { byLemma, searchIdx, annData, witnessById } = useData()
 const entry = ref<UnlinkedEntry>(), state = ref<'loading' | 'done'>('loading'), lines = ref<UnlinkedKwic[]>([])
 const light = ref<ReadonlySet<string>>()
 loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
+const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()   // SPEC 63 CV-2: light / CV / archaic cards
+loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
 watch(() => props.form, async f => {
   state.value = 'loading'; entry.value = undefined; lines.value = []
   const e = await lookupUnlinked(f); if (f !== props.form) return
@@ -30,7 +34,7 @@ const occs = computed(() => (entry.value ? occurrencesOf(entry.value) : []))
 const para = computed(() => searchIdx.value.map.get(key(props.form)) ?? [])
 const d = computed(() => deriveWithSteps(props.form))
 const an = computed(() => runDetectors(props.form, annData.value))
-const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value }))
+const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value, cards: cards.value }))
 const cands = computed(() => d.value.candidates.filter(c => c.form !== props.form).map(c => ({ form: c.form, steps: c.steps.length, link: analyzeLink(c.form, ctx.value) })))
 const wit = (id: string) => witnessById.value.get(id)
 const ocr = computed(() => occs.value.some(o => /\bOCR\b/i.test(wit(o.w)?.title ?? '')))

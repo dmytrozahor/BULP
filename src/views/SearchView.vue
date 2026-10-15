@@ -14,6 +14,8 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
 import { plastSearch } from '../lib/sociolectData.ts'
+import { cardSearchIndex, hitRoute, hitWord, loadCardIndex } from '../lib/cardIndex.ts'
+import { emptyIndex, type SearchIndex } from '../lib/search.ts'
 const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
@@ -23,7 +25,7 @@ const rows = computed(() => results.value.map(r => {
   const fa = isKnown(c.first) ? c.first.value : undefined
   return { r, c, fa, who: fa ? authorInfo(fa.author, witnessById.value.get(fa.witness)).name : '' }
 }))
-const go = () => rows.value[0] && router.push(`/w/${encodeURIComponent(rows.value[0].c.lemma)}`)
+const go = () => rows.value[0] ? router.push(`/w/${encodeURIComponent(rows.value[0].c.lemma)}`) : cardHits.value[0] && router.push(hitRoute(cardHits.value[0].lemma))
 // BL-2: switching the phone keyboard language blurs the field (IME/viewport resize); keep focus unless the user deliberately tapped elsewhere.
 const box = ref<HTMLInputElement | null>(null)
 let lastTap = 0
@@ -37,6 +39,10 @@ const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed((
 watch(q, () => { if (route.query.p !== undefined) pgR.go(1) })
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
 /** Plast vocabulary (SL-2) is searchable too — its words are mostly not corpus lemmas, so they never reached the lemma index */
+/** SPEC 63 CV-2: light (/lw), dictionary-attested (CV) and archaic (/ar) cards are searched too, case-insensitively, with the same ranking */
+const cardIdx = ref<SearchIndex>(emptyIndex())
+loadCardIndex().then(ci => { cardIdx.value = cardSearchIndex(ci) }, () => undefined)
+const cardHits = computed(() => (q.value.trim() ? search(cardIdx.value, q.value, 30).filter(r => !byLemma.value.has(hitWord(r.lemma))) : []))
 const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
 </script>
 
@@ -63,6 +69,18 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     </ul>
     <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>
   </section>
+  <section v-if="cardHits.length" class="card" aria-live="polite">
+    <h2><span>Інші картки (словники, рідкісні й архаїчні слова)</span> <span class="muted small">{{ cardHits.length }}</span></h2>
+    <ul class="results">
+      <li v-for="r in cardHits" :key="r.lemma">
+        <RouterLink :to="hitRoute(r.lemma)">
+          <span class="lem">{{ hitWord(r.lemma) }}</span>
+          <span class="badge">{{ r.lemma.startsWith('ar:') ? 'архаїчна/словникова картка' : 'коротка картка' }}</span>
+          <span v-if="r.matched.toLowerCase() !== hitWord(r.lemma).toLowerCase()" class="small sans">знайдено: «{{ r.matched }}»</span>
+        </RouterLink>
+      </li>
+    </ul>
+  </section>
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
     <li v-for="{ r, c, fa, who } in pgR.slice(rows)" :key="c.lemma">
@@ -77,7 +95,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     </li>
     <li v-if="pgR.pages.value > 1" class="pagerli"><Pagination :page="pgR.page.value" :pages="pgR.pages.value" :total="rows.length" @go="pgR.go" /></li>
   </ul>
-  <template v-else-if="q.trim() && loaded">
+  <template v-else-if="q.trim() && loaded && !cardHits.length">
     <div class="card" role="status">
       <p><strong>«{{ q.trim() }}» — немає в корпусі, аналіз за правилами.</strong> Це не словникова стаття: нижче лише розбір за правилами з джерелами (будова, деривація, шлях запозичення, омографи, русинська, IPA); «невідомо» ≠ «літературне».</p>
       <p class="small sans"><RouterLink :to="{ path: '/analyze', query: { q: q.trim() } }">Відкрити в «Аналізі слова» →</RouterLink></p>

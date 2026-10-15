@@ -4,7 +4,7 @@
  * Evidence-safe gating: "If the word is neither in lexindex nor in the lexicon the normative VESUM check is unavailable offline, so
  * absence-based dialect/suffix rules are gated" (src/lib/analyze.ts). Weight-0 rules are hypotheses without source → listed separately (P-1.3, P-3.1).
  */
-import { computed, ref, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ruleById } from '../../core/phonology.ts'
 import { key } from '../../core/text.ts'
@@ -32,6 +32,8 @@ import { analyzeLink } from '../lib/analyze-links.ts'
 import { attestationOf, type Attested } from '../lib/attest.ts'
 import { formTo } from '../lib/nav.ts'
 import { loadArchaic, loadLight } from '../lib/torotData.ts'
+import { loadCardIndex } from '../lib/cardIndex.ts'
+import { cardMap } from '../../core/cv.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -58,7 +60,9 @@ const open = ref<string | null>(null)
 /** SPEC 63 NV-2: every form shown here leads to its page (/w, /lw or /f); the rare-lemma set loads lazily */
 const light = ref<ReadonlySet<string>>()
 loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
-const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value })
+const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()   // SPEC 63 CV-2: light / CV / archaic cards
+loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
+const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value, cards: cards.value })
 /** NV-4: a form found in a witness (dictionary headword card or unlinked text spelling) is «засвідчено», not a hypothesis; filled for the input, the normalised form and every candidate */
 const att = ref(new Map<string, Attested>())
 watch([d, word], async () => {

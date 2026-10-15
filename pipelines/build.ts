@@ -45,6 +45,7 @@ import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
 import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
+import { buildCv, writeCv } from './build-cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
@@ -336,11 +337,18 @@ export async function build(opts: { noPy?: boolean } = {}) {
     muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26', 'i14_09'])
     lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
   }
+  let cvLater: () => void = () => {}   // CV shards live in lex/, which writeLexicon() recreates: written after it
   {   // SPEC 63 AR: archaic lemmas (dictionary headwords unknown to VESUM + unverified recurring clusters); cards /ar/:id, text refs 'a:<id>'
     const ar = buildArchaic(adm.map(({ w }, wi) => ({ w, linked: (ti: number) => !!linked[tix[wi]![ti]!], epoch: meta[wi]!.pe })), derive, new Date().toISOString())
     for (const [wid, r] of ar.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     writeFileSync(resolve(PUB, 'archaic.json'), JSON.stringify(ar.file)); archReport(ar.file, ar.counts, ANALYSIS)
     lap(`archaic lemmas: ${ar.file.entries.filter(e => e.status === 'dictionary').length} dictionary, ${ar.file.entries.filter(e => e.status === 'unverified').length} unverified; ${ar.counts.dictionaryTokens + ar.counts.unverifiedTokens} corpus tokens linked`)
+    // SPEC 63 CV: every word attested in a dictionary witness (headwords AND quoted equivalents) without a full card gets a light card /lw/:word with its attestation lines
+    const cv = buildCv(adm.map(({ w }) => ({ w })), (wi, ti) => { const L = linked[tix[wi]![ti]!]; if (!L) return undefined; const la = lemmas.get(L.c.id); return { lemma: L.c.lemma, tags: L.c.hit.tags, full: !!la && keep[la.idx] === 1 } },
+      new Set(ar.file.entries.flatMap(e => [e.id, ...e.variants])), (wid, ti) => !!torot.refs.get(wid)?.[ti])
+    for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
+    cvLater = () => { const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
+    lap(`CV cards: ${cv.entries.length} words from ${cv.stats.tokens} dictionary tokens (${cv.stats.vesum} VESUM-linked, ${cv.stats.asIs} as-is spellings; ${cv.stats.skippedFull} already full cards, ${cv.stats.skippedArchaic} owned by /ar); ${cv.stats.refTokens} text tokens linked; cv/ ${wc.shards} shards ${(wc.bytes / 1048576).toFixed(2)} MB (max ${(wc.maxShard / 1024).toFixed(0)} KB), cardindex.json ${(wc.indexBytes / 1048576).toFixed(2)} MB (${wc.index.lw.length} /lw, ${wc.index.ar.length} /ar)`) }
   }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)
@@ -522,6 +530,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   mkdirSync(PUB, { recursive: true }); mkdirSync(ANALYSIS, { recursive: true })
   const lexIdxJson = JSON.stringify(lexindex)
   const budget = writeLexicon(cards, PUB)   // B-5: core + detail shards, nothing dropped
+  cvLater()
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
   lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB, torot.refs) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
   writeFileSync(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeFileSync(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,

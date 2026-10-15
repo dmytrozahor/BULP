@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SPEC 20 B-5e/B-5f — the detail shards (public/data/lex/, ~59 MB) and the running-text shards (public/data/texts/, ~19 MB) live on the orphan branch
  * `ukr-lexicon-data`, not on the code branch.
  * > B-5e "publish replaces the branch with ONE squashed commit …" — superseded by SPEC 60 W5: "Data-branch publish must never force-push": publish now adds a new commit on top of origin/ukr-lexicon-data and pushes a fast-forward.
@@ -11,7 +11,7 @@ import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 
-const BRANCH = 'ukr-lexicon-data', REMOTE = process.env.DATA_REMOTE ?? 'origin', DATA = resolve('public/data'), DIRS = ['lex', 'texts']
+const BRANCH = 'ukr-lexicon-data', REMOTE = process.env.DATA_REMOTE ?? 'origin', DATA = resolve('public/data'), DIRS = ['lex', 'texts', 'cv']
 const git = (args: string[], env: NodeJS.ProcessEnv = {}) => execFileSync('git', args, { encoding: 'utf8', env: { ...process.env, ...env } }).trim()
 
 type Git = (args: string[], env?: NodeJS.ProcessEnv) => string

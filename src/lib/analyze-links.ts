@@ -11,6 +11,8 @@ export interface LinkCtx {
   /** lemma/form/paradigm index (searchIdx.map): normalised key → hits */
   hits: { get(k: string): { lemma: string; via: string }[] | undefined }
   light?: ReadonlySet<string>
+  /** SPEC 63 CV-2: key → card hits of the non-lexicon cards (core/cv.ts cardMap): light, CV, archaic */
+  cards?: { get(k: string): { kind: 'lw' | 'ar'; id: string }[] | undefined }
 }
 export interface AnalyzeLink { to: string; kind: 'word' | 'spelling' }
 export const analyzeLink = (form: string, ctx: LinkCtx): AnalyzeLink => {
@@ -18,6 +20,8 @@ export const analyzeLink = (form: string, ctx: LinkCtx): AnalyzeLink => {
   const h = ctx.hits.get(key(form))?.[0]
   if (h) return { to: h.via === 'lemma' ? wordTo(h.lemma) : formTo(form, h.lemma), kind: 'word' }
   if (ctx.light?.has(form)) return { to: `/lw/${encodeURIComponent(form)}`, kind: 'word' }
+  const c = ctx.cards?.get(key(form))?.[0]
+  if (c) return { to: `/${c.kind}/${encodeURIComponent(c.id)}`, kind: 'word' }
   return { to: formTo(form), kind: 'spelling' }
 }
 export const analyzeTarget = (form: string, ctx: LinkCtx): string => analyzeLink(form, ctx).to
