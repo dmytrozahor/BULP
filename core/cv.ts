@@ -27,14 +27,24 @@ export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
 /** [witness id, locator (dictionary + lookup + quoted article start), attested spelling] */
 export type CvAtt = [w: string, loc: string, raw: string]
 /** [displayed word, VESUM tags ('' = spelling not in VESUM), attestations in total, first MAX_ATT attestations] */
-export type CvEntry = [word: string, tags: string, n: number, atts: CvAtt[]]
+/** extra: `an` = every VESUM analysis [lemma, tags] of the first attested spelling (CV-5: риночку = риночок m v_mis / риночка f v_zna); `prev` = the word before the corpus example; `pick` = the analysis the context rule prefers (never a claim: both stay listed) */
+export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string }
+export type CvEntry = [word: string, tags: string, n: number, atts: CvAtt[], extra?: CvExtra]
+
+/** the user's cheap context rule (2026-10-16): a preceding на / в / у / по / при / о / об points to the locative (v_mis); applied only when exactly one analysis is a locative. The other analyses stay listed. */
+const LOC_PREP = new Set(['на', 'в', 'у', 'во', 'по', 'при', 'о', 'об'])
+export function pickByContext(prev: string | undefined, an: [string, string][]): string | undefined {
+  if (!prev || !LOC_PREP.has(key(prev))) return undefined
+  const loc = an.filter(a => a[1].split(':').includes('v_mis'))
+  return loc.length === 1 && an.length > 1 ? loc[0]![0] : undefined
+}
 export const MAX_ATT = 5
 
 /** a word worth a card: letters (apostrophe / hyphen inside), not a bare letter */
 export const isCvWord = (s: string) => /^\p{L}[\p{L}'’ʼ-]*$/u.test(s) && [...s].length >= 2
 
 export class CvScan {
-  readonly m = new Map<string, { word: string; tags: string; seen: Set<string>; n: number; atts: CvAtt[]; forms: Set<string> }>()
+  readonly m = new Map<string, { word: string; tags: string; seen: Set<string>; n: number; atts: CvAtt[]; forms: Set<string>; extra?: CvExtra }>()
   /** one attestation; a VESUM-linked reading (tags) wins over an as-is spelling that shares the key */
   add(word: string, tags: string, w: string, loc: string, raw: string): void {
     const k = lk(word); if (!k) return
@@ -50,8 +60,17 @@ export class CvScan {
   /** attested spellings that differ from the card word (inflected forms, pre-reform spellings): [spelling, word] */
   forms(): [string, string][] { return [...this.m].flatMap(([k, e]) => [...e.forms].filter(f => lk(f) !== k).map(f => [f, e.word] as [string, string])) }
   /** a card without dictionary lines (e.g. a Plast headword): the word is attested by another source that the card view joins */
+  /** create a card without an attestation (e.g. a light lemma whose example lives in light.json) and attach extra data */
+  ensure(word: string, tags: string, extra?: CvExtra): void {
+    const k = lk(word); if (!k) return
+    let e = this.m.get(k)
+    if (!e) this.m.set(k, e = { word, tags, seen: new Set(), n: 0, atts: [], forms: new Set() })
+    else if (tags && !e.tags) { e.word = word; e.tags = tags }
+    if (extra) e.extra = { ...e.extra, ...extra }
+  }
+  setExtra(k: string, extra: CvExtra): void { const e = this.m.get(k); if (e) e.extra = { ...e.extra, ...extra } }
   addBare(word: string): boolean { const k = lk(word); if (!k || this.m.has(k)) return false; this.m.set(k, { word, tags: '', seen: new Set(), n: 0, atts: [], forms: new Set() }); return true }
-  entries(): [string, CvEntry][] { return [...this.m].map(([k, e]) => [k, [e.word, e.tags, e.n, e.atts]] as [string, CvEntry]) }
+  entries(): [string, CvEntry][] { return [...this.m].map(([k, e]) => [k, (e.extra ? [e.word, e.tags, e.n, e.atts, e.extra] : [e.word, e.tags, e.n, e.atts]) as CvEntry] as [string, CvEntry]) }
 }
 
 export function shardsOfCv(entries: [string, CvEntry][]): Record<string, CvEntry>[] {

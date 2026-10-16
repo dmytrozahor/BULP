@@ -33,6 +33,7 @@ import { attestationOf, type Attested } from '../lib/attest.ts'
 import { formTo } from '../lib/nav.ts'
 import { loadArchaic, loadLight } from '../lib/torotData.ts'
 import { loadCardIndex } from '../lib/cardIndex.ts'
+import UserHypotheses from '../components/UserHypotheses.vue'
 import { cardMap } from '../../core/cv.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
@@ -93,6 +94,7 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
   </template>
   <div v-if="!word" class="card muted">Введіть слово.</div>
   <template v-else-if="d && a">
+    <UserHypotheses :spellings="[word, d.norm]" />
     <section class="card"><h2><span>Кандидати сучасної форми</span><span class="small">норм.: <RouterLink :to="to(d.norm)" class="lang">{{ d.norm }}</RouterLink></span></h2>
       <p class="sans small">Введена форма: <RouterLink :to="formTo(word)" class="lang">{{ word }}</RouterLink>
         <template v-if="isAtt(word)"> · <span class="attested-badge">засвідчено: {{ att.get(word)!.text }}</span> <RouterLink :to="att.get(word)!.to">{{ linkLabel(word) }}</RouterLink></template></p>

@@ -4,7 +4,7 @@
  */
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { CvScan, buildCardIndex, isCvWord, shardsOfCv, type CardIndexFile, type CvEntry } from '../core/cv.ts'
+import { CvScan, pickByContext, buildCardIndex, isCvWord, shardsOfCv, type CardIndexFile, type CvEntry } from '../core/cv.ts'
 import { archId } from '../core/archaic.ts'
 import { key } from '../core/text.ts'
 import { lk } from '../core/cv.ts'
@@ -14,9 +14,11 @@ export interface CvWitness { w: Pick<WitnessOut, 'id' | 'tokens' | 'witnessType'
 /** what the linker says about token `ti` of witness `wi`: its VESUM lemma and whether that lemma has a full lexicon card */
 export type CvLookup = (wi: number, ti: number) => { lemma: string; tags: string; full: boolean } | undefined
 
+/** CV-5: all VESUM analyses of a spelling key, and the light-card examples (a corpus token whose lemma KEEP_MIN_F dropped) with the word before them */
+export interface CvCtx { analyses: (spellingKey: string) => [string, string][]; light: { lemma: string; tags: string; w: string; loc: string; raw: string; form?: string; prev?: string }[] }
 export interface CvResult { entries: [string, CvEntry][]; forms: [string, string][]; refs: Map<string, string[]>; stats: { vesum: number; asIs: number; tokens: number; skippedArchaic: number; skippedFull: number; refTokens: number; plastBare: number } }
 
-export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySet<string>, hasRef: (wid: string, ti: number) => boolean, extra?: { words: string[]; owned: ReadonlySet<string> }): CvResult {
+export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySet<string>, hasRef: (wid: string, ti: number) => boolean, extra?: { words: string[]; owned: ReadonlySet<string> }, ctx?: CvCtx): CvResult {
   const scan = new CvScan(), own = new Map<string, string[]>()
   const st = { vesum: 0, asIs: 0, tokens: 0, skippedArchaic: 0, skippedFull: 0, refTokens: 0, plastBare: 0 }
   ins.forEach(({ w }, wi) => {
@@ -34,6 +36,14 @@ export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySe
     })
     if (r.some(Boolean)) own.set(w.id, r)
   })
+  if (ctx) {
+    for (const x of ctx.light) {
+      const an = ctx.analyses(key(x.form ?? x.raw)), pick = pickByContext(x.prev, an)
+      scan.ensure(x.lemma, x.tags, { ...(an.length > 1 ? { an } : {}), ...(x.prev ? { prev: x.prev } : {}), ...(pick ? { pick } : {}) })
+      for (const [l, t] of an) if (key(l) !== key(x.lemma) && isCvWord(l)) { scan.add(l, t, x.w, x.loc, x.raw); scan.setExtra(lk(l), { an, ...(x.prev ? { prev: x.prev } : {}), ...(pick ? { pick } : {}) }) }   // every analysis of an attested spelling is a card
+    }
+    for (const [k, e] of scan.m) if (!e.extra?.an && e.atts[0]) { const an = ctx.analyses(key(e.atts[0][2])); if (an.length > 1) scan.setExtra(k, { an }) }
+  }
   // SL / CV: every Plast headword gets a card unless a card of another kind already owns it (that card shows the Plast sense, joined at runtime)
   let plastBare = 0
   for (const w of extra?.words ?? []) if (!extra!.owned.has(lk(w)) && scan.addBare(w)) plastBare++

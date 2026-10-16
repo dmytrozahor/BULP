@@ -444,7 +444,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-3 | tests/cv.test.ts › CV-3 a Plast headword owned by a full lemma / light / archaic card gets no second card; any other gets a bare card |
 | CV-3 | tests/cv.test.ts › CV-3 the Plast links go to the word card, the source card is the secondary link |
 | CV-3 | tests/cv.test.ts › CV-3 вишкіл, ВПР and КВТ each open a card that carries the Plast sense (abbreviations with their expansion); every Plast entry has a card |
-| CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
 | YT-1 | tests/yat.test.ts › YT-1 research/42-yat.md quotes ЕУМ «Ять» (um150), Шевельов and the нігди dictionary evidence; analysis/yat-interchange.md has per-century tables |
 | YT-2 | tests/yat.test.ts › YT-2 every rule has a verbatim cite and a dialect group; no rule without a source |
 | YT-2 | tests/yat.test.ts › YT-2 нѣгдѣ: standard нігді from R09 (not repeated); нігди (final -ѣ > -и, зап. діал.) and нігде as labelled hypotheses |
@@ -457,3 +456,20 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | YT-2 | tests/yat.test.ts › YT-2 lexical dialect rules fire only on the stems the source prints |
 | YT-2 | tests/yat.test.ts › YT-2 a word without ѣ has no continuants |
 | YT-3 | tests/yat.test.ts › YT-3 i17_12 is a 1622 Kyiv izbornyk unit with a vetted author; modernised orthography (not a ѣ/и witness); Компаніченко is only noted, never evidence |
+| CV-4 | tests/uv.test.ts › CV-4 spellings are grouped by the fold key; the headword is the most frequent spelling; all spellings, witnesses and occurrences are kept |
+| CV-4 | tests/uv.test.ts › CV-4 OCR garbage is excluded: digits, Latin and mixed script, repeated letters, and spellings seen only in OCR scans |
+| CV-4 | tests/uv.test.ts › CV-4 a spelling that already owns a card is skipped; an ORV card is attached by lemma or form key |
+| CV-4 | tests/uv.test.ts › CV-4 shards: stable hash, prefix file = hex of the first two letters |
+| CV-4 | tests/uv.test.ts › CV-4 search finds a spelling case-insensitively by exact key or prefix (≥ 2 letters), exact first; a one-letter query finds nothing |
+| CV-4 | tests/uv.test.ts › CV-4 the card and the spelling→card link load through the same shards |
+| CV-4 | tests/uv.test.ts › CV-4 /uv/:id is routed; search lists the unverified block AFTER the verified results, labelled «неперевірена»; the spelling page links the card |
+| CV-4 | tests/uv.test.ts › CV-4 uv/ is shipped on the data branch (DIRS) and ignored by git like lex/ and cv/ |
+| CV-4 | tests/uv.test.ts › CV-4 нѣгдѣ has a card with its spellings, occurrences and a search hit |
+| CV-4 | tests/uv.test.ts › CV-4 no card has digits / Latin letters, and no spelling in a card also owns a verified card |
+| CV-4 | tests/uv.test.ts › CV-4 the card files stay small: every file ≤ 256 KiB |
+| CV-5 | tests/uv.test.ts › CV-4 нѣгдѣ and негде get the user form «нігди» with author and date; other spellings get none |
+| CV-5 | tests/uv.test.ts › CV-4 the rule engine does NOT produce нігди (no cited final -ѣ > -и rule); the hypothesis is labelled «гіпотеза користувача» on the card, the spelling page and the analyser |
+| CV-5 | tests/uv.test.ts › CV-5 a preceding на / в / у / по / при picks the locative analysis only when exactly one analysis is a locative |
+| CV-5 | tests/uv.test.ts › CV-5 риночку: both analyses get a card with all analyses listed, the context pick is stored, the example is kept |
+| CV-5 | tests/uv.test.ts › CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too |
+| CV-5 | tests/uv.test.ts › CV-5 /lw/риночка lists риночок (v_mis) and риночка (v_zna) as analyses of the attested spelling |

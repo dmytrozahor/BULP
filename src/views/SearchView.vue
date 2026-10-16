@@ -16,6 +16,7 @@ import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for w
 import { plastSearch } from '../lib/sociolectData.ts'
 import { cardSearchIndex, hitRoute, hitWord, loadCardIndex, wordCardTo } from '../lib/cardIndex.ts'
 import { cardMap } from '../../core/cv.ts'
+import { uvSearch, type UvHit } from '../lib/uvData.ts'
 import { emptyIndex, type SearchIndex } from '../lib/search.ts'
 const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
 const route = useRoute(), router = useRouter()
@@ -45,6 +46,9 @@ const cardIdx = ref<SearchIndex>(emptyIndex())
 const cardMp = ref<ReturnType<typeof cardMap>>()
 loadCardIndex().then(ci => { cardIdx.value = cardSearchIndex(ci); cardMp.value = cardMap(ci) }, () => undefined)
 const cardHits = computed(() => (q.value.trim() ? search(cardIdx.value, q.value, 30).filter(r => !byLemma.value.has(hitWord(r.lemma))) : []))
+/** SPEC 63 CV-4: «неперевірена лема» cards of unlinked corpus spellings (prefix-sharded, ≥ 2 letters), shown after the verified results */
+const uvHits = ref<UvHit[]>([])
+watch(q, async v => { const x = v; const r = await uvSearch(x).catch(() => []); if (x === q.value) uvHits.value = r }, { immediate: true })
 const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
 </script>
 
@@ -98,7 +102,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     </li>
     <li v-if="pgR.pages.value > 1" class="pagerli"><Pagination :page="pgR.page.value" :pages="pgR.pages.value" :total="rows.length" @go="pgR.go" /></li>
   </ul>
-  <template v-else-if="q.trim() && loaded && !cardHits.length">
+  <template v-else-if="q.trim() && loaded && !cardHits.length && !uvHits.length">
     <div class="card" role="status">
       <p><strong>«{{ q.trim() }}» — немає в корпусі, аналіз за правилами.</strong> Це не словникова стаття: нижче лише розбір за правилами з джерелами (будова, деривація, шлях запозичення, омографи, русинська, IPA); «невідомо» ≠ «літературне».</p>
       <p class="small sans"><RouterLink :to="{ path: '/analyze', query: { q: q.trim() } }">Відкрити в «Аналізі слова» →</RouterLink></p>
@@ -111,4 +115,17 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     <Pagination :page="pgL.page.value" :pages="pgL.pages.value" @go="pgL.go" />
     <p class="small muted sans" style="margin-top:.8rem">Спробуйте <a href="#/annotate">анотатор тексту</a> на прикладах із пам’яток корпусу.</p>
   </div>
+  <!-- SPEC 63 CV-4: unlinked corpus spellings (нѣгдѣ) — «неперевірена лема» cards, listed AFTER every verified card -->
+  <section v-if="uvHits.length" class="card" aria-live="polite" data-testid="uv-hits">
+    <h2><span>Неперевірені слова з текстів</span> <span class="muted small">{{ uvHits.length }}</span></h2>
+    <ul class="results">
+      <li v-for="h in uvHits" :key="h.group">
+        <RouterLink :to="`/uv/${encodeURIComponent(h.group)}`">
+          <span class="lem">{{ h.head }}</span>
+          <span class="badge">неперевірена</span>
+          <span v-if="h.matched !== h.head.toLowerCase()" class="small sans">знайдено: «{{ h.matched }}»</span>
+        </RouterLink>
+      </li>
+    </ul>
+  </section>
 </template>

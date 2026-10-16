@@ -351,6 +351,16 @@ export async function build(opts: { noPy?: boolean } = {}) {
         const sp = resolve(PUB, 'sociolect.json'); if (!existsSync(sp)) return undefined
         const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
         return { words: rd<{ plast: { entries: { w: string }[] } }>(sp).plast.entries.map(e => e.w), owned }
+      })(),
+      (() => {   // CV-5: every VESUM analysis of an attested spelling, and the first corpus token (with the word before it) of each lemma that KEEP_MIN_F dropped
+        const first = new Map<number, [number, number]>()
+        docs.forEach((d, wi) => d.id.forEach((idx, ti) => { if (idx >= 0 && !keep[idx] && !first.has(idx)) first.set(idx, [wi, ti]) }))
+        const lightEx = [...first].map(([idx, [wi, ti]]) => {
+          const w = adm[wi]!.w, t = w.tokens[ti]!, L = linked[tix[wi]![ti]!], pt = ti > 0 && w.tokens[ti - 1]!.s === t.s ? w.tokens[ti - 1]!.raw : undefined
+          return { lemma: lemmaList[idx]!.display, tags: lemmaList[idx]!.tags, w: w.id, loc: t.loc, raw: t.raw, form: L?.c.form, ...(pt ? { prev: pt } : {}) }
+        })
+        const analyses = (k: string): [string, string][] => { const seen = new Set<string>(), out: [string, string][] = []; for (const h of hits1.get(k) ?? []) { const s = h.lemma + '\0' + h.tags; if (!seen.has(s) && out.length < 8) { seen.add(s); out.push([h.lemma, h.tags]) } } return out }
+        return { analyses, light: lightEx }
       })())
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvLater = () => { const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)

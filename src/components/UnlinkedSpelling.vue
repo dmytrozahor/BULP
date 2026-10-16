@@ -15,6 +15,8 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import { formTo, textTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { lookupUnlinked, occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
 import { loadLight } from '../lib/torotData.ts'
+import { uvOfSpelling } from '../lib/uvData.ts'
+import UserHypotheses from './UserHypotheses.vue'
 import { loadCardIndex } from '../lib/cardIndex.ts'
 import { cardMap } from '../../core/cv.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
@@ -24,6 +26,8 @@ const light = ref<ReadonlySet<string>>()
 loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
 const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()   // SPEC 63 CV-2: light / CV / archaic cards
 loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
+const uvCard = ref<{ group: string; head: string }>()   // SPEC 63 CV-4: the «неперевірена лема» card this spelling belongs to
+watch(() => props.form, f => { uvCard.value = undefined; uvOfSpelling(f).then(c => { if (f === props.form) uvCard.value = c }, () => undefined) }, { immediate: true })
 watch(() => props.form, async f => {
   state.value = 'loading'; entry.value = undefined; lines.value = []
   const e = await lookupUnlinked(f); if (f !== props.form) return
@@ -65,6 +69,9 @@ const reason = computed(() => {
       <span v-if="!entry" class="muted"> у текстах корпусу не засвідчена.</span>
     </section>
     <template v-if="entry">
+      <section v-if="uvCard" class="card sans small" aria-label="Неперевірена лема">
+        <strong>Картка неперевіреної леми:</strong> <RouterLink :to="`/uv/${encodeURIComponent(uvCard.group)}`">{{ uvCard.head }}</RouterLink> <span class="muted">(усі варіанти написання разом)</span>
+      </section>
       <section class="card sans small" aria-label="Чому не зв’язано">
         <strong>Чому не зв’язано з лемою</strong>
         <ul><li v-for="r in reason" :key="r">{{ r }}</li></ul>
@@ -82,6 +89,7 @@ const reason = computed(() => {
         <p v-if="+entry[2] > occs.length" class="muted">і ще {{ +entry[2] - occs.length }} пам’яток</p>
       </section>
     </template>
+    <UserHypotheses :spellings="[form]" />
     <section class="card sans small" aria-label="Кандидати">
       <strong>Кандидати за правилами</strong> <span class="muted">(гіпотези; зв’язком стають лише після збігу з формою ВЕСУМ)</span>
       <ul v-if="cands.length"><li v-for="c in cands" :key="c.form"><RouterLink :to="c.link.to" class="lang">{{ c.form }}</RouterLink>

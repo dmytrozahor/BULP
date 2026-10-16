@@ -32,7 +32,7 @@ describe('R2U-2 dump ingestion', () => {
   it('R2U-2 the real dump (when present): all pages are read, rows exist for every modelled dictionary, witnesses are noFreq', () => {
     if (!existsSync('data/raw/r2u/index.jsonl')) return
     const s = storedRows('data/raw/r2u', 'pages/')
-    expect(s.lookups).toBe(3003)
+    expect(s.lookups).toBeGreaterThanOrEqual(3003)   // the dump keeps growing
     for (const d of R2U_DICTS.filter(d => [9, 12, 8, 11].includes(d.id))) {
       expect(s.rows.filter(r => r.dict === d.id).length).toBeGreaterThan(100)
       const w = r2uWitness(UNITS_R2U.find(u => u.id === d.unitId)!, d.id, s.rows)
