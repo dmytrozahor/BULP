@@ -5,7 +5,7 @@ import { fold as foldRaw } from '../core/orthography.ts'
 import { key } from '../core/text.ts'
 import { GATE, compatible, gateKey, paradigmKindOf, vesumClass } from '../core/pos-gate.ts'
 import { CORRESPONDENCES, correspondenceFor } from '../core/correspondences.ts'
-import { chooseLemma, linkOptions, posLabel, type Env, type TypeCtx } from '../pipelines/build-link.ts'
+import { chooseLemma, linkOptions, ONE_LETTER_PREP, posLabel, type Env, type TypeCtx } from '../pipelines/build-link.ts'
 import { rankFirst, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
@@ -66,6 +66,22 @@ describe('FX-1 POS gate', () => {
     expect(link(T({ raw: 'да', lemma: 'да' }))!.cls).toBe('noun')
   })
   it('nothing compatible → unresolved, never guessed', () => { expect(link(T({ raw: 'да', lemma: 'да', gate: 'P:V-' }))).toBeUndefined() })
+})
+
+describe('MM-1 preposition recognised as pronoun', () => {
+  const e3: Env = { ...env, hits: new Map(Object.entries({ з: [H('з', 'prep:v_rod:v_zna:v_oru')], себе: [H('себе', 'noun:unanim:v_rod:pron:refl')], с: [H('с', 'noun:inanim:m:v_naz:nv:abbr')] }).map(([k, v]) => [key(k), v])) }
+  const l3 = (t: TypeCtx) => { const r = linkOptions(t, e3); return r ? chooseLemma(r.opts, new Map()) : undefined }
+  it('«с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun', () => {
+    for (const o of [{ lemma: 'себе', gate: 'P:Pk' }, { lemma: 'съ', gate: 'P:R-' }, { gate: 'U:PRON' }]) { const c = l3(T({ raw: 'с', ...o }))!; expect(c.lemma, JSON.stringify(o)).toBe('з'); expect(c.cls).toBe('prep') }
+  })
+  it('the reflexive enclitic сѧ stays under себе', () => { expect(l3(T({ raw: 'сѧ', lemma: 'себе', gate: 'P:Pk' }))?.lemma).toBe('себе') })
+  it('real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays', () => {
+    if (!hasData()) return
+    const c = readFull().find(x => x.lemma === 'себе'); if (!c) return
+    const raws = c.forms.map(f => f.raw)
+    expect(raws).not.toContain('с')
+    expect(ONE_LETTER_PREP.has('с')).toBe(true)
+  })
 })
 
 describe('FX-2 correspondences', () => {

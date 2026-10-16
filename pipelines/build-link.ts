@@ -90,7 +90,21 @@ function muOptions(t: TypeCtx, env: Env): Option[] {
 }
 
 /** First successful route for one token type (B-2). Returns the route with ALL its options (disambiguated later by chooseLemma). */
+/** MM-1: a one-letter token that is a known preposition (с, в, к, у, о, з) never links to a pronoun / noun / adjective / numeral lemma, whatever its annotation says
+ *  (PVL «с» = з, TOROT tags some of them Pk «себе»); it goes to its preposition lemma (с → з). The reflexive enclitic сѧ / ся is a different spelling and keeps себе. */
+export const ONE_LETTER_PREP: ReadonlySet<string> = new Set(['с', 'в', 'к', 'у', 'о', 'з'])
+const PREP_LEMMA: Record<string, string> = { с: 'з' }
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
+  const k1 = key(t.raw)
+  if (!ONE_LETTER_PREP.has(k1)) return linkOptionsCore(t, env)
+  const lemma = PREP_LEMMA[k1] ?? k1
+  const opts = (env.hits.get(lemma) ?? []).filter(h => isHead(h, lemma) && vesumClass(h.tags) === 'prep').map(h => { const c: Candidate = { form: lemma, trace: [], branches: 0 }; return toOption(lemma, h, c, c, true) })
+  if (opts.length) return { route: t.lang === 'uk' ? 'direct' : 'token', opts }
+  const r = linkOptionsCore(t, env)
+  const kept = r?.opts.filter(o => !['pron', 'noun', 'adj', 'adjp', 'numr'].includes(o.cls)) ?? []
+  return r && kept.length ? { route: r.route, opts: kept } : undefined
+}
+function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   // FX-1: every route keeps only analyses whose POS class is compatible with the token's own POS annotation; an empty route falls through to the next
   const gated = (os: Option[]) => os.filter(o => compatible(t.gate, o.hit.tags))
   const viaLemma = (lemma: string): Option[] => {

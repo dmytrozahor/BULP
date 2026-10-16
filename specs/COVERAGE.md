@@ -487,3 +487,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-3 | tests/parts.test.ts › PF-3 annotate() over the shard facades equals annotate() over in-memory maps |
 | PF-3 | tests/parts.test.ts › PF-3 runDetectors / reconstruct read the same facades |
 | CV-6 | manual — pending: CV-6 (owner word list specs/user-words.txt gets priority r2u lookups and guaranteed cards) is being implemented; the test row replaces this line when it lands |
+| MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
+| MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
+| MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |
