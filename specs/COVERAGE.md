@@ -1,4 +1,4 @@
-# Requirement coverage (P-4.1)
+﻿# Requirement coverage (P-4.1)
 
 Every requirement id of SPEC 00 / 10 / 20 / 30 / 40-rusyn / 50 maps to at least one test (`file › text that occurs in the test file`) or is marked `manual` with the reason.
 `tests/coverage.test.ts` fails if an id is missing here, if a referenced file or test text does not exist, or if an id disappears from the specs.
@@ -467,8 +467,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-4 | tests/uv.test.ts › CV-4 нѣгдѣ has a card with its spellings, occurrences and a search hit |
 | CV-4 | tests/uv.test.ts › CV-4 no card has digits / Latin letters, and no spelling in a card also owns a verified card |
 | CV-4 | tests/uv.test.ts › CV-4 the card files stay small: every file ≤ 256 KiB |
-| CV-5 | tests/uv.test.ts › CV-4 нѣгдѣ and негде get the user form «нігди» with author and date; other spellings get none |
-| CV-5 | tests/uv.test.ts › CV-4 the rule engine does NOT produce нігди (no cited final -ѣ > -и rule); the hypothesis is labelled «гіпотеза користувача» on the card, the spelling page and the analyser |
+| CV-5 | tests/uv.test.ts › CV-4 нѣгдѣ gets нігди with its CITED rule YT-FIN-I (final -ѣ > -и, зап. діал.), labelled hypothesis; a word without ѣ gets none |
+| CV-5 | tests/uv.test.ts › CV-4 the card, the spelling page and the analyser show the cited forms and the «гіпотеза користувача» slot (no uncited rule: the user list is empty now) |
 | CV-5 | tests/uv.test.ts › CV-5 a preceding на / в / у / по / при picks the locative analysis only when exactly one analysis is a locative |
 | CV-5 | tests/uv.test.ts › CV-5 риночку: both analyses get a card with all analyses listed, the context pick is stored, the example is kept |
 | CV-5 | tests/uv.test.ts › CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too |

@@ -6,7 +6,7 @@ import { foldSpelling } from '../core/phrasemes.ts'
 import { key } from '../core/text.ts'
 import { loadUvGroup, uvOfSpelling, uvSearch, type UvFetch } from '../src/lib/uvData.ts'
 import { makeRouter } from '../src/router.ts'
-import { userHypothesesOf } from '../core/uv-hypotheses.ts'
+import { citedFormsOf, userHypothesesOf } from '../core/uv-hypotheses.ts'
 import { deriveWithSteps } from '../src/lib/derive.ts'
 import { buildCv } from '../pipelines/build-cv.ts'
 import { cvBucket, lk, pickByContext } from '../core/cv.ts'
@@ -89,14 +89,15 @@ real('CV-4 the real data', () => {
   })
 })
 
-describe('CV-4 (a) нѣгдѣ → нігди is a user hypothesis, never an uncited rule', () => {
-  it('CV-4 нѣгдѣ and негде get the user form «нігди» with author and date; other spellings get none', () => {
-    for (const s of ['нѣгдѣ', 'Негде']) { const h = userHypothesesOf([s]); expect(h.map(x => x.form)).toEqual(['нігди']); expect(h[0]!.author).toBe('user'); expect(h[0]!.date).toBe('2026-10-16') }
-    expect(userHypothesesOf(['вода'])).toEqual([])
+describe('CV-4 (a) нѣгдѣ → нігди: a cited rule (YT-2), else a labelled user hypothesis', () => {
+  it('CV-4 нѣгдѣ gets нігди with its CITED rule YT-FIN-I (final -ѣ > -и, зап. діал.), labelled hypothesis; a word without ѣ gets none', () => {
+    const c = citedFormsOf(['нѣгдѣ']).find(x => x.form === 'нігди')!
+    expect(c.rule).toBe('YT-FIN-I'); expect(c.cite.length).toBeGreaterThan(0); expect(c.cite[0]!.quote.length).toBeGreaterThan(10); expect(c.group).toBe('SW')
+    expect(citedFormsOf(['вода'])).toEqual([]); expect(userHypothesesOf(['нѣгдѣ'])).toEqual([])
+    expect(deriveWithSteps('нѣгдѣ').candidates.map(x => x.form)).toContain('нігді')
   })
-  it('CV-4 the rule engine does NOT produce нігди (no cited final -ѣ > -и rule); the hypothesis is labelled «гіпотеза користувача» on the card, the spelling page and the analyser', () => {
-    expect(deriveWithSteps('нѣгдѣ').candidates.map(c => c.form)).not.toContain('нігди')
-    expect(rd('src/components/UserHypotheses.vue')).toContain('гіпотеза користувача')
+  it('CV-4 the card, the spelling page and the analyser show the cited forms and the «гіпотеза користувача» slot (no uncited rule: the user list is empty now)', () => {
+    expect(rd('src/components/UserHypotheses.vue')).toContain('гіпотеза користувача'); expect(rd('src/components/UserHypotheses.vue')).toContain('гіпотеза')
     for (const p of ['src/views/UnverifiedView.vue', 'src/components/UnlinkedSpelling.vue', 'src/views/AnalyzeView.vue']) expect(rd(p), p).toMatch(/<UserHypotheses/)
   })
 })
