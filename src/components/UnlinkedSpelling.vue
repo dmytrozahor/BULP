@@ -16,6 +16,7 @@ import { formTo, textTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { lookupUnlinked, occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
 import { uvOfSpelling } from '../lib/uvData.ts'
 import UserHypotheses from './UserHypotheses.vue'
+import WitnessPanel from './WitnessPanel.vue'
 import { ixCards } from '../lib/parts.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
 const { byLemma, searchIdx, annData, witnessById } = useData()
@@ -79,7 +80,7 @@ const reason = computed(() => {
       </section>
       <section class="card sans small" aria-label="Пам’ятки">
         <strong>Пам’ятки</strong>
-        <ul><li v-for="o in occs" :key="o.w"><RouterLink :to="witnessTo(o.w)">{{ wit(o.w)?.title ?? o.w }}</RouterLink><template v-if="wit(o.w)"> · {{ fmtDate(wit(o.w)!.date) }}</template></li></ul>
+        <WitnessPanel :items="occs.map(o => ({ w: o.w, n: 1 }))" />
         <p v-if="+entry[2] > occs.length" class="muted">і ще {{ +entry[2] - occs.length }} пам’яток</p>
       </section>
     </template>

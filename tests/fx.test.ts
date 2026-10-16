@@ -11,6 +11,10 @@ import { rankFirst, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
 import { hasData, readFull } from './lexdata.ts'
+import { uvStatus, uvShard, UV_CONFIRM_MIN_W, type UvGroup } from '../core/uv.ts'
+import { witnessPoints, showWitnessGraph } from '../src/lib/witnessPoints.ts'
+import { existsSync, readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
 const H = (lemma: string, tags: string): VesumHit => ({ lemma, tags })
 const table: Record<string, VesumHit[]> = {
@@ -162,6 +166,45 @@ describe('MM-3 пілки (dim. of пола) is not полки (pl. of полк 
     if (!hasData()) return
     const c = readFull().find(x => x.lemma === 'пілка'); if (!c) return
     expect(c.forms.map(f => f.raw).filter(r => /^полк|^полък/.test(r))).toEqual([])
+  })
+})
+
+describe('MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows the witness graph, and R17 (е > о) does not fire before a soft consonant', () => {
+  const g = (orv: string, nW: number): UvGroup => ['жечи', 3, nW, [['жечи', 3]], orv, 'w1', 1, 'w2', 2]
+  const W: Record<string, { title: string; date: [number, number]; witnessType: string }> = {
+    a: { title: 'Київський літопис', date: [1117, 1200], witnessType: 'chronicle' }, b: { title: 'Галицько-Волинський літопис', date: [1200, 1292], witnessType: 'chronicle' },
+  }
+  it('promotion: a group with a TOROT lemma in ≥ 2 witnesses is «засвідчено (TOROT + N пам’яток)», not «неперевірена лема»', () => {
+    expect(UV_CONFIRM_MIN_W).toBe(2)
+    expect(uvStatus(g('жети', 2))).toEqual({ confirmed: true, label: 'засвідчено (TOROT + 2 пам’ятки)' })
+    expect(uvStatus(g('жети', 5)).label).toBe('засвідчено (TOROT + 5 пам’яток)')
+  })
+  it('the honest label stays when no dictionary or TOROT lemma stands behind it, or only one witness has it', () => {
+    expect(uvStatus(g('', 3))).toEqual({ confirmed: false, label: 'неперевірена лема' })
+    expect(uvStatus(g('жети', 1)).confirmed).toBe(false)
+  })
+  it('graph: ≥ 2 known witnesses give one plate each (year = composition midpoint), one witness or unknown ids give no graph', () => {
+    const pts = witnessPoints([{ w: 'a', n: 1 }, { w: 'b', n: 1 }], id => W[id])
+    expect(pts.map(p => [p.id, p.year, p.kind])).toEqual([['a', 1158.5, 'chronicle'], ['b', 1246, 'chronicle']]); expect(showWitnessGraph(pts)).toBe(true)
+    expect(showWitnessGraph(witnessPoints([{ w: 'a', n: 1 }, { w: 'zz', n: 1 }], id => W[id]))).toBe(false)
+  })
+  it('R17: жечи (е before ч + и) gives no жочи; the rule still fires before a hard consonant (жена > жона, пьшено > пшоно)', () => {
+    expect(deriveRaw('жечи', { oldI: true }).candidates.map(c => c.form)).not.toContain('жочи')
+    expect(deriveRaw('жена', { oldI: true }).candidates.find(c => c.form === 'жона')!.trace).toContain('R17')
+    expect(deriveRaw('пьшено', { oldI: true }).candidates.find(c => c.form === 'пшоно')!.trace).toContain('R17')
+  })
+  it('R17 reverse: жочи never gives жечи (soft ч follows), while жона still gives жена', () => {
+    expect(reverse('жочи').candidates.map(c => c.form)).not.toContain('жечи')
+    expect(reverse('жона').candidates.map(c => c.form)).toContain('жена')
+  })
+  it('r2u / Грінченко / Желехівський / Уманець harvests hold no «жечи / жещи»: the card stays TOROT-attested, no dictionary quote is invented', () => {
+    const p = fileURLToPath(new URL('../data/work/r2u_zheleh.json', import.meta.url)); if (!existsSync(p)) return
+    expect(readFileSync(p, 'utf8')).not.toMatch(/жечи|жещи/)
+  })
+  it('real data (after a rebuild with MM-4, shards present): the uv group «жечи» exists with an ORV card and 2+ witnesses → confirmed', () => {
+    const p = fileURLToPath(new URL(`../public/data/uv/g/${uvShard('жечи')}.json`, import.meta.url)); if (!existsSync(p)) return
+    const x = (JSON.parse(readFileSync(p, 'utf8')) as Record<string, UvGroup>)['жечи']; if (!x) return
+    expect(uvStatus(x).confirmed).toBe(true)
   })
 })
 

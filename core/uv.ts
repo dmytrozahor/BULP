@@ -63,3 +63,10 @@ export class UvScan {
     return out
   }
 }
+
+/** SPEC 63 MM-4: a group with a TOROT lemma (ORV card) attested in at least this many distinct witnesses is «засвідчено (TOROT + N пам’яток)», not «неперевірена лема» */
+export const UV_CONFIRM_MIN_W = 2
+export const pamiatok = (n: number): string => `${n} ${n % 10 === 1 && n % 100 !== 11 ? 'пам’ятка' : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 'пам’ятки' : 'пам’яток'}`
+export interface UvStatus { confirmed: boolean; label: string }
+export const uvStatus = (g: UvGroup): UvStatus =>
+  g[4] && g[2] >= UV_CONFIRM_MIN_W ? { confirmed: true, label: `засвідчено (TOROT + ${pamiatok(g[2])})` } : { confirmed: false, label: 'неперевірена лема' }

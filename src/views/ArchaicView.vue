@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import type { ArchDict, ArchEntry } from '../../core/archaic.ts'
 import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
+import WitnessPanel from '../components/WitnessPanel.vue'
 import { archEntryOf } from '../lib/torotData.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
 const props = defineProps<{ id: string }>()
@@ -58,6 +59,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
         <li v-for="(k, i) in e.kwic" :key="i"><RouterLink :to="textTo(k.w, k.loc)">«{{ k.raw }}»</RouterLink> · {{ k.loc }} · <RouterLink :to="witnessTo(k.w)">{{ k.w }}</RouterLink></li>
       </ul>
     </template>
-    <p v-if="wits.length" class="sans small muted">Тексти: <template v-for="([w, n], i) in wits" :key="w"><template v-if="i">, </template><RouterLink :to="witnessTo(w)">{{ w }}</RouterLink> ×{{ n }}</template></p>
+    <section v-if="wits.length > 1" class="card sans small" aria-label="Пам’ятки"><strong>Пам’ятки</strong><WitnessPanel :items="wits.map(([w, n]) => ({ w, n }))" /></section>
+    <p v-else-if="wits.length" class="sans small muted">Тексти: <template v-for="([w, n], i) in wits" :key="w"><template v-if="i">, </template><RouterLink :to="witnessTo(w)">{{ w }}</RouterLink> ×{{ n }}</template></p>
   </template>
 </template>

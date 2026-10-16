@@ -69,7 +69,7 @@ const ROWS: Row[] = [
   } },
   { id: 'R19', gen: w => one(w, /р$/g, () => 'рь') },
   { id: 'R18', gen: w => [...one(w, /([жчшщ])$/g, m => m[1] + 'ь'), ...one(w, /([жчшщ])у/g, m => m[1] + 'ю'), ...one(w, /([жчш])а/g, m => m[1] + 'я')] },
-  { id: 'R17', gen: w => one(w, /([жчшй])о/g, m => m[1] + 'е') },
+  { id: 'R17', gen: w => one(w, /([жчшй])о(?![жчшщй])/g, m => m[1] + 'е') },   // MM-4: the forward rule never fires before a soft (sibilant / й) consonant
   { id: 'R16p', gen: w => one(w, /([аиуяы])в$/g, m => m[1] + 'л') },                                       // -в past → -лъ
   { id: 'R16', gen: w => one(w, R('([ое])в(?=$|C)'), m => m[1] + 'л') },
   { id: 'R15', gen: w => one(w, /([бпвмф])$/g, m => m[1] + 'ь') },

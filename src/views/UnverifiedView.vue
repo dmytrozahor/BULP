@@ -5,7 +5,7 @@
  */
 import { computed, ref, shallowRef, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
-import { uvOccurrences, type UvGroup } from '../../core/uv.ts'
+import { uvOccurrences, uvStatus, type UvGroup } from '../../core/uv.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
@@ -16,6 +16,7 @@ import { occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
 import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
 import ThinCard from '../components/ThinCard.vue'
+import WitnessPanel from '../components/WitnessPanel.vue'
 import { cognatesOf } from '../lib/cognatesData.ts'
 const props = defineProps<{ id: string }>()
 const { byLemma, searchIdx, witnessById } = useData()
@@ -26,7 +27,7 @@ watch(() => props.id, async id => {
   g.value = x; state.value = 'done'
   if (x) { const ks = await Promise.all(uvOccurrences(x).map(o => occurrenceKwic(o))); if (id === props.id) lines.value = ks.filter((k): k is UnlinkedKwic => !!k) }
 }, { immediate: true })
-const epochsOf = (id: string): string[] => { const e = wit(id)?.epochShev; return e && isKnown(e) ? e.value.epochs.map(epochShort) : [] }
+const status = computed(() => (g.value ? uvStatus(g.value) : { confirmed: false, label: 'неперевірена лема' }))
 const kwicFull = computed(() => lines.value.map(k => ({ ...k, date: wit(k.w)?.date ?? [0, 0] as [number, number] })))
 const occs = computed(() => (g.value ? uvOccurrences(g.value) : []))
 const wit = (id: string) => witnessById.value.get(id)
@@ -59,7 +60,7 @@ watch(cands, async cs => {
     <header class="wordhead headline compact">
       <h1 class="lemma">{{ g[0] }}</h1>
       <p class="hl-line sans">
-        <span class="derived-badge" title="Жоден словник не містить слова, ВЕСУМ його не знає: це група написань із текстів, не підтверджена лема">неперевірена лема</span>
+        <span class="derived-badge" :title="status.confirmed ? 'Лема TOROT у кількох пам’ятках; жоден словник слова не містить, ВЕСУМ його не знає' : 'Жоден словник не містить слова, ВЕСУМ його не знає: це група написань із текстів, не підтверджена лема'">{{ status.label }}</span>
         <span class="muted"> зустрічається </span>{{ fmtNum(g[1]) }}<span class="muted"> разів у </span>{{ fmtNum(g[2]) }}<span class="muted"> пам’ятках</span>
         <template v-if="epochs.length"><span class="muted"> · епохи: </span>{{ epochs.join(', ') }}</template>
       </p>
@@ -67,14 +68,14 @@ watch(cands, async cs => {
     <section class="card sans small" aria-label="Написання">
       <strong>Написання в тексті</strong> <span class="muted">(згруповані за ключем згортання: ѣ=е, ы=и, оу=у, ъ/ь опущені; ключ «{{ id }}»)</span>
       <p><RouterLink v-for="[raw, n] in g[3]" :key="raw" :to="formTo(raw)" class="chip" style="text-decoration:none">{{ raw }} ×{{ fmtNum(n) }}</RouterLink></p>
-      <p class="muted">Це не словникова стаття і не підтверджена лема: леми, значення й частини мови немає в жодному джерелі.</p>
+      <p v-if="status.confirmed" class="muted">Слово засвідчене лемою TOROT «{{ g[4] }}» у кількох пам’ятках (MM-4). Словникової статті немає ні у ВЕСУМ, ні в r2u, тому значення й частина мови — лише з розмітки TOROT, а сучасний відповідник невідомий.</p>
+      <p v-else class="muted">Це не словникова стаття і не підтверджена лема: леми, значення й частини мови немає в жодному джерелі.</p>
       <p v-if="ocr" class="muted">Серед пам’яток є OCR-скан: розпізнавання могло спотворити слово.</p>
     </section>
     <p class="sans small muted">Вживання: показано {{ lines.length }} із {{ fmtNum(g[1]) }} (рядки нижче, у блоці «Приклади · KWIC»).</p>
     <section class="card sans small" aria-label="Пам’ятки">
       <strong>Пам’ятки</strong>
-      <ul><li v-for="o in occs" :key="o.w"><RouterLink :to="witnessTo(o.w)">{{ wit(o.w)?.title ?? o.w }}</RouterLink><template v-if="wit(o.w)"> · {{ fmtDate(wit(o.w)!.date) }}</template>
-        <template v-if="epochsOf(o.w).length"> · {{ epochsOf(o.w).join(' / ') }}</template></li></ul>
+      <WitnessPanel :items="occs.map(o => ({ w: o.w, n: 1 }))" />
       <p v-if="g[2] > occs.length" class="muted">і ще {{ g[2] - occs.length }} пам’яток</p>
     </section>
     <section v-if="g[4]" class="card sans small" aria-label="ORV">
