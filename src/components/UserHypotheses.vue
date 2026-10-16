@@ -4,16 +4,13 @@
  * labelled «гіпотеза»; (2) forms the user proposed that no cited rule produces — «гіпотеза користувача» with author and date. A card/VESUM status is shown only when a card stands behind the form.
  */
 import { computed, shallowRef } from 'vue'
-import { cardMap } from '../../core/cv.ts'
 import { citedFormsOf, userHypothesesOf } from '../../core/uv-hypotheses.ts'
 import { useData } from '../composables/useData.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
-import { loadCardIndex } from '../lib/cardIndex.ts'
+import { ixCards } from '../lib/parts.ts'
 const props = defineProps<{ spellings: string[] }>()
 const { byLemma, searchIdx, annData } = useData()
-const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()
-loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
-const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: cards.value })
+const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards })
 const status = (form: string) => { const v = annData.value.lexindex?.vesum[form.toLowerCase()]; return { l: analyzeLink(form, ctx()), vesum: v?.map(x => x.tags).slice(0, 2).join('; ') } }
 const user = computed(() => userHypothesesOf(props.spellings).map(h => ({ h, ...status(h.form) })))
 const cited = computed(() => citedFormsOf(props.spellings).map(c => ({ c, ...status(c.form) })))
