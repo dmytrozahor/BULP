@@ -7,7 +7,14 @@
  * Rules: resumable (index.jsonl is the truth, ids already there are skipped), polite pacing (`delayMs` between requests),
  * stop on 403/429/5xx (no retry loops), per-source disk cap (default 2 GB), progress line every `logEvery` items.
  */
-import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs'
+
+/** SPEC 63 RS-1: write tmp, then rename, so a kill never leaves a half-written final file */
+export function writeAtomic(path: string, data: string | Buffer) {
+  const tmp = `${path}.tmp`
+  writeFileSync(tmp, data)
+  renameSync(tmp, path)
+}
 import { gzipSync } from 'node:zlib'
 
 export const ROOT_DIR = process.env.HARVEST_DIR ?? 'data/raw/harvest'
@@ -44,7 +51,7 @@ export class Harvest {
   get cap() { return this.opts.capBytes ?? 2_000_000_000 }
   log(msg: string) { console.log(`${new Date().toISOString()} [${this.source}] ${msg}`) }
   state<T extends object>(def: T): T { try { return { ...def, ...JSON.parse(readFileSync(this.statePath, 'utf8')) } } catch { return def } }
-  saveState(s: object) { writeFileSync(this.statePath, JSON.stringify(s)) }
+  saveState(s: object) { writeAtomic(this.statePath, JSON.stringify(s)) }
   has(id: string) { return this.done.has(id) }
   diskFull() { return this.diskBytes() >= this.cap }
   /** bytes stored in items/ (gz, i.e. real disk use); the index `bytes` is the payload size before gzip */
@@ -53,12 +60,12 @@ export class Harvest {
 
   stop(reason: string, code = 2): never {
     this.log(`STOP ${reason} after ${this.newItems} new items (total ${this.count})`)
-    writeFileSync(`${this.dir}/STOPPED.json`, JSON.stringify({ at: new Date().toISOString(), reason, items: this.count }))
+    writeAtomic(`${this.dir}/STOPPED.json`, JSON.stringify({ at: new Date().toISOString(), reason, items: this.count }))
     process.exit(code)
   }
   finish(): never {
     this.log(`DONE ${this.newItems} new items, total ${this.count}`)
-    writeFileSync(`${this.dir}/STOPPED.json`, JSON.stringify({ at: new Date().toISOString(), reason: 'DONE', items: this.count }))
+    writeAtomic(`${this.dir}/STOPPED.json`, JSON.stringify({ at: new Date().toISOString(), reason: 'DONE', items: this.count }))
     process.exit(0)
   }
 
@@ -98,7 +105,7 @@ export class Harvest {
   /** store one payload file and add index lines for the items it holds */
   put(file: string, payload: string | Buffer, items: IndexItem[]) {
     const gz = gzipSync(payload)
-    writeFileSync(`${this.itemsDir}/${file}.gz`, gz)
+    writeAtomic(`${this.itemsDir}/${file}.gz`, gz)
     this.disk += gz.length
     for (const it of items) {
       it.file = file
@@ -122,5 +129,5 @@ export function decisionNeeded(line: string) {
   mkdirSync(ROOT_DIR, { recursive: true })
   const p = `${ROOT_DIR}/DECISIONS-NEEDED.md`
   const cur = existsSync(p) ? readFileSync(p, 'utf8') : '# Harvest: sources skipped or waiting for an owner decision\n\n'
-  if (!cur.includes(line)) writeFileSync(p, cur + line + '\n')
+  if (!cur.includes(line)) writeAtomic(p, cur + line + '\n')
 }

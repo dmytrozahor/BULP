@@ -4,9 +4,9 @@
  * Lemma order: lexicon cards by frequency, then VESUM lemmas; the list is cached in data/raw/harvest/r2u/lemmas.txt (the card file may be mid-rebuild).
  * Also keeps data/raw/harvest/r2u/index.jsonl (a count line per fetch) so status.ps1 can report it like the other sources.
  */
-import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
-import { Harvest } from './lib.ts'
+import { Harvest, writeAtomic } from './lib.ts'
 
 const DIR = 'data/raw/r2u', PAGES = `${DIR}/pages`, INDEX = `${DIR}/index.jsonl`
 const LEMMA_OK = /^[а-яіїєґ'-]+$/i
@@ -24,7 +24,7 @@ export async function lemmaList(): Promise<string[]> {
   try {
     for (const line of readFileSync('data/raw/vesum/dict_corp_vis.txt', 'utf8').split('\n')) if (line && line[0] !== ' ' && line[0] !== '#') add(line.split(/\s/)[0]!.toLowerCase())
   } catch { /* no VESUM dump */ }
-  if (out.length > 1000) writeFileSync(cache, out.join('\n'))
+  if (out.length > 1000) writeAtomic(cache, out.join('\n'))
   return out
 }
 
@@ -39,7 +39,7 @@ async function main() {
     if (done.has(q)) continue
     const { status, text } = await h.getText(r2uQueryUrl(q, 'ukr'))
     const file = `${String(n).padStart(5, '0')}.html.gz`
-    writeFileSync(`${PAGES}/${file}`, gzipSync(text))
+    writeAtomic(`${PAGES}/${file}`, gzipSync(text))
     appendFileSync(INDEX, JSON.stringify({ q, scope: 'ukr', file, at: new Date().toISOString(), status, bytes: text.length }) + '\n')
     h.note({ id: `r2u:${q}`, url: r2uQueryUrl(q, 'ukr'), date: null, licence: 'r2u.org.ua dictionaries (research/30; vocabulary/attestation only)', bytes: text.length, status, title: q, file })
     done.add(q); n++

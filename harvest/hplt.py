@@ -15,6 +15,11 @@ UA = 'BULP research (non-commercial; ukr-lexicon; dmytrozah.dev@gmail.com)'
 MAX_DOCS = int(os.environ.get('HPLT_MAX_DOCS', '10000000'))
 CAP = 2_000_000_000
 
+def write_stopped(o):
+    with open(f'{D}/STOPPED.json.tmp', 'w') as f: json.dump(o, f)
+    os.replace(f'{D}/STOPPED.json.tmp', f'{D}/STOPPED.json')
+
+
 def log(m): print(f'{datetime.datetime.utcnow().isoformat()}Z [{SRC}] {m}', flush=True)
 
 STRESS = re.compile('[́­]')
@@ -84,20 +89,21 @@ def main():
                     out.write(b)
         except urllib.error.HTTPError as e:
             if e.code in (403, 429) or e.code >= 500:
-                log(f'STOP HTTP {e.code} {url}'); json.dump({'at': time.time(), 'reason': f'HTTP {e.code}'}, open(f'{D}/STOPPED.json', 'w')); return
-            if e.code == 404: log(f'shard {n} not found: end'); json.dump({'reason': 'DONE'}, open(f'{D}/STOPPED.json', 'w')); return
+                log(f'STOP HTTP {e.code} {url}'); write_stopped({'at': time.time(), 'reason': f'HTTP {e.code}'}); return
+            if e.code == 404: log(f'shard {n} not found: end'); write_stopped({'reason': 'DONE'}); return
             raise
         size = os.path.getsize(tmp)
         docs, yrs, toks = count_shard(tmp, known)
         os.remove(tmp)
         fn = f'shard-{n:05d}.counts.json.gz'
-        with gzip.open(f'{D}/items/{fn}', 'wt', encoding='utf8') as g:
+        with gzip.open(f'{D}/items/{fn}.tmp', 'wt', encoding='utf8') as g:
             json.dump({'docs': docs, 'perYear': yrs, 'tokens': toks}, g, ensure_ascii=False)
+        os.replace(f'{D}/items/{fn}.tmp', f'{D}/items/{fn}')
         disk += os.path.getsize(f'{D}/items/{fn}')
         item = {'id': sid, 'url': url, 'date': None, 'licence': 'CC0-1.0 (HPLT 2.0 cleaned dataset card)', 'bytes': size, 'status': 200, 'title': f'HPLT 2.0 cleaned ukr_Cyrl_1 shard {n}', 'file': fn, 'vocabOnly': True, 'dateKind': 'crawl', 'docs': docs, 'types': len(toks)}
         with open(idx, 'a', encoding='utf8') as f: f.write(json.dumps(item, ensure_ascii=False) + '\n')
         log(f'shard {n}: {docs} docs, {len(toks)} unknown types, parquet {size >> 20} MB')
         time.sleep(5)
-    json.dump({'reason': 'DONE'}, open(f'{D}/STOPPED.json', 'w'))
+    write_stopped({'reason': 'DONE'})
 
 if __name__ == '__main__': main()
