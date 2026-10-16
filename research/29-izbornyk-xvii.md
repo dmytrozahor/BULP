@@ -17,7 +17,7 @@ Editorial rule [Q, old17.htm]: «Твори, писані староукраїн
 | 08, 09 | Густинський літопис, Синопсис | 7 700 / 5 600 | skip | modern translations (Крекотень, Жиленко) |
 | 10 | Літопис Самовидця (fragments) | 6 100 | skip | already ingested from samovyd/sam02–04 |
 | 11 | М. Смотрицький, епіграми; Лямент на Карповича | 5 000 | skip | no first-person self-naming |
-| 12 | К. Сакович, вірші на погреб Сагайдачного (1622) | 4 800 | skip | only «віру нашу святую» (confession, no Rus'/Ukraine) |
+| 12 | К. Сакович, вірші на погреб Сагайдачного (1622) | 4 800 | ingest (YT-3) | first-person «Зоставивши теди нам святиню в Росії» |
 | 13, 14, 15 | Почаський Евхарістеріон; Лямент (Острог); Транквіліон «Перло» | 3 900 / 3 300 / 2 100 | skip | no self-naming in the author's voice |
 | 16, 17, 21 | anon. verses 1648–54 / 2nd half XVII c.; pasquil | 2 000 / 1 900 / 300 | skip | collective rubrics are editorial; Rus'/Ukraine only in 3rd person |
 | 18, 19, 23 | Баранович, Бучинський, Братковський | 2 100 / 2 200 / 1 600 | skip | modern translations from Polish |

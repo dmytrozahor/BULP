@@ -445,3 +445,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-3 | tests/cv.test.ts › CV-3 the Plast links go to the word card, the source card is the secondary link |
 | CV-3 | tests/cv.test.ts › CV-3 вишкіл, ВПР and КВТ each open a card that carries the Plast sense (abbreviations with their expansion); every Plast entry has a card |
 | CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
+| YT-1 | tests/yat.test.ts › YT-1 research/42-yat.md quotes ЕУМ «Ять» (um150), Шевельов and the нігди dictionary evidence; analysis/yat-interchange.md has per-century tables |
+| YT-2 | tests/yat.test.ts › YT-2 every rule has a verbatim cite and a dialect group; no rule without a source |
+| YT-2 | tests/yat.test.ts › YT-2 нѣгдѣ: standard нігді from R09 (not repeated); нігди (final -ѣ > -и, зап. діал.) and нігде as labelled hypotheses |
+| YT-2 | tests/yat.test.ts › YT-2 гдѣ → гди / где |
+| YT-2 | tests/yat.test.ts › YT-2 дѣти: діти (R09) is the standard; no ѣ > и branch (stressed, closed syllable) |
+| YT-2 | tests/yat.test.ts › YT-2 дѣтина → дитина (lexical, standard) while дѣти has no such branch |
+| YT-2 | tests/yat.test.ts › YT-2 хлѣб: хліб (R09); Polissian іе and unstressed е are hypotheses |
+| YT-2 | tests/yat.test.ts › YT-2 Polissian examples sourced in ЕУМ «Західнополіський говір»: лѣсъ → ліес, сѣно → сиено, тѣсто → тиесто, мѣшокъ → мишок |
+| YT-2 | tests/yat.test.ts › YT-2 gates: WPL not before 1301 (Shevelov ch. 8), unstressed monophthong e not before 1501 (MPL group; own 1401), final -и has no gate |
+| YT-2 | tests/yat.test.ts › YT-2 lexical dialect rules fire only on the stems the source prints |
+| YT-2 | tests/yat.test.ts › YT-2 a word without ѣ has no continuants |
+| YT-3 | tests/yat.test.ts › YT-3 i17_12 is a 1622 Kyiv izbornyk unit with a vetted author; modernised orthography (not a ѣ/и witness); Компаніченко is only noted, never evidence |
