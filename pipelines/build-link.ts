@@ -13,7 +13,7 @@ import { foldById } from '../core/orthography.ts'
 import { key } from '../core/text.ts'
 import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
-import { correspondenceFor, type Correspondence } from '../core/correspondences.ts'
+import { correspondenceFor, variantFor, type Correspondence } from '../core/correspondences.ts'
 import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
@@ -81,6 +81,13 @@ const muAccepts = (m: { trace: string[]; last: { group: string } }, h: VesumHit)
 function muOptions(t: TypeCtx, env: Env): Option[] {
   if (!t.orth || !MU_ORTH.has(t.orth)) return []
   const out: Option[] = []
+  // MM-3: for a non-Ukrainian-labelled witness the first pass derives the token (R16 turns полки into повки), so the PLAIN modern spelling was never tried; the phonetic fold о > і
+  // then moved полки (pl. of полк «regiment») to пілка (dim. of пола). A token that is itself a VESUM form of a common lemma keeps that lemma: a plain route always wins over a fold.
+  if (t.lang !== 'uk') {
+    const k = key(t.raw), plain: Candidate = { form: k, trace: [], branches: 0 }
+    for (const h of env.hits.get(k) ?? []) if (!/:(prop|abbr|slang|vulg|obsc)\b/.test(':' + h.tags) && h.lemma[0] === h.lemma[0]!.toLowerCase() && compatible(t.gate, h.tags)) out.push(toOption(k, h, plain, plain, true))
+    if (out.length) return out
+  }
   for (const m of muCandidates(key(t.raw), !!env.phon)) {
     const cands: Candidate[] = t.lang === 'uk' ? [{ form: m.form, trace: m.trace, branches: m.trace.length }]
       : env.derive(m.form, t.oldI).candidates.map(d => ({ form: d.form, trace: [...m.trace, ...d.trace], branches: d.branches + m.trace.length }))
@@ -101,9 +108,32 @@ export function preferCommon(t: TypeCtx, r: { route: Route; opts: Option[] } | u
   const common = r.opts.filter(o => !isProp(o))
   return common.length && common.length < r.opts.length ? { route: r.route, opts: common } : r
 }
+const gatedBy = (t: TypeCtx, os: Option[]) => os.filter(o => compatible(t.gate, o.hit.tags))
+/** MM-3: where a candidate used R10 (о, е > і in a new closed syllable), the same chain WITHOUT R10 is a second candidate: R10 has lexical exceptions (богъ → біг / бог),
+ *  and «полъкы» (PVL / Мономах, pl. of полк «regiment») must be able to reach полки, not only пілки (dim. of пола). chooseLemma decides by frequency class, as for богъ. The plain
+ *  sibling comes second, so an exact tie keeps the previous choice. */
+export function withPlain(norm: string, cands: Candidate[]): Candidate[] {
+  return cands.flatMap(c => {
+    if (!c.trace.includes('R10')) return [c]
+    const ids = c.trace.filter(i => i !== 'R10')
+    let s = norm
+    for (const id of ids) { const r = ruleById[id] ?? foldById[id]; if (r) s = r.apply(s) }
+    s = show(s)
+    return s === c.form ? [c] : [c, { form: s, trace: ids, branches: c.branches }]
+  })
+}
+const candsOf = (env: Pick<Env, 'derive'>, raw: string, oldI: boolean) => { const d = env.derive(raw, oldI); return withPlain(d.norm, d.candidates) }
 export function linkOptions(t: TypeCtx, env: Env) { return preferCommon(t, linkOptionsPrep(t, env)) }
 function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)
+  // MM-2: a lower-case token spelled exactly like a dictionary-cited variant (хомик, хомік) links to the standard card (хом'як), never to the surname «Хомік»
+  const vr = t.raw && t.raw === t.raw.toLowerCase() ? variantFor(k1) : undefined
+  if (vr) {
+    const mk = key(vr.modern), own: Candidate = { form: k1, trace: [], branches: 0 }
+    const opts = gatedBy(t, (env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && vesumClass(h.tags) === vr.cls && !/:prop\b/.test(':' + h.tags))
+      .map(h => ({ ...toOption(mk, h, { form: mk, trace: [], branches: 0 }, own, false), corr: { row: vr, old: k1 } })))
+    if (opts.length) return { route: t.lang === 'uk' ? 'direct' : 'token', opts }
+  }
   if (!ONE_LETTER_PREP.has(k1)) return linkOptionsCore(t, env)
   const lemma = PREP_LEMMA[k1] ?? k1
   const opts = (env.hits.get(lemma) ?? []).filter(h => isHead(h, lemma) && vesumClass(h.tags) === 'prep').map(h => { const c: Candidate = { form: lemma, trace: [], branches: 0 }; return toOption(lemma, h, c, c, true) })
@@ -139,7 +169,7 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
     const opts = viaLemma(key(t.raw)); if (opts.length) return { route: 'token', opts }
   }
   if (t.lang !== 'uk') {
-    const opts = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true))))
+    const opts = gated(candsOf(env, t.raw, t.oldI).flatMap(c => (env.hits.get(key(c.form)) ?? []).map(h => toOption(key(c.form), h, c, c, true))))
     if (opts.length) return { route: 'token', opts }
     // R24r (BL-20): ц/з/с before и/і/ѣ → the velar-stem lemma (помози → помогти, руцѣ → рука); last resort, VESUM must list the lemma with the right POS
     const pal = gated(env.derive(t.raw, t.oldI).candidates.flatMap(c => velarCandidates(key(c.form)).flatMap(v =>
@@ -164,8 +194,10 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
     const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form))
   }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
-  if (t.lang !== 'uk') for (const c of env.derive(t.raw, t.oldI).candidates) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
+  if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr) out.push(key(vr.modern)) }   // MM-2
+  if (t.lang !== 'uk') for (const c of candsOf(env, t.raw, t.oldI)) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
+  if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') out.push(key(t.raw))   // MM-3: the plain spelling
   if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw), !!env.phon)) { if (t.lang === 'uk') out.push(key(m.form)); else for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) }
   return out
 }

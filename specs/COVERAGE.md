@@ -1,4 +1,4 @@
-﻿# Requirement coverage (P-4.1)
+# Requirement coverage (P-4.1)
 
 Every requirement id of SPEC 00 / 10 / 20 / 30 / 40-rusyn / 50 maps to at least one test (`file › text that occurs in the test file`) or is marked `manual` with the reason.
 `tests/coverage.test.ts` fails if an id is missing here, if a referenced file or test text does not exist, or if an id disappears from the specs.
@@ -490,8 +490,18 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |
-| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › хомѣкъ lemma → хом'як (common noun), labelled cognate link, not the surname «Хомік» |
-| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › the lemma-less token хомѣки also links to хом'як |
-| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › lower-case token: the surname reading is dropped when a common noun exists; a capitalised token and a surname-only token keep it |
-| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › no uncited sound rule: the standard derivation of хомѣки still gives хоміки (no ѣ > 'а after a labial rule exists) |
-| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › real data (after a rebuild with MM-2): a хом'як card exists with the PVL spelling, and no «Хомік» card carries хомѣки |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › PVL хомѣки (TOROT lemma хомѣкъ) → хом’як (common noun) by R09 as a listed variant хомік, not the surname «Хомік» |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › хомѧкъ derives хом’як by R02 (ѧ > ’я after a labial) and links to the same card, with the cited Wiktionary line |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › the dictionary variants хомик / хомік (Желехівський «Хоми́к», ЕСУМ) link to хом’як; a capitalised Хомік stays the surname |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › no row says «ѣ > ’а»: the table has no cognate row for хомѣкъ and no rule id of that kind |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › the lemma-less token хомѣки also links to хом’як |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › lower-case token: the surname reading is dropped when a common noun exists; a capitalised token and a surname-only token keep it |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › no uncited sound rule: the standard derivation of хомѣки still gives хоміки (no ѣ > ’а after a labial rule exists) |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R02 → хом’як), no rule ѣ > ’а › real data (after a rebuild with MM-2): a хом’як card exists with the PVL spelling, and no «Хомік» card carries хомѣки |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › Нечуй-Левицький «пілки срібної одежі» (modern text) links to пілка and never to полк |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › a modernised-orthography witness labelled non-uk: «полки» stays полк (the plain spelling is a VESUM form), the fold о > і never moves it to пілка |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › PVL / Мономах «полъкы» (regiments): R10 gives пілки, but the plain chain полки is a second candidate and frequency decides (as for богъ) |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › derivation пола → пілка: *полъка (dim. -ъка) > пілка is the cited rule path R04 + R10 (о > і in the new closed syllable), no step R-id invented |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › the dim.-of-пола claim carries its dictionary quote (Уманець–Спілка «Пола́ … здр. пі́лка»); no uncited claim |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › reconstructed old spellings of пілка (полка, полъка …) are labelled reconstruction, never confirmed by an attestation unless a callback supplies one |
+| MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › real data (after a rebuild with MM-3): the card пілка lists no spelling of полк (полки, полъкы, полкы …) |
