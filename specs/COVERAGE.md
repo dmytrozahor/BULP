@@ -486,3 +486,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-3 | tests/parts.test.ts › PF-3 the paradigm facade returns the VESUM hits of the in-memory map |
 | PF-3 | tests/parts.test.ts › PF-3 annotate() over the shard facades equals annotate() over in-memory maps |
 | PF-3 | tests/parts.test.ts › PF-3 runDetectors / reconstruct read the same facades |
+| CV-6 | manual — pending: CV-6 (owner word list specs/user-words.txt gets priority r2u lookups and guaranteed cards) is being implemented; the test row replaces this line when it lands |

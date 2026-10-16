@@ -1,0 +1,5 @@
+# Words the owner sent (screenshots, messages). Each must get a card with every dictionary attestation (SPEC 63 CV-6).
+# Format: word<TAB>r2u lookups (comma-separated, ukr/ru)<TAB>source of the request
+м'ясень	м'ясень,мускул	owner 2026-10-16, r2u screenshot: Уманець–Спілка 1893–98 «Му́скулъ = мъя́сень, ми́шиця (С. Жел.)»
+мишиця	мишиця,мускул	owner 2026-10-16, same screenshot
+в'язь	в'язь,мышца	owner 2026-10-16, r2u screenshot: Ніковський 1927 «В'язь, -ли – мышца»; Грінченко 1927–28 «*В'язь, -ли, ж. Мышца. Сл. Нік.»
