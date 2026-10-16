@@ -8,7 +8,7 @@ import type { CoreCard, VesumHit, WitnessMeta } from '../../core/types.ts'
 import { unpackCore } from '../../core/pack.ts'
 import { bucketOf } from '../../core/shard.ts'
 import {
-  VIA_NAME, ixLeaf, ixName, ixUrl, lmBucket, witBucket, type IxManifest, type IxRow, type IxShard, type LmName,
+  IX_MIN, VIA_NAME, dxUrl, ixLeaf, ixName, ixUrl, lmBucket, witBucket, type DxShard, type IxManifest, type IxRow, type IxShard, type LmName,
 } from '../../core/parts.ts'
 import type { Hit, Via } from './search.ts'
 import type { Attest } from './derive.ts'
@@ -74,8 +74,26 @@ export const ixLexIndex = {
   generated: '', vesum: prox(k => tagged(k, ixRow(k)?.v)),
   lt: prox(k => { const l = ixRow(k)?.l; return l ? ([l[0] ? 'soft' : 'replace', l[1]] as ['replace' | 'soft', string]) : undefined }),
 }
-/** non-lexicon card hits (light / CV / archaic) of a key, as cardMap() returned them */
-export const ixCards = { get: (k: string) => ixRow(k)?.c?.map(([a, id, form]) => ({ kind: (a ? 'ar' : 'lw') as 'ar' | 'lw', id, form: form ?? id })), has: (k: string) => !!ixRow(k)?.c }
+// ── dx: dictionary-only cards (SPEC 63 DO-6) ─────────────────────────────────────────────────────
+const dxManifest = store<{ leaves: Set<string>; list: [string, number][] }>(() => './data/dx/index.json', j => { const m = j as IxManifest; return { leaves: new Set(m.leaves.map(l => l[0])), list: m.leaves } })
+const dxShards = store<DxShard>(p => dxUrl(p), j => j as DxShard)
+/** the id of the dictionary-only card of a (lk-normalised) key; undefined while its shard loads or when there is none */
+export function dxCard(k: string): string | undefined {
+  const m = dxManifest.peek(MANI); if (!m) return undefined
+  const leaf = ixLeaf(k, m.leaves); if (!leaf) return undefined
+  const v = dxShards.peek(leaf)?.rows[k]
+  return v === undefined ? undefined : v || k
+}
+/** non-lexicon card hits (light / CV / archaic) of a key, as cardMap() returned them; a key without such a card falls back to a dictionary-only card (dict: true) */
+export const ixCards = {
+  get: (k: string) => {
+    const c = ixRow(k)?.c
+    if (c) return c.map(([a, id, form]) => ({ kind: (a ? 'ar' : 'lw') as 'ar' | 'lw', id, form: form ?? id }))
+    const d = dxCard(k)
+    return d ? [{ kind: 'lw' as const, id: d, form: d, dict: true as const }] : undefined
+  },
+  has: (k: string) => !!ixRow(k)?.c || dxCard(k) !== undefined,
+}
 
 /** true once the shard of key k is in memory (or the key has no shard at all): a reader can tell "absent" from "still loading" */
 export function ixLoaded(k: string): boolean {
@@ -163,4 +181,25 @@ export async function searchRemote(q: string, queryKeysOf: (q: string) => string
   }
   const byRank = <T extends { rank: number }>(a: T, b: T) => a.rank - b.rank
   return { lemmas: [...lem.values()].sort((a, b) => byRank(a, b) || a.lemma.localeCompare(b.lemma, 'uk')).slice(0, limit), cards: [...crd.values()].sort(byRank).slice(0, limit) }
+}
+
+/** SPEC 63 DO-4: a dictionary-only hit (never mixed into RemoteResult: the corpus-attested results are complete before these are even asked for) */
+export interface DictHit { kind: 'lw'; id: string; matched: string; rank: number; dict: true }
+/**
+ * Dictionary-only cards of the query: exact key first, then keys below it alphabetically, from the dx/ shards (≥ 2 letters). At most `maxShards` shards are read (the exact leaf, then
+ * the heaviest-first leaves below a short prefix), so one keystroke stays within the PF-2 keystroke budget together with searchRemote().
+ */
+export async function searchDict(q: string, queryKeysOf: (q: string) => string[], limit = 20, maxShards = 2): Promise<DictHit[]> {
+  const m = await dxManifest.load(MANI); if (!m) return []
+  const out = new Map<string, DictHit>()
+  for (const qk of queryKeysOf(q)) {
+    if ([...qk].length < IX_MIN) continue
+    const exact = ixLeaf(qk, m.leaves), under = m.list.map(l => l[0]).filter(p => p.startsWith(qk)).sort()
+    for (const n of [...new Set([...(exact ? [exact] : []), ...under])].slice(0, maxShards)) {
+      const s = await dxShards.load(n)
+      for (const [k, v] of Object.entries(s?.rows ?? {})) if (k.startsWith(qk)) { const id = v || k, cur = out.get(id), rank = k === qk ? 0 : 1; if (!cur || rank < cur.rank) out.set(id, { kind: 'lw', id, matched: k, rank, dict: true }) }
+      if (out.size >= limit) break
+    }
+  }
+  return [...out.values()].sort((a, b) => a.rank - b.rank || a.id.localeCompare(b.id, 'uk')).slice(0, limit)
 }

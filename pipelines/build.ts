@@ -25,7 +25,7 @@ import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexInd
 import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
-import { FLAG_TAGS, lexIndexVesum, vesumIndex } from './vesum.ts'
+import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
 import { ltIndex } from './lt.ts'
 import { palatalClaim, R24_CITE } from '../core/palatalization.ts'
 import { chooseLemma, linkOptions, posLabel, traceSteps, wantedKeys, ROUTE_RANK, type Chosen, type Env, type Route, type TypeCtx } from './build-link.ts'
@@ -363,10 +363,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
         })
         const analyses = (k: string): [string, string][] => { const seen = new Set<string>(), out: [string, string][] = []; for (const h of hits1.get(k) ?? []) { const s = h.lemma + '\0' + h.tags; if (!seen.has(s) && out.length < 8) { seen.add(s); out.push([h.lemma, h.tags]) } } return out }
         return { analyses, light: lightEx }
+      })(),
+      process.env['DICT_ONLY'] === '0' ? undefined : await (async () => {   // SPEC 63 DO-1: every VESUM lemma (and r2u / Plast / dictionary word) with no corpus attestation gets a dictionary-only light card
+        const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
+        return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))) }
       })())
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvLater = () => { const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
-    lap(`CV cards: ${cv.entries.length} words from ${cv.stats.tokens} dictionary tokens (${cv.stats.vesum} VESUM-linked, ${cv.stats.asIs} as-is spellings; ${cv.stats.skippedFull} already full cards, ${cv.stats.skippedArchaic} owned by /ar); ${cv.stats.refTokens} text tokens linked; cv/ ${wc.shards} shards ${(wc.bytes / 1048576).toFixed(2)} MB (max ${(wc.maxShard / 1024).toFixed(0)} KB), cardindex.json ${(wc.indexBytes / 1048576).toFixed(2)} MB (${wc.index.lw.length} /lw, ${wc.index.ar.length} /ar)`) }
+    lap(`CV cards: ${cv.entries.length} words from ${cv.stats.tokens} dictionary tokens (${cv.stats.vesum} VESUM-linked, ${cv.stats.asIs} as-is spellings; ${cv.stats.skippedFull} already full cards, ${cv.stats.skippedArchaic} owned by /ar); DO: ${cv.stats.dictOnly} dictionary-only cards (${cv.stats.dictVesum} known to VESUM, f = 0); ${cv.stats.refTokens} text tokens linked; cv/ ${wc.shards} shards ${(wc.bytes / 1048576).toFixed(2)} MB (max ${(wc.maxShard / 1024).toFixed(0)} KB), cardindex.json ${(wc.indexBytes / 1048576).toFixed(2)} MB (${wc.index.lw.length} /lw, ${wc.index.ar.length} /ar)`) }
   }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
   const coll = collocations(docs, fx, keep, names)

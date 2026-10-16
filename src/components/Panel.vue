@@ -5,7 +5,7 @@
  * The body is mounted on first open (heavy children such as the map are not built for collapsed panels) and then kept.
  */
 import { computed, ref, watch } from 'vue'
-const props = defineProps<{ id: string; title: string; summary?: string; empty?: boolean; open?: boolean; info?: string; count?: string | number }>()
+const props = defineProps<{ id: string; title: string; summary?: string; empty?: boolean; open?: boolean; info?: string; count?: string | number; /** shown instead of «немає даних» when `empty` (SPEC 63 DO-3: «немає засвідчень у корпусі») */ emptyText?: string }>()
 const emit = defineEmits<{ 'update:open': [v: boolean] }>()
 const own = ref(props.open ?? !props.empty)
 const seen = ref(own.value)
@@ -24,7 +24,7 @@ const showInfo = ref(false)
       <button type="button" class="ptoggle" :aria-expanded="isOpen" :aria-controls="id + '-body'" @click="toggle">
         <span class="caret" aria-hidden="true">{{ isOpen ? '▾' : '▸' }}</span><span class="ptitle">{{ title }}</span><span v-if="count !== undefined" class="small pcount">{{ count }}</span>
       </button>
-      <span class="psum small sans" :title="empty ? undefined : summary" :class="{ unk: empty }">{{ empty ? 'немає даних' : summary }}</span>
+      <span class="psum small sans" :title="empty ? undefined : summary" :class="{ unk: empty }">{{ empty ? (emptyText ?? 'немає даних') : summary }}</span>
       <button v-if="info || $slots.info" type="button" class="pinfo" :aria-expanded="showInfo" :aria-label="`Примітка до панелі «${title}»`" @click="showInfo = !showInfo">ⓘ</button>
     </h2>
     <p v-if="(info || $slots.info) && showInfo" class="small muted sans pnote" role="note"><slot name="info">{{ info }}</slot></p>

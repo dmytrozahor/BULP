@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { createInterface } from 'node:readline'
 import type { VesumHit } from '../core/types.ts'
 import { key } from '../core/text.ts'
+import { lk } from '../core/cv.ts'
 import { vesumClass } from '../core/pos-gate.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -94,6 +95,22 @@ export async function lexLines(lines: Lines): Promise<Record<string, VesumHit[]>
   return out
 }
 export const lexIndexVesum = () => lexLines(fileLines())
+
+/**
+ * SPEC 63 DO-1: every VESUM headword (lemma line) once, keyed by lk(lemma) → [lemma as written, its tags]. Homonyms of one spelling (мати n / v) keep up to three distinct tag
+ * strings joined with « | » (the card is one /lw card per word). Pure core over any line source; ~400k entries.
+ */
+export async function lemmaLines(lines: Lines): Promise<Map<string, [word: string, tags: string]>> {
+  const out = new Map<string, [string, string]>()
+  await scanVesum(lines, e => {
+    if (!e.head || !e.lemma) return
+    const k = lk(e.lemma), cur = out.get(k)
+    if (!cur) out.set(k, [e.lemma, e.lemmaTags])
+    else if (cur[0] === e.lemma || key(cur[0]) === key(e.lemma)) { const t = cur[1].split(' | '); if (e.lemmaTags && !t.includes(e.lemmaTags) && t.length < 3) cur[1] = cur[1] ? cur[1] + ' | ' + e.lemmaTags : e.lemmaTags }
+  })
+  return out
+}
+export const vesumLemmaList = () => lemmaLines(fileLines())
 
 /** Count lemma lines / form lines per flag tag (sanity check vs research/02). */
 export async function tagStats(lines: Lines = fileLines()) {

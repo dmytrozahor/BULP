@@ -13,7 +13,7 @@ import { cardMap } from '../core/cv.ts'
 import { DIALECTS } from '../core/rules.ts'
 import { archId, type ArchEntry } from '../core/archaic.ts'
 import { featureOf } from '../core/form-class.ts'
-import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
+import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 
 const DATA = process.env.PARTS_DATA ?? 'public/data'
@@ -42,7 +42,7 @@ export function buildRows(cards: CoreCard[], lexindex?: LexIndex, ci?: Parameter
   for (const [k, hs] of Object.entries(lexindex?.vesum ?? {})) row(m, k).v = hs.map(h => [h.lemma, tag(h.tags)] as [string, number])
   for (const [k, [file, sugg]] of Object.entries(lexindex?.lt ?? {})) row(m, k).l = [file === 'soft' ? 1 : 0, sugg]
   const lemmas = new Set(cards.map(c => c.lemma))   // a card of a lexicon lemma is the full card, not an «інша картка»
-  if (ci) for (const [k, hs] of cardMap(ci)) { const cs = hs.filter(h => !lemmas.has(h.id)); if (cs.length) row(m, k).c = cs.map(h => [h.kind === 'ar' ? 1 : 0, h.id, h.form === h.id ? undefined : h.form] as [0 | 1, string, string?]) }
+  if (ci) for (const [k, hs] of cardMap(ci)) { const cs = hs.filter(h => !lemmas.has(h.id) && !h.dict); if (cs.length) row(m, k).c = cs.map(h => [h.kind === 'ar' ? 1 : 0, h.id, h.form === h.id ? undefined : h.form] as [0 | 1, string, string?]) }
   ;(m as RowMap & { tags: string[] }).tags = tags
   return m
 }
@@ -65,10 +65,10 @@ export function shardOf(rows: [string, IxRow][], allTags: string[]): IxShard {
 }
 
 /** split by prefix until every shard is ≤ IX_GZ_MAX gzipped (or has too few keys / reached IX_MAX) */
-export function planShards(rows: RowMap & { tags?: string[] }, gzMax = IX_GZ_MAX): Map<string, [string, IxRow][]> {
+export function planShards(rows: RowMap & { tags?: string[] }, gzMax = IX_GZ_MAX, mk?: (items: [string, IxRow][]) => unknown): Map<string, [string, IxRow][]> {
   const tags = rows.tags ?? [], leaves = new Map<string, [string, IxRow][]>()
   const go = (p: string, items: [string, IxRow][], n: number) => {
-    if (n < IX_MAX && items.length >= IX_SPLIT_MIN_KEYS && gz(shardOf(items.slice(), tags)) > gzMax) {
+    if (n < IX_MAX && items.length >= IX_SPLIT_MIN_KEYS && gz(mk ? mk(items.slice()) : shardOf(items.slice(), tags)) > gzMax) {
       const by = new Map<string, [string, IxRow][]>()
       for (const it of items) { const q = ixPad(it[0], n + 1); (by.get(q) ?? (by.set(q, []), by.get(q)!)).push(it) }
       if (by.size > 1) { for (const [q, its] of by) go(q, its, n + 1); return }
@@ -79,6 +79,33 @@ export function planShards(rows: RowMap & { tags?: string[] }, gzMax = IX_GZ_MAX
   for (const it of rows) { const q = ixPad(it[0], IX_MIN); (top.get(q) ?? (top.set(q, []), top.get(q)!)).push(it) }
   for (const [p, its] of top) go(p, its, IX_MIN)
   return leaves
+}
+
+// ── dx: the dictionary-only cards (SPEC 63 DO-6) ─────────────────────────────────────────────────
+/** key → a row whose `h[0][0]` is the card id; only the dictionary-only words of the card index (`ld`) */
+export function buildDictRows(ci?: Parameters<typeof cardMap>[0]): RowMap {
+  const m: RowMap = new Map()
+  if (ci) for (const [k, hs] of cardMap(ci)) { const h = hs.find(x => x.dict); if (h && !hs.some(x => !x.dict)) m.set(k, { h: [[h.id, 0]] }) }   // a key that also has an attested / archaic card is served by ix/
+  return m
+}
+/** one dx shard: key → '' (the id is the key) or the id */
+export function dxShardOf(items: [string, IxRow][]): DxShard {
+  const rows: Record<string, string> = {}
+  for (const [k, r] of items.slice().sort((a, b) => (a[0] < b[0] ? -1 : 1))) rows[k] = r.h![0]![0] === k ? '' : r.h![0]![0]
+  return { format: 1, rows }
+}
+function writeDx(rows: RowMap) {
+  fresh('dx')
+  const leaves = planShards(rows, IX_GZ_MAX, dxShardOf), man: IxManifest = { format: 1, leaves: [] }
+  let bytes = 0, raw = 0, worst = 0
+  for (const [p, items] of leaves) {
+    const s = dxShardOf(items), t = JSON.stringify(s), g = gz(s)
+    writeFileSync(`${DATA}/dx/${ixName(p)}.json`, t); bytes += g; raw += Buffer.byteLength(t); worst = Math.max(worst, g)
+    man.leaves.push([p, items.length])
+  }
+  man.leaves.sort((a, b) => (a[0] < b[0] ? -1 : 1))
+  out('dx/index.json', man)
+  console.log(`dx: ${rows.size} dictionary-only keys → ${leaves.size} shards, raw ${(raw / 1048576).toFixed(1)} MB, gz total ${(bytes / 1048576).toFixed(1)} MB, worst ${(worst / 1024).toFixed(1)} KB gz, manifest ${(gz(man) / 1024).toFixed(1)} KB gz`)
 }
 
 function writeIx(rows: RowMap & { tags?: string[] }) {
@@ -216,14 +243,16 @@ function writeTc() {
 }
 
 // ── wit / boot / pg ──────────────────────────────────────────────────────────────────────────────
-function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[]) {
+/** SPEC 63 DO-5: the two coverage counters of boot.json — «з засвідченнями» (full cards + every other card a corpus text attests) and «лише словник» (cardindex `ld`) */
+export const coverageCounts = (nFull: number, ci?: Parameters<typeof cardMap>[0]): { nAttested: number; nDictOnly: number } => ({ nAttested: nFull + (ci?.lw.length ?? 0) + (ci?.ar.length ?? 0), nDictOnly: ci?.ld?.length ?? 0 })
+function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters<typeof cardMap>[0]) {
   fresh('wit')
   const parts = Array.from({ length: WIT_BUCKETS }, () => ({} as Record<string, unknown>))
   for (const w of corpus.witnesses) parts[witBucket(w.id)]![w.id] = w
   let worst = 0
   parts.forEach((p, b) => { if (Object.keys(p).length) { worst = Math.max(worst, gz(p)); out(`wit/${b}.json`, p) } })
   const boot: BootFile = {
-    format: 1, generated: corpus.generated, N: corpus.N, linked: corpus.linked, unresolved: corpus.unresolved, nLemmas: cards.length, nWitnesses: corpus.witnesses.length, lemmaPage: LEMMA_PAGE,
+    format: 1, generated: corpus.generated, N: corpus.N, linked: corpus.linked, unresolved: corpus.unresolved, nLemmas: cards.length, ...coverageCounts(cards.length, ci), nWitnesses: corpus.witnesses.length, lemmaPage: LEMMA_PAGE,
     epochSizes: corpus.epochSizes, centurySizes: corpus.centurySizes, rusynStatus: corpus.rusynStatus, regions: corpus.regions, authors: corpus.authors,
   }
   out('boot.json', boot)
@@ -237,10 +266,11 @@ function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[]) {
 if (process.argv[1]?.endsWith('build-parts.ts')) {
   const core = rd<unknown>('lexicon.json'); if (!core) throw new Error(`${DATA}/lexicon.json missing (run build:data)`)
   const cards = unpackCore(core), corpus = rd<CorpusMeta>('corpus.json')!, lexindex = rd<LexIndex>('lexindex.json'), ci = rd<Parameters<typeof cardMap>[0]>('cardindex.json')
-  writeCorpusParts(corpus, cards)
+  writeCorpusParts(corpus, cards, ci)
   writeCd(cards)
   writeSum(cards)
   writeTc()
   writeIx(buildRows(cards, lexindex, ci))
+  writeDx(buildDictRows(ci))
   writeLm()
 }

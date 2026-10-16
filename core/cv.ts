@@ -19,7 +19,7 @@ import { key } from './text.ts'
 const LAT: Record<string, string> = { a: 'а', b: 'в', c: 'с', e: 'е', h: 'н', i: 'і', k: 'к', m: 'м', o: 'о', p: 'р', t: 'т', x: 'х', y: 'у' }
 export const lk = (s: string): string => { const k = key(s); return /\p{Script=Cyrillic}/u.test(k) && /[a-z]/.test(k) ? k.replace(/[a-z]/g, c => LAT[c] ?? c) : k }
 
-export const CV_BUCKETS = 256
+export const CV_BUCKETS = 1024   // SPEC 63 DO-6: 256 → 1024 so that ~450k dictionary-only entries stay at ≈ 30 KB raw per shard (≈ 10 KB gzip)
 /** public/data/cv/<bucket>.json holds { [key(word)]: CvEntry } */
 export const cvBucket = (word: string) => bucketOf(lk(word), CV_BUCKETS)
 export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
@@ -28,7 +28,7 @@ export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
 export type CvAtt = [w: string, loc: string, raw: string]
 /** [displayed word, VESUM tags ('' = spelling not in VESUM), attestations in total, first MAX_ATT attestations] */
 /** extra: `an` = every VESUM analysis [lemma, tags] of the first attested spelling (CV-5: риночку = риночок m v_mis / риночка f v_zna); `prev` = the word before the corpus example; `pick` = the analysis the context rule prefers (never a claim: both stay listed) */
-export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string }
+export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string; /** SPEC 63 DO-1: dictionary-only card = a non-zero bitmask of DICT_SRC (the `dictOnly: true` flag AND the source list in one number) */ d?: number }
 export type CvEntry = [word: string, tags: string, n: number, atts: CvAtt[], extra?: CvExtra]
 
 /** the user's cheap context rule (2026-10-16): a preceding на / в / у / по / при / о / об points to the locative (v_mis); applied only when exactly one analysis is a locative. The other analyses stay listed. */
@@ -39,6 +39,21 @@ export function pickByContext(prev: string | undefined, an: [string, string][]):
   return loc.length === 1 && an.length > 1 ? loc[0]![0] : undefined
 }
 export const MAX_ATT = 5
+
+/**
+ * SPEC 63 DO-1/DO-2 — dictionary-only cards. `extra.d` is a bitmask of the dictionaries that know the word while no corpus text attests it (bytes: `"d":1`, not a name list).
+ * 1 ВЕСУМ (dict_corp_vis) · 2 r2u.org.ua (its dictionaries are named by the attestation lines) · 4 Пластові словники · 8 other dictionary witnesses of the corpus.
+ */
+export const DICT_SRC = [[1, 'ВЕСУМ'], [2, 'r2u.org.ua'], [4, 'Пластові словники'], [8, 'інші словники корпусу']] as const
+export const DICT_STATUS = 'лише словник · без засвідчень у корпусі'
+export const dictSources = (d: number): string[] => DICT_SRC.filter(([bit]) => d & bit).map(([, name]) => name)
+export interface DictInfo { dictOnly: true; sources: string[]; /** stats: always 0 corpus tokens */ f: 0; /** no first attestation: a dictionary's year is a dictionary date, never a «найраніше» */ earliest: null; status: string }
+/** the dictionary-only reading of a CV entry (undefined for an entry that a corpus text attests) */
+export function dictInfo(e: CvEntry | undefined): DictInfo | undefined {
+  const d = e?.[4]?.d; if (!d) return undefined
+  return { dictOnly: true, sources: dictSources(d), f: 0, earliest: null, status: DICT_STATUS }
+}
+export const isDictOnly = (e: CvEntry): boolean => !!e[4]?.d
 
 /** a word worth a card: letters (apostrophe / hyphen inside), not a bare letter */
 export const isCvWord = (s: string) => /^\p{L}[\p{L}'’ʼ-]*$/u.test(s) && [...s].length >= 2
@@ -75,31 +90,34 @@ export class CvScan {
 
 export function shardsOfCv(entries: [string, CvEntry][]): Record<string, CvEntry>[] {
   const out: Record<string, CvEntry>[] = Array.from({ length: CV_BUCKETS }, () => ({}))
-  for (const [k, e] of entries) out[cvBucket(k)]![k] = e
+  // DO-6: a dictionary-only entry whose card word is its own key stores '' for the word (loadCv restores it): ≈ 18 B less per card at 450k cards
+  for (const [k, e] of entries) out[cvBucket(k)]![k] = e[4]?.d && e[0] === k ? (['', ...e.slice(1)] as unknown as CvEntry) : e
   return out
 }
 
 // ── the index of every non-lexicon card ───────────────────────────────────────────────────────────
 /** `lw`: words with a /lw/:word card (light cards of the corpus + CV cards); `ar`: archaic / dictionary cards, [id, ...other spellings] */
-export interface CardIndexFile { format: 1; generated: string; lw: string[]; ar: string[][]; /** attested spellings of CV words that are not the card word: [spelling, card word] */ lf?: [string, string][] }
+export interface CardIndexFile { format: 1; generated: string; lw: string[]; ar: string[][]; /** attested spellings of CV words that are not the card word: [spelling, card word] */ lf?: [string, string][]; /** SPEC 63 DO-1: words with a dictionary-only /lw card (they are NOT in `lw`) */ ld?: string[] }
 export type CardKind = 'lw' | 'ar'
-export interface CardHit { kind: CardKind; id: string; form: string }
+export interface CardHit { kind: CardKind; id: string; form: string; /** SPEC 63 DO-4: a dictionary-only card (ranked below every corpus-attested one) */ dict?: true }
 export const cardRoute = (h: Pick<CardHit, 'kind' | 'id'>) => `/${h.kind}/${encodeURIComponent(h.id)}`
 
-export function buildCardIndex(generated: string, light: Iterable<string>, cv: Iterable<string>, arch: { id: string; variants: string[] }[], forms: [string, string][] = []): CardIndexFile {
-  const lw = [...new Set([...light, ...cv])].sort((a, b) => a.localeCompare(b, 'uk'))
-  return { format: 1, generated, lw, ar: arch.map(e => [e.id, ...e.variants.filter(v => v !== e.id)]), ...(forms.length ? { lf: forms } : {}) }
+export function buildCardIndex(generated: string, light: Iterable<string>, cv: Iterable<string>, arch: { id: string; variants: string[] }[], forms: [string, string][] = [], dictOnly: Iterable<string> = []): CardIndexFile {
+  const ld = [...new Set(dictOnly)].sort((a, b) => a.localeCompare(b, 'uk')), dset = new Set(ld)
+  const lw = [...new Set([...light, ...cv])].filter(w => !dset.has(w)).sort((a, b) => a.localeCompare(b, 'uk'))
+  return { format: 1, generated, lw, ar: arch.map(e => [e.id, ...e.variants.filter(v => v !== e.id)]), ...(forms.length ? { lf: forms } : {}), ...(ld.length ? { ld } : {}) }
 }
 
 /** key → card hits (lookup is case- and stress-insensitive through core/text.ts key()) */
 export function cardMap(ci: CardIndexFile): Map<string, CardHit[]> {
   const m = new Map<string, CardHit[]>()
-  const put = (form: string, kind: CardKind, id: string) => {
+  const put = (form: string, kind: CardKind, id: string, dict?: true) => {
     const k = lk(form); if (!k) return
-    const l = m.get(k) ?? []; if (!l.some(h => h.kind === kind && h.id === id)) l.push({ kind, id, form }); m.set(k, l)
+    const l = m.get(k) ?? []; if (!l.some(h => h.kind === kind && h.id === id)) l.push(dict ? { kind, id, form, dict } : { kind, id, form }); m.set(k, l)
   }
   for (const w of ci.lw) put(w, 'lw', w)
   for (const [f, w] of ci.lf ?? []) put(f, 'lw', w)
   for (const [id = "", ...vs] of ci.ar) { put(id, 'ar', id); for (const v of vs) put(v, 'ar', id) }
+  for (const w of ci.ld ?? []) put(w, 'lw', w, true)   // DO-1
   return m
 }

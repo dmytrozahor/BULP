@@ -16,7 +16,7 @@ import EtymologyBlock from './EtymologyBlock.vue'
 import CognatesPanel from './CognatesPanel.vue'
 import UsageChips from './UsageChips.vue'
 import SociolectBadges from './SociolectBadges.vue'
-const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[] }>()
+const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
 const best = computed(() => d.value.candidates[0])
 </script>
@@ -24,7 +24,7 @@ const best = computed(() => d.value.candidates[0])
 <template>
   <div data-testid="thin-card">
     <p v-if="lemma" class="sans small"><UsageChips :lemma="lemma" label /> <SociolectBadges :word="lemma" /></p>
-    <Panel id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length">
+    <Panel id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : undefined">
       <Kwic :lines="kwic" :lemma="lemma" />
     </Panel>
     <Panel id="t-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="spelling" :lemma="lemma" /></Panel>

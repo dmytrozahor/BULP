@@ -35,6 +35,14 @@ export function ixUnder(q: string, manifest: readonly (readonly [string, number]
   return manifest.filter(([p]) => p.startsWith(q)).sort((a, b) => b[1] - a[1]).slice(0, max).map(e => e[0])
 }
 
+/**
+ * SPEC 63 DO-6 — dx/: the prefix shards of the DICTIONARY-ONLY cards (VESUM lemmas and dictionary words that no corpus text attests, ~450k). Kept apart from ix/ so that the corpus-attested
+ * search path (and its keystroke budget) is unchanged and an attested card is never crowded out by a dictionary-only one. dx/index.json = IxManifest; dx/<hex>.json = DxShard.
+ * rows: key → '' when the card id IS the key, else the id (capitals, e.g. «Київ»).
+ */
+export interface DxShard { format: 1; rows: Record<string, string> }
+export const dxUrl = (p: string) => `./data/dx/${ixName(p)}.json`
+
 /** hit kinds of IxRow.h */
 /** via: 0 lemma · 1 historical spelling (raw / norm: an attestation) · 2 VESUM paradigm form · 3 modern spelling of a corpus form (searchable like a form, but not an attestation) */
 export type IxHit = [lemma: string, via: 0 | 1 | 2 | 3, form?: string]
@@ -68,6 +76,8 @@ export const lemmaPageUrl = (n: number) => `./data/pg/lemmas/${n}.json`
 export interface BootFile {
   format: 1; generated: string; N: number; linked: number; unresolved: number
   nLemmas: number; nWitnesses: number; lemmaPage: number
+  /** SPEC 63 DO-5: «з засвідченнями» = nAttested (full lexicon cards + corpus-attested light cards), «лише словник» = nDictOnly; nLemmas stays the number of full lexicon cards (the paged lemma list) */
+  nAttested?: number; nDictOnly?: number
   epochSizes: Record<string, number>; centurySizes: Record<string, number>
   rusynStatus: unknown; regions: unknown[]; authors: unknown[]
 }

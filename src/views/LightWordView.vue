@@ -10,7 +10,7 @@ import { lightRow } from '../lib/torotData.ts'
 import { ixPrefix } from '../lib/parts.ts'
 import { loadCv } from '../lib/cardIndex.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
-import type { CvEntry } from '../../core/cv.ts'
+import { dictInfo, type CvEntry } from '../../core/cv.ts'
 import type { Kwic } from '../../core/types.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
@@ -55,6 +55,8 @@ const spelling = computed(() => ex.value?.raw || cv.value?.[3][0]?.[2] || word.v
 /** CV-5: all VESUM analyses of the spelling; the card of each is one tap away (full card if the lexicon has the lemma, else /lw) */
 const analyses = computed(() => (cv.value?.[4]?.an ?? []).map(([lemma, t]) => ({ lemma, tags: t, to: byLemma.value.has(lemma) ? `/w/${encodeURIComponent(lemma)}` : `/lw/${encodeURIComponent(lemma)}`, self: key(lemma) === key(word.value), picked: cv.value?.[4]?.pick === lemma })))
 const prev = computed(() => cv.value?.[4]?.prev)
+/** SPEC 63 DO-2: a dictionary-only card (VESUM / r2u / Plast, no corpus text): explicit status, sources by name, f = 0, no «найраніше» */
+const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
 </script>
 
 <template>
@@ -64,6 +66,10 @@ const prev = computed(() => cv.value?.[4]?.prev)
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
     <h1>{{ word }} <small class="muted sans">коротка картка</small></h1>
+    <p v-if="dict" class="sans small" data-testid="dict-only">
+      <span class="badge">{{ dict.status }}</span>
+      Джерела: <b>{{ dict.sources.join(' · ') }}</b>. Вжив. у корпусі: f = {{ dict.f }}. Найраніше: — <span class="muted">(роки словників нижче — дати словників, а не перша фіксація слова)</span>
+    </p>
     <p v-if="tags" class="sans small">VESUM: <code>{{ tags }}</code><template v-if="row"> · вжив. у корпусі: {{ row[2] }}</template></p>
     <p v-else class="sans small"><b>Написання як засвідчене:</b> ВЕСУМ такої форми не підтверджує, лематизацію не вгадано; картка подає лише рядки словників.</p>
     <section v-if="analyses.length > 1" class="card sans small" aria-label="Аналізи ВЕСУМ" data-testid="vesum-analyses">
@@ -77,18 +83,19 @@ const prev = computed(() => cv.value?.[4]?.prev)
       <p class="muted">Жодного аналізу не відкинуто: контекст лише позначає ймовірніший, коли його вирішує просте правило (прийменник + місцевий відмінок).</p>
     </section>
     <p v-if="row" class="sans small muted">Мало засвідчена в нашому корпусі (f = {{ row[2] }}): повної картки немає, бо лема трапляється рідше за поріг лексикону (KEEP_MIN_F). Це не рідкісне слово мови: VESUM її знає.</p>
+    <p v-else-if="dict" class="sans small muted">Слово є у словнику, але жоден текст нашого корпусу його не засвідчує, тому частот, першої фіксації й прикладів немає — нічого не вигадано. Правила, виведення з написання й довідкові блоки нижче працюють без корпусу.</p>
     <p v-else-if="cv && cv[2] === 0" class="sans small muted">Слово засвідчене у пластових словниках (значення нижче); у корпусі текстів і в історичних словниках не трапляється.</p>
     <p v-else class="sans small muted">Слово засвідчене лише в словниках (заголовне слово або цитований відповідник); у корпусі текстів не трапляється, тому повної картки з частотами немає.</p>
     <PlastSenses :word="word" />
     <IkavismChain v-if="row && base.length" :lemma="row[0]" :paradigm="base" />
     <p v-if="ex" class="sans small">Приклад: <RouterLink :to="textTo(ex.w, ex.loc)">«{{ ex.raw }}»</RouterLink> · {{ ex.loc }} · <RouterLink :to="witnessTo(ex.w)">{{ ex.w }}</RouterLink></p>
     <template v-if="cv && cv[3].length">
-      <h2>Засвідчення <small class="muted sans">{{ cv[2] }}</small></h2>
+      <h2>{{ dict ? 'Словникові джерела' : 'Засвідчення' }} <small class="muted sans">{{ cv[2] }}</small></h2>
       <ul class="sans small">
-        <li v-for="(a, i) in cv[3]" :key="i"><b>{{ a[2] }}</b> · <RouterLink :to="witnessTo(a[0])">{{ wt(a[0]) }}</RouterLink><template v-if="wd(a[0])">, {{ wd(a[0]) }}</template> · <RouterLink :to="textTo(a[0], a[1])">{{ a[1] }}</RouterLink></li>
+        <li v-for="(a, i) in cv[3]" :key="i"><b>{{ a[2] }}</b> · <RouterLink :to="witnessTo(a[0])">{{ wt(a[0]) }}</RouterLink><template v-if="wd(a[0])">, {{ dict ? 'рік словника ' : '' }}{{ wd(a[0]) }}</template> · <RouterLink :to="textTo(a[0], a[1])">{{ a[1] }}</RouterLink></li>
       </ul>
       <p v-if="cv[2] > cv[3].length" class="sans small muted">Показано {{ cv[3].length }} з {{ cv[2] }} засвідчень.</p>
     </template>
-    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" />
+    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" />
   </template>
 </template>

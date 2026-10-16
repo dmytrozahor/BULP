@@ -18,7 +18,8 @@ const shards = new Map<number, Promise<Record<string, CvEntry>>>()
 export async function loadCv(word: string): Promise<CvEntry | undefined> {
   const b = cvBucket(word); let p = shards.get(b)
   if (!p) shards.set(b, p = fetch(cvShardUrl(word)).then(r => (r.ok ? r.json() : {})).catch(() => ({})) as Promise<Record<string, CvEntry>>)
-  return (await p)[lk(word)]
+  const k = lk(word), e = (await p)[k]
+  return e && e[0] === '' ? ([k, ...e.slice(1)] as unknown as CvEntry) : e   // DO-6: a dictionary-only entry stores '' for a word that is its own key
 }
 
 /** SPEC 63 SL / CV: the word card of a Plast headword (a lexicon lemma, else a light / CV / archaic card, else its own /lw card); lookup via lk(), the source spelling is not altered */

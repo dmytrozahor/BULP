@@ -512,3 +512,27 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BQ-5 | manual — implemented: README sections on the fork guide and on specs/Claude, commands checked against package.json |
 | BQ-6 | manual — implemented: .github/ISSUE_TEMPLATE/book-list.yml is a GitHub issue form; row-by-row triage and per-row approval are planned with BQ-2 and BQ-3 |
 | BQ-7 | manual — implemented: .github/ISSUE_TEMPLATE/proposal.yml and config.yml; triage of proposals into the mismatch ledger and draft specs is planned with BQ-2 |
+| DO-1 | tests/do.test.ts › DO-1 a VESUM-only lemma gets a dictOnly card with no dates, no attestation lines and f = 0 |
+| DO-1 | tests/do.test.ts › DO-1 an r2u-only headword gets a dictOnly card that names r2u and keeps its dictionary line (a dictionary date, not a first attestation) |
+| DO-1 | tests/do.test.ts › DO-1 a VESUM headword that already has a full / light / archaic card gets no second card (ids never collide) |
+| DO-1 | tests/do.test.ts › DO-1 lemmaLines reads one headword per word and joins the tags of homonyms |
+| DO-2 | tests/do.test.ts › DO-2 the badge text and the source names are the specified ones |
+| DO-2 | tests/do.test.ts › DO-2 a Plast headword without any dictionary line is dictionary-only too (Plast) |
+| DO-2 | tests/do.test.ts › DO-2 the card view shows the status, the sources, f = 0, «Найраніше: —», labels a dictionary year as a dictionary date, and has no first-attestation text |
+| DO-3 | tests/do.test.ts › DO-3 ThinCard collapses KWIC with «немає засвідчень у корпусі»; Panel prints emptyText instead of «немає даних» |
+| DO-3 | tests/do.test.ts › DO-3 a card with a light row (a corpus attestation) is never rendered as dictionary-only |
+| DO-4 | tests/do.test.ts › DO-4 attested lemmas and cards come from ix/ and never include a dictionary-only card; the dx/ hits come separately |
+| DO-4 | tests/do.test.ts › DO-4 the page lists every attested result before any dictionary-only one (order of the sections in SearchView) |
+| DO-4 | tests/do.test.ts › DO-4 an exact dictionary-only key is ranked before its prefix matches |
+| DO-4 | tests/do.test.ts › DO-4 a key with a dictionary-only card only resolves through ixCards as dict: true; an attested card is not marked |
+| DO-4 | tests/do.test.ts › DO-4 a key with an attested card AND a dictionary-only card is served by ix/ only (no dx row) |
+| DO-5 | tests/do.test.ts › DO-5 the card index keeps dictionary-only words out of lw and boot reports the two counts separately |
+| DO-5 | tests/do.test.ts › DO-5 the home page prints both counters |
+| DO-5 | tests/do.test.ts › DO-5 a card the corpus attests is counted as attested, never as dictionary-only |
+| DO-6 | tests/do.test.ts › DO-6 cv/ shards: bytes per card and per shard at 450k cards stay far below the 256 KiB hard limit of lex/ shards |
+| DO-6 | tests/do.test.ts › DO-6 the compact entry drops the word when it is its own key, and loadCv restores it |
+| DO-6 | tests/do.test.ts › DO-6 dx/ shards: the planner keeps every leaf under IX_GZ_MAX and the per-card cost is reported |
+| DO-6 | tests/do.test.ts › DO-6 writeCv puts dictionary-only words into ld, not lw (cardindex.json is a build intermediate, never fetched whole) |
+| DO-7 | tests/do.test.ts › DO-7 a light lemma, a GZ-1 lemma and a word a corpus text links to stay ordinary CV cards (no d) |
+| DO-7 | tests/do.test.ts › DO-7 without the DO context (DICT_ONLY=0) the build is the old one: nothing is marked |
+| DO-8 | tests/do.test.ts › DO-8 SPEC 63 lists DO-1…DO-8 and the build wires vesumLemmaList into buildCv |
