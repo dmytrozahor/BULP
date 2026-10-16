@@ -65,7 +65,7 @@ describe('CV-4 search and card', () => {
     for (const s of ['неперевірена лема', 'Написання в тексті', 'Вживання', 'ThinCard', 'Пам’ятки', 'реконструкція (гіпотеза)', 'Давньоруська лема']) expect(c, s).toContain(s)
   })
   it('CV-4 uv/ is shipped on the data branch (DIRS) and ignored by git like lex/ and cv/', () => {
-    expect(rd('pipelines/data-branch.ts')).toMatch(/DIRS = \['lex', 'texts', 'cv', 'uv'\]/); expect(rd('.gitignore')).toMatch(/public\/data\/uv/)
+    expect(rd('pipelines/data-branch.ts')).toMatch(/DIRS = \['lex', 'texts', 'cv', 'uv'[,\]]/); expect(rd('.gitignore')).toMatch(/public\/data\/uv/)
   })
 })
 
