@@ -1,0 +1,128 @@
+name: Book proposal / Пропозиція книжки
+description: Propose a book, manuscript or dictionary for the BULP corpus / Запропонувати книжку, рукопис чи словник для корпусу BULP (SPEC 63 BQ-1)
+title: "[book] "
+labels: ["book", "proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Every proposal is triaged (BQ-2) and then approved by the owner (label `approved`, BQ-3). Project principle: **no cite, no claim**; every date and fact must come from a source, never a guess.
+
+        Дякуємо! Кожну пропозицію перевіряють (BQ-2), потім її схвалює власник (мітка `approved`, BQ-3). Принцип проєкту: **немає джерела — немає твердження**; усі дати й відомості беруться з джерела, а не вгадуються.
+  - type: input
+    id: title
+    attributes:
+      label: Title / Назва
+      description: Full title of the work or edition. / Повна назва твору або видання.
+    validations:
+      required: true
+  - type: input
+    id: author
+    attributes:
+      label: Author / Автор
+      description: Author, compiler or publisher, if known. / Автор, укладач або видавець, якщо відомо.
+    validations:
+      required: false
+  - type: input
+    id: years
+    attributes:
+      label: Year or year range / Рік або діапазон років
+      description: "E.g. 1627 or 1380-1400. Only a date stated by the source (title page, colophon, preface, catalogue); never a guess. If there is none, write 'unknown'. / Наприклад 1627 або 1380-1400. Лише дата, яку називає джерело (титул, колофон, передмова, каталог); не вгадуйте. Якщо дати немає, напишіть «невідомо»."
+    validations:
+      required: true
+  - type: dropdown
+    id: epoch
+    attributes:
+      label: Epoch (after Shevelov) / Епоха (за Шевельовим)
+      description: Approximate; the project assigns the epoch from the date. / Орієнтовно; остаточно епоху визначає проєкт за датою.
+      options:
+        - Proto-Ukrainian (600-1049) / протоукраїнська доба
+        - Old Ukrainian (1050-1386) / давньоукраїнська доба
+        - Early Middle Ukrainian (1387-1574) / ранньосередньоукраїнська доба
+        - Middle Ukrainian (1575-1719) / середньоукраїнська доба
+        - Late Middle Ukrainian (1720-1817) / пізньосередньоукраїнська доба
+        - Modern Ukrainian (from 1818) / новітня доба
+        - don't know / не знаю
+    validations:
+      required: false
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language / variety / Мова / різновид
+      options:
+        - literary Ukrainian / книжна українська
+        - prosta mova (Ruthenian) / проста мова
+        - Church Slavonic / церковнослов'янська
+        - dialect text / діалектний текст
+        - Rusyn / русинська
+        - other / інша
+    validations:
+      required: false
+  - type: input
+    id: region
+    attributes:
+      label: Region / dialect group / Регіон / діалектна група
+      description: E.g. Polissia, Kuban, Transcarpathia. Only if a source or authoritative work says so (name it). / Наприклад Полісся, Кубань, Закарпаття. Лише якщо це сказано в джерелі або авторитетній праці (вкажіть її).
+    validations:
+      required: false
+  - type: input
+    id: school
+    attributes:
+      label: School / centre (optional) / Школа / осередок (необов'язково)
+      description: E.g. a brotherhood school, a printing house. / Наприклад братська школа, друкарня.
+    validations:
+      required: false
+  - type: input
+    id: genre
+    attributes:
+      label: Genre / Жанр
+      description: Chronicle, charter, grammar, dictionary, poetry, sermon, song, etc. / Хроніка, грамота, граматика, словник, поезія, проповідь, пісня тощо.
+    validations:
+      required: false
+  - type: input
+    id: tags
+    attributes:
+      label: Tags / Мітки
+      description: Free text, comma-separated. / Вільний текст, через кому.
+    validations:
+      required: false
+  - type: textarea
+    id: links
+    attributes:
+      label: Link to the text or scan / Посилання на текст або скан
+      description: At least one URL, one per line. / Щонайменше одне URL, по одному в рядку.
+    validations:
+      required: true
+  - type: dropdown
+    id: licence
+    attributes:
+      label: Licence / status / Ліцензія / статус
+      description: A copyrighted or share-alike work can only become vocabulary, never quoted text. / Твір під авторським правом або з умовою share-alike стає лише джерелом слів, ніколи цитованим текстом.
+      options:
+        - public domain / суспільне надбання
+        - CC (give the version below / версію вкажіть нижче)
+        - under copyright / під авторським правом
+        - unknown / не знаю
+    validations:
+      required: true
+  - type: input
+    id: licence-detail
+    attributes:
+      label: Licence details (optional) / Деталі ліцензії (необов'язково)
+      description: E.g. CC BY 4.0, the author's death date. / Наприклад CC BY 4.0, дата смерті автора.
+    validations:
+      required: false
+  - type: textarea
+    id: why
+    attributes:
+      label: Why this book matters for the lexicon / Чому ця книжка важлива для словника
+      description: Which words, forms, dialects or epochs are missing? / Яких слів, форм, говірок чи епох бракує?
+    validations:
+      required: false
+  - type: checkboxes
+    id: legal
+    attributes:
+      label: Confirmation / Підтвердження
+      options:
+        - label: I checked that the link may be legally used. / Я перевірив(ла), що посилання можна законно використати.
+          required: true

@@ -505,3 +505,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › the dim.-of-пола claim carries its dictionary quote (Уманець–Спілка «Пола́ … здр. пі́лка»); no uncited claim |
 | MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › reconstructed old spellings of пілка (полка, полъка …) are labelled reconstruction, never confirmed by an attestation unless a callback supplies one |
 | MM-3 | tests/fx.test.ts › MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment») › real data (after a rebuild with MM-3): the card пілка lists no spelling of полк (полки, полъкы, полкы …) |
+| BQ-1 | manual — implemented: .github/ISSUE_TEMPLATE/book.yml is a GitHub issue form, validated by GitHub when an issue is opened |
+| BQ-2 | manual — pending: the ~3-day triage pickup of issues labelled book is planned, not built |
+| BQ-3 | manual — pending: approval by the label approved and ingest through harvest:ingest is planned, not built |
+| BQ-4 | manual — pending: the label rejected with a reason comment is planned, not built |
+| BQ-5 | manual — implemented: README sections on the fork guide and on specs/Claude, commands checked against package.json |
