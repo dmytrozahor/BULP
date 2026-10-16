@@ -1,0 +1,96 @@
+name: Book list / Перелік книжок
+description: Propose several books at once / Запропонувати кілька книжок одразу (SPEC 63 BQ-6)
+title: "[books] "
+labels: ["book", "proposal", "list"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One row per book. Each row is triaged on its own (BQ-2), and the owner can approve the whole list or single rows (BQ-3). Principle: **no cite, no claim**; years come from the source, never from a guess.
+
+        Один рядок — одна книжка. Кожен рядок перевіряється окремо (BQ-2), а власник може схвалити весь перелік або окремі рядки (BQ-3). Принцип: **немає джерела — немає твердження**; роки беруться з джерела, а не вгадуються.
+  - type: input
+    id: list-name
+    attributes:
+      label: List name / Назва переліку
+      description: E.g. "Brotherhood school grammars and dictionaries". / Наприклад «Граматики й словники братських шкіл».
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        **Shared defaults (optional) / Спільні значення (необов'язково).** Applied to every row whose cell is empty. / Застосовуються до кожного рядка, де відповідна клітинка порожня.
+  - type: dropdown
+    id: epoch
+    attributes:
+      label: Default epoch / Епоха за замовчуванням
+      options:
+        - Proto-Ukrainian (600-1049) / протоукраїнська доба
+        - Old Ukrainian (1050-1386) / давньоукраїнська доба
+        - Early Middle Ukrainian (1387-1574) / ранньосередньоукраїнська доба
+        - Middle Ukrainian (1575-1719) / середньоукраїнська доба
+        - Late Middle Ukrainian (1720-1817) / пізньосередньоукраїнська доба
+        - Modern Ukrainian (from 1818) / новітня доба
+        - don't know / не знаю
+    validations:
+      required: false
+  - type: dropdown
+    id: language
+    attributes:
+      label: Default language / variety / Мова / різновид за замовчуванням
+      options:
+        - literary Ukrainian / книжна українська
+        - prosta mova (Ruthenian) / проста мова
+        - Church Slavonic / церковнослов'янська
+        - dialect text / діалектний текст
+        - Rusyn / русинська
+        - other / інша
+    validations:
+      required: false
+  - type: input
+    id: region
+    attributes:
+      label: Default region / Регіон за замовчуванням
+    validations:
+      required: false
+  - type: input
+    id: school
+    attributes:
+      label: Default school / centre / Школа / осередок за замовчуванням
+    validations:
+      required: false
+  - type: dropdown
+    id: licence
+    attributes:
+      label: Default licence / Ліцензія за замовчуванням
+      description: A copyrighted or share-alike work can only become vocabulary, never quoted text. / Твір під авторським правом або з умовою share-alike стає лише джерелом слів, ніколи цитованим текстом.
+      options:
+        - public domain / суспільне надбання
+        - CC (give the version in the row / версію вкажіть у рядку)
+        - under copyright / під авторським правом
+        - unknown / не знаю
+    validations:
+      required: false
+  - type: textarea
+    id: books
+    attributes:
+      label: Books / Книжки
+      description: "One book per line, cells separated by | ; the header line must stay. Empty cells inherit the shared defaults. Required per row: title, year or range (as stated by the source, never a guess), url. A pasted CSV with the same columns is also accepted. / Одна книжка в рядку, клітинки розділені символом | ; заголовок залишайте. Порожні клітинки беруть спільні значення. Обов'язково в кожному рядку: title, рік або діапазон (як у джерелі, не вгадувати), url. Вставлений CSV з тими самими колонками теж приймається. Example rows / Приклади: Лексис, сиречь реченія | Лаврентій Зизаній | 1596 | http://litopys.org.ua/zyzlex/zyz.htm | Middle Ukrainian | Church Slavonic | | братська школа | dictionary | public domain | словник ;; Лексіконъ славенорѡсскїй | Памво Беринда | 1627 | http://litopys.org.ua/berlex/be.htm | Middle Ukrainian | Church Slavonic | Київ | | dictionary | public domain | словник"
+      render: text
+      value: "title | author | year or range | url | epoch | language | region | school | genre | licence | tags"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why these matter / Чому важливі
+      description: Which words, forms, dialects or epochs are missing? / Яких слів, форм, говірок чи епох бракує?
+    validations:
+      required: false
+  - type: checkboxes
+    id: legal
+    attributes:
+      label: Confirmation / Підтвердження
+      options:
+        - label: I checked that the links may be legally used. / Я перевірив(ла), що посилання можна законно використати.
+          required: true

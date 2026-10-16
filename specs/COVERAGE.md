@@ -510,3 +510,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | BQ-3 | manual — pending: approval by the label approved and ingest through harvest:ingest is planned, not built |
 | BQ-4 | manual — pending: the label rejected with a reason comment is planned, not built |
 | BQ-5 | manual — implemented: README sections on the fork guide and on specs/Claude, commands checked against package.json |
+| BQ-6 | manual — implemented: .github/ISSUE_TEMPLATE/book-list.yml is a GitHub issue form; row-by-row triage and per-row approval are planned with BQ-2 and BQ-3 |
