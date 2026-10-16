@@ -5,7 +5,7 @@ import { fold as foldRaw } from '../core/orthography.ts'
 import { key } from '../core/text.ts'
 import { GATE, compatible, gateKey, paradigmKindOf, vesumClass } from '../core/pos-gate.ts'
 import { CORRESPONDENCES, correspondenceFor } from '../core/correspondences.ts'
-import { chooseLemma, linkOptions, ONE_LETTER_PREP, posLabel, type Env, type TypeCtx } from '../pipelines/build-link.ts'
+import { chooseLemma, linkOptions, preferCommon, ONE_LETTER_PREP, posLabel, type Env, type TypeCtx } from '../pipelines/build-link.ts'
 import { rankFirst, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
@@ -84,9 +84,36 @@ describe('MM-1 preposition recognised as pronoun', () => {
   })
 })
 
+describe('MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule', () => {
+  const e4: Env = { ...env, hits: new Map(Object.entries({ "хом'як": [H("хом'як", 'noun:anim:m:v_naz')], "хом'яки": [H("хом'як", 'noun:anim:p:v_naz')], хомік: [H('Хомік', 'noun:anim:m:v_naz:prop:lname')] }).map(([k, v]) => [key(k), v])) }
+  const l4 = (t: TypeCtx) => { const r = linkOptions(t, e4); return r ? chooseLemma(r.opts, new Map()) : undefined }
+  it('PVL хомѣки (TOROT lemma хомѣкъ) → хом\'як (common noun), labelled as a cognate link, not the surname «Хомік»', () => {
+    const c = l4(T({ raw: 'хомѣки', lemma: 'хомѣкъ' }))!
+    expect(c.lemma).toBe("хом'як"); expect(c.cls).toBe('noun'); expect(c.corr!.row.kind).toBe('cognate'); expect(c.corr!.row.quote).toMatch(/хомя́к.*хамя́к/)
+  })
+  it('the lemma-less token хомѣки also links to хом\'як', () => { expect(l4(T({ raw: 'хомѣки' }))?.lemma).toBe("хом'як") })
+  it('lower-case token: the surname reading is dropped when a common noun exists; a capitalised token and a surname-only token keep it', () => {
+    const o = (lemma: string, tags: string) => ({ id: key(lemma), lemma, form: key(lemma), hit: H(lemma, tags), cand: { form: key(lemma), trace: [], branches: 0 }, tier: 0, own: { form: key(lemma), trace: [], branches: 0 }, ownConfirmed: true, cls: 'noun' as const })
+    const both = { route: 'direct' as const, opts: [o('Хомік', 'noun:anim:m:v_naz:prop:lname'), o('хомік', 'noun:anim:m:v_naz')] }
+    expect(preferCommon(T({ raw: 'хомік' }), both)!.opts.map(x => x.lemma)).toEqual(['хомік'])
+    expect(preferCommon(T({ raw: 'Хомік' }), both)!.opts.length).toBe(2)
+    const only = { route: 'direct' as const, opts: [o('Хомік', 'noun:anim:m:v_naz:prop:lname')] }
+    expect(preferCommon(T({ raw: 'хомік' }), only)!.opts.length).toBe(1)
+  })
+  it('no uncited sound rule: the standard derivation of хомѣки still gives хоміки (no ѣ > \'а after a labial rule exists)', () => {
+    expect(deriveRaw('хомѣки', { oldI: true }).candidates.map(c => c.form)).not.toContain("хом'яки")
+  })
+  it('real data (after a rebuild with MM-2): a хом\'як card exists with the PVL spelling, and no «Хомік» card carries хомѣки', () => {
+    if (!hasData()) return
+    const all = readFull(), c = all.find(x => x.lemma === "хом'як"); if (!c) return
+    expect(c.forms.map(f => f.raw)).toContain('хомѣки')
+    expect(all.filter(x => x.lemma === 'Хомік').flatMap(x => x.forms.map(f => f.raw))).not.toContain('хомѣки')
+  })
+})
+
 describe('FX-2 correspondences', () => {
   it('every row has a verbatim ЕСУМ quote and a goroh URL', () => {
-    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(/^https:\/\/goroh\.pp\.ua\//) }
+    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' ? /^https:\/\/en\.wiktionary\.org\// : /^https:\/\/goroh\.pp\.ua\//) }
     expect(correspondenceFor('азъ')!.modern).toBe('я'); expect(correspondenceFor('есмь')).toBeUndefined()   // no fetched quote → no row
   })
   it('азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я', () => {

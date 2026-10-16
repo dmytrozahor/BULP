@@ -39,7 +39,9 @@ export function textTokens(text: string, loc: string): { tokens: TokenRec[]; unm
 }
 
 /** «1380-1400» → [1380,1400]; «1893», «1893-05-01», «1899-01-01T00:00:00Z» → [1893,1893]; null when the index gives no year */
-export function yearRange(d: string | null | undefined): [number, number] | null {
+export function yearRange(d0: unknown): [number, number] | null {
+  // archive.org metadata may give a number or a list of dates: take the first plain value (the index states it; nothing is invented)
+  const d = Array.isArray(d0) ? String(d0.find(x => x !== null && x !== '') ?? '') : d0 === null || d0 === undefined ? '' : String(d0)
   if (!d) return null
   const r = d.match(/^(\d{4})\s*[-–‒]\s*(\d{4})$/)
   if (r) return [+r[1]!, +r[2]!]
@@ -57,8 +59,8 @@ export function readIndex(source: string): Idx[] {
   return out
 }
 export function readItem(source: string, file: string): Buffer | null {
-  const p = `${HARVEST}/${source}/items/${file}.gz`
-  return existsSync(p) ? gunzipSync(readFileSync(p)) : null
+  for (const ext of ['.gz', '.txt.gz']) { const p = `${HARVEST}/${source}/items/${file}${ext}`; if (existsSync(p)) return gunzipSync(readFileSync(p)) }
+  return null
 }
 
 // ── author records ───────────────────────────────────────────────────────────────────────────────────
@@ -106,7 +108,7 @@ export function countText(text: string): Record<string, number> {
 const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<\/(p|div|li|h\d|tr)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_m, n) => String.fromCodePoint(+n)).replace(/[ \t]+/g, ' ')
 
 // ── per-source runs ──────────────────────────────────────────────────────────────────────────────────
-export interface Ctx { out: string; limit: number; manifestIa: Set<string>; manifestWs: Set<string> }
+export interface Ctx { out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
 const save = (ctx: Ctx, w: WitnessOut) => writeFileSync(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
@@ -179,9 +181,12 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
   const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
   const entries: Record<string, VocabEntry> = {}, items: object[] = []
   let licence = ''
+  let seen = 0
   for (const it of readIndex(src)) {
     if (ctx.limit && s.items >= ctx.limit) break
     if (!it.file || it.status === 204) continue
+    // deterministic sample (SPEC 63 HV-3): wikipedia-uk takes every `stride`-th item file in index order, so N reaches the target without holding the whole dump
+    if (src === 'wikipedia-uk' && ctx.stride > 1 && seen++ % ctx.stride !== 0) continue
     const buf = readItem(src, it.file); if (!buf) continue
     s.items++; licence = it.licence
     const ym = (it.date ?? '').slice(0, 7) || null
@@ -195,6 +200,13 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
       addForms(entries, j.forms, null); s.tokens += j.n
       const range = yearRange(it.date) ?? (it.debut ? [Number(it.debut), 2026] : null)
       items.push({ id: it.id, title: it.title, author: it.author, date: range, dateBasis: it.date ? 'source' : 'debut-year (poem date not stated)', region: it.region, tokens: j.n, quote: j.quote, url: it.url, p2: it.p2, witnessType: it.witnessType })
+      continue
+    }
+    if (src === 'user-books') {   // owner-supplied Lukash translations: raw text per part, vocabulary + ≤ 2-line quote only
+      const text = buf.toString('utf8'), f = countText(text); addForms(entries, f, null)
+      const n = Object.values(f).reduce((a, b) => a + b, 0); s.tokens += n
+      const q = text.replace(/\s+/g, ' ').trim().split(/(?<=[.!?…])\s+/).slice(0, 2).join(' ').slice(0, 240)
+      items.push({ id: it.id, title: it.title, author: it.author, date: yearRange(it.date), dateBasis: 'source', region: it.region, tokens: n, quote: [q], url: it.url, p2: it.p2, witnessType: it.witnessType })
       continue
     }
     if (src === 'gramoty') {
@@ -216,12 +228,12 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
   return s
 }
 
-const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative' }
+const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative' }
 const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky']
 
 export async function main(argv: string[]) {
   const arg = (k: string) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined }
-  const ctx: Ctx = { out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), manifestIa: new Set(), manifestWs: new Set() }
+  const ctx: Ctx = { out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), stride: Number(arg('--wiki-stride') ?? 1), manifestIa: new Set(), manifestWs: new Set() }
   mkdirSync(ctx.out, { recursive: true })
   try {
     const { MANIFEST } = await import('./manifest.ts')

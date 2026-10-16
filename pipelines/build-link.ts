@@ -94,7 +94,15 @@ function muOptions(t: TypeCtx, env: Env): Option[] {
  *  (PVL «с» = з, TOROT tags some of them Pk «себе»); it goes to its preposition lemma (с → з). The reflexive enclitic сѧ / ся is a different spelling and keeps себе. */
 export const ONE_LETTER_PREP: ReadonlySet<string> = new Set(['с', 'в', 'к', 'у', 'о', 'з'])
 const PREP_LEMMA: Record<string, string> = { с: 'з' }
-export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
+/** MM-2a: a token written with a lower-case initial prefers common-noun (non-:prop) analyses; a surname / proper-name reading (VESUM «Хомік») is kept only when nothing else links. */
+const isProp = (o: Option) => /:prop\b/.test(':' + o.hit.tags)
+export function preferCommon(t: TypeCtx, r: { route: Route; opts: Option[] } | undefined): { route: Route; opts: Option[] } | undefined {
+  if (!r || !t.raw || t.raw[0] === t.raw[0]!.toUpperCase() && t.raw[0] !== t.raw[0]!.toLowerCase()) return r
+  const common = r.opts.filter(o => !isProp(o))
+  return common.length && common.length < r.opts.length ? { route: r.route, opts: common } : r
+}
+export function linkOptions(t: TypeCtx, env: Env) { return preferCommon(t, linkOptionsPrep(t, env)) }
+function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)
   if (!ONE_LETTER_PREP.has(k1)) return linkOptionsCore(t, env)
   const lemma = PREP_LEMMA[k1] ?? k1
@@ -114,7 +122,7 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
     const corr = row ? { row, old: lemma } : undefined
     const via = (l: string, c0?: typeof corr): Option[] => env.derive(l, t.oldI).candidates.flatMap(c => {
       const k = key(c.form)
-      return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || vesumClass(h.tags) === c0.row.cls)).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
+      return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || (vesumClass(h.tags) === c0.row.cls && !/:prop\b/.test(':' + h.tags)))).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
     })
     const viaCorr = corr ? gated(via(corr.row.modern, corr)) : []
     return viaCorr.length ? viaCorr : gated(via(lemma))

@@ -490,3 +490,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › хомѣкъ lemma → хом'як (common noun), labelled cognate link, not the surname «Хомік» |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › the lemma-less token хомѣки also links to хом'як |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › lower-case token: the surname reading is dropped when a common noun exists; a capitalised token and a surname-only token keep it |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › no uncited sound rule: the standard derivation of хомѣки still gives хоміки (no ѣ > 'а after a labial rule exists) |
+| MM-2 | tests/fx.test.ts › MM-2 хомѣки: common noun over surname, cognate link without an invented sound rule › real data (after a rebuild with MM-2): a хом'як card exists with the PVL spelling, and no «Хомік» card carries хомѣки |
