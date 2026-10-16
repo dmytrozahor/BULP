@@ -173,7 +173,7 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
     expect(unpackCore(cards)).toBe(cards); expect(isFull(cards[0]!)).toBe(true); expect(isFull(splitCard(cards[0]!).core)).toBe(false)
   })
   it('bucketOf is stable: pinned values, NFC-invariant, in range; the browser imports this very function', () => {
-    expect([bucketOf('слово'), bucketOf('кънѧзь'), bucketOf('вода')]).toEqual([3653, 3318, 3581])
+    expect([bucketOf('слово'), bucketOf('кънѧзь'), bucketOf('вода')]).toEqual([32325, 27894, 15869])
     expect(bucketOf('й')).toBe(bucketOf('й'))   // й precomposed vs и + combining breve
     for (const l of ['а', 'слово', 'ѣ', 'ґанок', '']) { expect(bucketOf(l)).toBeGreaterThanOrEqual(0); expect(bucketOf(l)).toBeLessThan(BUCKETS) }
     expect(readFileSync('src/composables/useData.ts', 'utf8')).toMatch(/import \{[^}]*bucketOf[^}]*\} from '\.\.\/\.\.\/core\/shard\.ts'/)
@@ -191,7 +191,11 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
       for (const f of files) for (const l of unpackShard(JSON.parse(readFileSync(join(dir, 'lex', f), 'utf8'))).keys()) { seen.set(l, (seen.get(l) ?? 0) + 1); expect(bucketOf(l), l).toBe(+f.replace('.json', '')) }
       expect(seen.size).toBe(60); expect([...seen.values()].every(n => n === 1)).toBe(true); expect(st.shards).toBe(files.length)
       expect(readFull(dir)).toEqual(cs)
-      expect(() => writeLexicon(cs, dir, 1000)).toThrow(/core/); expect(() => writeLexicon(cs, dir, 1e9, 100)).toThrow(/shard/)
+      expect(() => writeLexicon(cs, dir, 1000)).toThrow(/core.*sanity cap/); expect(() => writeLexicon(cs, dir, 1e9, 100)).toThrow(/shard/)
+      // B-5a amendment 2026-10-17: the per-column byte breakdown accounts for the whole core file (columns + pool + tag table, plus the JSON punctuation between them)
+      const sum = Object.values(st.fields).reduce((a, b) => a + b, 0)
+      expect(Object.keys(st.fields)).toEqual(expect.arrayContaining(['lemma', 'pos', 'paradigm', 'forms', 'first', 'claims', 'stats', 'ev (pool)', 'tags (table)']))
+      expect(st.bytes - sum).toBeGreaterThanOrEqual(0); expect(st.bytes - sum).toBeLessThan(200)
     } finally { rmSync(dir, { recursive: true, force: true }) }
   })
   it('EP-1.5 an over-budget shard first drops ctx, then caps cells at 2 — n, ex and cells are never dropped', () => {

@@ -41,7 +41,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | M-5.4 | tests/core.test.ts › G² is symmetric and zero for equal rates |
 | M-5.5 | tests/gaps.test.ts › M-5.5 collocations |
 | M-5.6 | tests/core.test.ts › smoothing keeps nulls out |
-| M-6 | tests/gaps.test.ts › M-6 the three data files exist; core ≤ 15 MiB holds every kept lemma, each detail shard ≤ 256 KiB |
+| M-6 | tests/gaps.test.ts › M-6 the three data files exist; core holds every kept lemma under the 256 MiB sanity cap (B-5a amendment 2026-10-17: build intermediate, the site loads cd/ + ix/ parts), each detail shard ≤ 256 KiB (epochs included), lexindex under its 64 MiB sanity cap |
 | B-1.1 | tests/build.test.ts › author record without evidence needs a Q authorEvidence |
 | B-2.1 | tests/build.test.ts › B-2.1 ambiguity resolution order |
 | B-2.2 | tests/build.test.ts › nothing → undefined (unresolved tokens are never guessed, B-2.2) |

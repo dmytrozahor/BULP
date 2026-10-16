@@ -63,7 +63,9 @@ import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-voca
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
-const CORE_LIMIT = 15 * 1024 * 1024, SHARD_LIMIT = 256 * 1024   // SPEC 20 B-5a / B-5b (raised 192 → 256 KiB for SPEC 50 epoch paradigms, see B-5b)
+// SPEC 20 B-5a amendment 2026-10-17: lexicon.json is a build intermediate (the site loads boot.json + ix/ + cd/ parts, SPEC 63 PF), so its 15 MiB download limit is replaced by a sanity cap
+// that fails loudly (JSON.stringify of the whole file must stay far below V8's ~512 MiB string limit); the transfer budgets live in pipelines/budget.ts and the per-shard limits below.
+const CORE_LIMIT = 256 * 1024 * 1024, SHARD_LIMIT = 256 * 1024   // SPEC 20 B-5a (sanity cap) / B-5b (raised 192 → 256 KiB for SPEC 50 epoch paradigms, see B-5b)
 const execP = promisify(execFile)
 
 interface NlpOut { model: string; outOfDomain?: boolean; tokens: ({ lemma?: string; upos?: string; feats?: string | null } | null)[] }
@@ -547,7 +549,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   const lexIdxJson = JSON.stringify(lexindex)
   const budget = writeLexicon(cards, PUB)   // B-5: core + detail shards, nothing dropped
   cvLater()
-  lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB, ${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
+  lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB (${fmtBreakdown(budget.fields)}),${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
   lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB, torot.refs) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
   writeFileSync(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeFileSync(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
     [['arch', 'PV-7 Архангельське Євангеліє 1092'], ['o18_26', 'PV-6 Прокопович «Владимир» 1705']].flatMap(([id, what]) => { const x = adm.findIndex(a => a.w.id === id); return x < 0 ? [] : [{ id: id!, what: what!, n: adm[x]!.w.tokens.length, linked: wLinked.get(id!) ?? 0 }] }))
@@ -607,14 +609,27 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
 const lemmaStatsInput = (la: LemmaAcc): Counts => ({ f: la.f, perW: la.perW, perEpoch: la.perEpoch, perCentury: la.perCentury })
 
-export interface LexStats { bytes: number; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number] }
+/** bytes of each column of the packed core (wire form [lemma, pos, paradigm, forms, first, claims, stats, paradigmKind?]) plus the evidence pool and tag table — what the core file is made of */
+const WIRE_COLUMNS = ['lemma', 'pos', 'paradigm', 'forms', 'first', 'claims', 'stats', 'paradigmKind'] as const
+export function coreBreakdown(core: ReturnType<typeof packCore>): Record<string, number> {
+  const out: Record<string, number> = Object.fromEntries(WIRE_COLUMNS.map(c => [c, 0]))
+  for (const w of core.cards) (w as unknown[]).forEach((v, i) => { out[WIRE_COLUMNS[i] ?? `col${i}`]! += Buffer.byteLength(JSON.stringify(v)) + 1 })
+  out['ev (pool)'] = Buffer.byteLength(JSON.stringify(core.ev)); out['tags (table)'] = Buffer.byteLength(JSON.stringify(core.tags))
+  if (!out['paradigmKind']) delete out['paradigmKind']
+  return out
+}
+export const fmtBreakdown = (f: Record<string, number>) => Object.entries(f).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${(n / 1048576).toFixed(2)}`).join(', ') + ' MiB'
+
+export interface LexStats { bytes: number; fields: Record<string, number>; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number] }
 /**
  * B-5 (amendment 2026-10-11): writes <dir>/lexicon.json (core, ALL cards, evidence pooled) and <dir>/lex/<bucket>.json (detail shards, one per non-empty bucket; each lemma in exactly one).
  * Stale shards are removed first. Throws when core or a shard exceeds its limit — lemmas are never dropped to make it fit.
  */
 export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_LIMIT, shardLimit = SHARD_LIMIT): LexStats {
   const parts = cards.map(splitCard), core = packCore(parts.map(p => p.core)), json = JSON.stringify(core), bytes = Buffer.byteLength(json)
-  if (bytes > coreLimit) throw new Error(`lexicon.json core ${bytes} B exceeds ${coreLimit} B (B-5a): move fields to LemmaDetail instead of dropping lemmas`)
+  const fields = coreBreakdown(core)
+  console.log(`  lexicon.json core ${bytes} B, ${cards.length} lemmas, per field: ${fmtBreakdown(fields)}`)
+  if (bytes > coreLimit) throw new Error(`lexicon.json core ${bytes} B exceeds the ${coreLimit} B sanity cap (B-5a; fields: ${fmtBreakdown(fields)}): move fields to LemmaDetail instead of dropping lemmas`)
   const buckets = new Map<number, [string, LemmaDetail][]>()
   parts.forEach(p => { const b = bucketOf(p.core.lemma); (buckets.get(b) ?? buckets.set(b, []).get(b)!).push([p.core.lemma, p.detail]) })
   const lex = resolve(dir, 'lex'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
@@ -637,7 +652,7 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
   }
   sizes.sort((a, b) => a - b)
   writeFileSync(resolve(dir, 'lexicon.json'), json)
-  return { bytes, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2] }
+  return { bytes, fields, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2] }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -5,7 +5,8 @@
 import { packer, restore } from './pack.ts'
 import type { CoreCard, CoreStats, FirstAttestation, LemmaCard, LemmaDetail, Shard } from './types.ts'
 
-export const BUCKETS = 4096
+/** 32768 (B-5b amendment 2026-10-17: 74,739 kept lemmas at 10 M tokens, ~7.5x the 9,867 that 4096 buckets were sized for; keeps ~2 lemmas per detail shard like before) */
+export const BUCKETS = 32768
 /** FNV-1a (32 bit) over the UTF-16 code units of the NFC lemma, modulo the bucket count. */
 export function bucketOf(lemma: string, buckets = BUCKETS): number {
   let h = 0x811c9dc5
