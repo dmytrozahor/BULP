@@ -71,11 +71,22 @@ body:
         - unknown / не знаю
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        **Row format / Формат рядка.** One book per line, cells separated by `|`; keep the header line. Empty cells inherit the shared defaults. Required in every row: title, year or range (as stated by the source, never a guess), url. A pasted CSV with the same columns is also accepted.
+
+        Одна книжка в рядку, клітинки розділені `|`; заголовок залишайте. Порожні клітинки беруть спільні значення. Обов'язково в кожному рядку: title, рік або діапазон (як у джерелі, не вгадувати), url. Вставлений CSV з тими самими колонками теж приймається.
+
+        Examples / Приклади:
+
+        - `Лексис, сиречь реченія | Лаврентій Зизаній | 1596 | http://litopys.org.ua/zyzlex/zyz.htm | Middle Ukrainian | Church Slavonic | | братська школа | dictionary | public domain | словник`
+        - `Лексіконъ славенорѡсскїй | Памво Беринда | 1627 | http://litopys.org.ua/berlex/be.htm | Middle Ukrainian | Church Slavonic | Київ | | dictionary | public domain | словник`
   - type: textarea
     id: books
     attributes:
       label: Books / Книжки
-      description: "One book per line, cells separated by | ; the header line must stay. Empty cells inherit the shared defaults. Required per row: title, year or range (as stated by the source, never a guess), url. A pasted CSV with the same columns is also accepted. / Одна книжка в рядку, клітинки розділені символом | ; заголовок залишайте. Порожні клітинки беруть спільні значення. Обов'язково в кожному рядку: title, рік або діапазон (як у джерелі, не вгадувати), url. Вставлений CSV з тими самими колонками теж приймається. Example rows / Приклади: Лексис, сиречь реченія | Лаврентій Зизаній | 1596 | http://litopys.org.ua/zyzlex/zyz.htm | Middle Ukrainian | Church Slavonic | | братська школа | dictionary | public domain | словник ;; Лексіконъ славенорѡсскїй | Памво Беринда | 1627 | http://litopys.org.ua/berlex/be.htm | Middle Ukrainian | Church Slavonic | Київ | | dictionary | public domain | словник"
+      description: One book per line, `|`-separated, header kept. / Одна книжка в рядку, розділювач `|`, заголовок залишити.
       render: text
       value: "title | author | year or range | url | epoch | language | region | school | genre | licence | tags"
     validations:

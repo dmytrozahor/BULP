@@ -1,0 +1,51 @@
+name: Proposal / Пропозиція
+description: A feature, a correction, a source, a rule or a spec addition / Функція, виправлення, джерело, правило чи доповнення специфікації (SPEC 63 BQ-7)
+title: "[proposal] "
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Proposals are triaged (BQ-2) and acted on only after the owner adds the label `approved`. For books use the **Book proposal** or **Book list** form instead.
+
+        Дякуємо! Пропозиції перевіряють (BQ-2) і виконують лише після того, як власник додасть мітку `approved`. Для книжок використайте форму **Book proposal** або **Book list**.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind / Вид
+      options:
+        - new feature or view / нова функція чи вигляд
+        - data or word-card correction (link the card below) / виправлення даних чи картки слова (дайте посилання нижче)
+        - source or dictionary to add (other than a book) / джерело чи словник (не книжка)
+        - rule or linguistic claim (requires a citation) / правило чи лінгвістичне твердження (потрібна цитата)
+        - spec addition (new or changed SPEC item) / доповнення специфікації (новий чи змінений пункт SPEC)
+        - other / інше
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Title / Заголовок
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description / Опис
+      description: What should change and why? Drag screenshots into this field. / Що змінити і чому? Перетягніть скриншоти в це поле.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence or sources / Докази або джерела
+      description: Links, quotes with page numbers. Linguistic claims follow "no cite, no rule". / Посилання, цитати зі сторінками. Лінгвістичні твердження — за принципом «немає джерела — немає правила».
+    validations:
+      required: false
+  - type: input
+    id: url
+    attributes:
+      label: Affected card or page URL (optional) / Посилання на картку чи сторінку (необов'язково)
+      description: E.g. https://dmytrozahor.github.io/BULP/ followed by the card path. / Наприклад https://dmytrozahor.github.io/BULP/ і шлях до картки.
+    validations:
+      required: false
