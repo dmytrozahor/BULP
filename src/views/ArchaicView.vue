@@ -3,17 +3,16 @@
  * SPEC 63 AR-1/AR-2 /ar/:id — card of an archaic lemma: a headword of the historical dictionary (BL-11) that VESUM does not know, or an `unverified` recurring unresolved cluster.
  * Everything shown is the dictionary's own header line (quote + locator) and the corpus lines; what no source states is «невідомо».
  */
-import { computed, ref, watch } from 'vue'
-import { archId, type ArchDict, type ArchEntry, type ArchFile } from '../../core/archaic.ts'
+import { computed } from 'vue'
+import type { ArchDict, ArchEntry } from '../../core/archaic.ts'
 import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
-import { loadArchaic } from '../lib/torotData.ts'
+import { archEntryOf } from '../lib/torotData.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
 const props = defineProps<{ id: string }>()
-const file = ref<ArchFile>(), err = ref('')
-watch(() => props.id, () => { loadArchaic().then(f => (file.value = f), e => (err.value = String(e))) }, { immediate: true })
+const found = computed(() => archEntryOf(props.id)), err = ''   // PF-1: the entry's bucket shard (tc/arch), not archaic.json
 /** NV-4: the lookup is case-insensitive (Приборниця = приборниця) */
-const e = computed<ArchEntry | undefined>(() => file.value?.entries.find(x => x.id === archId(props.id)))
+const e = computed<ArchEntry | undefined>(() => found.value.value)
 const { witnessById } = useData()
 const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 const GLOSS_LANG = ['рос.', 'чес.', 'нім.']
@@ -30,7 +29,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
 <template>
   <p class="small sans"><RouterLink to="/texts">← тексти</RouterLink></p>
   <p v-if="err" class="muted sans">{{ err }}</p>
-  <div v-else-if="!file" class="skeleton" style="height:4rem" />
+  <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!e" class="muted sans">Архаїчної картки «{{ id }}» немає.</p>
   <template v-else>
     <h1>{{ e.head }} <small class="muted sans">{{ badge }}</small></h1>

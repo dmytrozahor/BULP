@@ -3,14 +3,14 @@
  * SPEC 63 PV-3 /name/:id and PV-5 /orv/:id — in-site card of a TOROT lemma that has no (VESUM-linked) modern lemma: a proper name (POS Ne) or an ORV-only lemma.
  * Everything shown is TOROT's own annotation (lemma, part-of-speech, morphology, citation-part); gloss and person/place type are «unknown» unless a cited source gives them.
  */
-import { computed, ref, watch } from 'vue'
-import type { NameCard, OrvCard, TorotFile } from '../../core/torot.ts'
-import { loadTorot } from '../lib/torotData.ts'
+import { computed } from 'vue'
+import type { NameCard, OrvCard } from '../../core/torot.ts'
+import { torotCard } from '../lib/torotData.ts'
 import { textTo, witnessTo, wordTo } from '../lib/nav.ts'
 const props = defineProps<{ id: string; kind: 'name' | 'orv' }>()
-const file = ref<TorotFile>(), err = ref('')
-watch(() => props.kind, () => { loadTorot().then(f => (file.value = f), e => (err.value = String(e))) }, { immediate: true })
-const card = computed<NameCard | OrvCard | undefined>(() => (props.kind === 'name' ? file.value?.names : file.value?.orv)?.find(c => c.id === props.id))
+const found = computed(() => torotCard(props.kind, props.id))   // PF-1: the card's own bucket shard (tc/), not torot.json
+const card = computed<NameCard | OrvCard | undefined>(() => found.value.value)
+const err = ''
 const asName = computed(() => (props.kind === 'name' ? (card.value as NameCard | undefined) : undefined))
 const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | undefined) : undefined))
 </script>
@@ -18,7 +18,7 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
 <template>
   <p class="small sans"><RouterLink to="/texts">← тексти</RouterLink></p>
   <p v-if="err" class="muted sans">{{ err }}</p>
-  <div v-else-if="!file" class="skeleton" style="height:4rem" />
+  <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!card" class="muted sans">Картки «{{ id }}» немає в TOROT-даних.</p>
   <template v-else>
     <h1>{{ card.lemma }} <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1>

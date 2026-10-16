@@ -16,7 +16,7 @@ import MediaPanel from './MediaPanel.vue'
 import { hasMedia, resolveMedia } from '../lib/sophiaData.ts'
 import type { WitnessMedia } from '../lib/media.ts'
 import { useData } from '../composables/useData.ts'
-import { phrasesOf, songOfWitness, useSongs, usePhrases } from '../lib/datasets.ts'
+import { phrasesFor, phrasesOf, songOfWitness, useSongs } from '../lib/datasets.ts'
 import { phraseTo } from '../lib/nav.ts'
 const { witnessById } = useData()
 const songs = useSongs()   // lazy songs.json: a witness that is a song links to /songs/:id
@@ -28,11 +28,11 @@ const showMedia = async (i: number, w: string) => {
   try { media.value = await resolveMedia(w, wm(w)) } catch { mediaErr.value = true }
 }
 const props = defineProps<{ lines: Kwic[]; limit?: number; lemma?: string; /** SPEC 63 PH: the node is a whole phraseme, not one word form (no /f link) */ plain?: boolean }>()
-const phr = props.lemma && !props.plain ? usePhrases() : undefined   // SPEC 63 PH: a line that contains a phraseme candidate of this lemma links to its page (/p/:id)
+const phr = computed(() => (props.lemma && !props.plain ? phrasesFor(props.lemma) : undefined))   // SPEC 63 PH: a line that contains a phraseme candidate of this lemma links to its page (/p/:id)
 const phraseOf = (k: Kwic) => {
   if (!props.lemma || props.plain) return undefined
   const t = `${k.left} ${k.node} ${k.right}`.toLowerCase(), n = k.node.toLowerCase()
-  return phrasesOf(phr?.value, props.lemma).find(p => p.id && p.spellings.some(s => s.length > n.length && s.includes(n) && t.includes(s)))
+  return phrasesOf(phr.value, props.lemma).find(p => p.id && p.spellings.some(s => s.length > n.length && s.includes(n) && t.includes(s)))
 }
 /** BL-6: the node word links to its form page (/f/:form), the lemma disambiguates shared spellings */
 const formTo = (k: Kwic) => ({ path: `/f/${k.node}`, query: props.lemma ? { lemma: props.lemma } : {} })

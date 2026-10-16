@@ -6,10 +6,10 @@
  * The detail blocks are the lexicon card's own components (ThinCard).
  */
 import { computed, ref, watch } from 'vue'
-import { loadLight } from '../lib/torotData.ts'
+import { lightRow } from '../lib/torotData.ts'
+import { ixPrefix } from '../lib/parts.ts'
 import { loadCv } from '../lib/cardIndex.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
-import type { LightFile } from '../../pipelines/build-torot.ts'
 import type { CvEntry } from '../../core/cv.ts'
 import type { Kwic } from '../../core/types.ts'
 import { key } from '../../core/text.ts'
@@ -17,18 +17,29 @@ import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
 import ThinCard from '../components/ThinCard.vue'
 import IkavismChain from '../components/IkavismChain.vue'
-import { ikavismBase } from '../lib/lightcard.ts'
-import { findLoc } from '../lib/witnessText.ts'
-import { loadTokens } from '../lib/witnessText.ts'
+import { ikavismBaseRemote } from '../lib/lightcard.ts'
+import { findLoc, loadTokens } from '../lib/witnessText.ts'
 import { kwicAt } from '../lib/unlinked.ts'
 const props = defineProps<{ lemma: string }>()
-const file = ref<LightFile>(), cv = ref<CvEntry>(), err = ref(''), done = ref(false), kwic = ref<Kwic[]>([])
+const cv = ref<CvEntry>(), err = ref(''), cvDone = ref(false), kwic = ref<Kwic[]>([])
 const { annData, loaded, witnessById, byLemma } = useData()
-watch(() => props.lemma, async () => {
-  done.value = false; cv.value = undefined; kwic.value = []
-  try { await Promise.all([loadLight().then(f => (file.value = f)), loadCv(props.lemma).then(e => (cv.value = e))]) } catch (e) { err.value = String(e) }
-  done.value = true
-  // KWIC of the corpus example (light row) and of the first dictionary lines, cut from the text shards
+watch(() => props.lemma, () => {
+  cvDone.value = false; cv.value = undefined
+  loadCv(props.lemma).then(e => (cv.value = e)).catch(e => (err.value = String(e))).finally(() => (cvDone.value = true))
+}, { immediate: true })
+const found = computed(() => lightRow(props.lemma))   // PF-1: the card's bucket shard (tc/light), not light.json
+const row = computed(() => found.value.value)
+const done = computed(() => cvDone.value && found.value.ready)
+const word = computed(() => row.value?.[0] ?? cv.value?.[0] ?? props.lemma)
+const tags = computed(() => row.value?.[1] ?? cv.value?.[1] ?? '')
+/** GZ-4: the stem relative that proves the о/е > і alternation (покірність ~ покора) */
+const base = ref<string[]>([])
+watch(row, async r => { base.value = r ? await ikavismBaseRemote(r[0], async pre => (await ixPrefix(pre)).map(e => e[0]).sort()) : [] }, { immediate: true })
+const ex = computed(() => { const [w, loc, raw] = (row.value?.[3] ?? '').split('|'); return w ? { w, loc: loc ?? '', raw: raw ?? '' } : undefined })
+let kwicSeq = 0
+watch([done, cv, row], async () => {
+  const n = ++kwicSeq
+  if (!done.value) { kwic.value = []; return }
   const srcs = [ex.value, ...(cv.value?.[3] ?? []).slice(0, 2).map(a => ({ w: a[0], loc: a[1], raw: a[2] }))].filter((x): x is { w: string; loc: string; raw: string } => !!x)
   const out: Kwic[] = []
   for (const s of srcs) {
@@ -36,14 +47,8 @@ watch(() => props.lemma, async () => {
     const i = findLoc(toks, s.loc), k = i >= 0 ? kwicAt(toks, i, s.w) : undefined
     if (k) out.push({ ...k, date: witnessById.value.get(s.w)?.date ?? [0, 0] })
   }
-  kwic.value = out
+  if (n === kwicSeq) kwic.value = out
 }, { immediate: true })
-const row = computed(() => file.value?.lemmas.find(l => l[0] === props.lemma) ?? file.value?.lemmas.find(l => key(l[0]) === key(props.lemma)))
-const word = computed(() => row.value?.[0] ?? cv.value?.[0] ?? props.lemma)
-const tags = computed(() => row.value?.[1] ?? cv.value?.[1] ?? '')
-/** GZ-4: the stem relative that proves the о/е > і alternation (покірність ~ покора) */
-const base = computed(() => (row.value && loaded.value ? ikavismBase(row.value[0], annData.value.search.keys) : []))
-const ex = computed(() => { const [w, loc, raw] = (row.value?.[3] ?? '').split('|'); return w ? { w, loc: loc ?? '', raw: raw ?? '' } : undefined })
 const wt = (id: string) => witnessById.value.get(id)?.title ?? id
 const wd = (id: string) => { const d = witnessById.value.get(id)?.date; return d ? (d[0] === d[1] ? String(d[0]) : `${d[0]}–${d[1]}`) : '' }
 const spelling = computed(() => ex.value?.raw || cv.value?.[3][0]?.[2] || word.value)

@@ -14,18 +14,12 @@ import { analyzeLink } from '../lib/analyze-links.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import { formTo, textTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { lookupUnlinked, occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
-import { loadLight } from '../lib/torotData.ts'
 import { uvOfSpelling } from '../lib/uvData.ts'
 import UserHypotheses from './UserHypotheses.vue'
-import { loadCardIndex } from '../lib/cardIndex.ts'
-import { cardMap } from '../../core/cv.ts'
+import { ixCards } from '../lib/parts.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
 const { byLemma, searchIdx, annData, witnessById } = useData()
 const entry = ref<UnlinkedEntry>(), state = ref<'loading' | 'done'>('loading'), lines = ref<UnlinkedKwic[]>([])
-const light = ref<ReadonlySet<string>>()
-loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
-const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()   // SPEC 63 CV-2: light / CV / archaic cards
-loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
 const uvCard = ref<{ group: string; head: string }>()   // SPEC 63 CV-4: the «неперевірена лема» card this spelling belongs to
 watch(() => props.form, f => { uvCard.value = undefined; uvOfSpelling(f).then(c => { if (f === props.form) uvCard.value = c }, () => undefined) }, { immediate: true })
 watch(() => props.form, async f => {
@@ -38,7 +32,7 @@ const occs = computed(() => (entry.value ? occurrencesOf(entry.value) : []))
 const para = computed(() => searchIdx.value.map.get(key(props.form)) ?? [])
 const d = computed(() => deriveWithSteps(props.form))
 const an = computed(() => runDetectors(props.form, annData.value))
-const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value, cards: cards.value }))
+const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards }))
 const cands = computed(() => d.value.candidates.filter(c => c.form !== props.form).map(c => ({ form: c.form, steps: c.steps.length, link: analyzeLink(c.form, ctx.value) })))
 const wit = (id: string) => witnessById.value.get(id)
 const ocr = computed(() => occs.value.some(o => /\bOCR\b/i.test(wit(o.w)?.title ?? '')))

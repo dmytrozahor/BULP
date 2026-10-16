@@ -1,12 +1,12 @@
 <script setup lang="ts">
 /** BL-12 word-card panel «Сталі сполучення»: phraseme candidates containing this lemma (model, P-1.7), every component word clickable. */
 import { computed } from 'vue'
-import { phrasesOf, usePhrases } from '../lib/datasets.ts'
+import { phrasesFor, phrasesOf } from '../lib/datasets.ts'
 import PhraseWords from './PhraseWords.vue'
 import { phraseTo } from '../lib/nav.ts'
 import Panel from './Panel.vue'
 const props = defineProps<{ lemma: string }>()
-const data = usePhrases()
+const data = computed(() => phrasesFor(props.lemma))   // PF-1: per-lemma shard, not phrases.json
 const rows = computed(() => phrasesOf(data.value, props.lemma).slice(0, 15))
 </script>
 <template>

@@ -10,6 +10,7 @@ import { heteronymKey } from '../../core/heteronyms.ts'
 import type { Phraseme } from '../../core/phrasemes.ts'
 import { detailShardOf, type PhraseDetail, type PhrasesDetailShard } from '../../core/phraseme-pages.ts'
 import type { Donor, DonorLabel, LabelLookup } from '../../core/loanwords.ts'
+import { lmPeek } from './parts.ts'
 
 const once = <T>(name: string, set: (v: T) => void): (() => void) => {
   let p: Promise<void> | undefined
@@ -18,8 +19,6 @@ const once = <T>(name: string, set: (v: T) => void): (() => void) => {
 
 // ── heteronym candidates ────────────────────────────────────────────────────────────────────
 export interface HeteronymCandidates { method: 'dictionary'; status: 'unknown'; source: string; note: string; forms: Record<string, string[]> }
-const het = shallowRef<HeteronymCandidates>()
-const loadHet = once<HeteronymCandidates>('heteronyms', v => { het.value = v })
 export interface DictCandidate { form: string; stresses: string[]; source: string; note: string; method: 'dictionary'; status: 'unknown' }
 /** pure: stress candidates for a spelling from the data (≥ 2 stresses); unverified, P-1.7 */
 export function candidatesIn(d: HeteronymCandidates | undefined, form: string): DictCandidate | undefined {
@@ -27,12 +26,10 @@ export function candidatesIn(d: HeteronymCandidates | undefined, form: string): 
   return d && s && s.length > 1 ? { form, stresses: s, source: d.source, note: d.note, method: 'dictionary', status: 'unknown' } : undefined
 }
 /** reactive: triggers the lazy load, re-evaluated by the computed that called it when the file arrives */
-export function dictCandidates(form: string): DictCandidate | undefined { loadHet(); return candidatesIn(het.value, form) }
+export function dictCandidates(form: string): DictCandidate | undefined { return candidatesIn(lmPeek<HeteronymCandidates>('heteronyms', heteronymKey(form)), form) }   // PF-1: the bucket shard of the spelling's key
 
 // ── Wiktionary donor labels ─────────────────────────────────────────────────────────────────
 export interface LoanLabelData { retrieved: string; licence: string; attribution: string; labels: Record<string, [string, string]>; multi?: Record<string, [string, string][]> }
-const loan = shallowRef<LoanLabelData>()
-const loadLoan = once<LoanLabelData>('loanlabels', v => { loan.value = v })
 const DONORS_UK: Record<string, string> = { pl: 'пол.', fr: 'фр.', en: 'англ.', de: 'нім.', ru: 'рос.', la: 'лат.', grc: 'грец.', cu: 'цсл.', tr: 'тур.', it: 'італ.', nl: 'нід.', hu: 'угор.' }
 /** pure: build the lookup from the data (tests call this without fetch) */
 export function makeLabelLookup(d: LoanLabelData | undefined): LabelLookup {
@@ -46,7 +43,7 @@ export function makeLabelLookup(d: LoanLabelData | undefined): LabelLookup {
   }
 }
 /** reactive `labels` lookup for analyzeLoan: empty until loanlabels.json arrives, then re-evaluated by every computed that called it */
-export const loanLabels: LabelLookup = lemma => { loadLoan(); return makeLabelLookup(loan.value)(lemma) as Claim<DonorLabel> | undefined }
+export const loanLabels: LabelLookup = lemma => makeLabelLookup(lmPeek<LoanLabelData>('loanlabels', lemma))(lemma) as Claim<DonorLabel> | undefined   // PF-1: lm/loanlabels bucket shard
 
 // ── songs ───────────────────────────────────────────────────────────────────────────────────
 export interface SongMedia { kind: 'youtube'; id: string; url: string; title: string; uploader?: string; role?: string; verified?: string }
@@ -73,6 +70,8 @@ export interface PhrasesData { generated: string; method: string; note: string; 
 const phrases = shallowRef<PhrasesData>()
 const loadPhrasesOnce = once<PhrasesData>('phrases', v => { phrases.value = v })
 export function usePhrases() { loadPhrasesOnce(); return phrases }
+/** PF-1: the phrases shard of a lemma's bucket (only candidates that contain one of the bucket's lemmas; reactive, undefined while loading) */
+export const phrasesFor = (lemma: string): PhrasesData | undefined => lmPeek<PhrasesData>('phrases', lemma.toLowerCase())
 /** pure: candidates that contain `lemma` (case-insensitive) */
 export const phrasesOf = (d: PhrasesData | undefined, lemma: string): Phraseme[] => (d?.candidates ?? []).filter(p => p.lemmas.some(l => l.replace(/^~/, '').toLowerCase() === lemma.toLowerCase()))
 

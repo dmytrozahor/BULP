@@ -7,7 +7,8 @@ import { useData } from '../composables/useData.ts'
 import { epochShort, fmtNum } from '../lib/format.ts'
 import { sourceTo, epochTo } from '../lib/nav.ts'
 import WitnessTable from '../components/WitnessTable.vue'
-const { corpus, loaded } = useData()
+const { corpus, loaded, ensureCorpus } = useData()
+ensureCorpus()
 const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
   const eps = EPOCHS.filter(e => e.scheme === sc && !e.overlay && corpus.value?.epochSizes[e.id])
   const max = Math.max(1, ...eps.map(e => corpus.value!.epochSizes[e.id]!))
@@ -25,7 +26,7 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.N) }}</strong><div class="small muted">слів (N)</div></div>
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.linked) }}</strong><div class="small muted">прив’язано до лем ({{ fmtNum(corpus.linked / corpus.N * 100, 1) }}%)</div></div>
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.unresolved) }}</strong><div class="small muted">не прив’язано (unresolved)</div></div>
-        <div><strong style="font-size:1.6rem">{{ corpus.witnesses.length }}</strong><div class="small muted">пам’яток</div></div>
+        <div><strong style="font-size:1.6rem">{{ corpus.nWitnesses }}</strong><div class="small muted">пам’яток</div></div>
       </div>
       <p class="small muted">Непрограмні токени не вгадуються — залишаються unresolved і лічаться (SPEC 10 M-3.3). Згенеровано: {{ corpus.generated }}.</p>
     </section>

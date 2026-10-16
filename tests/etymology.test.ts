@@ -56,7 +56,7 @@ describe('ET-3 conflict flag', () => {
 describe('ET word-card panel', () => {
   it('ET panel is in WordView and loads etymology.json lazily', () => {
     expect(rd('src/views/WordView.vue')).toContain('<EtymologyBlock')
-    expect(rd('src/lib/etymologyData.ts')).toContain('./data/etymology.json')
+    expect(rd('src/lib/etymologyData.ts')).toContain("lmLoad<EtymologyFile>('etymology'")   // PF-1: lm/etymology/<bucket>.json, not the whole file
     const b = rd('src/components/EtymologyBlock.vue')
     expect(b).toContain('CC BY-SA'); expect(b).toContain('hypotheses')
   })

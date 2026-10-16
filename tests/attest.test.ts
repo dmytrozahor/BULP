@@ -31,7 +31,7 @@ describe('NV-4 term-list headwords become cards', () => {
   })
   it('NV-4 the card shows the badge «технічний термін <рік>», the quoted equivalents and a case-insensitive id', () => {
     const v = rd('src/views/ArchaicView.vue')
-    expect(v).toMatch(/технічний термін \$\{t\.date\[0\]\}/); expect(v).toMatch(/Еквіваленти за списком/); expect(v).toMatch(/archId\(props\.id\)/)
+    expect(v).toMatch(/технічний термін \$\{t\.date\[0\]\}/); expect(v).toMatch(/Еквіваленти за списком/); expect(v).toMatch(/archEntryOf\(props\.id\)/); expect(rd('src/lib/torotData.ts')).toMatch(/archId\(form\)/)   // PF-1: the case-insensitive lookup lives in the per-card shard reader
     expect(rd('pipelines/build-archaic.ts')).not.toMatch(/date\[0\] >= 1800/)
   })
 })

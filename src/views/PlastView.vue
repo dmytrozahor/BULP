@@ -6,11 +6,9 @@ import Pagination from '../components/Pagination.vue'
 import { usePage } from '../composables/usePage.ts'
 import { plastAll, plastSearch, sociolectFile } from '../lib/sociolectData.ts'
 import { useData } from '../composables/useData.ts'
-import { loadCardIndex, wordCardTo } from '../lib/cardIndex.ts'
-import { cardMap } from '../../core/cv.ts'
+import { wordCardTo } from '../lib/cardIndex.ts'
+import { ixCards } from '../lib/parts.ts'
 const { searchIdx } = useData()
-const cardMp = ref<ReturnType<typeof cardMap>>()
-loadCardIndex().then(ci => { cardMp.value = cardMap(ci) }, () => undefined)
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
 watch(q, v => { const query: Record<string, unknown> = { ...route.query, q: v || undefined }; delete query.p; router.replace({ path: route.path, query: query as typeof route.query }) })
@@ -26,7 +24,7 @@ const pg = usePage(computed(() => rows.value.length))
     <p class="small muted sans">{{ rows.length }} записів</p>
     <ul class="results">
       <li v-for="e in pg.slice(rows)" :key="e.src + e.loc + e.w">
-        <RouterLink :to="wordCardTo(e.w, searchIdx, cardMp)">
+        <RouterLink :to="wordCardTo(e.w, searchIdx, ixCards)">
           <span class="lem">{{ e.w }}</span>
           <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
           <span class="small sans">«{{ e.g }}»</span>

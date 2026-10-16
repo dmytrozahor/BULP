@@ -31,10 +31,9 @@ import { loanLabels } from '../lib/datasets.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
 import { attestationOf, type Attested } from '../lib/attest.ts'
 import { formTo } from '../lib/nav.ts'
-import { loadArchaic, loadLight } from '../lib/torotData.ts'
-import { loadCardIndex } from '../lib/cardIndex.ts'
+import { loadArchEntry } from '../lib/torotData.ts'
+import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
-import { cardMap } from '../../core/cv.ts'
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -59,17 +58,13 @@ const parallelClaims = computed(() => Object.fromEntries(allClaims.value.filter(
 const spans = computed(() => (word.value && loaded.value ? annotateSyntax(word.value, annData.value, y.value) : []))   // SPEC 60 SX-4
 const open = ref<string | null>(null)
 /** SPEC 63 NV-2: every form shown here leads to its page (/w, /lw or /f); the rare-lemma set loads lazily */
-const light = ref<ReadonlySet<string>>()
-loadLight().then(f => { light.value = new Set(f.lemmas.map(l => l[0])) }, () => undefined)
-const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()   // SPEC 63 CV-2: light / CV / archaic cards
-loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
-const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, light: light.value, cards: cards.value })
+const ctx = () => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards })   // SPEC 63 CV-2 / PF-1: light / CV / archaic cards come from the same ix shards
 /** NV-4: a form found in a witness (dictionary headword card or unlinked text spelling) is «засвідчено», not a hypothesis; filled for the input, the normalised form and every candidate */
 const att = ref(new Map<string, Attested>())
 watch([d, word], async () => {
   if (!d.value) return
-  const forms = [...new Set([word.value, d.value.norm, ...d.value.candidates.map(c => c.form)])], arch = await loadArchaic().catch(() => undefined), m = new Map<string, Attested>()
-  await Promise.all(forms.map(async f => { const r = await attestationOf(f, { arch, witness: id => witnessById.value.get(id) }); if (r) m.set(f, r) }))
+  const forms = [...new Set([word.value, d.value.norm, ...d.value.candidates.map(c => c.form)])], m = new Map<string, Attested>()
+  await Promise.all(forms.map(async f => { const r = await attestationOf(f, { arch: loadArchEntry, witness: id => witnessById.value.get(id) }); if (r) m.set(f, r) }))
   att.value = m
 }, { immediate: true })
 const to = (form: string) => { const l = analyzeLink(form, ctx()); return l.kind === 'word' ? l.to : att.value.get(form)?.to ?? l.to }

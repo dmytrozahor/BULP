@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { key } from '../../core/text.ts'
+import { ixHitMap, ixLoaded } from '../lib/parts.ts'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
@@ -35,20 +36,23 @@ import { isOldForm, witnessTo } from '../lib/nav.ts'
 
 const props = defineProps<{ form: string }>()
 const route = useRoute()
-const { cards, loaded, corpus, fullOf, detailError, witnessById } = useData()
+const { byLemma, loaded, corpus, fullOf, detailError, witnessById } = useData()
 
 /** every (lemma, spelling) whose raw spelling is this one; falls back to the normalised key (KWIC nodes keep the surface case) */
+/** SPEC 63 PF: the lemmas that own a spelling come from the prefix shard of its key (ix/), their cards from the cd shards */
+const hitLemmas = computed(() => [...new Set((ixHitMap.get(key(props.form)) ?? []).map(h => h.lemma))])
+const resolving = computed(() => !ixLoaded(key(props.form)) || hitLemmas.value.some(l => !byLemma.value.get(l)))
 const matches = computed(() => {
-  if (!loaded.value) return []
+  if (!loaded.value || resolving.value) return []
   const exact = (f: { raw: string }) => f.raw === props.form, loose = (f: { raw: string }) => key(f.raw) === key(props.form)
   for (const test of [exact, (f: { raw: string }) => f.raw.toLowerCase() === props.form.toLowerCase(), loose]) {
-    const out = cards.value.flatMap(c => c.forms.filter(test).map(f => ({ lemma: c.lemma, raw: f.raw })))
+    const out = hitLemmas.value.flatMap(l => (byLemma.value.get(l)?.forms ?? []).filter(test).map(f => ({ lemma: l, raw: f.raw })))
     if (out.length) return out
   }
   return []
 })
 const pick = computed(() => matches.value.find(m => m.lemma === route.query.lemma) ?? matches.value[0])
-const core = computed(() => cards.value.find(c => c.lemma === pick.value?.lemma))
+const core = computed(() => (pick.value ? byLemma.value.get(pick.value.lemma) : undefined))
 const full = computed(() => fullOf(core.value))
 const fc = computed(() => full.value?.forms.find(f => f.raw === pick.value?.raw))
 const err = computed(() => pick.value ? detailError.get(pick.value.lemma) : undefined)
@@ -63,8 +67,8 @@ const rusyn = computed(() => fc.value?.claims.rusyn)
 const labelClaims = computed(() => Object.fromEntries(Object.entries(fc.value?.claims ?? {}).filter(([k]) => k !== 'rusyn')))
 /** SPEC 63 DP-2/DX-2: a spelling the corpus lacks may still be a rule-derived pronoun variant or a segmentable deictic: it gets a page too */
 const derivedOnly = computed(() => {
-  if (!loaded.value || pick.value) return undefined
-  for (const std of new Set(PRONOUN_VARIANTS.map(v => v.std))) { const s = cards.value.find(c => c.lemma === std); const h = s && deriveAll(std, s.paradigm).find(d => d.form === props.form); if (h) return { kind: 'dp' as const, h } }
+  if (!loaded.value || resolving.value || pick.value) return undefined
+  for (const std of new Set(PRONOUN_VARIANTS.map(v => v.std))) { const s = byLemma.value.get(std); const h = s && deriveAll(std, s.paradigm).find(d => d.form === props.form); if (h) return { kind: 'dp' as const, h } }
   const sg = segment(props.form)[0]; return sg ? { kind: 'dx' as const, sg } : undefined
 })
 const regionNames = computed(() => byRegion.value.filter(r => r.f).map(r => ({ name: corpus.value?.regions.find(x => x.code === r.code)?.name ?? r.code, f: r.f })))
@@ -79,7 +83,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 </script>
 
 <template>
-  <div v-if="!loaded"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
+  <div v-if="!loaded || resolving"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <template v-else-if="!pick && derivedOnly">
     <header class="wordhead headline"><h1 class="lemma">{{ form }}</h1>
       <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у словнику такого написання немає (P-1.7: виведена форма не є свідченням)</span>

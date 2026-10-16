@@ -6,7 +6,8 @@ import { AUTHOR_LABEL_UK, fmtDate, STATUS_UK } from '../lib/format.ts'
 import { witnessTo } from '../lib/nav.ts'
 import EvidenceList from '../components/EvidenceList.vue'
 const props = defineProps<{ id: string }>()
-const { loaded, corpus } = useData()
+const { loaded, corpus, ensureCorpus } = useData()
+ensureCorpus()
 const a = computed(() => authorInfo(props.id))
 const works = computed(() => (corpus.value?.witnesses ?? []).filter(w => w.author === props.id || w.author === a.value.id))
 </script>

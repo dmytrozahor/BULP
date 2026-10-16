@@ -17,7 +17,7 @@ import type { CellForm, CorpusMeta, EpochParadigms, FormCard, LemmaCard, LexInde
 import { MANIFEST } from './manifest.ts'
 import { AUTHORS } from './authors.ts'
 import { deriveWithSteps } from '../src/lib/derive.ts'
-import { runDetectors, type LexData } from '../src/lib/analyze.ts'
+import { emptyLex, runDetectors } from '../src/lib/analyze.ts'
 
 const FX = (loc: string, q: string) => D('FIXTURE', `pipelines/fixture.ts, ${loc}`, `[фікстура] ${q}`)
 
@@ -119,7 +119,7 @@ const SPECS: Spec[] = [
 ]
 
 // ── lexicon cards ────────────────────────────────────────────────────────────────────────────────
-const lex: LexData = { paradigmMap: new Map() }
+const lex = emptyLex()
 for (const s of SPECS) for (const [f, t] of s.paradigm) { const k = key(f); lex.paradigmMap.set(k, [...(lex.paradigmMap.get(k) ?? []), { lemma: s.lemma, tags: t }]) }
 
 const F_MAX = 4000

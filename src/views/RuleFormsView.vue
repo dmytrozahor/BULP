@@ -2,7 +2,8 @@
 /** SPEC 63 FD-5: every lexicon form on which one dialect feature fires (class of forms sharing the feature), ordered by the owner lemma's f; each links to its /f page. */
 import { computed } from 'vue'
 import { DIALECTS } from '../../core/rules.ts'
-import { dialectRule, featureOf, ruleForms } from '../../core/form-class.ts'
+import { dialectRule, featureOf } from '../../core/form-class.ts'
+import { ruleFormsOf } from '../lib/parts.ts'
 import { useData } from '../composables/useData.ts'
 import { fmtNum } from '../lib/format.ts'
 import { formTo, ruleTo, wordTo } from '../lib/nav.ts'
@@ -10,8 +11,8 @@ import EvidencePopover from '../components/EvidencePopover.vue'
 import Pagination from '../components/Pagination.vue'
 import { usePage } from '../composables/usePage.ts'
 const props = defineProps<{ rule: string }>()
-const { cards, loaded } = useData()
-const rows = computed(() => (loaded.value ? ruleForms(props.rule, cards.value) : []))
+const { loaded } = useData()
+const rows = computed(() => (loaded.value ? ruleFormsOf(props.rule) : []))
 const pg = usePage(computed(() => rows.value.length))   // SPEC 63 NV-1
 const shown = computed(() => pg.slice(rows.value))
 const rules = computed(() => { const r = dialectRule(props.rule); return r ? [r] : [] })

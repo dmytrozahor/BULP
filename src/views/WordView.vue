@@ -79,9 +79,10 @@ const first = computed(() => card.value && isKnown(card.value.first) ? card.valu
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
 const firstWho = computed(() => first.value ? authorInfo(first.value.author, firstW.value).name : '')
 /** Legend samples from this lemma's own data: an attested spelling, plus the reverse() reconstructions of the lemma (confirmed by a spelling in the corpus / hypothesis only). */
+const legendOpen = ref(false)
 const legendSample = computed(() => {
   const c = card.value, out: { attested?: string; derived?: string; confirmed?: string } = { attested: c?.forms[0]?.raw }
-  if (c && loaded.value) {
+  if (c && loaded.value && legendOpen.value) {   // PF: the reconstruction (many ix lookups) runs only when the legend is opened
     try {
       for (const r of reconstruct(c.lemma, searchIdx.value, byLemma.value, att.value).candidates) {
         if (r.status === 'confirmed-by-attestation') out.confirmed ??= r.form; else out.derived ??= r.form
@@ -205,7 +206,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
       <p v-if="active" class="small sans muted">Панелі відфільтровано за написанням «{{ active }}».</p>
     </header>
 
-    <details class="legendbox"><summary class="small sans muted">Умовні позначення форм</summary>
+    <details class="legendbox" @toggle="legendOpen = ($event.target as HTMLDetailsElement).open"><summary class="small sans muted">Умовні позначення форм</summary>
       <FormLegend :epoch="isNoun" :attested="legendSample.attested" :derived="legendSample.derived" :confirmed="legendSample.confirmed" /></details>
     <div class="cols">
       <div>
@@ -319,7 +320,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <div v-if="full" class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - full.stats.dp, 2) }}</strong></span>
             <EvidencePopover :evidence="[STAT_CITES.dp!]" heading="Дисперсія DP (Gries)"><span class="badge">ⓘ</span></EvidencePopover>
             <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - full.stats.dp, 2)}`"><i :style="{ width: (1 - full.stats.dp) * 100 + '%' }"></i></div>
-            <span class="muted">у {{ full.stats.range }} із {{ corpus?.witnesses.length }} пам’яток</span></div>
+            <span class="muted">у {{ full.stats.range }} із {{ corpus?.nWitnesses }} пам’яток</span></div>
           <div v-else class="skeleton" style="height:2.5rem" />
         </Panel>
         <Panel id="h-stx" :open="false" title="Як читати статистику" summary="пояснення показників"><StatsExplainer :card="card" /></Panel>

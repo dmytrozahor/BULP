@@ -3,11 +3,6 @@ import { cardMap, cardRoute, cvBucket, cvShardUrl, lk, type CardHit, type CardIn
 import { key } from '../../core/text.ts'
 import type { SearchIndex } from './search.ts'
 
-let ip: Promise<CardIndexFile> | undefined
-export function loadCardIndex(): Promise<CardIndexFile> {
-  ip ??= fetch('./data/cardindex.json').then(r => { if (!r.ok) throw new Error(`cardindex.json: HTTP ${r.status}`); return r.json() as Promise<CardIndexFile> }).catch(e => { ip = undefined; throw e })
-  return ip
-}
 
 /** A SearchIndex over the card index (Hit.lemma = `<kind>:<id>`), so search() ranks exact / prefix / substring exactly as for lexicon cards. */
 export function cardSearchIndex(ci: CardIndexFile): SearchIndex {
@@ -27,7 +22,7 @@ export async function loadCv(word: string): Promise<CvEntry | undefined> {
 }
 
 /** SPEC 63 SL / CV: the word card of a Plast headword (a lexicon lemma, else a light / CV / archaic card, else its own /lw card); lookup via lk(), the source spelling is not altered */
-export function wordCardTo(w: string, lex: SearchIndex, cards?: Map<string, CardHit[]>): string {
+export function wordCardTo(w: string, lex: SearchIndex, cards?: { get(k: string): CardHit[] | undefined }): string {
   const k = lk(w), h = lex.map.get(k)?.find(x => x.via === 'lemma')
   if (h) return `/w/${encodeURIComponent(h.lemma)}`
   const c = cards?.get(k)?.[0]

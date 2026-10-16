@@ -3,12 +3,16 @@
  * > "Search key: NFC, no stress, lower case, one apostrophe." — core/text.ts key()
  * Old letters ѣ ъ ы ѧ are indexed as written AND via stage-N normalisation, so the user may type either.
  */
-import type { CoreCard, VesumHit } from '../../core/types.ts'
+import type { CoreCard } from '../../core/types.ts'
 import { key, normalizeOld } from '../../core/text.ts'
 
 export type Via = 'lemma' | 'form' | 'paradigm'
 export interface Hit { lemma: string; form: string; via: Via }
-export interface SearchIndex { map: Map<string, Hit[]>; keys: string[] }
+/** the lookup surface the annotator / analyser use: a Map, or the shard-backed facade of src/lib/parts.ts (SPEC 63 PF-3) */
+export interface HitMap { get(k: string): Hit[] | undefined; has(k: string): boolean }
+export interface SearchIndex { map: HitMap; keys: string[] }
+/** lemma → core card: a Map, or the cd-shard facade (src/lib/parts.ts cardMapView) */
+export interface CardLookup { get(lemma: string): CoreCard | undefined; has(lemma: string): boolean }
 export interface Result { lemma: string; matched: string; via: Via; rank: number }
 
 const VIA_RANK: Record<Via, number> = { lemma: 0, form: 1, paradigm: 2 }
@@ -49,27 +53,3 @@ export function search(idx: SearchIndex, q: string, limit = 30): Result[] {
 }
 
 export const emptyIndex = (): SearchIndex => ({ map: new Map(), keys: [] })
-
-/**
- * F2: the same index + the VESUM paradigm map in ONE pass, time-sliced (a 15 MB lexicon takes ~1 s of CPU; slices of ≤ 25 ms keep the page responsive
- * and let a progress bar paint). Chosen over a Web Worker because the annotator/analyser read the Maps synchronously and structured-cloning
- * multi-million-entry Maps back costs more than building them.
- */
-export async function buildIndexAsync(cards: CoreCard[], onProgress?: (f: number) => void, sliceMs = 25): Promise<{ idx: SearchIndex; paradigm: Map<string, VesumHit[]> }> {
-  const map = new Map<string, Hit[]>(), paradigm = new Map<string, VesumHit[]>()
-  const add = (form: string, lemma: string, via: Via) => {
-    const k = key(form); if (!k) return
-    const list = map.get(k) ?? []; if (!list.some(h => h.lemma === lemma)) list.push({ lemma, form, via }); map.set(k, list)
-  }
-  let t0 = performance.now()
-  for (let i = 0; i < cards.length; i++) {
-    const c = cards[i]!
-    add(c.lemma, c.lemma, 'lemma')
-    for (const f of c.forms) { add(f.raw, c.lemma, 'form'); add(f.norm, c.lemma, 'form'); add(f.modern, c.lemma, 'form') }
-    for (const p of c.paradigm) { add(p.form, c.lemma, 'paradigm'); const k = key(p.form); if (k) { const l = paradigm.get(k); l ? l.push({ lemma: c.lemma, tags: p.tags }) : paradigm.set(k, [{ lemma: c.lemma, tags: p.tags }]) } }
-    if (performance.now() - t0 > sliceMs) { onProgress?.(i / cards.length); await new Promise<void>(r => setTimeout(r, 0)); t0 = performance.now() }
-  }
-  const keys = [...map.keys()].sort()
-  onProgress?.(1)
-  return { idx: { map, keys }, paradigm }
-}

@@ -10,17 +10,18 @@
 import { computed } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { DIALECTS } from '../../core/rules.ts'
-import { cellKey, cellsOfSpelling, dxChips, firedRules, formClass, rulesChecked, ruleForms, type CardLike } from '../../core/form-class.ts'
+import { cellKey, cellsOfSpelling, dxChips, firedRules, formClass, rulesChecked, type CardLike } from '../../core/form-class.ts'
 import { PRONOUN_VARIANTS, deriveAll, variantById, variantClaims, variantsOfStd } from '../../core/pronoun-variants.ts'
 import { segment } from '../../core/deictics.ts'
 import { useData } from '../composables/useData.ts'
 import { fmtDate } from '../lib/format.ts'
+import { ruleFormsOf } from '../lib/parts.ts'
 import { dialectTo, formTo, ruleFormsTo, ruleTo, wordTo } from '../lib/nav.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import FormClassTable from './FormClassTable.vue'
 import DeicticStructure from './DeicticStructure.vue'
 const props = defineProps<{ spelling: string; lemma?: string; regions?: { name: string; f: number }[] }>()
-const { byLemma, cards, fullOf } = useData()
+const { byLemma, fullOf } = useData()
 
 const own = computed(() => (props.lemma ? byLemma.value.get(props.lemma) : undefined))
 const ownFull = computed(() => fullOf(own.value))
@@ -62,7 +63,7 @@ const classes = computed(() => {
 })
 
 // ── FD-5 ──
-const featureClass = computed(() => features.value.map(f => ({ f, forms: ruleForms(f, cards.value) })))
+const featureClass = computed(() => features.value.map(f => ({ f, forms: ruleFormsOf(f) })))
 
 // ── DX ──
 const seg = computed(() => segment(props.spelling)[0])
