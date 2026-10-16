@@ -59,7 +59,7 @@ export function readIndex(source: string): Idx[] {
   return out
 }
 export function readItem(source: string, file: string): Buffer | null {
-  for (const ext of ['.gz', '.txt.gz']) { const p = `${HARVEST}/${source}/items/${file}${ext}`; if (existsSync(p)) return gunzipSync(readFileSync(p)) }
+  for (const ext of ['', '.gz', '.txt.gz']) { if (!ext && !file.endsWith('.gz')) continue; const p = `${HARVEST}/${source}/items/${file}${ext}`; if (existsSync(p)) return gunzipSync(readFileSync(p)) }
   return null
 }
 
