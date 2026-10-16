@@ -106,6 +106,10 @@ describe('M-5 statistics', () => {
     expect(c.get(0)![0]).toMatchObject({ lemma: 'b' }); expect(c.get(0)![0]!.logDice).toBeCloseTo(logDice(c.get(0)![0]!.fxy, 4, 3), 2)
     expect(c.get(0)!.every(x => x.lemma !== 'c' || x.fxy >= 3)).toBe(true)
     expect(collocations([{ id, seg: Int32Array.from([0, 1, 2, 3, 4, 5, 6]) }], [3, 3, 1], Uint8Array.from([1, 1, 1]), ['a', 'b', 'c']).get(0)).toBeUndefined()   // every token in its own segment: no pairs
+    const id2 = Int32Array.from([0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 4, 0, 1, 2]), seg2 = new Int32Array(id2.length), fx2 = [4, 4, 3, 3, 1], keep2 = Uint8Array.from([1, 1, 1, 1, 1]), nm = ['a', 'b', 'c', 'd', 'e']
+    const one = collocations([{ id: id2, seg: seg2 }], fx2, keep2, nm, 3, 3, 12, 1)
+    expect(one.size).toBeGreaterThan(1)   // CX: sharding by x % shards (V8 Map cap of 2^24) leaves the result unchanged
+    for (const n of [2, 3, 16]) expect(collocations([{ id: id2, seg: seg2 }], fx2, keep2, nm, 3, 3, 12, n)).toEqual(one)
   })
 })
 

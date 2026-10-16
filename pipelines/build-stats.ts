@@ -43,25 +43,29 @@ export function lemmaStats(c: Counts, fMax: number, sz: Sizes, colloc: LemmaStat
   return { f: c.f, ipm: r3(ipm(c.f, sz.N)), hk, dots: dots(hk), dp: r3(dp.dp), range: dp.range, byEpoch, byCentury, shifts, colloc }
 }
 
-/** Window ±3 inside a segment; counts y in the window of every x (both kept). Returns top-12 per x by logDice (f_xy ≥ 3, logDice > 0). */
-export function collocations(docs: { id: Int32Array; seg: Int32Array }[], fx: ArrayLike<number>, keep: Uint8Array, names: string[], win = 3, minF = 3, top = 12): Map<number, LemmaStats['colloc']> {
-  const pair = new Map<number, number>(), M = 1 << 21
-  for (const { id, seg } of docs) {
-    for (let i = 0; i < id.length; i++) {
-      const x = id[i]!; if (x < 0 || !keep[x]) continue
-      for (let j = Math.max(0, i - win); j <= Math.min(id.length - 1, i + win); j++) {
-        if (j === i || seg[j] !== seg[i]) continue
-        const y = id[j]!; if (y < 0 || y === x || !keep[y]) continue
-        const k = x * M + y; pair.set(k, (pair.get(k) ?? 0) + 1)
+/** Window ±3 inside a segment; counts y in the window of every x (both kept). Returns top-12 per x by logDice (f_xy ≥ 3, logDice > 0).
+ *  V8 Maps hold at most 2^24 entries, and a 10M-token corpus has more distinct pairs than that: the pairs are counted in `shards`
+ *  passes, pass s taking only the x with x % shards === s. Every pair of an x lands in one pass, so the result is identical to a single Map. */
+export function collocations(docs: { id: Int32Array; seg: Int32Array }[], fx: ArrayLike<number>, keep: Uint8Array, names: string[], win = 3, minF = 3, top = 12, shards = 16): Map<number, LemmaStats['colloc']> {
+  const M = 1 << 21, out = new Map<number, LemmaStats['colloc']>()
+  for (let s = 0; s < shards; s++) {
+    const pair = new Map<number, number>()
+    for (const { id, seg } of docs) {
+      for (let i = 0; i < id.length; i++) {
+        const x = id[i]!; if (x < 0 || !keep[x] || x % shards !== s) continue
+        for (let j = Math.max(0, i - win); j <= Math.min(id.length - 1, i + win); j++) {
+          if (j === i || seg[j] !== seg[i]) continue
+          const y = id[j]!; if (y < 0 || y === x || !keep[y]) continue
+          const k = x * M + y; pair.set(k, (pair.get(k) ?? 0) + 1)
+        }
       }
     }
-  }
-  const out = new Map<number, LemmaStats['colloc']>()
-  for (const [k, fxy] of pair) {
-    if (fxy < minF) continue
-    const x = Math.floor(k / M), y = k % M, ld = logDice(fxy, fx[x]!, fx[y]!)
-    if (ld <= 0) continue
-    const a = out.get(x) ?? []; a.push({ lemma: names[y]!, fxy, logDice: r3(ld) }); out.set(x, a)
+    for (const [k, fxy] of pair) {
+      if (fxy < minF) continue
+      const x = Math.floor(k / M), y = k % M, ld = logDice(fxy, fx[x]!, fx[y]!)
+      if (ld <= 0) continue
+      const a = out.get(x) ?? []; a.push({ lemma: names[y]!, fxy, logDice: r3(ld) }); out.set(x, a)
+    }
   }
   for (const [x, a] of out) out.set(x, a.sort((p, q) => q.logDice - p.logDice || q.fxy - p.fxy).slice(0, top))
   return out
