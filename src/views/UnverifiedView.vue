@@ -5,7 +5,6 @@
  */
 import { computed, ref, shallowRef, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
-import { cardMap } from '../../core/cv.ts'
 import { uvOccurrences, type UvGroup } from '../../core/uv.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
@@ -14,15 +13,13 @@ import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { formTo, textTo, witnessTo } from '../lib/nav.ts'
 import { loadUvGroup } from '../lib/uvData.ts'
 import { occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
-import { loadCardIndex } from '../lib/cardIndex.ts'
+import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
 import ThinCard from '../components/ThinCard.vue'
 import { cognatesOf } from '../lib/cognatesData.ts'
 const props = defineProps<{ id: string }>()
 const { byLemma, searchIdx, witnessById } = useData()
 const g = ref<UvGroup>(), state = ref<'loading' | 'done'>('loading'), lines = ref<UnlinkedKwic[]>([])
-const cards = shallowRef<Map<string, { kind: 'lw' | 'ar'; id: string }[]>>()
-loadCardIndex().then(ci => { cards.value = cardMap(ci) }, () => undefined)
 watch(() => props.id, async id => {
   state.value = 'loading'; g.value = undefined; lines.value = []
   const x = await loadUvGroup(id); if (id !== props.id) return
@@ -33,7 +30,7 @@ const epochsOf = (id: string): string[] => { const e = wit(id)?.epochShev; retur
 const kwicFull = computed(() => lines.value.map(k => ({ ...k, date: wit(k.w)?.date ?? [0, 0] as [number, number] })))
 const occs = computed(() => (g.value ? uvOccurrences(g.value) : []))
 const wit = (id: string) => witnessById.value.get(id)
-const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: cards.value }))
+const ctx = computed(() => ({ lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards }))
 /** rule candidates of the headword and of every other spelling (hypotheses; «є в словнику» only when a card stands behind the form) */
 const cands = computed(() => {
   if (!g.value) return []
