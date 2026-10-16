@@ -20,7 +20,8 @@ import Pagination from '../components/Pagination.vue'
 import { usePage } from '../composables/usePage.ts'
 const PAGE_SIZE = 200
 const route = useRoute(), router = useRouter()
-const { corpus, loaded, annData, witnessById } = useData()
+const { corpus, loaded, annData, witnessById, ensureCorpus } = useData()
+ensureCorpus()   // PF: the witness list is the whole corpus.json, fetched by the pages that list witnesses
 const ep = ref(''), au = ref(''), rg = ref('')
 const epochOf = (w: NonNullable<typeof corpus.value>['witnesses'][number]) => (isKnown(w.epochShev) ? w.epochShev.value.epochs[0]! : 'unknown')
 const all = computed(() => corpus.value?.witnesses ?? [])

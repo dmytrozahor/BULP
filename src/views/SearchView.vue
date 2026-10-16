@@ -3,31 +3,44 @@
  * Instant search over lemmas AND every historical spelling / paradigm form (stress- and case-insensitive via core/text.ts key();
  * Old letters ѣ ъ ы ѧ accepted). Results: lemma, first-attestation year + author, dots barometer. Unknown → /analyze.
  */
-import { computed, ref, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import Pagination from '../components/Pagination.vue'
 import { usePage } from '../composables/usePage.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
-import { search } from '../lib/search.ts'
+import { queryKeys, type Result } from '../lib/search.ts'
+import { ixCards, lemmaPage, searchRemote, type RemoteResult } from '../lib/parts.ts'
+import { wordCardTo } from '../lib/cardIndex.ts'
+import { cardRoute } from '../../core/cv.ts'
+import { LEMMA_PAGE } from '../../core/parts.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
 import { plastSearch } from '../lib/sociolectData.ts'
-import { cardSearchIndex, hitRoute, hitWord, loadCardIndex, wordCardTo } from '../lib/cardIndex.ts'
-import { cardMap } from '../../core/cv.ts'
 import { uvSearch, type UvHit } from '../lib/uvData.ts'
-import { emptyIndex, type SearchIndex } from '../lib/search.ts'
-const { loaded, loading, byLemma, searchIdx, cards, corpus, witnessById } = useData()
+const { loaded, byLemma, corpus, witnessById, searchIdx } = useData()
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
-const results = computed(() => (q.value.trim() ? search(searchIdx.value, q.value) : []))
-const rows = computed(() => results.value.map(r => {
-  const c = byLemma.value.get(r.lemma)!
-  const fa = isKnown(c.first) ? c.first.value : undefined
-  return { r, c, fa, who: fa ? authorInfo(fa.author, witnessById.value.get(fa.witness)).name : '' }
-}))
-const go = () => rows.value[0] ? router.push(`/w/${encodeURIComponent(rows.value[0].c.lemma)}`) : cardHits.value[0] && router.push(hitRoute(cardHits.value[0].lemma))
+/** SPEC 63 PF-1: one prefix shard per keystroke (ix/), never the whole lexicon */
+const none: RemoteResult = { lemmas: [], cards: [] }
+const remote = shallowRef<RemoteResult>(none), searching = ref(false)
+let seq = 0
+watch(q, async v => {
+  const t = v.trim(), n = ++seq
+  if (!t) { remote.value = none; searching.value = false; return }
+  searching.value = true
+  const r = await searchRemote(t, queryKeys)
+  if (n === seq) { remote.value = r; searching.value = false }
+}, { immediate: true })
+const rows = computed(() => remote.value.lemmas)
+/** the core card behind a result row (cd shard, fetched for the rows on screen only) */
+const info = (r: Result) => {
+  const c = byLemma.value.get(r.lemma), fa = c && isKnown(c.first) ? c.first.value : undefined
+  return { c, fa, who: fa ? authorInfo(fa.author, witnessById.value.get(fa.witness)).name : '' }
+}
+const cardHits = computed(() => remote.value.cards)   // SPEC 63 CV-2: light (/lw), dictionary-attested (CV) and archaic (/ar) cards, same shards
+const go = () => rows.value[0] ? router.push(`/w/${encodeURIComponent(rows.value[0].lemma)}`) : cardHits.value[0] && router.push(cardRoute(cardHits.value[0]))
 // BL-2: switching the phone keyboard language blurs the field (IME/viewport resize); keep focus unless the user deliberately tapped elsewhere.
 const box = ref<HTMLInputElement | null>(null)
 let lastTap = 0
@@ -37,15 +50,12 @@ const keepFocus = (e: FocusEvent) => {
   setTimeout(() => { if (document.visibilityState === 'visible' && !document.activeElement?.closest('a,button,summary,select,textarea')) box.value?.focus({ preventScroll: true }) }, 80)
 }
 /** SPEC 63 NV-1 (was F2 «показати ще»): results and the full lemma list are paged by `?p=`, never rendered at once */
-const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed(() => cards.value.length))
+const pgR = usePage(computed(() => rows.value.length)), pgL = usePage(computed(() => corpus.value?.nLemmas ?? 0), LEMMA_PAGE)
 watch(q, () => { if (route.query.p !== undefined) pgR.go(1) })
 const viaUk = { lemma: 'лема', form: 'історична форма', paradigm: 'словоформа' } as const
+/** the lemma list is paged files (pg/lemmas/<n>.json), one page per request */
+const lemmaChips = computed(() => lemmaPage(pgL.page.value) ?? [])
 /** Plast vocabulary (SL-2) is searchable too — its words are mostly not corpus lemmas, so they never reached the lemma index */
-/** SPEC 63 CV-2: light (/lw), dictionary-attested (CV) and archaic (/ar) cards are searched too, case-insensitively, with the same ranking */
-const cardIdx = ref<SearchIndex>(emptyIndex())
-const cardMp = ref<ReturnType<typeof cardMap>>()
-loadCardIndex().then(ci => { cardIdx.value = cardSearchIndex(ci); cardMp.value = cardMap(ci) }, () => undefined)
-const cardHits = computed(() => (q.value.trim() ? search(cardIdx.value, q.value, 30).filter(r => !byLemma.value.has(hitWord(r.lemma))) : []))
 /** SPEC 63 CV-4: «неперевірена лема» cards of unlinked corpus spellings (prefix-sharded, ≥ 2 letters), shown after the verified results */
 const uvHits = ref<UvHit[]>([])
 watch(q, async v => { const x = v; const r = await uvSearch(x).catch(() => []); if (x === q.value) uvHits.value = r }, { immediate: true })
@@ -58,14 +68,14 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     <p class="muted">Лексикон словоформ із доказами: перша фіксація, історичні написання, мітки (церковнослов’янське, суржик, діалектне, розмовне) — кожна з джерелом і цитатою.
       <span class="sans small">Where does a Ukrainian word come from — every claim with its evidence.</span></p>
     <input ref="box" v-model="q" type="search" inputmode="search" enterkeyhint="search" @blur="keepFocus" placeholder="Знайти слово: князь, кънѧзь, видѣти, шо…" aria-label="Пошук слова" autofocus autocomplete="off" spellcheck="false" @keydown.enter="go" />
-    <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ cards.length }} лем у словнику.</template></p>
+    <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ corpus.nLemmas }} лем у словнику.</template></p>
   </section>
 
   <section v-if="plast.length" class="card" aria-live="polite">
     <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
     <ul class="results">
       <li v-for="e in plast.slice(0, 3)" :key="e.src + e.loc">
-        <RouterLink :to="wordCardTo(e.w, searchIdx, cardMp)">
+        <RouterLink :to="wordCardTo(e.w, searchIdx, ixCards)">
           <span class="lem">{{ e.w }}</span>
           <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
           <span class="small sans">«{{ e.g }}»</span>
@@ -79,39 +89,41 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
   <section v-if="cardHits.length" class="card" aria-live="polite">
     <h2><span>Інші картки (словники, рідкісні й архаїчні слова)</span> <span class="muted small">{{ cardHits.length }}</span></h2>
     <ul class="results">
-      <li v-for="r in cardHits" :key="r.lemma">
-        <RouterLink :to="hitRoute(r.lemma)">
-          <span class="lem">{{ hitWord(r.lemma) }}</span>
-          <span class="badge">{{ r.lemma.startsWith('ar:') ? 'архаїчна/словникова картка' : 'коротка картка' }}</span>
-          <span v-if="r.matched.toLowerCase() !== hitWord(r.lemma).toLowerCase()" class="small sans">знайдено: «{{ r.matched }}»</span>
+      <li v-for="r in cardHits" :key="r.kind + r.id">
+        <RouterLink :to="cardRoute(r)">
+          <span class="lem">{{ r.id }}</span>
+          <span class="badge">{{ r.kind === 'ar' ? 'архаїчна/словникова картка' : 'коротка картка' }}</span>
+          <span v-if="r.matched.toLowerCase() !== r.id.toLowerCase()" class="small sans">знайдено: «{{ r.matched }}»</span>
         </RouterLink>
       </li>
     </ul>
   </section>
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
-    <li v-for="{ r, c, fa, who } in pgR.slice(rows)" :key="c.lemma">
-      <RouterLink :to="`/w/${encodeURIComponent(c.lemma)}`">
-        <span class="lem">{{ c.lemma }}</span>
-        <span class="muted small sans">{{ c.pos }}</span>
-        <span v-if="r.matched !== c.lemma" class="small sans">знайдено: «{{ r.matched }}» ({{ viaUk[r.via] }})</span>
-        <span v-if="fa" class="small sans">перша фіксація <strong>{{ fmtDate(fa.date) }}</strong> · {{ who }}</span>
-        <span v-else class="unk">перша фіксація невідома</span>
-        <Dots :dots="c.stats.dots" :ipm="c.stats.ipm" :hk="c.stats.hk" :f="c.stats.f" :N="corpus?.N" />
+    <li v-for="r in pgR.slice(rows)" :key="r.lemma">
+      <RouterLink :to="`/w/${encodeURIComponent(r.lemma)}`">
+        <span class="lem">{{ r.lemma }}</span>
+        <template v-if="info(r).c"><span class="muted small sans">{{ info(r).c!.pos }}</span></template>
+        <span v-if="r.matched !== r.lemma" class="small sans">знайдено: «{{ r.matched }}» ({{ viaUk[r.via] }})</span>
+        <template v-if="info(r).c">
+          <span v-if="info(r).fa" class="small sans">перша фіксація <strong>{{ fmtDate(info(r).fa!.date) }}</strong> · {{ info(r).who }}</span>
+          <span v-else class="unk">перша фіксація невідома</span>
+          <Dots :dots="info(r).c!.stats.dots" :ipm="info(r).c!.stats.ipm" :hk="info(r).c!.stats.hk" :f="info(r).c!.stats.f" :N="corpus?.N" />
+        </template>
       </RouterLink>
     </li>
     <li v-if="pgR.pages.value > 1" class="pagerli"><Pagination :page="pgR.page.value" :pages="pgR.pages.value" :total="rows.length" @go="pgR.go" /></li>
   </ul>
-  <template v-else-if="q.trim() && loaded && !cardHits.length && !uvHits.length">
+  <template v-else-if="q.trim() && loaded && !searching && !cardHits.length && !uvHits.length">
     <div class="card" role="status">
       <p><strong>«{{ q.trim() }}» — немає в корпусі, аналіз за правилами.</strong> Це не словникова стаття: нижче лише розбір за правилами з джерелами (будова, деривація, шлях запозичення, омографи, русинська, IPA); «невідомо» ≠ «літературне».</p>
       <p class="small sans"><RouterLink :to="{ path: '/analyze', query: { q: q.trim() } }">Відкрити в «Аналізі слова» →</RouterLink></p>
     </div>
     <AnalyzeView :embed="q.trim()" />
   </template>
-  <div v-else-if="loaded" class="card">
-    <h2>Усі леми ({{ cards.length }})</h2>
-    <div class="chips"><RouterLink v-for="c in pgL.slice(cards)" :key="c.lemma" class="chip" :to="`/w/${encodeURIComponent(c.lemma)}`" style="text-decoration:none">{{ c.lemma }}</RouterLink></div>
+  <div v-else-if="loaded && !q.trim()" class="card">
+    <h2>Усі леми ({{ corpus?.nLemmas }})</h2>
+    <div class="chips"><RouterLink v-for="l in lemmaChips" :key="l" class="chip" :to="`/w/${encodeURIComponent(l)}`" style="text-decoration:none">{{ l }}</RouterLink></div>
     <Pagination :page="pgL.page.value" :pages="pgL.pages.value" @go="pgL.go" />
     <p class="small muted sans" style="margin-top:.8rem">Спробуйте <a href="#/annotate">анотатор тексту</a> на прикладах із пам’яток корпусу.</p>
   </div>

@@ -63,7 +63,7 @@ describe('CV-2 resolution over all card kinds', () => {
   })
   it('CV-2 SearchView, LightWordView, AnalyzeView and UnlinkedSpelling are wired to the card index', () => {
     expect(rd('src/views/SearchView.vue')).toMatch(/cardHits/); expect(rd('src/views/LightWordView.vue')).toMatch(/loadCv/)
-    expect(rd('src/views/AnalyzeView.vue')).toMatch(/cards: cards\.value/); expect(rd('src/components/UnlinkedSpelling.vue')).toMatch(/cards: cards\.value/)
+    expect(rd('src/views/AnalyzeView.vue')).toMatch(/cards: ixCards/); expect(rd('src/components/UnlinkedSpelling.vue')).toMatch(/cards: ixCards/)
     expect(rd('pipelines/build.ts')).toMatch(/buildCv\(/)
   })
 })

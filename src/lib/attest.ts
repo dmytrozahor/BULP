@@ -8,7 +8,8 @@ import { fetchShard, lookupUnlinked, type ShardFetch } from './unlinked.ts'
 import { formTo } from './nav.ts'
 
 export interface Attested { text: string; to: string; kind: 'card' | 'spelling' }
-export interface AttestDeps { arch?: ArchFile; witness: (id: string) => { title: string; date: [number, number] } | undefined; shard?: ShardFetch }
+/** `arch`: the whole file (tests) or an async per-card lookup (the app: tc/arch shards) */
+export interface AttestDeps { arch?: ArchFile | ((form: string) => Promise<ArchEntry | undefined>); witness: (id: string) => { title: string; date: [number, number] } | undefined; shard?: ShardFetch }
 
 const maps = new WeakMap<ArchFile, Map<string, ArchEntry>>()
 export function archIndex(f: ArchFile): Map<string, ArchEntry> {
@@ -19,7 +20,7 @@ export function archIndex(f: ArchFile): Map<string, ArchEntry> {
 }
 const fmt = (d: [number, number]) => (d[0] === d[1] ? `${d[0]}` : `${d[0]}–${d[1]}`)
 export async function attestationOf(form: string, deps: AttestDeps): Promise<Attested | undefined> {
-  const e = deps.arch && archIndex(deps.arch).get(archId(form))
+  const e = typeof deps.arch === 'function' ? await deps.arch(form) : deps.arch && archIndex(deps.arch).get(archId(form))
   if (e) {
     const d = e.dict ?? undefined, w = d ? deps.witness(d.w) : e.first ? deps.witness(e.first.w) : undefined, date = d?.date ?? e.first?.date
     return { text: `${w?.title ?? d?.w ?? e.first?.w ?? 'пам’ятка'}${date ? `, ${fmt(date)}` : ''}`, to: `/ar/${encodeURIComponent(e.id)}`, kind: 'card' }

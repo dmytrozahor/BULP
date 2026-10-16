@@ -473,3 +473,16 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-5 | tests/uv.test.ts › CV-5 риночку: both analyses get a card with all analyses listed, the context pick is stored, the example is kept |
 | CV-5 | tests/uv.test.ts › CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too |
 | CV-5 | tests/uv.test.ts › CV-5 /lw/риночка lists риночок (v_mis) and риночка (v_zna) as analyses of the attested spelling |
+| CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
+| PF-1 | tests/parts.test.ts › PF-1 every key lives in exactly one leaf, found by ixLeaf from the manifest alone |
+| PF-1 | tests/parts.test.ts › PF-1 searchRemote returns what the in-memory search() returns for lemma / form / paradigm hits, reading only prefix shards |
+| PF-1 | tests/parts.test.ts › PF-1 shards split deeper than 2 letters when they are over the limit, never past IX_MAX |
+| PF-1 | tests/budget.test.ts › lexicon / lexindex / cardindex / light / archaic / torot / sidecars are never fetched whole |
+| PF-1 | tests/budget.test.ts › the paged lemma list exists page by page |
+| PF-2 | tests/budget.test.ts › first load (HTML + JS + CSS + data) ≤ 500 KB |
+| PF-2 | tests/budget.test.ts › a word card ≤ 300 KB on top of the home page, and a deep link to it ≤ 500 KB as a first load (core + detail + witness + sidecar shards + the card route) |
+| PF-2 | tests/budget.test.ts › a search keystroke ≤ 64 KB (prefix shards + the core cards of the first rows) |
+| PF-2 | tests/budget.test.ts › the service worker is shipped |
+| PF-3 | tests/parts.test.ts › PF-3 the paradigm facade returns the VESUM hits of the in-memory map |
+| PF-3 | tests/parts.test.ts › PF-3 annotate() over the shard facades equals annotate() over in-memory maps |
+| PF-3 | tests/parts.test.ts › PF-3 runDetectors / reconstruct read the same facades |

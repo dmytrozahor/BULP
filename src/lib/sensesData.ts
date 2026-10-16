@@ -1,20 +1,11 @@
 /** BL-9: lazy, cached loader for public/data/senses.json (uk.wiktionary senses, CC BY-SA 4.0) and a reactive lemma → senses lookup (empty until the file arrives or when it is absent). */
-import { shallowRef } from 'vue'
 import type { Sense, SensesFile } from '../../core/senses.ts'
+import { lmPeek } from './parts.ts'
 
-const file = shallowRef<SensesFile>()
-let started = false
-export function loadSenses(): void {
-  if (started) return
-  started = true
-  fetch('./data/senses.json').then(r => (r.ok ? r.json() : undefined)).then(j => { if (j && typeof j === 'object') file.value = j as SensesFile }).catch(() => { /* optional data */ })
-}
-/** Senses of a lemma (reactive through `file`). */
+/** Senses of a lemma: the lm/senses/<bucket>.json shard of its bucket (SPEC 63 PF-1), reactive; [] while loading or when there are none. */
 export function sensesOf(lemma: string): Sense[] {
-  loadSenses()
-  return file.value?.[lemma] ?? []
+  return lmPeek<SensesFile>('senses', lemma)?.[lemma] ?? []
 }
-export const sensesLoaded = file
 
 /** Group senses by stressed spelling, in page order; senses without a stress go to the group `''`. */
 export function groupByStress(rows: Sense[]): { stress: string; senses: Sense[] }[] {

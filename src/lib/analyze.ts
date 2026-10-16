@@ -17,8 +17,10 @@ export const ruleOf = (id: string) => ALL_RULES.find(r => r.id === id)
 export const GATED_IDS = new Set(['ORT-JO', 'MOR-PART-SHCH', 'PFX-VS', 'SFX-YVA', 'PFX-RAZ', 'SFX-STVO', 'REG-H-TSIA', 'PAN-INF-C'])
 const isGated = (r: Rule) => r.axis === 'dialect' || GATED_IDS.has(r.id)
 
-export interface LexData { lexindex?: LexIndex; paradigmMap: Map<string, VesumHit[]> }
-export const emptyLex = (): LexData => ({ paradigmMap: new Map() })
+/** SPEC 63 PF-3: a Map in tests / fixtures, the shard-backed facade (src/lib/parts.ts ixParadigm) in the app: no global paradigm map */
+export interface ParadigmLookup { get(k: string): VesumHit[] | undefined; has(k: string): boolean }
+export interface LexData { lexindex?: LexIndex; paradigmMap: ParadigmLookup }
+export const emptyLex = (): LexData & { paradigmMap: Map<string, VesumHit[]> } => ({ paradigmMap: new Map() })
 
 export const hitsOf = (d: LexData, form: string): VesumHit[] => {
   const k = key(form)

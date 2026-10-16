@@ -14,22 +14,32 @@ import { collectQuotes, type HeldQuote } from '../lib/sourceQuotes.ts'
 import { epochTo, ruleTo, witnessTo, wordTo } from '../lib/nav.ts'
 import { KIND_UK } from '../lib/format.ts'
 import { loadSociolect, sociolectFile } from '../lib/sociolectData.ts'
+import { sourceQuotesOf } from '../lib/parts.ts'
 const props = defineProps<{ id: string }>()
-const { loaded, cards, witnessById } = useData()
+const { loaded, witnessById } = useData()
 const src = computed(() => SOURCES[props.id])
 const wit = computed(() => witnessById.value.get(props.id))
-const held = ref<HeldQuote[]>([]), busy = ref(true)
+const base = ref<Map<string, HeldQuote>>(), lemmaQ = computed(() => sourceQuotesOf(props.id))   // SPEC 63 PF-3: the lemma-card quotes are a precomputed file per source, not a scan of all cards
+const busy = computed(() => !base.value || !lemmaQ.value)
+const held = computed<HeldQuote[]>(() => {
+  const into = new Map([...(base.value ?? [])].map(([k, h]) => [k, { ...h, places: [...h.places] }]))
+  for (const q of lemmaQ.value ?? []) {
+    const k = `${q.ev.locator}|${q.ev.quote}`; let h = into.get(k)
+    if (!h) { if (into.size >= 200) continue; into.set(k, h = { ev: q.ev, places: [], nPlaces: 0 }) }
+    for (const p of q.places) if (!h.places.some(x => x.to === p.to)) { h.nPlaces++; if (h.places.length < 12) h.places.push(p) }
+  }
+  return [...into.values()]
+})
 function scan() {
   const into = new Map<string, HeldQuote>(), id = props.id
   for (const r of [...RULES, ...CS_RULES, ...CONTACT_RULES, ...DIALECT_RULES, ...RUSYN_RULES, ...REGISTER_RULES]) collectQuotes(r, id, { label: r.id, to: ruleTo(r.id) }, into)
   for (const e of EPOCHS) collectQuotes(e, id, { label: e.id, to: epochTo(e.id) }, into)
-  for (const c of cards.value) { if (into.size >= 200) break; collectQuotes(c, id, { label: c.lemma, to: wordTo(c.lemma) }, into) }
   loadSociolect(); const sf = sociolectFile.value   // SL: Plast entries and process rows are quotes of their sources too
   if (sf) {
     for (const e of sf.plast.entries) collectQuotes({ source: sf.plast.source, locator: e.loc, quote: e.g, kind: 'D' }, id, { label: e.w, to: wordTo(e.w) }, into)
     for (const r of sf.processes) collectQuotes({ source: r.source, locator: r.loc, quote: r.quote, kind: 'Q' }, id, { label: r.w, to: wordTo(r.w) }, into)
   }
-  held.value = [...into.values()]; busy.value = false
+  base.value = into
 }
 onMounted(() => { const go = () => (loaded.value ? scan() : setTimeout(go, 150)); go() })
 </script>

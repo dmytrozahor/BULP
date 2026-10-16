@@ -1,59 +1,54 @@
 /**
- * Data loading (SPEC 10 M-6): fetch ./data/{corpus,lexicon,lexindex}.json once; module-level reactive state shared by all views.
- * lexicon.json is the CORE (CoreCard[], shared evidence pool, core/pack.ts) of ALL lemmas; annotator/analyse/derive/lists run on it alone. The rest of a card (KWIC, stress, stats, link evidence)
- * lives in lex/<bucket>.json shards (SPEC 20 B-5): fullOf(core) fetches the lemma's shard once, caches it and returns the merged LemmaCard (undefined while loading).
- * corpus.json carries the author vetting records (CorpusMeta.authors).
+ * Data loading (SPEC 63 PF): the browser never downloads the lexicon whole. useData() hands out
+ *  - `corpus`: boot.json (N, epoch / century sizes, regions, vetting records, counts) — the only file of the first load; `ensureCorpus()` swaps in the full corpus.json (witness list) for the pages that list witnesses;
+ *  - `byLemma` / `witnessById` / `searchIdx.map` / `annData` / `att`: Map-like facades over on-demand shards (src/lib/parts.ts) — a missing shard starts its fetch and reads as absent, the arrival re-runs the reader;
+ *  - `fullOf(core)`: the lemma's detail shard (lex/<bucket>.json, SPEC 20 B-5) merged into the core card.
+ * No lemma list, no paradigm map and no search index is built in memory.
  */
 import { computed, markRaw, reactive, shallowReactive, shallowRef, toRefs } from 'vue'
-import type { CoreCard, CorpusMeta, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta } from '../../core/types.ts'
+import type { Author, CoreCard, CorpusMeta, LemmaCard, LemmaDetail, WitnessMeta } from '../../core/types.ts'
 import { unpackCore } from '../../core/pack.ts'
 import { bucketOf, isFull, mergeCard, unpackShard } from '../../core/shard.ts'
 import { SOURCES } from '../../core/sources.ts'
-import type { Author } from '../../core/types.ts'
-import { buildIndexAsync, emptyIndex, type SearchIndex } from '../lib/search.ts'
-import { attestIndex } from '../lib/derive.ts'
+import type { BootFile } from '../../core/parts.ts'
+import type { SearchIndex } from '../lib/search.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
+import { cardMapView, ixAttest, ixHitMap, ixLexIndex, ixParadigm, witnessOf } from '../lib/parts.ts'
 
-const state = reactive({
-  corpus: undefined as CorpusMeta | undefined, cards: [] as CoreCard[], lexindex: undefined as LexIndex | undefined,
-  loaded: false, loading: false, error: '' as string,
-  /** F2: loading progress for the ~15 MB lexicon: phase + fraction 0..1 */
-  progress: { phase: '', frac: 0, note: '' },
-})
-const searchIdx = shallowRef<SearchIndex>(emptyIndex()), paradigmMap = shallowRef(new Map<string, VesumHit[]>())
+export const toCards = unpackCore   // tests / fixtures: a packed core (format 3/4), a packed format 2 or a plain LemmaCard[] (fixture: detail embedded)
 
-export const toCards = unpackCore   // lexicon.json is the core { format: 4 (3 still read), … }; a packed format 2 or a plain LemmaCard[] (fixture: detail embedded) is still accepted
+/** boot.json dressed as a CorpusMeta without the witness list (`witnesses` is empty until ensureCorpus()) */
+export type BootCorpus = CorpusMeta & { nWitnesses: number; nLemmas: number; lemmaPage: number; full?: boolean }
+const state = reactive({ corpus: undefined as BootCorpus | undefined, loaded: false, loading: false, error: '' as string, progress: { phase: '', frac: 0, note: '' } })
+const fullCorpus = shallowRef<CorpusMeta>()
+const searchIdx = shallowRef<SearchIndex>({ map: ixHitMap, keys: [] })
 
-/** fetch + JSON.parse; streams the body so a large file reports download progress (Content-Length; indeterminate otherwise). */
-const get = async (name: string, onFrac?: (f: number, bytes: number) => void) => {
+const get = async (name: string) => {
   const r = await fetch(`./data/${name}.json`)
   if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`)
-  const total = +(r.headers.get('content-length') ?? 0)
-  if (!r.body || !onFrac) return r.json()
-  const rd = r.body.getReader(), parts: Uint8Array[] = []; let got = 0
-  for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); got += value.length; onFrac(total ? Math.min(1, got / total) : 0, got) }
-  const buf = new Uint8Array(got); let o = 0; for (const c of parts) { buf.set(c, o); o += c.length }
-  await tick()   // let the "parsing" label paint before the blocking JSON.parse
-  return JSON.parse(new TextDecoder().decode(buf))
+  return r.json()
 }
-const tick = () => new Promise<void>(r => setTimeout(r, 0))
 
 let started: Promise<void> | undefined
 export function loadData() {
   return (started ??= (async () => {
-    state.loading = true
+    state.loading = true; state.progress.phase = 'завантаження'
     try {
-      const P = state.progress, mb = (b: number) => (b / 1048576).toFixed(1)
-      P.phase = 'завантаження'
-      const [c, l, x] = await Promise.all([get('corpus'), get('lexicon', (f, b) => { P.frac = f * 0.5; P.note = `${mb(b)} МБ` }), get('lexindex').catch(() => undefined)])
-      state.corpus = markRaw(c); state.cards = markRaw(toCards(l)); state.lexindex = x && markRaw(x)   // markRaw: no deep reactive proxies over 15 MB
-      P.phase = 'індексація'; P.note = `${state.cards.length} лем`
-      const built = await buildIndexAsync(state.cards, f => { P.frac = 0.5 + f * 0.5 })   // time-sliced: the UI thread never blocks > ~30 ms
-      searchIdx.value = built.idx; paradigmMap.value = built.paradigm
+      const b = await get('boot') as BootFile
+      state.corpus = markRaw({
+        generated: b.generated, authors: b.authors as Author[], witnesses: [], epochSizes: b.epochSizes, centurySizes: b.centurySizes, N: b.N, linked: b.linked, unresolved: b.unresolved,
+        topUnresolved: [], rusynStatus: b.rusynStatus as CorpusMeta['rusynStatus'], regions: b.regions as CorpusMeta['regions'], nWitnesses: b.nWitnesses, nLemmas: b.nLemmas, lemmaPage: b.lemmaPage,
+      })
       state.loaded = true
     } catch (e) { state.error = String((e as Error).message ?? e) }
     finally { state.loading = false }
   })())
+}
+
+let fullP: Promise<void> | undefined
+/** the whole corpus.json (witness list, topUnresolved): fetched by the pages that list witnesses / need witness indices, never by a word card */
+export function ensureCorpus() {
+  return (fullP ??= get('corpus').then(c => { fullCorpus.value = markRaw(c) }).catch(e => { fullP = undefined; state.error = String((e as Error).message ?? e) }))
 }
 
 // ── detail shards (B-5b) ─────────────────────────────────────────────────────────────────────
@@ -64,13 +59,13 @@ const loadShard = (lemma: string) => {
   if (!p) shards.set(b, p = get(`lex/${b}`).then(unpackShard).catch(e => { shards.delete(b); throw e }))
   return p
 }
+const fetching = new Set<string>()
 const fetchDetail = (lemma: string) => {
   if (details.has(lemma) || detailError.has(lemma) || fetching.has(lemma)) return
   fetching.add(lemma)
   loadShard(lemma).then(m => { const d = m.get(lemma); d ? details.set(lemma, markRaw(d)) : detailError.set(lemma, 'немає в шарді') })
     .catch(e => detailError.set(lemma, String((e as Error).message ?? e))).finally(() => fetching.delete(lemma))
 }
-const fetching = new Set<string>()
 /** The merged full card of a core card (SPEC 20 B-5c): undefined until its shard is loaded (reactive: computeds re-run on arrival); a card that already embeds its detail is returned as is. */
 export function fullOf(c: CoreCard | LemmaCard | undefined): LemmaCard | undefined {
   if (!c) return undefined
@@ -81,12 +76,10 @@ export function fullOf(c: CoreCard | LemmaCard | undefined): LemmaCard | undefin
   return undefined
 }
 
-const byLemma = computed(() => new Map(state.cards.map(c => [c.lemma, c])))
-const witnessById = computed(() => new Map((state.corpus?.witnesses ?? []).map(w => [w.id, w])))
-/** Everything the pure annotator/analyser needs. */
-/** attestation index of all forms, built once on first use (not per component) */
-const att = computed(() => attestIndex(state.cards))
-const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: byLemma.value, lexindex: state.lexindex, paradigmMap: paradigmMap.value }))
+const witnessById = computed(() => ({ get: (id: string): WitnessMeta | undefined => witnessOf(id), has: (id: string) => !!witnessOf(id) }))
+/** Everything the pure annotator/analyser needs: shard-backed lookups, nothing in memory */
+const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: cardMapView, lexindex: ixLexIndex, paradigmMap: ixParadigm }))
+const corpus = computed<BootCorpus | undefined>(() => (fullCorpus.value && state.corpus ? { ...state.corpus, ...fullCorpus.value, full: true } : state.corpus))
 
 export interface AuthorInfo { id: string; name: string; label?: Author['label']; status?: Author['status']; evidence: Author['evidence']; life?: string; known: boolean }
 /** Resolve an author id (or name) to the vetting record; falls back to the witness's own self-reference evidence. */
@@ -99,7 +92,8 @@ export function authorInfo(idOrName: string, w?: WitnessMeta): AuthorInfo {
 
 export function useData() {
   loadData()
-  const sourceTitle = (id: string) => SOURCES[id]?.title ?? witnessById.value.get(id)?.title ?? id
-  const sourceUrl = (id: string) => SOURCES[id]?.url ?? witnessById.value.get(id)?.url
-  return { ...toRefs(state), byLemma, fullOf, detailError, searchIdx, att, witnessById, annData, sourceTitle, sourceUrl, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
+  const sourceTitle = (id: string) => SOURCES[id]?.title ?? witnessOf(id)?.title ?? id
+  const sourceUrl = (id: string) => SOURCES[id]?.url ?? witnessOf(id)?.url
+  const { loaded, loading, error, progress } = toRefs(state)
+  return { loaded, loading, error, progress, corpus, byLemma: computed(() => cardMapView), fullOf, detailError, searchIdx, att: computed(() => ixAttest), witnessById, annData, sourceTitle, sourceUrl, ensureCorpus, isFixture: computed(() => state.corpus?.generated === 'FIXTURE') }
 }

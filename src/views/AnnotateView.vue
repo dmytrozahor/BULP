@@ -5,7 +5,8 @@
  * Hover/focus a word → compact card (side panel, so evidence popovers stay open). Examples are real passages from the cached witnesses.
  * SPEC 00 P-3.1: unknown words stay muted and unlabelled.
  */
-import { computed, ref, watch } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
+import { settled } from '../lib/parts.ts'
 import { EPOCHS } from '../../core/epochs.ts'
 import { useData } from '../composables/useData.ts'
 import { annotate, annotateSyntax, summarize, type AnnotatedToken } from '../lib/annotate.ts'
@@ -24,11 +25,22 @@ const exId = ref(''), text = ref(''), year = ref('')
 const ex = computed(() => EXAMPLES.find(e => e.id === exId.value))
 watch(exId, () => { if (ex.value) { text.value = ex.value.text; year.value = String(ex.value.date[1]) } })
 const y = computed(() => (/^\d{3,4}$/.test(year.value.trim()) ? +year.value : undefined))
-const tokens = computed(() => (loaded.value ? annotate(text.value.slice(0, 20000), annData.value, y.value) : []))
+/** SPEC 63 PF-3: the annotator reads its lookups from the prefix shards; settled() re-runs it until every shard its tokens need is in memory (one result, not a re-render per arrival) */
+const tokens = shallowRef<AnnotatedToken[]>([]), spans = shallowRef<SyntaxSpan[]>([]), busy = ref(false)
+let seq = 0, timer: ReturnType<typeof setTimeout> | undefined
+watch([text, y, loaded], () => {
+  clearTimeout(timer)
+  if (!loaded.value) return
+  busy.value = true
+  timer = setTimeout(async () => {
+    const n = ++seq, t = text.value.slice(0, 20000), yr = y.value
+    const r = await settled(() => ({ tk: annotate(t, annData.value, yr), sp: annotateSyntax(t, annData.value, yr) }))
+    if (n === seq) { tokens.value = r.tk; spans.value = r.sp; busy.value = false }
+  }, 200)
+}, { immediate: true })
 const sum = computed(() => summarize(tokens.value))
 const hot = ref<AnnotatedToken | null>(null)
 // SPEC 60 SX-4: multi-token spans (core/syntax.ts) are drawn as a bracket underline around their tokens
-const spans = computed(() => (loaded.value ? annotateSyntax(text.value.slice(0, 20000), annData.value, y.value) : []))
 const hotSpan = ref<SyntaxSpan | null>(null)
 type Part = { gap: string } | { t: AnnotatedToken; i: number }
 const groups = computed(() => {

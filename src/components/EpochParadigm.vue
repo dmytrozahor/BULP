@@ -22,7 +22,8 @@ import EvidencePopover from './EvidencePopover.vue'
 import FormLegend from './FormLegend.vue'
 const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean; kind?: string }>()
 const emit = defineEmits<{ kwic: [raw: string] }>()
-const { corpus } = useData()
+const { corpus, ensureCorpus } = useData()
+if (!props.witnesses) ensureCorpus()   // cell examples index corpus.witnesses
 
 const tabs = computed(() => epochTabs(props.epochs?.paradigms ?? [], props.sizes ?? corpus.value?.epochSizes ?? {}))
 const chosen = ref(props.start ?? '')   // user's pick; until then the default tab follows the data (the shard may arrive after mount)

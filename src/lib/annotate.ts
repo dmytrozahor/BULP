@@ -13,13 +13,13 @@ import { assignEpoch } from '../../core/epochs.ts'
 import { derive } from '../../core/phonology.ts'
 import { traceSteps } from './derive.ts'
 import { key, normalizeOld, tokenize } from '../../core/text.ts'
-import { type SearchIndex, type Via } from './search.ts'
+import { type CardLookup, type SearchIndex, type Via } from './search.ts'
 import { hitsOf, runDetectors, strongest, type Category, type LexData } from './analyze.ts'
 import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
-export interface AnnotateData extends LexData { search: SearchIndex; cards: Map<string, CoreCard> }
+export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup }
 
 export interface AnnotatedToken {
   raw: string; start: number; end: number; key: string
