@@ -303,7 +303,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   }] : []), new Date().toISOString())
   lap(`TOROT: ${torot.file.names.length} name cards, ${torot.file.orv.length} ORV-only cards`)
 
-  const fMax = Math.max(...lemmaList.map(l => l.f))
+  const fMax = lemmaList.reduce((m, l) => l.f > m ? l.f : m, -Infinity)   // no spread: millions of lemmas at 10M tokens
   // CX budget: lemmas attested only in later (post-1400, non-dictionary) texts must reach KEEP_MIN_F tokens; the 15 MiB core limit (B-5a) is held by this threshold, never by dropping fields
   const KEEP_MIN_F = Number(process.env['KEEP_MIN_F'] ?? 5)
   lap('kept-lemma histogram (f ≥ k, not pre-1400/dict): ' + [2, 3, 4, 5, 6, 8].map(k => `${k}:${lemmaList.filter(l => l.f >= k && !l.pre1400 && !l.dict).length}`).join(' ') + `; pre-1400 ${lemmaList.filter(l => l.pre1400).length}, dict-only ${lemmaList.filter(l => l.dict && !l.pre1400 && l.f < 2).length}`)
@@ -318,14 +318,14 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const byLemma = new Map(light.file.lemmas.map(l => [l[0], l]))
     const gz = vesumFormLight(adm.map(({ w }) => w), docs.map(d => d.id), (wid, ti) => !!torot.refs.get(wid)?.[ti], hits1, byLemma)
     for (const [wid, r] of gz.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
-    light.file.lemmas.push(...gz.lemmas)
+    for (const l of gz.lemmas) light.file.lemmas.push(l)
     lap(`GZ-1: ${gz.tokens} unresolved VESUM-form tokens got a light card (${gz.lemmas.length} new light lemmas)`)
   }
   {   // SPEC 63 MU-3: capitalised unresolved tokens of Middle Ukrainian witnesses get name cards; analysis/middle-ukr-extraction.md
     const muWs = adm.flatMap(({ w }, wi) => w.orth && MU_ORTH.has(w.orth) ? [{ w, ids: docs[wi]!.id, wi }] : [])
     const cap = capNames(muWs, new Set(torot.file.names.map(n => n.id)))
     for (const [wid, r] of cap.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
-    torot.file.names.push(...cap.names)
+    for (const n of cap.names) torot.file.names.push(n)
     const rows: MuWitness[] = muWs.map(({ w, ids, wi }) => {
       const rules: Record<string, number> = {}, unresolved = new Map<string, number>(), refs = cap.refs.get(w.id)
       w.tokens.forEach((t, ti) => {
