@@ -30,9 +30,11 @@ function tail(p: string, n = 2000): string {
 export function runLogged(cmd: string, args: string[], o: { cwd: string; log: string; env?: NodeJS.ProcessEnv }): Promise<void> {
   return new Promise((res, rej) => {
     const fd = openSync(o.log, 'w')
+    let open = true
+    const done = () => { if (open) { open = false; closeSync(fd) } }   // a spawn error emits both 'error' and 'close': close the fd once (EBADF otherwise)
     const p = spawn(cmd, args, { cwd: o.cwd, env: o.env ?? process.env, stdio: ['ignore', fd, fd] })
-    p.on('error', e => { closeSync(fd); rej(new Error(`${cmd} failed to start: ${e.message}`)) })
-    p.on('close', code => { closeSync(fd); code === 0 ? res() : rej(new Error(`${cmd} ${args.join(' ')} exited ${code}; log ${o.log}:\n${tail(o.log)}`)) })
+    p.on('error', e => { done(); rej(new Error(`${cmd} failed to start: ${e.message}`)) })
+    p.on('close', code => { done(); code === 0 ? res() : rej(new Error(`${cmd} ${args.join(' ')} exited ${code}; log ${o.log}:\n${tail(o.log)}`)) })
   })
 }
 
