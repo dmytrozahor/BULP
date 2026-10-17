@@ -129,9 +129,12 @@ describe('M-6 / B-6 outputs', () => {
     const core = readFileSync('public/data/lexicon.json')
     expect(core.length).toBeLessThanOrEqual(256 * 1024 * 1024)
     expect(readFileSync('public/data/lexindex.json').length).toBeLessThanOrEqual(64 * 1024 * 1024)
-    const files = readdirSync('public/data/lex')
-    expect(files.length).toBeGreaterThan(100)
-    for (const f of files) expect(statSync(`public/data/lex/${f}`).size, f).toBeLessThanOrEqual(256 * 1024)
+    const all = readdirSync('public/data/lex')
+    expect(all.length).toBeGreaterThan(100)
+    // SPEC 63 PF-4: lex/<bucket>-<k>.json are overflow part files of a bucket shard, not shards: compare buckets, and every part must belong to an existing bucket shard
+    const files = all.filter(f => !/-\d+\.json$/.test(f)), partFiles = all.filter(f => /-\d+\.json$/.test(f))
+    for (const f of partFiles) expect(files, `${f} has no bucket shard`).toContain(f.replace(/-\d+\.json$/, '.json'))
+    for (const f of all) expect(statSync(`public/data/lex/${f}`).size, f).toBeLessThanOrEqual(256 * 1024)
     const lemmas = lex().map(c => c.lemma)
     expect(lemmas.length).toBeGreaterThan(5000); expect(new Set(lemmas).size).toBe(lemmas.length)
     expect(files.length).toBe(new Set(lemmas.map(l => bucketOf(l))).size)   // no empty or stray shard
