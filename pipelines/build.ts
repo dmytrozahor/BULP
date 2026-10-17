@@ -60,6 +60,7 @@ import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
 import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
 import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
+import { isFresh, readJson, runLogged } from './robust.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const WORK = resolve(ROOT, 'data/work'), PUB = resolve(ROOT, 'public/data'), ANALYSIS = resolve(ROOT, 'analysis')
@@ -72,7 +73,7 @@ interface NlpOut { model: string; outOfDomain?: boolean; tokens: ({ lemma?: stri
 interface Loaded { w: WitnessOut; nlp?: NlpOut }
 type LinkVal = Exclude<FormCard['link']['value'], 'unknown'>
 
-const rd = <T>(p: string): T => JSON.parse(readFileSync(p, 'utf8')) as T
+const rd = readJson
 const rawKey = (s: string) => s.normalize('NFC').toLowerCase()
 const bump = <K>(m: Map<K, number>, k: K, n = 1) => m.set(k, (m.get(k) ?? 0) + n)
 
@@ -82,7 +83,11 @@ export function loadWitnesses(dir = WORK): Loaded[] {
   for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith('.json') || /\.nlp\.json$|^stress|^ru\.json$|request/.test(f)) continue
     let w: WitnessOut
-    try { w = rd<WitnessOut>(resolve(dir, f)) } catch (e) { console.warn(`  ! ${f}: unreadable (${(e as Error).message}), skipped`); continue }   // an empty / half-written work file (another ingest in progress) must not stop the build
+    try { w = rd<WitnessOut>(resolve(dir, f)) } catch (e) {
+      // RS-1: a truncated work file silently shrinks the corpus; fatal unless the owner allows skipping (BULP_ALLOW_UNREADABLE=1)
+      if (!process.env['BULP_ALLOW_UNREADABLE']) throw new Error(`${f}: unreadable (${(e as Error).message}); re-run its ingest, or set BULP_ALLOW_UNREADABLE=1 to skip it`)
+      console.warn(`  ! ${f}: unreadable (${(e as Error).message}), skipped`); continue
+    }
     if (!Array.isArray(w.tokens) || !w.id || !w.author) continue
     const np = resolve(dir, f.replace(/\.json$/, '.nlp.json'))
     let nlp = existsSync(np) ? rd<NlpOut>(np) : undefined
@@ -106,10 +111,11 @@ interface LemmaAcc {
 
 async function runPy(script: string): Promise<void> {
   const uv = process.env['UV_BIN'] || 'uv'   // UV_BIN override, else uv on PATH (plan 40 B4)
-  await execP(uv, ['run', '--project', 'nlp', 'python', `nlp/${script}`], { cwd: ROOT, maxBuffer: 1 << 26, env: { ...process.env, PYTHONIOENCODING: 'utf-8' } })
+  mkdirSync(WORK, { recursive: true })   // RS-1: output streams to a log file (no maxBuffer to overflow), a non-zero exit rejects with the log tail
+  await runLogged(uv, ['run', '--project', 'nlp', 'python', `nlp/${script}`], { cwd: ROOT, log: resolve(WORK, `${script}.log`), env: { ...process.env, PYTHONIOENCODING: 'utf-8' } })
 }
 
-export async function build(opts: { noPy?: boolean } = {}) {
+export async function build(opts: { noPy?: boolean; allowStalePy?: boolean } = {}) {
   const t0 = Date.now(), lap = (m: string) => console.log(`[${((Date.now() - t0) / 1000).toFixed(1)}s] ${m}`)
 
   // ── 1. admission (B-1.1) ───────────────────────────────────────────────────────────────────────
@@ -405,7 +411,13 @@ export async function build(opts: { noPy?: boolean } = {}) {
 
   const py = async () => {
     if (opts.noPy) return
-    try { await runPy('stress.py'); await runPy('russian_check.py') } catch (e) { console.warn('  ! python stage failed, using existing outputs if any:', String((e as Error).message).slice(0, 300)) }
+    try { await runPy('stress.py'); await runPy('russian_check.py') } catch (e) {
+      // RS-1: a failed Python stage fails the build (stale stress.json/ru.json may belong to another lemma set); --allow-stale-py reuses them knowingly
+      if (!opts.allowStalePy) throw new Error(`python stage failed (use --allow-stale-py to reuse the existing stress.json/ru.json): ${String((e as Error).message).slice(0, 600)}`)
+      console.warn('  ! python stage failed, --allow-stale-py: using existing outputs if any:', String((e as Error).message).slice(0, 300))
+    }
+    if (!opts.allowStalePy) for (const [out, req] of [['stress.json', 'stress-request.json'], ['ru.json', 'ru-request.json']] as const)
+      if (!isFresh(resolve(WORK, out), resolve(WORK, req))) throw new Error(`${out} is missing or older than ${req}: the python stage did not produce it`)
   }
   lap(`VESUM pass 2 (${keys2.size} keys, ${kept.length} paradigms) + python stages`)
   const [v2] = await Promise.all([vesumIndex(keys2, new Map(kept.map(l => [l.id, l.cls] as const))), py()])
@@ -423,6 +435,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   if (!stressJson) console.warn('  ! no stress.json — stress variants empty')
   else {   // GAPS #5: a stale stress.json (python stage skipped/failed, UV_BIN unset) silently loses stress for new lemmas — say so
     const miss = [...stressReq].filter(f => !(f in stressJson.forms)).length
+    if (miss && !opts.noPy && !opts.allowStalePy) throw new Error(`stress.json lacks ${miss} of ${stressReq.size} requested forms after a python run`)
     if (miss) console.warn(`  ! stress.json lacks ${miss} of ${stressReq.size} requested forms (stale: run without --no-py, set UV_BIN)`)
     lap(`stress: ${stressReq.size - miss}/${stressReq.size} requested forms answered, ${[...stressReq].filter(f => stressJson.forms[f]?.length).length} with a dictionary stress`)
   }
@@ -665,5 +678,5 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  await build({ noPy: process.argv.includes('--no-py') })
+  await build({ noPy: process.argv.includes('--no-py'), allowStalePy: process.argv.includes('--allow-stale-py') })
 }

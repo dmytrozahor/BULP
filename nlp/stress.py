@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 import unicodedata
 import warnings
@@ -114,7 +115,9 @@ def main() -> None:
     out = build(forms)
     Path(a.data).mkdir(parents=True, exist_ok=True)
     dest = Path(a.data) / "stress.json"
-    dest.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    tmp = dest.with_name(dest.name + ".tmp")   # RS-1: write whole, then replace; a kill never leaves a truncated file
+    tmp.write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    os.replace(tmp, dest)
     print(f"{len(out['forms'])} forms -> {dest}")
 
 
