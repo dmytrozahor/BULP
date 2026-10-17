@@ -567,12 +567,20 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AT-1 | tests/atlas.test.ts › AT-1 АУМ т. 2 maps from the OCR |
 | AT-1 | tests/atlas.test.ts › the committed extract covers all 387 maps plus 55-а, every one with a locator and a short quote |
 | AT-1 | manual — АУМ т. 1 has no OCR yet (only the owner's т. 2 scan was processed); see research/44-atlas.md |
-| RS-1 | tests/robust-harvest.test.ts › RS-1 harvest: kill tolerance (writeAtomic, torn index tail, r2u torn line, page numbers, degraded lemma list not cached) |
-| RS-1 | tests/robust-harvest.test.ts › RS-1 harvest: get() retries and bans (5xx/network backoff, 403/429 stop, launch.sh keeps ban STOPPED.json) |
-| RS-1 | tests/robust-harvest.test.ts › RS-1 data branch and authors (fetch failure is not a missing branch, rollback swap) |
-| RS-1 | tests/robust-harvest.test.ts › RS-1 build-parts: required sidecars and staged swap |
-| RS-1 | tests/robust-build.test.ts › RS-1 build helpers (python stage failure, streamed log, freshness, truncated work file fatal, atomic python writes) |
-| RS-1 | manual — not yet done: writeLexicon temp-dir swap, detail-size pre-flight and cards checkpoint (wait for the overflow fix); the scan test for direct writes to final paths |
 | AT-2 | tests/atlas.test.ts › AT-2 areal extent per variant |
 | AT-2 | tests/atlas.test.ts › map-image readings carry the label «прочитано з карти, не вичитано» and are empty until a reading is made |
 | AT-2 | manual — settlement number → name/oblast → dialect group is not resolvable from the OCR (column layout) and no map-image readings were made yet; see research/44-atlas.md |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 a torn index tail is terminated |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 r2u: a torn last index line is skipped |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 r2u lemmaList: an unreadable lexicon.json |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 a 503 then a 200 is retried |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 403/429 stops at once |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 launch.sh keeps STOPPED.json |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 a network failure on fetch is rethrown |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 swapDirs: a failure mid-swap |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 a missing required sidecar is fatal |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 commitStage swaps whole dirs |
+| RS-1 | tests/robust-build.test.ts › RS-1 a python-stage failure rejects |
+| RS-1 | tests/robust-build.test.ts › RS-1 freshness: a stale or missing |
+| RS-1 | tests/robust-build.test.ts › RS-1 a truncated work file is fatal |
+| RS-1 | manual — not yet done: writeLexicon temp-dir swap and detail-size pre-flight (waiting for the overflow fix); the scan test for direct writes to final paths |
