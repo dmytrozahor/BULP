@@ -1,3 +1,4 @@
+/** SPEC 63 PF-7: SUPERSEDED as the publish target (the data no longer fits GitHub); kept as history. See pipelines/data-cdn.ts. */
 ﻿/**
  * SPEC 20 B-5e/B-5f — the detail shards (public/data/lex/, ~59 MB) and the running-text shards (public/data/texts/, ~19 MB) live on the orphan branch
  * `ukr-lexicon-data`, not on the code branch.

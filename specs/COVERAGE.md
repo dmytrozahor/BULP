@@ -509,6 +509,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() drops a sub-gram only when the longer gram has the same f |
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() handles 1M synthetic phrasemes in seconds |
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 collectEvidence trie matches the nested prefix targets once per occurrence |
+| PF-7 | tests/data-cdn.test.ts › PF-7 resolveDataUrl: big dirs go to <base>/data/<buildId>/…, everything else stays on Pages |
+| PF-7 | tests/data-cdn.test.ts › routes every CDN dir |
+| PF-7 | tests/data-cdn.test.ts › no build id (pointer not yet written), no pointer, or local mode: everything stays on ./data |
+| PF-7 | tests/data-cdn.test.ts › the committed pointer is well-formed |
+| PF-7 | tests/data-cdn.test.ts › fetchJson, useData.get and witnessText apply dataUrl at the fetch; no other src file fetches a CDN dir directly |
+| PF-7 | tests/data-cdn.test.ts › dry run calls no aws and does not move the pointer or write state |
+| PF-7 | tests/data-cdn.test.ts › diffObjects / verify: missing, wrong size and unexpected objects are all reported; the manifest is allowed |
+| PF-7 | tests/data-cdn.test.ts › a full upload against a fake bucket verifies, writes the manifest and moves the pointer |
+| PF-7 | tests/data-cdn.test.ts › a failed verify leaves the pointer alone (the live site keeps its data) |
+| PF-7 | tests/data-cdn.test.ts › pruneList keeps the newest N and the live build and ignores foreign prefixes |
+| PF-7 | tests/data-cdn.test.ts › pages.yml no longer pulls data and fails the build above 800 MB |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |

@@ -8,7 +8,7 @@ Live site: https://dmytrozahor.github.io/BULP/ (deployed by `.github/workflows/p
 ## Run locally
 ```sh
 npm ci
-npm run data:pull   # detail shards public/data/lex from the orphan branch ukr-lexicon-data (SPEC 20 B-5e)
+npm run data:pull   # big data dirs from the S3 bucket into public/data (SPEC 63 PF-7; needs read access; or just set VITE_DATA_BASE=cdn for npm run dev)
 npm run dev
 npm test
 ```
@@ -17,7 +17,7 @@ npm test
 The corpus inputs (`data/raw`, `data/work`) are not committed; `npm run mine` ingests `data/raw` into `data/work` (SPEC 10). Then:
 ```sh
 UV_BIN=<path to uv> npm run build:data   # nlp/ runs via uv; add -- --no-py to reuse existing NLP outputs
-npm run data:publish                     # replace ukr-lexicon-data with one squashed commit of the new shards
+npm run data:publish                     # upload public/data to s3://bucket/data/<buildId>/, verify, write src/data/data-version.json (SPEC 63 PF-7)
 ```
 
 Layout: `research/` (sources) → `specs/` (requirements) → `core/` (pure rules, evidence) → `pipelines/` (mining, build) → `src/` (Vue 3 app) → `tests/`.

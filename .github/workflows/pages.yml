@@ -1,5 +1,7 @@
-# Build the Vue app with the real data and deploy it to GitHub Pages.
-# Core data (public/data/*.json) is on this branch; the detail shards come from the orphan branch ukr-lexicon-data (SPEC 20 B-5e).
+# Build the Vue app and deploy it to GitHub Pages.
+# SPEC 63 PF-7: the big data (lex, texts, ix, cd, ..., ~6 GB) is NOT in this site: it lives on S3 + CloudFront under /data/<buildId>/, and src/data/data-version.json
+# (committed with the deploy) names the build this app reads. The small core data (public/data/*.json) is on this branch. Real-data tests skip when the shards are absent;
+# the full real-data verification runs on the worker before the data is published.
 name: Deploy to GitHub Pages
 
 on:
@@ -26,9 +28,13 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
-      - run: npm run data:pull
       - run: npx vitest run
       - run: npm run build
+      - name: Pages artifact stays small (limit ~1 GB; fail above 800 MB)
+        run: |
+          du -sh dist
+          kb=$(du -sk dist | cut -f1)
+          if [ "$kb" -gt 819200 ]; then echo "dist is $((kb / 1024)) MB: big data must go to the CDN (SPEC 63 PF-7)"; exit 1; fi
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:
