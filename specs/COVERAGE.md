@@ -602,7 +602,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-1 | tests/robust-build.test.ts › RS-1 a python-stage failure rejects |
 | RS-1 | tests/robust-build.test.ts › RS-1 freshness: a stale or missing |
 | RS-1 | tests/robust-build.test.ts › RS-1 a truncated work file is fatal |
-| RS-1 | manual — not yet done: writeLexicon temp-dir swap and detail-size pre-flight (waiting for the overflow fix); the scan test for direct writes to final paths |
+| RS-1 | tests/build.test.ts › RS-1 writeLexicon: a failing build leaves the previous lex/ and lexicon.json untouched (no delete first) |
+| RS-1 | tests/build.test.ts › RS-1 pre-flight names the lemma that no PF-4 split can fit |
+| RS-1 | tests/robust-build.test.ts › RS-1 harvest/ and pipelines/ do not gain direct writeFileSync calls |
+| RS-1 | manual — ratchet only: the remaining direct writeFileSync calls listed in the scan test are still to be moved to writeAtomic |
 | RS-2 | tests/stage-cache.test.ts › RS-2 cold = uncached output; warm = all hits, same output |
 | RS-2 | tests/stage-cache.test.ts › RS-2 changing one input file invalidates exactly the stages that read it |
 | RS-2 | tests/stage-cache.test.ts › RS-2 a source file changed: only the stages whose block references it |

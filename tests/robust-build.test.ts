@@ -44,3 +44,49 @@ describe('RS-1 build helpers', () => {
     expect(existsSync('nlp/stress.py')).toBe(true)
   })
 })
+
+describe('RS-1 scan: no new direct writes to final paths', () => {
+  // ratchet: the files below still call writeFileSync directly (to be moved to writeAtomic/writeJsonAtomic); a new file, or more calls in a file, fails
+  const BASELINE: Record<string, number> = {
+  'pipelines/atlas-extract.ts': 1,
+  'pipelines/atlas-site.ts': 1,
+  'pipelines/bq.ts': 1,
+  'pipelines/build-archaic.ts': 1,
+  'pipelines/build-autolabel.ts': 2,
+  'pipelines/build-cognates.ts': 1,
+  'pipelines/build-cv.ts': 2,
+  'pipelines/build-etymology.ts': 1,
+  'pipelines/build-extras.ts': 4,
+  'pipelines/build-mu.ts': 1,
+  'pipelines/build-parts.ts': 3,
+  'pipelines/build-phrases.ts': 2,
+  'pipelines/build-r2u.ts': 1,
+  'pipelines/build-texts.ts': 1,
+  'pipelines/build-torot.ts': 1,
+  'pipelines/build-unlinked.ts': 5,
+  'pipelines/build-usage.ts': 1,
+  'pipelines/cognates.ts': 1,
+  'pipelines/data-cdn.ts': 3,
+  'pipelines/dialect-literature.ts': 1,
+  'pipelines/etymology.ts': 2,
+  'pipelines/fixture.ts': 3,
+  'pipelines/loan-labels.ts': 1,
+  'pipelines/lt.ts': 1,
+  'pipelines/merge-lch.ts': 2,
+  'pipelines/phraseology-wikt.ts': 1,
+  'pipelines/sense-audit.ts': 1,
+  'pipelines/senses-wikt.ts': 1,
+  'pipelines/usage-wikt.ts': 1,
+  'pipelines/yat-interchange.ts': 1,
+  }
+  it('RS-1 harvest/ and pipelines/ do not gain direct writeFileSync calls', async () => {
+    const { readdirSync } = await import('node:fs')
+    const found: Record<string, number> = {}
+    for (const d of ['harvest', 'pipelines']) for (const f of readdirSync(d)) {
+      if (!f.endsWith('.ts') || ['lib.ts', 'robust.ts', 'stage-cache.ts'].includes(f)) continue
+      const n = (readFileSync(`${d}/${f}`, 'utf8').match(/writeFileSync\(/g) ?? []).length
+      if (n) found[`${d}/${f}`] = n
+    }
+    for (const [f, n] of Object.entries(found)) expect(n, `${f}: use writeAtomic / writeJsonAtomic (RS-1)`).toBeLessThanOrEqual(BASELINE[f] ?? 0)
+  })
+})

@@ -10,7 +10,7 @@
  * detect() asks for (found by a dry run) — so rule evaluation never needs a third lookup. (3) lexIndexVesum for lexindex.json.
  */
 import { execFile } from 'node:child_process'
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { promisify } from 'node:util'
@@ -60,7 +60,7 @@ import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
 import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
 import { writeHeteronymCandidates, writeLoanLabels, writeSenses, writeSongs } from './build-extras.ts'
 import { LYRICS_SOURCES, loadLyrics, vocabOf, type SongVocab } from './song-vocab.ts'
-import { isFresh, readJson, runLogged, writeJsonAtomic } from './robust.ts'
+import { isFresh, readJson, runLogged, swapDir, writeJsonAtomic } from './robust.ts'
 import { BUILD_ENV_KEYS, StageCache, sha } from './stage-cache.ts'
 import { SourceIndex } from './stage-code.ts'
 
@@ -398,7 +398,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     // #end
     ar.file.generated = new Date().toISOString()   // RS-2: a cached file carries the time of the run that computed it
     for (const [wid, r] of ar.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
-    writeFileSync(resolve(PUB, 'archaic.json'), JSON.stringify(ar.file)); archReport(ar.file, ar.counts, ANALYSIS)
+    writeJsonAtomic(resolve(PUB, 'archaic.json'), JSON.stringify(ar.file)); archReport(ar.file, ar.counts, ANALYSIS)
     lap(`archaic lemmas: ${ar.file.entries.filter(e => e.status === 'dictionary').length} dictionary, ${ar.file.entries.filter(e => e.status === 'unverified').length} unverified; ${ar.counts.dictionaryTokens + ar.counts.unverifiedTokens} corpus tokens linked`)
     // SPEC 63 CV: every word attested in a dictionary witness (headwords AND quoted equivalents) without a full card gets a light card /lw/:word with its attestation lines
     const cv = buildCv(adm.map(({ w }) => ({ w })), (wi, ti) => { const L = linked[tix[wi]![ti]!]; if (!L) return undefined; const la = lemmas.get(L.c.id); return { lemma: L.c.lemma, tags: L.c.hit.tags, full: !!la && keep[la.idx] === 1 } },
@@ -450,8 +450,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     if (lt[l.id] || /:(bad|subst|slang|alt)\b/.test(':' + l.tags) || auto.ruPairs.has(key(l.display))) ruReq.add(l.id)   // AC-3: a lemma that is a Russian headword in r2u gets the Russian-dictionary check
   }
   mkdirSync(WORK, { recursive: true })
-  writeFileSync(resolve(WORK, 'stress-request.json'), JSON.stringify([...stressReq]))
-  writeFileSync(resolve(WORK, 'ru-request.json'), JSON.stringify([...ruReq]))
+  writeJsonAtomic(resolve(WORK, 'stress-request.json'), JSON.stringify([...stressReq]))
+  writeJsonAtomic(resolve(WORK, 'ru-request.json'), JSON.stringify([...ruReq]))
   lap(`requests: stress ${stressReq.size}, ru ${ruReq.size}`)
 
   // dry run: which VESUM keys will detect() look up?
@@ -625,6 +625,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   Object.assign(auto.counts, ann.counts)
   const { cards, detectHits, hints, lemTags } = ann
   lap(`${cards.length} lemma cards annotated`)
+  { const pf = preflightShards(cards); lap(`pre-flight: ${pf.big.length} lemma(s) over the shard limit (PF-4 part files), ${pf.overBuckets} bucket(s) will overflow, largest lemma ${pf.max} B`) }   // RS-1: fail in seconds, not at minute 50
 
 
   // #stage phrases
@@ -668,9 +669,9 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   cvLater()
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB (${fmtBreakdown(budget.fields)}),${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
   lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB, torot.refs) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
-  writeFileSync(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeFileSync(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
+  writeJsonAtomic(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeJsonAtomic(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
     [['arch', 'PV-7 Архангельське Євангеліє 1092'], ['o18_26', 'PV-6 Прокопович «Владимир» 1705']].flatMap(([id, what]) => { const x = adm.findIndex(a => a.w.id === id); return x < 0 ? [] : [{ id: id!, what: what!, n: adm[x]!.w.tokens.length, linked: wLinked.get(id!) ?? 0 }] }))
-  writeFileSync(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeFileSync(resolve(PUB, 'lexindex.json'), lexIdxJson)
+  writeJsonAtomic(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeJsonAtomic(resolve(PUB, 'lexindex.json'), lexIdxJson)
   {   // NP-2: toponym gazetteer + spelling-variant clusters over every capitalised token of the admitted witnesses
     const scan = new PlaceScan(); for (const { w } of adm) for (const t of w.tokens) scan.add(w, t)
     const places: PlacesFile = {
@@ -678,7 +679,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
       source: { coords: 'Wikidata P625 (query.wikidata.org, 2026-10-12)', licence: 'CC0', tiles: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '© учасники OpenStreetMap (ODbL)' },
       places: scan.result(),
     }
-    writeFileSync(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
+    writeJsonAtomic(resolve(PUB, 'places.json'), JSON.stringify(places)); lap(`places.json: ${places.places.length} toponyms`)
   }
   lap(`loanlabels.json: ${writeLoanLabels(ROOT, PUB)} lemmas; heteronyms.json: ${writeHeteronymCandidates(ROOT, PUB)} candidate forms; songs.json: ${writeSongs(PUB, generated, songVocab)} songs`)   // LW-2 / HT-1 exports for the W10 stream
   {   // BL-12
@@ -698,7 +699,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     ltCorpus: ltCorpus.sort((a, b) => b.f - a.f), budget: { ...budget, lexindexBytes: Buffer.byteLength(lexIdxJson), lexindexAttested: attested },
     stressForms: stressJson ? Object.keys(stressJson.forms).length : 0, stressSource: stressJson?.source ?? '', ruForms: Object.keys(ruJson).length, fMax, epochs: epochRes.stats,
   }
-  writeFileSync(resolve(ANALYSIS, 'REPORT.md'), renderReport(rd2))
+  writeJsonAtomic(resolve(ANALYSIS, 'REPORT.md'), renderReport(rd2))
 
   // console summary
   console.log('\n=== SUMMARY ===')
@@ -726,6 +727,21 @@ export const fmtBreakdown = (f: Record<string, number>) => Object.entries(f).sor
 
 export interface LexStats { bytes: number; fields: Record<string, number>; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number]; /** SPEC 63 PF-4 */ overflow?: [string, number, number][] }
 /**
+ * RS-1 pre-flight, run right after annotate: the same size arithmetic as writeLexicon, but only per lemma (about 60 MB of JSON, seconds).
+ * Throws, naming the lemma and the piece, when a lemma cannot be split into PF-4 part files that fit `limit`; otherwise reports how many lemmas/buckets will overflow.
+ */
+export function preflightShards(cards: LemmaCard[], limit = SHARD_LIMIT): { big: [string, number][]; overBuckets: number; max: number } {
+  const big: [string, number][] = [], perBucket = new Map<number, number>()
+  let max = 0
+  for (const c of cards) {
+    const { detail } = splitCard(c), n = Buffer.byteLength(JSON.stringify(packShard([[c.lemma, detail]]))), b = bucketOf(c.lemma)
+    max = Math.max(max, n); perBucket.set(b, (perBucket.get(b) ?? 0) + n)
+    if (n > limit) { big.push([c.lemma, n]); try { splitDetail(c.lemma, detail, limit) } catch (e) { throw new Error(`pre-flight: ${(e as Error).message} (lemma «${c.lemma}» is ${n} B; PF-4 cannot split it)`) } }
+  }
+  return { big: big.sort((a, b) => b[1] - a[1]), overBuckets: [...perBucket.values()].filter(n => n > limit).length, max }
+}
+
+/**
  * B-5 (amendment 2026-10-11): writes <dir>/lexicon.json (core, ALL cards, evidence pooled) and <dir>/lex/<bucket>.json (detail shards, one per non-empty bucket; each lemma in exactly one).
  * Stale shards are removed first. Throws when core or a shard exceeds its limit — lemmas are never dropped to make it fit.
  */
@@ -736,11 +752,13 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
   if (bytes > coreLimit) throw new Error(`lexicon.json core ${bytes} B exceeds the ${coreLimit} B sanity cap (B-5a; fields: ${fmtBreakdown(fields)}): move fields to LemmaDetail instead of dropping lemmas`)
   const buckets = new Map<number, [string, LemmaDetail][]>()
   parts.forEach(p => { const b = bucketOf(p.core.lemma); (buckets.get(b) ?? buckets.set(b, []).get(b)!).push([p.core.lemma, p.detail]) })
-  const lex = resolve(dir, 'lex'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
+  // RS-1: write into lex.next and swap after every shard passed validation; a throw below leaves the previous lex/ + lexicon.json untouched
+  const lexFinal = resolve(dir, 'lex'), lex = resolve(dir, 'lex.next'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
   const sizes: number[] = []
   let epochBytes = 0, shrunk1 = 0, shrunk2 = 0
   const overflow: [lemma: string, bytes: number, parts: number][] = []   // PF-4
   const sz = (es: [string, LemmaDetail][]) => Buffer.byteLength(JSON.stringify(packShard(es)))
+  try {
   for (const [b, es0] of [...buckets].sort((x, y) => x[0] - y[0])) {
     let es = es0, s = JSON.stringify(packShard(es)), n = Buffer.byteLength(s)
     const bare = sz(es.map(([l, d]) => [l, (({ epochs: _e, ...r }) => r)(d)] as [string, LemmaDetail]))
@@ -762,18 +780,19 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
         if (!moved.has(l)) continue
         let parts: LemmaDetail[]
         try { parts = splitDetail(l, d, shardLimit) } catch (e) { throw new Error(`shard ${b}: ${(e as Error).message}; lemma sizes in the bucket: ${es0.map(([x]) => `${x} ${own.get(x)} B`).join(', ')} (B-5b, PF-4)`) }
-        over[l] = parts.map(part => { const name = `${b}-${++k}`, t = JSON.stringify(packShard([[l, part]])); writeFileSync(resolve(lex, `${name}.json`), t); sizes.push(Buffer.byteLength(t)); return name })
+        over[l] = parts.map(part => { const name = `${b}-${++k}`, t = JSON.stringify(packShard([[l, part]])); writeJsonAtomic(resolve(lex, `${name}.json`), t); sizes.push(Buffer.byteLength(t)); return name })
         overflow.push([l, own.get(l)!, parts.length])
       }
       es = keep; s = JSON.stringify({ ...packShard(es), over }); n = Buffer.byteLength(s)
       if (n > shardLimit) throw new Error(`shard ${b} (${es.length} lemmas) is ${n} B, over ${shardLimit} B even without ${[...moved].join(', ')} (B-5b, PF-4)`)
     }
     epochBytes += Math.max(0, n - bare)
-    writeFileSync(resolve(lex, `${b}.json`), s); sizes.push(n)
+    writeJsonAtomic(resolve(lex, `${b}.json`), s); sizes.push(n)
   }
+  } catch (e) { rmSync(lex, { recursive: true, force: true }); throw e }
   sizes.sort((a, b) => a - b)
   if (overflow.length) console.log(`  PF-4: ${overflow.length} lemma(s) in part files: ${overflow.map(([l, n, p]) => `${l} ${n} B → ${p} part(s)`).join(', ')}`)
-  writeFileSync(resolve(dir, 'lexicon.json'), json)
+  swapDir(lex, lexFinal); writeJsonAtomic(resolve(dir, 'lexicon.json'), json)
   return { bytes, fields, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2], overflow }
 }
 

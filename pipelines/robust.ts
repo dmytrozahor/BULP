@@ -1,6 +1,6 @@
 /** SPEC 63 RS-1: small crash-tolerance helpers shared by the build (kept out of build.ts so they are testable and the build diff stays small). */
 import { spawn } from 'node:child_process'
-import { closeSync, existsSync, openSync, readFileSync, renameSync, statSync, writeFileSync, readSync, fstatSync } from 'node:fs'
+import { closeSync, existsSync, openSync, readFileSync, renameSync, rmSync, statSync, writeFileSync, readSync, fstatSync } from 'node:fs'
 
 /** JSON read that names the file in the error (a bare «Unexpected end of JSON input» 20 minutes into a build says nothing) */
 export function readJson<T>(p: string): T {
@@ -13,6 +13,15 @@ export function readJson<T>(p: string): T {
 export function writeJsonAtomic(p: string, text: string) {
   const tmp = `${p}.${process.pid}.tmp`
   writeFileSync(tmp, text); renameSync(tmp, p)
+}
+
+/** replace `final` by the fully written `next` dir: the old one is renamed aside first and deleted only after the new one is in place (a crash leaves one of the two, never neither) */
+export function swapDir(next: string, final: string) {
+  const old = `${final}.old`
+  rmSync(old, { recursive: true, force: true })
+  if (existsSync(final)) renameSync(final, old)
+  renameSync(next, final)
+  rmSync(old, { recursive: true, force: true })
 }
 
 /** the last `n` bytes of a file, as text (the tail of a stage log for an error message) */

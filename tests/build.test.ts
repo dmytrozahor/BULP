@@ -7,7 +7,7 @@ import type { LemmaCard, VesumHit, WitnessOut } from '../core/types.ts'
 import { authorById, type Author } from '../pipelines/authors.ts'
 import { admit, rankFirst, firstClaim, upgradeLt, selectForms, lemmaRusyn, surzhykClaim, type FirstCand } from '../pipelines/build-annotate.ts'
 import { chooseLemma, tierOf, type Option } from '../pipelines/build-link.ts'
-import { writeLexicon } from '../pipelines/build.ts'
+import { preflightShards, writeLexicon } from '../pipelines/build.ts'
 import { vesumClass } from '../core/pos-gate.ts'
 import { pack, packCore, unpack, unpackCore } from '../core/pack.ts'
 import { BUCKETS, bucketOf, isFull, loadShardWith, mergeCard, packShard, splitCard, unpackShard } from '../core/shard.ts'
@@ -306,3 +306,19 @@ describe.skipIf(!hasData())('P-1.1 every claim in the built lexicon passes claim
   })
 })
 
+
+describe('RS-1 writeLexicon and pre-flight', () => {
+  it('RS-1 writeLexicon: a failing build leaves the previous lex/ and lexicon.json untouched (no delete first)', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'lex-')); mkdirSync(join(dir, 'lex')); writeFileSync(join(dir, 'lex', 'old.json'), '{}'); writeFileSync(join(dir, 'lexicon.json'), 'OLD')
+    try {
+      const cs = Array.from({ length: 5 }, (_, i) => fullCard('лема' + i, 10 - i, 2))
+      expect(() => writeLexicon(cs, dir, 1e9, 10)).toThrow()
+      expect(existsSync(join(dir, 'lex', 'old.json'))).toBe(true); expect(readFileSync(join(dir, 'lexicon.json'), 'utf8')).toBe('OLD'); expect(existsSync(join(dir, 'lex.next'))).toBe(false)
+    } finally { rmSync(dir, { recursive: true, force: true }) }
+  })
+  it('RS-1 pre-flight names the lemma that no PF-4 split can fit', () => {
+    const cs = [fullCard('мала', 5, 1), fullCard('велика', 9, 3)]
+    expect(preflightShards(cs).big).toEqual([])
+    expect(() => preflightShards(cs, 50)).toThrow(/pre-flight/)
+  })
+})
