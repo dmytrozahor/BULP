@@ -12,11 +12,12 @@
  *  r2u pages are read by pipelines/ingest-r2u.ts from data/raw/r2u (the harvester writes there).
  *  Authors: <out>/harvest-authors.json (provisional records whose evidence is the source's own header line); pipelines/authors.ts merges the file when it exists.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
 import { Q } from '../core/evidence.ts'
 import type { Evidence } from '../core/evidence.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
 export interface Idx { id: string; url: string; date: string | null; licence: string; bytes: number; status: number; title: string; author?: string; region?: string; file?: string; [k: string]: unknown }
@@ -111,7 +112,7 @@ const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' '
 export interface Ctx { out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
-const save = (ctx: Ctx, w: WitnessOut) => writeFileSync(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
+const save = (ctx: Ctx, w: WitnessOut) => writeAtomic(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
 
 function runWikisource(ctx: Ctx): Sum {
   const src = 'wikisource-uk', s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
@@ -223,7 +224,7 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
   }
   const keep = src.startsWith('wikipedia') ? Object.fromEntries(Object.entries(entries).filter(([, e]) => e.f >= 2)) : entries
   mkdirSync(`${ctx.out}/harvest-vocab`, { recursive: true })
-  writeFileSync(`${ctx.out}/harvest-vocab/${src}.json`, JSON.stringify({ source: src, licence, family, vocabOnly: true, docs: s.items, tokens: s.tokens, entries: keep, items }))
+  writeAtomic(`${ctx.out}/harvest-vocab/${src}.json`, JSON.stringify({ source: src, licence, family, vocabOnly: true, docs: s.items, tokens: s.tokens, entries: keep, items }))
   s.witnesses = 0
   return s
 }
@@ -251,7 +252,7 @@ export async function main(argv: string[]) {
   for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) sums.push(runVocab(ctx, v, fam))
   const ap = `${ctx.out}/harvest-authors.json`   // merge: a run with --only must not drop the authors of the other sources
   const prev: HAuthor[] = existsSync(ap) ? JSON.parse(readFileSync(ap, 'utf8')) : []
-  writeFileSync(ap, JSON.stringify([...new Map([...prev, ...authors.values()].map(a => [a.id, a])).values()]))
+  writeAtomic(ap, JSON.stringify([...new Map([...prev, ...authors.values()].map(a => [a.id, a])).values()]))
   for (const s of sums) console.log(`${s.source}: ${s.items} items → ${s.witnesses} witnesses, ${s.tokens} tokens${Object.keys(s.skipped).length ? ', skipped ' + JSON.stringify(s.skipped) : ''}`)
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('pipelines/ingest-harvest.ts')) await main(process.argv.slice(2))

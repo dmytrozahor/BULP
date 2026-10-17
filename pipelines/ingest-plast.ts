@@ -4,13 +4,14 @@
  * headword + ≤ 1-sentence gloss + locator; the page is cached under data/raw/plast/ and never published). research/33 §2 logs the rejected sources.
  * Also checks every ingested headword and the SL-1 words against VESUM (literary-language status, SL-4).
  */
-import { createReadStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createReadStream, existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createInterface } from 'node:readline'
 import { GAZETTEER } from '../core/autolabel.ts'
 import { parsePlastLines, type DialectRow, type PlastEntry, type LiteraryRow, type ProcessRow, type SociolectFile } from '../core/sociolect.ts'
 import { key } from '../core/text.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const PLAST_URL = 'https://plastseattle.org/plast-101/dictionary/'
@@ -80,13 +81,13 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     mkdirSync(dirname(RAW), { recursive: true })
     const r = await fetch(PLAST_URL, { headers: { 'User-Agent': 'BULP-ukr-lexicon/0.1 (https://github.com/dmytrozahor/BULP; dmytrozah.dev@gmail.com) plast glossary' } })
     if (!r.ok) throw new Error(`HTTP ${r.status}`)
-    writeFileSync(RAW, await r.text())
+    writeAtomic(RAW, await r.text())
   }
   if (!existsSync(KROKI_RAW)) {   // user allowed despite robots.txt (2026-10-14: «I allow»); pacing ≥ 10 s before the single request
     await new Promise(r => setTimeout(r, 10_000))
     const r = await fetch(KROKI_URL, { headers: { 'User-Agent': 'BULP-ukr-lexicon/0.1 (https://github.com/dmytrozahor/BULP; dmytrozah.dev@gmail.com) plast glossary' } })
     if (!r.ok) throw new Error(`HTTP ${r.status}`)
-    writeFileSync(KROKI_RAW, await r.text())
+    writeAtomic(KROKI_RAW, await r.text())
   }
   const kroki = parseKroki(pageLines(readFileSync(KROKI_RAW, 'utf8')))
   const entries = [...parsePlastLines(htmlLines(readFileSync(RAW, 'utf8'))), ...kroki.entries]
@@ -96,6 +97,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     plast: { source: 'PLSEA', url: PLAST_URL, retrieved: new Date().toISOString().slice(0, 10), licence: '© Пласт Сієтл; лише цитати, без повного тексту', compiler: 'Ярко Запотоцький, 14.05.2021', entries },
     processes: PROCESSES, dialect: kroki.dialect, literary,
   }
-  writeFileSync(resolve(ROOT, 'public/data/sociolect.json'), JSON.stringify(f))
+  writeAtomic(resolve(ROOT, 'public/data/sociolect.json'), JSON.stringify(f))
   console.log(`plast entries ${entries.length} (abbr ${entries.filter(e => e.k === 'abbr').length}); VESUM present ${literary.filter(l => l.vesum).length}/${literary.length}`)
 }

@@ -12,7 +12,7 @@
  * Lookup is by key() (lower case, no stress, one apostrophe); VESUM is lower case except proper names, so that is case-insensitive.
  * Homonymous lemma lines (e.g. two `бар`) are merged under key(lemma); each paradigm form keeps its own tags, so nothing is lost.
  */
-import { createReadStream, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createReadStream, existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createInterface } from 'node:readline'
@@ -20,6 +20,7 @@ import type { VesumHit } from '../core/types.ts'
 import { key } from '../core/text.ts'
 import { lk } from '../core/cv.ts'
 import { vesumClass } from '../core/pos-gate.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const VESUM_TXT = resolve(ROOT, 'data/raw/vesum/dict_corp_vis.txt')
@@ -146,7 +147,7 @@ async function twistersText(): Promise<string> {
   if (!existsSync(p)) {
     const r = await fetch(TWISTERS_URL)
     if (!r.ok) throw new Error(`twisters.lst fetch: ${r.status}`)
-    mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, await r.text())
+    mkdirSync(dirname(p), { recursive: true }); writeAtomic(p, await r.text())
   }
   return readFileSync(p, 'utf8')
 }
@@ -175,6 +176,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     for (const a of Object.values(lex)) for (const h of a) for (const x of new Set(segs(h.tags))) if (FLAGS.has(x)) perTag[x] = (perTag[x] ?? 0) + 1
     console.log(`keys ${Object.keys(lex).length}, hits ${hits}, JSON ${json.length} chars / ${Buffer.byteLength(json)} bytes, ${((Date.now() - t0) / 1000).toFixed(1)} s`)
     console.log(perTag)
-    if (process.argv[3]) { mkdirSync(dirname(resolve(process.argv[3])), { recursive: true }); writeFileSync(process.argv[3], json) }
+    if (process.argv[3]) { mkdirSync(dirname(resolve(process.argv[3])), { recursive: true }); writeAtomic(process.argv[3], json) }
   } else console.log('usage: vesum.ts stats | lex [out.json]')
 }

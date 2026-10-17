@@ -76,3 +76,27 @@ describe('RS-1 harvest: get() retries and bans', () => {
     expect(sh).toMatch(/HTTP \(403\|429\)/); expect(sh).toMatch(/COOLDOWN_H/); expect(sh).not.toMatch(/rm -f "\$dir\/STOPPED\.json"/)
   })
 })
+
+describe('RS-1 data branch and authors', async () => {
+  const { publishWith, swapDirs } = await import('../pipelines/data-branch.ts')
+  const O = { remote: 'origin', branch: 'b', data: '/x', dirs: ['lex'] }
+  it('RS-1 a network failure on fetch is rethrown, not treated as a missing branch (no root commit)', () => {
+    const calls: string[][] = []
+    const run = (a: string[]) => { calls.push(a); if (a[0] === 'fetch') throw new Error('fatal: unable to access: Could not resolve host'); return '' }
+    expect(() => publishWith(run, '/i', O)).toThrow(/not a missing branch/)
+    expect(calls.some(c => c[0] === 'commit-tree' || c[0] === 'push')).toBe(false)
+  })
+  it('RS-1 swapDirs: a failure mid-swap restores the old dirs', () => {
+    const d = mkdtempSync(join(tmpdir(), 'sw-')), next = join(d, '.pull-next')
+    mkdirSync(join(d, 'lex')); writeFileSync(join(d, 'lex/a'), 'old'); mkdirSync(join(d, 'texts')); writeFileSync(join(d, 'texts/a'), 'oldT')
+    mkdirSync(join(next, 'lex'), { recursive: true }); writeFileSync(join(next, 'lex/a'), 'new')
+    swapDirs(d, next, ['lex', 'texts'])
+    expect(readFileSync(join(d, 'lex/a'), 'utf8')).toBe('new'); expect(readFileSync(join(d, 'texts/a'), 'utf8')).toBe('oldT'); expect(existsSync(join(d, '.pull-old'))).toBe(false)
+  })
+  it('RS-1 swapDirs: leftovers of a pull that died mid-swap are restored first', () => {
+    const d = mkdtempSync(join(tmpdir(), 'sw-')); mkdirSync(join(d, '.pull-old/lex'), { recursive: true }); writeFileSync(join(d, '.pull-old/lex/a'), 'orig')
+    mkdirSync(join(d, 'next'), { recursive: true })
+    swapDirs(d, join(d, 'next'), ['lex'])
+    expect(readFileSync(join(d, 'lex/a'), 'utf8')).toBe('orig')
+  })
+})

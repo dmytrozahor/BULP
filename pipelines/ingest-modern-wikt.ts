@@ -4,9 +4,10 @@
  * Pacing 2.1 s per request. Licence CC BY-SA 4.0 → headword + gloss ≤ 160 chars may be stored, with attribution.
  * Date of an entry = timestamp of its FIRST revision (when the word was added to the dictionary). It is NOT the date the word was first used: the badge says so.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { writeAtomic } from '../harvest/lib.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const WIKT_OUT = resolve(ROOT, 'data/raw/wikt-modern/entries.json')
@@ -54,7 +55,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       const created = Object.values<any>(r.query.pages)[0]?.revisions?.[0]?.timestamp as string | undefined
       if (!created) continue
       out.push({ w, kind, cat, gloss: gloss.get(w), created, url: 'https://uk.wiktionary.org/wiki/' + encodeURIComponent(w) })
-      mkdirSync(dirname(WIKT_OUT), { recursive: true }); writeFileSync(WIKT_OUT, JSON.stringify(out))
+      mkdirSync(dirname(WIKT_OUT), { recursive: true }); writeAtomic(WIKT_OUT, JSON.stringify(out))
     }
   }
   console.log('entries', out.length)

@@ -8,13 +8,14 @@
  *
  * Locator of a token = «r2u <dict short> · s?w=<lookup>#<dict>_<row>: <first 90 characters of the article>».
  */
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { existsSync, readFileSync, mkdirSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
 import type { Ingester } from './ingest.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
 import { witnessOf } from './ingest-torot.ts'
 import { stripStress } from '../core/text.ts'
 import { parseSearch, r2uDictById, type R2uRow } from './r2u.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 export const R2U_DIR = 'data/raw/r2u'   // an OPEN, licensed dump of result pages goes here: pages/<file>.html.gz + index.jsonl (see research/30 §2)
 export interface IndexLine { q: string; scope: string; file: string; at: string; status: number; bytes: number }
 const readIndex = (): IndexLine[] => (existsSync(`${R2U_DIR}/index.jsonl`) ? readFileSync(`${R2U_DIR}/index.jsonl`, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l) as IndexLine) : [])
@@ -63,7 +64,7 @@ export default {
     if (!wrote) {
       mkdirSync('data/work', { recursive: true })
       const out: RowsFile = { format: 1, lookups: memo.lookups, queried: memo.queried, rows: memo.rows }
-      writeFileSync('data/work/r2u-rows.json', JSON.stringify(out)); wrote = true
+      writeAtomic('data/work/r2u-rows.json', JSON.stringify(out)); wrote = true
     }
     const w = r2uWitness(u, d.id, memo.rows)
     return w.tokens.length ? [w] : []   // a dictionary none of whose articles was found yet is no witness

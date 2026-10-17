@@ -27,11 +27,12 @@
  *
  * Usage: `npx tsx pipelines/ingest-sophia.ts` → data/raw/sophia/NNN.json (cache, 300 per page, ≥ 1.1 s apart) → public/data/sophia.json + data/work/sophia-<id>.json.
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync, readdirSync, rmSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { D } from '../core/evidence.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
 import { ATTRIBUTION, LICENCE_NOTE, SOPHIA_API } from './nw-sophia.ts'
 import { buildSegmenter, loadAttested } from './sophia-segment.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 
 export const API = SOPHIA_API
 export const PORTAL = 'https://saintsophia.dh.gu.se/'
@@ -235,7 +236,7 @@ async function main() {
     if (!existsSync(f)) {
       const res = await fetch(`${API}?depth=2&limit=${LIMIT}&offset=${off}`, { headers: UA })
       if (!res.ok) throw new Error(`sophia ${res.status} at offset ${off}`)
-      writeFileSync(f, Buffer.from(await res.arrayBuffer()))
+      writeAtomic(f, Buffer.from(await res.arrayBuffer()))
       console.log(`✓ offset ${off}`)
       await new Promise(r => setTimeout(r, 1100))
     }
@@ -258,10 +259,10 @@ async function main() {
     droppedUnmapped: ing.witnesses.reduce((s, w) => s + w.dropped.unmapped, 0),
   }
   mkdirSync('public/data', { recursive: true })
-  writeFileSync('public/data/sophia.json', JSON.stringify(cat))
+  writeAtomic('public/data/sophia.json', JSON.stringify(cat))
   mkdirSync('data/work', { recursive: true })
   for (const f of readdirSync('data/work')) if (/^sophia-\d+(\.nlp)?\.json$/.test(f)) rmSync(`data/work/${f}`)
-  for (const w of ing.witnesses) writeFileSync(`data/work/${w.id}.json`, JSON.stringify(w))
+  for (const w of ing.witnesses) writeAtomic(`data/work/${w.id}.json`, JSON.stringify(w))
   console.log(`sophia: ${cat.count} inscriptions → public/data/sophia.json; ${cat.text.witnesses} witnesses, ${cat.text.tokens} tokens → data/work/sophia-*.json; excluded ${JSON.stringify(ing.excluded)}`)
 }
 if (process.argv[1]?.endsWith('ingest-sophia.ts')) await main()

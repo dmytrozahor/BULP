@@ -3,10 +3,11 @@
  * Inputs (all fetched politely, research/38): data/work/modern-counts.json (pipelines/modern_count.py: HPLT shard sample + UberText social, vocabulary-only counters),
  * data/raw/wikt-modern/entries.json (pipelines/ingest-modern-wikt.ts). No running text is stored anywhere in the output.
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { buildModern, modernReport, type ModernFile, type RawCounts, type WiktRow } from '../core/modern.ts'
+import { writeAtomic } from '../harvest/lib.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const HPLT_SHARD = 'ukr_Cyrl_1/train-00000-of-00300.parquet'
@@ -48,7 +49,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     ],
     entries, report: modernReport(entries, { HPLT: c.hpltDocs, UBER: c.uberLines, WIKT: wikt.length }),
   }
-  writeFileSync(resolve(ROOT, 'public/data/modern.json'), JSON.stringify(f))
-  writeFileSync(resolve(ROOT, 'analysis/modern-vocabulary.md'), renderReport(f))
+  writeAtomic(resolve(ROOT, 'public/data/modern.json'), JSON.stringify(f))
+  writeAtomic(resolve(ROOT, 'analysis/modern-vocabulary.md'), renderReport(f))
   console.log(`entries ${entries.length}: candidates ${f.report.candidates}, labelled ${f.report.labelled}`, JSON.stringify(f.report.perSource))
 }

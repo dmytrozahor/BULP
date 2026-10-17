@@ -101,7 +101,10 @@ export const AUTHORS: Author[] = [
 ]
 
 // HV-3: provisional authors of the harvested works (written by pipelines/ingest-harvest.ts; absent file = none)
-try { AUTHORS.push(...(JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../data/work/harvest-authors.json'), 'utf8')) as Author[])) } catch { /* no harvest ingest yet */ }
+try { AUTHORS.push(...(JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../data/work/harvest-authors.json'), 'utf8')) as Author[])) } catch (e) {
+  // RS-1: only "no harvest ingest yet" is ignorable; a truncated/corrupt file would silently exclude every harvested witness
+  if ((e as NodeJS.ErrnoException).code !== 'ENOENT') throw new Error(`data/work/harvest-authors.json is unreadable (${(e as Error).message}); re-run pipelines/ingest-harvest.ts`)
+}
 
 export const authorById =Object.fromEntries(AUTHORS.map(a => [a.id, a])) as Record<string, Author>
 export const admissible = (a?: Author) => !!a && (a.status === 'vetted' || a.status === 'provisional')
