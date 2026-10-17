@@ -4,7 +4,7 @@
  * Input: public/data/{lexicon,lexindex,cardindex,corpus,etymology,cognates,senses,usage,loanlabels,heteronyms,phrases}.json (the whole files stay for the pipeline and the full list pages).
  * ix/ is the prefix-sharded lookup index (search + analyser/annotator/derivation lookups), see core/parts.ts.
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { unpackCore, packCore } from '../core/pack.ts'
 import { bucketOf } from '../core/shard.ts'
@@ -17,9 +17,36 @@ import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BU
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 
 const DATA = process.env.PARTS_DATA ?? 'public/data'
-const rd = <T>(f: string): T | undefined => (existsSync(`${DATA}/${f}`) ? JSON.parse(readFileSync(`${DATA}/${f}`, 'utf8')) as T : undefined)
-const out = (f: string, v: unknown) => { const p = `${DATA}/${f}`; mkdirSync(p.slice(0, p.lastIndexOf('/')), { recursive: true }); writeFileSync(p, JSON.stringify(v)) }
-const fresh = (d: string) => { rmSync(`${DATA}/${d}`, { recursive: true, force: true }); mkdirSync(`${DATA}/${d}`, { recursive: true }) }
+/**
+ * RS-1: sidecars the main build ALWAYS writes are required (a missing one is a failed build, not a site without that part); only these may be absent:
+ * cardindex.json (written by the separate CV step), phrases.json and archaic.json (written only when their stage ran).
+ */
+export const OPTIONAL_SIDECARS = ['cardindex.json', 'phrases.json', 'archaic.json']
+export const readSidecar = <T>(dir: string, f: string, optional = OPTIONAL_SIDECARS.includes(f)): T | undefined => {
+  const p = `${dir}/${f}`
+  if (!existsSync(p)) { if (optional) return undefined; throw new Error(`${p} is missing (required input; run build:data)`) }
+  try { return JSON.parse(readFileSync(p, 'utf8')) as T } catch (e) { throw new Error(`${p} is unreadable: ${(e as Error).message}`) }
+}
+const rd = <T>(f: string): T | undefined => readSidecar<T>(DATA, f)
+/** RS-1: every output is written under DATA/.next and swapped into place only after all stages succeeded, so a crash never leaves a half-written ix/ or a site without lm/ */
+const STAGE = () => `${DATA}/.next`
+const fresh_ = new Set<string>(), loose = new Set<string>()
+const out = (f: string, v: unknown) => { const p = `${STAGE()}/${f}`; mkdirSync(p.slice(0, p.lastIndexOf('/')), { recursive: true }); writeFileSync(p, JSON.stringify(v)); if (![...fresh_].some(d => f.startsWith(d + '/'))) loose.add(f) }
+const fresh = (d: string) => { fresh_.add(d); rmSync(`${STAGE()}/${d}`, { recursive: true, force: true }); mkdirSync(`${STAGE()}/${d}`, { recursive: true }) }
+const parent = (p: string) => p.slice(0, p.lastIndexOf('/'))
+/** swap the staged outputs into DATA (old dir renamed aside, new renamed in, old deleted) */
+export function commitStage(data: string, dirs: Iterable<string>, files: Iterable<string>) {
+  const st = `${data}/.next`, old = `${data}/.old`
+  rmSync(old, { recursive: true, force: true })
+  for (const d of dirs) {
+    if (!existsSync(`${st}/${d}`)) continue
+    mkdirSync(parent(`${old}/${d}`), { recursive: true }); mkdirSync(parent(`${data}/${d}`), { recursive: true })
+    if (existsSync(`${data}/${d}`)) renameSync(`${data}/${d}`, `${old}/${d}`)
+    renameSync(`${st}/${d}`, `${data}/${d}`)
+  }
+  for (const f of files) if (existsSync(`${st}/${f}`)) { mkdirSync(parent(`${data}/${f}`), { recursive: true }); renameSync(`${st}/${f}`, `${data}/${f}`) }
+  rmSync(old, { recursive: true, force: true }); rmSync(st, { recursive: true, force: true })
+}
 const gz = (v: unknown) => gzipSync(JSON.stringify(v), { level: 6 }).length
 
 // ── ix: the lookup index ─────────────────────────────────────────────────────────────────────────
@@ -100,7 +127,7 @@ function writeDx(rows: RowMap) {
   let bytes = 0, raw = 0, worst = 0
   for (const [p, items] of leaves) {
     const s = dxShardOf(items), t = JSON.stringify(s), g = gz(s)
-    writeFileSync(`${DATA}/dx/${ixName(p)}.json`, t); bytes += g; raw += Buffer.byteLength(t); worst = Math.max(worst, g)
+    writeFileSync(`${STAGE()}/dx/${ixName(p)}.json`, t); bytes += g; raw += Buffer.byteLength(t); worst = Math.max(worst, g)
     man.leaves.push([p, items.length])
   }
   man.leaves.sort((a, b) => (a[0] < b[0] ? -1 : 1))
@@ -114,7 +141,7 @@ function writeIx(rows: RowMap & { tags?: string[] }) {
   let bytes = 0, worst = 0
   for (const [p, items] of leaves) {
     const s = shardOf(items, rows.tags ?? []), g = gz(s)
-    writeFileSync(`${DATA}/ix/${ixName(p)}.json`, JSON.stringify(s)); bytes += g; worst = Math.max(worst, g)
+    writeFileSync(`${STAGE()}/ix/${ixName(p)}.json`, JSON.stringify(s)); bytes += g; worst = Math.max(worst, g)
     man.leaves.push([p, items.length])
   }
   man.leaves.sort((a, b) => (a[0] < b[0] ? -1 : 1))
@@ -264,6 +291,7 @@ function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters
 }
 
 if (process.argv[1]?.endsWith('build-parts.ts')) {
+  rmSync(STAGE(), { recursive: true, force: true })   // the stage of a crashed earlier run
   const core = rd<unknown>('lexicon.json'); if (!core) throw new Error(`${DATA}/lexicon.json missing (run build:data)`)
   const cards = unpackCore(core), corpus = rd<CorpusMeta>('corpus.json')!, lexindex = rd<LexIndex>('lexindex.json'), ci = rd<Parameters<typeof cardMap>[0]>('cardindex.json')
   writeCorpusParts(corpus, cards, ci)
@@ -273,4 +301,5 @@ if (process.argv[1]?.endsWith('build-parts.ts')) {
   writeIx(buildRows(cards, lexindex, ci))
   writeDx(buildDictRows(ci))
   writeLm()
+  commitStage(DATA, fresh_, loose)
 }

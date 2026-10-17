@@ -100,3 +100,21 @@ describe('RS-1 data branch and authors', async () => {
     expect(readFileSync(join(d, 'lex/a'), 'utf8')).toBe('orig')
   })
 })
+
+describe('RS-1 build-parts: required sidecars and staged swap', async () => {
+  const { readSidecar, commitStage, OPTIONAL_SIDECARS } = await import('../pipelines/build-parts.ts')
+  it('RS-1 a missing required sidecar is fatal, an optional one is undefined, a truncated one names the file', () => {
+    const d = mkdtempSync(join(tmpdir(), 'bp-'))
+    expect(() => readSidecar(d, 'etymology.json')).toThrow(/etymology\.json is missing/)
+    expect(readSidecar(d, 'cardindex.json')).toBeUndefined()
+    writeFileSync(join(d, 'senses.json'), '{"a":'); expect(() => readSidecar(d, 'senses.json')).toThrow(/senses\.json is unreadable/)
+    expect(OPTIONAL_SIDECARS).toEqual(['cardindex.json', 'phrases.json', 'archaic.json'])
+  })
+  it('RS-1 commitStage swaps whole dirs in; the old dir survives until then', () => {
+    const d = mkdtempSync(join(tmpdir(), 'bp-')); mkdirSync(join(d, 'ix')); writeFileSync(join(d, 'ix/old'), 'o')
+    mkdirSync(join(d, '.next/ix'), { recursive: true }); writeFileSync(join(d, '.next/ix/new'), 'n'); writeFileSync(join(d, '.next/boot.json'), '{}')
+    expect(existsSync(join(d, 'ix/old'))).toBe(true)   // before the commit nothing was deleted
+    commitStage(d, ['ix'], ['boot.json'])
+    expect(readdirSync(join(d, 'ix'))).toEqual(['new']); expect(existsSync(join(d, 'boot.json'))).toBe(true); expect(existsSync(join(d, '.next'))).toBe(false)
+  })
+})
