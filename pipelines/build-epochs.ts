@@ -53,6 +53,26 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
   const pcache = new Map<string, Decoded>(), ucache = new Map<string, Decoded>()
   const proiel = (m: string) => pcache.get(m) ?? (pcache.set(m, cellsFromProiel(m)), pcache.get(m)!)
   const ud = (u: string, f: string | null | undefined) => { const k = u + '|' + (f ?? ''); return ucache.get(k) ?? (ucache.set(k, cellsFromUd(u, f)), ucache.get(k)!) }
+  // perf: results that depend only on the linked type (L is one object per token type) are computed once; same outputs as the per-token version
+  const vcache = new Map<object, { tag: string; dec: Decoded } | null>()
+  const vesumOf = (L: { c: Chosen }) => {
+    let v = vcache.get(L)
+    if (v === undefined) {
+      const lines = (env.hits.get(key(L.c.own.form)) ?? []).filter(h => key(h.lemma) === L.c.id).map(h => h.tags)
+      vcache.set(L, v = lines.length ? { tag: lines.join(' | '), dec: cellsFromVesum(lines) } : null)
+    }
+    return v
+  }
+  const scache = [new Map<object, Map<string, boolean>>(), new Map<object, Map<string, boolean>>()]   // [oldI] L → nlp lemma → "the model lemma is the one the link followed"
+  const sameLemma = (L: { c: Chosen }, lemma: string, oldI: boolean) => {
+    const m = scache[oldI ? 1 : 0]!
+    let inner = m.get(L); if (!inner) m.set(L, inner = new Map())
+    let r = inner.get(lemma)
+    if (r === undefined) inner.set(lemma, r = env.derive(lemma, oldI).candidates.some(c => key(c.form) === L.c.id))
+    return r
+  }
+  const rcache = new Map<string, string>()
+  const rawOf = (s: string) => { let r = rcache.get(s); if (r === undefined) rcache.set(s, r = rawKey(s)); return r }
   const lg = new Map([...env.lemmas].map(([id, l]) => [id, lemmaGender(l.tags)]))
   /** FX-5: the grid of a kept lemma — pronouns (VESUM `pron` segment) get the pronominal grid (no stem type), everything else here is a noun */
   const gridOfLemma = new Map([...env.lemmas].map(([id, l]) => { const k = paradigmKindOf(l.tags); return [id, k === 'pron' ? 'pron' as const : k === 'verb' ? 'verb' as const : 'noun' as const] as const }))
@@ -71,12 +91,12 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
       else if (nt?.upos) {
         src = 'stanza'; tag = nt.feats ?? nt.upos; dec = ud(nt.upos, nt.feats); oldLemma = nt.lemma
         // EP-3.4: the model's analysis must be the one the link followed
-        const same = L.route === 'stanza-lemma' || (!!nt.lemma && env.derive(nt.lemma, !!w.oldI).candidates.some(c => key(c.form) === L.c.id))
+        const same = L.route === 'stanza-lemma' || (!!nt.lemma && sameLemma(L, nt.lemma, !!w.oldI))
         const g = lg.get(L.c.id)
         if (!same) conflict = 'lemma'; else if (dec.gender && g && dec.gender !== g && gridOfLemma.get(L.c.id) !== 'pron') conflict = 'gender'   // personal pronouns: the VESUM lemma line's gender is one of several
       } else if (w.lang === 'uk' && L.route === 'direct') {
-        const lines = (env.hits.get(key(L.c.own.form)) ?? []).filter(h => key(h.lemma) === L.c.id).map(h => h.tags)
-        if (lines.length) { src = 'vesum'; tag = lines.join(' | '); dec = cellsFromVesum(lines) }
+        const v = vesumOf(L)
+        if (v) { src = 'vesum'; tag = v.tag; dec = v.dec }
       }
       const why = !src || !dec ? '' : conflict || (dec.grid !== (gridOfLemma.get(L.c.id) ?? (env.kindOf?.(L.c.id) === 'pron' ? 'pron' : 'noun')) ? 'grid:' + (dec.grid ?? 'none') : '')
       if (isProbe) {   // FX-6 diagnostics: one outcome per token for the named test lemmas (also non-noun ones, which have no noun grid by design)
@@ -98,9 +118,9 @@ export function buildEpochs(env: EpochEnv, shevOrder = EPOCHS.filter(e => e.sche
         if (why) { ea.dropped.conflict++; c.conflict++; stats.conflictWhy[src + ':' + why] = (stats.conflictWhy[src + ':' + why] ?? 0) + 1; continue }   // EP-3.3 grid mismatch / EP-3.4
         if (dec.under || !dec.keys.length) { ea.dropped.underspecified++; c.underspecified++; continue }
         c.placed++
-        const raw = rawKey(tok.raw)
+        const raw = rawOf(tok.raw), id = raw + '\0' + src
         for (const k of dec.keys) {
-          const cell = ea.cells.get(k) ?? (ea.cells.set(k, new Map()), ea.cells.get(k)!), id = raw + '\0' + src
+          const cell = ea.cells.get(k) ?? (ea.cells.set(k, new Map()), ea.cells.get(k)!)
           const a = cell.get(id)
           if (!a) cell.set(id, { raw, src, tag, amb: dec.amb > 1 ? dec.amb : undefined, n: 1, w: wi, ti, date: w.date[1], loc: tok.loc })
           else { a.n++; if (w.date[1] < a.date) { a.date = w.date[1]; a.w = wi; a.ti = ti; a.loc = tok.loc; a.tag = tag; a.amb = dec.amb > 1 ? dec.amb : undefined } }   // EP-3.6: first ex = earliest witness (adm is date-ordered, so ties keep the first)
