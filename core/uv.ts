@@ -8,12 +8,14 @@
  * «неперевірена»: no dictionary lists it, VESUM does not know it; its rule candidates are hypotheses. Layout (public/data/uv/, shipped on the data branch like lex/ and cv/):
  *   g/<n>.json  = { "<group key>": UvGroup }          sharded by a stable hash of the group key (UV_SHARDS)
  *   p/<xx-yy>.json = { "<spelling key>": [group key, headword] }   prefix shards by the first two letters of the spelling key (search by prefix needs ≥ 2 letters)
+ *   p/<xx-yy-zz…>.json  a first-two-letters shard above UV_P_MAX_BYTES is split one letter deeper (recursively, '_'-padded; lossless), and p/_split.json lists those deeper leaves
+ *   Every file stays ≤ 256 KiB (CV-4): g/ is hashed into UV_SHARDS files, p/ is split by prefix like ix/ dx/ unlinked/.
  * Search ranks these hits after every verified card.
  */
 import { key, stripStress } from './text.ts'
 import { occurrencesOf, unlinkedShard, type UnlinkedOcc } from './unlinked.ts'
 
-export const UV_SHARDS = 64
+export const UV_SHARDS = 512
 export const UV_MAX_SPELLINGS = 12
 export const UV_MAX_OCC = 4
 export const uvShard = (groupKey: string): number => unlinkedShard(groupKey, UV_SHARDS)
@@ -26,6 +28,45 @@ export type UvPrefixShard = Record<string, [group: string, head: string]>
 /** Prefix shard file of a spelling key: the code points of its first two letters in hex ("43d-45b"). */
 export const uvPrefixFile = (k: string): string => [...k].slice(0, 2).map(c => c.codePointAt(0)!.toString(16)).join('-')
 export const UV_MIN_QUERY = 2
+
+// ── prefix leaves below the first two letters (the 10 M-token import: 'по', 'пр' … are > 256 KiB) ───────────────────────────────────────────
+export const UV_P_MAX_BYTES = 200 * 1024, UV_P_MAX_DEPTH = 14
+export const UV_SPLIT_FILE = 'p/_split'
+export interface UvSplit { format: 1; leaves: string[] }
+const uvPad = (k: string, n: number): string => { const cs = [...k]; while (cs.length < n) cs.push('_'); return cs.slice(0, n).join('') }
+/** file stem of a leaf prefix: hex code points joined by '-' (a two-letter leaf is exactly uvPrefixFile) */
+export const uvLeafFile = (leaf: string): string => [...leaf].map(c => c.codePointAt(0)!.toString(16)).join('-')
+/**
+ * Plan the leaves of the prefix shards: group the spelling keys by their first two letters, and split a group deeper while its JSON is above `maxBytes`
+ * (and the split actually separates it). Returns leaf prefix → keys; every key lands in exactly one leaf, nothing is dropped.
+ */
+export function planUvPrefixes(keys: Iterable<string>, bytesOf: (keys: string[]) => number, maxBytes = UV_P_MAX_BYTES): Map<string, string[]> {
+  const out = new Map<string, string[]>()
+  const group = (ks: string[], n: number) => { const by = new Map<string, string[]>(); for (const k of ks) { const q = uvPad(k, n); (by.get(q) ?? by.set(q, []).get(q)!).push(k) } return by }
+  const go = (p: string, ks: string[], n: number) => {
+    if (n < UV_P_MAX_DEPTH && ks.length > 1 && bytesOf(ks) > maxBytes) { const by = group(ks, n + 1); if (by.size > 1) { for (const [q, sub] of by) go(q, sub, n + 1); return } }
+    out.set(p, ks)
+  }
+  for (const [p, ks] of group([...keys], UV_MIN_QUERY)) go(p, ks, UV_MIN_QUERY)
+  return out
+}
+/** the deeper leaves (longer than two letters) of a plan: the content of p/_split.json */
+export const uvSplitOf = (leaves: Iterable<string>): UvSplit => ({ format: 1, leaves: [...leaves].filter(l => [...l].length > UV_MIN_QUERY).sort() })
+const topOf = (leaf: string) => uvPad(leaf, UV_MIN_QUERY)
+/** the leaf file stem that holds the exact spelling key k (the two-letter shard unless its top was split) */
+export function uvLeafOf(k: string, split?: UvSplit | null): string {
+  const top = topOf(k), set = new Set(split?.leaves)
+  if (!split || !split.leaves.some(l => topOf(l) === top)) return uvLeafFile(top)
+  for (let n = UV_MIN_QUERY + 1; n <= UV_P_MAX_DEPTH; n++) { const p = uvPad(k, n); if (set.has(p)) return uvLeafFile(p) }
+  return uvLeafFile(top)
+}
+/** every leaf file stem that can hold a key starting with the (≥ 2 letters) query key qk */
+export function uvLeavesFor(qk: string, split?: UvSplit | null): string[] {
+  const top = topOf(qk), m = [...qk].length
+  const deeper = (split?.leaves ?? []).filter(l => topOf(l) === top)
+  if (!deeper.length) return [uvLeafFile(top)]
+  return deeper.filter(l => (m >= [...l].length ? [...qk].slice(0, [...l].length).join('') === l : l.startsWith(qk))).map(uvLeafFile)
+}
 
 /** A spelling worth a card: Cyrillic letters (stress, apostrophe, hyphen allowed) only — no digits, no Latin or mixed script (OCR garbage) — at least 3 letters, not one letter repeated. */
 export const isCleanSpelling = (raw: string): boolean => {

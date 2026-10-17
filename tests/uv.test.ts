@@ -1,7 +1,8 @@
 ﻿/** SPEC 63 CV-4: unlinked corpus spellings are searchable «неперевірена лема» cards (нѣгдѣ). */
 import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
-import { UV_SHARDS, UvScan, isCleanSpelling, uvOccurrences, uvPrefixFile, uvShard, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
+import { UV_SHARDS, UvScan, isCleanSpelling, planUvPrefixes, uvLeafFile, uvLeafOf, uvLeavesFor, uvOccurrences, uvPrefixFile, uvShard, uvSplitOf, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
+import { readdirSync } from 'node:fs'
 import { foldSpelling } from '../core/phrasemes.ts'
 import { key } from '../core/text.ts'
 import { loadUvGroup, uvOfSpelling, uvSearch, type UvFetch } from '../src/lib/uvData.ts'
@@ -39,6 +40,33 @@ describe('CV-4 grouping and filtering', () => {
   })
   it('CV-4 shards: stable hash, prefix file = hex of the first two letters', () => {
     expect(uvShard('негде')).toBeLessThan(UV_SHARDS); expect(uvShard('негде')).toBe(uvShard('негде')); expect(uvPrefixFile('нѣгдѣ')).toBe('43d-463')
+  })
+})
+
+describe('CV-4 prefix leaves (every file ≤ 256 KiB, lossless)', () => {
+  const keys = ['по', 'пов', 'повіт', 'повість', 'полк', 'полки', 'полковник', 'пр', 'прав', 'право', 'нѣгдѣ', 'негде'].flatMap(k => [k + 'а', k + 'б', k + 'в'])
+  const bytes = (ks: string[]) => ks.length * 40
+  it('CV-4 a prefix above the limit is split deeper; every key lands in exactly one leaf; small prefixes stay two-letter shards', () => {
+    const plan = planUvPrefixes(keys, bytes, 200), all = [...plan.values()].flat()
+    expect(all.sort()).toEqual([...keys].sort()); expect(new Set(all).size).toBe(keys.length)
+    expect([...plan.keys()].some(l => [...l].length > 2)).toBe(true); expect(plan.has('не')).toBe(true)
+    for (const [leaf, ks] of plan) { for (const k of ks) expect(k.startsWith(leaf.replace(/_+$/, ''))).toBe(true); if ([...leaf].length < 14 && ks.length > 1 && new Set(ks.map(k => [...k].slice(0, [...leaf].length + 1).join(''))).size > 1) expect(bytes(ks)).toBeLessThanOrEqual(200) }
+  })
+  it('CV-4 uvLeafOf finds the leaf of a key and uvLeavesFor every leaf a prefix query can hit (2-letter, deeper and exact queries)', () => {
+    const plan = planUvPrefixes(keys, bytes, 200), split = uvSplitOf(plan.keys()), files = new Map([...plan].map(([l, ks]) => [uvLeafFile(l), ks]))
+    for (const k of keys) { expect(files.get(uvLeafOf(k, split))!, k).toContain(k) }
+    for (const q of ['по', 'пов', 'повіт', 'повітб', 'пол', 'пр', 'не', 'нѣ']) {
+      const want = new Set(keys.filter(k => k.startsWith(q))), got = new Set(uvLeavesFor(q, split).flatMap(f => (files.get(f) ?? []).filter(k => k.startsWith(q))))
+      expect([...got].sort(), q).toEqual([...want].sort())
+    }
+    expect(uvLeavesFor('нѣ', null)).toEqual([uvPrefixFile('нѣ')]); expect(uvLeafOf('нѣгдѣ', null)).toBe(uvPrefixFile('нѣгдѣ'))
+  })
+  it('CV-4 search and the spelling lookup follow p/_split.json into the deeper leaves', async () => {
+    const plan = planUvPrefixes(keys, bytes, 200), split = uvSplitOf(plan.keys()), files: Record<string, unknown> = { 'p/_split': split }
+    for (const [l, ks] of plan) files[`p/${uvLeafFile(l)}`] = Object.fromEntries(ks.map(k => [k, ['g' + k, k]]))
+    const get: UvFetch = async p => files[p] ?? null
+    expect((await uvSearch('пов', 100, get)).map(h => h.matched).sort()).toEqual(keys.filter(k => k.startsWith('пов')).sort())
+    expect(await uvOfSpelling('повіта', get)).toEqual({ group: 'gповіта', head: 'повіта' })
   })
 })
 
@@ -85,7 +113,8 @@ real('CV-4 the real data', () => {
     }
   })
   it('CV-4 the card files stay small: every file ≤ 256 KiB', () => {
-    for (let i = 0; i < UV_SHARDS; i++) expect(readFileSync(`public/data/uv/g/${i}.json`).length).toBeLessThan(256 * 1024)
+    for (let i = 0; i < UV_SHARDS; i++) expect(readFileSync(`public/data/uv/g/${i}.json`).length, `g/${i}`).toBeLessThan(256 * 1024)
+    for (const f of readdirSync('public/data/uv/p')) expect(readFileSync(`public/data/uv/p/${f}`).length, `p/${f}`).toBeLessThan(256 * 1024)
   })
 })
 

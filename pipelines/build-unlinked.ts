@@ -9,7 +9,7 @@ import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
 import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
-import { UV_SHARDS, UvScan, uvPrefixFile, uvShard, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
+import { UV_P_MAX_BYTES, UV_SHARDS, UvScan, planUvPrefixes, uvLeafFile, uvShard, uvSplitOf, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { cardMap, type CardIndexFile } from '../core/cv.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
 
@@ -52,13 +52,18 @@ if (existsSync(resolve(pub, 'torot.json'))) {
 }
 const groups = uv.groups(k => foldSpelling(k), k => owned.has(k), (sks, f) => [f, ...sks].map(k => orvByKey.get(k)).find(Boolean) ?? '')
 const uvDir = resolve(pub, 'uv'); rmSync(uvDir, { recursive: true, force: true }); mkdirSync(resolve(uvDir, 'g'), { recursive: true }); mkdirSync(resolve(uvDir, 'p'), { recursive: true })
-const gs: Record<string, UvGroup>[] = Array.from({ length: UV_SHARDS }, () => ({})), ps = new Map<string, UvPrefixShard>()
-let spellings = 0
+const gs: Record<string, UvGroup>[] = Array.from({ length: UV_SHARDS }, () => ({})), pe = new Map<string, [string, string]>()
 for (const [gk, { g, spellingKeys }] of groups) {
   gs[uvShard(gk)]![gk] = g
-  for (const sk of spellingKeys) { const p = uvPrefixFile(sk), s = ps.get(p) ?? ps.set(p, {}).get(p)!; s[sk] = [gk, g[0]]; spellings++ }
+  for (const sk of spellingKeys) pe.set(sk, [gk, g[0]])
 }
+const spellings = pe.size
+// prefix shards: first two letters, split deeper while a file is above UV_P_MAX_BYTES (lossless); p/_split.json lists the deeper leaves
+const pShard = (ks: string[]): UvPrefixShard => { const o: UvPrefixShard = {}; for (const k of ks.slice().sort()) o[k] = pe.get(k)!; return o }
+const plan = planUvPrefixes(pe.keys(), ks => Buffer.byteLength(JSON.stringify(pShard(ks))), UV_P_MAX_BYTES)
+const ps = new Map<string, UvPrefixShard>([...plan].map(([leaf, ks]) => [uvLeafFile(leaf), pShard(ks)]))
 let uvBytes = 0, uvMax = 0
 gs.forEach((s, n) => { const t = JSON.stringify(s), b = Buffer.byteLength(t); uvBytes += b; uvMax = Math.max(uvMax, b); writeFileSync(resolve(uvDir, 'g', `${n}.json`), t) })
 for (const [p, s] of ps) { const t = JSON.stringify(s), b = Buffer.byteLength(t); uvBytes += b; uvMax = Math.max(uvMax, b); writeFileSync(resolve(uvDir, 'p', `${p}.json`), t) }
+writeFileSync(resolve(uvDir, 'p', '_split.json'), JSON.stringify(uvSplitOf(plan.keys())))
 console.log(`uv: ${groups.size} «неперевірена лема» cards from ${spellings} clean spellings (of ${uv.keys().length} unlinked clean-script spellings), ${ps.size} prefix shards + ${UV_SHARDS} card shards, ${(uvBytes / 1048576).toFixed(2)} MB (max file ${(uvMax / 1024).toFixed(0)} KB)`)
