@@ -567,3 +567,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AT-1 | tests/atlas.test.ts › AT-1 АУМ т. 2 maps from the OCR |
 | AT-1 | tests/atlas.test.ts › the committed extract covers all 387 maps plus 55-а, every one with a locator and a short quote |
 | AT-1 | manual — АУМ т. 1 has no OCR yet (only the owner's т. 2 scan was processed); see research/44-atlas.md |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 harvest: kill tolerance (writeAtomic, torn index tail, r2u torn line, page numbers, degraded lemma list not cached) |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 harvest: get() retries and bans (5xx/network backoff, 403/429 stop, launch.sh keeps ban STOPPED.json) |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 data branch and authors (fetch failure is not a missing branch, rollback swap) |
+| RS-1 | tests/robust-harvest.test.ts › RS-1 build-parts: required sidecars and staged swap |
+| RS-1 | tests/robust-build.test.ts › RS-1 build helpers (python stage failure, streamed log, freshness, truncated work file fatal, atomic python writes) |
+| RS-1 | manual — not yet done: writeLexicon temp-dir swap, detail-size pre-flight and cards checkpoint (wait for the overflow fix); the scan test for direct writes to final paths |
