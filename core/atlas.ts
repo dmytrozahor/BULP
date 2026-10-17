@@ -54,7 +54,7 @@ export function expandPoints(s: string, max = AUM2_POINTS): number[] {
   for (const part of s.split(/\s*,\s*/)) {
     const m = part.match(/^\s*(\d{1,3})(?:\s*[-–—]{1,3}\s*[^\d]{0,2}(\d{1,3}))?\s*$/)
     if (!m) continue
-    const a = +m[1], b = m[2] ? +m[2] : a
+    const a = +m[1]!, b = m[2] ? +m[2] : a
     if (a < 1 || a > max || b < a || b > max || b - a > 200) continue
     for (let i = a; i <= b; i++) out.add(i)
   }
@@ -72,7 +72,7 @@ export function splitCommentary(text: string): { n: string; body: string; offset
   const out: { n: string; body: string; offset: number; fromSeq: boolean }[] = []
   let prev = 0
   for (let i = 0; i < heads.length; i++) {
-    const h = heads[i]
+    const h = heads[i]!
     const base = parseInt(h.raw, 10) || -1
     const sfx = /-/.test(h.raw)
     let n: string, fromSeq = false
@@ -80,7 +80,7 @@ export function splitCommentary(text: string): { n: string; body: string; offset
     else if (base === prev + 1) n = String(base)
     else { n = String(prev + 1); fromSeq = true }   // OCR digit confusion (584 for 384, «Ж: 1» …): trust the sequence
     prev = parseInt(n, 10)
-    out.push({ n, body: text.slice(h.end, i + 1 < heads.length ? heads[i + 1].at : undefined), offset: h.at, fromSeq })
+    out.push({ n, body: text.slice(h.end, i + 1 < heads.length ? heads[i + 1]!.at : undefined), offset: h.at, fromSeq })
   }
   return out
 }
@@ -92,7 +92,7 @@ export function parseVariants(body: string): AtlasVariant[] {
   for (const it of items) {
     const im = it.match(/^\s*(\d{1,2})\.\s/)
     if (!im) continue
-    const item = +im[1]
+    const item = +im[1]!
     if (item === 1) continue
     const txt = clean(it.replace(/-\s*\n\s*/g, '').replace(/^\s*\d{1,2}\.\s*/, ''))
     if (/^Не картографуються/i.test(txt)) continue
@@ -101,10 +101,10 @@ export function parseVariants(body: string): AtlasVariant[] {
       const sym = clause.match(SYMBOL)?.[1]
       const re = /([^\s,;:()«»–—-]{2,}(?:\s+[^\s,;:()«»–—-]{2,}){0,2})\s*[-–—]{1,3}\s*((?:\d{1,3}(?:\s*[-–—]{1,3}\s*\d{1,3})?(?:\s*,\s*)?){1,})/g
       for (const m of clause.matchAll(re)) {
-        const pts = expandPoints(m[2].replace(/[,\s]+$/, ''))
+        const pts = expandPoints(m[2]!.replace(/[,\s]+$/, ''))
         if (!pts.length) continue
-        let form = m[1].split(/\s+/).slice(-1)[0]
-        if (SYMBOL.test(m[1]) || /^(також|відзначено|об'єднано|об’єднано|картографується|картографуються)$/i.test(form)) form = ''
+        let form = m[1]!.split(/\s+/).slice(-1)[0] ?? ''
+        if (SYMBOL.test(m[1]!) || /^(також|відзначено|об'єднано|об’єднано|картографується|картографуються)$/i.test(form)) form = ''
         form = form.replace(/^[«»"'!І|]+(?=[а-яіїєґa-z])/i, '').replace(/[«»"]+$/, '')
         if (!form || /^\d/.test(form)) continue
         out.push({ form, symbol: sym && sym.toLowerCase(), points: pts, item })
@@ -115,7 +115,7 @@ export function parseVariants(body: string): AtlasVariant[] {
 }
 
 export function parseMap(volume: number, c: { n: string; body: string; fromSeq: boolean }, page: number): AtlasMap {
-  const first = c.body.split(/\n(?=\s*2\.\s)/)[0].replace(/^\s*1\.\s*/, '')
+  const first = (c.body.split(/\n(?=\s*2\.\s)/)[0] ?? '').replace(/^\s*1\.\s*/, '')
   const pq = first.match(/Програми\s+\S{0,3}\s*(\d{1,3}(?:\s*[-–,]\s*\d{1,3})*)/i)
   return {
     volume, n: c.n, ...(c.fromSeq ? { nFromSequence: true } : {}), page,
@@ -156,6 +156,6 @@ export function arealOf(m: AtlasMap, commentary: string): MapAreal {
   return {
     n: m.n, source: 'commentary', groups: null, mapReadings: [],
     namedRegions: REGION_WORDS.filter(([, re]) => re.test(commentary)).map(([n]) => n),
-    variants: m.variants.map(v => ({ form: v.form, ...(v.symbol ? { symbol: v.symbol } : {}), nPoints: v.points.length, share: +(v.points.length / 685).toFixed(3), min: v.points[0], max: v.points.at(-1)! })),
+    variants: m.variants.map(v => ({ form: v.form, ...(v.symbol ? { symbol: v.symbol } : {}), nPoints: v.points.length, share: +(v.points.length / 685).toFixed(3), min: v.points[0]!, max: v.points.at(-1)! })),
   }
 }

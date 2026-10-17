@@ -33,6 +33,6 @@ write(`data/atlas/aum${vol}-maps.json`, { volume: +vol, source: 'owner scan, OCR
 const arDst = `data/atlas/aum${vol}-areal.json`
 const prev: Record<string, { mapReadings?: unknown[] }> = existsSync(arDst)
   ? Object.fromEntries((JSON.parse(readFileSync(arDst, 'utf8')).maps as { n: string; mapReadings: unknown[] }[]).map(m => [m.n, m])) : {}
-const areal = maps.map((m, i) => { const r = arealOf(m, comm[i].body); return prev[m.n]?.mapReadings?.length ? { ...r, mapReadings: prev[m.n].mapReadings } : r })
+const areal = maps.map((m, i) => { const r = arealOf(m, comm[i]!.body); return prev[m.n]?.mapReadings?.length ? { ...r, mapReadings: prev[m.n]!.mapReadings } : r })
 write(arDst, { volume: +vol, note: 'points are atlas settlement numbers; dialect groups need the settlement list (not resolvable from the OCR)', maps: areal })
 console.log(`maps ${maps.length}, with variants ${maps.filter(m => m.variants.length).length}, variants ${maps.reduce((s, m) => s + m.variants.length, 0)}, seq-numbered ${maps.filter(m => m.nFromSequence).length}, missing pages ${missing.length}, maps naming a region ${areal.filter(r => r.namedRegions.length).length}`)
