@@ -1,0 +1,25 @@
+# SPEC 63 BQ-2..4: keep the issue labels in sync with .github/labels.json (idempotent: create or update, never delete).
+name: Sync issue labels
+
+on:
+  push:
+    branches: [mvp]
+    paths: ['.github/labels.json', '.github/workflows/labels.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node pipelines/bq.ts labels
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

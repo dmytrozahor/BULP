@@ -1,0 +1,8 @@
+[
+  { "name": "book", "color": "0e8a16", "description": "Book or manuscript proposal (SPEC 63 BQ-1, BQ-2)" },
+  { "name": "list", "color": "5319e7", "description": "Several books in one issue, triaged row by row (SPEC 63 BQ-6)" },
+  { "name": "proposal", "color": "1d76db", "description": "Any proposal awaiting triage (SPEC 63 BQ-2, BQ-7)" },
+  { "name": "needs-approval", "color": "fbca04", "description": "Triaged by the bot, waiting for the owner (SPEC 63 BQ-2)" },
+  { "name": "approved", "color": "2ea44f", "description": "Owner approval: queued for harvest and ingest (SPEC 63 BQ-3)" },
+  { "name": "rejected", "color": "b60205", "description": "Declined, closed with a reason comment (SPEC 63 BQ-4)" }
+]
