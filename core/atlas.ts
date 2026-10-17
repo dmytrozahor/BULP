@@ -125,3 +125,37 @@ export function parseMap(volume: number, c: { n: string; body: string; fromSeq: 
     quality: 'ocr-heuristic',
   }
 }
+
+// ── AT-2: areal extent ──────────────────────────────────────────────────────────────────────────
+/** label for anything read from a map image with model vision (never presented as commentary text) */
+export const MAP_READING_LABEL = 'прочитано з карти, не вичитано'
+const REGION_WORDS: [string, RegExp][] = [
+  ['Закарпаття', /Закарпатт/], ['Прикарпаття', /Прикарпатт/], ['Волинь', /Волин/], ['Полісся', /Полісс/], ['Наддністрянщина', /Наддністрян/],
+  ['Лемківщина', /Лемківщин/], ['Бойківщина', /Бойківщин/], ['Гуцульщина', /Гуцульщин/], ['Покуття', /Покутт/], ['Буковина', /Буковин/],
+  ['Поділля', /Поділл/], ['Східна Словаччина', /Східн\S* Словаччин/], ['Мараморощина', /Мараморощин/],
+]
+export interface ArealVariant {
+  form: string; symbol?: string; nPoints: number
+  /** share of the 685-point net of vol. 2 */
+  share: number
+  /** lowest / highest settlement number: the net is numbered, the span is only a coarse hint, NOT a region */
+  min: number; max: number
+}
+export interface MapAreal {
+  n: string
+  /** regions the commentary itself names (verbatim stems matched in the commentary text) — the only region information read from text */
+  namedRegions: string[]
+  variants: ArealVariant[]
+  /** settlement number → name/oblast could not be taken from the OCR (column layout): dialect groups are NOT assigned */
+  groups: null
+  /** vision readings of the map image, label MAP_READING_LABEL; empty until a reading is made */
+  mapReadings: { variant: string; area: string; label: typeof MAP_READING_LABEL }[]
+  source: 'commentary'
+}
+export function arealOf(m: AtlasMap, commentary: string): MapAreal {
+  return {
+    n: m.n, source: 'commentary', groups: null, mapReadings: [],
+    namedRegions: REGION_WORDS.filter(([, re]) => re.test(commentary)).map(([n]) => n),
+    variants: m.variants.map(v => ({ form: v.form, ...(v.symbol ? { symbol: v.symbol } : {}), nPoints: v.points.length, share: +(v.points.length / 685).toFixed(3), min: v.points[0], max: v.points.at(-1)! })),
+  }
+}

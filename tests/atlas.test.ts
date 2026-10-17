@@ -32,3 +32,22 @@ describe('AT-1 АУМ т. 2 maps from the OCR', () => {
     expect(m.variants.some(v => /^вуїко/.test(v.form) && v.points.includes(114))).toBe(true)
   })
 })
+
+import { arealOf, MAP_READING_LABEL } from '../core/atlas.ts'
+const AR = JSON.parse(readFileSync('data/atlas/aum2-areal.json', 'utf8')) as { maps: ReturnType<typeof arealOf>[] }
+
+describe('AT-2 areal extent per variant', () => {
+  it('every map has an areal record; variants carry point counts and the net share, never a guessed dialect group', () => {
+    expect(AR.maps.length).toBe(J.maps.length)
+    for (const a of AR.maps) { expect(a.groups, a.n).toBeNull(); expect(a.source).toBe('commentary'); for (const v of a.variants) { expect(v.nPoints).toBeGreaterThan(0); expect(v.share).toBeLessThanOrEqual(1.2) } }
+  })
+  it('named regions are only those the commentary text names (map 7 says Закарпатті)', () => {
+    const t = arealOf({ ...J.maps[0], variants: [] }, 'На Закарпатті і на Волині')
+    expect(t.namedRegions).toEqual(['Закарпаття', 'Волинь'])
+    expect(AR.maps.filter(a => a.namedRegions.length).length).toBeGreaterThan(5)
+  })
+  it('map-image readings carry the label «прочитано з карти, не вичитано» and are empty until a reading is made', () => {
+    expect(MAP_READING_LABEL).toBe('прочитано з карти, не вичитано')
+    expect(AR.maps.every(a => a.mapReadings.every(r => r.label === MAP_READING_LABEL))).toBe(true)
+  })
+})

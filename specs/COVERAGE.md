@@ -573,3 +573,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-1 | tests/robust-harvest.test.ts › RS-1 build-parts: required sidecars and staged swap |
 | RS-1 | tests/robust-build.test.ts › RS-1 build helpers (python stage failure, streamed log, freshness, truncated work file fatal, atomic python writes) |
 | RS-1 | manual — not yet done: writeLexicon temp-dir swap, detail-size pre-flight and cards checkpoint (wait for the overflow fix); the scan test for direct writes to final paths |
+| AT-2 | tests/atlas.test.ts › AT-2 areal extent per variant |
+| AT-2 | tests/atlas.test.ts › map-image readings carry the label «прочитано з карти, не вичитано» and are empty until a reading is made |
+| AT-2 | manual — settlement number → name/oblast → dialect group is not resolvable from the OCR (column layout) and no map-image readings were made yet; see research/44-atlas.md |
