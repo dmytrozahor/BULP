@@ -82,7 +82,10 @@ real('CV-2 the real data: every attested word opens a non-empty card', () => {
   }
   it('CV-2 запобігти, рушничний, парада, плавний', () => {
     for (const w of ['запобігти', 'рушничний', 'парада', 'плавний', 'Плавний', 'ЗАПОБІГТИ']) expect(opens(w), w).toBe(true)
-    const e = cv('рушничний')!; expect(e[3][0]![0]).toMatch(/^r2u_/); expect(e[3][0]![1]).toContain('r2u'); expect(e[1]).toMatch(/^adj/)
+    // the 10 M-token import makes рушничний a lexicon spelling (it then has no light/CV entry: the full card opens it); a word that is still CV-only keeps its dictionary attestation line
+    const e = cv('рушничний'); if (e) { expect(e[3][0]![0]).toMatch(/^r2u_/); expect(e[3][0]![1]).toContain('r2u'); expect(e[1]).toMatch(/^adj/) } else expect(lex.has(key('рушничний'))).toBe(true)
+    const sh = JSON.parse(rd('public/data/cv/0.json')) as Record<string, CvEntry>, att = Object.values(sh).find(x => x[3][0]?.[0]?.startsWith('r2u_'))
+    expect(att, 'some CV entry keeps an r2u attestation line').toBeTruthy(); expect(att![3][0]![1]).toContain('r2u')
   })
   it('CV-2 a sample of 200 random dictionary equivalents each opens a non-empty card', () => {
     const rows = (JSON.parse(rd('public/data/r2u.json')) as { dicts: { id: number; dir: string }[]; rows: [number, number, string, string, string[], string[], string][] })
