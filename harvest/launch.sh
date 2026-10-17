@@ -42,7 +42,12 @@ for job in "${JOBS[@]}"; do
   dir="$OUT/$NAME"; mkdir -p "$dir"
   if [ -f "$dir/STOPPED.json" ]; then
     if grep -q '"DONE"' "$dir/STOPPED.json"; then echo "$NAME is DONE"; continue; fi
-    rm -f "$dir/STOPPED.json"
+    # a 403/429 ban is not retried at once (relaunching would hammer the site): wait COOLDOWN_H hours (default 6), then resume; the reason is kept in STOPPED.prev.json
+    if grep -Eq 'HTTP (403|429)' "$dir/STOPPED.json"; then
+      age=$(( $(date +%s) - $(stat -c %Y "$dir/STOPPED.json" 2>/dev/null || echo 0) ))
+      if [ "$age" -lt $(( ${COOLDOWN_H:-6} * 3600 )) ]; then echo "$NAME banned (see STOPPED.json), cooling down, skipped"; continue; fi
+    fi
+    mv -f "$dir/STOPPED.json" "$dir/STOPPED.prev.json"
   fi
   if [ "$KIND" = uv ]; then
     [ -n "$UV" ] || { echo "$NAME: uv not found, skipped"; continue; }

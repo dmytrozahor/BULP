@@ -7,12 +7,13 @@
  * Rules: resumable (index.jsonl is the truth, ids already there are skipped), polite pacing (`delayMs` between requests),
  * stop on 403/429/5xx (no retry loops), per-source disk cap (default 2 GB), progress line every `logEvery` items.
  */
-import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs'
+import { appendFileSync, closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeSync } from 'node:fs'
 
 /** SPEC 63 RS-1: write tmp, then rename, so a kill never leaves a half-written final file */
 export function writeAtomic(path: string, data: string | Buffer) {
-  const tmp = `${path}.tmp`
-  writeFileSync(tmp, data)
+  const tmp = `${path}.${process.pid}.tmp`   // per-process name: a racing old process or a second harvester cannot collide
+  const fd = openSync(tmp, 'w')
+  try { writeSync(fd, data); fsyncSync(fd) } finally { closeSync(fd) }   // fsync before rename: a power loss cannot leave a zero-length final file
   renameSync(tmp, path)
 }
 import { gzipSync } from 'node:zlib'
@@ -38,12 +39,16 @@ export class Harvest {
   count = 0; bytes = 0; newItems = 0
   private last = 0
   private consec5xx = 0
-  constructor(readonly source: string, readonly opts: { delayMs: number; capBytes?: number; logEvery?: number }) {
+  constructor(readonly source: string, readonly opts: { delayMs: number; capBytes?: number; logEvery?: number; retryBaseMs?: number; retries?: number }) {
     this.dir = `${ROOT_DIR}/${source}`; this.itemsDir = `${this.dir}/items`; this.indexPath = `${this.dir}/index.jsonl`; this.statePath = `${this.dir}/state.json`
     mkdirSync(this.itemsDir, { recursive: true })
-    if (existsSync(this.indexPath)) for (const l of readFileSync(this.indexPath, 'utf8').split('\n')) {
-      if (!l) continue
-      try { const it = JSON.parse(l) as IndexItem; this.done.add(it.id); this.count++; this.bytes += it.bytes } catch { /* torn last line after a kill: ignored */ }
+    if (existsSync(this.indexPath)) {
+      const raw = readFileSync(this.indexPath, 'utf8')
+      if (raw && !raw.endsWith('\n')) appendFileSync(this.indexPath, '\n')   // torn tail: end it, so the next append is not glued onto the fragment
+      for (const l of raw.split('\n')) {
+        if (!l) continue
+        try { const it = JSON.parse(l) as IndexItem; this.done.add(it.id); this.count++; this.bytes += it.bytes } catch { /* torn last line after a kill: ignored */ }
+      }
     }
     this.disk = dirBytes(this.itemsDir)
     this.log(`start: ${this.count} items already, ${this.bytes} bytes`)
@@ -73,13 +78,24 @@ export class Harvest {
   async get(url: string, init: RequestInit & { soft5xx?: boolean } = {}): Promise<{ status: number; res: Response }> {
     const wait = this.last + this.opts.delayMs - Date.now()
     if (wait > 0) await sleep(wait)
-    let res: Response | null = null
-    for (let k = 0; k < 2 && !res; k++) {
-      try { res = await fetch(url, { ...init, headers: { 'user-agent': UA, ...(init.headers ?? {}) }, signal: AbortSignal.timeout(120_000) }) } catch { await sleep(30_000) }
+    // network errors and 5xx: bounded exponential backoff (a transient blip must not end a multi-day crawl); 403/429 = a ban, stop at once
+    const tries = this.opts.retries ?? 4, base = this.opts.retryBaseMs ?? 30_000
+    let res: Response | null = null, st = 0, why = 'network failure'
+    for (let k = 0; k < tries; k++) {
+      if (k > 0) { this.log(`retry ${k}/${tries - 1} for ${url} (${why})`); await sleep(Math.min(base * 2 ** (k - 1), 600_000)) }
+      try { res = await fetch(url, { ...init, headers: { 'user-agent': UA, ...(init.headers ?? {}) }, signal: AbortSignal.timeout(120_000) }) } catch (e) { res = null; why = `network failure: ${(e as Error).message}`; continue }
+      st = res.status
+      if (st >= 500 && !init.soft5xx && k < tries - 1) {
+        why = `HTTP ${st}`
+        const ra = Number(res.headers.get('retry-after'))   // MediaWiki maxlag 503 asks for it
+        res.body?.cancel().catch(() => {}); res = null
+        if (ra > 0 && ra <= 600) await sleep(ra * 1000)
+        continue
+      }
+      break
     }
     this.last = Date.now()
-    if (!res) this.stop(`network failure for ${url}`)
-    const st = res.status
+    if (!res) this.stop(`${why} for ${url}`)
     if (st === 403 || st === 429) this.stop(`HTTP ${st} for ${url}`)
     if (st >= 500) {
       // `soft5xx` (per-file download servers, e.g. archive.org items): one broken file is recorded by the caller, but 5 in a row stop the script
@@ -89,7 +105,7 @@ export class Harvest {
   }
   async getText(url: string, init: RequestInit = {}): Promise<{ status: number; text: string }> {
     const { status, res } = await this.get(url, init)
-    return { status, text: await res.text() }
+    try { return { status, text: await res.text() } } catch (e) { return this.stop(`body read failed (${(e as Error).message}) for ${url}`) }   // AbortError mid-body: STOPPED.json, not an unhandled rejection
   }
   async getJson<T = any>(url: string): Promise<T> {
     const { status, text } = await this.getText(url)

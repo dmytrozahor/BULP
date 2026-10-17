@@ -4,37 +4,60 @@
  * Lemma order: lexicon cards by frequency, then VESUM lemmas; the list is cached in data/raw/harvest/r2u/lemmas.txt (the card file may be mid-rebuild).
  * Also keeps data/raw/harvest/r2u/index.jsonl (a count line per fetch) so status.ps1 can report it like the other sources.
  */
-import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { Harvest, writeAtomic } from './lib.ts'
 
 const DIR = 'data/raw/r2u', PAGES = `${DIR}/pages`, INDEX = `${DIR}/index.jsonl`
 const LEMMA_OK = /^[а-яіїєґ'-]+$/i
 
-export async function lemmaList(): Promise<string[]> {
-  const cache = 'data/raw/harvest/r2u/lemmas.txt'
+export async function lemmaList(opts: { cache?: string; lexicon?: string } = {}): Promise<string[]> {
+  const cache = opts.cache ?? 'data/raw/harvest/r2u/lemmas.txt', LEXICON = opts.lexicon ?? 'public/data/lexicon.json'
   if (existsSync(cache)) return readFileSync(cache, 'utf8').split('\n').filter(Boolean)
   const out: string[] = [], seen = new Set<string>()
   const add = (l: string) => { if (LEMMA_OK.test(l) && !seen.has(l)) { seen.add(l); out.push(l) } }
-  try {   // the card file may be mid-rebuild: then only the VESUM order is used (and not cached as the final list)
+  let lexiconOk = false
+  try {   // the card file may be mid-rebuild: then only the VESUM order is used (and NOT cached as the final list)
     const m = await import('../core/pack.ts')
-    const cards = m.unpackCore(JSON.parse(readFileSync('public/data/lexicon.json', 'utf8')))
+    const cards = m.unpackCore(JSON.parse(readFileSync(LEXICON, 'utf8')))
     for (const c of [...cards].sort((a, b) => b.stats.f - a.stats.f)) add(c.lemma)
-  } catch { /* fall through to VESUM */ }
+    lexiconOk = true
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code !== 'ENOENT') console.error(`r2u lemmaList: lexicon.json unreadable (${(e as Error).message}); VESUM order only, list not cached`)
+  }
   try {
     for (const line of readFileSync('data/raw/vesum/dict_corp_vis.txt', 'utf8').split('\n')) if (line && line[0] !== ' ' && line[0] !== '#') add(line.split(/\s/)[0]!.toLowerCase())
-  } catch { /* no VESUM dump */ }
-  if (out.length > 1000) writeAtomic(cache, out.join('\n'))
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code !== 'ENOENT') console.error(`r2u lemmaList: VESUM dump unreadable (${(e as Error).message})`)
+  }
+  if (lexiconOk && out.length > 1000) writeAtomic(cache, out.join('\n'))
   return out
+}
+
+/** the queries already fetched; a torn line (kill mid-append) is skipped and logged, never a crash */
+export function doneQueries(index: string): Set<string> {
+  const done = new Set<string>()
+  if (!existsSync(index)) return done
+  for (const l of readFileSync(index, 'utf8').split('\n')) {
+    if (!l) continue
+    try { done.add(JSON.parse(l).q as string) } catch { console.error(`r2u: skipping torn index line: ${l.slice(0, 60)}`) }
+  }
+  return done
+}
+/** page file numbers never collide with existing pages: max existing + 1 (the done count can be lower after a torn line) */
+export function nextFileNumber(pagesDir: string, fallback: number): number {
+  let max = -1
+  try { for (const f of readdirSync(pagesDir)) { const m = /^(\d+)\.html\.gz$/.exec(f); if (m) max = Math.max(max, +m[1]!) } } catch { /* none yet */ }
+  return max < 0 ? fallback : max + 1
 }
 
 async function main() {
   const h = new Harvest('r2u', { delayMs: 10_000, logEvery: 100, capBytes: 2_000_000_000 })
   mkdirSync(PAGES, { recursive: true })
   const { r2uQueryUrl } = await import('../pipelines/r2u.ts')
-  const done = new Set(existsSync(INDEX) ? readFileSync(INDEX, 'utf8').split('\n').filter(Boolean).map(l => JSON.parse(l).q as string) : [])
+  const done = doneQueries(INDEX)
   const lemmas = await lemmaList()
-  let n = done.size
+  let n = nextFileNumber(PAGES, done.size)
   for (const q of lemmas) {
     if (done.has(q)) continue
     const { status, text } = await h.getText(r2uQueryUrl(q, 'ukr'))
