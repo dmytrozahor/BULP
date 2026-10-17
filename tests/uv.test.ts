@@ -3,6 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { existsSync, readFileSync } from 'node:fs'
 import { UV_SHARDS, UvScan, isCleanSpelling, planUvPrefixes, uvLeafFile, uvLeafOf, uvLeavesFor, uvOccurrences, uvPrefixFile, uvShard, uvSplitOf, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { readdirSync } from 'node:fs'
+import { unpackCore } from '../core/pack.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
 import { key } from '../core/text.ts'
 import { loadUvGroup, uvOfSpelling, uvSearch, type UvFetch } from '../src/lib/uvData.ts'
@@ -152,10 +153,13 @@ describe('CV-5 thin cards render the full card components and every VESUM analys
 })
 
 real('CV-5 the real data: риночку', () => {
-  it('CV-5 /lw/риночка lists риночок (v_mis) and риночка (v_zna) as analyses of the attested spelling', () => {
+  it('CV-5 both VESUM analyses of риночку (риночок v_mis, риночка v_zna) open a card; a thin /lw/риночка lists both, a full lexicon card (10 M-token build: риночка is frequent enough) needs no thin list', () => {
     const k = (w: string) => JSON.parse(rd(`public/data/cv/${cvBucket(w)}.json`))[lk(w)]
+    const lex = new Set(unpackCore(JSON.parse(rd('public/data/lexicon.json'))).map(c => key(c.lemma)))
     const a = k('риночка'), b = k('риночок')
-    expect(a?.[4]?.an?.map((x: string[]) => x[0])).toEqual(expect.arrayContaining(['риночка', 'риночок'])); expect(b).toBeTruthy()
+    expect(lex.has(key('риночка')) || !!a, 'риночка has a full or a thin card').toBe(true); expect(lex.has(key('риночок')) || !!b, 'риночок has a full or a thin card').toBe(true)
+    if (a?.[4]?.an) expect(a[4].an.map((x: string[]) => x[0])).toEqual(expect.arrayContaining(['риночка', 'риночок']))
+    if (!lex.has(key('риночка'))) expect(a?.[4]?.an?.map((x: string[]) => x[0])).toEqual(expect.arrayContaining(['риночка', 'риночок']))
   })
 })
 
