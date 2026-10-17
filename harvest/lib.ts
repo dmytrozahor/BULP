@@ -7,13 +7,13 @@
  * Rules: resumable (index.jsonl is the truth, ids already there are skipped), polite pacing (`delayMs` between requests),
  * stop on 403/429/5xx (no retry loops), per-source disk cap (default 2 GB), progress line every `logEvery` items.
  */
-import { appendFileSync, closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeSync } from 'node:fs'
+import { appendFileSync, closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, readdirSync, renameSync, statSync, writeFileSync } from 'node:fs'
 
 /** SPEC 63 RS-1: write tmp, then rename, so a kill never leaves a half-written final file */
 export function writeAtomic(path: string, data: string | Buffer) {
   const tmp = `${path}.${process.pid}.tmp`   // per-process name: a racing old process or a second harvester cannot collide
   const fd = openSync(tmp, 'w')
-  try { writeSync(fd, data); fsyncSync(fd) } finally { closeSync(fd) }   // fsync before rename: a power loss cannot leave a zero-length final file
+  try { writeFileSync(fd, data); fsyncSync(fd) } finally { closeSync(fd) }   // fsync before rename: a power loss cannot leave a zero-length final file
   renameSync(tmp, path)
 }
 import { gzipSync } from 'node:zlib'
