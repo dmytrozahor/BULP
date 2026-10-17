@@ -1,0 +1,31 @@
+# SPEC 63 BQ-2: every 3 days, triage open issues labelled book/list/proposal that carry none of needs-approval/approved/rejected.
+# Writes a triage comment and adds needs-approval. Never ingests anything. Uses GITHUB_TOKEN only.
+name: Triage book proposals
+
+on:
+  schedule:
+    - cron: '17 6 */3 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: bq
+  cancel-in-progress: false
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: mvp
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node pipelines/bq.ts triage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}

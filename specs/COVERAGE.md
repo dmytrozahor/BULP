@@ -527,9 +527,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-4 | tests/fx.test.ts › MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows the witness graph, and R17 (е > о) does not fire before a soft consonant › r2u / Грінченко / Желехівський / Уманець harvests hold no «жечи / жещи»: the card stays TOROT-attested, no dictionary quote is invented |
 | MM-4 | tests/fx.test.ts › MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows the witness graph, and R17 (е > о) does not fire before a soft consonant › real data (after a rebuild with MM-4, shards present): the uv group «жечи» exists with an ORV card and 2+ witnesses → confirmed |
 | BQ-1 | manual — implemented: .github/ISSUE_TEMPLATE/book.yml is a GitHub issue form, validated by GitHub when an issue is opened |
-| BQ-2 | manual — pending: the ~3-day triage pickup of issues labelled book is planned, not built |
-| BQ-3 | manual — pending: approval by the label approved and ingest through harvest:ingest is planned, not built |
-| BQ-4 | manual — pending: the label rejected with a reason comment is planned, not built |
+| BQ-2 | tests/bq.test.ts › flags invalid fields, duplicates by url and title, dead links, robots |
+| BQ-3 | tests/bq.test.ts › queue lines cite the issue and are appended idempotently |
+| BQ-4 | tests/bq.test.ts › takes the latest owner comment and strips |
 | BQ-5 | manual — implemented: README sections on the fork guide and on specs/Claude, commands checked against package.json |
 | BQ-6 | manual — implemented: .github/ISSUE_TEMPLATE/book-list.yml is a GitHub issue form; row-by-row triage and per-row approval are planned with BQ-2 and BQ-3 |
 | BQ-7 | manual — implemented: .github/ISSUE_TEMPLATE/proposal.yml and config.yml; triage of proposals into the mismatch ledger and draft specs is planned with BQ-2 |

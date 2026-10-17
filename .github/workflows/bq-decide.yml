@@ -1,0 +1,47 @@
+# SPEC 63 BQ-3 / BQ-4: the owner's decisions.
+#   label `approved` (or «approve 1,3» on a list) -> append the clean items to harvest/queue.jsonl and commit it to mvp;
+#   label `rejected` -> needs a reason comment, then the issue is closed with that reason.
+# A label or comment by anyone but the repository owner is ignored (an `approved`/`rejected` label by someone else is removed).
+name: Owner decisions on proposals
+
+on:
+  issues:
+    types: [labeled]
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: bq
+  cancel-in-progress: false
+
+jobs:
+  decide:
+    if: >-
+      (github.event_name == 'issues' && (github.event.label.name == 'approved' || github.event.label.name == 'rejected'))
+      || (github.event_name == 'issue_comment' && github.event.comment.user.type != 'Bot')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: mvp
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - run: node pipelines/bq.ts decide
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+      - name: Commit the queue
+        run: |
+          if [ -n "$(git status --porcelain harvest/queue.jsonl)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add harvest/queue.jsonl
+            git commit -m "ukr-lexicon SPEC 63 BQ-3: approved issue queued for harvest (#${{ github.event.issue.number }})"
+            git pull --rebase origin mvp
+            git push origin HEAD:mvp
+          fi
