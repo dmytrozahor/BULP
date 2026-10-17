@@ -3,6 +3,7 @@
  * retried with a bounded backoff, never cached, and reported in `loadFailures` so the shell can say so (DataNotice.vue) instead of showing "no data".
  */
 import { ref, shallowReactive } from 'vue'
+import { dataUrl } from './dataUrl.ts'
 
 /** URLs whose load failed after the retries and has not succeeded since (reactive) */
 export const loadFailures = shallowReactive(new Set<string>())
@@ -27,7 +28,7 @@ export async function fetchJson(url: string, delays: readonly number[] = BACKOFF
   for (let i = 0; i <= delays.length; i++) {
     if (i > 0) await sleep(delays[i - 1]!)
     try {
-      const r = await fetch(url)
+      const r = await fetch(dataUrl(url))
       if (r.status === 404 || r.status === 410) { loadFailures.delete(url); return null }
       if (!r.ok) {
         last = new Error(`${url}: HTTP ${r.status}`)

@@ -38,7 +38,8 @@ self.addEventListener('fetch', e => {
   const req = e.request
   if (req.method !== 'GET') return
   const url = new URL(req.url)
-  if (url.origin !== self.location.origin) return
+  // SPEC 63 PF-7: the big data is on the CDN under /data/<buildId>/…; the path is versioned, so a cached shard never goes stale: cache first
+  if (url.origin !== self.location.origin) { if (/^\/data\/\d{12}-[0-9a-f]{7}\/[a-z]+\/.+\.json$/.test(url.pathname)) e.respondWith(cacheFirst(req, DATA).then(r => { trim(DATA, DATA_MAX); return r })); return }
   const path = url.pathname
   if (/\/assets\//.test(path)) e.respondWith(cacheFirst(req, ASSETS))
   else if (/\/data\/(boot\.json|ix\/index\.json)$/.test(path)) e.respondWith(networkFirst(req, DATA))

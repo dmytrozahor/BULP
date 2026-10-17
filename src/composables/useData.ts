@@ -13,6 +13,7 @@ import { SOURCES } from '../../core/sources.ts'
 import type { BootFile } from '../../core/parts.ts'
 import type { SearchIndex } from '../lib/search.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
+import { dataUrl } from '../lib/dataUrl.ts'
 import { cardMapView, ixAttest, ixHitMap, ixLexIndex, ixParadigm, witnessOf } from '../lib/parts.ts'
 
 export const toCards = unpackCore   // tests / fixtures: a packed core (format 3/4), a packed format 2 or a plain LemmaCard[] (fixture: detail embedded)
@@ -24,7 +25,7 @@ const fullCorpus = shallowRef<CorpusMeta>()
 const searchIdx = shallowRef<SearchIndex>({ map: ixHitMap, keys: [] })
 
 const get = async (name: string) => {
-  const r = await fetch(`./data/${name}.json`)
+  const r = await fetch(dataUrl(`./data/${name}.json`))
   if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`)
   return r.json()
 }

@@ -1,5 +1,6 @@
 /** Running text of a witness (public/data/texts/<id>.json = { tokens: [raw, loc, s][] }) + annotation of a token slice; shared by /texts and the /witness card. */
 import { annotate, type AnnotateData } from './annotate.ts'
+import { dataUrl } from './dataUrl.ts'
 
 export type Tok = [string, string, string | boolean, string?]   // 4th = SPEC 63 PV ref ('n:' name card, 'o:' ORV-only card, 'l:' light card, 'w:' word card)
 export interface Row { raw: string; loc: string; sep: string; lemma?: string; form?: string; status: string; provenance?: string; ref?: string }
@@ -16,7 +17,7 @@ export function rowRef(r: Row): string | undefined {
 
 export async function loadTokens(id: string): Promise<Tok[] | null> {
   try {
-    const r = await fetch(`./data/texts/${encodeURIComponent(id)}.json`)
+    const r = await fetch(dataUrl(`./data/texts/${encodeURIComponent(id)}.json`))
     if (!r.ok) return null
     const j = await r.json()
     return Array.isArray(j?.tokens) ? j.tokens : null
