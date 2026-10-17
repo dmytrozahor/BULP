@@ -423,6 +423,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | HV-3 | tests/harvest.test.ts › HV-3 dates: «1380-1400», «1893-05-01», archive timestamps; no year → null (undated works are not ingested) |
 | HV-3 | tests/harvest.test.ts › HV-3 OCR rules and language gate: Cyrillic-only tokens kept, Latin/digit/mixed dropped as unmapped, Russian lines dropped as apparatus |
 | HV-3 | tests/harvest.test.ts › HV-3 end to end on a synthetic archive dump: witness with date/licence/author/region from the index, OCR rules applied; vocab-only sources give counts only |
+| HV-4 | tests/harvest.test.ts › HV-4 the work list: 5 prints 1596/1596/1619/1627/1653, each with date, place, author, PD licence and an archive.org item; the 1961/1964/1979 Німчук editions are not in it |
+| HV-4 | tests/harvest.test.ts › HV-4 an item is stored as one gz with its index line (date/author/region/ocr); a second run skips it (resumable, idempotent) |
+| HV-4 | tests/harvest.test.ts › HV-4 harvest:ingest turns the hv4 dump into a vocabulary-only file (family middle-ukrainian-church-slavonic, dated items, no running text) |
 | PL-1 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › every PL row cites its own ЕУМ article (um155 East, um161 North, um168 West) with a verbatim quote that contains its example |
 | PL-2 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › gates: the rows are undated (no dating quote), so the blanket 1798 applies; the group gates (CHN 1501, WPL 1301) lie below it |
 | PL-2 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › no row claims akanye, hard р or ы for MPL/WPL: ЕУМ um167/um168 attest none of them; the only akanye rows are CHN (um155) and SLB (um169) |

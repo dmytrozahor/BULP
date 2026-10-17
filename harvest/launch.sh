@@ -26,6 +26,7 @@ JOBS=(
   "gramoty|node|harvest/gramoty.ts"
   "poets|node|harvest/poets.ts"
   "r2u|node|harvest/r2u.ts"
+  "hv4|node|harvest/hv4.ts"
   "hplt|uv|run --with pyarrow python -I harvest/hplt.py 1 299"
 )
 PIDF="$OUT/pids.json"

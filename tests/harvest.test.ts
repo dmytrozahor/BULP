@@ -14,6 +14,7 @@ const gram = await import('../harvest/gramoty.ts')
 const poets = await import('../harvest/poets.ts')
 const faust = await import('../harvest/faust.ts')
 const hr = await import('../harvest/hrushevsky.ts')
+const hv4 = await import('../harvest/hv4.ts')
 const ing = await import('../pipelines/ingest-harvest.ts')
 
 describe('HV-1 harvest/ scripts: resumable, capped, logged, launched detached', () => {
@@ -126,5 +127,35 @@ describe('HV-3 ingest-harvest: dumps → witnesses', () => {
     expect(v.entries['слово']).toMatchObject({ f: 3 }); expect(v.vocabOnly).toBe(true); expect(v.items[0].quote).toHaveLength(2)
     expect(JSON.stringify(v)).not.toMatch(/"tokens":\[/)   // no running text
     expect(readdirSync(out).filter(f => f.startsWith('hv_faust'))).toEqual([])
+  })
+})
+
+describe('HV-4 Зизаній, Смотрицький, Беринда (archive.org scans of the original prints)', () => {
+  it('HV-4 the work list: 5 prints 1596/1596/1619/1627/1653, each with date, place, author, PD licence and an archive.org item; the 1961/1964/1979 Німчук editions are not in it', () => {
+    expect(hv4.HV4_WORKS.map(w => w.date)).toEqual(['1596', '1596', '1619', '1627', '1653'])
+    for (const w of hv4.HV4_WORKS) { expect(w.region).toBeTruthy(); expect(w.author).toBeTruthy(); expect(w.licence).toMatch(/^PD/); expect(w.file).toMatch(/_djvu\.txt$/) }
+    expect(new Set(hv4.HV4_WORKS.map(w => w.id)).size).toBe(5)
+    expect(hv4.HV4_WORKS.map(w => w.ia).join()).not.toMatch(/leksykon1961|zyzanii2|hramslavenski/)
+    expect(hv4.HV4_SKIPPED.join('\n')).toMatch(/Німчук/)
+  })
+  it('HV-4 an item is stored as one gz with its index line (date/author/region/ocr); a second run skips it (resumable, idempotent)', () => {
+    const h = new Harvest('hv4t', { delayMs: 0 })
+    const w = hv4.HV4_WORKS[0]!
+    h.put(w.id.replace(':', '_'), 'текст', [hv4.item(w, 'https://archive.org/details/x', 10, 200)])
+    const again = new Harvest('hv4t', { delayMs: 0 })
+    expect(again.has(w.id)).toBe(true); expect(again.count).toBe(1)
+    const line = JSON.parse(readFileSync(join(TMP, 'harvest/hv4t/index.jsonl'), 'utf8').trim())
+    expect(line).toMatchObject({ date: '1596', author: 'Лаврентій Зизаній', region: 'Вільно', ocr: true, kind: 'grammar' })
+  })
+  it('HV-4 harvest:ingest turns the hv4 dump into a vocabulary-only file (family middle-ukrainian-church-slavonic, dated items, no running text)', async () => {
+    const root = process.env.HARVEST_DIR!, out = join(TMP, 'out4')
+    const w = hv4.HV4_WORKS[3]!
+    mkdirSync(join(root, 'hv4/items'), { recursive: true })
+    writeFileSync(join(root, 'hv4/items/b.gz'), gzipSync('Агнєцъ — баранъ. Азъ — я. Агнєцъ.\n'))
+    writeFileSync(join(root, 'hv4/index.jsonl'), JSON.stringify({ ...hv4.item(w, 'https://archive.org/details/x', 30, 200), file: 'b' }) + '\n')
+    await ing.main(['--out', out, '--only', 'hv4'])
+    const v = JSON.parse(readFileSync(join(out, 'harvest-vocab/hv4.json'), 'utf8'))
+    expect(v).toMatchObject({ vocabOnly: true, family: 'middle-ukrainian-church-slavonic' })
+    expect(v.items[0]).toMatchObject({ date: [1627, 1627], region: 'Київ' }); expect(JSON.stringify(v)).not.toMatch(/"tokens":\[/)
   })
 })

@@ -202,7 +202,7 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
       items.push({ id: it.id, title: it.title, author: it.author, date: range, dateBasis: it.date ? 'source' : 'debut-year (poem date not stated)', region: it.region, tokens: j.n, quote: j.quote, url: it.url, p2: it.p2, witnessType: it.witnessType })
       continue
     }
-    if (src === 'user-books') {   // owner-supplied Lukash translations: raw text per part, vocabulary + ≤ 2-line quote only
+    if (src === 'user-books' || src === 'hv4') {   // owner-supplied Lukash translations: raw text per part, vocabulary + ≤ 2-line quote only
       const text = buf.toString('utf8'), f = countText(text); addForms(entries, f, null)
       const n = Object.values(f).reduce((a, b) => a + b, 0); s.tokens += n
       const q = text.replace(/\s+/g, ' ').trim().split(/(?<=[.!?…])\s+/).slice(0, 2).join(' ').slice(0, 240)
@@ -228,7 +228,7 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
   return s
 }
 
-const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative' }
+const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative', hv4: 'middle-ukrainian-church-slavonic' }
 const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky']
 
 export async function main(argv: string[]) {
