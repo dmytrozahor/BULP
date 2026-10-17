@@ -47,3 +47,47 @@ export function unpackShard(j: unknown): Map<string, LemmaDetail> {
   const d = restore(s.ev, s.details)
   return new Map(s.lemmas.map((l, i) => [l, d[i]!]))
 }
+
+// ── SPEC 63 PF-4: a lemma whose detail alone does not fit a 256 KiB shard is split into part files lex/<bucket>-<k>.json (lossless) ──────────────────────
+const bytesOf = (lemma: string, d: LemmaDetail) => new TextEncoder().encode(JSON.stringify(packShard([[lemma, d]]))).length
+/**
+ * Splits one detail into fragments, each of which packs (as the only lemma of a shard) to <= limit bytes. Nothing is dropped: part 0 holds everything except the spellings and the
+ * epoch paradigms, which are dealt out in order over the parts (a later part carries only `forms` and `epochs.paradigms`). joinDetail() is the inverse.
+ * Throws, naming the lemma and the piece, when one spelling or one epoch paradigm alone is over the limit.
+ */
+export function splitDetail(lemma: string, d: LemmaDetail, limit: number): LemmaDetail[] {
+  const head: LemmaDetail = { ...d, forms: [], ...(d.epochs ? { epochs: { ...d.epochs, paradigms: [] } } : {}) }
+  const stub: LemmaDetail = { stress: [], oldest: d.oldest, forms: [], stats: {} as LemmaDetail['stats'], ...(d.epochs ? { epochs: { tags: [], stem: undefined as never, paradigms: [] } } : {}) }
+  const hb = bytesOf(lemma, head)
+  if (hb > limit) throw new Error(`lemma «${lemma}»: its detail without spellings and epoch paradigms is ${hb} B, over ${limit} B (PF-4)`)
+  const atoms: { name: string; add: (p: LemmaDetail) => LemmaDetail }[] = [
+    ...d.forms.map((f, i) => ({ name: `spelling #${i}`, add: (p: LemmaDetail): LemmaDetail => ({ ...p, forms: [...p.forms, f] }) })),
+    ...(d.epochs?.paradigms ?? []).map((q, i) => ({ name: `epoch paradigm #${i} (${q.epoch})`, add: (p: LemmaDetail): LemmaDetail => ({ ...p, epochs: { ...p.epochs!, paradigms: [...p.epochs!.paradigms, q] } }) })),
+  ]
+  const parts: LemmaDetail[] = []; let cur = head
+  for (const a of atoms) {
+    const next = a.add(cur)
+    if (bytesOf(lemma, next) <= limit) { cur = next; continue }
+    parts.push(cur); cur = a.add(stub)
+    const one = bytesOf(lemma, cur)
+    if (one > limit) throw new Error(`lemma «${lemma}»: ${a.name} alone is ${one} B, over ${limit} B (PF-4)`)
+  }
+  parts.push(cur)
+  return parts
+}
+export function joinDetail(parts: LemmaDetail[]): LemmaDetail {
+  const h = parts[0]!
+  return { ...h, forms: parts.flatMap(p => p.forms), ...(h.epochs ? { epochs: { ...h.epochs, paradigms: parts.flatMap(p => p.epochs?.paradigms ?? []) } } : {}) }
+}
+/**
+ * Loads lex/<name> through `get` (which maps a name like `lex/12` to its parsed JSON) and follows the `over` pointers: the part files of every overflow lemma of the shard are fetched
+ * and joined, so the returned Map holds the whole detail of every lemma of the bucket. The browser (src/composables/useData.ts) and the tests use this very function.
+ */
+export async function loadShardWith(get: (name: string) => Promise<unknown>, name: string): Promise<Map<string, LemmaDetail>> {
+  const j = await get(`lex/${name}`), m = unpackShard(j), over = (j as Shard).over
+  if (over) await Promise.all(Object.entries(over).map(async ([lemma, files]) => {
+    const parts = await Promise.all(files.map(async f => { const p = unpackShard(await get(`lex/${f}`)).get(lemma); if (!p) throw new Error(`lex/${f}: lemma ${lemma} missing`); return p }))
+    m.set(lemma, joinDetail(parts))
+  }))
+  return m
+}

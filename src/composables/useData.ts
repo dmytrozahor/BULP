@@ -8,7 +8,7 @@
 import { computed, markRaw, reactive, shallowReactive, shallowRef, toRefs } from 'vue'
 import type { Author, CoreCard, CorpusMeta, LemmaCard, LemmaDetail, WitnessMeta } from '../../core/types.ts'
 import { unpackCore } from '../../core/pack.ts'
-import { bucketOf, isFull, mergeCard, unpackShard } from '../../core/shard.ts'
+import { bucketOf, isFull, loadShardWith, mergeCard } from '../../core/shard.ts'
 import { SOURCES } from '../../core/sources.ts'
 import type { BootFile } from '../../core/parts.ts'
 import type { SearchIndex } from '../lib/search.ts'
@@ -56,7 +56,7 @@ const details = shallowReactive(new Map<string, LemmaDetail>()), detailError = s
 const shards = new Map<number, Promise<Map<string, LemmaDetail>>>(), merged = new Map<string, LemmaCard>()
 const loadShard = (lemma: string) => {
   const b = bucketOf(lemma); let p = shards.get(b)
-  if (!p) shards.set(b, p = get(`lex/${b}`).then(unpackShard).catch(e => { shards.delete(b); throw e }))
+  if (!p) shards.set(b, p = loadShardWith(get, String(b)).catch(e => { shards.delete(b); throw e }))
   return p
 }
 const fetching = new Set<string>()

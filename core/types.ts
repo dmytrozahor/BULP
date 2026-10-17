@@ -123,7 +123,11 @@ export interface LemmaDetail { first?: FirstDetail; stress: StressVariant[]; old
 /** public/data/lexicon.json (format 3): CoreCard[] in the compact wire form of core/pack.ts (tag table, defaults omitted) with the shared evidence pool. */
 export interface PackedCore { format: 3 | 4; ev: Evidence[]; tags: string[]; cards: unknown[][] }
 /** public/data/lex/<bucket>.json (format 1): the details of the lemmas hashing to the bucket, own evidence pool. */
-export interface Shard { format: 1; ev: Evidence[]; lemmas: string[]; details: LemmaDetail[] }
+export interface Shard {
+  format: 1; ev: Evidence[]; lemmas: string[]; details: LemmaDetail[]
+  /** SPEC 63 PF-4: lemmas whose detail does not fit this shard → names (relative to lex/, without .json) of the part files that hold it, in order; such a lemma is NOT in `lemmas`. Absent in an ordinary shard. */
+  over?: Record<string, string[]>
+}
 
 // ── SPEC 50 EP-1.2: attested cells per epoch (detail shard). Reconstructions are NOT stored (EP-1.3): core/reconstruct.ts computes them from `stem`. ──
 /** Cell key grammar (core/cells.ts):  noun `${num}.${case}`  num ∈ sg|du|pl, case ∈ nom|gen|dat|acc|ins|loc|voc;

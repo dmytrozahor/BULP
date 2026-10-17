@@ -23,7 +23,7 @@ import { RUSYN_STATUS } from '../core/rules.ts'
 import { REGIONS, regionOf } from './regions.ts'
 import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
 import { packCore } from '../core/pack.ts'
-import { bucketOf, packShard, splitCard } from '../core/shard.ts'
+import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
 import { ltIndex } from './lt.ts'
@@ -642,7 +642,7 @@ export function coreBreakdown(core: ReturnType<typeof packCore>): Record<string,
 }
 export const fmtBreakdown = (f: Record<string, number>) => Object.entries(f).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${(n / 1048576).toFixed(2)}`).join(', ') + ' MiB'
 
-export interface LexStats { bytes: number; fields: Record<string, number>; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number] }
+export interface LexStats { bytes: number; fields: Record<string, number>; pool: number; lemmas: number; shards: number; shardMax: number; shardMedian: number; shardTotal: number; epochBytes?: number; shrunk?: [number, number]; /** SPEC 63 PF-4 */ overflow?: [string, number, number][] }
 /**
  * B-5 (amendment 2026-10-11): writes <dir>/lexicon.json (core, ALL cards, evidence pooled) and <dir>/lex/<bucket>.json (detail shards, one per non-empty bucket; each lemma in exactly one).
  * Stale shards are removed first. Throws when core or a shard exceeds its limit — lemmas are never dropped to make it fit.
@@ -657,6 +657,7 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
   const lex = resolve(dir, 'lex'); rmSync(lex, { recursive: true, force: true }); mkdirSync(lex, { recursive: true })
   const sizes: number[] = []
   let epochBytes = 0, shrunk1 = 0, shrunk2 = 0
+  const overflow: [lemma: string, bytes: number, parts: number][] = []   // PF-4
   const sz = (es: [string, LemmaDetail][]) => Buffer.byteLength(JSON.stringify(packShard(es)))
   for (const [b, es0] of [...buckets].sort((x, y) => x[0] - y[0])) {
     let es = es0, s = JSON.stringify(packShard(es)), n = Buffer.byteLength(s)
@@ -668,13 +669,30 @@ export function writeLexicon(cards: LemmaCard[], dir: string, coreLimit = CORE_L
       es = [...es]; shrunk2++
       for (const [i] of order) { const [l, d] = es[i]!; if (!d.epochs) break; es[i] = [l, { ...d, epochs: shrinkEpochs(d.epochs, 2) }]; s = JSON.stringify(packShard(es)); n = Buffer.byteLength(s); if (n <= shardLimit) break }
     }
-    if (n > shardLimit) throw new Error(`shard ${b} (${es.length} lemmas) is ${n} B, over ${shardLimit} B (B-5b)`)
+    // SPEC 63 PF-4: still over → nothing is shrunk or dropped; the biggest lemmas (unshrunk) move to part files lex/<b>-<k>.json, the bucket shard keeps a pointer (Shard.over)
+    let over: Record<string, string[]> | undefined
+    if (n > shardLimit) {
+      const own = new Map(es0.map(([l, d]) => [l, sz([[l, d]])])), byBig = [...es0].sort((x, y) => own.get(y[0])! - own.get(x[0])!)
+      const moved = new Set<string>(); let keep = es0
+      while (keep.length && sz(keep) > shardLimit) { moved.add(byBig[moved.size]![0]); keep = es0.filter(([l]) => !moved.has(l)) }
+      over = {}; let k = 0
+      for (const [l, d] of es0) {
+        if (!moved.has(l)) continue
+        let parts: LemmaDetail[]
+        try { parts = splitDetail(l, d, shardLimit) } catch (e) { throw new Error(`shard ${b}: ${(e as Error).message}; lemma sizes in the bucket: ${es0.map(([x]) => `${x} ${own.get(x)} B`).join(', ')} (B-5b, PF-4)`) }
+        over[l] = parts.map(part => { const name = `${b}-${++k}`, t = JSON.stringify(packShard([[l, part]])); writeFileSync(resolve(lex, `${name}.json`), t); sizes.push(Buffer.byteLength(t)); return name })
+        overflow.push([l, own.get(l)!, parts.length])
+      }
+      es = keep; s = JSON.stringify({ ...packShard(es), over }); n = Buffer.byteLength(s)
+      if (n > shardLimit) throw new Error(`shard ${b} (${es.length} lemmas) is ${n} B, over ${shardLimit} B even without ${[...moved].join(', ')} (B-5b, PF-4)`)
+    }
     epochBytes += Math.max(0, n - bare)
     writeFileSync(resolve(lex, `${b}.json`), s); sizes.push(n)
   }
   sizes.sort((a, b) => a - b)
+  if (overflow.length) console.log(`  PF-4: ${overflow.length} lemma(s) in part files: ${overflow.map(([l, n, p]) => `${l} ${n} B → ${p} part(s)`).join(', ')}`)
   writeFileSync(resolve(dir, 'lexicon.json'), json)
-  return { bytes, fields, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2] }
+  return { bytes, fields, pool: core.ev.length, lemmas: cards.length, shards: sizes.length, shardMax: sizes.at(-1) ?? 0, shardMedian: sizes[sizes.length >> 1] ?? 0, shardTotal: sizes.reduce((a, b) => a + b, 0), epochBytes, shrunk: [shrunk1, shrunk2], overflow }
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -10,11 +10,11 @@ import { chooseLemma, tierOf, type Option } from '../pipelines/build-link.ts'
 import { writeLexicon } from '../pipelines/build.ts'
 import { vesumClass } from '../core/pos-gate.ts'
 import { pack, packCore, unpack, unpackCore } from '../core/pack.ts'
-import { BUCKETS, bucketOf, isFull, mergeCard, packShard, splitCard, unpackShard } from '../core/shard.ts'
+import { BUCKETS, bucketOf, isFull, loadShardWith, mergeCard, packShard, splitCard, unpackShard } from '../core/shard.ts'
 import { mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { hasData, readFull } from './lexdata.ts'
+import { hasData, readFull, readShard } from './lexdata.ts'
 import { REGIONS, regionOf } from '../pipelines/regions.ts'
 import { SURZHYK_DEF } from '../core/rules.ts'
 
@@ -214,6 +214,29 @@ describe('B-5 core / detail split (SPEC 20 B-5a–c)', () => {
       expect(s2.paradigms[0]!.cells.map(x => [x.forms.length, x.more])).toEqual([[2, 13], [2, 13], [2, 13]])
       expect(s2.paradigms[0]!.N).toBe(99)
       expect(() => writeLexicon([c], dir, 15 * 1024 * 1024, 200)).toThrow(/shard/)
+    } finally { rmSync(dir, { recursive: true, force: true }) }
+  })
+  it('PF-4 a lemma whose detail alone is over the shard limit goes to part files; the client loader joins them back to the identical detail; nothing is shrunk or dropped', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'lexpf4-')), LIMIT = 24 * 1024
+    const base = fullCard('велика', 9, 6), many = Array.from({ length: 80 }, (_, i) => ({ ...base.forms[0]!, raw: `велика${i}`, norm: `велика${i}`, modern: `велика${i}`, f: i + 1, kwic: kw(6) }))
+    const form = (raw: string, n: number) => ({ raw, n, src: 'torot' as const, t: 0, ex: [0, 'л. 1'] as [number, string], ctx: 'контекст '.repeat(6) })
+    const epochs = { tags: ['Nb -s---mn--i'], stem: unknown() as never, paradigms: ['shev.old', 'shev.middle'].map(epoch => ({ epoch, grid: 'noun' as const, N: 99, dropped: { conflict: 0, underspecified: 0, untagged: 0 }, cells: Array.from({ length: 40 }, (_, c) => ({ key: `sg.c${c}`, forms: ['a', 'b', 'c'].map(r => form(r + c, 5)) })) })) }
+    const big: LemmaCard = { ...base, forms: many, epochs }, rest = Array.from({ length: 12 }, (_, i) => fullCard('мала' + i, 5, 1)), cs = [big, ...rest]
+    try {
+      const st = writeLexicon(cs, dir, 1e9, LIMIT)
+      expect(st.overflow?.map(o => o[0])).toEqual(['велика']); expect(st.overflow![0]![1]).toBeGreaterThan(LIMIT); expect(st.overflow![0]![2]).toBeGreaterThan(1)
+      const files = readdirSync(join(dir, 'lex'))
+      for (const f of files) expect(readFileSync(join(dir, 'lex', f)).length, f).toBeLessThanOrEqual(LIMIT)
+      const b = bucketOf('велика'), bucketJson = JSON.parse(readFileSync(join(dir, 'lex', `${b}.json`), 'utf8'))
+      expect(bucketJson.over['велика'].length).toBe(st.overflow![0]![2]); expect(bucketJson.lemmas).not.toContain('велика')
+      expect(bucketJson.over['велика'].every((n: string) => files.includes(n + '.json') && n.startsWith(b + '-'))).toBe(true)
+      expect(st.shards).toBe(files.length)
+      const get = async (name: string) => JSON.parse(readFileSync(join(dir, name + '.json'), 'utf8'))   // what the browser's fetch does
+      const m = await loadShardWith(get, String(b)), core = unpackCore(JSON.parse(readFileSync(join(dir, 'lexicon.json'), 'utf8')))
+      expect(mergeCard(core.find(c => c.lemma === 'велика')!, m.get('велика')!)).toEqual(big)
+      expect(readFull(dir)).toEqual(cs); expect(readShard(dir, String(b)).get('велика')).toEqual(m.get('велика'))
+      // an unsplittable piece is an error that names the lemma and the sizes, never a drop
+      expect(() => writeLexicon(cs, dir, 1e9, 3000)).toThrow(/велика.*B/)
     } finally { rmSync(dir, { recursive: true, force: true }) }
   })
 })

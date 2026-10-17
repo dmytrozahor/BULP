@@ -501,6 +501,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-6 | tests/sn.test.ts › CV-6 the priority queue looks every listed word up first (ukr), then the other lookups in both scopes, deduplicated |
 | CV-6 | tests/sn.test.ts › CV-6 the build gets the listed words and a listed word without a card is reported |
 | CV-6 | tests/sn.test.ts › CV-6 built data: every listed word has a card |
+| PF-4 | tests/build.test.ts › PF-4 a lemma whose detail alone is over the shard limit goes to part files |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |
