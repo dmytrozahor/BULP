@@ -49,7 +49,7 @@ describe('NV-4 the analyser shows attestation, not «реконструкція 
     expect(await attestationOf('кликнуцький', deps)).toBeUndefined()
   })
   it('NV-4 a spelling that occurs only in a text (unlinked index) is attested too, linking its spelling page', async () => {
-    const a = await attestationOf('призвичкою', { ...deps, shard: async () => ({ призвичкою: ['призвичкою', 1, 1, 'mtt1925', 5] }) })
+    const a = await attestationOf('призвичкою', { ...deps, shard: async (n: string) => (n === 'index' ? { format: 1, leaves: [['пр', 1]] } : { призвичкою: ['призвичкою', 1, 1, 'mtt1925', 5] }) })
     expect(a?.kind).toBe('spelling'); expect(a?.to).toBe(`/f/${encodeURIComponent('призвичкою')}`); expect(a?.text).toContain('1925')
   })
   it('NV-4 AnalyzeView renders the «засвідчено» badge before the «реконструкція (гіпотеза)» one', () => {

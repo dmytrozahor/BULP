@@ -397,16 +397,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MD-3 | tests/modern.test.ts › the report counts distinct words per source and per first-attestation year |
 | MD-3 | tests/modern.test.ts › the badges are wired into the word and form pages |
 | NV-3 | tests/unlinked.test.ts › NV-3 the accumulator keeps count, witness count and at most 3 witnesses with token indexes |
-| NV-3 | tests/unlinked.test.ts › NV-3 sharding is stable and every key lands in exactly one of the shards |
 | NV-3 | tests/unlinked.test.ts › NV-3 only word tokens are indexed (no digits or punctuation) |
 | NV-3 | tests/unlinked.test.ts › NV-3 a KWIC line is cut around the token index from the text shard |
 | NV-3 | tests/unlinked.test.ts › NV-3 the lookup finds an indexed spelling through the injected shard fetch |
 | NV-3 | tests/unlinked.test.ts › NV-3 /f/:form for a spelling no lemma owns renders the «незв’язане написання» page, never «немає в корпусі» |
 | NV-3 | tests/unlinked.test.ts › NV-3 the analyser says «сторінка слова» only for a lemma / light card, else «сторінка написання» |
-| NV-3 | tests/unlinked.test.ts › NV-3 the index is on the code branch, within the size budget |
+| NV-3 | tests/unlinked.test.ts › NV-3 the index has a build script (data:unlinked) |
 | NV-3 | tests/unlinked.test.ts › NV-3 the Сумцов «Слобожане» 1918 page: «призвичкою» and every other word token leads to a page with content |
 | NV-3 | tests/unlinked.test.ts › NV-3 every text shard word token is a lexicon spelling or in the unlinked index (all witnesses) |
-| NV-3 | tests/unlinked.test.ts › NV-3 the committed index is within the size budget |
+| NV-3 | tests/unlinked.test.ts › NV-5 the built index: total within budget, every leaf ≤ hard gz limit, the manifest small and consistent |
 | NV-4 | tests/attest.test.ts › NV-4 the term locator is parsed: row ref, quote and the quoted ru | cs | de equivalents |
 | NV-4 | tests/attest.test.ts › NV-4 lookup is case-insensitive: Приборниця = приборниця = ПРИБОРНИЦЯ |
 | NV-4 | tests/attest.test.ts › NV-4 the build makes a card of an unlinked term-list headword and refs its text tokens; a VESUM-linked token keeps its lemma |
@@ -416,6 +415,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NV-4 | tests/attest.test.ts › NV-4 a spelling that occurs only in a text (unlinked index) is attested too, linking its spelling page |
 | NV-4 | tests/attest.test.ts › NV-4 AnalyzeView renders the «засвідчено» badge before the «реконструкція (гіпотеза)» one |
 | NV-4 | tests/attest.test.ts › NV-4 every unlinked headword of mtt1925 has an archaic.json card with its equivalents and the text token refs it |
+| NV-5 | tests/unlinked.test.ts › NV-5 prefix sharding: every key lands in exactly one leaf, found again through the manifest; nothing is dropped |
+| NV-5 | tests/unlinked.test.ts › NV-5 unlinked/ travels on the data branch (DIRS) and is ignored by git like ix/ and uv/; budgets are per leaf + manifest + sane total |
+| NV-5 | tests/unlinked.test.ts › NV-5 the built index: total within budget, every leaf ≤ hard gz limit, the manifest small and consistent |
 | HV-1 | tests/harvest.test.ts › HV-1 an item batch is written as items/<file>.gz with an index line; a new run sees it as done |
 | HV-1 | tests/harvest.test.ts › HV-1 a torn last index line (killed mid-write) does not break the resume |
 | HV-1 | tests/harvest.test.ts › HV-1 the launcher starts hidden detached processes, writes pids.json and logs; the status script reports items/bytes/alive |

@@ -1,5 +1,5 @@
 /**
- * `npm run data:unlinked` — SPEC 63 NV-3: public/data/unlinked/<n>.json from public/data/texts/*.json and the lexicon core (see core/unlinked.ts).
+ * `npm run data:unlinked` — SPEC 63 NV-3: public/data/unlinked/{index,<hex prefix>}.json (prefix-sharded, NV-5) from public/data/texts/*.json and the lexicon core (see core/unlinked.ts).
  * A token is unlinked when its normalised key is not the key of any card form (the same test /f/:form uses to find a page). Fails above the size budget.
  * SPEC 63 CV-4: the same scan also writes public/data/uv/ — «неперевірена лема» cards for the clean unlinked spellings, grouped by the spelling-fold key (core/uv.ts).
  */
@@ -7,7 +7,8 @@ import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync
 import { resolve } from 'node:path'
 import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
-import { UNLINKED_BUDGET_BYTES, isWordToken, newAccumulator, shardsOf } from '../core/unlinked.ts'
+import { gzipSync } from 'node:zlib'
+import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestOf, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
 import { UV_SHARDS, UvScan, uvPrefixFile, uvShard, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { cardMap, type CardIndexFile } from '../core/cv.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
@@ -29,10 +30,18 @@ for (const f of readdirSync(resolve(pub, 'texts')).filter(f => f.endsWith('.json
   })
 }
 const dir = resolve(pub, 'unlinked'); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true })
-let bytes = 0
-shardsOf(acc.m).forEach((s, n) => { const t = JSON.stringify(s); bytes += Buffer.byteLength(t); writeFileSync(resolve(dir, `${n}.json`), t) })
-console.log(`unlinked: ${acc.m.size} spellings of ${toks} tokens, ${(bytes / 1048576).toFixed(2)} MB (budget ${(UNLINKED_BUDGET_BYTES / 1048576).toFixed(0)} MB)`)
-if (bytes > UNLINKED_BUDGET_BYTES) { console.error('over budget'); process.exit(1) }
+// NV-5: prefix-sharded leaves (like ix/ and dx/), nothing dropped; budgets: total raw, worst leaf gz, manifest gz
+let bytes = 0, worst = 0, gzTotal = 0
+const gzLen = (t: string) => gzipSync(t, { level: 6 }).length
+const leaves = planUnlinked(acc.m, gzLen)
+for (const [p, ks] of leaves) {
+  const t = JSON.stringify(leafShard(acc.m, ks)), g = gzLen(t); bytes += Buffer.byteLength(t); gzTotal += g; worst = Math.max(worst, g)
+  writeFileSync(resolve(dir, `${unlinkedName(p)}.json`), t)
+}
+const man = JSON.stringify(manifestOf(leaves)); writeFileSync(resolve(dir, 'index.json'), man); bytes += Buffer.byteLength(man)
+const manGz = gzLen(man)
+console.log(`unlinked: ${acc.m.size} spellings of ${toks} tokens → ${leaves.size} leaves, ${(bytes / 1048576).toFixed(2)} MB raw (budget ${(UNLINKED_BUDGET_BYTES / 1048576).toFixed(0)} MB), gz total ${(gzTotal / 1048576).toFixed(1)} MB, worst leaf ${(worst / 1024).toFixed(1)} KB gz (target ${UNL_GZ_MAX / 1024}, hard ${UNL_GZ_HARD / 1024}), manifest ${(manGz / 1024).toFixed(1)} KB gz`)
+if (bytes > UNLINKED_BUDGET_BYTES || worst > UNL_GZ_HARD || manGz > UNL_MANIFEST_GZ_MAX) { console.error('over budget'); process.exit(1) }
 
 // ── CV-4 ────────────────────────────────────────────────────────────────────────────────────────
 const owned = existsSync(resolve(pub, 'cardindex.json')) ? cardMap(JSON.parse(readFileSync(resolve(pub, 'cardindex.json'), 'utf8')) as CardIndexFile) : new Map()

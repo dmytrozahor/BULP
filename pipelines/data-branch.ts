@@ -11,7 +11,7 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, renameSync, rmSync } f
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 
-const BRANCH = 'ukr-lexicon-data', REMOTE = process.env.DATA_REMOTE ?? 'origin', DATA = resolve('public/data'), DIRS = ['lex', 'texts', 'cv', 'uv', 'ix', 'cd', 'lm', 'wit', 'pg', 'tc', 'sum']
+const BRANCH = 'ukr-lexicon-data', REMOTE = process.env.DATA_REMOTE ?? 'origin', DATA = resolve('public/data'), DIRS = ['lex', 'texts', 'cv', 'uv', 'unlinked', 'ix', 'cd', 'lm', 'wit', 'pg', 'tc', 'sum']
 const git = (args: string[], env: NodeJS.ProcessEnv = {}) => execFileSync('git', args, { encoding: 'utf8', maxBuffer: 1 << 28, env: { ...process.env, ...env } }).trim()
 
 type Git = (args: string[], env?: NodeJS.ProcessEnv) => string
