@@ -587,6 +587,27 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-1 | tests/robust-build.test.ts › RS-1 freshness: a stale or missing |
 | RS-1 | tests/robust-build.test.ts › RS-1 a truncated work file is fatal |
 | RS-1 | manual — not yet done: writeLexicon temp-dir swap and detail-size pre-flight (waiting for the overflow fix); the scan test for direct writes to final paths |
+| RS-2 | tests/stage-cache.test.ts › RS-2 cold = uncached output; warm = all hits, same output |
+| RS-2 | tests/stage-cache.test.ts › RS-2 changing one input file invalidates exactly the stages that read it |
+| RS-2 | tests/stage-cache.test.ts › RS-2 a source file changed: only the stages whose block references it |
+| RS-2 | tests/stage-cache.test.ts › RS-2 a stage block edited: that stage and the later ones |
+| RS-2 | tests/stage-cache.test.ts › RS-2 CRLF checkouts do not change a fingerprint |
+| RS-2 | tests/stage-cache.test.ts › RS-2 env/flags are part of the key; --from recomputes |
+| RS-2 | tests/stage-cache.test.ts › RS-2 never keyed on time |
+| RS-2 | tests/stage-cache.test.ts › RS-2 a truncated, bit-flipped or missing entry is a miss |
+| RS-2 | tests/stage-cache.test.ts › RS-2 a killed writer leaves only a *.tmp |
+| RS-2 | tests/stage-cache.test.ts › RS-2 an entry is written to a tmp file and renamed |
+| RS-2 | tests/stage-cache.test.ts › RS-2 chunked Map/Array fields round-trip exactly |
+| RS-2 | tests/stage-cache.test.ts › RS-2 verify mode refuses an entry whose round trip is lossy |
+| RS-2 | tests/stage-cache.test.ts › RS-2 GC keeps the last 2 entries per stage |
+| RS-2 | tests/stage-cache.test.ts › RS-2 per-witness items: adding or touching one witness recomputes only that witness |
+| RS-2 | tests/stage-cache.test.ts › RS-2 the item code is part of the spine |
+| RS-2 | tests/stage-cache.test.ts › RS-2 the tracker fingerprints reads through the ES-module named imports |
+| RS-2 | tests/stage-cache.test.ts › RS-2 every sc.run / sc.item stage of build.ts has a // #stage block |
+| RS-2 | tests/stage-cache.test.ts › RS-2 a stage fingerprint covers the modules its block uses, transitively |
+| RS-2 | tests/stage-cache.test.ts › RS-2 the output section after the last cached stage is not part of any fingerprint |
+| RS-2 | tests/stage-cache.test.ts › RS-2 stage markers are validated |
+| RS-2 | manual — full-corpus cold/warm equality is checked on the worker rebuild (BUILD_CACHE_VERIFY=1, public/data diff against the last uncached build, second run time); the corpus is not in the repository |
 | AT-3 | tests/atlas.test.ts › AT-3 АУМ rows in DIALECT_BOOK_RULES |
 | AT-3 | tests/atlas.test.ts › AT-3 /atlas page and site file |
 | AT-3 | manual — validation of the AUM rules on the dialect witnesses (CX-9, Лєснова, Шухевич) needs data/work from the consolidated rebuild: run `tsx pipelines/dialect-literature.ts` after it |
