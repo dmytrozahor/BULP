@@ -27,7 +27,7 @@ describe('SPEC 63 MU', () => {
     expect(MU_FOLDS.length).toBeGreaterThanOrEqual(20)
     for (const f of MU_FOLDS) {
       expect(f.cite.locator.length, f.id).toBeGreaterThan(3)
-      expect(['RUSL', 'PAVL', 'SHEV', 'PRAV'], f.id).toContain(f.cite.source)
+      expect(['RUSL', 'PAVL', 'SHEV', 'PRAV', 'ENC'], f.id).toContain(f.cite.source)
       if (f.cite.kind !== 'Q') { expect(doc, f.id).toContain('PAVL ' + f.cite.locator.match(/с\. \d+/)![0]); continue }   // a paraphrased (decoded) table: research/35 names the page
       const q = f.cite.quote.replace(/\s+/g, ' ').slice(0, 45)
       expect(doc.includes(q), `${f.id}: «${q}» not in research/35`).toBe(true)
@@ -57,7 +57,7 @@ describe('SPEC 63 MU', () => {
     // not Middle Ukrainian text (orth differs) → no MU route
     expect(lemmaOf(ctx('польськой', { orth: 'кулішівка' }), env)).toBeUndefined()
     // the token's own POS annotation vetoes (a noun-gate token cannot take an adjective analysis)
-    expect(lemmaOf(ctx('польськой', { lang: 'ruthenian', gate: 'P:Nb' }), env)).toBeUndefined()
+    expect(lemmaOf(ctx('польськой', { lang: 'ruthenian', gate: 'U:ADP' }), env)).toBeUndefined()
     // a plain route always wins over MU
     expect(linkOptions(ctx('польськой'), mkEnv({ польськой: [{ lemma: 'польськой', tags: 'noun:inanim:m:v_naz' }], польської: [adjGen] }))!.opts.every(o => o.cand.trace.length === 0)).toBe(true)
   })
@@ -104,10 +104,10 @@ describe('SPEC 63 MU', () => {
     const dir = mkdtempSync(join(tmpdir(), 'mu-'))
     try {
       const w = { id: 'o18_33', title: 'Величко', tokens: [], orth: 'modernised', lang: 'uk' } as never
-      const md = muReport([{ w, n: 100, linked: 80, names: 5, rules: { 'MU-PAST-L': 7 }, unresolved: new Map([['тогда', 3], ['хмельницьком', 1]]) }], { o18_33: { n: 100, linked: 70 } }, dir, ['o18_33'])
+      const md = muReport([{ w, n: 100, linked: 80, names: 5, rules: { 'MU-PAST-L': 7 }, unresolved: new Map([['чрез', 3], ['хмельницьком', 1]]) }], { o18_33: { n: 100, linked: 70 } }, dir, ['o18_33'])
       expect(md).toContain('| 70 (70.0%) | 80 (80.0%) | +10 | 5 | 85.0% |')
       expect(md).toMatch(/\| MU-PAST-L \| 7 \| RUSL/)
-      expect(md).toMatch(/\| тогда \| 3 \| no-rule \|/); expect(md).toMatch(/\| хмельницьком \| 1 \| MU-no-vesum \|/)
+      expect(md).toMatch(/\| чрез \| 3 \| no-rule \|/); expect(md).toMatch(/\| хмельницьком \| 1 \| MU-no-vesum \|/)
     } finally { rmSync(dir, { recursive: true, force: true }) }
   })
 

@@ -84,13 +84,16 @@ function muOptions(t: TypeCtx, env: Env): Option[] {
   // MM-3: for a non-Ukrainian-labelled witness the first pass derives the token (R16 turns полки into повки), so the PLAIN modern spelling was never tried; the phonetic fold о > і
   // then moved полки (pl. of полк «regiment») to пілка (dim. of пола). A token that is itself a VESUM form of a common lemma keeps that lemma: a plain route always wins over a fold.
   if (t.lang !== 'uk') {
-    const k = key(t.raw), plain: Candidate = { form: k, trace: [], branches: 0 }
-    for (const h of env.hits.get(k) ?? []) if (!/:(prop|abbr|slang|vulg|obsc)\b/.test(':' + h.tags) && h.lemma[0] === h.lemma[0]!.toLowerCase() && compatible(t.gate, h.tags)) out.push(toOption(k, h, plain, plain, true))
+    // the letter ы of the witness (R11 ы > и: полкы = полки) belongs to the plain route as well; no other old-letter rule is applied to a token of a modernised edition
+    const k = key(t.raw), k11 = key(ruleById['R11']!.apply(k)), plains: Candidate[] = [{ form: k, trace: [], branches: 0 }, ...(k11 !== k ? [{ form: k11, trace: ['R11'], branches: 0 }] : [])]
+    for (const plain of plains) for (const h of env.hits.get(key(plain.form)) ?? []) if (!/:(prop|abbr|slang|vulg|obsc)\b/.test(':' + h.tags) && h.lemma[0] === h.lemma[0]!.toLowerCase() && compatible(t.gate, h.tags)) out.push(toOption(key(plain.form), h, plain, plain, true))
     if (out.length) return out
   }
   for (const m of muCandidates(key(t.raw), !!env.phon)) {
     const cands: Candidate[] = t.lang === 'uk' ? [{ form: m.form, trace: m.trace, branches: m.trace.length }]
-      : env.derive(m.form, t.oldI).candidates.map(d => ({ form: d.form, trace: [...m.trace, ...d.trace], branches: d.branches + m.trace.length }))
+      : [...env.derive(m.form, t.oldI).candidates.map(d => ({ form: d.form, trace: [...m.trace, ...d.trace], branches: d.branches + m.trace.length })),
+        // MM-3: the edition is in modern letters: the fold's own result (only ы > и applied) is a candidate too, because the old-letter chain turns полку into повку (R16)
+        { form: key(ruleById['R11']!.apply(m.form)), trace: m.trace, branches: m.trace.length }]
     for (const c of cands) for (const h of env.hits.get(key(c.form)) ?? []) if (muAccepts(m, h) && compatible(t.gate, h.tags)) out.push(toOption(key(c.form), h, c, c, true))
   }
   return out
@@ -197,8 +200,8 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
   if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr) out.push(key(vr.modern)) }   // MM-2
   if (t.lang !== 'uk') for (const c of candsOf(env, t.raw, t.oldI)) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
-  if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') out.push(key(t.raw))   // MM-3: the plain spelling
-  if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw), !!env.phon)) { if (t.lang === 'uk') out.push(key(m.form)); else for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) }
+  if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') { out.push(key(t.raw), key(ruleById['R11']!.apply(key(t.raw)))) }   // MM-3: the plain spelling and its ы > и
+  if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw), !!env.phon)) { if (t.lang === 'uk') out.push(key(m.form)); else { out.push(key(ruleById['R11']!.apply(m.form))); for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) } }
   return out
 }
 

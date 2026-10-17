@@ -133,7 +133,7 @@ describe('MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R
 
 describe('MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment»)', () => {
   const e5: Env = { ...env, phon: true, hits: new Map(Object.entries({
-    полк: [H('полк', 'noun:inanim:m:v_naz')], полки: [H('полк', 'noun:inanim:p:v_naz')], пілка: [H('пілка', 'noun:inanim:f:v_naz')], пілки: [H('пілка', 'noun:inanim:f:v_rod'), H('пілка', 'noun:inanim:p:v_naz')],
+    полк: [H('полк', 'noun:inanim:m:v_naz')], полки: [H('полк', 'noun:inanim:p:v_naz')], полку: [H('полк', 'noun:inanim:m:v_rod'), H('полк', 'noun:inanim:m:v_dav')], пілка: [H('пілка', 'noun:inanim:f:v_naz')], пілки: [H('пілка', 'noun:inanim:f:v_rod'), H('пілка', 'noun:inanim:p:v_naz')],
   }).map(([k, v]) => [key(k), v])) }
   const l5 = (t: TypeCtx, freq: Record<string, number> = {}) => { const r = linkOptions(t, e5); return r ? chooseLemma(r.opts, new Map(Object.entries(freq))) : undefined }
   it('Нечуй-Левицький «пілки срібної одежі» (modern text) links to пілка and never to полк', () => {
@@ -161,6 +161,19 @@ describe('MM-3 пілки (dim. of пола) is not полки (pl. of полк 
   it('reconstructed old spellings of пілка (полка, полъка …) are labelled reconstruction, never confirmed by an attestation unless a callback supplies one', () => {
     const cs = reverse('пілка', { paradigm: ['пілка', 'пілки', 'пілок'] }).candidates
     expect(cs.every(c => c.status === 'reconstruction')).toBe(true)
+  })
+  it('Ізборник 1569 «всими сими полкы» (ruthenian, normalised orthography, ы kept) links to полк by the plain ы > и route, never to пілка', () => {
+    for (const phon of [false, true]) {
+      const r = linkOptions(T({ lang: 'ruthenian', oldI: false, raw: 'полкы', orth: 'ізборник-нормалізований' }), { ...e5, phon })!
+      expect(chooseLemma(r.opts, new Map())!.lemma, String(phon)).toBe('полк')
+    }
+  })
+  it('the old genitive «з полка» (modernised text, 10 M-token import) is a form of полк by MU-GEN-SG-A (ENC um27 / PAVL с. 81: -а ~ -у), not пілка by the phonetic fold', () => {
+    for (const lang of ['uk', 'ruthenian'] as const) for (const phon of [false, true]) {
+      const r = linkOptions(T({ lang, oldI: false, raw: 'полка', orth: 'modernised' }), { ...e5, phon })!
+      expect(chooseLemma(r.opts, new Map([['полк', 12345], ['пілка', 3]]))!.lemma, lang + phon).toBe('полк')
+    }
+    expect(linkOptions(T({ lang: 'uk', oldI: false, raw: 'полка', orth: 'modernised' }), { ...e5, phon: false })!.opts.map(o => o.cand.trace)).toEqual([['MU-GEN-SG-A']])
   })
   it('real data (after a rebuild with MM-3): the card пілка lists no spelling of полк (полки, полъкы, полкы …)', () => {
     if (!hasData()) return

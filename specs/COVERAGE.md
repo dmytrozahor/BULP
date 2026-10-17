@@ -484,7 +484,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-5 | tests/uv.test.ts › CV-5 a preceding на / в / у / по / при picks the locative analysis only when exactly one analysis is a locative |
 | CV-5 | tests/uv.test.ts › CV-5 риночку: both analyses get a card with all analyses listed, the context pick is stored, the example is kept |
 | CV-5 | tests/uv.test.ts › CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too |
-| CV-5 | tests/uv.test.ts › CV-5 /lw/риночка lists риночок (v_mis) and риночка (v_zna) as analyses of the attested spelling |
+| CV-5 | tests/uv.test.ts › CV-5 both VESUM analyses of риночку (риночок v_mis, риночка v_zna) open a card |
 | CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
 | PF-1 | tests/parts.test.ts › PF-1 every key lives in exactly one leaf, found by ixLeaf from the manifest alone |
 | PF-1 | tests/parts.test.ts › PF-1 searchRemote returns what the in-memory search() returns for lemma / form / paradigm hits, reading only prefix shards |
