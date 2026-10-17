@@ -590,3 +590,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | AT-3 | tests/atlas.test.ts › AT-3 АУМ rows in DIALECT_BOOK_RULES |
 | AT-3 | tests/atlas.test.ts › AT-3 /atlas page and site file |
 | AT-3 | manual — validation of the AUM rules on the dialect witnesses (CX-9, Лєснова, Шухевич) needs data/work from the consolidated rebuild: run `tsx pipelines/dialect-literature.ts` after it |
+| SL-5 | tests/plast-lch.test.ts › quotes are verbatim sentences: no split after a short abbreviation, hyphens joined, ≤ 160 chars, span pinned by from/to |
+| SL-5 | tests/plast-lch.test.ts › every term is a cite-only entry of source LCH with a «с. N PDF» locator, in exactly two categories |
+| SL-5 | tests/plast-lch.test.ts › the committed quotes are substrings of the OCR pages (skipped without the local OCR dump) |
+| SL-5 | tests/plast-lch.test.ts › kurin slang gets its own badge and never «пластова лексика»; Plast-wide terms get the Plast badge; labels differ |
+| SL-5 | tests/plast-lch.test.ts › the source is registered; /plast, the cards and the source card use the category label and the entry source |
