@@ -44,6 +44,7 @@ apply()
       <RouterLink to="/plast">Пласт</RouterLink>
       <RouterLink to="/sophia">Софія</RouterLink>
       <RouterLink to="/map">Мапа</RouterLink>
+      <RouterLink to="/atlas">Атлас</RouterLink>
       <RouterLink to="/corpus">Корпус</RouterLink>
       <RouterLink to="/report">Звіт</RouterLink>
       <RouterLink to="/method">Метод</RouterLink>

@@ -6,6 +6,7 @@
 import { Q, P, D, claim, type Claim, type Evidence } from './evidence.ts'
 import { TAG, normative, modern, detect, type Ctx, type Rule, type Detection } from './detect.ts'
 import { DIALECT_LEX } from './dialect-lex.ts'
+import { AUM_ROWS, AUM_VOL2 } from './atlas-rules.ts'
 
 const vline = (c: Ctx, t: string) => { const h = TAG(c, t); return h ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${c.form} ${h.tags} (лема: ${h.lemma})`) : null }
 const match = (re: RegExp, s?: string) => (s && re.test(s) ? s : null)
@@ -165,6 +166,10 @@ const diaB = (id: string, code: string, re: RegExp, weight: number, src: string,
 }
 
 export const DIALECT_BOOK_RULES: Rule[] = [
+  // ─ SPEC 63 AT-3: «Атлас української мови» т. 2 (core/atlas-rules.ts, data/atlas/aum2-maps.json); umbrella SW, weak: the settlement list is not readable from the OCR ─
+  ...AUM_ROWS.map(r => diaB(r.id, 'SW', r.re, 0.2, 'AUM', `${AUM_VOL2}, карта ${r.map} (коментар)`,
+    `${r.q} — ${r.attested.map(([f, p]) => `${f} (пункт ${p})`).join('; ')}`,
+    `${r.example} ← ${r.standard}; ареал на рівні групи не визначено (AT-2): лише SW`)),
   // ─ Carpathian group (BOY, HUT, LEM, ZAK, SYAN) and the whole south-west ─
   ...diaE('SW-LABIAL-J', /[а-яіїєґ][бпвмф]й(у|е|еш|ем|емо|ете|ут|ат|еть)$/, 0.5, [
     { code: 'BOY', um: 177, quote: 'після губних відсутній епентетичний звук [л] (л’ýбйу, ўхôпйу)' },

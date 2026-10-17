@@ -60,12 +60,12 @@ const EX: Record<string, [string[], string, string]> = {
 
 describe('DL-1 every ЕУМ-mined row has a verbatim ЕУМ cite of its own dialect, an example and a standard counterpart', () => {
   it('the example table covers every rule:code of DIALECT_BOOK_RULES and nothing else', () => {
-    const have = new Set(DIALECT_BOOK_RULES.map(r => r.id))
+    const have = new Set(DIALECT_BOOK_RULES.filter(r => !r.id.startsWith('AUM-')).map(r => r.id))
     const want = new Set(Object.entries(EX).flatMap(([id, [codes]]) => codes.map(c => `${id}:${c}`)))
     expect([...have].filter(x => !want.has(x))).toEqual([]); expect([...want].filter(x => !have.has(x))).toEqual([])
   })
   it('each rule cite is a Q quote from an ЕУМ article (litopys um<N>.htm) and rule ids are unique', () => {
-    for (const r of DIALECT_BOOK_RULES) {
+    for (const r of DIALECT_BOOK_RULES.filter(r => !r.id.startsWith('AUM-'))) {
       expect(r.cite.kind, r.id).toBe('Q'); expect(r.cite.quote.length, r.id).toBeGreaterThan(12); expect(r.weight, r.id).toBeGreaterThan(0)
       if (r.id.startsWith('WPL-INF-ODD') || r.id.startsWith('WPL-PHON-VAR')) { expect(r.cite.source, r.id).toBe('ARKUSHYN'); expect(r.cite.locator, r.id).toContain('slzhdplhv') }   // Arkushin's own preface
       else { expect(r.cite.source, r.id).toBe('ENC'); expect(r.cite.locator, r.id).toMatch(/^http:\/\/litopys\.org\.ua\/ukrmova\/um\d+\.htm$/) }

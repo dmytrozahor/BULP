@@ -585,3 +585,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-1 | tests/robust-build.test.ts › RS-1 freshness: a stale or missing |
 | RS-1 | tests/robust-build.test.ts › RS-1 a truncated work file is fatal |
 | RS-1 | manual — not yet done: writeLexicon temp-dir swap and detail-size pre-flight (waiting for the overflow fix); the scan test for direct writes to final paths |
+| AT-3 | tests/atlas.test.ts › AT-3 АУМ rows in DIALECT_BOOK_RULES |
+| AT-3 | tests/atlas.test.ts › AT-3 /atlas page and site file |
+| AT-3 | manual — validation of the AUM rules on the dialect witnesses (CX-9, Лєснова, Шухевич) needs data/work from the consolidated rebuild: run `tsx pipelines/dialect-literature.ts` after it |
