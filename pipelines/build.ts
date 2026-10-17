@@ -464,6 +464,7 @@ export async function build(opts: { noPy?: boolean } = {}) {
   for (const l of lemmaList) for (const fa of l.forms.values()) for (const id of fa.chosen.own.trace) { soundType[id] = (soundType[id] ?? 0) + 1; soundToken[id] = (soundToken[id] ?? 0) + fa.f }
   const detectHits: Record<string, number> = {}, hints: Record<string, number> = {}
 
+  const wRegion = new Map([...witMap].map(([id, w]) => [id, regionOf(w.region)] as const))
   const regionN = REGIONS.map(r => ({ code: r.code, name: r.name, oblasts: r.oblasts, N: adm.filter(({ w }) => regionOf(w.region) === r.code).reduce((s, { w }) => s + w.tokens.length, 0) }))
   const cards: LemmaCard[] = [], lemTags = new Map<string, string>()   // lemTags: UL-1 input
   for (const la of kept) {
@@ -486,8 +487,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const lc = lemmaContact(la.display, annEnv)
     const modernCards = pairs.filter(p => p.card.epochs.includes('shev.modern'))
     // first (B-3.5): one candidate per (witness, spelling) over ALL spellings of the lemma, ranked by rankFirst
-    const cands: FirstCand[] = [...la.firstByW.values()].map(x => ({ witness: x.wid, author: authorById[witMap.get(x.wid)!.author]!, date: witMap.get(x.wid)!.date, witnessType: witMap.get(x.wid)!.witnessType, loc: x.loc, form: x.raw, route: x.route, n: x.n }))
-    const refOf = new Map(cands.map((c, i) => [c, [...la.firstByW.values()][i]!.ref]))
+    const fbw = [...la.firstByW.values()]   // perf: spread once (was re-spread per candidate, O(F²))
+    const cands: FirstCand[] = fbw.map(x => { const wm = witMap.get(x.wid)!; return { witness: x.wid, author: authorById[wm.author]!, date: wm.date, witnessType: wm.witnessType, loc: x.loc, form: x.raw, route: x.route, n: x.n } })
+    const refOf = new Map(cands.map((c, i) => [c, fbw[i]!.ref]))
     const first = firstClaim(cands, witMap, c => kline(refOf.get(c)!))
     // oldest (B-3.4) and first attestation use ONE tie-break (FX-3): the oldest spelling IS the spelling of the ranked first attestation. Fallback (no vetted first): min date.to, commoner spelling.
     const ranked = rankFirst(cands)
@@ -515,7 +517,9 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const ac = auto.counts; ac.lemmas++; if (diaBase) ac.diaBase++; if (Object.keys(dia).length) ac.diaAfter++; if (isKnown(szBase)) ac.szBase++; if (isKnown(sz)) ac.szAfter++; if (szAuto) ac.szAuto++
     const order = lemmaStatsInput(la)
     const stats = lemmaStats(order, fMax, sizes, coll.get(la.idx) ?? [])
-    stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: [...la.perW].reduce((s, [wid, y]) => s + (regionOf(witMap.get(wid)?.region) === r.code ? y : 0), 0), N: r.N }))
+    const byRegion = new Map<string, number>()   // perf: witness → region code resolved once (wRegion), one pass over perW
+    for (const [wid, y] of la.perW) { const code = wRegion.get(wid); if (code !== undefined) byRegion.set(code, (byRegion.get(code) ?? 0) + y) }
+    stats.byRegion = regionN.filter(r => r.N > 0).map(r => ({ code: r.code, f: byRegion.get(r.code) ?? 0, N: r.N }))
     const lemmaPos = v2.lemmaTags.get(la.id) ?? la.tags
     lemTags.set(la.display, lemmaPos)
     const proper = properClaim(la.display, {
