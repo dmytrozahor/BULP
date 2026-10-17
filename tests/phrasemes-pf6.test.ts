@@ -31,13 +31,16 @@ describe('PF-6 maximality filter', () => {
     const a = mk(['а', 'б'], 3), b = mk(['а', 'б', 'в'], 3), c = mk(['б', 'в'], 4)
     expect(maximal([a, b, c], 10)).toEqual([b, c])
   })
-  it('PF-6 maximal() handles 1M synthetic phrasemes in seconds', () => {
-    const out: Phraseme[] = []
-    for (let i = 0; i < 1_000_000; i++) out.push(mk(['w' + (i % 50000), 'x' + (i % 777), 'y' + (i % 13)].slice(0, 2 + (i % 2)), 3 + (i % 20)))
-    const t = Date.now(), r = maximal(out, 1e9)
-    expect(r.length).toBeGreaterThan(0)
-    expect(Date.now() - t).toBeLessThan(15_000)
-  })
+  it('PF-6 maximal() scales linearly (4x the input costs ~4x, not ~16x) and survives 1M synthetic phrasemes', () => {
+    const gen = (n: number) => { const out: Phraseme[] = []; for (let i = 0; i < n; i++) out.push(mk(['w' + (i % 50000), 'x' + (i % 777), 'y' + (i % 13)].slice(0, 2 + (i % 2)), 3 + (i % 20))); return out }
+    const time = (out: Phraseme[]) => { const t = performance.now(), r = maximal(out, 1e9); return { ms: performance.now() - t, n: r.length } }
+    // machine independent: the same run's smaller input is the baseline, so only the growth rate is asserted, never seconds
+    const small = gen(100_000), mid = gen(400_000)
+    time(small)   // warm-up (JIT)
+    const s1 = Math.min(time(small).ms, time(small).ms), m = time(mid)
+    expect(m.ms / Math.max(s1, 1), `400k took ${Math.round(m.ms)} ms, 100k ${Math.round(s1)} ms`).toBeLessThan(11)   // linear ~4 (+GC/cache noise); quadratic ~16
+    expect(time(gen(1_000_000)).n).toBeGreaterThan(0)   // completes at full size (a quadratic filter never would)
+  }, 300_000)
   it('PF-6 collectEvidence trie matches the nested prefix targets once per occurrence', () => {
     const p2 = mk(['а', 'б'], 3), p3 = mk(['а', 'б', 'в'], 3)
     const doc = { wid: 'w1', date: [1100, 1200] as [number, number], old: true, keys: [1, 2, 3, 1, 2, 9], seg: [0, 0, 0, 0, 0, 0] }
