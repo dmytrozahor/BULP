@@ -215,7 +215,9 @@ export function readEntry(path: string): { meta: EntryMeta; value: Record<string
 
 // ── the cache ────────────────────────────────────────────────────────────────────────────────────
 
-export interface CodeIndex { fingerprint(stage: string): string }
+/** the parts a code fingerprint is made of (hashes), so a miss can name which part changed */
+export interface CodeDetail { block: string; chunks: [string, string][]; mods: [string, string][] }
+export interface CodeIndex { fingerprint(stage: string): string; detail?(stage: string): CodeDetail }
 export interface CacheConfig {
   dir: string; enabled: boolean
   /** `--from <stage>`: recompute this stage and every later one */
@@ -243,12 +245,22 @@ export interface RunOpts {
   parallel?: boolean
 }
 export interface StageStat { stage: string; status: 'hit' | 'miss' | 'off'; secs: number; bytes: number; why?: string }
-interface ManifestLine { key: string; file: string; bytes: number; secs: number; digest: string; item?: string; at: string }
+/** what the key was made of (short hashes) and the keys of the stages before it: the next run compares them to say WHY it missed (RS-2) */
+interface KeyParts { code: string; inputs?: string; files?: Record<string, string> }
+interface ManifestLine { key: string; file: string; bytes: number; secs: number; digest: string; item?: string; at: string; parts?: KeyParts; up?: Record<string, string> }
+const short = (s: string) => s.slice(0, 12)
+const MAX_NAMES = 4
+const names = (xs: string[]) => xs.length <= MAX_NAMES ? xs.join(', ') : xs.slice(0, MAX_NAMES).join(', ') + ` (+${xs.length - MAX_NAMES} more)`
 
 export class StageCache {
   readonly tracker: ReadTracker
   readonly stats: StageStat[] = []
   private spine: string
+  /** the spine's contributions in order: [stage, key] (item stages: [stage, code fingerprint]); 'base' = format, node, env, flags */
+  private ups: [string, string][]
+  private why = new Map<string, string>()   // this run: stage -> why it missed
+  private itemWhy = new Map<string, Map<string, number>>()
+  private codeSaved = new Set<string>()
   private pending = new Map<string, string>()
   private forced = false
   private itemStages = new Set<string>()
@@ -259,6 +271,7 @@ export class StageCache {
     this.enabled = cfg.enabled
     this.tracker = new ReadTracker([resolve(cfg.dir), ...(cfg.ignore ?? [])])
     this.spine = sha(CACHE_FORMAT, process.versions.node.split('.')[0]!, stable(cfg.env ?? {}), stable(cfg.flags ?? {}))
+    this.ups = [['base', this.spine]]
   }
   private log(m: string) { (this.cfg.log ?? console.log)(`[stage-cache] ${m}`) }
   start() { if (this.enabled) this.tracker.install() }
@@ -276,12 +289,57 @@ export class StageCache {
     O.appendFileSync(join(this.dirOf(stage), 'manifest.jsonl'), JSON.stringify(line) + '\n')   // only after the entry file is complete and renamed (RS-1)
     this.manifest(stage).push(line)
   }
-  private keyOf(stage: string, o: RunOpts) {
-    return sha(stage, this.cfg.code.fingerprint(stage), this.spine, stable(o.inputs ?? null), ...(o.files ?? []).map(f => { try { return f + ':' + contentHash(O.readFileSync(f)) } catch { return f + ':absent' } }))
+  private keyParts(stage: string, o: RunOpts): { key: string; parts: KeyParts } {
+    const code = this.cfg.code.fingerprint(stage), inputs = sha(stable(o.inputs ?? null))
+    const fh = (o.files ?? []).map(f => { try { return [f, contentHash(O.readFileSync(f))] as const } catch { return [f, 'absent'] as const } })
+    const parts: KeyParts = { code: short(code), inputs: short(inputs), ...(fh.length ? { files: Object.fromEntries(fh.map(([f, x]) => [f, short(x)])) } : {}) }
+    return { key: sha(stage, code, this.spine, stable(o.inputs ?? null), ...fh.map(([f, x]) => f + ':' + x)), parts }
   }
-  private lookup(stage: string, key: string, wantReads: boolean): { value: Record<string, unknown>; meta: EntryMeta } | { why: string } {
+  private codeDiffMemo = new Map<string, string>()
+  /** which part of the stage's code fingerprint differs from the one recorded with the last entry */
+  private codeDiff(stage: string, prevCode: string): string {
+    const memo = stage + '|' + prevCode, m = this.codeDiffMemo.get(memo); if (m !== undefined) return m
+    let r = ' (details of the previous fingerprint were not kept)'
+    try {
+      const prev = JSON.parse(String(O.readFileSync(join(this.dirOf(stage), 'code.json'), 'utf8'))) as { fp: string } & CodeDetail, cur = this.cfg.code.detail?.(stage)
+      if (cur && short(prev.fp) === prevCode) {
+        const out: string[] = []
+        if (prev.block !== cur.block) out.push('the stage block in build.ts')
+        const pc = new Set(prev.chunks.map(c => c.join('\u0000'))), cc = new Set(cur.chunks.map(c => c.join('\u0000')))
+        const gl = [...new Set([...cur.chunks.filter(c => !pc.has(c.join('\u0000'))), ...prev.chunks.filter(c => !cc.has(c.join('\u0000')))].map(c => c[0]))]
+        if (gl.length) out.push('build.ts code it uses: ' + names(gl))
+        const pm = new Map(prev.mods), cm = new Map(cur.mods), mods: string[] = []
+        for (const [f, x] of cm) if (pm.get(f) !== x) mods.push(pm.has(f) ? f : f + ' (new dependency)')
+        for (const f of pm.keys()) if (!cm.has(f)) mods.push(f + ' (no longer a dependency)')
+        if (mods.length) out.push('module ' + names(mods))
+        r = out.length ? ': ' + out.join('; ') : ' (parts equal: the module list differs)'
+      }
+    } catch { /* no code.json yet */ }
+    this.codeDiffMemo.set(memo, r); return r
+  }
+  /** the precise reason there is no entry for the key: compares the key's parts with those recorded on the newest entry of the stage (for an item stage: of that item) */
+  private explain(stage: string, cur: KeyParts, item?: string): string {
+    const lines = this.manifest(stage); let prev: ManifestLine | undefined
+    for (let i = lines.length - 1; i >= 0; i--) if (item === undefined || lines[i]!.item === item) { prev = lines[i]; break }
+    if (!prev) return item === undefined ? 'no entry' : 'no entry for this witness'
+    if (!prev.parts) return 'previous entry predates the recorded key parts (cache of an older build)'
+    const why: string[] = []
+    if (prev.parts.code !== cur.code) why.push('code fingerprint changed' + this.codeDiff(stage, prev.parts.code))
+    if (item === undefined) {
+      const now = Object.fromEntries(this.ups.map(([s, k]) => [s, short(k)])), was = prev.up ?? {}
+      const first = Object.keys(now).find(s => was[s] !== now[s]) ?? Object.keys(was).find(s => !(s in now))
+      if (first === 'base') why.push('build env, flags or node version changed')
+      else if (first) { const w = this.why.get(first); why.push('upstream stage "' + first + '" has a new key' + (w ? ' (' + w + ')' : '')) }
+    }
+    if (prev.parts.inputs !== cur.inputs) why.push('opts.inputs changed')
+    const pf = prev.parts.files ?? {}, cf = cur.files ?? {}, fch = [...new Set([...Object.keys(pf), ...Object.keys(cf)])].filter(f => pf[f] !== cf[f])
+    if (fch.length) why.push('opts.files changed: ' + names(fch))
+    if (!why.length) why.push(item === undefined ? 'key differs for an unrecorded reason' : 'the witness file (or its nlp file) content changed')
+    return why.join('; ')
+  }
+  private lookup(stage: string, key: string, wantReads: boolean, explain: () => string): { value: Record<string, unknown>; meta: EntryMeta } | { why: string } {
     const cands = this.manifest(stage).filter(l => l.key === key).reverse()
-    if (!cands.length) return { why: this.manifest(stage).length ? 'code, spine or inputs changed' : 'no entry' }
+    if (!cands.length) return { why: explain() }
     let why = 'entry file missing'
     for (const l of cands) {
       const path = join(this.dirOf(stage), l.file)
@@ -296,7 +354,7 @@ export class StageCache {
     }
     return { why }
   }
-  private save(stage: string, key: string, secs: number, value: Record<string, unknown>, chunked: string[], reads: [string, string][], item?: string) {
+  private save(stage: string, key: string, secs: number, value: Record<string, unknown>, chunked: string[], reads: [string, string][], parts: KeyParts, item?: string) {
     const file = `${key}-${sha(stable(reads)).slice(0, 12)}.v8`, path = join(this.dirOf(stage), file)
     try {
       const { bytes, digest } = writeEntry(path, { stage, key, secs, reads }, value, chunked, this.cfg.chunk)
@@ -304,19 +362,29 @@ export class StageCache {
         const back = readEntry(path).value
         if (!isDeepStrictEqual(back, value)) { O.unlinkSync(path); throw new Error('round trip is not lossless (function, class instance or shared state in a chunked field?)') }
       }
-      this.commit(stage, { key, file, bytes, secs: Math.round(secs * 10) / 10, digest, ...(item ? { item } : {}), at: new Date().toISOString() })
+      this.saveCode(stage)
+      this.commit(stage, { key, file, bytes, secs: Math.round(secs * 10) / 10, digest, ...(item ? { item } : {}), at: new Date().toISOString(), parts, ...(item ? {} : { up: Object.fromEntries(this.ups.map(([s, k]) => [s, short(k)])) }) })
       return bytes
     } catch (e) { this.log(`not cached ${stage}${item ? ' ' + item : ''}: ${(e as Error).message}`); return 0 }
+  }
+
+  /** the parts of the stage's current code fingerprint, next to its entries (atomic), once per run */
+  private saveCode(stage: string) {
+    if (this.codeSaved.has(stage) || !this.cfg.code.detail) return; this.codeSaved.add(stage)
+    try {
+      const p = join(this.dirOf(stage), 'code.json'), tmp = p + '.' + process.pid + '.tmp'
+      O.writeFileSync(tmp, JSON.stringify({ fp: this.cfg.code.fingerprint(stage), ...this.cfg.code.detail(stage) })); O.renameSync(tmp, p)
+    } catch { /* diagnostics only */ }
   }
 
   /** run (or load) a stage; fn's result must be an object */
   async run<T extends Record<string, unknown>>(stage: string, o: RunOpts, fn: () => Promise<T> | T): Promise<T> {
     if (!this.enabled) { const t = Date.now(); const v = await fn(); this.stats.push({ stage, status: 'off', secs: (Date.now() - t) / 1000, bytes: 0 }); return v }
     if (this.cfg.from === stage) this.forced = true
-    const key = this.keyOf(stage, o)
+    const { key, parts } = this.keyParts(stage, o)
     let why = this.forced ? `--from ${this.cfg.from}` : ''
     if (!this.forced) {
-      const hit = this.lookup(stage, key, true)
+      const hit = this.lookup(stage, key, true, () => this.explain(stage, parts))
       if ('value' in hit) {
         this.log(`cache hit ${stage} (saved ~${Math.round(hit.meta.secs)} s)`)
         this.stats.push({ stage, status: 'hit', secs: hit.meta.secs, bytes: this.manifest(stage).find(l => l.key === key)?.bytes ?? 0 })
@@ -324,19 +392,20 @@ export class StageCache {
       }
       why = hit.why
     }
+    this.why.set(stage, why)
     this.log(`cache miss ${stage}: ${why}`)
     const t = Date.now()
     if (o.produces) this.tracker.hide(o.produces)
     let value: T
     try { value = await fn() } finally { if (o.produces) this.tracker.unhide(o.produces) }
     const secs = (Date.now() - t) / 1000
-    const bytes = this.save(stage, key, secs, value, o.chunked ?? [], this.tracker.snapshot())
+    const bytes = this.save(stage, key, secs, value, o.chunked ?? [], this.tracker.snapshot(), parts)
     this.stats.push({ stage, status: 'miss', secs, bytes, why })
     this.advance(stage, key, o); return value
   }
-  private advance(stage: string, key: string, o: RunOpts) { if (o.parallel) this.pending.set(stage, key); else this.spine = sha(this.spine, key) }
+  private advance(stage: string, key: string, o: RunOpts) { if (o.parallel) this.pending.set(stage, key); else { this.spine = sha(this.spine, key); this.ups.push([stage, key]) } }
   /** fold concurrently run stages into the spine in the given (fixed) order */
-  join(stages: string[]) { this.spine = sha(this.spine, ...stages.filter(s => this.pending.has(s)).map(s => this.pending.get(s)!)) }
+  join(stages: string[]) { this.spine = sha(this.spine, ...stages.filter(s => this.pending.has(s)).map(s => this.pending.get(s)!)); for (const s of stages) if (this.pending.has(s)) this.ups.push([s, this.pending.get(s)!]) }
 
   /**
    * Per-item stage (one entry per witness): key = code fingerprint + item id + `fp()` (the item's input fingerprint); no spine, no read set.
@@ -345,17 +414,26 @@ export class StageCache {
   item<T extends Record<string, unknown>>(stage: string, id: string, fp: () => string, fn: () => T): T {
     if (!this.enabled) return fn()
     if (this.cfg.from === stage) this.forced = true
-    if (!this.itemStages.has(stage)) { this.itemStages.add(stage); this.spine = sha(this.spine, 'item-stage', stage, this.cfg.code.fingerprint(stage)) }   // the item code is not part of the glue: it enters the spine here
-    const key = sha(stage, this.cfg.code.fingerprint(stage), id, fp())
+    if (!this.itemStages.has(stage)) { this.itemStages.add(stage); this.spine = sha(this.spine, 'item-stage', stage, this.cfg.code.fingerprint(stage)); this.ups.push([stage, this.cfg.code.fingerprint(stage)]) }   // the item code is not part of the glue: it enters the spine here
+    const code = this.cfg.code.fingerprint(stage), parts: KeyParts = { code: short(code) }, key = sha(stage, code, id, fp())
+    let why = '--from ' + this.cfg.from
     if (!this.forced) {
-      const hit = this.lookup(stage, key, false)
+      const hit = this.lookup(stage, key, false, () => this.explain(stage, parts, id))
       if ('value' in hit) { this.items.hit++; this.items.saved += hit.meta.secs; return hit.value as T }
+      why = hit.why
     }
+    const m = this.itemWhy.get(stage) ?? new Map<string, number>(); this.itemWhy.set(stage, m); m.set(why, (m.get(why) ?? 0) + 1)
     const t = Date.now(), v = fn(), secs = (Date.now() - t) / 1000
-    this.items.miss++; this.items.bytes += this.save(stage, key, secs, v, [], [], id)
+    this.items.miss++; this.items.bytes += this.save(stage, key, secs, v, [], [], parts, id)
     return v
   }
-  itemSummary(stage: string) { if (this.enabled) this.log(`${stage}: ${this.items.hit} entries reused, ${this.items.miss} computed`); this.items.hit = this.items.miss = 0 }
+  itemSummary(stage: string) {
+    if (this.enabled) {
+      const w = [...(this.itemWhy.get(stage) ?? [])].sort((a, b) => b[1] - a[1]), top = w.slice(0, 3).map(([r, n]) => n + ' x ' + r).join(' | ')
+      this.log(stage + ': ' + this.items.hit + ' entries reused, ' + this.items.miss + ' computed' + (w.length ? ' (' + top + (w.length > 3 ? ' | +' + (w.length - 3) + ' other reasons' : '') + ')' : ''))
+    }
+    this.items.hit = this.items.miss = 0; this.itemWhy.delete(stage)
+  }
 
   /** end of build: GC and the size report */
   finish() {
@@ -386,7 +464,7 @@ export function gc(dir: string, keep = 2): { removed: number } {
     kept.reverse()
     const refd = new Set(kept.map(l => l.file))
     for (const f of O.readdirSync(sd)) {
-      if (f === 'manifest.jsonl' || refd.has(f)) continue
+      if (f === 'manifest.jsonl' || f === 'code.json' || refd.has(f)) continue
       if (f.endsWith('.tmp') && Date.now() - O.statSync(join(sd, f)).mtimeMs < 600_000) continue   // a live writer
       try { O.unlinkSync(join(sd, f)); removed++ } catch { /* gone */ }
     }

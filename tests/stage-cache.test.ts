@@ -20,16 +20,17 @@ function project() {
   w('lib/deep.ts', 'export const helper = (x: number) => x + 100\n')
   w('lib/m3.ts', 'export const m3 = (x: number) => x * 3\n')
   w('in/a.txt', '1'); w('in/b.txt', '2')
-  const main = (extra = '', s2 = '') => `import { m1 } from '../lib/m1.ts'
+  const main = (extra = '', s2 = '', used = '') => `import { m1 } from '../lib/m1.ts'
 import { m2 } from '../lib/m2.ts'
 import { m3 } from '../lib/m3.ts'
 const glue = 1${extra}
+const used = 5${used}
 export async function build() {
   // #stage s1
   const s1 = await sc.run('s1', {}, () => ({ v: m1(a) }))
   // #end
   // #stage s2
-  const s2 = await sc.run('s2', {}, () => ({ v: m2(s1.v) + b${s2} }))
+  const s2 = await sc.run('s2', {}, () => ({ v: m2(s1.v) + b${s2} + used }))
   // #end
   // #stage s3
   const s3 = await sc.run('s3', {}, () => ({ v: m3(s2.v) }))
@@ -92,12 +93,17 @@ describe('RS-2 stage cache: hits, misses, invalidation', () => {
     expect((await run(p)).calls).toEqual(['s1', 's2', 's3', 's4'])
     expect((await run(p)).calls).toEqual([])
   })
-  it('RS-2 a stage block edited: that stage and the later ones; edited glue: every stage', async () => {
+  it('RS-2 a stage block edited: that stage and the later ones; edited glue: only the stages that reach it (and the later ones)', async () => {
     const p = project(); await run(p)
     p.w('pipeline/main.ts', p.main('', ' /* edited */'))
     expect((await run(p)).calls).toEqual(['s2', 's3', 's4'])
-    p.w('pipeline/main.ts', p.main('; // glue edited'))
-    expect((await run(p)).calls).toEqual(['s1', 's2', 's3', 's4'])
+    p.w('pipeline/main.ts', p.main('; // glue edited'))   // glue no stage mentions: no stage depends on it
+    expect((await run(p)).calls).toEqual([])
+    p.w('pipeline/main.ts', p.main('', '', '; // used edited'))   // glue that the s2 block mentions
+    const r = await run(p)
+    expect(r.calls).toEqual(['s2', 's3', 's4'])
+    expect(r.logs.find(l => /cache miss s2/.test(l))).toMatch(/code fingerprint changed.*build.ts code it uses: used/)
+    expect(r.logs.find(l => /cache miss s3/.test(l))).toMatch(/upstream stage "s2" has a new key .code fingerprint changed/)
   })
   it('RS-2 CRLF checkouts do not change a fingerprint', async () => {
     const p = project(); await run(p)
@@ -225,6 +231,59 @@ describe('RS-2 per-item (per-witness) cache and the read tracker', () => {
   })
 })
 
+describe('RS-2 chain10 regression: a later stage\'s code or inputs must not invalidate the per-witness tokens', () => {
+  const MAIN = (mid = '3', extra = '') => `import { m1 } from '../lib/m1.ts'
+import { m3 } from '../lib/m3.ts'
+import type { Shape } from '../lib/m2.ts'
+const base = 1
+const unrelated = (x: number) => x${extra}
+export async function build() {
+  // #stage tokens
+  const t = ids.map(id => sc.item('tokens', id, () => 'f', () => ({ v: m1(base) })))
+  // #end
+  const mid = ${mid}
+  const noise: Shape = { n: unrelated(mid) }
+  // #stage link
+  const l = await sc.run('link', {}, () => ({ v: m3(mid) }))
+  // #end
+  // #tail
+}
+`
+  function go(root: string, ids = ['a', 'b', 'c']) {
+    const logs: string[] = [], ran: string[] = []
+    const sc = new StageCache({ dir: join(root, 'cache'), enabled: true, code: new SourceIndex(join(root, 'pipeline/main.ts'), root).warm(), log: m => logs.push(m) }); live.push(sc); sc.start()
+    for (const id of ids) sc.item('tokens', id, () => sc.tracker.fileFp(join(root, 'in', id + '.txt')), () => { ran.push(id); return { v: readFileSync(join(root, 'in', id + '.txt'), 'utf8') } })
+    sc.itemSummary('tokens')
+    const link = sc.run('link', {}, () => { ran.push('link'); return { v: 1 } })
+    return link.then(() => { sc.finish(); return { ran, logs } })
+  }
+  function proj() {
+    const p = project(); for (const id of ['a', 'b', 'c']) p.w('in/' + id + '.txt', id)
+    p.w('lib/m2.ts', 'export interface Shape { n: number }\n'); p.w('pipeline/main.ts', MAIN()); return p
+  }
+  it('RS-2 editing the link module, a glue statement after the tokens stage, or a type-only import keeps every tokens entry; the reasons are precise', async () => {
+    const p = proj(); const cold = await go(p.root); expect(cold.ran).toEqual(['a', 'b', 'c', 'link'])
+    p.w('lib/m3.ts', 'export const m3 = (x: number) => x * 30\n')   // the link stage's module
+    p.w('pipeline/main.ts', MAIN('4'))                              // glue after the tokens stage
+    p.w('lib/m2.ts', 'export interface Shape { n: number; extra?: string }\n')   // imported as a type only
+    const warm = await go(p.root)
+    expect(warm.ran).toEqual(['link'])
+    expect(warm.logs.find(l => /tokens: /.test(l))).toMatch(/tokens: 3 entries reused, 0 computed/)
+    expect(warm.logs.find(l => /cache miss link/.test(l))).toMatch(/code fingerprint changed.*(stage block|build\.ts code it uses: mid).*module lib\/m3\.ts/)
+  })
+  it('RS-2 an edit the tokens stage reaches invalidates its entries, and the summary names the cause and the count', async () => {
+    const p = proj(); await go(p.root)
+    p.w('lib/m1.ts', 'export const m1 = (x: number) => x + 7\n')
+    const r = await go(p.root)
+    expect(r.ran).toEqual(['a', 'b', 'c', 'link'])
+    expect(r.logs.find(l => /tokens: /.test(l))).toMatch(/tokens: 0 entries reused, 3 computed \(3 x code fingerprint changed: module lib\/m1\.ts\)/)
+    expect(r.logs.find(l => /cache miss link/.test(l))).toMatch(/upstream stage "tokens" has a new key/)
+    p.w('in/b.txt', 'changed')
+    const r2 = await go(p.root); expect(r2.ran).toEqual(['b', 'link'])
+    expect(r2.logs.find(l => /tokens: /.test(l))).toMatch(/2 entries reused, 1 computed \(1 x the witness file/)
+  })
+})
+
 describe('RS-2 code fingerprints of the real build.ts', () => {
   const buildTs = resolve('pipelines/build.ts')
   const text = readFileSync(buildTs, 'utf8')
@@ -246,6 +305,13 @@ describe('RS-2 code fingerprints of the real build.ts', () => {
     expect(f('phrases')).toEqual(expect.arrayContaining(['core/phrasemes.ts', 'core/phraseme-pages.ts']))
     expect(f('vesum2')).toContain('core/verbs.ts')
     for (const s of used) for (const m of f(s)) expect(existsSync(resolve(m)), `${s}: ${m}`).toBe(true)
+  })
+  it('RS-2 the tokens stage does not depend on the link, MU or later-stage code (chain10: 0 of 4336 reused)', () => {
+    const tok = idx.files('tokens')
+    for (const m of ['pipelines/build-link.ts', 'core/mu-fold.ts', 'pipelines/build-archaic.ts', 'pipelines/build-stats.ts', 'pipelines/build-phrases.ts', 'core/phrasemes.ts', 'core/verbs.ts']) expect(tok, m).not.toContain(m)
+    expect(idx.glueOf('tokens')).toEqual(expect.arrayContaining(['rawKey', 'loadWitnesses', 'isWitnessFile']))
+    expect(idx.glueOf('tokens')).not.toContain('dmemo,fmemo')
+    expect(idx.files('link')).toEqual(expect.arrayContaining(['pipelines/build-link.ts', 'core/mu-fold.ts']))
   })
   it('RS-2 the output section after the last cached stage is not part of any fingerprint (a writer edit keeps the cache)', () => {
     const { glue, blocks } = parseSource(buildTs)
