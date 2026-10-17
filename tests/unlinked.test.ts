@@ -102,9 +102,12 @@ real('NV-3 real data: every link target of a rendered text page resolves to a no
     expect(spelling).toBeGreaterThan(0)
   })
   it('NV-3 every text shard word token is a lexicon spelling or in the unlinked index (all witnesses)', () => {
+    // 10 M-token build: 4,336 text shards (4.3 GB), so the first 400 alphabetical files took > 60 s. An even stride over the sorted list still reaches every kind of witness
+    // (each prefix of the id space), and every distinct spelling is checked once (a spelling repeats across files).
     let missing = 0, total = 0
-    for (const f of readdirSync('public/data/texts').filter(x => x.endsWith('.json')).slice(0, 400)) {
-      for (const t of (JSON.parse(rd(`public/data/texts/${f}`)).tokens as Tok[])) { if (!isWordToken(t[0])) continue; total++; if (!forms.has(key(t[0])) && !indexed(key(t[0]))) missing++ }
+    const all = readdirSync('public/data/texts').filter(x => x.endsWith('.json')).sort(), step = Math.max(1, Math.floor(all.length / 120)), seen = new Set<string>()
+    for (let i = 0; i < all.length; i += step) {
+      for (const t of (JSON.parse(rd(`public/data/texts/${all[i]}`)).tokens as Tok[])) { if (!isWordToken(t[0]) || seen.has(t[0])) continue; seen.add(t[0]); total++; if (!forms.has(key(t[0])) && !indexed(key(t[0]))) missing++ }
     }
     expect(total).toBeGreaterThan(1000); expect(missing).toBe(0)
   })
