@@ -504,6 +504,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-4 | tests/build.test.ts › PF-4 a lemma whose detail alone is over the shard limit goes to part files |
 | PF-5 | tests/phrasemes-pf5.test.ts › PF-5 mine() keeps 250k content-word phrasemes without a call-stack overflow |
 | PF-5 | tests/phrasemes-pf5.test.ts › PF-5 spanOf is min start / max end of any number of ranges |
+| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() equals the old quadratic filter on random fixtures (multi-word lemmas, equal-f buckets) |
+| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() drops a sub-gram only when the longer gram has the same f |
+| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() handles 1M synthetic phrasemes in seconds |
+| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 collectEvidence trie matches the nested prefix targets once per occurrence |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |

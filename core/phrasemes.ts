@@ -42,6 +42,34 @@ export function contentCore(lemmas: string[]): { lemmas: string[]; trimmed: bool
 }
 const r3 = (x: number) => Math.round(x * 1000) / 1000
 
+/**
+ * PF-6: keep the maximal formulas, in `out` order, up to `top`. A gram contained (as a space-bounded token window of the joined lemmas) in a strictly longer gram with the same f is dropped.
+ * Exactly the old byF-bucket scan (some q with more lemmas whose ' '+join+' ' includes ' '+join(p)+' '), but linear: every token window of every q is recorded once
+ * (key f + window → max q.lemmas.length) and only windows that are some p's own string are kept (bounded memory). Multi-word lemmas are handled: windows are over the space-split joined string.
+ */
+export function maximal(out: Phraseme[], top: number): Phraseme[] {
+  const key = (f: number, joined: string) => f + '\u0001' + joined
+  const need = new Map<string, number>()
+  for (const p of out) need.set(key(p.f, p.lemmas.join(' ')), 0)
+  for (const q of out) {
+    const t = q.lemmas.join(' ').split(' '), L = q.lemmas.length
+    for (let a = 0; a < t.length; a++) {
+      let w = ''
+      for (let b = a; b < t.length; b++) {
+        w = b === a ? t[b]! : w + ' ' + t[b]
+        const k = key(q.f, w), m = need.get(k)
+        if (m !== undefined && L > m) need.set(k, L)
+      }
+    }
+  }
+  const res: Phraseme[] = []
+  for (const p of out) {
+    if (need.get(key(p.f, p.lemmas.join(' ')))! > p.lemmas.length) continue
+    res.push(p); if (res.length >= top) break
+  }
+  return res
+}
+
 export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling: (wi: number, ti: number) => string, o: PhraseOpts = {}): Phraseme[] {
   const minF = o.minF ?? 3, minW = o.minW ?? 2, maxN = o.maxN ?? 5, top = o.top ?? 3000
   const gram = (d: PhraseDoc, i: number, n: number) => {
@@ -109,15 +137,7 @@ export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling
     out.length = 0; for (const p of keep) out.push(p)   // PF-5: no spread of millions of arguments (RangeError: Maximum call stack size exceeded)
   }
   out.sort((a, b) => b.score - a.score || b.f - a.f)
-  const byF = new Map<number, Phraseme[]>()
-  for (const p of out) { const a = byF.get(p.f) ?? []; a.push(p); byF.set(p.f, a) }
-  const res: Phraseme[] = []   // a gram contained in a longer gram with the same support is dropped (keep the maximal formula)
-  for (const p of out) {
-    const j = ' ' + p.lemmas.join(' ') + ' '
-    if (byF.get(p.f)?.some(q => q.lemmas.length > p.lemmas.length && (' ' + q.lemmas.join(' ') + ' ').includes(j))) continue
-    res.push(p); if (res.length >= top) break
-  }
-  return res
+  return maximal(out, top)
 }
 
 /** `/phrases` epoch filter: the earliest witness falls before `max` */

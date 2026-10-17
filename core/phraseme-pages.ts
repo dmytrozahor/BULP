@@ -60,23 +60,29 @@ import type { PhraseDoc } from './phrasemes.ts'
  * `kwicAt(docIndex, tokenIndex, n)` builds the concordance line (the build owns the tokens).
  */
 export function collectEvidence(docs: PhraseDoc[], targets: Map<Phraseme, number[]>, kwicAt: (wi: number, ti: number, n: number) => Kwic, perPhrase = 5): Map<Phraseme, PhraseEvidence> {
-  const byFirst = new Map<number, { p: Phraseme; ks: number[] }[]>()
-  for (const [p, ks] of targets) { const a = byFirst.get(ks[0]!) ?? []; a.push({ p, ks }); byFirst.set(ks[0]!, a) }
+  // PF-6: a trie over the target key sequences, so a position costs O(match depth), not O(phrasemes sharing the first lemma)
+  interface Node { kids: Map<number, Node>; ps: Phraseme[] }
+  const root = new Map<number, Node>()
+  for (const [p, ks] of targets) {
+    let m = root, node: Node | undefined
+    for (const k of ks) { node = m.get(k); if (!node) { node = { kids: new Map(), ps: [] }; m.set(k, node) } m = node.kids }
+    node!.ps.push(p)
+  }
   interface Acc { n: number; byCentury: Record<string, number>; hits: { wi: number; ti: number; y: number }[]; first?: { wi: number; ti: number; y: number } }
   const acc = new Map<Phraseme, Acc>()
   docs.forEach((d, wi) => {
     for (let i = 0; i < d.keys.length; i++) {
-      const c = byFirst.get(d.keys[i]!); if (!c) continue
-      for (const { p, ks } of c) {
-        if (i + ks.length > d.keys.length) continue
-        let ok = true
-        for (let j = 1; j < ks.length && ok; j++) ok = d.keys[i + j] === ks[j] && d.seg[i + j] === d.seg[i]
-        if (!ok) continue
-        const a = acc.get(p) ?? { n: 0, byCentury: {}, hits: [] }; acc.set(p, a)
-        a.n++; const cen = centuryOf(d.date); a.byCentury[cen] = (a.byCentury[cen] ?? 0) + 1
-        const h = { wi, ti: i, y: d.date[0] }
-        if (a.hits.length < 400) a.hits.push(h)
-        if (!a.first || h.y < a.first.y) a.first = h
+      let node = root.get(d.keys[i]!); if (!node) continue
+      for (let j = 1; node; j++) {
+        for (const p of node.ps) {
+          const a = acc.get(p) ?? { n: 0, byCentury: {}, hits: [] }; acc.set(p, a)
+          a.n++; const cen = centuryOf(d.date); a.byCentury[cen] = (a.byCentury[cen] ?? 0) + 1
+          const h = { wi, ti: i, y: d.date[0] }
+          if (a.hits.length < 400) a.hits.push(h)
+          if (!a.first || h.y < a.first.y) a.first = h
+        }
+        if (i + j >= d.keys.length || d.seg[i + j] !== d.seg[i]) break
+        node = node.kids.get(d.keys[i + j]!)
       }
     }
   })
