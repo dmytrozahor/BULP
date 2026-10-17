@@ -2,7 +2,8 @@
  * BUILD stage, SPEC 63 CV: a card for every attested word. Pure scan (core/cv.ts) + writers.
  * public/data/cv/<bucket>.json (gitignored like lex/, shipped on the data branch) (CV_BUCKETS shards of { key: CvEntry }) and public/data/cardindex.json (every non-lexicon card: light, archaic, CV).
  */
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { parseUserWords } from '../core/sn.ts'
 import { resolve } from 'node:path'
 import { CvScan, pickByContext, buildCardIndex, isCvWord, isDictOnly, shardsOfCv, type CardIndexFile, type CvAtt, type CvEntry } from '../core/cv.ts'
 import { archId } from '../core/archaic.ts'
@@ -96,4 +97,10 @@ export function writeCv(pub: string, entries: [string, CvEntry][], light: string
   const index = buildCardIndex(generated, light, entries.map(e => e[1][0]), arch, forms, entries.filter(e => isDictOnly(e[1])).map(e => e[1][0]))
   const t = JSON.stringify(index); writeFileSync(resolve(pub, 'cardindex.json'), t)
   return { shards: sh.length, bytes, maxShard, index, indexBytes: Buffer.byteLength(t) }
+}
+
+/** SPEC 63 CV-6: the owner's words (specs/user-words.txt) — each gets a card in every build (a bare card at worst; the r2u attestations join through the dictionary witnesses). */
+export function userWords(root: string): string[] {
+  const p = resolve(root, 'specs/user-words.txt')
+  return existsSync(p) ? parseUserWords(readFileSync(p, 'utf8')).map(w => w.word) : []
 }

@@ -497,7 +497,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-3 | tests/parts.test.ts › PF-3 the paradigm facade returns the VESUM hits of the in-memory map |
 | PF-3 | tests/parts.test.ts › PF-3 annotate() over the shard facades equals annotate() over in-memory maps |
 | PF-3 | tests/parts.test.ts › PF-3 runDetectors / reconstruct read the same facades |
-| CV-6 | manual — pending: CV-6 (owner word list specs/user-words.txt gets priority r2u lookups and guaranteed cards) is being implemented; the test row replaces this line when it lands |
+| CV-6 | tests/sn.test.ts › CV-6 specs/user-words.txt parses the owner words with their lookups |
+| CV-6 | tests/sn.test.ts › CV-6 the priority queue looks every listed word up first (ukr), then the other lookups in both scopes, deduplicated |
+| CV-6 | tests/sn.test.ts › CV-6 the build gets the listed words and a listed word without a card is reported |
+| CV-6 | tests/sn.test.ts › CV-6 built data: every listed word has a card |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › «с» tagged Pk with lemma себе (PVL) → the preposition з, never the pronoun |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › the reflexive enclitic сѧ stays under себе |
 | MM-1 | tests/fx.test.ts › MM-1 preposition recognised as pronoun › real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays |
@@ -554,3 +557,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DO-7 | tests/do.test.ts › DO-7 a light lemma, a GZ-1 lemma and a word a corpus text links to stay ordinary CV cards (no d) |
 | DO-7 | tests/do.test.ts › DO-7 without the DO context (DICT_ONLY=0) the build is the old one: nothing is marked |
 | DO-8 | tests/do.test.ts › DO-8 SPEC 63 lists DO-1…DO-8 and the build wires vesumLemmaList into buildCv |
+| SN-1 | tests/sn.test.ts › SN-1 a ru→uk line documents the Russian headword as the sense; uk→ru lines document the Russian gloss |
+| SN-1 | tests/sn.test.ts › SN-1 lines of one sense are grouped, the earliest source is `first`, the others `later`, years shown as range |
+| SN-1 | tests/sn.test.ts › SN-1 every line gets a sense even when no gloss is readable; an undated witness leaves first null |
+| SN-1 | tests/sn.test.ts › SN-1 the card view shows the sense list and numbers each line |
+| SN-2 | tests/sn.test.ts › SN-2 counts Plast cards without a Plast sense, headwords without sense and undated senses; the markdown names them |
+| SN-2 | tests/sn.test.ts › SN-2 the audit is an npm script that writes analysis/sense-audit.md atomically |
+| SN-2 | tests/sn.test.ts › SN-2 built data: every Plast headword has a card |

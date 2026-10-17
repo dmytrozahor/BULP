@@ -45,7 +45,7 @@ import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
 import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
-import { buildCv, writeCv } from './build-cv.ts'
+import { buildCv, writeCv, userWords } from './build-cv.ts'
 import { lk } from '../core/cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
@@ -350,9 +350,10 @@ export async function build(opts: { noPy?: boolean } = {}) {
     const cv = buildCv(adm.map(({ w }) => ({ w })), (wi, ti) => { const L = linked[tix[wi]![ti]!]; if (!L) return undefined; const la = lemmas.get(L.c.id); return { lemma: L.c.lemma, tags: L.c.hit.tags, full: !!la && keep[la.idx] === 1 } },
       new Set(ar.file.entries.flatMap(e => [e.id, ...e.variants])), (wid, ti) => !!torot.refs.get(wid)?.[ti],
       (() => {   // SL: Plast headwords (public/data/sociolect.json, ingest-plast) get a card unless a full lemma, a light card or an /ar card already owns the word
-        const sp = resolve(PUB, 'sociolect.json'); if (!existsSync(sp)) return undefined
+        const sp = resolve(PUB, 'sociolect.json')
         const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
-        return { words: rd<{ plast: { entries: { w: string }[] } }>(sp).plast.entries.map(e => e.w), owned }
+        const plastWords = existsSync(sp) ? rd<{ plast: { entries: { w: string }[] } }>(sp).plast.entries.map(e => e.w) : []
+        return { words: [...plastWords, ...userWords(ROOT)], owned }   // CV-6: the owner's words (specs/user-words.txt) always get a card
       })(),
       (() => {   // CV-5: every VESUM analysis of an attested spelling, and the first corpus token (with the word before it) of each lemma that KEEP_MIN_F dropped
         const first = new Map<number, [number, number]>()

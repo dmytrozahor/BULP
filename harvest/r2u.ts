@@ -2,13 +2,18 @@
  * SPEC 63 HV-2: r2u.org.ua lookups for lemmas not yet fetched. Owner's decision 2026-10-14 (robots ignored; pacing = the site's Crawl-delay 10 s).
  * Writes the dump format pipelines/ingest-r2u.ts already reads: data/raw/r2u/pages/<file>.html.gz + data/raw/r2u/index.jsonl (shared with the earlier manual runs, so it resumes where they stopped).
  * Lemma order: lexicon cards by frequency, then VESUM lemmas; the list is cached in data/raw/harvest/r2u/lemmas.txt (the card file may be mid-rebuild).
+ * CV-6: specs/user-words.txt (the owner's words) is looked up FIRST, in the scopes given (core/sn.ts priorityQueries); a run resumes by (query, scope).
  * Also keeps data/raw/harvest/r2u/index.jsonl (a count line per fetch) so status.ps1 can report it like the other sources.
  */
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { Harvest, writeAtomic } from './lib.ts'
+import { parseUserWords, priorityQueries } from '../core/sn.ts'
 
 const DIR = 'data/raw/r2u', PAGES = `${DIR}/pages`, INDEX = `${DIR}/index.jsonl`
+export const USER_WORDS = 'specs/user-words.txt'
+/** done-set key of a lookup: a ukr-scope query is the bare query (as before), a ru-scope one is «ru:<query>» */
+export const doneKey = (q: string, scope: string) => (scope === 'ukr' ? q : `${scope}:${q}`)
 const LEMMA_OK = /^[а-яіїєґ'-]+$/i
 
 export async function lemmaList(opts: { cache?: string; lexicon?: string } = {}): Promise<string[]> {
@@ -40,7 +45,7 @@ export function doneQueries(index: string): Set<string> {
   if (!existsSync(index)) return done
   for (const l of readFileSync(index, 'utf8').split('\n')) {
     if (!l) continue
-    try { done.add(JSON.parse(l).q as string) } catch { console.error(`r2u: skipping torn index line: ${l.slice(0, 60)}`) }
+    try { { const j = JSON.parse(l); done.add(doneKey(j.q as string, (j.scope as string) ?? 'ukr')) } } catch { console.error(`r2u: skipping torn index line: ${l.slice(0, 60)}`) }
   }
   return done
 }
@@ -58,14 +63,16 @@ async function main() {
   const done = doneQueries(INDEX)
   const lemmas = await lemmaList()
   let n = nextFileNumber(PAGES, done.size)
-  for (const q of lemmas) {
-    if (done.has(q)) continue
-    const { status, text } = await h.getText(r2uQueryUrl(q, 'ukr'))
+  const userQ = existsSync(USER_WORDS) ? priorityQueries(parseUserWords(readFileSync(USER_WORDS, 'utf8'))) : []
+  const queue: [string, 'ukr' | 'ru'][] = [...userQ, ...lemmas.map(q => [q, 'ukr'] as [string, 'ukr' | 'ru'])]
+  for (const [q, scope] of queue) {
+    if (done.has(doneKey(q, scope))) continue
+    const { status, text } = await h.getText(r2uQueryUrl(q, scope))
     const file = `${String(n).padStart(5, '0')}.html.gz`
     writeAtomic(`${PAGES}/${file}`, gzipSync(text))
-    appendFileSync(INDEX, JSON.stringify({ q, scope: 'ukr', file, at: new Date().toISOString(), status, bytes: text.length }) + '\n')
-    h.note({ id: `r2u:${q}`, url: r2uQueryUrl(q, 'ukr'), date: null, licence: 'r2u.org.ua dictionaries (research/30; vocabulary/attestation only)', bytes: text.length, status, title: q, file })
-    done.add(q); n++
+    appendFileSync(INDEX, JSON.stringify({ q, scope, file, at: new Date().toISOString(), status, bytes: text.length }) + '\n')
+    h.note({ id: `r2u:${doneKey(q, scope)}`, url: r2uQueryUrl(q, scope), date: null, licence: 'r2u.org.ua dictionaries (research/30; vocabulary/attestation only)', bytes: text.length, status, title: q, file })
+    done.add(doneKey(q, scope)); n++
   }
   h.finish()
 }

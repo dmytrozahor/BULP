@@ -15,6 +15,8 @@ import type { Kwic } from '../../core/types.ts'
 import { key } from '../../core/text.ts'
 import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
+import AttSenses from '../components/AttSenses.vue'
+import { attSenses } from '../lib/senseLines.ts'
 import ThinCard from '../components/ThinCard.vue'
 import IkavismChain from '../components/IkavismChain.vue'
 import { ikavismBaseRemote } from '../lib/lightcard.ts'
@@ -54,6 +56,7 @@ const wd = (id: string) => { const d = witnessById.value.get(id)?.date; return d
 const spelling = computed(() => ex.value?.raw || cv.value?.[3][0]?.[2] || word.value)
 /** CV-5: all VESUM analyses of the spelling; the card of each is one tap away (full card if the lexicon has the lemma, else /lw) */
 const analyses = computed(() => (cv.value?.[4]?.an ?? []).map(([lemma, t]) => ({ lemma, tags: t, to: byLemma.value.has(lemma) ? `/w/${encodeURIComponent(lemma)}` : `/lw/${encodeURIComponent(lemma)}`, self: key(lemma) === key(word.value), picked: cv.value?.[4]?.pick === lemma })))
+const lineSense = computed(() => (cv.value?.[3].length ? attSenses(word.value, cv.value[3], w => witnessById.value.get(w)?.date).lineSense : []))
 const prev = computed(() => cv.value?.[4]?.prev)
 /** SPEC 63 DO-2: a dictionary-only card (VESUM / r2u / Plast, no corpus text): explicit status, sources by name, f = 0, no «найраніше» */
 const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
@@ -87,12 +90,13 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
     <p v-else-if="cv && cv[2] === 0" class="sans small muted">Слово засвідчене у пластових словниках (значення нижче); у корпусі текстів і в історичних словниках не трапляється.</p>
     <p v-else class="sans small muted">Слово засвідчене лише в словниках (заголовне слово або цитований відповідник); у корпусі текстів не трапляється, тому повної картки з частотами немає.</p>
     <PlastSenses :word="word" />
+    <AttSenses v-if="cv && cv[3].length" :word="word" :atts="cv[3]" />
     <IkavismChain v-if="row && base.length" :lemma="row[0]" :paradigm="base" />
     <p v-if="ex" class="sans small">Приклад: <RouterLink :to="textTo(ex.w, ex.loc)">«{{ ex.raw }}»</RouterLink> · {{ ex.loc }} · <RouterLink :to="witnessTo(ex.w)">{{ ex.w }}</RouterLink></p>
     <template v-if="cv && cv[3].length">
       <h2>{{ dict ? 'Словникові джерела' : 'Засвідчення' }} <small class="muted sans">{{ cv[2] }}</small></h2>
       <ul class="sans small">
-        <li v-for="(a, i) in cv[3]" :key="i"><b>{{ a[2] }}</b> · <RouterLink :to="witnessTo(a[0])">{{ wt(a[0]) }}</RouterLink><template v-if="wd(a[0])">, {{ dict ? 'рік словника ' : '' }}{{ wd(a[0]) }}</template> · <RouterLink :to="textTo(a[0], a[1])">{{ a[1] }}</RouterLink></li>
+        <li v-for="(a, i) in cv[3]" :key="i"><b>{{ a[2] }}</b><sup v-if="lineSense[i] !== undefined" class="muted" title="значення, яке засвідчує цей рядок"> ({{ lineSense[i]! + 1 }})</sup> · <RouterLink :to="witnessTo(a[0])">{{ wt(a[0]) }}</RouterLink><template v-if="wd(a[0])">, {{ dict ? 'рік словника ' : '' }}{{ wd(a[0]) }}</template> · <RouterLink :to="textTo(a[0], a[1])">{{ a[1] }}</RouterLink></li>
       </ul>
       <p v-if="cv[2] > cv[3].length" class="sans small muted">Показано {{ cv[3].length }} з {{ cv[2] }} засвідчень.</p>
     </template>
