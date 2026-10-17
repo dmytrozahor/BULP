@@ -5,7 +5,7 @@
  * quirks (stress capitals «ВИшкіл», a Latin B in «BЮВ»); the source spelling is shown as written. Renders nothing when the word is not in the Plast vocabulary.
  */
 import { computed } from 'vue'
-import { plastOf } from '../../core/sociolect.ts'
+import { plastLabel, plastOf } from '../../core/sociolect.ts'
 import { key } from '../../core/text.ts'
 import { loadSociolect, sociolectFile } from '../lib/sociolectData.ts'
 import { sensesOf } from '../lib/sensesData.ts'
@@ -20,7 +20,7 @@ const others = computed(() => sensesOf(key(props.word)).slice(0, 4))
     <h2>Значення (Пласт)</h2>
     <ul class="sans small">
       <li v-for="e in rows" :key="e.src + e.loc + e.w">
-        <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
+        <span class="badge">{{ plastLabel(e) }}</span>
         <b> {{ e.w }}</b><template v-if="e.k === 'abbr'"> — розшифровка: </template><template v-else> — </template>«{{ e.g }}»
         <span class="muted"> · <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">джерело</RouterLink>, {{ e.loc }}</span>
       </li>

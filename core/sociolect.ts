@@ -8,7 +8,7 @@ import { key } from './text.ts'
 import { lk } from './cv.ts'
 
 /** a Plast entry: w headword, g gloss (≤ 1 sentence, quoted), k 'term' (glossary part) | 'abbr' (abbreviation part), loc locator */
-export interface PlastEntry { w: string; g: string; k: 'term' | 'abbr'; loc: string; /** source id when not the file's main one */ s?: string }
+export interface PlastEntry { w: string; g: string; k: 'term' | 'abbr'; loc: string; /** source id when not the file's main one */ s?: string; /** 'kurin' = in-group slang of one kurin (SL-5), not general Plast vocabulary */ c?: 'kurin' }
 /** a dialect attribution stated by a study (SL-3): quote + locator; group only when the gazetteer (AC-2) maps the stated region, else label-only «діал.» */
 export interface DialectRow { w: string; region?: string; group?: string; label: string; source: string; loc: string; quote: string; gaz?: { loc: string; quote: string } }
 /** a documented process of a word: kind 'abbreviation' | 'anglicism' | 'jargon'; every row has a source, a verbatim quote and a locator */
@@ -23,9 +23,11 @@ export interface SociolectFile {
   literary: LiteraryRow[]
 }
 
-export type SocBadgeId = 'plast' | 'zharhon' | 'anglicism' | 'abbreviation'
-export const SOC_UK: Record<SocBadgeId, string> = { plast: 'пластова лексика', zharhon: 'жаргон', anglicism: 'англіцизм', abbreviation: 'абревіатура' }
+export type SocBadgeId = 'plast' | 'kurin' | 'zharhon' | 'anglicism' | 'abbreviation'
+export const SOC_UK: Record<SocBadgeId, string> = { plast: 'пластова лексика', kurin: 'жаргон куреня Лісові Чорти', zharhon: 'жаргон', anglicism: 'англіцизм', abbreviation: 'абревіатура' }
 export interface SocBadge { id: SocBadgeId; text: string; claim: Claim<string> }
+/** the label of a Plast entry: abbreviation | kurin slang (SL-5) | Plast vocabulary */
+export const plastLabel = (e: PlastEntry) => e.c === 'kurin' ? SOC_UK.kurin : e.k === 'abbr' ? SOC_UK.abbreviation : SOC_UK.plast
 export const DIALECT_UNKNOWN = 'діалектна належність не встановлена'
 
 /** Plast glossary lines look like «Ватра – церемоніальне вогнище, …» (terms) or «ВПР/VPR: Відкриття пластового року» (abbreviations). */
@@ -56,7 +58,10 @@ export const plastOf = (word: string, f: SociolectFile) => f.plast.entries.filte
 export function sociolectBadges(word: string, f: SociolectFile): SocBadge[] {
   const out: SocBadge[] = []
   const pl = plastOf(word, f)
-  if (pl.length) out.push({ id: 'plast', text: SOC_UK.plast, claim: claim('plast', pl.map(e => D(e.s ?? f.plast.source, e.loc, e.g, e.s ? 'cite-only' : `${f.plast.compiler}; ${f.plast.licence}`)), { method: 'ingest-plast: запис у пластовому словнику (лише цитата)' }) })
+  const gen = pl.filter(e => e.c !== 'kurin'), kur = pl.filter(e => e.c === 'kurin')
+  const ev = (e: PlastEntry) => D(e.s ?? f.plast.source, e.loc, e.g, e.s ? 'cite-only' : `${f.plast.compiler}; ${f.plast.licence}`)
+  if (kur.length) out.push({ id: 'kurin', text: SOC_UK.kurin, claim: claim('kurin', kur.map(ev), { method: 'ingest-plast: слово вжито в збірнику куреня «Лісові Чорти», власне цитата зі сторінкою (SL-5)' }) })
+  if (gen.length) out.push({ id: 'plast', text: SOC_UK.plast, claim: claim('plast', gen.map(e => D(e.s ?? f.plast.source, e.loc, e.g, e.s ? 'cite-only' : `${f.plast.compiler}; ${f.plast.licence}`)), { method: 'ingest-plast: запис у пластовому словнику (лише цитата)' }) })
   if (pl.some(e => e.k === 'abbr')) out.push({ id: 'abbreviation', text: SOC_UK.abbreviation, claim: claim('abbreviation', pl.filter(e => e.k === 'abbr').map(e => D(e.s ?? f.plast.source, e.loc, e.g)), { method: 'розділ «абревіатури» пластового словника' }) })
   for (const kind of ['jargon', 'anglicism', 'abbreviation'] as const) {
     const rows = f.processes.filter(r => key(r.w) === key(word) && r.kind === kind)

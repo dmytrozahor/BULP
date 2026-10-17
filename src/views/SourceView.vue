@@ -36,7 +36,7 @@ function scan() {
   for (const e of EPOCHS) collectQuotes(e, id, { label: e.id, to: epochTo(e.id) }, into)
   loadSociolect(); const sf = sociolectFile.value   // SL: Plast entries and process rows are quotes of their sources too
   if (sf) {
-    for (const e of sf.plast.entries) collectQuotes({ source: sf.plast.source, locator: e.loc, quote: e.g, kind: 'D' }, id, { label: e.w, to: wordTo(e.w) }, into)
+    for (const e of sf.plast.entries) collectQuotes({ source: e.s ?? sf.plast.source, locator: e.loc, quote: e.g, kind: 'D' }, id, { label: e.w, to: wordTo(e.w) }, into)
     for (const r of sf.processes) collectQuotes({ source: r.source, locator: r.loc, quote: r.quote, kind: 'Q' }, id, { label: r.w, to: wordTo(r.w) }, into)
   }
   base.value = into

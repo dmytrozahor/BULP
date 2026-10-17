@@ -41,7 +41,7 @@ describe('SL-2 Plast ingest', () => {
     expect(real.plast.entries.length).toBeGreaterThanOrEqual(60)
     for (const e of real.plast.entries) { expect(e.g.length).toBeLessThanOrEqual(160); expect(e.loc).toBeTruthy() }
     expect(real.plast.licence).toMatch(/цитати/)
-    expect(JSON.stringify(real).length).toBeLessThan(60_000)
+    expect(JSON.stringify(real).length).toBeLessThan(90_000)
   })
 })
 
@@ -92,6 +92,6 @@ describe('SL-4 literary status and badges', () => {
     expect(rd('src/components/SociolectBadges.vue')).toContain('ClaimBadge')
     for (const id of ['PLSEA', 'FBRU']) expect(SOURCES[id]).toBeTruthy()
     expect(rd('src/views/SourceView.vue')).toContain('sociolectFile')
-    expect(Object.values(SOC_UK).sort()).toEqual(['абревіатура', 'англіцизм', 'жаргон', 'пластова лексика'])
+    expect(Object.values(SOC_UK).sort()).toEqual(['абревіатура', 'англіцизм', 'жаргон', 'жаргон куреня Лісові Чорти', 'пластова лексика'])
   })
 })

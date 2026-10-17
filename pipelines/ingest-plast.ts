@@ -12,9 +12,11 @@ import { GAZETTEER } from '../core/autolabel.ts'
 import { parsePlastLines, type DialectRow, type PlastEntry, type LiteraryRow, type ProcessRow, type SociolectFile } from '../core/sociolect.ts'
 import { key } from '../core/text.ts'
 import { writeAtomic } from '../harvest/lib.ts'
+import { lchEntries, LCH_ID } from './plast-lch.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const PLAST_URL = 'https://plastseattle.org/plast-101/dictionary/'
+const LCH_RAW = resolve(ROOT, 'data/raw/plast/lch-ocr.txt'), OUT = resolve(ROOT, 'public/data/sociolect.json')
 const RAW = resolve(ROOT, 'data/raw/plast/plastseattle-dictionary.html'), VESUM = resolve(ROOT, 'data/raw/vesum/dict_corp_vis.txt')
 /** SL-1 words (user list) — checked against VESUM whatever their process. */
 export const SL1_WORDS = ['всм', 'екстремітет', 'екстреміті', 'аплікейбіліті', 'аплікабіліті']
@@ -90,13 +92,16 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     writeAtomic(KROKI_RAW, await r.text())
   }
   const kroki = parseKroki(pageLines(readFileSync(KROKI_RAW, 'utf8')))
-  const entries = [...parsePlastLines(htmlLines(readFileSync(RAW, 'utf8'))), ...kroki.entries]
+  // SL-5: «Лісові Чорти» (1983): from the OCR dump when present, else the entries of the previous sociolect.json are kept (the OCR text is not in git)
+  const prev = existsSync(OUT) ? (JSON.parse(readFileSync(OUT, 'utf8')) as SociolectFile).plast.entries.filter(e => e.s === LCH_ID) : []
+  const lch = existsSync(LCH_RAW) ? lchEntries(readFileSync(LCH_RAW, 'utf8')) : prev
+  const entries = [...parsePlastLines(htmlLines(readFileSync(RAW, 'utf8'))), ...kroki.entries, ...lch]
   const literary = await vesumLookup([...new Set([...SL1_WORDS, ...entries.map(e => e.w)])])
   const f: SociolectFile = {
     format: 1, generated: new Date().toISOString().slice(0, 10),
     plast: { source: 'PLSEA', url: PLAST_URL, retrieved: new Date().toISOString().slice(0, 10), licence: '© Пласт Сієтл; лише цитати, без повного тексту', compiler: 'Ярко Запотоцький, 14.05.2021', entries },
     processes: PROCESSES, dialect: kroki.dialect, literary,
   }
-  writeAtomic(resolve(ROOT, 'public/data/sociolect.json'), JSON.stringify(f))
+  writeAtomic(OUT, JSON.stringify(f))
   console.log(`plast entries ${entries.length} (abbr ${entries.filter(e => e.k === 'abbr').length}); VESUM present ${literary.filter(l => l.vesum).length}/${literary.length}`)
 }

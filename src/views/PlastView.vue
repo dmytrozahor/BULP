@@ -3,6 +3,7 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Pagination from '../components/Pagination.vue'
+import { plastLabel } from '../../core/sociolect.ts'
 import { usePage } from '../composables/usePage.ts'
 import { plastAll, plastSearch, sociolectFile } from '../lib/sociolectData.ts'
 import { useData } from '../composables/useData.ts'
@@ -26,7 +27,7 @@ const pg = usePage(computed(() => rows.value.length))
       <li v-for="e in pg.slice(rows)" :key="e.src + e.loc + e.w">
         <RouterLink :to="wordCardTo(e.w, searchIdx, ixCards)">
           <span class="lem">{{ e.w }}</span>
-          <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
+          <span class="badge">{{ plastLabel(e) }}</span>
           <span class="small sans">«{{ e.g }}»</span>
           <span class="small muted sans">{{ e.loc }}<template v-if="e.byGloss"> · знайдено в тлумаченні</template></span>
         </RouterLink>
