@@ -11,10 +11,11 @@ import type { Phraseme } from '../../core/phrasemes.ts'
 import { detailShardOf, type PhraseDetail, type PhrasesDetailShard } from '../../core/phraseme-pages.ts'
 import type { Donor, DonorLabel, LabelLookup } from '../../core/loanwords.ts'
 import { lmPeek } from './parts.ts'
+import { fetchJson } from './fetchJson.ts'
 
 const once = <T>(name: string, set: (v: T) => void): (() => void) => {
   let p: Promise<void> | undefined
-  return () => { p ??= fetch(`./data/${name}.json`).then(r => { if (!r.ok) throw new Error(`${name}.json: HTTP ${r.status}`); return r.json() as Promise<T> }).then(set).catch(() => { p = undefined }) }
+  return () => { p ??= fetchJson(`./data/${name}.json`).then(j => { if (j === null) throw new Error(`${name}.json: absent`); set(j as T) }).catch(() => { p = undefined }) }
 }
 
 // ── heteronym candidates ────────────────────────────────────────────────────────────────────
@@ -80,7 +81,7 @@ const phraseShards = new Map<string, Promise<Record<string, PhraseDetail>>>()
 export function loadPhraseDetail(id: string): Promise<PhraseDetail | undefined> {
   const s = detailShardOf(id)
   let p = phraseShards.get(s)
-  if (!p) { p = fetch(`./data/phr/${s}.json`).then(r => { if (!r.ok) throw new Error(`phr/${s}.json: HTTP ${r.status}`); return r.json() as Promise<PhrasesDetailShard> }).then(j => j.details); phraseShards.set(s, p); p.catch(() => phraseShards.delete(s)) }
+  if (!p) { p = fetchJson(`./data/phr/${s}.json`).then(j => { if (j === null) throw new Error(`phr/${s}.json: absent`); return (j as PhrasesDetailShard).details }); phraseShards.set(s, p); p.catch(() => phraseShards.delete(s)) }
   return p.then(m => m[id])
 }
 /** the phraseme page id of a lemma sequence's candidate (undefined before phrases.json arrives) */

@@ -1,5 +1,6 @@
 /** SL: lazy loader for public/data/sociolect.json and reactive badge / literary-status lookups (empty until the file arrives or when it is absent). */
 import { shallowRef } from 'vue'
+import { fetchJson } from './fetchJson.ts'
 import { dialectClaims, literaryStatus, sociolectBadges, type PlastEntry, type SociolectFile } from '../../core/sociolect.ts'
 import { key } from '../../core/text.ts'
 
@@ -8,7 +9,7 @@ let started = false
 export function loadSociolect(): void {
   if (started) return
   started = true
-  fetch('./data/sociolect.json').then(r => (r.ok ? r.json() : undefined)).then(j => { if (j && j.format === 1) sociolectFile.value = j as SociolectFile }).catch(() => { /* optional data */ })
+  fetchJson('./data/sociolect.json').then(j => { const f = j as SociolectFile | null; if (f && f.format === 1) sociolectFile.value = f }).catch(() => { started = false })   // absent = optional data; a failure is shown (DataNotice) and the next read tries again
 }
 export function socBadgesOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? sociolectBadges(word, f) : [] }
 export function dialectOf(word: string) { loadSociolect(); const f = sociolectFile.value; return f ? dialectClaims(word, f) : [] }

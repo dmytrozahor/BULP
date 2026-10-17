@@ -2,6 +2,7 @@
 import { cardMap, cardRoute, cvBucket, cvShardUrl, lk, type CardHit, type CardIndexFile, type CvEntry } from '../../core/cv.ts'
 import { key } from '../../core/text.ts'
 import type { SearchIndex } from './search.ts'
+import { fetchJson } from './fetchJson.ts'
 
 
 /** A SearchIndex over the card index (Hit.lemma = `<kind>:<id>`), so search() ranks exact / prefix / substring exactly as for lexicon cards. */
@@ -17,7 +18,7 @@ const shards = new Map<number, Promise<Record<string, CvEntry>>>()
 /** the CV entry (attestation lines) of a word; undefined when the word has none */
 export async function loadCv(word: string): Promise<CvEntry | undefined> {
   const b = cvBucket(word); let p = shards.get(b)
-  if (!p) shards.set(b, p = fetch(cvShardUrl(word)).then(r => (r.ok ? r.json() : {})).catch(() => ({})) as Promise<Record<string, CvEntry>>)
+  if (!p) shards.set(b, p = fetchJson(cvShardUrl(word)).then(j => (j ?? {}) as Record<string, CvEntry>, () => { shards.delete(b); return {} as Record<string, CvEntry> }))   // 404 = no shard (cached); a network / 5xx failure is reported (DataNotice) and not cached
   const k = lk(word), e = (await p)[k]
   return e && e[0] === '' ? ([k, ...e.slice(1)] as unknown as CvEntry) : e   // DO-6: a dictionary-only entry stores '' for a word that is its own key
 }

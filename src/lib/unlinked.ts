@@ -1,13 +1,14 @@
 /** SPEC 63 NV-3 runtime: look a spelling up in the unlinked-spelling index (core/unlinked.ts) and cut KWIC lines from the text shards. */
 import { key } from '../../core/text.ts'
 import { occurrencesOf, unlinkedShard, type UnlinkedEntry, type UnlinkedOcc } from '../../core/unlinked.ts'
+import { fetchJson } from './fetchJson.ts'
 import { loadTokens, type Tok } from './witnessText.ts'
 
 export type ShardFetch = (n: number) => Promise<Record<string, UnlinkedEntry> | null>
 const cache = new Map<number, Promise<Record<string, UnlinkedEntry> | null>>()
 export const fetchShard: ShardFetch = n => {
   let p = cache.get(n)
-  if (!p) cache.set(n, p = fetch(`./data/unlinked/${n}.json`).then(r => (r.ok ? r.json() : null)).catch(() => null))
+  if (!p) cache.set(n, p = fetchJson(`./data/unlinked/${n}.json`).then(j => j as Record<string, UnlinkedEntry> | null, () => { cache.delete(n); return null }))
   return p
 }
 export async function lookupUnlinked(form: string, get: ShardFetch = fetchShard): Promise<UnlinkedEntry | undefined> {

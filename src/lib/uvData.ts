@@ -1,4 +1,5 @@
 /** SPEC 63 CV-4 runtime: «неперевірена лема» cards (public/data/uv/, core/uv.ts) — prefix search over unlinked spellings and the group-card lookup. */
+import { fetchJson } from './fetchJson.ts'
 import { key } from '../../core/text.ts'
 import { UV_MIN_QUERY, uvPrefixFile, uvShard, type UvGroup, type UvPrefixShard } from '../../core/uv.ts'
 
@@ -6,7 +7,7 @@ export type UvFetch = (path: string) => Promise<unknown | null>
 const cache = new Map<string, Promise<unknown | null>>()
 export const fetchUv: UvFetch = path => {
   let p = cache.get(path)
-  if (!p) cache.set(path, p = fetch(`./data/uv/${path}.json`).then(r => (r.ok ? r.json() : null)).catch(() => null))
+  if (!p) cache.set(path, p = fetchJson(`./data/uv/${path}.json`).catch(() => { cache.delete(path); return null }))
   return p
 }
 export interface UvHit { group: string; head: string; matched: string; exact: boolean }

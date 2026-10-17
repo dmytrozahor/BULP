@@ -10,6 +10,7 @@ import { bucketOf } from '../../core/shard.ts'
 import {
   IX_MIN, VIA_NAME, dxUrl, ixLeaf, ixName, ixUrl, lmBucket, witBucket, type DxShard, type IxManifest, type IxRow, type IxShard, type LmName,
 } from '../../core/parts.ts'
+import { fetchJson, onRetry } from './fetchJson.ts'
 import type { Hit, Via } from './search.ts'
 import type { Attest } from './derive.ts'
 import type { RuleForm } from '../../core/form-class.ts'
@@ -18,22 +19,24 @@ import type { Evidence } from '../../core/evidence.ts'
 // ── shard store ──────────────────────────────────────────────────────────────────────────────────
 let scope: Promise<unknown>[] | undefined
 export interface Store<T> { peek(name: string): T | undefined; load(name: string): Promise<T | undefined>; has(name: string): boolean }
-export function store<T>(urlOf: (name: string) => string, parse: (j: unknown) => T): Store<T> {
-  const data = shallowReactive(new Map<string, T | null>()), pending = new Map<string, Promise<T | undefined>>()
+export function store<T>(urlOf: (name: string) => string, parse: (j: unknown) => T, delays?: readonly number[]): Store<T> {
+  // data: name → value, or null when the file is absent (404); a transient failure is in `failed` (not cached as absent: peek() stops re-fetching, retry clears it)
+  const data = shallowReactive(new Map<string, T | null>()), pending = new Map<string, Promise<T | undefined>>(), failed = shallowReactive(new Set<string>())
   const load = (name: string): Promise<T | undefined> => {
     let p = pending.get(name)
     if (!p) {
-      p = fetch(urlOf(name)).then(r => (r.ok ? r.json() : null)).then(j => (j === null ? null : parse(j))).catch(() => null)
-        .then(v => { data.set(name, v); return v ?? undefined })
+      p = fetchJson(urlOf(name), delays).then(j => (j === null ? null : parse(j)))
+        .then(v => { data.set(name, v); return v ?? undefined }, () => { failed.add(name); pending.delete(name); return undefined })
       pending.set(name, p)
     }
     return p
   }
   const peek = (name: string): T | undefined => {
     const v = data.get(name)
-    if (v === undefined) { const p = load(name); scope?.push(p) }
+    if (v === undefined && !failed.has(name)) { const p = load(name); scope?.push(p) }
     return v ?? undefined
   }
+  onRetry(() => { for (const n of [...failed]) { failed.delete(n); pending.delete(n) } })
   return { peek, load, has: n => data.get(n) !== undefined }
 }
 /** run `fn` until it triggers no new fetch (≤ max rounds); the result is the last run's, with every shard it needed in memory */
@@ -60,7 +63,10 @@ export function ixRow(k: string): IxRow | undefined {
   const leaf = ixLeaf(k, m.leaves); if (!leaf) return undefined
   return ixShards.peek(leaf)?.rows[k]
 }
-const tagOf = (k: string, i: number): string => ixShards.peek(ixLeaf(k, manifest.peek(MANI)!.leaves)!)!.tags[i]!
+const tagOf = (k: string, i: number): string => {   // a failed / loading shard reads as an empty tag, never throws in render
+  const m = manifest.peek(MANI), leaf = m && ixLeaf(k, m.leaves)
+  return (leaf ? ixShards.peek(leaf)?.tags[i] : undefined) ?? ''
+}
 const hitsOf = (k: string): Hit[] | undefined => ixRow(k)?.h?.map(([lemma, via, form]) => ({ lemma, via: VIA_NAME[via] as Via, form: form ?? (via === 0 ? lemma : k) }))
 const tagged = (k: string, r: [string, number][] | undefined): VesumHit[] | undefined => r?.map(([lemma, t]) => ({ lemma, tags: tagOf(k, t) }))
 
