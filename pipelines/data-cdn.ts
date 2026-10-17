@@ -51,7 +51,7 @@ export function localFiles(data: string, dirs: readonly string[] = CDN_DIRS, big
 
 export const keyOf = (id: string, f: Pick<LocalFile, 'dir' | 'rel'>) => `data/${id}/${f.dir}/${f.rel}`
 
-export interface UploadState { buildId: string; /** gzip size of every big file already uploaded, by `dir/rel` */ big: Record<string, number> }
+export interface UploadState { buildId: string; /** ISO time this upload started: only a state with startedAt and without done is a resumable in-progress upload */ startedAt?: string; /** set once the pointer moved: the prefix is then closed for ever */ done?: boolean; /** gzip size of every big file already uploaded, by `dir/rel` */ big: Record<string, number> }
 export function loadState(path = STATE): UploadState | undefined { try { return JSON.parse(readFileSync(path, 'utf8')) as UploadState } catch { return undefined } }
 export function saveState(s: UploadState, path = STATE) {
   mkdirSync(join(path, '..'), { recursive: true })
@@ -122,11 +122,15 @@ export async function upload(o: UploadOpts): Promise<{ buildId: string; ok: bool
   const dirs = (o.dirs ?? CDN_DIRS).filter(d => existsSync(join(data, d)))
   if (dirs.length < (o.dirs ?? CDN_DIRS).length) throw new Error(`missing under ${data}: ${(o.dirs ?? CDN_DIRS).filter(d => !dirs.includes(d)).join(', ')} (run build:data / data:texts / data:unlinked first)`)
   const files = localFiles(data, dirs), bytes = files.reduce((s, f) => s + f.size, 0)
-  const prev = o.fresh ? undefined : loadState(statePath)
+  // only the in-progress upload recorded in the state file may be resumed; a finished one, an old-format one, or --new never lends its id
+  const st0 = o.fresh ? undefined : loadState(statePath), prev = st0 && st0.startedAt && !st0.done ? st0 : undefined
   const sha = o.aws ? 'abcdef0' : execFileSync('git', ['rev-parse', '--short=7', 'HEAD'], { encoding: 'utf8' }).trim()
   const buildId = o.buildId ?? prev?.buildId ?? buildIdOf(new Date(), sha)
   if (!BUILD_ID_RE.test(buildId)) throw new Error(`bad build id ${buildId}`)
-  const state: UploadState = { buildId, big: prev?.buildId === buildId ? prev.big : {} }
+  const resuming = prev?.buildId === buildId
+  if (!o.dryRun && !resuming && listRemote(aws, buildId, bucket).size > 0)
+    throw new Error(`refusing to upload: s3://${bucket}/data/${buildId}/ already has objects and is not the in-progress upload of this checkout (immutable prefixes are never reused; omit --build-id for a fresh one)`)
+  const state: UploadState = { buildId, startedAt: resuming ? prev.startedAt : new Date().toISOString(), big: resuming ? prev.big : {} }
   console.log(`build ${buildId}: ${files.length} files, ${(bytes / 1e9).toFixed(2)} GB in ${dirs.length} dirs → s3://${bucket}/data/${buildId}/ (${files.filter(f => f.big).length} gzipped big files)`)
   if (o.dryRun) {
     for (const d of dirs) console.log('aws', syncArgs(buildId, d, files.filter(f => f.dir === d && f.big).map(f => f.rel), bucket, data).join(' '))
@@ -154,6 +158,7 @@ export async function upload(o: UploadOpts): Promise<{ buildId: string; ok: bool
   const mf = join(tmpdir(), `cdn-manifest-${process.pid}.json`); writeFileSync(mf, JSON.stringify(manifest))
   try { aws(['s3', 'cp', mf, `s3://${bucket}/data/${buildId}/manifest.json`, '--only-show-errors', '--content-type', 'application/json', '--cache-control', CACHE_CONTROL]) } finally { rmSync(mf, { force: true }) }
   writePointer(buildId, o.pointer ?? POINTER)
+  saveState({ ...state, done: true }, statePath)
   return { buildId, ok: true, files: files.length, bytes }
 }
 

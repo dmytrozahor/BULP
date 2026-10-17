@@ -124,6 +124,42 @@ describe('PF-7 upload script', () => {
     expect(r.ok).toBe(false); expect(JSON.parse(readFileSync(ptr, 'utf8')).buildId).toBe('')
     rmSync(data, { recursive: true })
   })
+  const fakeAws = (data: string, bucket: Map<string, number>): Aws => a => {
+    if (a[1] === 'sync') { const id = a[3]!.split('/')[4]!, dir = a[2]!.split(/[\\/]/).pop()!; for (const f of localFiles(data, [dir], 1 << 30)) bucket.set(`data/${id}/${dir}/${f.rel}`, f.size); return '' }
+    if (a[1] === 'cp') { bucket.set(a[3]!.replace(/^s3:\/\/[^/]+\//, ''), 1); return '' }
+    if (a[0] === 's3api') { const p = a[a.indexOf('--prefix') + 1]!; return [...bucket].filter(([k]) => k.startsWith(p)).map(([k, n]) => k + '\t' + n).join('\n') || 'None' }
+    return ''
+  }
+  it('PF-7 immutability: an upload gets a fresh build id, never one reused from the pointer or a finished state, and finishing closes the state', async () => {
+    const { data } = fixture(), bucket = new Map<string, number>(), ptr = ptrFile(data), st = join(data, 'st.json')
+    writeFileSync(st, JSON.stringify({ buildId: ID, big: {} }))   // old-format / finished state naming a live prefix
+    bucket.set(`data/${ID}/lex/old.json`, 1)
+    const r = await upload({ dryRun: false, fresh: false, data, aws: fakeAws(data, bucket), pointer: ptr, state: st, dirs: ['lex', 'lm'] })
+    expect(r.ok).toBe(true); expect(r.buildId).not.toBe(ID)
+    expect([...bucket.keys()].filter(k => k.startsWith(`data/${ID}/`))).toEqual([`data/${ID}/lex/old.json`])   // the old prefix is untouched
+    expect(JSON.parse(readFileSync(st, 'utf8'))).toMatchObject({ buildId: r.buildId, done: true })
+    // a completed upload is never resumed: within the same minute the new id collides and is refused, later it is simply another id
+    const r2 = await upload({ dryRun: false, fresh: false, data, aws: fakeAws(data, bucket), pointer: ptr, state: st, dirs: ['lex', 'lm'] }).catch((e: Error) => e)
+    if (r2 instanceof Error) expect(r2.message).toMatch(/refusing to upload/); else expect(r2.buildId).not.toBe(r.buildId)
+    rmSync(data, { recursive: true })
+  })
+  it('PF-7 immutability: the in-progress upload of the state file is resumed into its own half-filled prefix', async () => {
+    const { data } = fixture(), bucket = new Map<string, number>(), ptr = ptrFile(data), st = join(data, 'st.json')
+    writeFileSync(st, JSON.stringify({ buildId: ID, startedAt: '2026-10-18T00:00:00.000Z', big: {} }))
+    bucket.set(`data/${ID}/lex/partial.json`, 1)
+    // the half-filled prefix has an extra, so verify reports it, but the upload itself must not refuse
+    const r = await upload({ dryRun: false, fresh: false, data, aws: fakeAws(data, bucket), pointer: ptr, state: st, dirs: ['lex', 'lm'] })
+    expect(r.buildId).toBe(ID); expect(JSON.parse(readFileSync(st, 'utf8')).startedAt).toBe('2026-10-18T00:00:00.000Z')
+    rmSync(data, { recursive: true })
+  })
+  it('PF-7 immutability: refuses a non-empty prefix that is not the in-progress upload (explicit id, --new, or no state)', async () => {
+    const { data } = fixture(), bucket = new Map<string, number>([[`data/${ID}/lex/x.json`, 1]]), ptr = ptrFile(data), st = join(data, 'st.json')
+    const aws = fakeAws(data, bucket), calls: string[][] = []
+    for (const fresh of [true, false]) await expect(upload({ dryRun: false, fresh, buildId: ID, data, aws: a => { calls.push(a); return aws(a) }, pointer: ptr, state: st, dirs: ['lex'] })).rejects.toThrow(/refusing to upload/)
+    expect(calls.every(a => a[0] === 's3api')).toBe(true)   // nothing was written
+    expect(JSON.parse(readFileSync(ptr, 'utf8')).buildId).toBe('')
+    rmSync(data, { recursive: true })
+  })
   it('writePointer keeps the base; pruneList keeps the newest N and the live build and ignores foreign prefixes', () => {
     const { data } = fixture(), ptr = ptrFile(data)
     writePointer(ID, ptr); expect(JSON.parse(readFileSync(ptr, 'utf8')).base).toBe('https://x.cloudfront.net')
