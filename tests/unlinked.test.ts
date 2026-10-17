@@ -4,14 +4,14 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
-import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestOf, newAccumulator, occurrencesOf, planUnlinked, unlinkedLeaf, unlinkedName, type UnlinkedManifest } from '../core/unlinked.ts'
+import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, unlinkedTop, newAccumulator, occurrencesOf, planUnlinked, unlinkedLeaf, unlinkedName, type UnlinkedManifest } from '../core/unlinked.ts'
 import { analyzeLink } from '../src/lib/analyze-links.ts'
 import { buildIndex } from '../src/lib/search.ts'
 import { kwicAt, lookupUnlinked } from '../src/lib/unlinked.ts'
 import type { Tok } from '../src/lib/witnessText.ts'
 
 const rd = (p: string) => readFileSync(p, 'utf8')
-const have = existsSync('public/data/unlinked/index.json') && existsSync('public/data/texts/sumtsov_slobozhane1918.json') && existsSync('public/data/lexicon.json')
+const have = existsSync('public/data/unlinked') && readdirSync('public/data/unlinked').some(f => f.startsWith('idx-')) && existsSync('public/data/texts/sumtsov_slobozhane1918.json') && existsSync('public/data/lexicon.json')
 const real = have ? describe : describe.skip
 
 describe('NV-3 unlinked-spelling index', () => {
@@ -31,9 +31,9 @@ describe('NV-3 unlinked-spelling index', () => {
     const names = new Set<string>(), all: string[] = []
     for (const [p, ks] of leaves) { names.add(unlinkedName(p)); all.push(...ks) }
     expect(names.size).toBe(leaves.size); expect(all.sort()).toEqual([...a.m.keys()].sort()); expect(leaves.size).toBeGreaterThan(10)
-    const man = manifestOf(leaves), set = new Set(man.leaves.map(l => l[0]))
-    for (const [p, ks] of leaves) { expect(gz(JSON.stringify(leafShard(a.m, ks))), p).toBeLessThanOrEqual(4096 * 1.5); for (const k of ks) expect(unlinkedLeaf(k, set)).toBe(p) }
-    expect(unlinkedLeaf('ъъъъ', set)).toBeUndefined()
+    const mans = manifestsOf(leaves)
+    for (const [p, ks] of leaves) { const set = new Set(mans.get(unlinkedTop(p))!.leaves.map(l => l[0])); expect(gz(JSON.stringify(leafShard(a.m, ks))), p).toBeLessThanOrEqual(4096 * 1.5); for (const k of ks) expect(unlinkedLeaf(k, set)).toBe(p) }
+    expect(unlinkedLeaf('ъъъъ', new Set(['ко']))).toBeUndefined(); expect(unlinkedLeaf('ъъъъ', new Set())).toBeUndefined()
   })
   it('NV-3 only word tokens are indexed (no digits or punctuation)', () => {
     expect(isWordToken('призвичкою')).toBe(true); expect(isWordToken("п'ять")).toBe(true); expect(isWordToken('1918')).toBe(false); expect(isWordToken('—')).toBe(false)
@@ -45,7 +45,7 @@ describe('NV-3 unlinked-spelling index', () => {
   })
   it('NV-3 the lookup finds an indexed spelling through the injected shard fetch', async () => {
     const a = newAccumulator(); a.add('призвичкою', 'w1', 7)
-    const leaves = planUnlinked(a.m, t => t.length), files = new Map<string, unknown>([['index', manifestOf(leaves)]])
+    const leaves = planUnlinked(a.m, t => t.length), files = new Map<string, unknown>([...manifestsOf(leaves)].map(([t, m]) => [unlinkedManifestName(t), m]))
     for (const [p, ks] of leaves) files.set(unlinkedName(p), leafShard(a.m, ks))
     const get = async (n: string) => files.get(n) ?? null
     const e = await lookupUnlinked('Призвичкою', get)
@@ -83,8 +83,8 @@ real('NV-3 real data: every link target of a rendered text page resolves to a no
   const forms = new Set<string>(); for (const c of cards) { forms.add(key(c.lemma)); for (const f of c.forms) forms.add(key(f.raw)) }
   const byLemma = new Map(cards.map(c => [c.lemma, c])), idx = buildIndex(cards)
   const light = new Set<string>((JSON.parse(rd('public/data/light.json')).lemmas as string[][]).map(l => l[0]!))
-  let leafSet: Set<string> | undefined; const shards = new Map<string, Record<string, unknown>>()
-  const indexed = (k: string) => { leafSet ??= new Set((JSON.parse(rd(`${dir}/index.json`)) as UnlinkedManifest).leaves.map(l => l[0])); const p = unlinkedLeaf(k, leafSet); if (!p) return false; if (!shards.has(p)) shards.set(p, JSON.parse(rd(`${dir}/${unlinkedName(p)}.json`))); return k in shards.get(p)! }
+  const tops = new Map<string, Set<string>>(), shards = new Map<string, Record<string, unknown>>()
+  const indexed = (k: string) => { const top = unlinkedTop(k); if (!tops.has(top)) { const f = `${dir}/${unlinkedManifestName(top)}.json`; tops.set(top, existsSync(f) ? new Set((JSON.parse(rd(f)) as UnlinkedManifest).leaves.map(l => l[0])) : new Set()) } const p = unlinkedLeaf(k, tops.get(top)!); if (!p) return false; if (!shards.has(p)) shards.set(p, JSON.parse(rd(`${dir}/${unlinkedName(p)}.json`))); return k in shards.get(p)! }
   it('NV-3 the Сумцов «Слобожане» 1918 page: «призвичкою» and every other word token leads to a page with content', () => {
     const toks = JSON.parse(rd('public/data/texts/sumtsov_slobozhane1918.json')).tokens as Tok[]
     expect(toks.some(t => t[0] === 'призвичкою')).toBe(true)
@@ -108,11 +108,11 @@ real('NV-3 real data: every link target of a rendered text page resolves to a no
     }
     expect(total).toBeGreaterThan(1000); expect(missing).toBe(0)
   })
-  it('NV-5 the built index: total within budget, every leaf ≤ hard gz limit, the manifest small and consistent', () => {
-    const man = JSON.parse(rd(`${dir}/index.json`)) as UnlinkedManifest, files = readdirSync(dir).filter(f => f !== 'index.json')
-    expect(files).toHaveLength(man.leaves.length)
+  it('NV-5 the built index: total within budget, every leaf ≤ hard gz limit, every manifest small and consistent', () => {
+    const mans = readdirSync(dir).filter(f => f.startsWith('idx-')), files = readdirSync(dir).filter(f => !f.startsWith('idx-'))
+    expect(files).toHaveLength(mans.reduce((n, f) => n + (JSON.parse(rd(`${dir}/${f}`)) as UnlinkedManifest).leaves.length, 0))
     expect(readdirSync(dir).reduce((n, f) => n + statSync(`${dir}/${f}`).size, 0)).toBeLessThanOrEqual(UNLINKED_BUDGET_BYTES)
-    expect(gzipSync(readFileSync(`${dir}/index.json`)).length).toBeLessThanOrEqual(UNL_MANIFEST_GZ_MAX)
+    for (const f of mans) expect(gzipSync(readFileSync(`${dir}/${f}`)).length, f).toBeLessThanOrEqual(UNL_MANIFEST_GZ_MAX)
     for (const f of files.slice(0, 200)) expect(gzipSync(readFileSync(`${dir}/${f}`)).length, f).toBeLessThanOrEqual(UNL_GZ_HARD)
   })
 })

@@ -1,7 +1,7 @@
 /**
  * SPEC 63 NV-3: index of UNLINKED spellings — word tokens that occur in a running text (public/data/texts) but are not a spelling of any lexicon lemma.
  * Without it /f/<spelling> (reached from the analyser or a shared URL) said «такого написання немає в корпусі» although the spelling is in a text.
- * Layout (NV-5; the 10 M-token import has 4.25 M spellings, 364 MB): public/data/unlinked/index.json = { format: 1, leaves: [prefix, nKeys][] } and
+ * Layout (NV-5; the 10 M-token import has 4.25 M spellings, 364 MB): public/data/unlinked/idx-<hex of the first 2 letters>.json = { format: 1, leaves: [prefix, nKeys][] } (one small manifest per top prefix) and
  * public/data/unlinked/<hex of prefix>.json = { "<key>": [raw, count, nWitnesses, w1, i1, w2, i2, w3, i3] }, prefix-sharded like ix/ and dx/: a leaf is
  * the first n letters of the key (n = 2 … UNL_MAX, '_'-padded), split one letter deeper while its gzip size is above UNL_GZ_MAX. Nothing is dropped; the
  * directory travels on the data branch, not the code branch. (The first layout was 64 hash shards; unlinkedShard stays for core/uv.ts.)
@@ -18,7 +18,7 @@ export const UNLINKED_BUDGET_BYTES = 512 * 1024 * 1024
 export const UNL_GZ_MAX = 30 * 1024, UNL_GZ_HARD = 128 * 1024
 export const UNL_MIN = 2, UNL_MAX = 12, UNL_SPLIT_MIN_KEYS = 2
 export const UNL_FORCE_SPLIT = 20000
-export const UNL_MANIFEST_GZ_MAX = 64 * 1024
+export const UNL_MANIFEST_GZ_MAX = 32 * 1024
 
 export const unlinkedShard = (k: string, n = UNLINKED_SHARDS): number => {
   let h = 2166136261
@@ -80,5 +80,12 @@ export function planUnlinked(m: Map<string, UnlinkedEntry>, gzSize: (json: strin
   for (const [p, ks] of group([...m.keys()], UNL_MIN)) go(p, ks, UNL_MIN)
   return leaves
 }
-export const manifestOf = (leaves: Map<string, string[]>): UnlinkedManifest =>
-  ({ format: 1, leaves: [...leaves].map(([p, ks]) => [p, ks.length] as [string, number]).sort((a, b) => (a[0] < b[0] ? -1 : 1)) })
+/** the manifest is split per first-2-letter prefix (32,831 leaves made one flat manifest 129 KB gz): idx-<hex of top>.json = { format 1, leaves under that top } */
+export const unlinkedTop = (k: string): string => unlPad(k, UNL_MIN)
+export const unlinkedManifestName = (top: string): string => 'idx-' + unlinkedName(top)
+export function manifestsOf(leaves: Map<string, string[]>): Map<string, UnlinkedManifest> {
+  const out = new Map<string, UnlinkedManifest>()
+  for (const [p, ks] of leaves) { const top = unlinkedTop(p); (out.get(top) ?? out.set(top, { format: 1, leaves: [] }).get(top)!).leaves.push([p, ks.length]) }
+  for (const m of out.values()) m.leaves.sort((a, b) => (a[0] < b[0] ? -1 : 1))
+  return out
+}

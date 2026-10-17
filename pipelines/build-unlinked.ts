@@ -1,5 +1,5 @@
 /**
- * `npm run data:unlinked` — SPEC 63 NV-3: public/data/unlinked/{index,<hex prefix>}.json (prefix-sharded, NV-5) from public/data/texts/*.json and the lexicon core (see core/unlinked.ts).
+ * `npm run data:unlinked` — SPEC 63 NV-3: public/data/unlinked/{idx-<hex top>,<hex prefix>}.json (prefix-sharded, NV-5) from public/data/texts/*.json and the lexicon core (see core/unlinked.ts).
  * A token is unlinked when its normalised key is not the key of any card form (the same test /f/:form uses to find a page). Fails above the size budget.
  * SPEC 63 CV-4: the same scan also writes public/data/uv/ — «неперевірена лема» cards for the clean unlinked spellings, grouped by the spelling-fold key (core/uv.ts).
  */
@@ -8,7 +8,7 @@ import { resolve } from 'node:path'
 import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
-import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestOf, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
+import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
 import { UV_SHARDS, UvScan, uvPrefixFile, uvShard, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { cardMap, type CardIndexFile } from '../core/cv.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
@@ -38,9 +38,9 @@ for (const [p, ks] of leaves) {
   const t = JSON.stringify(leafShard(acc.m, ks)), g = gzLen(t); bytes += Buffer.byteLength(t); gzTotal += g; worst = Math.max(worst, g)
   writeFileSync(resolve(dir, `${unlinkedName(p)}.json`), t)
 }
-const man = JSON.stringify(manifestOf(leaves)); writeFileSync(resolve(dir, 'index.json'), man); bytes += Buffer.byteLength(man)
-const manGz = gzLen(man)
-console.log(`unlinked: ${acc.m.size} spellings of ${toks} tokens → ${leaves.size} leaves, ${(bytes / 1048576).toFixed(2)} MB raw (budget ${(UNLINKED_BUDGET_BYTES / 1048576).toFixed(0)} MB), gz total ${(gzTotal / 1048576).toFixed(1)} MB, worst leaf ${(worst / 1024).toFixed(1)} KB gz (target ${UNL_GZ_MAX / 1024}, hard ${UNL_GZ_HARD / 1024}), manifest ${(manGz / 1024).toFixed(1)} KB gz`)
+let manGz = 0, nMan = 0
+for (const [top, m] of manifestsOf(leaves)) { const t = JSON.stringify(m); writeFileSync(resolve(dir, unlinkedManifestName(top) + '.json'), t); bytes += Buffer.byteLength(t); manGz = Math.max(manGz, gzLen(t)); nMan++ }
+console.log(`unlinked: ${acc.m.size} spellings of ${toks} tokens → ${leaves.size} leaves, ${(bytes / 1048576).toFixed(2)} MB raw (budget ${(UNLINKED_BUDGET_BYTES / 1048576).toFixed(0)} MB), gz total ${(gzTotal / 1048576).toFixed(1)} MB, worst leaf ${(worst / 1024).toFixed(1)} KB gz (target ${UNL_GZ_MAX / 1024}, hard ${UNL_GZ_HARD / 1024}), ${nMan} manifests, worst ${(manGz / 1024).toFixed(1)} KB gz`)
 if (bytes > UNLINKED_BUDGET_BYTES || worst > UNL_GZ_HARD || manGz > UNL_MANIFEST_GZ_MAX) { console.error('over budget'); process.exit(1) }
 
 // ── CV-4 ────────────────────────────────────────────────────────────────────────────────────────
