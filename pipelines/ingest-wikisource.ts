@@ -202,7 +202,7 @@ function parse(u: Unit, files: RawFile[]): WitnessOut[] {
     if (SKIP_PAGE[u.id]?.test(title)) continue
     const r = parsePage(f.body.toString('utf8'), title, u.id, u.author, s, dlg)
     if (r.skipped) { console.warn(`  skip ${title}: ${r.skipped}`); continue }
-    tokens.push(...r.tokens); apparatus += r.apparatus; s = (r.tokens.at(-1)?.s ?? s - 1) + 1
+    for (const t of r.tokens) tokens.push(t); apparatus += r.apparatus; s = (r.tokens.at(-1)?.s ?? s - 1) + 1
   }
   const base = {
     unit: u.id, author: u.author, url: u.urls[0]!.replace('&action=render', ''), date: u.date, dateCite: u.dateCite, msDate: u.msDate,

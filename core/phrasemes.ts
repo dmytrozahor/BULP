@@ -8,6 +8,8 @@
  */
 import { logDice, mi } from './stats.ts'
 
+/** [min start, max end] of date ranges, by loop (PF-5: Math.min(...big) overflows the argument limit) */
+export const spanOf = (ds: [number, number][]): [number, number] => { let a = Infinity, b = -Infinity; for (const d of ds) { if (d[0] < a) a = d[0]; if (d[1] > b) b = d[1] } return [a, b] }
 export const PHRASE_METHOD = 'collocation+archaism' as const
 /** key ≥ 0 = lemma id, key ≤ −2 = raw spelling id, −1 = break (unlinked modern token / punctuation) */
 export interface PhraseDoc { wid: string; date: [number, number]; old: boolean; keys: ArrayLike<number>; seg: ArrayLike<number>; fam?: string }
@@ -95,7 +97,7 @@ export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling
     const dates = ws.map(([, v]) => v.date), ks = x.g.split(',').map(Number)
     const rec: Phraseme = {
       lemmas: ks.map(lemma), spellings: [...sp[i]!].sort((a, b) => b[1] - a[1]).slice(0, 3).map(s => s[0]), f: x.f,
-      witnesses: ws.map(w => w[0]).slice(0, 8), nW: ws.length, families: [...fams.keys()].slice(0, 8), nF, dates: [Math.min(...dates.map(d => d[0])), Math.max(...dates.map(d => d[1]))], score: r3(score), method: PHRASE_METHOD,
+      witnesses: ws.map(w => w[0]).slice(0, 8), nW: ws.length, families: [...fams.keys()].slice(0, 8), nF, dates: spanOf(dates), score: r3(score), method: PHRASE_METHOD,
       components: { logDice: r3(ld), mi: r3(m), pre1400: r3(p14), pre1600: r3(p16), old: r3(old), archaism: r3(arch), witnesses: ws.length, families: nF },
     }
     out.push(rec); o.keysOut?.set(rec, ks)
@@ -104,7 +106,7 @@ export function mine(docs: PhraseDoc[], lemma: (key: number) => string, spelling
   {
     const keep: Phraseme[] = []
     for (const p of out) { const c = contentCore(p.lemmas); if (c.trimmed || c.nContent < 2) o.frames?.push(p); else keep.push(p) }
-    out.length = 0; out.push(...keep)
+    out.length = 0; for (const p of keep) out.push(p)   // PF-5: no spread of millions of arguments (RangeError: Maximum call stack size exceeded)
   }
   out.sort((a, b) => b.score - a.score || b.f - a.f)
   const byF = new Map<number, Phraseme[]>()

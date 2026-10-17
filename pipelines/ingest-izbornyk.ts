@@ -271,7 +271,7 @@ function parseSingle(u: Unit, files: RawFile[]): WitnessOut[] {
   for (const f of files) {
     const p = pageParas(dec(f.body), cut)
     const r = streamTokens(p.paras, p.apps, state, s, () => dropped, (st, para) => st.page ? `с. ${st.page}` : `абз. ${para}`)
-    s = r.s; items.push(...r.items)
+    s = r.s; for (const it of r.items) items.push(it)
   }
   return [baseWitness(u, u.id, items, u.id === 'samovydets' ? { dateCite: SAM_CITE } : {}, dropped)]
 }
