@@ -88,6 +88,10 @@ export const RULES: SoundRule[] = [
   { id: 'R07', name: 'Вставні о, е в кінцевих групах', date: 'XIII–XVIII ст.', scope: 'L',
     cite: Q('SHEV', S62, 'вставні голосні е та о поширилися… (давн. укр. ogn\'ь > суч. укр. огóнь — див. 35.6)'),
     apply: seq(rx(`([бвгдзкпстх])р(ь?)${LOST}$`, `$1ер$2${LOST}`), rx(`гнь${LOST}$`, `гонь${LOST}`)) },
+  // DV-4 (research/43-yat-after-j.md): the stative suffix -ѣ- (*-ěti) after j (written without j after a vowel: стоѣти = *stojěti) or after ж ч ш щ gives -а-/-я-, not і. Lexical (scope L): the plain R09 branch stays, the modern lexicon decides.
+  { id: 'R09j', name: 'ѣ > а/я після j і шиплячих у суфіксі -ѣти (стоѣти > стояти, лежѣти > лежати)', date: 'праслов’янська, у східнослов’янських усталена', scope: 'L',
+    cite: Q('WIKT', 'https://en.wiktionary.org/wiki/Reconstruction:Proto-Slavic/stojati', 'From earlier *stojěti', 'ЕС: *stojěti > *stojati; нащадки: uk стоя́ти, ru стоя́ть, be стая́ць (research/43-yat-after-j.md)'),
+    apply: seq(rx('([жчшщ])ѣ(?=т[иь]|л(?:·|$|[аоиы]))', '$1а'), rx('([аоу])ѣ(?=т(?:и|ь|ься|ися))', '$1я')) },
   { id: 'R09', name: 'ѣ > і (ї на початку та після голосного)', date: 'XIII–XIV ст.', scope: 'G',
     cite: P('SHEV', sh(32, 'shev05'), 'Просунення вперед е· з перетворенням його на і (назва розділу 32)'),
     apply: seq(rx("(^|[аеиоуєїюяі'])ѣ", '$1ї'), rx('ѣ', 'і')) },

@@ -129,6 +129,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DV-1 | tests/derivation.test.ts › lists the prefixes of SPEC 60 DV-1 |
 | DV-2 | tests/derivation.test.ts › ділати → зділати, переділати, відділати, відділатися (U-1) |
 | DV-3 | tests/derivation.test.ts › DV-3 DerivativesBlock «Похідні» is included in WordCard and /derive has the prefix mode |
+| DV-4 | tests/dv4.test.ts › DV-4 стояти, боятися, лежати: R09j gives а/я in the stative suffix, ahead of R09 |
+| DV-4 | tests/dv4.test.ts › DV-4 R09 stays for every other ѣ: видіти, жінка, поїсти, ліс; the rule is lexical (R09 branch kept for the lexicon to rank) |
+| DV-4 | tests/dv4.test.ts › DV-4 R09j carries a verbatim cite (Wiktionary *stojati < *stojěti) and a research file |
+| DV-4 | tests/dv4.test.ts › DV-4 біл: ru бел, be бел, pl biał, cs bíl → YC-1; сіно/seno |
+| DV-4 | tests/dv4.test.ts › DV-4 сидіти ~ be сядзець (YC-2), ru сидеть has no ѣ reflex row (и = и) |
+| DV-4 | tests/dv4.test.ts › DV-4 стояти ~ ru стоять ~ be стаяць, лежати ~ be ляжаць: YC-3 (j / hushing), not YC-1 |
+| DV-4 | tests/dv4.test.ts › DV-4 unrelated words get no label; every row has a verbatim cite |
+| DV-4 | tests/dv4.test.ts › DV-4 the Відповідники panel shows the rule on the edge |
 | MO-1 | tests/modernize.test.ts › бурян → бур'ян (§ 7 п.2, confirmed by the lexicon) |
 | MO-2 | tests/modernize.test.ts › MO-2 modernize runs as the last step in /derive (old → modern) and in /analyze |
 | BK-1 | tests/banks.test.ts › Zynoviiv 1705: hard ц + marked soft р give SE |

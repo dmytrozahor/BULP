@@ -5,6 +5,7 @@
  */
 import { computed, onMounted, ref, watch } from 'vue'
 import { COG_LANG_UK, FLAG_UK, wiktPsl, type CognateEntry, type CognateFile } from '../../core/cognates.ts'
+import { yatEdge } from '../../core/yat-corr.ts'
 import { cognatesOf } from '../lib/cognatesData.ts'
 import EvidenceList from './EvidenceList.vue'
 import Panel from './Panel.vue'
@@ -25,10 +26,11 @@ const span = (d: [number, number]) => (d[0] === d[1] ? String(d[0]) : `${d[0]}�
         <strong>Для перегляду (ET-3).</strong> {{ FLAG_UK[entry.flag.code] }}. <span class="muted">{{ entry.flag.note }}. Це підказка для перевірки, а не виправлення й не твердження.</span></p>
       <p class="sans small muted">Праслов’янська форма: <a :href="wiktPsl(entry.pivot)" target="_blank" rel="noopener">*{{ entry.pivot.replace(/^\*/, '') }} ↗</a><template v-if="entry.gloss"> · {{ entry.gloss }}</template></p>
       <table class="sans small">
-        <thead><tr><th>мова</th><th>форма</th><th>перша фіксація (за Вікісловником)</th></tr></thead>
+        <thead><tr><th>мова</th><th>форма</th><th>звукова відповідність</th><th>перша фіксація (за Вікісловником)</th></tr></thead>
         <tbody>
           <tr v-for="r in same" :key="r.l + r.w">
             <td>{{ COG_LANG_UK[r.l] }}</td><td lang="und">{{ r.w }}</td>
+            <td class="muted"><span v-for="y in yatEdge(lemma, r.l, r.w)" :key="y.id" :title="y.cite.map(c => c.quote).join(' | ')" data-testid="cog-rule">{{ y.label }}</span></td>
             <td><template v-if="r.d">{{ span(r.d) }} <span class="muted">«{{ r.q }}» · {{ r.k === 'tree' ? 'позначка в дереві' : 'текст етимології' }}</span></template><span v-else class="muted">не вказано</span></td>
           </tr>
         </tbody>
