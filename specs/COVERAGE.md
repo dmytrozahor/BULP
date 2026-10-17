@@ -507,7 +507,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PF-5 | tests/phrasemes-pf5.test.ts › PF-5 spanOf is min start / max end of any number of ranges |
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() equals the old quadratic filter on random fixtures (multi-word lemmas, equal-f buckets) |
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() drops a sub-gram only when the longer gram has the same f |
-| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() handles 1M synthetic phrasemes in seconds |
+| PF-6 | tests/phrasemes-pf6.test.ts › PF-6 maximal() scales linearly (4x the input costs ~4x, not ~16x) and survives 1M synthetic phrasemes |
 | PF-6 | tests/phrasemes-pf6.test.ts › PF-6 collectEvidence trie matches the nested prefix targets once per occurrence |
 | PF-7 | tests/data-cdn.test.ts › PF-7 resolveDataUrl: big dirs go to <base>/data/<buildId>/…, everything else stays on Pages |
 | PF-7 | tests/data-cdn.test.ts › routes every CDN dir |
