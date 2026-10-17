@@ -41,11 +41,17 @@ export function buildArchaic(ins: ArchIn[], derive: Derive, generated: string): 
   for (const e of [...scan.byId.values()]) for (const v of e.variants) for (const k of keysOf(v, true)) scan.alias(k, e.id)
   // 2. corpus tokens that equal a dictionary variant
   const counts = { dictionaryTokens: 0, unverifiedTokens: 0 }
+  // perf: the lookup depends only on (orth, oldI, lower-cased raw) and the alias index is final here, so it is resolved once per type (46M tokens, ~1-2M types)
+  const idCache = new Map<string, Map<string, string | null>>()
   for (const { w, linked, epoch } of ins) {
     const r = dictRefs.get(w.id) ?? new Array<string>(w.tokens.length).fill(''); let any = r.some(Boolean)
+    const ids = idCache.get((w.oldI ? '1' : '0') + (w.orth ?? '')) ?? (idCache.set((w.oldI ? '1' : '0') + (w.orth ?? ''), new Map()), idCache.get((w.oldI ? '1' : '0') + (w.orth ?? ''))!)
     if (w.witnessType !== 'dictionary') w.tokens.forEach((t, ti) => {
       if (linked(ti) || t.raw.length < 3 || !/^\p{L}[\p{L}'’ʼ-]*$/u.test(t.raw)) return
-      const id = scan.lookup(keysOf(t.raw.toLowerCase(), !!w.oldI, w.orth)); if (!id) return
+      const lc = t.raw.toLowerCase()
+      let id = ids.get(lc)
+      if (id === undefined) ids.set(lc, id = scan.lookup(keysOf(lc, !!w.oldI, w.orth)) ?? null)
+      if (!id) return
       scan.hit(id, w, epoch, t); r[ti] = 'a:' + id; any = true; counts.dictionaryTokens++
     })
     if (any) refs.set(w.id, r)

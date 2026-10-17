@@ -50,7 +50,7 @@ export interface ArchFile { generated: string; source: string; entries: ArchEntr
 export const archId = (head: string) => head.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{N}'’ʼ-]+/gu, '')
 
 export class ArchScan {
-  readonly byId = new Map<string, ArchEntry>(); private readonly index = new Map<string, string>()
+  readonly byId = new Map<string, ArchEntry>(); private readonly index = new Map<string, string>(); private readonly formIx = new Map<string, Map<string, ArchForm>>()   // perf: entry id → raw → form (was a linear find per token)
   /** register a dictionary entry (variants = spellings sharing the header line); returns its id */
   addDictEntry(w: { id: string; date: [number, number]; epoch?: string }, loc: string, variants: string[]): string | undefined {
     const vs = [...new Set(variants.map(archId).filter(Boolean))]; if (!vs.length) return undefined
@@ -78,7 +78,8 @@ export class ArchScan {
   hit(id: string, w: { id: string; date: [number, number] }, epoch: string | undefined, t: { raw: string; loc: string }): void {
     const e = this.byId.get(id); if (!e) return
     e.n++; e.witnesses[w.id] = (e.witnesses[w.id] ?? 0) + 1; if (epoch) e.epochs[epoch] = (e.epochs[epoch] ?? 0) + 1
-    const f = e.forms.find(x => x.raw === t.raw); f ? f.f++ : e.forms.push({ raw: t.raw, f: 1 })
+    let fi = this.formIx.get(id); if (!fi) { fi = new Map(e.forms.map(x => [x.raw, x] as const).reverse()); this.formIx.set(id, fi) }   // reverse: first form of a raw wins, as find() did
+    const f = fi.get(t.raw); if (f) f.f++; else { const nf = { raw: t.raw, f: 1 }; e.forms.push(nf); fi.set(t.raw, nf) }
     if (!e.first || w.date[1] < e.first.date[1]) e.first = { w: w.id, loc: t.loc, raw: t.raw, date: w.date }
     if (e.kwic.length < 6 && !e.kwic.some(k => k.w === w.id && k.loc === t.loc)) e.kwic.push({ w: w.id, loc: t.loc, raw: t.raw })
   }
