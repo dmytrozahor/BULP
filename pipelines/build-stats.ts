@@ -21,10 +21,35 @@ export interface Counts { f: number; perW: Map<string, number>; perEpoch: Map<st
 const SHEV = EPOCHS.filter(e => e.scheme === 'shev').map(e => e.id)
 const r3 = (x: number) => Math.round(x * 1000) / 1000
 
+interface DpIdx { idx: Map<string, number>; n: Float64Array; N: number; y: Float64Array }
+const dpIdx = new WeakMap<Sizes, DpIdx | null>()
+/** perf: dispersion(sz.witnesses.map(...)) without the 4k-object allocation per lemma. The float operations are the same
+ *  and in the same (witness) order, so the result is bit-identical; a dense Float64Array is filled from the sparse perW and cleared again. */
+export function dispersionFast(perW: Map<string, number>, sz: Sizes): { dp: number; evenness: number; range: number } {
+  let ix = dpIdx.get(sz)
+  if (ix === undefined) {
+    const idx = new Map(sz.witnesses.map((w, i) => [w.id, i] as const))
+    ix = idx.size === sz.witnesses.length ? { idx, n: Float64Array.from(sz.witnesses, w => w.n), N: sz.witnesses.reduce((s, w) => s + w.n, 0), y: new Float64Array(sz.witnesses.length) } : null
+    dpIdx.set(sz, ix)
+  }
+  if (!ix) return dispersion(sz.witnesses.map(w => ({ y: perW.get(w.id) ?? 0, n: w.n })))
+  const { idx, n, N, y } = ix
+  let AF = 0, range = 0
+  for (const [id, v] of perW) { const i = idx.get(id); if (i !== undefined) { y[i] = v } }
+  try {
+    for (let i = 0; i < y.length; i++) { AF += y[i]!; if (y[i]! > 0) range++ }
+    if (!AF || !N) return { dp: 1, evenness: 0, range: 0 }
+    let t = 0
+    for (let i = 0; i < y.length; i++) t += Math.abs(y[i]! / AF - n[i]! / N)
+    const dp = 0.5 * t
+    return { dp, evenness: 1 - dp, range }
+  } finally { for (const id of perW.keys()) { const i = idx.get(id); if (i !== undefined) y[i] = 0 } }
+}
+
 /** Centuries with data span min..max; gaps have N=0 → ipm 0 and smooth null. */
 export function lemmaStats(c: Counts, fMax: number, sz: Sizes, colloc: LemmaStats['colloc']): LemmaStats {
   const hk = freqClass(c.f, fMax)
-  const dp = dispersion(sz.witnesses.map(w => ({ y: c.perW.get(w.id) ?? 0, n: w.n })))
+  const dp = dispersionFast(c.perW, sz)
   const byEpoch: LemmaStats['byEpoch'] = {}
   for (const [id, f] of c.perEpoch) byEpoch[id] = { f, ipm: r3(ipm(f, sz.epoch[id] ?? 0)) }
   const cents = Object.keys(sz.century).map(Number).sort((a, b) => a - b)
