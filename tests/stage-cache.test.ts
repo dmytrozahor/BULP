@@ -118,6 +118,24 @@ describe('RS-2 stage cache: hits, misses, invalidation', () => {
     expect((await run(p, { env: { KEEP_MIN_F: '3' } })).calls).toEqual([])
     expect((await run(p, { enabled: false })).calls).toEqual(['s1', 's2', 's3', 's4'])
   })
+  it('RS-2 run-mode switches are not part of the key: verify, heap size, cache dir, UV_BIN keep every hit; the miss message names the exact variable', async () => {
+    const { BUILD_ENV_KEYS } = await import('../pipelines/stage-cache.ts')
+    for (const k of ['BUILD_CACHE_VERIFY', 'BUILD_CACHE_DIR', 'NODE_OPTIONS', 'UV_BIN']) expect(BUILD_ENV_KEYS as readonly string[]).not.toContain(k)
+    for (const k of ['KEEP_MIN_F', 'DICT_ONLY', 'HIST_ONLY', 'BULP_ALLOW_UNREADABLE']) expect(BUILD_ENV_KEYS as readonly string[]).toContain(k)
+    const keyed = (extra: Record<string, string | undefined>) => Object.fromEntries(BUILD_ENV_KEYS.map(k => [k, ({ ...process.env, ...extra } as Record<string, string | undefined>)[k]]))
+    const p = project(); await run(p, { env: keyed({}) })
+    const old = { v: process.env['NODE_OPTIONS'], u: process.env['UV_BIN'] }
+    try {
+      process.env['NODE_OPTIONS'] = '--max-old-space-size=16000'; process.env['UV_BIN'] = '/somewhere/else/uv'
+      expect((await run(p, { env: keyed({}), verify: true })).calls).toEqual([])
+      expect((await run(p, { env: keyed({}), verify: false })).calls).toEqual([])
+    } finally { for (const [k, v] of [['NODE_OPTIONS', old.v], ['UV_BIN', old.u]] as const) { if (v === undefined) delete process.env[k]; else process.env[k] = v } }
+    const r = await run(p, { env: keyed({ KEEP_MIN_F: '7' }), flags: { noPy: true } })
+    expect(r.calls).toEqual(['s1', 's2', 's3', 's4'])
+    const why = r.logs.join('\n')
+    expect(why).toContain('env KEEP_MIN_F: (unset) -> 7')
+    expect(why).toContain('flag noPy: (absent) -> true')
+  })
   it('RS-2 never keyed on time: touching a file without changing it is a hit', async () => {
     const p = project(); await run(p)
     const f = join(p.root, 'in/a.txt'), t = new Date(Date.now() + 3600_000)

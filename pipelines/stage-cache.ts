@@ -32,7 +32,11 @@ const O = {
 
 export const CACHE_FORMAT = 'RS2v1'
 /** env variables that change what the build computes: part of every key */
-export const BUILD_ENV_KEYS = ['KEEP_MIN_F', 'DICT_ONLY', 'HIST_ONLY', 'BULP_ALLOW_UNREADABLE', 'UV_BIN'] as const
+/**
+ * Only variables that change the OUTPUT. Run-mode variables are deliberately absent: BUILD_CACHE_VERIFY / --cache-verify, BUILD_CACHE_DIR, NODE_OPTIONS (heap), --from, --no-cache,
+ * and UV_BIN (a path to the same tool). UV_BIN used to be keyed: entries written while it was set carry the old spine and miss once (one cold run); afterwards the cache is stable whatever UV_BIN is.
+ */
+export const BUILD_ENV_KEYS = ['KEEP_MIN_F', 'DICT_ONLY', 'HIST_ONLY', 'BULP_ALLOW_UNREADABLE'] as const
 const MAGIC = Buffer.from('RS2v1\0\0\0'), END = Buffer.from('END!')
 
 export const sha = (...parts: (string | Buffer | Uint8Array)[]) => {
@@ -246,7 +250,7 @@ export interface RunOpts {
 }
 export interface StageStat { stage: string; status: 'hit' | 'miss' | 'off'; secs: number; bytes: number; why?: string }
 /** what the key was made of (short hashes) and the keys of the stages before it: the next run compares them to say WHY it missed (RS-2) */
-interface KeyParts { code: string; inputs?: string; files?: Record<string, string> }
+interface KeyParts { code: string; inputs?: string; files?: Record<string, string>; /** the spine's base, one entry per variable, so a miss names the one that changed */ base?: Record<string, string> }
 interface ManifestLine { key: string; file: string; bytes: number; secs: number; digest: string; item?: string; at: string; parts?: KeyParts; up?: Record<string, string> }
 const short = (s: string) => s.slice(0, 12)
 const MAX_NAMES = 4
@@ -256,6 +260,7 @@ export class StageCache {
   readonly tracker: ReadTracker
   readonly stats: StageStat[] = []
   private spine: string
+  private base: Record<string, string>
   /** the spine's contributions in order: [stage, key] (item stages: [stage, code fingerprint]); 'base' = format, node, env, flags */
   private ups: [string, string][]
   private why = new Map<string, string>()   // this run: stage -> why it missed
@@ -271,6 +276,11 @@ export class StageCache {
     this.enabled = cfg.enabled
     this.tracker = new ReadTracker([resolve(cfg.dir), ...(cfg.ignore ?? [])])
     this.spine = sha(CACHE_FORMAT, process.versions.node.split('.')[0]!, stable(cfg.env ?? {}), stable(cfg.flags ?? {}))
+    this.base = {
+      node: process.versions.node.split('.')[0]!,
+      ...Object.fromEntries(Object.entries(cfg.env ?? {}).map(([k, v]) => ['env ' + k, v === undefined ? '(unset)' : v])),
+      ...Object.fromEntries(Object.entries(cfg.flags ?? {}).map(([k, v]) => ['flag ' + k, String(v)])),
+    }
     this.ups = [['base', this.spine]]
   }
   private log(m: string) { (this.cfg.log ?? console.log)(`[stage-cache] ${m}`) }
@@ -292,7 +302,7 @@ export class StageCache {
   private keyParts(stage: string, o: RunOpts): { key: string; parts: KeyParts } {
     const code = this.cfg.code.fingerprint(stage), inputs = sha(stable(o.inputs ?? null))
     const fh = (o.files ?? []).map(f => { try { return [f, contentHash(O.readFileSync(f))] as const } catch { return [f, 'absent'] as const } })
-    const parts: KeyParts = { code: short(code), inputs: short(inputs), ...(fh.length ? { files: Object.fromEntries(fh.map(([f, x]) => [f, short(x)])) } : {}) }
+    const parts: KeyParts = { code: short(code), inputs: short(inputs), base: this.base,...(fh.length ? { files: Object.fromEntries(fh.map(([f, x]) => [f, short(x)])) } : {}) }
     return { key: sha(stage, code, this.spine, stable(o.inputs ?? null), ...fh.map(([f, x]) => f + ':' + x)), parts }
   }
   private codeDiffMemo = new Map<string, string>()
@@ -317,6 +327,13 @@ export class StageCache {
     } catch { /* no code.json yet */ }
     this.codeDiffMemo.set(memo, r); return r
   }
+  /** which variable of the spine's base differs from the one recorded with the previous entry */
+  private baseDiff(was?: Record<string, string>): string {
+    if (!was) return 'build env, flags or node version changed (the previous entry did not record which)'
+    const out: string[] = []
+    for (const k of new Set([...Object.keys(was), ...Object.keys(this.base)])) if (was[k] !== this.base[k]) out.push((k === 'node' ? 'node major' : k) + ': ' + (was[k] ?? '(absent)') + ' -> ' + (this.base[k] ?? '(absent)'))
+    return out.length ? 'build input changed: ' + out.join('; ') : 'build env, flags or node version changed (legacy key: a variable that is no longer keyed)'
+  }
   /** the precise reason there is no entry for the key: compares the key's parts with those recorded on the newest entry of the stage (for an item stage: of that item) */
   private explain(stage: string, cur: KeyParts, item?: string): string {
     const lines = this.manifest(stage); let prev: ManifestLine | undefined
@@ -328,7 +345,7 @@ export class StageCache {
     if (item === undefined) {
       const now = Object.fromEntries(this.ups.map(([s, k]) => [s, short(k)])), was = prev.up ?? {}
       const first = Object.keys(now).find(s => was[s] !== now[s]) ?? Object.keys(was).find(s => !(s in now))
-      if (first === 'base') why.push('build env, flags or node version changed')
+      if (first === 'base') why.push(this.baseDiff(prev.parts.base))
       else if (first) { const w = this.why.get(first); why.push('upstream stage "' + first + '" has a new key' + (w ? ' (' + w + ')' : '')) }
     }
     if (prev.parts.inputs !== cur.inputs) why.push('opts.inputs changed')

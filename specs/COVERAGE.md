@@ -612,6 +612,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-2 | tests/stage-cache.test.ts › RS-2 a stage block edited: that stage and the later ones |
 | RS-2 | tests/stage-cache.test.ts › RS-2 CRLF checkouts do not change a fingerprint |
 | RS-2 | tests/stage-cache.test.ts › RS-2 env/flags are part of the key; --from recomputes |
+| RS-2 | tests/stage-cache.test.ts › RS-2 run-mode switches are not part of the key |
 | RS-2 | tests/stage-cache.test.ts › RS-2 never keyed on time |
 | RS-2 | tests/stage-cache.test.ts › RS-2 a truncated, bit-flipped or missing entry is a miss |
 | RS-2 | tests/stage-cache.test.ts › RS-2 a killed writer leaves only a *.tmp |
@@ -627,6 +628,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RS-2 | tests/stage-cache.test.ts › RS-2 the output section after the last cached stage is not part of any fingerprint |
 | RS-2 | tests/stage-cache.test.ts › RS-2 stage markers are validated |
 | RS-2 | manual — full-corpus cold/warm equality is checked on the worker rebuild (BUILD_CACHE_VERIFY=1, public/data diff against the last uncached build, second run time); the corpus is not in the repository |
+| RS-3 | tests/ops-worker.test.ts › RS-3 everything pushed, uploaded and deployed: ALL CLEAR |
+| RS-3 | tests/ops-worker.test.ts › RS-3 busy: a work process, an ssh session |
+| RS-3 | tests/ops-worker.test.ts › RS-3 busy: unpushed commit |
+| RS-3 | tests/ops-worker.test.ts › RS-3 CDN-aware |
+| RS-3 | tests/ops-worker.test.ts › RS-3 Actions runs are parsed as JSON |
+| RS-3 | tests/ops-worker.test.ts › RS-3 the timer: clear starts it |
+| RS-3 | tests/ops-worker.test.ts › RS-3 a failing step stops the run |
+| RS-3 | tests/ops-worker.test.ts › RS-3 publish mode: the upload starts a fresh build id |
+| RS-3 | tests/ops-worker.test.ts › RS-3 every script parses |
+| RS-3 | tests/ops-worker.test.ts › RS-3 ingest.sh fails the run |
+| RS-3 | manual — the install and the real idle-stop decision on the AWS worker are checked by running install.sh and DRY=1 idle-stop.sh there (report of the ops task); the real shutdown and GitHub issue creation need the instance |
 | AT-3 | tests/atlas.test.ts › AT-3 АУМ rows in DIALECT_BOOK_RULES |
 | AT-3 | tests/atlas.test.ts › AT-3 /atlas page and site file |
 | AT-3 | manual — validation of the AUM rules on the dialect witnesses (CX-9, Лєснова, Шухевич) needs data/work from the consolidated rebuild: run `tsx pipelines/dialect-literature.ts` after it |
