@@ -113,8 +113,12 @@ describe('SE-4 transitions are typed only when a source names the type', () => {
     expect(t[0]).toMatchObject({ type: 'figurative', label: 'перен.', status: 'cited', by: 1 })
   })
   it('SE-4 a transition resting on a coverage period or an edition year is a hypothesis', () => {
-    const rows: SeRow[] = [{ d: 'dsu14', g: 'вільна людина' }, { d: 'r2u_hrinch09', g: 'невільник' }]
+    const rows: SeRow[] = [{ d: 'dsu14', g: 'вільна людина' }, { d: 'wikt.uk', g: 'невільник' }]
     expect(transitions(rows, [{ rows: [0], sc: null, link: 'inferred' }, { rows: [1], sc: null, link: 'inferred' }])[0]!.status).toBe('hypothesis')
+  })
+  it('SE-4 no transition between glosses of different languages (not comparable)', () => {
+    const rows: SeRow[] = [dsu([1350, 1359], 'вільна людина'), { d: 'r2u_hrinch09', g: 'свободный' }]
+    expect(transitions(rows, rows.map((_, i) => ({ rows: [i], sc: null, link: 'inferred' as const })))).toHaveLength(0)
   })
   it('SE-4 no arrow when the origin is ambiguous (two senses in the closest earlier epoch) and none for senses of the same epoch', () => {
     const rows = [dsu([1350, 1359], 'а'), dsu([1340, 1345], 'б'), tim([1650, 1659], 'в')]

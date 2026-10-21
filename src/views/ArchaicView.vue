@@ -66,6 +66,6 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
       </ul>
     </template>
     <WitnessBlock id="ar-wit" :items="wits.map(([w, n]) => ({ w, n }))" />   <!-- SPEC 63 CP-2: graph / list, empty state -->
-    <ThinCard :lemma="e.head" :spelling="e.head" :kwic="lines" :f="e.n" :witnesses="e.witnesses" />
+    <ThinCard se-kind="arch" :lemma="e.head" :spelling="e.head" :kwic="lines" :f="e.n" :witnesses="e.witnesses" />
   </template>
 </template>

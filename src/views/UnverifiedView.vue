@@ -92,6 +92,6 @@ watch(cands, async cs => {
       <RouterLink :to="{ path: '/analyze', query: { q: g[0] } }">повний аналіз за правилами →</RouterLink>
     </section>
     <PlastSenses :word="g[0]" />
-    <ThinCard :spelling="g[0]" :kwic="kwicFull" :f="g[1]" />
+    <ThinCard se-kind="mu" :spelling="g[0]" :kwic="kwicFull" :f="g[1]" />
   </template>
 </template>

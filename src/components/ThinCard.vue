@@ -16,7 +16,8 @@ import Kwic from './Kwic.vue'
 import DialectBlock from './DialectBlock.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import LemmaBlocks from './LemmaBlocks.vue'
-const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
+import SenseEpochs from './SenseEpochs.vue'
+const props = defineProps<{ /** SPEC 63 SE-6: card kind of the host view (label of the sense block) */ seKind?: 'light' | 'dict' | 'orv' | 'arch' | 'mu'; lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
 const best = computed(() => d.value.candidates[0])
 const { corpus, witnessById } = useData()
@@ -36,7 +37,7 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
       <p class="sans small"><span class="muted">норма: </span>{{ d.norm }}<template v-if="best"> <span class="muted"> · сучасна (гіпотеза за правилами): </span>{{ best.form }}</template></p>
       <DerivationSteps v-if="best" :steps="best.steps" :uid="`t-${spelling}`" :lemma="lemma" panel="chain" />
     </Panel>
-    <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» (sense timeline) mounts here, right after the derivation block -->
+    <SenseEpochs :word="lemma ?? spelling" :kind="seKind ?? (dictOnly ? 'dict' : 'light')" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами»: the sense timeline, right after the derivation block -->
     <Panel id="t-reg" :open="false" :count="nRegions" title="Карта · регіон пам’ятки" :summary="`${nRegions} регіонів`" :empty="!nRegions" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : 'регіон пам’яток не визначено'"
       info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
       <RegionMap :by="byRegion" />

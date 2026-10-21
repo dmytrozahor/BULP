@@ -51,6 +51,7 @@ import DeicticStructure from '../components/DeicticStructure.vue'
 import DialectVariants from '../components/DialectVariants.vue'
 import HeteronymReadings from '../components/HeteronymReadings.vue'
 import SensesBlock from '../components/SensesBlock.vue'
+import SenseEpochs from '../components/SenseEpochs.vue'
 import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
@@ -291,6 +292,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <DialectVariants :lemma="card.lemma" />   <!-- SPEC 63 DP-4 -->
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
+        <SenseEpochs :word="card.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами» -->
         <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
         <Panel id="h-sn" :open="false" :count="lemmaSenses.length" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
           info="Значення — з розділу «Значення» uk.wiktionary (CC BY-SA 4.0), скорочено; не словникова норма проєкту. Наголос показано лише там, де сторінка Вікісловника дає наголошений склад для цієї омонімічної статті.">

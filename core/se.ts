@@ -36,7 +36,7 @@ export const DICT_COVER: DictCover[] = [
   R('r2u_izyumov', 'Ізюмов', 'Російсько-український словник', [1930, 1930], 'ru', 'ru-uk'),
   R('r2u_doroshenko', 'Дорошенко–Станиславський', 'Російсько-український словник ділової мови', [1930, 1930], 'ru', 'ru-uk'),
   R('r2u_yakubski', 'Якубські', 'Російсько-український словник військової термінології', [1928, 1928], 'ru', 'ru-uk'),
-  { id: 'dsu14', short: 'Словник староукр. мови XIV–XV ст.', title: 'Словник староукраїнської мови XIV–XV ст.', edition: [1977, 1978], cover: [1301, 1500], basis: 'period', lang: 'none', quoteDates: true, harvested: true,
+  { id: 'dsu14', short: 'Словник староукр. мови XIV–XV ст.', title: 'Словник староукраїнської мови XIV–XV ст.', edition: [1977, 1978], cover: [1301, 1500], basis: 'period', lang: 'uk', quoteDates: true, harvested: true,
     note: 'історичний словник: описує XIV–XV ст., а не роки друку; у проєкті прочитано лише рядки заголовних слів (значення не копіюються), цитата з роком дає дату засвідчення' },
   { id: 'wikt.uk', short: 'Вікісловник (uk)', title: 'uk.wiktionary.org, розділ «Значення»', edition: [2026, 2026], cover: null, basis: 'modern', lang: 'uk', harvested: true, note: 'сучасне вживання; джерело не датує значень (рік видання не є датою значення)' },
   { id: 'wikt.en', short: 'Wiktionary (en, kaikki)', title: 'en.wiktionary.org via kaikki.org', edition: [2026, 2026], cover: null, basis: 'modern', lang: 'en', harvested: true, note: 'сучасне вживання; джерело не датує значень' },
@@ -210,11 +210,12 @@ const firstEpoch = (g: SeGroup, rows: SeRow[]): number => {
  * hypothesis = at least one end rests on a coverage period / edition year only (the order may only mirror which dictionary covers which period).
  */
 export function transitions(rows: SeRow[], groups: SeGroup[]): SeTrans[] {
+  const glang = (g: SeGroup) => dictById(rows[g.rows.find(r => rows[r]!.g) ?? g.rows[0]!]!.d)?.lang ?? 'none'
   const fe = groups.map(g => firstEpoch(g, rows)), out: SeTrans[] = []
   const quoteDated = (g: SeGroup) => g.rows.some(i => rows[i]!.e)
   groups.forEach((b, bi) => {
     if (fe[bi]! >= 99 || !b.rows.some(i => rows[i]!.g)) return
-    const earlier = groups.map((_, i) => i).filter(i => fe[i]! < fe[bi]! && groups[i]!.rows.some(r => rows[r]!.g))
+    const earlier = groups.map((_, i) => i).filter(i => fe[i]! < fe[bi]! && groups[i]!.rows.some(r => rows[r]!.g) && glang(groups[i]!) === glang(b))   // glosses of different languages cannot be compared: no change is claimed
     if (!earlier.length) return
     const nearest = Math.max(...earlier.map(i => fe[i]!)), cand = earlier.filter(i => fe[i] === nearest)
     if (cand.length !== 1) return

@@ -683,4 +683,13 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-9 | manual — policy for new dictionaries (harvester + DICT_COVER record; copyrighted = headword line and short quotes; not online = research/45 top); the decision per dictionary is SE-10 and is checked by reading the spec and research/45 |
 | SE-5 | tests/se.test.ts › SE-5 the epochs are the six project epochs; an epoch with no evidence is a gap, never filled |
 | SE-5 | tests/se.test.ts › SE-5 a period that spans two epochs is shown in both, marked as a span |
-| SE-6 | manual — the block component and its mount points are added in the next commit with tests/se-ui.test.ts (one test per card kind); until then the id is checked by reading src/views |
+| SE-5 | tests/se-ui.test.ts › SE-5 the fixture timeline shows the six epochs in order, a gap as «немає даних», dated quotes, coverage periods and the typed transition |
+| SE-5 | tests/se-ui.test.ts › SE-5 an untyped transition reads «тип не вказано джерелом» |
+| SE-4 | tests/se.test.ts › SE-4 no transition between glosses of different languages (not comparable) |
+| SE-6 | tests/se-ui.test.ts › SE-6 the full card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the light card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the dict card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the orv card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the arch card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the mu card renders the block with its own test id |
+| SE-6 | tests/se-ui.test.ts › SE-6 the block is one component: mounted once in the full card and once in ThinCard, which serves light, dictionary-only, ORV/TOROT, archaic and unverified (MU) cards |

@@ -48,6 +48,6 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
     </ul>
     <WitnessBlock id="tc-wit" :items="wits" />
     <PlastSenses :word="modern ?? card.lemma" />
-    <ThinCard :lemma="modern ?? card.lemma" :spelling="card.lemma" :kwic="lines" :f="card.n" />
+    <ThinCard se-kind="orv" :lemma="modern ?? card.lemma" :spelling="card.lemma" :kwic="lines" :f="card.n" />
   </template>
 </template>
