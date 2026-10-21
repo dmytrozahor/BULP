@@ -18,6 +18,7 @@ import { AUTHORS_R2U } from './nw-r2u.ts'
 import { AUTHORS_17 } from './nw-izb17.ts'
 import { AUTHORS_TERMLIST } from './nw-termlist.ts'
 import { AUTHORS_TRANSLIT } from './nw-translit.ts'
+import { AUTHORS_PUM } from './nw-pum.ts'
 
 export type AuthorLabel = 'ruthenian-rus' | 'ruthenian' | 'malorossian' | 'ukrainian' | 'institutional'
 export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
@@ -97,6 +98,7 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_R2U,
   ...AUTHORS_17,
   ...AUTHORS_TERMLIST,   // CX-6
+  ...AUTHORS_PUM,   // RF-8
   ...AUTHORS_TRANSLIT,   // CX-6
 ]
 

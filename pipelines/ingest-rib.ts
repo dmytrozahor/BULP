@@ -15,11 +15,11 @@ import { Q } from '../core/evidence.ts'
 import type { Evidence } from '../core/evidence.ts'
 import type { WitnessOut } from '../core/types.ts'
 import { writeAtomic } from '../harvest/lib.ts'
-import { authorFor, textTokens } from './ingest-harvest.ts'
+import { authorFor, mergeHarvestAuthors, textTokens } from './ingest-harvest.ts'
 
 export interface RibWork {
   id: string; book: RegExp; title: string; author: string; authorQuote: string; cols: [number, number]; date: [number, number]; dateCite: Evidence
-  edition: string; lang: WitnessOut['lang']; school?: WitnessOut['school']
+  edition: string; lang: WitnessOut['lang']; school?: WitnessOut['school']; /** scan pages carry a Polish parallel column read as Cyrillic garbage: polishFilter drops its lines */ polish?: boolean
 }
 const R44 = 'research/44-bratstva-bibliography.md'
 const T4 = 'РИБ т. 4, СПб. 1878 (ред. П. Гильтебрандт; Археографическая коммиссія)'
@@ -41,7 +41,7 @@ export const RIB_WORKS: RibWork[] = [
   { id: 'rib19_istoria_florent', book: /РИБ_т19_1903/, title: 'Исторія о разбойничьемъ Флорентійскомъ соборѣ (клирик Острозький, 1598), РИБ т. 19, стб. 433–476', author: 'Клірик Острозький', authorQuote: 'Исторія о разбойничьемъ Флорентійскомъ соборѣ, изданная клирикомъ Острожскимъ въ 1598 году',
     cols: [433, 476], date: [1598, 1598], dateCite: toc19('Исторгя 0 РАЗБОЙНИЧЬЕМЪ ФлОРЕНТ!Й- СКОМЪ — СОБОРЪ, ИЗДАННАЯ | КЛИРИКОМЪ Острожскимъ въ 1598 году'), edition: T19, lang: 'ruthenian' },
   { id: 'rib19_antirrhisis', book: /РИБ_т19_1903/, title: 'Ипатій Потій, «Антирисисъ», західно-руський текст 1599 р., РИБ т. 19, стб. 477–982', author: 'Іпатій Потій', authorQuote: 'Антирисисъ … Ипатія Потѣя (РИБ т. 19)',
-    cols: [477, 982], date: [1599, 1599], dateCite: toc19('Антиризисъ или Апологтя пРотивЪ Хри- СТОФОРА ФиИлЛАЛЕТА. Въ ДВУХЪ ТЕКСТАХЪ: Западно-Русскомъ (1599) и Польскомъ'), edition: T19, lang: 'ruthenian' },
+    cols: [477, 982], polish: true, date: [1599, 1599], dateCite: toc19('Антиризисъ или Апологтя пРотивЪ Хри- СТОФОРА ФиИлЛАЛЕТА. Въ ДВУХЪ ТЕКСТАХЪ: Западно-Русскомъ (1599) и Польскомъ'), edition: T19, lang: 'ruthenian' },
   { id: 'rib19_potij_lyst', book: /РИБ_т19_1903/, title: 'Листъ Ипатія Потѣя къ князю К. К. Острожскому, 3 червня 1598, РИБ т. 19, стб. 983–1040', author: 'Іпатій Потій', authorQuote: 'Листъ Ипатія Потѣя къ князю Константину Константиновичу Острожскому, 3 іюня 1598 года',
     cols: [983, 1040], date: [1598, 1598], dateCite: toc19('Листъ Ипатгл Потвя къ князю Констли- тиЦУ КонстАНТИПоОВИчЧУ ОстрРожскоху, 3 тюня 1598 года'), edition: T19, lang: 'ruthenian' },
   { id: 'rib19_potij_otpovid', book: /РИБ_т19_1903/, title: 'Отвѣтъ (отписъ) Ипатія Потѣя клирику Острожскому, 1598–1599, РИБ т. 19, стб. 1041–1122', author: 'Іпатій Потій', authorQuote: 'Отвѣтъ (отписъ) Ипатія Потѣя клирику Острожскому, 1598—1599 года',
@@ -57,6 +57,34 @@ export function columnsOf(page: string): [number, number] | undefined {
   if (!nums.length) return undefined
   const a = nums[0]!, last = nums[nums.length - 1]!
   return [a, nums.length > 1 && last > a && last - a <= 6 ? last : a + 3]
+}
+/**
+ * OQ line-level filter for a two-column scan page (Ruthenian text + Polish parallel text, «Антирисис»): tesseract read the Latin-script Polish column as Cyrillic look-alikes,
+ * so its lines are garbage. A line is POLISH when it has a word with a glyph the Ruthenian text never uses (ѕ һ ү ќ ј ҹ ћ ђ), a capital inside a word (ВлушзКіеро), a digit inside a word, or ≥ 3 words
+ * and not one Ruthenian mark; it is RUTHENIAN when it has a word ending in ъ, or a Ruthenian function word. A line with neither mark inherits the verdict of the previous line of its block (a blank line ends a block).
+ * Returns the kept text and the number of dropped words.
+ */
+const END = String.raw`(?=[\s.,;:!?)\]»“]|$)`
+const RUTH_MARK = new RegExp(String.raw`(?:^|[\s(\[«„])(?:ся|што|что|тый|тая|тое|тую|которы\p{L}*|есть|былъ|была|было|быти|зъ|съ|къ|безъ|надъ|подъ)${END}|\p{L}ъ${END}`, 'iu')
+const POL_GLYPH = /[ѕһүќјҹћђҕӏ]/iu
+const POL_WORD = /\p{Ll}\p{Lu}|\p{L}\d|\d\p{L}/u
+export function polishFilter(text: string): { text: string; dropped: number } {
+  const out: string[] = []; let dropped = 0, verdict: 'r' | 'p' | undefined
+  for (const ln of text.split('\n')) {
+    if (!ln.trim()) { verdict = undefined; out.push(ln); continue }
+    if (/Руниверс|АНТ[ИЙ]*РИЗИС|ПРОТИВЪ ХРИСТОФОРА|^[\s\d]+$/.test(ln)) continue   // page furniture: the scanner's watermark, the running head, a bare column number
+    const ws = ln.match(/[\p{L}\p{N}]+/gu) ?? []
+    const polN = ws.filter(w => POL_GLYPH.test(w) || POL_WORD.test(w)).length, ruth = RUTH_MARK.test(ln)
+    let v: 'r' | 'p'
+    if (ruth && !polN) v = 'r'
+    else if (polN && !ruth) v = 'p'
+    else if (polN && ruth) v = polN >= 2 ? 'p' : 'r'
+    else v = ws.length >= 3 && !verdict ? 'p' : (verdict ?? 'r')
+    verdict = v
+    if (v === 'p') dropped += ws.length
+    else { const k = ln.replace(/[\p{L}\p{N}]+/gu, w => (POL_GLYPH.test(w) || POL_WORD.test(w)) ? (dropped++, ' ') : w); out.push(k) }   // a stray garbage word inside a Ruthenian line goes too
+  }
+  return { text: out.join('\n'), dropped }
 }
 const FOOT = /^\s*[\d¹²³*†‡]*\s*\)/
 /** the first printed column of every scan page: OCR noise in a running head (`835` for `335`, a stray year) is rejected by the longest increasing chain of heads (a step of 1…8 columns per scan page) and the pages between chain members are interpolated at 4 columns per page; pages outside the chain's ends have no column */
@@ -98,13 +126,14 @@ export function ribWitness(w: RibWork, pages: { n: number; text: string }[], sou
   if (!sel.length) return { skip: 'no-pages' }
   const tokens: WitnessOut['tokens'] = []; let unmapped = 0, apparatus = 0
   for (const p of sel) {
-    const t = textTokens(p.text, plain ? `арк. ${p.n}` : `стб. ${p.a}`, true)
+    const pf = w.polish ? polishFilter(p.text) : undefined
+    const t = textTokens(pf ? pf.text : p.text, plain ? `арк. ${p.n}` : `стб. ${p.a}`, true)
     const base = tokens.length ? tokens[tokens.length - 1]!.s + 1 : 0
-    tokens.push(...t.tokens.map(x => ({ ...x, s: x.s + base }))); unmapped += t.unmapped; apparatus += t.apparatus + p.foot
+    tokens.push(...t.tokens.map(x => ({ ...x, s: x.s + base }))); unmapped += t.unmapped; apparatus += t.apparatus + p.foot + (pf?.dropped ?? 0)
   }
   if (tokens.length < 20) return { skip: 'too-short' }
   const url = `owner-books:${w.book.source}`
-  return { id: w.id, unit: w.id, title: w.title, author: authorFor(w.author, source, url, w.authorQuote), url, date: w.date, dateCite: w.dateCite, lang: w.lang, witnessType: 'edition', edition: w.edition,
+  return { id: w.id, unit: w.id, title: w.title, author: authorFor(w.author, source, url, w.authorQuote), url, date: w.date, dateCite: w.dateCite, lang: w.lang, witnessType: 'ocr', edition: w.edition,
     ...(w.school ? { school: w.school } : {}), license: 'public domain (автор † до 1900; скан власника, OCR не вичитано)', dropped: { unmapped, apparatus }, tokens, pages: [sel[0]!.n, sel[sel.length - 1]!.n] }
 }
 
@@ -131,5 +160,6 @@ export function main(argv: string[]) {
     writeAtomic(`${out}/${w.id}.json`, JSON.stringify(wit))
     console.log(`${w.id}: ${wit.tokens.length} tokens, scan pages ${pages[0]}–${pages[1]}, dropped ${JSON.stringify(wit.dropped)}`)
   }
+  mergeHarvestAuthors(out)   // the authors made by authorFor() live in data/work/harvest-authors.json (pipelines/authors.ts reads it): without this the build dropped every РИБ witness for «автор без запису»
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('pipelines/ingest-rib.ts')) main(process.argv.slice(2))

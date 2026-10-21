@@ -85,6 +85,13 @@ export function authorFor(name: string | undefined, source: string, url: string,
   return id
 }
 
+/** merge the authors made by authorFor() in this process into <out>/harvest-authors.json (a run with --only, or another ingester such as ingest-rib / ingest-kvitka, must not drop the authors of the others) */
+export function mergeHarvestAuthors(out: string) {
+  const ap = `${out}/harvest-authors.json`
+  const prev: HAuthor[] = existsSync(ap) ? JSON.parse(readFileSync(ap, 'utf8')) : []
+  writeAtomic(ap, JSON.stringify([...new Map([...prev, ...authors.values()].map(a => [a.id, a])).values()]))
+}
+
 // ── builders ─────────────────────────────────────────────────────────────────────────────────────────
 export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
   const date = yearRange(it.date)
@@ -327,9 +334,7 @@ export async function main(argv: string[]) {
   if (want('hv5')) sums.push(runLitopys(ctx))
   if (want('hv5-orig')) sums.push(runOrig(ctx))
   for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) sums.push(runVocab(ctx, v, fam))
-  const ap = `${ctx.out}/harvest-authors.json`   // merge: a run with --only must not drop the authors of the other sources
-  const prev: HAuthor[] = existsSync(ap) ? JSON.parse(readFileSync(ap, 'utf8')) : []
-  writeAtomic(ap, JSON.stringify([...new Map([...prev, ...authors.values()].map(a => [a.id, a])).values()]))
+  mergeHarvestAuthors(ctx.out)
   for (const s of sums) console.log(`${s.source}: ${s.items} items → ${s.witnesses} witnesses, ${s.tokens} tokens${Object.keys(s.skipped).length ? ', skipped ' + JSON.stringify(s.skipped) : ''}`)
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('pipelines/ingest-harvest.ts')) await main(process.argv.slice(2))

@@ -29,6 +29,8 @@
     "data:branch:pull": "tsx pipelines/data-branch.ts pull",
     "harvest:ingest": "tsx pipelines/ingest-harvest.ts",
     "ingest:rib": "tsx pipelines/ingest-rib.ts",
+    "ingest:kvitka": "tsx pipelines/ingest-kvitka.ts",
+    "ingest:pum": "tsx pipelines/ingest-pum.ts",
     "harvest:launch": "powershell -NoProfile -File harvest/launch.ps1",
     "harvest:status": "powershell -NoProfile -File harvest/status.ps1"
   },
