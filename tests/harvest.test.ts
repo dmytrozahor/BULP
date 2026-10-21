@@ -15,6 +15,7 @@ const poets = await import('../harvest/poets.ts')
 const faust = await import('../harvest/faust.ts')
 const hr = await import('../harvest/hrushevsky.ts')
 const hv4 = await import('../harvest/hv4.ts')
+const hv5 = await import('../harvest/hv5.ts')
 const ing = await import('../pipelines/ingest-harvest.ts')
 
 describe('HV-1 harvest/ scripts: resumable, capped, logged, launched detached', () => {
@@ -157,5 +158,53 @@ describe('HV-4 Зизаній, Смотрицький, Беринда (archive.o
     const v = JSON.parse(readFileSync(join(out, 'harvest-vocab/hv4.json'), 'utf8'))
     expect(v).toMatchObject({ vocabOnly: true, family: 'middle-ukrainian-church-slavonic' })
     expect(v.items[0]).toMatchObject({ date: [1627, 1627], region: 'Київ' }); expect(JSON.stringify(v)).not.toMatch(/"tokens":\[/)
+  })
+})
+
+describe('HV-5 litopys/izbornyk Ruthenian texts, ayuzr and gap volumes', () => {
+  const page = (body: string) => `<html><body><div class="dop3"><h2>Анонім</h2><h1>ТЕСТ</h1>${body}</div></body></html>`
+  const enc = (s: string) => Buffer.from(s.replace(/ѣ/g, 'Ђ'), 'latin1')   // fixture only needs ASCII + Ђ-free text; windows-1251 bytes are produced below
+  it('HV-5 the work list: every queued research/44 row is a unit with a school and a dating source, the rest has a verdict; undated pages are never given a date', () => {
+    const queued = Object.entries(hv5.HV5_BRATSTVA).filter(([, v]) => v.verdict === 'queued').map(([r]) => r)
+    const units = hv5.HV5_UNITS.filter(u => u.tier === 1)
+    for (const r of queued) expect(units.some(u => u.rows?.includes(r)), r).toBe(true)
+    for (const u of units) { expect(u.school && u.schoolSource, u.id).toMatch(/research\/44/); expect(u.dateQuote?.length || u.dateSource, u.id).toBeTruthy() }
+    expect(Object.values(hv5.HV5_BRATSTVA).filter(v => v.verdict !== 'queued').map(v => v.verdict).sort()).toContain('hv4')
+    for (const u of hv5.HV5_UNITS.filter(u => u.tier === 2)) expect(u.date ?? null, u.id).toBeNull()
+    expect(new Set(hv5.HV5_UNITS.map(u => u.id)).size).toBe(hv5.HV5_UNITS.length)
+  })
+  it('HV-5 a stated date must occur verbatim in the page, else the item is undated; tier 2 takes a year only from a composition/printing sentence', () => {
+    const u = hv5.HV5_UNITS.find(x => x.id === 'hv5:old14_33')!
+    expect(hv5.item(u, page('<p class=Prym>Просфонима. Львів, друкарня братства, 1.2 1591 р.</p>'), 10, 200)).toMatchObject({ date: '1591', dateBasis: 'page-quote', school: 'lviv', schoolSource: expect.stringMatching(/research\/44 r05/) })
+    expect(hv5.item(u, page('<p class=Prym>без року</p>'), 10, 200)).toMatchObject({ date: null })
+    expect(hv5.autoDate('Твір написаний 1607 р. в Острозі. Інше.')).toMatchObject({ date: '1607' })
+    expect(hv5.autoDate('У 1607 р. він помер.')).toBeNull()
+  })
+  it('HV-5 harvest:ingest on one litopys page: primary text only (Prym never read), ъ/ѣ kept, Russian lines dropped, school and date carried, vocab-only mixed volumes', async () => {
+    const root = process.env.HARVEST_DIR!, out = join(TMP, 'out5')
+    const w = hv5.HV5_UNITS.find(x => x.id === 'hv5:old14_37')!
+    const k1 = '<p class=K1>Вѣрши або стихи, до того што читал, же краєгранесиє сицево хранися италиян якъ бы то было и ся вѣра наша в Христа богу истинному слава</p><p class=K1>Что это было такое которое мы видели</p><p class=K1>На герб ясневельможного княжати Острозского слава богу и людем</p>'
+    const html = page(k1 + '<p class=Prym>ПРИМІТКИ УКЛАДАЧА: коментар жодного слова не читається; написаному у Дерманському монастирі 1603 р.; Острог, 1607, арк. 2</p>').replace(/ѣ/g, 'Ђ')
+    const bytes = Buffer.from(html, 'utf8')   // the ingester decodes windows-1251: encode the fixture accordingly
+    const cp = Buffer.from([...html].map(ch => { const c = ch.codePointAt(0)!; if (c < 128) return c; if (c === 0x402) return 0x80; if (c >= 0x410 && c <= 0x44f) return c - 0x410 + 0xc0; if (c === 0x404) return 0xaa; if (c === 0x454) return 0xba; if (c === 0x456) return 0xb3; if (c === 0x406) return 0xb2; return 0x3f }))
+    expect(bytes.length).toBeGreaterThan(0); void enc
+    mkdirSync(join(root, 'hv5/items'), { recursive: true })
+    writeFileSync(join(root, 'hv5/items/p.gz'), gzipSync(cp))
+    const it = hv5.item(w, new TextDecoder('windows-1251').decode(cp), cp.length, 200)
+    writeFileSync(join(root, 'hv5/index.jsonl'), JSON.stringify({ ...it, file: 'p' }) + '\n')
+    await ing.main(['--out', out, '--only', 'hv5'])
+    const files = readdirSync(out).filter(f => f.startsWith('hv_lit_'))
+    expect(files).toHaveLength(1)
+    const wit = JSON.parse(readFileSync(join(out, files[0]!), 'utf8'))
+    expect(wit).toMatchObject({ lang: 'ruthenian', date: [1603, 1607], region: 'Острог', school: { id: 'ostroh', confidence: 'певно' } })
+    const raw = wit.tokens.map((t: { raw: string }) => t.raw)
+    expect(raw).toContain('вѣра'); expect(raw).toContain('якъ'); expect(raw).not.toContain('Что'); expect(raw).not.toContain('УКЛАДАЧА'); expect(wit.dropped.apparatus).toBeGreaterThan(0)
+    // АЮЗР volume: mixed language → vocabulary only, Russian function-word lines dropped, no running text
+    mkdirSync(join(root, 'archive-ayuzr/items'), { recursive: true })
+    writeFileSync(join(root, 'archive-ayuzr/items/v.gz'), gzipSync('Козаки запорозскіе жили на Сѣчи\nЧто это было такое\n'))
+    writeFileSync(join(root, 'archive-ayuzr/index.jsonl'), JSON.stringify({ id: 'auzr', url: 'https://archive.org/details/auzr', date: '1863', licence: 'PD', bytes: 40, status: 200, title: 'Архив ЮЗР', file: 'v' }) + '\n')
+    await ing.main(['--out', out, '--only', 'archive-ayuzr'])
+    const v = JSON.parse(readFileSync(join(out, 'harvest-vocab/archive-ayuzr.json'), 'utf8'))
+    expect(v).toMatchObject({ vocabOnly: true, family: 'middle-ukrainian-mixed' }); expect(v.entries['козаки']).toBeTruthy(); expect(v.entries['что']).toBeUndefined(); expect(JSON.stringify(v)).not.toMatch(/"tokens":\[/)
   })
 })

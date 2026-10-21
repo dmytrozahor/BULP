@@ -6,6 +6,8 @@
  *    wikisource-uk (date = header «рік» or the category «Роботи NNNN»; only pages categorised «Роботи українською мовою»), archive-* (archive.org OCR: Cyrillic-only tokens,
  *    lines with Russian letters/function words dropped as apparatus), hrushevsky (izbornyk, one witness per volume).
  *    Undated works are NOT ingested (counted in the summary) — a made-up date would corrupt first attestations.
+ *    hv5 (HV-5, litopys.org.ua / izbornyk.org.ua pages: Ruthenian texts of the 14th–18th c.; one witness per page, primary-text paragraphs only, Russian-function-word lines dropped but ъ/ѣ kept;
+ *    pages that pipelines/manifest.ts already ingests are skipped; the research/44 school travels as WitnessOut.school). archive-hv5-authors (Сумцов, Руданський, Черемшина): archive-* rules.
  *  VOCABULARY ONLY (copyright / share-alike / not Ukrainian): wikipedia-uk, wikipedia-rue, wiktionary-uk, hplt, poets, faust-lukash, gramoty →
  *    <out>/harvest-vocab/<source>.json {source, licence, family, docs, entries:{word:{f,docs,first?,last?}}, items:[{title,author,date,region,tokens,quote}]}. No running text.
  *    gramoty is tagged family «east-slavic-comparative» (not Ukrainian, never counted in N).
@@ -18,20 +20,25 @@ import { Q } from '../core/evidence.ts'
 import type { Evidence } from '../core/evidence.ts'
 import type { TokenRec, WitnessOut } from '../core/types.ts'
 import { writeAtomic } from '../harvest/lib.ts'
+import { decodeIzbornyk } from '../core/text.ts'
+import { pageParagraphs } from './ingest-izbornyk-pages.ts'
+import { MARKER } from './ingest-izbornyk.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
 export interface Idx { id: string; url: string; date: string | null; licence: string; bytes: number; status: number; title: string; author?: string; region?: string; file?: string; [k: string]: unknown }
 
 // ── OCR / language-gate rules (same as pipelines/ingest-iaocr.ts) ─────────────────────────────────────
-const RU = /[ъѣэЪѢ]|(^|\s)(что|это|или|который|которы\S*|быть|были|также|только|если|когда)(\s|$)/i
+const RU_WORDS = /(^|\s)(что|это|или|который|которы\S*|быть|были|также|только|если|когда)(\s|$)/i
+const RU = new RegExp(`[ъѣэЪѢ]|${RU_WORDS.source}`, 'i')
 const OK = /^[\p{Script=Cyrillic}\p{M}'’ʼ]+$/u
-export function textTokens(text: string, loc: string): { tokens: TokenRec[]; unmapped: number; apparatus: number } {
+/** `oldOrth`: the text is Ruthenian/Middle Ukrainian, where ъ ѣ are normal letters — only the Russian function words mark a line as apparatus (HV-5) */
+export function textTokens(text: string, loc: string, oldOrth = false): { tokens: TokenRec[]; unmapped: number; apparatus: number } {
   const tokens: TokenRec[] = []; let unmapped = 0, apparatus = 0, s = 0
   const joined: string[] = []
   for (const ln of text.split('\n')) { const prev = joined[joined.length - 1]; if (prev !== undefined && /[\p{L}]-$/u.test(prev)) joined[joined.length - 1] = prev.slice(0, -1) + ln.trim(); else joined.push(ln.trim()) }
   for (const ln of joined) {
     const ws = ln.match(/[\p{L}\p{M}\p{N}'’ʼ]+/gu) ?? []
-    if (RU.test(ln)) { apparatus += ws.length; continue }
+    if ((oldOrth ? RU_WORDS : RU).test(ln)) { apparatus += ws.length; continue }
     let n = 0
     for (const w of ws) { if (OK.test(w)) { tokens.push({ raw: w, loc, s }); n++ } else unmapped++ }
     if (n) s++
@@ -49,6 +56,7 @@ export function yearRange(d0: unknown): [number, number] | null {
   const y = d.match(/^(\d{4})/)
   return y ? [+y[1]!, +y[1]!] : null
 }
+const relPath = (u: string) => u.replace(/^https?:\/\/[^/]+\//, '')
 const slug = (s: string) => s.normalize('NFKD').replace(/[^\p{L}\p{N}]+/gu, '_').replace(/^_|_$/g, '').toLowerCase().slice(0, 48) || 'x'
 
 // ── reading a harvest dir ────────────────────────────────────────────────────────────────────────────
@@ -78,14 +86,14 @@ export function authorFor(name: string | undefined, source: string, url: string,
 }
 
 // ── builders ─────────────────────────────────────────────────────────────────────────────────────────
-export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string }): WitnessOut | { skip: string } {
+export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
   const date = yearRange(it.date)
   if (!date) return { skip: 'undated' }
-  const t = textTokens(text, opts.loc)
+  const t = textTokens(text, opts.loc, opts.oldOrth)
   if (t.tokens.length < 20) return { skip: 'too-short' }
   return {
     id, unit: id, title: it.title, author: opts.authorId, url: it.url, date, dateCite: Q(it.url, `harvest/${src}/index.jsonl`, opts.dateQuote.slice(0, 300), 'дата з index.jsonl харвестера (джерело вказує її саме так)'),
-    lang: opts.lang, ...(it.region ? { region: it.region } : {}), witnessType: opts.witnessType, edition: opts.edition, license: it.licence,
+    lang: opts.lang, ...(it.region ? { region: it.region } : {}), witnessType: opts.witnessType, edition: opts.edition, ...(opts.orth ? { orth: opts.orth } : {}), ...(opts.school ? { school: opts.school } : {}), license: it.licence,
     dropped: { unmapped: t.unmapped, apparatus: t.apparatus }, tokens: t.tokens,
   }
 }
@@ -109,7 +117,7 @@ export function countText(text: string): Record<string, number> {
 const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<\/(p|div|li|h\d|tr)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_m, n) => String.fromCodePoint(+n)).replace(/[ \t]+/g, ' ')
 
 // ── per-source runs ──────────────────────────────────────────────────────────────────────────────────
-export interface Ctx { out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string> }
+export interface Ctx { out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
 const save = (ctx: Ctx, w: WitnessOut) => writeAtomic(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
@@ -150,6 +158,27 @@ function runArchive(ctx: Ctx, src: string): Sum {
     const authorId = authorFor(it.author, src, it.url, it.author ? `creator: ${it.author}` : it.title, it.region)
     const rusyn = src === 'archive-rusyn'
     const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}` })
+    if ('skip' in w) { bump(s, w.skip); continue }
+    save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+  }
+  return s
+}
+
+/** HV-5: litopys.org.ua / izbornyk.org.ua pages (raw windows-1251 html). Only the primary text paragraphs (K1, K2, K4, V1…, Dia) are read — the editors' Prym matter never is. */
+function runLitopys(ctx: Ctx, src = 'hv5'): Sum {
+  const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
+  for (const it of readIndex(src)) {
+    if (ctx.limit && s.items >= ctx.limit) break
+    if (it.status !== 200 || !it.file) continue
+    s.items++
+    const path = relPath(it.url)
+    if (ctx.manifestUrls.has(path)) { bump(s, 'already-in-manifest'); continue }
+    const buf = readItem(src, it.file); if (!buf) continue
+    const { paras } = pageParagraphs(decodeIzbornyk(new TextDecoder('windows-1251').decode(buf)))
+    const text = paras.map(p => p.replace(MARKER, '')).join('\n')
+    const authorId = authorFor(it.author, src, it.url, it.author ? `${it.authorBasis ?? 'заголовок'}: ${it.author}` : it.title, it.region)
+    const school = it.school ? { id: String(it.school), source: String(it.schoolSource ?? ''), ...(it.schoolConfidence ? { confidence: String(it.schoolConfidence) } : {}) } : undefined
+    const w = witnessFrom(src, it, `hv_lit_${slug(path.replace(/\.htm$/, ''))}`, text, { lang: 'ruthenian', witnessType: String(it.witnessType ?? 'scholarly_ed'), edition: String(it.edition ?? 'litopys.org.ua'), authorId, loc: it.title, dateQuote: String(it.dateQuote ?? it.date), oldOrth: true, orth: String(it.orth ?? ''), school })
     if ('skip' in w) { bump(s, w.skip); continue }
     save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
   }
@@ -210,6 +239,12 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
       items.push({ id: it.id, title: it.title, author: it.author, date: yearRange(it.date), dateBasis: 'source', region: it.region, tokens: n, quote: [q], url: it.url, p2: it.p2, witnessType: it.witnessType })
       continue
     }
+    if (src === 'archive-ayuzr' || src === 'archive-hv5-gaps') {   // HV-5: mixed-language volumes (Ukrainian/Ruthenian, Polish, Latin, Russian apparatus), not segmented by document → vocabulary only; Russian function-word lines are dropped
+      const kept = buf.toString('utf8').split('\n').filter(l => !RU_WORDS.test(l.trim())).join('\n'), f = countText(kept); addForms(entries, f, null)
+      const n = Object.values(f).reduce((a, b) => a + b, 0); s.tokens += n
+      items.push({ id: it.id, title: it.title, author: it.author, date: yearRange(it.date), dateBasis: 'volume year of the edition (the documents inside carry their own dates; not segmented yet)', region: it.region, tokens: n, url: it.url })
+      continue
+    }
     if (src === 'gramoty') {
       const j = JSON.parse(buf.toString('utf8')) as { text: string }
       const f = countText(j.text); addForms(entries, f, null); s.tokens += Object.values(f).reduce((a, b) => a + b, 0)
@@ -229,17 +264,18 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
   return s
 }
 
-const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative', hv4: 'middle-ukrainian-church-slavonic' }
-const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky']
+const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative', hv4: 'middle-ukrainian-church-slavonic', 'archive-ayuzr': 'middle-ukrainian-mixed', 'archive-hv5-gaps': 'middle-ukrainian-mixed' }
+const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky', 'archive-hv5-authors']
 
 export async function main(argv: string[]) {
   const arg = (k: string) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined }
-  const ctx: Ctx = { out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), stride: Number(arg('--wiki-stride') ?? 1), manifestIa: new Set(), manifestWs: new Set() }
+  const ctx: Ctx = { out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), stride: Number(arg('--wiki-stride') ?? 1), manifestIa: new Set(), manifestWs: new Set(), manifestUrls: new Set() }
   mkdirSync(ctx.out, { recursive: true })
   try {
     const { MANIFEST } = await import('./manifest.ts')
     for (const u of MANIFEST) {
       if (u.kind === 'ia-ocr') for (const url of u.urls) { const m = url.match(/archive\.org\/(?:download|details)\/([^/]+)/); if (m) ctx.manifestIa.add(m[1]!) }
+      for (const x of (u as { urls?: string[] }).urls ?? []) ctx.manifestUrls.add(relPath(String(x)))
       if (u.kind === 'wikisource') ctx.manifestWs.add(u.title)
     }
   } catch { /* no manifest in a bare sample run */ }
@@ -249,6 +285,7 @@ export async function main(argv: string[]) {
   if (want('wikisource-uk')) sums.push(runWikisource(ctx))
   for (const a of ARCHIVE) if (want(a)) sums.push(runArchive(ctx, a))
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
+  if (want('hv5')) sums.push(runLitopys(ctx))
   for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) sums.push(runVocab(ctx, v, fam))
   const ap = `${ctx.out}/harvest-authors.json`   // merge: a run with --only must not drop the authors of the other sources
   const prev: HAuthor[] = existsSync(ap) ? JSON.parse(readFileSync(ap, 'utf8')) : []

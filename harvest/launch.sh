@@ -27,6 +27,10 @@ JOBS=(
   "poets|node|harvest/poets.ts"
   "r2u|node|harvest/r2u.ts"
   "hv4|node|harvest/hv4.ts"
+  "hv5|node|harvest/hv5.ts"
+  "archive-hv5-gaps|node|harvest/archive.ts archive-hv5-gaps"
+  "archive-ayuzr|node|harvest/archive.ts archive-ayuzr"
+  "archive-hv5-authors|node|harvest/archive.ts archive-hv5-authors"
   "hplt|uv|run --with pyarrow python -I harvest/hplt.py 1 299"
 )
 PIDF="$OUT/pids.json"

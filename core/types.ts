@@ -27,6 +27,8 @@ export interface WitnessOut {
   date: [number, number]; dateCite: Evidence; msDate?: number
   lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; region?: string
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
+  /** SPEC 63 HV-5: the school of the work as research/44 gives it (`source` names the row, `confidence` its certainty); absent when no source states it */
+  school?: { id: string; source: string; confidence?: string }
   /** SPEC 60 NW-6 amendment: shown wherever the witness text is shown (/texts, media panel) when the text licence is not stated by the source */
   licenceNote?: string
   /** Sophia: the portal's diplomatic transcription (as written, abbreviations unexpanded) kept for display when the analysed text is the interpretative edition or a segmentation of it */

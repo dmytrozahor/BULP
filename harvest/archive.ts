@@ -17,6 +17,13 @@ export const ARCHIVE_PRESETS: Record<string, { q: string; region?: string; licen
 // owner 2026-10-15 «роботи грушевського»: Грушевський † 1934 → PD; only prints up to 1934 (later editions carry editorial apparatus)
 ARCHIVE_PRESETS['archive-hrushevsky'] = { q: 'mediatype:texts AND (creator:(Грушевський OR Грушевскій OR Hrushevsky OR Hrushevsʹkyĭ OR Hruševs*) OR title:(Грушевськ*)) AND date:[1000-01-01 TO 1934-12-31]', region: 'Київ / Львів', licence: 'PD (М. Грушевський † 1934; видання ≤ 1934, archive.org OCR, не вичитано)' }
 
+// SPEC 63 HV-5 (coordinator 2026-10-21, research/45 H1–H5): gaps named by research/45 — Запоріжжя, Волинь, hetman chancery; the АЮЗР volumes; Сумцов, Руданський, Черемшина.
+// resource.history.org.ua (АЮЗР scans) disallows all robots, so the volumes come from archive.org. PD = edition year ≤ 1925 (Черемшина † 1927: ≤ 1939, prints of the author's own books).
+const HV5_LIC = 'PD (видання ≤ 1925; archive.org OCR, не вичитано)'
+ARCHIVE_PRESETS['archive-hv5-gaps'] = { q: 'mediatype:texts AND (title:("Акты, относящиеся к истории Южной и Западной России" OR "Источники для истории запорожских казаков" OR "Документы Богдана Хмельницкого" OR "Письма Мазепы" OR "Универсалы" OR "Архив Коша" OR "История Новой-Сечи" OR "Запорожские песни" OR "Листи Мазепи" OR "Гетманские универсалы") OR creator:(Яворницк* OR Яворницьк* OR Эварницкий OR Evarnitskii)) AND date:[1000-01-01 TO 1925-12-31]', region: 'Запоріжжя / Волинь / гетьманська канцелярія (мішана мова, словник)', licence: HV5_LIC }
+ARCHIVE_PRESETS['archive-ayuzr'] = { q: 'mediatype:texts AND (title:("Архив Юго-Западной России" OR "Архив Юго-Западной Россіи" OR "Archiv Jugo-Zapadnoj Rossii" OR "Архів Південно-Західної Росії") OR creator:("Архив Юго-Западной России")) AND date:[1000-01-01 TO 1925-12-31]', region: 'Київ / Волинь / Поділля (мішана мова: АЮЗР)', licence: HV5_LIC }
+ARCHIVE_PRESETS['archive-hv5-authors'] = { q: 'mediatype:texts AND (creator:(Сумцов OR Сумцовъ OR Sumtsov OR Руданський OR Руданскій OR Рудаңський OR Rudansky* OR Черемшина OR Cheremshyna) OR title:(Слобожане OR Співомовки OR Руданського OR Черемшини)) AND language:(ukr OR Ukrainian OR "Ukrainian Old") AND date:[1000-01-01 TO 1939-12-31]', licence: 'PD (автор † ≤ 1927; видання за датою на титулі, ≤ 1939; archive.org OCR, не вичитано)' }
+
 export interface SearchDoc { identifier: string; title?: string | string[]; creator?: string | string[]; date?: string; year?: string | number; language?: string | string[] }
 const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v) ?? ''
 export function docItem(d: SearchDoc, cfg: { region?: string; licence: string }, bytes: number, status: number): IndexItem {
