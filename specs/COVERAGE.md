@@ -691,3 +691,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-4 | tests/se.test.ts › SE-4 no transition between glosses of different languages (not comparable) |
 | SE-6 | tests/se-ui.test.ts › SE-6 the block is one component: mounted once in the full card and once in ThinCard, which serves light, dictionary-only, ORV/TOROT, archaic and unverified (MU) cards |
 | SE-6 | tests/se-ui.test.ts › SE-6 the ${kind} card renders the block with its own test id |
+| SE-10 | tests/se-dicts.test.ts › SE-10 every harvested dictionary has a unique archive id, a licence status and a DICT_COVER record (or a declared sibling) |
+| SE-10 | tests/se-dicts.test.ts › SE-10 copyrighted dictionaries keep only the headword line and short quotes; public-domain ones may be read in full |
+| SE-10 | tests/se-dicts.test.ts › SE-10 the chain waits for HV-5 and the launcher knows the job; the spec records the decisions |
+| SE-7 | tests/se-dicts.test.ts › SE-7 the standalone report script reads the dictionary witnesses and writes analysis/sense-evolution.md atomically |

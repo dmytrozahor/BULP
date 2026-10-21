@@ -28,6 +28,7 @@ JOBS=(
   "r2u|node|harvest/r2u.ts"
   "hv4|node|harvest/hv4.ts"
   "hv5|node|harvest/hv5.ts"
+  "se-dicts|node|harvest/se-dicts.ts"
   "archive-hv5-gaps|node|harvest/archive.ts archive-hv5-gaps"
   "archive-ayuzr|node|harvest/archive.ts archive-ayuzr"
   "archive-hv5-authors|node|harvest/archive.ts archive-hv5-authors"

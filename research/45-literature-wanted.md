@@ -10,6 +10,7 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 
 ## Changes since last update (2026-10-21, first version)
 
+- SPEC 63 SE-10 (sense evolution): I looked for every dated-sense historical dictionary online. All were found on archive.org with an OCR text (H10–H15); none had to be moved to section A, so no new owner book is requested for them. Open questions: the archive.org items state no licence (the status is my reading of the author's death year), and the OCR quality of H13/H14 is unchecked (?).
 - New file. Built from research/44-bratstva-bibliography.md, analysis/corpus-10m.md, analysis/regions.md, research/39, research/40, research/45-hv4-old-grammars.md, specs/63-corpus-dialects.md, specs/COVERAGE.md, specs/GAPS.md and the owner's `books` folder (listing taken 2026-10-21).
 - Marked **supplied** (found in `books`, matched by title): Транквіліон «Зерцало богословії» (`Зерцало_богословия.pdf`, r24); Київський Псалтир з Полуставом 1643 (`1643-r.-Kyivs-kyy-Psaltyr-z-Poluustavu.pdf`); Беринда «Лексикон» 1627 and 1653; Зизаній «Лексис» (reprint) and «Граматика»; Смотрицький «Граматіка»; Метлинський «Народныя южнорусскія пѣсни» (`Narodnyja_juznorusskija_pesni.pdf`; matched by transliterated title, the year 1854 is not checked in the file).
 - Moved to **harvest** (online, so not asked from the owner): r11 Зизаній «Наука ку читаню» 1596 (research/45: archive.org `zyzanii`, harvested); r30 Смотрицький «Verificatia niewinności» (Вільно 1621) is printed in «Архив Юго-Западной России» ч. 1 т. 7 (Київ 1887), pp. 279–344, and I found its scan. research/44 lists r30 as «не знайдено онлайн»; that row is outdated.
@@ -51,7 +52,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | 21 | «Пам'ятки української мови»: «Українські грамоти XIV ст.», «… XV ст.», «Волинські грамоти XVI ст.», «Приватні листи XVIII ст.», Київ 1965, 1974, 1987, 1995 (CX-6) | Dated, localised Middle Ukrainian charters; 353 `pum14` charters are excluded for lack of an author record (corpus-10m §2). Ingest status of the later volumes: ? | catalogue entry only (spec CX-6); no scan found | wanted |
 | 22 | Онуфрій Манчук, «Жиб'ївські новелі» (Брустури 2024, 105 p., ISBN 9786178326630) | Hutsul dialect literature (research/40); copyrighted print, needs a legal copy (vocabulary-only use) | no free copy found (research/40) | wanted |
 
-## B. We'll harvest (online, no owner action; 9 entries)
+## B. We'll harvest (online, no owner action; 15 entries)
 
 | # | Work | Why | Link | Status |
 |---|---|---|---|---|
@@ -64,6 +65,12 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | H7 | Зизаній «Наука ку читаню» 1596 (r11) | research/45-hv4 | archive.org `zyzanii` | harvested |
 | H8 | Литопис/Ізборник items of research/44 «Пріоритет для корпусу» 1–10 (Лексис, Беринда, Апокрисис, Вишенський …) | ПМ and polemic prose | http://litopys.org.ua/ (links in research/44) | harvested/ingested (status per hv4) |
 | H9 | uk.wikisource harvest: 103,450 index lines versus 76,600 in the last build (corpus-10m §7) | corpus size | — | harvesting |
+| H10 | Тимченко, «Історичний словник українського язика», т. 1, зошити 1–2 (Харків–Київ 1930, 1932; А—Жял, only two зошити were printed) — dated 14th–18th-c. quotations per sense (SPEC 63 SE-1) | gives sense lines with dated quotations; Є. Тимченко † 1948, so the text is public domain | https://archive.org/details/tymch1930 (OCR, 3.8 MB), https://archive.org/details/1.2.1932 (OCR, 3.1 MB), second scan https://archive.org/details/ISUJa (2 files) | queued (harvest/se-dicts.ts after HV-5) |
+| H11 | Білецький-Носенко, «Словник української мови» (written 1838–1843; edition Німчук, Київ 1966, «Пам'ятки української мови») | language of the 1840s with dated usage; author † 1856 (PD); the 1966 editor's apparatus is not taken | https://archive.org/details/slovnyk33 (OCR, 2.1 MB) | queued |
+| H12 | Закревський, «Словарь малороссийских идиомов» (1861, in «Старосветский бандуриста») | mid-19th-c. senses; author † 1871 (PD) | https://archive.org/details/bandurista3 (OCR, 1.5 MB); the item title says «Старосветский бандуриста» (kn. 3?) | queued |
+| H13 | «Словник української мови XVI – першої половини XVII ст.», вип. 1–17 (1994–2017) and вип. 18– (2022–) | dated quotations of the 1500–1650 language per sense; copyrighted (Інститут українознавства НАН), so only headword and quotes ≤ 200 characters are kept (SE-9) | https://archive.org/details/SUM-28 (17 OCR files), https://archive.org/details/SUM-28_2 | queued; licence of the upload not stated |
+| H14 | «Матеріали до словника писемної та книжної української мови XV–XVIII ст.» кн. 1–2 (Тимченко, ed. Німчук, Лиса, 2002–2003) and «Словник мови Шевченка» т. 1–2 (1964) | dated quotations (15th–18th c.; Shevchenko 1837–1861); editions are copyrighted: headword and quotes ≤ 200 characters only | https://archive.org/details/kniga1, https://archive.org/details/kniga2, https://archive.org/details/1_20230624_20230624, https://archive.org/details/2_20230624_202306 | queued; licence of the upload not stated |
+| H15 | Словник староукраїнської мови XIV–XV ст. (1977–78) | already in the corpus (BL-11, headword lines by quotation decade); SE-1 reads it | archive.org `staroukr1`, `staroukr2` | harvested |
 
 ## C. Already supplied (do not send again)
 
@@ -81,6 +88,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 
 ## Зміни з останнього оновлення (2026-10-21, перша версія)
 
+- SPEC 63 SE-10: усі історичні словники з датованими значеннями знайдено онлайн (archive.org, OCR; H10–H15), у розділ А нічого не додано.
 - Новий файл. Побудовано з research/44, analysis/corpus-10m.md, analysis/regions.md, research/39, 40, 45-hv4-old-grammars.md, specs/63, specs/COVERAGE.md, specs/GAPS.md і теки `books` (стан на 2026-10-21).
 - **Подано** (знайдено в `books`, збіг за назвою): «Зерцало богословії» Транквіліона (r24); Псалтир з Полуставом 1643; Беринда 1627 і 1653; Зизаній «Лексис» і «Граматика»; Смотрицький «Граматіка»; Метлинський «Народныя южнорусскія пѣсни» (за транслітерованою назвою; рік у файлі не перевірено).
 - **Переведено в «зберемо самі»**: r11 Зизаній «Наука ку читаню» 1596 (archive.org `zyzanii`, уже зібрано); r30 «Verificatia niewinności» Смотрицького (Вільно 1621) надруковано в «Архиве Юго-Западной России» ч. 1 т. 7 (Київ 1887), с. 279–344, скан знайдено. Рядок r30 у research/44 («не знайдено онлайн») застарів.
@@ -122,7 +130,9 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 21. «Пам'ятки української мови»: грамоти XIV, XV ст., Волинські грамоти XVI ст., Приватні листи XVIII ст., Київ 1965, 1974, 1987, 1995 (CX-6).
 22. Манчук, «Жиб'ївські новелі» (Брустури 2024, ISBN 9786178326630): гуцульська говірка, потрібна легальна копія.
 
-## Б. Зберемо самі (онлайн; 9 записів)
+## Б. Зберемо самі (онлайн; 15 записів)
+
+- H10 Тимченко, «Історичний словник українського язика», т. 1, зошити 1–2 (1930, 1932; А—Жял): https://archive.org/details/tymch1930, https://archive.org/details/1.2.1932 (друге сканування: ISUJa). H11 Білецький-Носенко, словник 1838–1843, вид. 1966: https://archive.org/details/slovnyk33. H12 Закревський 1861: https://archive.org/details/bandurista3. H13 СУМ XVI – 1-ї пол. XVII ст.: https://archive.org/details/SUM-28. H14 «Матеріали до словника XV–XVIII ст.» (kniga1, kniga2) і «Словник мови Шевченка» (1_20230624_20230624, 2_20230624_202306). H15 Словник староукраїнської мови XIV–XV ст. (уже в корпусі). Усе знайдено, нічого не додано до розділу А; ліцензію архів не вказує (статус — моє прочитання за роком смерті автора), якість OCR H13/H14 ?.
 
 - H1 «Архив Юго-Западной России», 35 томів: https://resource.history.org.ua/item/0006703 (перелік відкрито; вміст томів, крім ч. 1 т. 7, не перевіряв).
 - H2 Смотрицький «Verificatia niewinności» (1621) в АЮЗР ч. 1 т. 7: https://www.uknol.info/en/Records/ArchivJuZR_1_07.html.
