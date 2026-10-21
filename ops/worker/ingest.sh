@@ -38,6 +38,14 @@ ocrsig() { find "$OCR_DIR" -name 'page_*.txt' 2>/dev/null | wc -l; }
 runcmd pum14 "$(cat data/seed/pum14/*.json | cksum)" npx tsx pipelines/ingest-pum.ts
 runcmd rib "$(ocrsig)" npx tsx pipelines/ingest-rib.ts --ocr "$OCR_DIR"
 runcmd kvitka "$(ocrsig)" npx tsx pipelines/ingest-kvitka.ts --ocr "$OCR_DIR"
+# SPEC 63 GG-7: the owner's СУМ-11 (DjVu) / СУМ-20 (PDF) scans under $BOOKS/sum11, $BOOKS/sum20 (typeset, not OCR). pipelines/sum-scan.ts parses them (resumable per volume, text never stored) into
+# data/work/<dict>-parsed/ and imports the policy fields (headword, stress, POS, sense numbers, labels, gloss ≤ 200 characters, volume/page; FULL_SENSES_* = 0) to data/work/se-parsed/<dict>.json.
+# The signature = the file sizes + the parser code, so a changed parser or a new volume reads the scans again.
+BOOKS=${BOOKS:-$HOME/work/books}; export BOOKS
+sumsig() { { find "$BOOKS/$1" -maxdepth 1 -name "$1_t*" ! -name '*.up' -printf '%f=%s '; cat core/sum-article.ts core/$1-parse.ts pipelines/sum-scan.ts pipelines/sum-import.ts core/sum-import.ts | cksum; } 2>/dev/null; }
+for s in sum11 sum20; do
+  ls "$BOOKS/$s"/${s}_t* 2>/dev/null | grep -qv '\.up$' && runcmd $s "$(sumsig $s)" nice -n 19 npx tsx pipelines/sum-scan.ts $s
+done
 if [ ${#failed[@]} -gt 0 ]; then
   echo "ingest FAILED: ${failed[*]} $(date +%T)" > ~/import-step
   echo "ingest FAILED: ${failed[*]}" >&2
