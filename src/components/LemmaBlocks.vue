@@ -22,8 +22,11 @@ import SensesBlock from './SensesBlock.vue'
 import EtymologyBlock from './EtymologyBlock.vue'
 import CognatesPanel from './CognatesPanel.vue'
 import PhrasePanel from './PhrasePanel.vue'
-const props = defineProps<{ lemma?: string; spelling: string; labels?: boolean }>()
+import StressForms from './StressForms.vue'
+import { cvStressVariants } from '../../core/cv.ts'
+const props = defineProps<{ lemma?: string; spelling: string; labels?: boolean; /** SPEC 63 CP-6: dictionary stress of the card word (CvExtra.s from the build) */ stress?: number[] }>()
 const w = computed(() => props.lemma ?? props.spelling)
+const variants = computed(() => cvStressVariants(props.lemma ?? props.spelling, props.stress))
 const senses = computed(() => sensesOf(w.value))
 </script>
 
@@ -31,9 +34,10 @@ const senses = computed(() => sensesOf(w.value))
   <div data-testid="lemma-blocks">
     <p class="sans small"><UsageChips :lemma="w" label /> <template v-if="labels !== false"><SociolectBadges :word="w" /> <ModernBadges :word="w" /></template> <LoanChip :word="w" /></p>
     <LoanAdaptBlock v-if="labels !== false" :word="w" />
-    <Panel id="t-ipa" :open="false" title="Вимова · IPA" summary="виведено за правилами (P-1.7), наголосу в джерелах цієї картки немає"
-      info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Наголос зі словників (ВЕСУМ / r2u) на цій картці ще не підключено: SPEC 63 CP-6.">
-      <IpaRow :variants="[]" :lemma="w" />
+    <p v-if="labels !== false" class="sans small" data-testid="cp-stress"><span class="muted">Наголос: </span><StressForms v-if="variants.length" :variants="variants" /><span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос не встановлено</span></p>
+    <Panel id="t-ipa" :open="false" title="Вимова · IPA" :summary="variants.length ? 'виведено за правилами (P-1.7) зі словникового наголосу' : 'виведено за правилами (P-1.7), наголосу в джерелах цієї картки немає'"
+      info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Словниковий наголос (ukrainian-word-stress) береться з даних картки (CP-6), де збірка його знайшла.">
+      <IpaRow :variants="variants" :lemma="w" />
     </Panel>
     <DerivativesBlock panel :lemma="w" />
     <DialectVariants :lemma="w" />

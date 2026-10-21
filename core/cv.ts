@@ -13,7 +13,9 @@
  * `cardindex.json` lists every card that is not a full lexicon card (light, archaic, CV) so search / analyser / text links resolve over all kinds.
  */
 import { bucketOf } from './shard.ts'
-import { key } from './text.ts'
+import { key, renderStress } from './text.ts'
+import { D } from './evidence.ts'
+import type { StressVariant } from './types.ts'
 
 /** lookup key: key() plus Latin look-alikes folded to Cyrillic inside a Cyrillic word (source quirk «BЮВ» with a Latin B); used for LOOKUP only, the source spelling is shown as is */
 const LAT: Record<string, string> = { a: 'а', b: 'в', c: 'с', e: 'е', h: 'н', i: 'і', k: 'к', m: 'м', o: 'о', p: 'р', t: 'т', x: 'х', y: 'у' }
@@ -28,7 +30,7 @@ export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
 export type CvAtt = [w: string, loc: string, raw: string]
 /** [displayed word, VESUM tags ('' = spelling not in VESUM), attestations in total, first MAX_ATT attestations] */
 /** extra: `an` = every VESUM analysis [lemma, tags] of the first attested spelling (CV-5: риночку = риночок m v_mis / риночка f v_zna); `prev` = the word before the corpus example; `pick` = the analysis the context rule prefers (never a claim: both stay listed) */
-export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string; /** SPEC 63 DO-1: dictionary-only card = a non-zero bitmask of DICT_SRC (the `dictOnly: true` flag AND the source list in one number) */ d?: number }
+export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string; /** SPEC 63 DO-1: dictionary-only card = a non-zero bitmask of DICT_SRC (the `dictOnly: true` flag AND the source list in one number) */ d?: number; /** SPEC 63 CP-6: stressed-vowel index of each admissible dictionary stress of the card word (0-based in the unstressed NFC form, one number per variant; omitted for homographs and unknown words) — ≈ 8 B per card */ s?: number[] }
 export type CvEntry = [word: string, tags: string, n: number, atts: CvAtt[], extra?: CvExtra]
 
 /** the user's cheap context rule (2026-10-16): a preceding на / в / у / по / при / о / об points to the locative (v_mis); applied only when exactly one analysis is a locative. The other analyses stay listed. */
@@ -52,6 +54,26 @@ export interface DictInfo { dictOnly: true; sources: string[]; /** stats: always
 export function dictInfo(e: CvEntry | undefined): DictInfo | undefined {
   const d = e?.[4]?.d; if (!d) return undefined
   return { dictOnly: true, sources: dictSources(d), f: 0, earliest: null, status: DICT_STATUS }
+}
+/** SPEC 63 CP-6: the dictionary-stress file (stress.py output) restricted to what a thin card stores: single-position, non-homograph variants */
+export interface CvStressSource { source?: string; forms: Record<string, { stressed: string; positions: number[]; ambiguous: boolean }[]> }
+export function cvStressOf(word: string, sj: CvStressSource | undefined): number[] | undefined {
+  const vs = sj?.forms[word]; if (!vs?.length || vs.some(v => v.ambiguous || v.positions.length !== 1)) return undefined
+  return [...new Set(vs.map(v => v.positions[0]!))].slice(0, 3)
+}
+/** adds `s` to the extra of every entry the file answers; returns how many entries got one (entries without extra get a fresh object, shared ones are never mutated) */
+export function attachCvStress(entries: [string, CvEntry][], sj: CvStressSource | undefined): number {
+  let n = 0
+  for (const e of entries) {
+    const s = cvStressOf(e[1][0], sj); if (!s) continue
+    e[1][4] = { ...e[1][4], s }; n++
+  }
+  return n
+}
+/** the stress variants the card shows (same evidence as the full card's, P-3.1: status unknown, a dictionary record without context) */
+export function cvStressVariants(word: string, s: number[] | undefined): StressVariant[] {
+  return (s ?? []).map(p => ({ form: word, positions: [p], status: 'unknown' as const, method: 'dictionary' as const,
+    evidence: [D('ukrainian-word-stress', 'ULIF-derived', renderStress(word, [p]), 'словниковий запис без контексту; статус невідомий (research/08 A3)')] }))
 }
 export const isDictOnly = (e: CvEntry): boolean => !!e[4]?.d
 

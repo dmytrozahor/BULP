@@ -105,6 +105,6 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
       <p v-if="cv[2] > cv[3].length" class="sans small muted">Показано {{ cv[3].length }} з {{ cv[2] }} засвідчень.</p>
     </template>
     <WitnessBlock id="lw-wit" :items="witItems" :unit="dict ? 'словникові джерела' : undefined" />
-    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" :f="row ? row[2] : 0" />
+    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" :f="row ? row[2] : 0" :stress="cv?.[4]?.s" />
   </template>
 </template>

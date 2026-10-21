@@ -15,7 +15,7 @@ import { queryKeys } from '../src/lib/search.ts'
 import { ixCards, searchDict, searchRemote } from '../src/lib/parts.ts'
 import { loadCv } from '../src/lib/cardIndex.ts'
 
-const rd = (p: string) => readFileSync(p, 'utf8')
+const rd = (p: string) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n')
 const tok = (raw: string, loc: string) => ({ raw, loc, s: 0 })
 const dictW = (id: string, ...t: [string, string][]) => ({ id, witnessType: 'dictionary' as const, tokens: t.map(([r, l]) => tok(r, l)) })
 const textW = (id: string, ...t: string[]) => ({ id, witnessType: 'text' as never, tokens: t.map((r, i) => tok(r, 'p' + i)) })

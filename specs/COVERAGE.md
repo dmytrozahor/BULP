@@ -662,5 +662,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-4 | tests/card-parity.test.ts › CP-2 ThinCard on a dictionary-only card collapses KWIC, map and statistics with «немає засвідчень у корпусі» |
 | CP-4 | tests/card-parity.test.ts › CP-2 ThinCard without f says «частоту не визначено», never a number |
 | CP-5 | tests/card-parity.test.ts › CP-5 /w mounts the derivation chain and the dialect block of the chosen spelling; /f mounts the lemma blocks and the lemma stress |
-| CP-6 | tests/card-parity.test.ts › CP-1 the only build-pending cells are the stress of the thin kinds, and CP-6 names the pipeline place in the spec |
+| CP-6 | tests/card-parity.test.ts › CP-6 no cell waits for a build item any more: stress is on the lemma-bearing thin kinds (empty state until the rebuild) and n/a where no dictionary knows the word |
 | CP-7 | tests/card-parity.test.ts › CP-1 the filled cells are counted |
+| CP-6 | tests/card-parity.test.ts › CP-6 cvStressOf keeps single-position non-homograph variants only: homographs, compounds and unknown words get no stress (nothing guessed) |
+| CP-6 | tests/card-parity.test.ts › CP-6 attachCvStress writes s into the extra without touching the shared dictionary-only extra object |
+| CP-6 | tests/card-parity.test.ts › CP-6 per-card bytes at 450k dictionary-only cards: s adds a few bytes to the 58.8 B DO-6 card |

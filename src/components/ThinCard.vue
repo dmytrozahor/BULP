@@ -16,7 +16,7 @@ import Kwic from './Kwic.vue'
 import DialectBlock from './DialectBlock.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import LemmaBlocks from './LemmaBlocks.vue'
-const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
+const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
 const best = computed(() => d.value.candidates[0])
 const { corpus, witnessById } = useData()
@@ -45,6 +45,6 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
       info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
       <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
     </Panel>
-    <LemmaBlocks :lemma="lemma" :spelling="spelling" />   <!-- SPEC 63 CP-2: every lemma-keyed block of the full card, with empty states -->
+    <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" />   <!-- SPEC 63 CP-2: every lemma-keyed block of the full card, with empty states -->
   </div>
 </template>

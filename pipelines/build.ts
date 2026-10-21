@@ -46,7 +46,7 @@ import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
 import { buildCv, writeCv, userWords } from './build-cv.ts'
-import { lk } from '../core/cv.ts'
+import { attachCvStress, lk } from '../core/cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
 import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
@@ -391,6 +391,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     muReport(rows, rd<{ linked: Record<string, { n: number; linked: number }> }>(resolve(ANALYSIS, 'mu-baseline.json')).linked, ANALYSIS, ['o18_33', 'o18_26', 'i14_09'])
     lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
   }
+  let cvStressSrc: StressJson | undefined, cvWords: string[] = []   // SPEC 63 CP-6: thin-card stress (requested with the lemma stress, attached just before the cv shards are written)
   let cvLater: () => void = () => {}   // CV shards live in lex/, which writeLexicon() recreates: written after it
   {   // SPEC 63 AR: archaic lemmas (dictionary headwords unknown to VESUM + unverified recurring clusters); cards /ar/:id, text refs 'a:<id>'
     // #stage archaic
@@ -424,7 +425,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))) }
       })())
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
-    cvLater = () => { const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
+    cvWords = cv.entries.filter(e => e[1][1] && /^[\p{L}'’-]+$/u.test(e[1][0])).map(e => e[1][0])
+    cvLater = () => { const n = attachCvStress(cv.entries, cvStressSrc); lap(`CP-6 stress on ${n} of ${cv.entries.length} thin cards`); const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
     lap(`CV cards: ${cv.entries.length} words from ${cv.stats.tokens} dictionary tokens (${cv.stats.vesum} VESUM-linked, ${cv.stats.asIs} as-is spellings; ${cv.stats.skippedFull} already full cards, ${cv.stats.skippedArchaic} owned by /ar); DO: ${cv.stats.dictOnly} dictionary-only cards (${cv.stats.dictVesum} known to VESUM, f = 0); ${cv.stats.refTokens} text tokens linked; cv/ ${wc.shards} shards ${(wc.bytes / 1048576).toFixed(2)} MB (max ${(wc.maxShard / 1024).toFixed(0)} KB), cardindex.json ${(wc.indexBytes / 1048576).toFixed(2)} MB (${wc.index.lw.length} /lw, ${wc.index.ar.length} /ar)`) }
   }
   const fx = lemmaList.map(l => l.f), names = lemmaList.map(l => l.display)
@@ -441,6 +443,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   lap(`autolabels: kaikki ${auto.stats.kaikkiLemmas} lemmas / ${auto.stats.kaikkiSenses} tagged senses, r2u ${auto.stats.r2uRows} articles (${auto.stats.r2uLabelled} with a regional label → ${auto.stats.dialectLemmas} lemmas), ${auto.stats.ruHeads} Russian headwords`)
   const ltCorpus: ReportData['ltCorpus'] = []
   types.forEach((t, x) => { const e = lt[key(t.raw)]; if (e && t.lang === 'uk' && typeCount[x]! > 0) { ltCorpus.push({ form: key(t.raw), f: typeCount[x]!, file: e[0] }); ruReq.add(key(t.raw)) } })
+  for (const w of cvWords) stressReq.add(w)   // SPEC 63 CP-6: VESUM-linked headwords of the thin cards (light, CV, dictionary-only)
   for (const l of kept) {
     stressReq.add(l.display)
     for (const fa of sel.get(l.id)!) {
@@ -506,6 +509,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     if (miss) console.warn(`  ! stress.json lacks ${miss} of ${stressReq.size} requested forms (stale: run without --no-py, set UV_BIN)`)
     lap(`stress: ${stressReq.size - miss}/${stressReq.size} requested forms answered, ${[...stressReq].filter(f => stressJson.forms[f]?.length).length} with a dictionary stress`)
   }
+  cvStressSrc = stressJson
   const annEnv: AnnEnv = { hits: v2.hits, lt, ru: ruJson, derive: dryEnv.derive }
 
   // ── 5b. epoch paradigms of the kept noun lemmas (SPEC 50 EP-3/EP-4) ───────────────────────────

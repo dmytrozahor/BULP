@@ -46,14 +46,14 @@ export const KIND_ROUTE: Record<KindId, string> = { word: '/w/:lemma', form: '/f
 const row = (c: Partial<Record<BlockId, Cell>>, base: Cell = 'empty'): Record<BlockId, Cell> =>
   Object.fromEntries((Object.keys(BLOCKS) as BlockId[]).map(b => [b, c[b] ?? base])) as Record<BlockId, Cell>
 /** lemma-keyed blocks of LemmaBlocks that every thin kind has, plus the shared witness / map / stats panels */
-const thin = { chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'build' } as const
+const thin = { chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'na' } as const
 /** SE sense timeline: pending on every kind but the phrase page (swap to 'shown' when the SE component is mounted at the slot) */
 const se = { senseTimeline: 'pending' } as const
 export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
   word: row({ ...se, chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
   form: row({ ...thin, ...se, kwic: 'shown', witnesses: 'shown', epochs: 'shown', derivation: 'shown', map: 'shown', stats: 'shown', stress: 'shown' }),
-  light: row({ ...thin, ...se, witnesses: 'empty' }),
-  dict: row({ ...thin, ...se }),
+  light: row({ ...thin, ...se, stress: 'empty', witnesses: 'empty' }),
+  dict: row({ ...thin, ...se, stress: 'empty' }),
   uv: row({ ...thin, ...se }),
   unlinked: row({ ...thin, ...se }),
   archaic: row({ ...thin, ...se }),
