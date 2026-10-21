@@ -13,7 +13,7 @@ import { cardMap } from '../core/cv.ts'
 import { DIALECTS } from '../core/rules.ts'
 import { archId, type ArchEntry } from '../core/archaic.ts'
 import { featureOf } from '../core/form-class.ts'
-import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
+import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, seBucket, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 
 const DATA = process.env.PARTS_DATA ?? 'public/data'
@@ -178,6 +178,16 @@ function writeLm() {
     const parts = Array.from({ length: LM_BUCKETS }, () => ({} as Obj))
     for (const [k, v] of Object.entries(S)) parts[lmBucket(k)]![k] = v
     fresh('lm/senses'); let n = 0; parts.forEach((p, b) => { if (Object.keys(p).length) { out(`lm/senses/${b}.json`, p); n++ } }); log.push(`senses ${n}`)
+  }
+  {   // SPEC 63 SE-8: data/work/se.json (build stage `senses`, not committed) → lm/se/<bucket>.json, keyed by lk(word)
+    const sp = process.env.SE_FILE ?? 'data/work/se.json'
+    if (existsSync(sp)) {
+      const SE = JSON.parse(readFileSync(sp, 'utf8')) as Obj, parts = new Map<number, Obj>()
+      for (const [k, v] of Object.entries(SE)) { const b = seBucket(k); (parts.get(b) ?? parts.set(b, {}).get(b)!)[k] = v }
+      fresh('lm/se'); let worst = 0
+      for (const [b, p] of parts) { worst = Math.max(worst, gz(p)); out(`lm/se/${b}.json`, p) }
+      log.push(`se ${parts.size} (worst ${(worst / 1024).toFixed(1)} KB gz)`)
+    }
   }
   const U = rd<Obj>('usage.json'); if (U) log.push(`usage ${splitMap('usage', U, k => k, s => s['lemmas'] as Obj, (m, p) => ({ ...m, lemmas: p }))}`)
   const L = rd<Obj>('loanlabels.json'); if (L) {

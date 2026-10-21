@@ -667,3 +667,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-6 | tests/card-parity.test.ts › CP-6 cvStressOf keeps single-position non-homograph variants only: homographs, compounds and unknown words get no stress (nothing guessed) |
 | CP-6 | tests/card-parity.test.ts › CP-6 attachCvStress writes s into the extra without touching the shared dictionary-only extra object |
 | CP-6 | tests/card-parity.test.ts › CP-6 per-card bytes at 450k dictionary-only cards: s adds a few bytes to the 58.8 B DO-6 card |
+| SE-1 | tests/se.test.ts › SE-1 every dictionary has its edition years and a coverage period; historical ones describe an earlier period than their print year |
+| SE-1 | tests/se.test.ts › SE-1 a row without its own dated quotation is dated by the coverage period, never by the print year of a historical dictionary |
+| SE-1 | tests/se.test.ts › SE-1 the date of a quotation outranks the coverage period (the XIV–XV ст. dictionary is split by quotation decade) |
+| SE-1 | tests/se.test.ts › SE-1 r2u lines give the gloss SN-1 reads: the Russian headword of a ru→uk dictionary, the Russian gloss of a uk→ru one, the German gloss of Желехівський |
+| SE-1 | tests/se.test.ts › SE-1 rows come from the tokens of dictionary witnesses linked to a card, one per article line, a line is not counted twice |
+| SE-2 | tests/se.test.ts › SE-2 similar glosses of the same language are one sense with a match score; the match is «inferred» without a cross-reference |
+| SE-2 | tests/se.test.ts › SE-2 glosses in different languages are never matched (no translation is guessed) |
+| SE-3 | tests/se.test.ts › SE-3 anything else is unassigned and counted per epoch; one sense does not claim every context |
+| SE-4 | tests/se.test.ts › SE-4 an untyped transition says so, and is «inferred» when both ends are dated by quotations |
+| SE-4 | tests/se.test.ts › SE-4 a type named by a source label gives status «cited» with the label quoted |
+| SE-4 | tests/se.test.ts › SE-4 a transition resting on a coverage period or an edition year is a hypothesis |
+| SE-7 | tests/se.test.ts › SE-7 the build runs the stage «senses», cached like the others, and writes data/work/se.json |
+| SE-8 | tests/se.test.ts › SE-8 the sidecar is lm/se/<bucket>.json with 4096 buckets and is not loaded with the card (lazy) |
+| SE-9 | manual — policy for new dictionaries (harvester + DICT_COVER record; copyrighted = headword line and short quotes; not online = research/45 top); the decision per dictionary is SE-10 and is checked by reading the spec and research/45 |

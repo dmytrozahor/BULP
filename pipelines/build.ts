@@ -55,6 +55,7 @@ import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../c
 import { writeEtymology } from './build-etymology.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
+import { buildSenseEntries, dictRows, kaikkiRows, wiktRows } from './build-se.ts'
 import { writeUsage } from './build-usage.ts'
 import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
 import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
@@ -392,6 +393,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     lap(`MU: ${cap.names.length} capitalisation name cards; ${rows.reduce((a, r) => a + r.linked, 0)}/${rows.reduce((a, r) => a + r.n, 0)} tokens linked in ${rows.length} Middle Ukrainian witnesses`)
   }
   let cvStressSrc: StressJson | undefined, cvWords: string[] = []   // SPEC 63 CP-6: thin-card stress (requested with the lemma stress, attached just before the cv shards are written)
+  let seWanted: string[] = []   // SPEC 63 SE: lk() keys of the CV light / dictionary-only cards (the modern sense sources are read for these and for the full / light lemmas)
   let cvLater: () => void = () => {}   // CV shards live in lex/, which writeLexicon() recreates: written after it
   {   // SPEC 63 AR: archaic lemmas (dictionary headwords unknown to VESUM + unverified recurring clusters); cards /ar/:id, text refs 'a:<id>'
     // #stage archaic
@@ -424,6 +426,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
         return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))) }
       })())
+    seWanted = cv.entries.map(e => e[0])
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvWords = cv.entries.filter(e => e[1][1] && /^[\p{L}'’-]+$/u.test(e[1][0])).map(e => e[1][0])
     cvLater = () => { const n = attachCvStress(cv.entries, cvStressSrc); lap(`CP-6 stress on ${n} of ${cv.entries.length} thin cards`); const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
@@ -649,6 +652,22 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     return { cands, frames, evidence }
   })
   // #end
+  // SPEC 63 SE: sense evolution. Rows = dictionary article lines of the corpus' dictionary witnesses (every token linked to a lemma / light / archaic card), uk.wiktionary and en.wiktionary (kaikki) senses.
+  // #stage senses
+  const se = await sc.run('senses', { chunked: ['entries'] }, async () => {
+    const rows = dictRows(adm, (wi, ti) => {
+      const L = linked[tix[wi]![ti]!]; if (L) return L.c.lemma
+      const r = torot.refs.get(adm[wi]!.w.id)?.[ti]; return r && /^[la]:/.test(r) ? r.slice(2) : undefined
+    })
+    const wanted = new Set<string>([...cards.map(c => lk(c.lemma)), ...light.file.lemmas.map(l => lk(l[0])), ...seWanted])
+    wiktRows(ROOT, cards.map(c => c.lemma), rows)
+    await kaikkiRows(ROOT, k => wanted.has(k), rows)
+    const dictW = new Set(adm.filter(({ w }) => w.witnessType === 'dictionary').map(({ w }) => w.id))
+    const kw = new Map(cards.map(c => [lk(c.lemma), c.forms.flatMap(f => f.kwic).filter(x => !dictW.has(x.w)).slice(0, 12)] as const))
+    const r = buildSenseEntries(rows, k => kw.get(k) ?? [])
+    return { entries: r.entries, stats: r.stats }
+  })
+  // #end
   // #tail
   // ── 8. outputs ────────────────────────────────────────────────────────────────────────────────
   const generated = new Date().toISOString()
@@ -692,6 +711,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   }
   { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki, auto.usage); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
+  { writeJsonAtomic(resolve(ROOT, 'data/work/se.json'), JSON.stringify(Object.fromEntries(se.entries))); const t = se.stats; lap(`SE: ${t.lemmas} lemmas with sense rows (${t.rows} rows, ${t.groups} senses, ${t.aligned} aligned across dictionaries, ${t.transitions} transitions, ${t.typed} typed by a source, ${t.withHistory} with a historical dictionary row, ${t.kwicAssigned} corpus contexts assigned by evidence); rows per dictionary: ${Object.entries(t.byDict).map(([d, n]) => d + ' ' + n).join(', ')}`) }   // SE-1…SE-4: data/work/se.json → lm/se/ (build-parts)
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1
   { const c = writeCognates(cards, ROOT, PUB, generated); lap(`cognates.json (BL-15): ${c.entries} lemmas with Proto-Slavic counterparts, ${c.dated} with a dated counterpart, ${c.flags} ET-3 review flags`) }   // BL-15

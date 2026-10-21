@@ -59,15 +59,16 @@ export function writeHeteronymCandidates(root: string, pub: string): number {
  * CC BY-SA 4.0: `source` keeps the revision id of every sense; the UI attributes «Вікісловник (uk), CC BY-SA 4.0» with the permalink. Absent cache → nothing written (an existing file stays).
  * Returns the lemmas with senses, the lemmas looked up (cache coverage) and how many senses carry a stress.
  */
-export function writeSenses(root: string, pub: string, lemmas: Iterable<string>): { lemmas: number; looked: number; withStress: number; senses: number } {
+/** The uk.wiktionary senses of the given lemmas from the harvest cache (BL-9); shared by writeSenses and the SE stage. Empty when there is no cache. */
+export function collectSenses(root: string, lemmas: Iterable<string>): { out: SensesFile; looked: number; senses: number; withStress: number } | undefined {
   const dir = resolve(root, 'data/raw/wikt')
-  if (!existsSync(dir)) return { lemmas: 0, looked: 0, withStress: 0, senses: 0 }
+  if (!existsSync(dir)) return undefined
   const pages = new Map<string, { revid: number; content: string; retrieved: string }>(), looked = new Set<string>()
   for (const f of readdirSync(dir).filter(x => /^senses-.*\.json$/.test(x)).sort()) {
     const b = JSON.parse(readFileSync(resolve(dir, f), 'utf8')) as { retrieved: string; pages: { title: string; revid?: number; content?: string; missing?: true }[] }
     for (const p of b.pages) { looked.add(p.title); if (!p.missing && p.content && p.revid) pages.set(p.title, { revid: p.revid, content: p.content, retrieved: b.retrieved }) }
   }
-  if (!pages.size) return { lemmas: 0, looked: 0, withStress: 0, senses: 0 }
+  if (!pages.size) return undefined
   const out: SensesFile = {}
   let senses = 0, withStress = 0, nl = 0
   for (const l of lemmas) {
@@ -79,6 +80,11 @@ export function writeSenses(root: string, pub: string, lemmas: Iterable<string>)
     if (!s.length) continue
     out[l] = s; senses += s.length; withStress += s.filter(x => x.stress).length
   }
-  writeFileSync(resolve(pub, 'senses.json'), JSON.stringify(out))
-  return { lemmas: Object.keys(out).length, looked: nl, withStress, senses }
+  return { out, looked: nl, senses, withStress }
+}
+export function writeSenses(root: string, pub: string, lemmas: Iterable<string>): { lemmas: number; looked: number; withStress: number; senses: number } {
+  const c = collectSenses(root, lemmas)
+  if (!c) return { lemmas: 0, looked: 0, withStress: 0, senses: 0 }
+  writeFileSync(resolve(pub, 'senses.json'), JSON.stringify(c.out))
+  return { lemmas: Object.keys(c.out).length, looked: c.looked, withStress: c.withStress, senses: c.senses }
 }

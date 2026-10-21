@@ -62,6 +62,10 @@ export type LmName = (typeof LM_NAMES)[number]
 /** the key a sidecar entry is filed under: the lemma (phrases: lower-cased lemma, heteronyms: heteronymKey of the spelling, passed in by the caller) */
 export const lmBucket = (k: string) => bucketOf(k, LM_BUCKETS)
 export const lmUrl = (name: LmName, k: string) => `./data/lm/${name}/${lmBucket(k)}.json`
+/** SPEC 63 SE-8: the sense-evolution sidecar lm/se/<b>.json, 4096 buckets (an entry is ~0.5 KB and ~150k lemmas have one): read only when the «Значення за епохами» block opens, so it is NOT in cardData() */
+export const SE_BUCKETS = 4096
+export const seBucket = (k: string) => bucketOf(k, SE_BUCKETS)
+export const seUrl = (k: string) => `./data/lm/se/${seBucket(k)}.json`
 
 export const WIT_BUCKETS = 64
 export const witBucket = (id: string) => bucketOf(id, WIT_BUCKETS)
