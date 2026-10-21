@@ -48,6 +48,7 @@ export const DICT_COVER: DictCover[] = [
   { id: 'zakrevsky', short: 'Закревський', title: 'Словарь малороссийских идиомов', edition: [1861, 1861], cover: [1861, 1861], basis: 'own-time', lang: 'ru', harvested: true, note: 'мова середини XIX ст.; мову глос перевірити (?)' },
   { id: 'shevchenko', short: 'Словник мови Шевченка', title: 'Словник мови Шевченка', edition: [1964, 1964], cover: [1837, 1861], basis: 'period', lang: 'uk', quoteDates: true, harvested: true, note: 'мова творів Т. Шевченка; дата цитати = дата твору; межі 1837–1861 ?' },
   { id: 'sum11', short: 'СУМ-11', title: 'Словник української мови в 11 томах', edition: [1970, 1980], cover: [1970, 1980], basis: 'own-time', lang: 'uk', harvested: false, note: 'сучасна літературна мова' },
+  { id: 'sum20', short: 'СУМ-20', title: 'Словник української мови (СУМ-20)', edition: [2010, 2026], cover: [2010, 2026], basis: 'own-time', lang: 'uk', harvested: false, note: 'НАН України, Інститут української мови; сучасна літературна мова; видання триває; ліцензія — SPEC 63 GG-7' },
 ]
 export const dictOfWitness = (wid: string): DictCover | undefined => DICT_COVER.find(d => d.id === wid) ?? (wid.startsWith('dsu14_') ? DICT_COVER.find(d => d.id === 'dsu14') : undefined)
 export const dictById = (id: string): DictCover | undefined => DICT_COVER.find(d => d.id === id)
@@ -65,6 +66,9 @@ export interface SeRow {
   /** sigla of the quotations as printed (SE-11) */ s?: string
   /** the key was reached through a derivation candidate of the headword, not its exact spelling (SE-11) */ m?: 'd'
   /** the type names the source gives to this sense (SE-4): [type id, the label as printed] */ t?: [string, string][]
+  /** SPEC 63 GG-7: stable link to the article on the official site */ u?: string
+  /** GG-7: the headword with its stress mark as the article shows it */ a?: string
+  /** GG-7: the labels printed on the sense (розм., заст., діал., перен. …) */ lb?: string[]
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }
 export const MAX_ROWS = 30, MAX_QUOTE = 200

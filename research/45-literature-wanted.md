@@ -29,7 +29,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 
 - **Q-SE1** (SPEC 63 SE-11): the OCR of three copyrighted dictionaries is parsed, but only the headword, a gloss ≤ 200 characters, the sigla and the quotation dates are stored (СУМ XVI – першої половини XVII ст., Інститут українознавства НАН; «Матеріали до словника XV–XVIII ст.» ed. Німчук, Лиса 2002–2003; Словник мови Шевченка, Інститут мовознавства 1964). May we store more (full definitions, quotation text)? Who holds the rights: НАН, the institutes, the editors (?). Until you confirm, nothing more is stored.
 
-## A. Wanted from the owner (22 entries)
+## A. Wanted from the owner (28 entries)
 
 | # | Work (author, year, edition wanted) | Why it matters / unblocks | Where it may be found | Status |
 |---|---|---|---|---|
@@ -55,8 +55,14 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | 20 | Квітка-Основ'яненко, «Малороссійскія повѣсти», Харків 1887, ed. Потебня (CX-6) | Слобожанщина, 19th c.; research/39: no copy found (archive.org, 7 queries) | not found online | wanted |
 | 21 | «Пам'ятки української мови»: «Українські грамоти XIV ст.», «… XV ст.», «Волинські грамоти XVI ст.», «Приватні листи XVIII ст.», Київ 1965, 1974, 1987, 1995 (CX-6) | Dated, localised Middle Ukrainian charters; 353 `pum14` charters are excluded for lack of an author record (corpus-10m §2). Ingest status of the later volumes: ? | catalogue entry only (spec CX-6); no scan found | wanted |
 | 22 | Онуфрій Манчук, «Жиб'ївські новелі» (Брустури 2024, 105 p., ISBN 9786178326630) | Hutsul dialect literature (research/40); copyrighted print, needs a legal copy (vocabulary-only use) | no free copy found (research/40) | wanted |
+| 23 | Чабаненко (ed.), «Словник говірок Нижньої Наддніпрянщини», 4 vols (Запоріжжя 1992). Headwords: not confirmed (?) | SPEC 63 GG-8: headword plus a short gloss (© dictionary, same policy as SE); Запоріжжя/Херсонщина/Таврія have 0 tokens (analysis/regions.md) | searched archive.org (0 hits), web search (no scan); not found online | wanted |
+| 24 | Онишкевич, «Словник бойківських говірок», ч. 1–2 (Київ 1984–85). Headwords: not confirmed (?) | GG-8, Boyko area | archive.org: 0 hits; web search: citations only, no scan | wanted |
+| 25 | Лисенко (ed.), «Словник поліських говорів» (Київ 1974). Headwords: not confirmed (?) | GG-8, Polissia | archive.org: 0 hits; no scan found | wanted |
+| 26 | Сабадош, «Словник закарпатської говірки села Сокирниця» (2008; 2nd ed. 2021, over 22.2 thousand dialect words per a search summary, unopened). The village name in the owner's brief («Холмець») is not confirmed (?) | GG-8, Transcarpathia; the largest postwar dialect dictionary of its kind | not found as a PDF; dspace.uzhnu.edu.ua (UzhNU repository, robots.txt not read) is where to ask | wanted |
+| 27 | «Словник гуцульських говірок» (2019?). The exact title is not confirmed (?): search found «Гуцульська діалектна лексика та фраземіка в українській художній мові» vol. 1 (2019) and Астаф'єва–Воронич, «Словник гуцульських говірок Річки та Яворова» (2014) | GG-8, Hutsul area (research/40) | no full text found | wanted |
+| 28 | «Словник буковинських говірок», ed. Гуйванюк (Чернівці: Рута, 2005, 688 pp.; the editor is from a search summary, the brief's «Загнітко» is not confirmed (?)) | GG-8, Bukovyna | no full text found | wanted |
 
-## B. We'll harvest (online, no owner action; 15 entries)
+## B. We'll harvest (online, no owner action; 16 entries)
 
 | # | Work | Why | Link | Status |
 |---|---|---|---|---|
@@ -75,6 +81,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | H13 | «Словник української мови XVI – першої половини XVII ст.», вип. 1–17 (1994–2017) and вип. 18– (2022–) | dated quotations of the 1500–1650 language per sense; copyrighted (Інститут українознавства НАН), so only headword and quotes ≤ 200 characters are kept (SE-9) | https://archive.org/details/SUM-28 (17 OCR files), https://archive.org/details/SUM-28_2 | queued; licence of the upload not stated |
 | H14 | «Матеріали до словника писемної та книжної української мови XV–XVIII ст.» кн. 1–2 (Тимченко, ed. Німчук, Лиса, 2002–2003) and «Словник мови Шевченка» т. 1–2 (1964) | dated quotations (15th–18th c.; Shevchenko 1837–1861); editions are copyrighted: headword and quotes ≤ 200 characters only | https://archive.org/details/kniga1, https://archive.org/details/kniga2, https://archive.org/details/1_20230624_20230624, https://archive.org/details/2_20230624_202306 | queued; licence of the upload not stated |
 | H15 | Словник староукраїнської мови XIV–XV ст. (1977–78) | already in the corpus (BL-11, headword lines by quotation decade); SE-1 reads it | archive.org `staroukr1`, `staroukr2` | harvested |
+| H16 | Open lexical data already in the project: VESUM (CC BY-NC-SA 4.0), uk.wiktionary and en.wiktionary dumps (CC BY-SA), LanguageTool/Hunspell uk_UA (derived from VESUM, so no new headwords). No other openly licensed Ukrainian headword list was found (checked: archive.org search, Wikipedia; Chtyvo has closed — its robots.txt URL returns a closing notice, chtyvo.org.ua 2026-10-21) | GG-8: nothing new to add | — | have |
 
 ## C. Already supplied (do not send again)
 
@@ -137,6 +144,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 20. Квітка-Основ'яненко, «Малороссійскія повѣсти», Харків 1887, ред. Потебня (CX-6): копії не знайдено.
 21. «Пам'ятки української мови»: грамоти XIV, XV ст., Волинські грамоти XVI ст., Приватні листи XVIII ст., Київ 1965, 1974, 1987, 1995 (CX-6).
 22. Манчук, «Жиб'ївські новелі» (Брустури 2024, ISBN 9786178326630): гуцульська говірка, потрібна легальна копія.
+23–28. Діалектні словники (SPEC 63 GG-8): Чабаненко, «Словник говірок Нижньої Наддніпрянщини» (4 т., 1992); Онишкевич, «Словник бойківських говірок» (1984–85); Лисенко, «Словник поліських говорів» (1974); Сабадош, словник закарпатської говірки (с. Сокирниця? 2008/2021, понад 22,2 тис. слів за пошуковою довідкою); гуцульські говірки (назву уточнити ?); «Словник буковинських говірок» (Рута 2005, ред. Гуйванюк ?). Онлайн-скан я не знайшов (archive.org: 0 збігів). Кількість заголовних слів не підтверджена (?). Опрацьовувати як інші © словники: заголовне слово + коротка глоса.
 
 ## Б. Зберемо самі (онлайн; 15 записів)
 

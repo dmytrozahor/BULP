@@ -15,3 +15,6 @@ export BULP_HPLT_LIMIT="${BULP_HPLT_LIMIT:-0}"
 export OMP_THREAD_LIMIT="${OMP_THREAD_LIMIT:-1}"
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac   # cron has a minimal PATH
 mkdir -p "$BULP_LOGS/runs" "$BULP_LOGS/done" 2>/dev/null
+# SPEC 63 GG-7: СУМ-11 / СУМ-20 are in copyright. 0 = headword, POS, stress, sense numbers, labels, volume/page, link and a gloss of at most 200 characters; 1 only with WRITTEN permission of the rights holder
+export FULL_SENSES_SUM11="${FULL_SENSES_SUM11:-0}"
+export FULL_SENSES_SUM20="${FULL_SENSES_SUM20:-0}"

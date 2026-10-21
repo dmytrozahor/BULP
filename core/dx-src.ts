@@ -22,6 +22,8 @@ export interface HistSrc {
 }
 const R = (id: string, bit: number, name: string, period: string, rank: number, orth = ['r2u', '1928'], ids = [id]): HistSrc => ({ ids, bit, name, period, ocr: false, orth, lineage: id, rank })
 const S = (id: string, bit: number, name: string, period: string, rank: number, lineage = id): HistSrc => ({ ids: [id], bit, name, period, ocr: true, lineage, rank })
+/** SPEC 63 GG-7: a licensed dump of a modern © dictionary: typeset (not OCR), so ONE such dictionary suffices for a card */
+const Y = (id: string, bit: number, name: string, period: string, rank: number): HistSrc => ({ ids: [id], bit, name, period, ocr: false, orth: [], lineage: id, rank })
 export const HIST_SRC: HistSrc[] = [
   R('r2u_hrinch09', 16, 'Грінченко, Словарь української мови', '1907–09; 3-тє вид. 1927–28', 1, ['r2u', '1928'], ['r2u_hrinch09', 'r2u_hrinch27']),
   R('r2u_zheleh', 32, 'Желехівський, Малорусько-німецький словар', '1886', 9, ['желехівка', '1928']),
@@ -38,6 +40,8 @@ export const HIST_SRC: HistSrc[] = [
   S('biletsky-nosenko', 65536, 'Білецький-Носенко, Словник української мови', '1840–42; друк 1966', 13),
   S('shevchenko', 131072, 'Словник мови Шевченка', '1837–61; друк 1964', 14),
   S('zakrevsky', 262144, 'Закревський, Словарь малороссийских идиомов', '1861', 15),
+  Y('sum11', 524288, 'Словник української мови в 11 томах (СУМ-11)', '1970–80', 16),
+  Y('sum20', 1048576, 'Словник української мови (СУМ-20)', '2010–', 17),
 ]
 export const HIST_BY_ID: Record<string, HistSrc> = Object.fromEntries(HIST_SRC.flatMap(s => s.ids.map(i => [i, s] as const)))
 /** the name the card lists: «Тимченко, Історичний словник українського язика (цитати XIV–XVIII ст.; друк 1930–32)» */

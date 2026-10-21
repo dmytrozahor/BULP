@@ -756,3 +756,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-5 | tests/gg.test.ts › GG-5 nVocab sums the vocab-only tokens of data/work/harvest-vocab, leaves out the other language family, and is 0 without the folder |
 | GG-5 | tests/gg.test.ts › GG-5 boot.json carries N (full text) and nVocab as two fields; the Corpus page prints both apart and says vocab-only is not in N; coverageCounts is unchanged |
 | GG-6 | tests/gg.test.ts › GG-3 DICT_HIST=0 switch and the loader are wired in build.ts; the report script exists |
+| GG-7 | tests/sum-import.test.ts › GG-7 default: gloss ≤ 200, full definition and quotation dropped, labels/POS/stress/volume-page/link kept, bad lines counted |
+| GG-7 | tests/sum-import.test.ts › GG-7 FULL_SENSES_<dict> defaults to false, reads 1/true, and only then the full definition and quote are kept |
+| GG-7 | tests/sum-import.test.ts › GG-7 clip cuts at a word boundary; the link must point to the official site of the dictionary |
+| GG-7 | tests/sum-import.test.ts › GG-7 one СУМ dictionary alone makes a card (typeset, no corroboration), merges into a dictionary-only card, names the dictionary |
+| GG-7 | tests/sum-import.test.ts › GG-7 SE periods: СУМ-11 = 1970–80, СУМ-20 = contemporary, both own-time; rows written by the pipeline are read back by the GG loader |
+| GG-8 | manual: documentation and owner follow-up only (research/45 items 23–28), no code |
