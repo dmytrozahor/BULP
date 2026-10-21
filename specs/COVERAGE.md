@@ -652,7 +652,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SL-5 | tests/plast-lch.test.ts › the source is registered; /plast, the cards and the source card use the category label and the entry source |
 | LW-1 | manual — research/45-literature-wanted.md is a generated document; every row cites its source file or an opened page, checked by reading at each regeneration (no invented editions) |
 | CP-1 | tests/card-parity.test.ts › CP-1 every shown / empty cell: some component of its block occurs in the sources the card kind mounts |
-| CP-1 | tests/card-parity.test.ts › CP-1 the SE sense timeline row is pending on every kind but the phrase page, and every layout keeps its SE-SLOT mount point |
+| CP-1 | tests/card-parity.test.ts › CP-1 the SE sense timeline row is shown on every kind but the phrase page, and every layout mounts SenseEpochs (SPEC 63 SE-6) |
 | CP-1 | tests/card-parity.test.ts › CP-1 every na reason is written, and the spec prints the matrix row of every card kind |
 | CP-2 | tests/card-parity.test.ts › CP-2 LemmaBlocks renders every lemma-keyed block with an honest empty state when nothing is known |
 | CP-2 | tests/card-parity.test.ts › CP-2 ThinCard hides the blocks the host page already prints (noKwic, noDerivation) |
@@ -686,10 +686,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-5 | tests/se-ui.test.ts › SE-5 the fixture timeline shows the six epochs in order, a gap as «немає даних», dated quotes, coverage periods and the typed transition |
 | SE-5 | tests/se-ui.test.ts › SE-5 an untyped transition reads «тип не вказано джерелом» |
 | SE-4 | tests/se.test.ts › SE-4 no transition between glosses of different languages (not comparable) |
-| SE-6 | tests/se-ui.test.ts › SE-6 the full card renders the block with its own test id |
-| SE-6 | tests/se-ui.test.ts › SE-6 the light card renders the block with its own test id |
-| SE-6 | tests/se-ui.test.ts › SE-6 the dict card renders the block with its own test id |
-| SE-6 | tests/se-ui.test.ts › SE-6 the orv card renders the block with its own test id |
-| SE-6 | tests/se-ui.test.ts › SE-6 the arch card renders the block with its own test id |
-| SE-6 | tests/se-ui.test.ts › SE-6 the mu card renders the block with its own test id |
 | SE-6 | tests/se-ui.test.ts › SE-6 the block is one component: mounted once in the full card and once in ThinCard, which serves light, dictionary-only, ORV/TOROT, archaic and unverified (MU) cards |
+| SE-6 | tests/se-ui.test.ts › SE-6 the ${kind} card renders the block with its own test id |

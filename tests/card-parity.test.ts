@@ -32,9 +32,9 @@ describe('CP-1 the parity matrix is true to the sources', () => {
     expect(cellsOf(c => c === 'build')).toEqual([]); expect(MATRIX.light.stress).toBe('empty'); expect(MATRIX.dict.stress).toBe('empty'); expect(MATRIX.archaic.stress).toBe('na')
     expect(spec).toContain("**CP-6** (implemented")
   })
-  it('CP-1 the SE sense timeline row is pending on every kind but the phrase page, and every layout keeps its SE-SLOT mount point', () => {
-    const pend = cellsOf(c => c === 'pending'); expect(pend.length).toBe(Object.keys(KINDS).length - 1); for (const [, b] of pend) expect(b).toBe('senseTimeline')
-    for (const k of Object.keys(KINDS) as (keyof typeof KINDS)[]) if (MATRIX[k].senseTimeline === 'pending') expect(KINDS[k].map(rd).join('\n'), k).toContain('SE-SLOT')
+  it('CP-1 the SE sense timeline row is shown on every kind but the phrase page, and every layout mounts SenseEpochs (SPEC 63 SE-6)', () => {
+    expect(cellsOf(c => c === 'pending')).toEqual([])
+    for (const k of Object.keys(KINDS) as (keyof typeof KINDS)[]) if (MATRIX[k].senseTimeline === 'shown') expect(KINDS[k].map(rd).join('\n'), k).toContain('<SenseEpochs')
   })
   it('CP-1 every na reason is written, and the spec prints the matrix row of every card kind', () => {
     expect(NA.light).toBeTruthy(); expect(NA.phrase).toBeTruthy(); expect(MATRIX.phrase.etymology).toBe('na')

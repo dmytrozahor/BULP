@@ -24,7 +24,7 @@ export const BLOCKS = {
   loan: ['LoanAdaptBlock'],
   derivatives: ['DerivativesBlock'],              // похідні (DV-3)
   ipa: ['IpaRow'],
-  senseTimeline: ['SE-SLOT'],                     // SE «Значення за епохами» (parallel step): mount slot marker until its component lands
+  senseTimeline: ['SenseEpochs'],                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
 } as const
 export type BlockId = keyof typeof BLOCKS
 /** the source files whose concatenation a card kind mounts (views and the shared components they reuse) */
@@ -47,8 +47,8 @@ const row = (c: Partial<Record<BlockId, Cell>>, base: Cell = 'empty'): Record<Bl
   Object.fromEntries((Object.keys(BLOCKS) as BlockId[]).map(b => [b, c[b] ?? base])) as Record<BlockId, Cell>
 /** lemma-keyed blocks of LemmaBlocks that every thin kind has, plus the shared witness / map / stats panels */
 const thin = { chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'na' } as const
-/** SE sense timeline: pending on every kind but the phrase page (swap to 'shown' when the SE component is mounted at the slot) */
-const se = { senseTimeline: 'pending' } as const
+/** SE sense timeline: shown on every kind but the phrase page (SenseEpochs, collapsed until opened; empty state «немає даних про значення») */
+const se = { senseTimeline: 'shown' } as const
 export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
   word: row({ ...se, chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
   form: row({ ...thin, ...se, kwic: 'shown', witnesses: 'shown', epochs: 'shown', derivation: 'shown', map: 'shown', stats: 'shown', stress: 'shown' }),

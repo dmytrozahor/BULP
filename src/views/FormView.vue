@@ -25,6 +25,7 @@ import { segment } from '../../core/deictics.ts'
 import DerivationSteps from '../components/DerivationSteps.vue'
 import LemmaBlocks from '../components/LemmaBlocks.vue'
 import PlastSenses from '../components/PlastSenses.vue'
+import SenseEpochs from '../components/SenseEpochs.vue'
 import StressForms from '../components/StressForms.vue'
 import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
@@ -144,7 +145,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <p v-if="rusyn && isKnown(rusyn)" class="sans small"><span class="muted">русинське прочитання: </span><ClaimBadge :claim="rusyn" :text="String(rusyn.value)" /></p>
           <p v-if="fc.hints.length" class="small sans muted">підказки (вага 0): {{ fc.hints.join(', ') }}</p>
         </Panel>
-        <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» mounts here, after the derivation block -->
+        <SenseEpochs :word="pick.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами», after the derivation block -->
         <PlastSenses :word="pick.lemma" />
         <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" />   <!-- SPEC 63 CP-2 -->
       </div>

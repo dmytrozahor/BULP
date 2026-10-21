@@ -292,7 +292,6 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <DialectVariants :lemma="card.lemma" />   <!-- SPEC 63 DP-4 -->
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
-        <SenseEpochs :word="card.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами» -->
         <!-- BL-9: senses from uk.wiktionary (CC BY-SA), collapsed, one-line summary = first gloss -->
         <Panel id="h-sn" :open="false" :count="lemmaSenses.length" title="Значення · Senses" :summary="sensesSummary(lemmaSenses)" :empty="!lemmaSenses.length"
           info="Значення — з розділу «Значення» uk.wiktionary (CC BY-SA 4.0), скорочено; не словникова норма проєкту. Наголос показано лише там, де сторінка Вікісловника дає наголошений склад для цієї омонімічної статті.">
@@ -322,7 +321,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <p class="sans small"><span class="muted">написання: </span>{{ chosen.raw }} <span class="muted"> · норма: </span>{{ chosen.norm }} <span class="muted"> · сучасна: </span>{{ chosen.modern }}</p>
           <DerivationSteps :steps="chosen.derivation" :uid="'w-' + chosen.raw" :dates="chosenDates" :lemma="card.lemma" panel="chain" />
         </Panel>
-        <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» mounts here, after the derivation block -->
+        <SenseEpochs :word="card.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами», after the derivation block -->
         <Panel v-if="chosen" id="h-dia" :open="false" title="Діалект · Dialect" :summary="`написання «${chosen.raw}»: ознаки, клас форм, літературний відповідник`"><DialectBlock :spelling="chosen.raw" :lemma="card.lemma" /></Panel>
         <WitnessBlock v-if="full" id="h-wit" :items="witnesses" />
       </div>
