@@ -59,10 +59,31 @@ export function columnsOf(page: string): [number, number] | undefined {
   return [a, nums.length > 1 && last > a && last - a <= 6 ? last : a + 3]
 }
 const FOOT = /^\s*[\d¹²³*†‡]*\s*\)/
+/** the first printed column of every scan page: OCR noise in a running head (`835` for `335`, a stray year) is rejected by the longest increasing chain of heads (a step of 1…8 columns per scan page) and the pages between chain members are interpolated at 4 columns per page; pages outside the chain's ends have no column */
+export function pageColumns(pages: { n: number; text: string }[]): Map<number, number> {
+  const h = pages.map(p => ({ n: p.n, a: columnsOf(p.text)?.[0] })).filter((x): x is { n: number; a: number } => x.a !== undefined).sort((x, y) => x.n - y.n)
+  const best = h.map(() => 1), prev = h.map(() => -1)
+  for (let i = 0; i < h.length; i++) for (let j = 0; j < i; j++) {
+    const da = h[i]!.a - h[j]!.a, dn = h[i]!.n - h[j]!.n
+    if (da > 0 && da <= 8 * dn && best[j]! + 1 > best[i]!) { best[i] = best[j]! + 1; prev[i] = j }
+  }
+  let k = best.reduce((m, v, i) => (v > best[m]! ? i : m), 0)
+  const chain: { n: number; a: number }[] = []
+  for (; k >= 0 && h.length; k = prev[k]!) chain.unshift(h[k]!)
+  const out = new Map<number, number>()
+  for (let i = 0; i < chain.length; i++) {
+    const c = chain[i]!; out.set(c.n, c.a)
+    const nx = chain[i + 1]; if (!nx) continue
+    for (let n = c.n + 1; n < nx.n; n++) out.set(n, Math.min(nx.a - 1, c.a + 4 * (n - c.n)))
+  }
+  return out
+}
 export function workPages(pages: { n: number; text: string }[], cols: [number, number]): { n: number; a: number; text: string; foot: number }[] {
   const out: { n: number; a: number; text: string; foot: number }[] = []
+  const colOf = pageColumns(pages)
   for (const p of pages) {
-    const c = columnsOf(p.text); if (!c) continue
+    const a0 = colOf.get(p.n); if (a0 === undefined) continue
+    const c: [number, number] = [a0, a0 + 3]
     if (c[1] < cols[0] || c[0] > cols[1]) continue
     const lines = p.text.split('\n'), i = lines.findIndex(l => l.trim())
     const body = lines.slice(i + 1)

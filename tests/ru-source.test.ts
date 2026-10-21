@@ -8,7 +8,7 @@ import { buildEntry, type SeRow } from '../core/se.ts'
 import { witnessPoints } from '../src/lib/witnessPoints.ts'
 import RuBadge from '../src/components/RuBadge.vue'
 import SenseEpochs from '../src/components/SenseEpochs.vue'
-import { columnsOf, readOcrBooks, ribWitness, RIB_WORKS, workPages } from '../pipelines/ingest-rib.ts'
+import { columnsOf, pageColumns, readOcrBooks, ribWitness, RIB_WORKS, workPages } from '../pipelines/ingest-rib.ts'
 
 const W = (id: string, edition: string, title = '') => ({ id, edition, title })
 describe('RU-2 flag derivation from the source metadata', () => {
@@ -78,6 +78,10 @@ describe('RU-4 РИБ т. 4 «Палінодія»: ingest by printed column ran
     expect(columnsOf('331 «палиноля», с0. ЗАХАРШ КОПЫСТЕНОКАГО, 1621 ГОДА. 382\n\nтекст')).toEqual([331, 334])
     expect(columnsOf('388 «пАлинОдтя>, СОЧ. ЗАКАРИИ, 1621 ГОД\n')).toEqual([388, 391])
     expect(columnsOf('\n\n1179 «ПАЛИНОДІЯ», 1621 года. 1180')).toEqual([1179, 1180]); expect(columnsOf('без номера')).toBeUndefined()
+  })
+  it('RU-4 an OCR-noised running head (835 for 335) is rejected by the chain of heads and interpolated', () => {
+    const m = pageColumns(book.pages)
+    expect(m.get(83)).toBe(315); expect(m.get(88)).toBe(335); expect(m.get(100)).toBe(388)
   })
   it('RU-4 only columns 313–1180: the previous work (cols 308–311) and the Palinodia own table of contents (col 1183 on) are not read', () => {
     expect(book.name).toMatch(/Том_04/)
