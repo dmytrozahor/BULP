@@ -15,7 +15,7 @@ describe('SE-1 sense inventory with coverage periods', () => {
     const d = Object.fromEntries(DICT_COVER.map(x => [x.id, x]))
     expect(d['dsu14']).toMatchObject({ edition: [1977, 1978], cover: [1301, 1500], basis: 'period' })
     expect(d['sum16']).toMatchObject({ cover: [1500, 1650], basis: 'period' })
-    expect(d['timchenko']).toMatchObject({ edition: [1930, 1932], cover: [1501, 1800], basis: 'period' })
+    expect(d['timchenko']).toMatchObject({ edition: [1930, 1932], cover: [1301, 1800], basis: 'period' })
     expect(d['r2u_zheleh']).toMatchObject({ edition: [1886, 1886], cover: [1886, 1886], basis: 'own-time' })
     expect(d['r2u_umanets']!.cover).toEqual([1893, 1898]); expect(d['r2u_hrinch09']!.cover).toEqual([1907, 1909]); expect(d['r2u_nikovsky']!.cover).toEqual([1927, 1927])
     expect(d['sum11']).toMatchObject({ edition: [1970, 1980], basis: 'own-time' })

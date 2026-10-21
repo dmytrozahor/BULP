@@ -6,7 +6,7 @@
  *  - uk.wiktionary senses (data/raw/wikt, BL-9) and en.wiktionary senses via kaikki (data/raw/kaikki/uk.jsonl), both modern and undated.
  * Output: data/work/se.json = { key: SeEntry } (not committed); pipelines/build-parts.ts shards it into public/data/lm/se/<bucket>.json (lazy, read only when the block opens).
  */
-import { createReadStream, existsSync } from 'node:fs'
+import { createReadStream, existsSync, readdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { createInterface } from 'node:readline'
 import { lk } from '../core/cv.ts'
@@ -15,6 +15,7 @@ import { collectSenses } from './build-extras.ts'
 
 export interface SeDictIn { w: { id: string; tokens: { raw: string; loc: string }[]; witnessType?: string; date: [number, number] } }
 const PER_SOURCE = 6   // rows per lemma and modern source (keeps lm/se shards small)
+const PER_PARSED = 8    // rows per lemma and parsed historical dictionary (SE-11)
 
 /** SE-1: a row for every (dictionary witness, article line) that documents the lemma; `target` = the lemma / card word a token links to (undefined = no card). */
 export function dictRows(ins: SeDictIn[], target: (wi: number, ti: number) => string | undefined, into = new Map<string, SeRow[]>()): Map<string, SeRow[]> {
@@ -74,6 +75,28 @@ export async function kaikkiRows(root: string, wanted: (k: string) => boolean, i
     }
   }
   return n
+}
+
+/**
+ * SE-11: rows of the parsed historical dictionaries (pipelines/parse-se-dicts.ts → data/work/se-parsed/<id>.json). A row is attached to the card whose key equals the headword (lk); a headword that no
+ * card has is tried through `alt` (the first derivation candidate of the headword, flagged `m: 'd'`); otherwise it is dropped: an OCR headword never creates a lemma.
+ */
+export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (head: string) => string[], into: Map<string, SeRow[]>): { files: number; rows: number; derived: number } {
+  const dir = resolve(root, 'data/work/se-parsed')
+  let files = 0, n = 0, derived = 0
+  if (!existsSync(dir)) return { files, rows: n, derived }
+  for (const f of readdirSync(dir).filter(x => x.endsWith('.json')).sort()) {
+    let j: { rows: [string, SeRow][] }
+    try { j = JSON.parse(readFileSync(resolve(dir, f), 'utf8')) } catch { continue }   // a torn file is ignored (RS-1)
+    files++
+    for (const [head, row] of j.rows) {
+      let k = lk(head), r = row
+      if (!wanted(k)) { const a = alt(head).map(lk).find(wanted); if (!a) continue; k = a; r = { ...row, m: 'd' as const }; derived++ }
+      const list = into.get(k) ?? into.set(k, []).get(k)!
+      if (list.filter(x => x.d === r.d).length < PER_PARSED) { list.push(r); n++ }
+    }
+  }
+  return { files, rows: n, derived }
 }
 
 export interface SeStats { lemmas: number; rows: number; groups: number; aligned: number; transitions: number; typed: number; byDict: Record<string, number>; withHistory: number; kwicAssigned: number }

@@ -11,3 +11,7 @@ while pgrep -f 'harvest/hv5-chain.sh' >/dev/null || pgrep -f 'harvest/hv5.ts' >/
 echo "$(date -u +%FT%TZ) [se-chain] start harvest/se-dicts.ts"
 "$NODE" "$TSX" harvest/se-dicts.ts
 echo "$(date -u +%FT%TZ) [se-chain] exit $?"
+# SPEC 63 SE-11: parse the OCR into dated sense rows (resumable, atomic; the worker repeats it on the synced dump)
+echo "$(date -u +%FT%TZ) [se-chain] start pipelines/parse-se-dicts.ts"
+"$NODE" "$TSX" pipelines/parse-se-dicts.ts
+echo "$(date -u +%FT%TZ) [se-chain] parse exit $?"

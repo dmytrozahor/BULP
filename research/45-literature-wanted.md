@@ -25,6 +25,10 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 
 Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs and regions with zero or near-zero tokens; (3) works that unblock a SPEC item; (4) Polish and Church Slavonic items last. Format for every entry unless stated: scan PDF or DjVu at 300 dpi or more; a text layer is a bonus. Drop files into `C:\Users\User\IdeaProjects\dmitrijza\.claude\worktrees\ukr-lexicon-mvp\books`.
 
+## Owner questions
+
+- **Q-SE1** (SPEC 63 SE-11): the OCR of three copyrighted dictionaries is parsed, but only the headword, a gloss ≤ 200 characters, the sigla and the quotation dates are stored (СУМ XVI – першої половини XVII ст., Інститут українознавства НАН; «Матеріали до словника XV–XVIII ст.» ed. Німчук, Лиса 2002–2003; Словник мови Шевченка, Інститут мовознавства 1964). May we store more (full definitions, quotation text)? Who holds the rights: НАН, the institutes, the editors (?). Until you confirm, nothing more is stored.
+
 ## A. Wanted from the owner (22 entries)
 
 | # | Work (author, year, edition wanted) | Why it matters / unblocks | Where it may be found | Status |
@@ -102,6 +106,10 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 - Жанр: вичитаних книг 1800–1950 мало.
 
 Формат кожного запису: скан PDF або DjVu від 300 dpi, текстовий шар бажаний. Класти в `C:\Users\User\IdeaProjects\dmitrijza\.claude\worktrees\ukr-lexicon-mvp\books`.
+
+## Питання власнику
+
+- **Q-SE1** (SPEC 63 SE-11): OCR трьох словників під © розібрано, але зберігаємо лише заголовне слово, глосу ≤ 200 знаків, сигли й дати цитат (СУМ XVI – 1-ї пол. XVII ст.; «Матеріали до словника XV–XVIII ст.»; Словник мови Шевченка). Чи можна зберігати більше (повні дефініції, текст цитат)? Правовласники: НАН, інститути, упорядники (?). До вашого підтвердження більше нічого не зберігається.
 
 ## А. Потрібно від власника (22 записи; нумерація як в англійській таблиці)
 

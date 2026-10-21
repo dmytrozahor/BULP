@@ -22,6 +22,7 @@
     "data:cognates": "tsx pipelines/cognates.ts",
     "audit:senses": "tsx pipelines/sense-audit.ts",
     "report:se": "tsx pipelines/se-report.ts",
+    "parse:se": "tsx pipelines/parse-se-dicts.ts",
     "budget": "tsx pipelines/budget.ts",
     "data:parts": "tsx pipelines/build-parts.ts",
     "data:pull": "tsx pipelines/data-cdn.ts pull",

@@ -20,7 +20,7 @@ describe('SE-10 harvest list', () => {
   })
   it('SE-10 the historical periods are the dictionaries own (not the print year)', () => {
     expect(dictById('biletsky-nosenko')).toMatchObject({ edition: [1966, 1966], cover: [1840, 1842] })
-    expect(dictById('timchenko')!.cover).toEqual([1501, 1800]); expect(dictById('sum16')!.cover).toEqual([1500, 1650])
+    expect(dictById('timchenko')!.cover).toEqual([1301, 1800]); expect(dictById('sum16')!.cover).toEqual([1500, 1650])
   })
   it('SE-10 the chain waits for HV-5 and the launcher knows the job; the spec records the decisions', () => {
     expect(rd('harvest/se-chain.sh')).toContain('hv5-chain.sh'); expect(rd('harvest/launch.sh')).toContain('se-dicts')

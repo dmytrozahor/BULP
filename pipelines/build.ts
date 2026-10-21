@@ -55,7 +55,7 @@ import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../c
 import { writeEtymology } from './build-etymology.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
-import { buildSenseEntries, dictRows, kaikkiRows, wiktRows } from './build-se.ts'
+import { buildSenseEntries, dictRows, kaikkiRows, parsedRows, wiktRows } from './build-se.ts'
 import { writeUsage } from './build-usage.ts'
 import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
 import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
@@ -426,7 +426,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
         return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))) }
       })())
-    seWanted = cv.entries.map(e => e[0])
+    seWanted = [...cv.entries.map(e => e[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])]
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvWords = cv.entries.filter(e => e[1][1] && /^[\p{L}'’-]+$/u.test(e[1][0])).map(e => e[1][0])
     cvLater = () => { const n = attachCvStress(cv.entries, cvStressSrc); lap(`CP-6 stress on ${n} of ${cv.entries.length} thin cards`); const wc = writeCv(PUB, cv.entries, light.file.lemmas.map(l => l[0]), ar.file.entries, new Date().toISOString(), cv.forms)
@@ -659,9 +659,10 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
       const L = linked[tix[wi]![ti]!]; if (L) return L.c.lemma
       const r = torot.refs.get(adm[wi]!.w.id)?.[ti]; return r && /^[la]:/.test(r) ? r.slice(2) : undefined
     })
-    const wanted = new Set<string>([...cards.map(c => lk(c.lemma)), ...light.file.lemmas.map(l => lk(l[0])), ...seWanted])
+    const wanted = new Set<string>([...cards.map(c => lk(c.lemma)), ...light.file.lemmas.map(l => lk(l[0])), ...seWanted.map(lk)])
     wiktRows(ROOT, cards.map(c => c.lemma), rows)
     await kaikkiRows(ROOT, k => wanted.has(k), rows)
+    parsedRows(ROOT, k => wanted.has(k), h => derive(h, true).candidates.slice(0, 1).map(c => c.form), rows)   // SE-11: Тимченко, СУМ XVI–XVII, Матеріали, Шевченко, Білецький-Носенко, Закревський
     const dictW = new Set(adm.filter(({ w }) => w.witnessType === 'dictionary').map(({ w }) => w.id))
     const kw = new Map(cards.map(c => [lk(c.lemma), c.forms.flatMap(f => f.kwic).filter(x => !dictW.has(x.w)).slice(0, 12)] as const))
     const r = buildSenseEntries(rows, k => kw.get(k) ?? [])

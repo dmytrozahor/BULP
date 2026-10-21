@@ -41,12 +41,12 @@ export const DICT_COVER: DictCover[] = [
   { id: 'wikt.uk', short: 'Вікісловник (uk)', title: 'uk.wiktionary.org, розділ «Значення»', edition: [2026, 2026], cover: null, basis: 'modern', lang: 'uk', harvested: true, note: 'сучасне вживання; джерело не датує значень (рік видання не є датою значення)' },
   { id: 'wikt.en', short: 'Wiktionary (en, kaikki)', title: 'en.wiktionary.org via kaikki.org', edition: [2026, 2026], cover: null, basis: 'modern', lang: 'en', harvested: true, note: 'сучасне вживання; джерело не датує значень' },
   // declared for the harvesters of SE-9 (nothing reads them yet); periods as stated by the dictionaries themselves
-  { id: 'timchenko', short: 'Тимченко', title: 'Історичний словник українського язика', edition: [1930, 1932], cover: [1501, 1800], basis: 'period', lang: 'uk', quoteDates: true, harvested: false, note: 'цитати XVI–XVIII ст. з датованих джерел; дата цитати важливіша за період' },
-  { id: 'sum16', short: 'СУМ XVI – 1-ї пол. XVII ст.', title: 'Словник української мови XVI – першої половини XVII ст.', edition: [1994, 1994], cover: [1500, 1650], basis: 'period', lang: 'uk', quoteDates: true, harvested: false, note: 'НАН України, Інститут української мови (видання тривало; роки видання випусків уточнити?)' },
-  { id: 'timchenko-materials', short: 'Тимченко, Матеріали XV–XVIII ст.', title: 'Матеріали до словника писемної та книжної української мови XV–XVIII ст.', edition: [2002, 2003], cover: [1401, 1800], basis: 'period', lang: 'uk', quoteDates: true, harvested: false, note: 'видання Німчука й Лисої з матеріалів Є. Тимченка; цитати датовані' },
-  { id: 'biletsky-nosenko', short: 'Білецький-Носенко', title: 'Словник української мови (1840–1842)', edition: [1966, 1966], cover: [1840, 1842], basis: 'period', lang: 'uk', harvested: false, note: 'укладено в 1840-х, надруковано 1966 (вид. Німчука): описує мову 1840-х, а не 1966' },
-  { id: 'zakrevsky', short: 'Закревський', title: 'Словарь малороссийских идиомов', edition: [1861, 1861], cover: [1861, 1861], basis: 'own-time', lang: 'ru', harvested: false, note: 'мова середини XIX ст.; мову глос перевірити (?)' },
-  { id: 'shevchenko', short: 'Словник мови Шевченка', title: 'Словник мови Шевченка', edition: [1964, 1964], cover: [1837, 1861], basis: 'period', lang: 'uk', quoteDates: true, harvested: false, note: 'мова творів Т. Шевченка; дата цитати = дата твору; межі 1837–1861 ?' },
+  { id: 'timchenko', short: 'Тимченко', title: 'Історичний словник українського язика', edition: [1930, 1932], cover: [1301, 1800], basis: 'period', lang: 'uk', quoteDates: true, harvested: true, note: 'лише А–Жял (надруковано два зошити); цитати XIV–XVIII ст. за століттями словника («ХУП.»); дата цитати важливіша за період' },
+  { id: 'sum16', short: 'СУМ XVI – 1-ї пол. XVII ст.', title: 'Словник української мови XVI – першої половини XVII ст.', edition: [1994, 1994], cover: [1500, 1650], basis: 'period', lang: 'uk', quoteDates: true, harvested: true, note: 'НАН України, Інститут української мови (видання тривало; роки видання випусків уточнити?)' },
+  { id: 'timchenko-materials', short: 'Тимченко, Матеріали XV–XVIII ст.', title: 'Матеріали до словника писемної та книжної української мови XV–XVIII ст.', edition: [2002, 2003], cover: [1401, 1800], basis: 'period', lang: 'ru', quoteDates: true, harvested: true, note: 'видання Німчука й Лисої з матеріалів Є. Тимченка; цитати датовані' },
+  { id: 'biletsky-nosenko', short: 'Білецький-Носенко', title: 'Словник української мови (1840–1842)', edition: [1966, 1966], cover: [1840, 1842], basis: 'period', lang: 'ru', harvested: true, note: 'укладено в 1840-х, надруковано 1966 (вид. Німчука): описує мову 1840-х, а не 1966' },
+  { id: 'zakrevsky', short: 'Закревський', title: 'Словарь малороссийских идиомов', edition: [1861, 1861], cover: [1861, 1861], basis: 'own-time', lang: 'ru', harvested: true, note: 'мова середини XIX ст.; мову глос перевірити (?)' },
+  { id: 'shevchenko', short: 'Словник мови Шевченка', title: 'Словник мови Шевченка', edition: [1964, 1964], cover: [1837, 1861], basis: 'period', lang: 'uk', quoteDates: true, harvested: true, note: 'мова творів Т. Шевченка; дата цитати = дата твору; межі 1837–1861 ?' },
   { id: 'sum11', short: 'СУМ-11', title: 'Словник української мови в 11 томах', edition: [1970, 1980], cover: [1970, 1980], basis: 'own-time', lang: 'uk', harvested: false, note: 'сучасна літературна мова' },
 ]
 export const dictOfWitness = (wid: string): DictCover | undefined => DICT_COVER.find(d => d.id === wid) ?? (wid.startsWith('dsu14_') ? DICT_COVER.find(d => d.id === 'dsu14') : undefined)
@@ -61,10 +61,13 @@ export interface SeRow {
   /** verbatim quote of the line, ≤ 200 characters */ q?: string
   /** locator inside the dictionary */ l?: string
   e?: [number, number]
+  /** sense number in the article (SE-11) */ n?: number
+  /** sigla of the quotations as printed (SE-11) */ s?: string
+  /** the key was reached through a derivation candidate of the headword, not its exact spelling (SE-11) */ m?: 'd'
   /** the type names the source gives to this sense (SE-4): [type id, the label as printed] */ t?: [string, string][]
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }
-export const MAX_ROWS = 20, MAX_QUOTE = 200
+export const MAX_ROWS = 30, MAX_QUOTE = 200
 
 /** SE-1: the date of a row: its own dated quotation, else the dictionary's coverage period (never the print year of a historical dictionary). */
 export function atOf(r: SeRow): SeAt {

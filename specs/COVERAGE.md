@@ -695,3 +695,16 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-10 | tests/se-dicts.test.ts › SE-10 copyrighted dictionaries keep only the headword line and short quotes; public-domain ones may be read in full |
 | SE-10 | tests/se-dicts.test.ts › SE-10 the chain waits for HV-5 and the launcher knows the job; the spec records the decisions |
 | SE-7 | tests/se-dicts.test.ts › SE-7 the standalone report script reads the dictionary witnesses and writes analysis/sense-evolution.md atomically |
+| SE-11 | tests/se-parse.test.ts › SE-11 ocrScore: clean Cyrillic scores high, garbled OCR low; headwords must look like words |
+| SE-11 | tests/se-parse.test.ts › SE-11 a garbled article is skipped and counted, never emitted as a lemma; the pass rate is reported |
+| SE-11 | tests/se-parse.test.ts › SE-11 century labels (OCR of XVII is «ХУП») and years are read |
+| SE-11 | tests/se-parse.test.ts › SE-11 the dictionary list of sources dates a siglum only where it gives a year |
+| SE-11 | tests/se-parse.test.ts › SE-11 a sense quoted in two centuries becomes two rows in two epochs, never one row spanning the epochs between |
+| SE-11 | tests/se-parse.test.ts › SE-11 Тимченко: headword, grammar, etymology dropped, gloss, century label as the date; a «Див.» article is a cross-reference |
+| SE-11 | tests/se-parse.test.ts › SE-11 СУМ XVI–XVII: year of the quotation in parentheses dates the sense; © = no quotation text, gloss ≤ 200; cross-reference «див.» left out |
+| SE-11 | tests/se-parse.test.ts › SE-11 Матеріали XV–XVIII ст.: the year in a siglum dates a sense («Кн.Луцк. 1562»), an undated one has no date (coverage period applies); © = no quotation text |
+| SE-11 | tests/se-parse.test.ts › SE-11 Словник мови Шевченка: a gloss only where the dictionary gives its count; the sigla are kept, the date is the coverage period (1837–1861) |
+| SE-11 | tests/se-parse.test.ts › SE-11 Білецький-Носенко: headword + parenthesised grammar, Russian gloss, PD so the quotation text may be kept; dated by the coverage period 1840–1842 |
+| SE-11 | tests/se-parse.test.ts › SE-11 parseAll writes one output per OCR item atomically, ignores a torn index line, and a rerun reuses unchanged outputs |
+| SE-11 | tests/se-parse.test.ts › SE-11 parsedRows keeps a row only for a card that exists (exact key, else the first derivation candidate, flagged), never creates a lemma |
+| SE-11 | tests/se-parse.test.ts › SE-11 the build stage reads the parsed rows, the parser script is an npm script and the chain runs it after the harvest |
