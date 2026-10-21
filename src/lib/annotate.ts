@@ -15,6 +15,7 @@ import { traceSteps } from './derive.ts'
 import { key, normalizeOld, tokenize } from '../../core/text.ts'
 import { type CardLookup, type SearchIndex, type Via } from './search.ts'
 import { hitsOf, runDetectors, strongest, type Category, type LexData } from './analyze.ts'
+import { contactCorr, type ContactCorr } from '../../core/contact-corr.ts'
 import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 
@@ -30,6 +31,7 @@ export interface AnnotatedToken {
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   numeral?: Numeral                                  // BL-4/N11: a Cyrillic numeral (value, not a word; same object on every token of the run)
+  contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
 }
 
@@ -41,7 +43,7 @@ function claimsOf(card: CoreCard, form?: CoreForm): Record<string, Claim<true>> 
   const out: Record<string, Claim<true>> = {}
   const c = card.claims
   if (isKnown(c.register)) out.colloquial = c.register as unknown as Claim<true>
-  if (isKnown(c.surzhyk)) out.surzhyk = c.surzhyk
+  // MM-9 rule 2: the lemma-level surzhyk aggregate is NOT copied to a token: a contact label is a property of the form (form.claims, below), never of the lemma
   if (isKnown(c.origin) && c.origin.value === 'church_slavonic') out.church_slavonic = c.origin as unknown as Claim<true>
   for (const [code, cl] of Object.entries(c.dialect)) if (isKnown(cl)) out[code] = cl
   const ru = c.rusyn   // optional (B0 contract); absent in older data
@@ -88,7 +90,8 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
         via: via.h!.via, claims, hints: [], mark: strongest(claims), epoch: shevEpochOf(dcard) })
       continue
     }
-    out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims) })
+    const contact = contactCorr(t.raw, f => hitsOf(data, f))   // MM-9: the SAME rule as MOR-ICHESK (core/rules.ts), so chip and counterpart agree
+    out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}) })
   }
   return out
 }

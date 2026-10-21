@@ -24,6 +24,8 @@ import IkavismChain from '../components/IkavismChain.vue'
 import { ikavismBaseRemote } from '../lib/lightcard.ts'
 import { findLoc, loadTokens } from '../lib/witnessText.ts'
 import { kwicAt } from '../lib/unlinked.ts'
+import { altStandardOf } from '../lib/altData.ts'
+import { foldById } from '../../core/orthography.ts'
 const props = defineProps<{ lemma: string }>()
 const cv = ref<CvEntry>(), err = ref(''), cvDone = ref(false), kwic = ref<Kwic[]>([])
 const { annData, loaded, witnessById, byLemma } = useData()
@@ -63,6 +65,8 @@ const lineSense = computed(() => (cv.value?.[3].length ? attSenses(word.value, c
 const witItems = computed(() => witnessCounts([...(ex.value ? [ex.value] : []), ...(cv.value?.[3] ?? []).map(a => ({ w: a[0] }))]))
 const prev = computed(() => cv.value?.[4]?.prev)
 /** SPEC 63 DO-2: a dictionary-only card (VESUM / r2u / Plast, no corpus text): explicit status, sources by name, f = 0, no «найраніше» */
+/** MM-10: the card is a VESUM :alt spelling (термінольоґія) → its standard lemma (термінологія) and the cited folds that lead there */
+const altStd = computed(() => (/(^|:)alt(:|$|\s)/.test(tags.value) ? altStandardOf(word.value) : undefined))
 const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
 </script>
 
@@ -78,7 +82,9 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
       Джерела: <b>{{ dict.sources.join(' · ') }}</b>. Вжив. у корпусі: f = {{ dict.f }}. Найраніше: — <span class="muted">(роки словників нижче — дати словників, а не перша фіксація слова)</span>
     </p>
     <p v-if="tags" class="sans small">VESUM: <code>{{ tags }}</code><template v-if="row"> · вжив. у корпусі: {{ row[2] }}</template></p>
-    <p v-else class="sans small"><b>Написання як засвідчене:</b> ВЕСУМ такої форми не підтверджує, лематизацію не вгадано; картка подає лише рядки словників.</p>
+    <p v-if="altStd" class="sans small" data-testid="alt-std">Альтернативне написання (ВЕСУМ <code>alt</code>, не за чинним правописом). Стандартна лема: <RouterLink :to="`/w/${encodeURIComponent(altStd.std)}`" class="lang"><b>{{ altStd.std }}</b></RouterLink>
+      <span v-for="f in altStd.folds" :key="f" class="badge" :title="foldById[f]?.cite.quote">{{ f }}</span></p>
+    <p v-if="!tags" class="sans small"><b>Написання як засвідчене:</b> ВЕСУМ такої форми не підтверджує, лематизацію не вгадано; картка подає лише рядки словників.</p>
     <section v-if="analyses.length > 1" class="card sans small" aria-label="Аналізи ВЕСУМ" data-testid="vesum-analyses">
       <strong>Усі аналізи написання «{{ spelling }}» у ВЕСУМ</strong>
       <ul>

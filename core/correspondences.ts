@@ -11,11 +11,12 @@ export interface Correspondence {
   old: string[]
   modern: string
   /** VESUM POS class the modern lemma must have (core/pos-gate.ts VClass) */
-  cls: 'pron' | 'noun'
+  cls: 'pron' | 'noun' | 'adv'
   /** 'etymology' = ЕСУМ quote (default); 'cognate' = no sound rule is cited, the link rests on VESUM + attested cognates, and is labelled so;
    *  'variant' (MM-2) = the regular rule `rule` gives a listed variant spelling (`variants`) of the modern lemma, which stays the standard form;
    *  'rule' (MM-2) = the regular rule `rule` gives the modern lemma itself, the row only carries the cited line */
-  kind?: 'etymology' | 'cognate' | 'variant' | 'rule'
+  kind?: 'etymology' | 'cognate' | 'variant' | 'rule' | 'cs'
+  /** 'cs' (MM-7) = a cited Church Slavonic ↔ East Slavic word correspondence (ЕСУМ); no sound rule is claimed for the suffix (-ствиѥ ↔ -ство has no quote) */
   /** sound-rule id (core/phonology.ts) behind a 'variant' / 'rule' row */
   rule?: string
   /** modern variant spellings of `modern` (lower case, dictionary-cited): the lemma-less token with exactly this spelling links to `modern` */
@@ -46,6 +47,20 @@ export const CORRESPONDENCES: Correspondence[] = [
   { old: ['хомѧкъ', 'хомѧки', 'хомѧкы'], modern: "хом'як", cls: 'noun', kind: 'rule', rule: 'R02', url: 'https://en.wiktionary.org/wiki/хомяк#Russian',
     quote: 'Inherited from Old East Slavic хомѧкъ (xomękŭ), хомѣкъ (xoměkŭ), from Proto-Slavic *xomě̀kъ',
     note: 'Вікісловник (ru хомяк): праслов\'янське *xomě̀kъ має в давньоруській обидві форми, хомѧкъ і хомѣкъ; причина варіювання ѣ ~ ѧ не з\'ясована (ЕСУМ: «надійної етимології не має»)' },
+  // MM-5 (owner file «съпостати це сопостат супостат іменник а не дієслово.png»): Stanza ORV lemmatised сопостат as the VERB съпостати (model). The NOUN супостат is in VESUM and in Wiktionary's
+  // etymology (OES супостатъ < *sǫpostatъ). The spelling relation сопостат / съпостат ~ сѫпостатъ has no quote (the 'о' for ѫ is not stated in a source), so the link is a labelled cognate row, not a sound rule.
+  { old: ['съпостати', 'съпостатъ', 'сопостат', 'сопостаты', 'сопостата', 'сопостатъ'], modern: 'супостат', cls: 'noun', kind: 'cognate', url: 'https://en.wiktionary.org/wiki/супостат',
+    quote: 'Inherited from Old East Slavic супостатъ (supostatŭ), from Proto-Slavic *sǫpostatъ.',
+    note: 'Вікісловник (uk супостат): давньоруське супостатъ < псл. *sǫpostatъ; сопостат / съпостат — те саме слово, написання з о / ъ на місці ѫ у джерелі не цитується (модельна лема Stanza «съпостати» — дієслово — хибна)' },
+  // MM-7 (owner file «цѣсарьствие без сучасного відповідника хоча є царство.png»): ЕСУМ «цар»: царь < цѣсарь, so цѣсарьствие / цесарьствие ~ царство. -ствиѥ ↔ -ство (ЦС ↔ укр.) is NOT quoted anywhere in the project: ЦС correspondence, no sound rule.
+  { old: ['цѣсарьствие', 'цесарьствие', 'цѣсарьство', 'цесарьство', 'цѣсарство', 'цесарство', 'цѣсарьствиѥ', 'цесарьствиѥ', 'царьствие', 'царствие'], modern: 'царство', cls: 'noun', kind: 'cs', url: 'https://goroh.pp.ua/Етимологія/цар',
+    quote: 'р. царь виникло в результаті скорочення др. цѣсарь, стсл. цѣсарь › цьсарь, що походять від імені Caesar',
+    note: 'ЕСУМ, стаття «цар»: цар(ь) < цѣсарь (скорочення). Суфікс ЦС -ьствиѥ ↔ укр. -ство у джерелі не цитується, тому це ЦС-відповідність, а не звукове правило; VESUM має цісарство і царство' },
+  // MM-8b (owner file «даль перша фіксація з невичитаного OCR і злиті прислівники далі дале.png»): the old spellings дале / далѣ are the ADVERB далі, not forms of the noun даль. Wiktionary's etymology
+  // of the adverb: Old Ruthenian далѣ, Old East Slavic дале. A lemma-less token with exactly one of these spellings links to the adverb (modern тексти 'далі' stay ambiguous: no POS evidence).
+  { old: ['дале', 'далѣ', 'далї'], modern: 'далі', cls: 'adv', kind: 'cognate', url: 'https://en.wiktionary.org/wiki/далі#Ukrainian',
+    quote: 'Inherited from Old Ruthenian далѣ (dalě), from Old East Slavic дале (dale), from Proto-Slavic *daľe.',
+    note: 'Вікісловник (uk далі, adv): «further, onwards, forth»; дале / далѣ — давньоруська і староруська форма цього прислівника, а не словоформа іменника даль' },
 ]
 
 const byOld = new Map<string, Correspondence>()
@@ -54,6 +69,6 @@ for (const c of CORRESPONDENCES) for (const o of c.old) byOld.set(o, c)
 export const correspondenceFor = (oldLemma: string | undefined): Correspondence | undefined => (oldLemma ? byOld.get(oldLemma.normalize('NFC').toLowerCase()) : undefined)
 /** MM-2: modern variant spelling (хомік, хомик) → the row whose standard lemma it varies */
 export const variantFor = (form: string): Correspondence | undefined => CORRESPONDENCES.find(c => c.variants?.includes(form))
-const label = (c: Correspondence) => c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
+const label = (c: Correspondence) => c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'cs' ? 'ЕСУМ (ЦС-відповідність)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
 export const corrEvidence = (c: Correspondence, oldLemma: string): Evidence => D(label(c), c.url, c.quote,
-  `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; хомік / хомик — варіанти, стандартна форма хом\'як' : ''}]` : ''}`)
+  `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cs' ? ' [ЦС-відповідність, без звукового правила]' : c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; хомік / хомик — варіанти, стандартна форма хом\'як' : ''}]` : ''}`)

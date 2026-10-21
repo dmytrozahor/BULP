@@ -27,6 +27,17 @@ export type Bucket = 'linked' | 'name' | 'orv' | 'none'
 export const bucketOf = (t: { lemma?: string; morph?: string }, linked: boolean): Bucket =>
   !t.lemma ? (linked ? 'linked' : 'none') : isName(t.morph) ? 'name' : linked ? 'linked' : 'orv'
 
+/** MM-5: how a card's lemma / POS / morphology are labelled. Stanza ORV output (card.model, a token gate key `U:…`) is a model prediction, never TOROT gold. */
+export const MODEL_NOTE = 'автоматична розмітка (Stanza), не перевірено'
+export const MODEL_POS_SUFFIX = ' (Stanza ORV, модель)'
+/** `pos` without the internal model suffix */
+export const posShown = (c: { pos: string }) => c.pos.endsWith(MODEL_POS_SUFFIX) ? c.pos.slice(0, -MODEL_POS_SUFFIX.length) : c.pos
+/** the line «TOROT: VERB …» is only for gold annotation; a model card says what it is */
+export const tagLine = (c: { model?: true; pos: string; morph: string }): { source: 'TOROT' | 'Stanza'; text: string } =>
+  c.model ? { source: 'Stanza', text: `${MODEL_NOTE}: ${posShown(c)}${c.morph ? ' ' + c.morph : ''}` } : { source: 'TOROT', text: `TOROT: ${c.pos}${c.morph ? ' ' + c.morph : ''}` }
+/** POS-gate keys: `P:` = TOROT manual tag, `U:` = Stanza UPOS (model); the card's reason names the right source */
+export const gateSourceUk = (gate: string | undefined) => (gate?.startsWith('U:') ? 'Stanza, модель' : 'TOROT')
+
 export interface TorotEvidence { w: string; loc: string; raw: string; morph: string }
 export interface TorotForm { raw: string; f: number }
 interface CardBase { /** PV-8: true when lemma/POS/morphology are Stanza ORV model output, not TOROT gold */ model?: true; id: string; lemma: string; pos: string; morph: string; n: number; forms: TorotForm[]; evidence: TorotEvidence[] }

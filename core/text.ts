@@ -58,6 +58,8 @@ const TITLO: [string, string][] = [
 // SPEC 63 PV-7: rows added for the Archangel Gospel 1092 (рства, двдъ); they extend the research/03 §5 seed with the same nomina-sacra mechanism and
 // stay hypotheses — an expansion becomes a link only if VESUM lists the modern form (build-link.ts). No verbatim palaeography quote is held for these two rows (SPEC 00: provisional).
 TITLO.unshift(['рств', 'рождьств'], ['двд', 'давид'])
+// MM-7: цр҃ствиѥ / цр҃ьствиꙗ (Мт 3:2 «покаитеся … приближи бо ся цр҃ствиѥ нб҃сное») = царствиѥ: the same nomina-sacra mechanism as «рств»; without the row the length cap (abbr + 4) left the word unexpanded.
+TITLO.unshift(['црьств', 'царьств'], ['црств', 'царств'])
 /** PV-7: the same contractions as printed WITHOUT a titlo (vira.ukr page text drops the mark). Whole-word match only; «сна/снъ» is omitted on purpose: сна = gen. of сон (homograph). */
 const NOMINA_BARE = new Set(['ісъ', 'исъ', 'хсъ', 'хва', 'цръ', 'рства', 'двдъ', 'бгъ', 'гдь', 'бжіи', 'гдн'])
 const TITLO_MARK = /[҃ⷠ-ⷿ]/

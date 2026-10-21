@@ -10,6 +10,7 @@ import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate } from '../lib/format.ts'
 import { formTo, isOldForm } from '../lib/nav.ts'
 import ClaimBadge from './ClaimBadge.vue'
+import EvidencePopover from './EvidencePopover.vue'
 import ClaimSet from './ClaimSet.vue'
 import BankChip from './BankChip.vue'
 import DerivationSteps from './DerivationSteps.vue'
@@ -68,6 +69,12 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
     <div v-else class="small muted">
       Слова немає ні в словнику, ні в індексі: мітки не ставляться (немає доказів — P-3.1).
       <RouterLink :to="{ path: '/analyze', query: { q: t.raw } }">Проаналізувати →</RouterLink>
+    </div>
+    <div v-if="t.contact" class="small" style="margin-top:.35rem" data-testid="contact-corr">
+      <span class="badge" title="контактна (суржикова) форма: мітка належить формі, не лемі">контактне / суржик</span>
+      літературний відповідник: <RouterLink :to="`/w/${encodeURIComponent(t.contact.standard)}`"><strong>{{ t.contact.standard }}</strong></RouterLink>
+      · <span class="muted">російський варіант (реконструкція):</span> {{ t.contact.ruVariant }}
+      <EvidencePopover :evidence="t.contact.evidence" heading="Контактна відповідність" />
     </div>
     <div v-if="Object.keys(t.claims).length" class="row" style="margin-top:.35rem">
       <ClaimSet :claims="t.claims" />

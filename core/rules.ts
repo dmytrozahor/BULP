@@ -6,6 +6,7 @@
 import { Q, P, D, claim, type Claim, type Evidence } from './evidence.ts'
 import { TAG, normative, modern, detect, type Ctx, type Rule, type Detection } from './detect.ts'
 import { DIALECT_LEX } from './dialect-lex.ts'
+import { contactCorr, ICHESK_CITE } from './contact-corr.ts'
 import { AUM_ROWS, AUM_VOL2 } from './atlas-rules.ts'
 
 const vline = (c: Ctx, t: string) => { const h = TAG(c, t); return h ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${c.form} ${h.tags} (лема: ${h.lemma})`) : null }
@@ -86,6 +87,9 @@ export const CONTACT_RULES: Rule[] = [
     test: c => (modern(c) && notInVesum(c) && /^вс[^ьяюєі]/.test(c.form) ? form(c) : null) },
   { id: 'SFX-YVA', axis: 'contact', label: 'russianism_morph', weight: 0.2, cite: LTD('7 ключів -ивати, напр. визивати=викликати'),
     test: c => (modern(c) && notInVesum(c) && /ив(ати|ає)$/.test(c.form) ? form(c) : null) },
+  // SPEC 63 MM-9: -ическ- / -ічеськ- in a form VESUM lacks, when the -ичн-/-ічн- counterpart is a VESUM form (Псіхіческе ~ психічне); the label goes on the FORM only (core/contact-corr.ts)
+  { id: 'MOR-ICHESK', axis: 'contact', label: 'russianism_morph', weight: 0.6, cite: ICHESK_CITE, note: 'суржик: російський суфікс -ическ- у формі з українськими літерами; відповідник -ичн- із ВЕСУМ',
+    test: c => { const cc = modern(c) ? contactCorr(c.form, c.inLexicon) : undefined; return cc ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${cc.form} ~ ${cc.standard} (російський варіант: ${cc.ruVariant})`) : null } },
   { id: 'PFX-RAZ', axis: 'contact', label: 'russianism_morph', weight: 0, cite: P('PRAV', '—', 'unsourced'), test: c => (modern(c) && notInVesum(c) && /^раз(?!ом|ів|у$)/.test(c.form) ? form(c) : null) },
   { id: 'SFX-STVO', axis: 'contact', label: 'russianism_morph', weight: 0, cite: P('PRAV', '—', 'unsourced: -ство питомий суфікс'), test: c => (/ство$/.test(c.form) && notInVesum(c) ? form(c) : null) },
 ]

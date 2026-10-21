@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { lemmaChipKeys } from '../lib/contactLayer.ts'
 /**
  * DWDS-like word card, research/07 §3.1 (two columns; stacked on mobile). SPEC 61 UX: summary first, evidence on demand — a headline (lemma · POS · stress · IPA ·
  * first attestation · ≤ 5 key chips), then collapsible panels with one-line summaries (Panel.vue). Nothing is removed (Evidence Invariant): every claim is still one tap away.
@@ -139,7 +140,7 @@ const stress1 = computed(() => full.value?.stress[0])
 const ipa1 = computed(() => { try { const v = stress1.value; return toIpa(v ? v.form : card.value!.lemma, v ? v.positions : null).ipa } catch { return '' } })
 const keyChips = computed(() => {
   const c = card.value!.claims
-  return { origin: isKnown(c.origin), register: isKnown(c.register), surzhyk: isKnown(c.surzhyk), dialect: dialects.value.length > 0 }
+  return lemmaChipKeys(c, dialects.value.length)   // MM-9 rule 2: no contact chip on the lemma card
 })
 const nKnownChips = computed(() => Object.values(keyChips.value).filter(Boolean).length)
 
@@ -151,7 +152,6 @@ const labParts = computed(() => {
   if (pal.value) p.push(`друга палаталізація: ${pal.value.forms.length}`)
   if (isKnown(c.origin)) p.push(labelUk(String(c.origin.value)))
   if (isKnown(c.register)) p.push('розмовне')
-  if (isKnown(c.surzhyk)) p.push('суржик')
   if (dialects.value.length) p.push(`діалекти: ${dialects.value.length}`)
   const ec = epochClaims.value[0]
   if (ec && isKnown(ec.c)) p.push(`епоха: ${ec.c.value.epochs.map(epochName).join(' / ')}`)
@@ -194,7 +194,6 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
       <div class="hl-chips sans">
         <ClaimBadge v-if="keyChips.origin" :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" />
         <ClaimBadge v-if="keyChips.register" :claim="card.claims.register" text="розмовне" tone="colloquial" />
-        <ClaimBadge v-if="keyChips.surzhyk" :claim="card.claims.surzhyk" text="суржик" tone="contact" />
         <ClaimSet v-if="keyChips.dialect" :claims="Object.fromEntries(dialects)" />
         <LoanChip :word="card.lemma" />
         <span v-if="!nKnownChips" class="muted small">міток із доказами немає</span>
@@ -252,7 +251,6 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           info="Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1). «Невідомо» означає відсутність доказів, а не «літературне». Тверді мітки з ⓘ відкривають цитату й локатор.">
           <div class="grid2 sans">
             <div><span class="muted">Регістр: </span><ClaimBadge :claim="card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
-            <div><span class="muted">Суржик: </span><ClaimBadge :claim="card.claims.surzhyk" text="суржик" tone="contact" /></div>
             <div><span class="muted">Походження: </span><ClaimBadge :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" /></div>
             <div v-if="pal"><span class="muted">Друга палаталізація: </span>
               <ClaimBadge :claim="pal.claim" :text="'друга палаталізація (' + pal.forms.length + ')'" tone="" />

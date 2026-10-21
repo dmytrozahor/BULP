@@ -25,6 +25,8 @@ import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexInd
 import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
+import { withSoftAdj } from '../core/adj-soft.ts'
+import { altFile, altStandardMap } from '../core/vesum-alt.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
 import { ltIndex } from './lt.ts'
 import { palatalClaim, R24_CITE } from '../core/palatalization.ts'
@@ -42,6 +44,7 @@ import { buildEpochs, shrinkEpochs } from './build-epochs.ts'
 import { writeTexts } from './build-texts.ts'
 import { oesVariants } from '../core/oes-folds.ts'
 import { scanTorot, torotReport, lightIndex } from './build-torot.ts'
+import { gateSourceUk } from '../core/torot.ts'
 import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
@@ -171,7 +174,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     const seen = new Set(d.candidates.map(c => c.form)), extra = oesVariants(d.norm).flatMap(v => deriveRaw(v.form, { oldI }).candidates.map(c => ({ ...c, trace: [...v.trace, ...c.trace], branches: c.branches + v.trace.length }))).filter(c => !seen.has(c.form) && seen.add(c.form))
     return extra.length ? { ...d, candidates: [...d.candidates, ...extra] } : d
   }
-  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = deriveOes(s, oldI)); return d }
+  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = withSoftAdj(deriveOes(s, oldI))); return d }
   const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = foldRaw(s, orth)); return d }
 
   // #stage tokens
@@ -230,7 +233,9 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     lap(`VESUM pass 1 done: ${hits1.size} keys with analyses`)
 
     // ── 3. link (B-2) ──────────────────────────────────────────────────────────────────────────────
-    const env: Env = { hits: hits1, derive, fold }
+    const altStd = altStandardMap(await vesumLemmaList())   // SPEC 63 MM-10: VESUM :alt lemma → standard lemma (cited 1928 folds)
+    lap(`MM-10: ${altStd.size} VESUM :alt lemmas linked to their standard lemma`)
+    const env: Env = { hits: hits1, derive, fold, altStd }
     const opts1 = types.map(t => linkOptions(t, env))
     {   // SPEC 63 MU-2: the phonetic MU folds (е/о → і, -ніє → -ння) multiply candidates, so they run in a second VESUM pass over the Middle Ukrainian token types still unresolved
       const pend = types.flatMap((t, x) => (!opts1[x] && t.orth && MU_ORTH.has(t.orth) ? [x] : []))
@@ -352,7 +357,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   const torot = scanTorot(adm.flatMap(({ w, nlp }, wi) => w.lang !== 'uk' && (w.tokens.some(t => t.lemma) || nlp) ? [{
     w: w.tokens.some(t => t.lemma) || !nlp ? w : { ...w, tokens: w.tokens.map((t, i) => { const n = nlp.tokens[i]; return n?.lemma ? { ...t, lemma: n.lemma, morph: [n.upos, n.feats].filter(Boolean).join(' ') } : t }) },
     model: !w.tokens.some(t => t.lemma), ids: docs[wi]!.id,
-    reasonOf: (ti: number) => { const x = tix[wi]![ti]!, t = types[x]!; return has1[x] ? 'POS agreement (FX-3)' : linkOptions({ ...t, gate: undefined }, env) ? `POS gate (TOROT ${t.gate})` : 'no VESUM-attested fold/derivation candidate' },
+    reasonOf: (ti: number) => { const x = tix[wi]![ti]!, t = types[x]!; return has1[x] ? 'POS agreement (FX-3)' : linkOptions({ ...t, gate: undefined }, env) ? `POS gate (${gateSourceUk(t.gate)} ${t.gate})` : 'no VESUM-attested fold/derivation candidate' },
     lemmaOf: (i: number) => lemmaList[i]!,
   }] : []), new Date().toISOString())
   lap(`TOROT: ${torot.file.names.length} name cards, ${torot.file.orv.length} ORV-only cards`)
@@ -696,6 +701,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   writeJsonAtomic(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeJsonAtomic(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
     [['arch', 'PV-7 Архангельське Євангеліє 1092'], ['o18_26', 'PV-6 Прокопович «Владимир» 1705']].flatMap(([id, what]) => { const x = adm.findIndex(a => a.w.id === id); return x < 0 ? [] : [{ id: id!, what: what!, n: adm[x]!.w.tokens.length, linked: wLinked.get(id!) ?? 0 }] }))
   writeJsonAtomic(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeJsonAtomic(resolve(PUB, 'lexindex.json'), lexIdxJson)
+  writeJsonAtomic(resolve(PUB, 'alt.json'), JSON.stringify(altFile(altStandardMap(await vesumLemmaList()))))   // SPEC 63 MM-10: VESUM :alt lemma → standard lemma, read by /lw
   {   // NP-2: toponym gazetteer + spelling-variant clusters over every capitalised token of the admitted witnesses
     const scan = new PlaceScan(); for (const { w } of adm) for (const t of w.tokens) scan.add(w, t)
     const places: PlacesFile = {

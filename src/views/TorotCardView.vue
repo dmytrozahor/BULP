@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { MODEL_NOTE, posShown } from '../../core/torot.ts'
 /**
  * SPEC 63 PV-3 /name/:id and PV-5 /orv/:id — in-site card of a TOROT lemma that has no (VESUM-linked) modern lemma: a proper name (POS Ne) or an ORV-only lemma.
  * Everything shown is TOROT's own annotation (lemma, part-of-speech, morphology, citation-part); gloss and person/place type are «unknown» unless a cited source gives them.
@@ -35,6 +36,7 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
   <template v-else>
     <h1>{{ card.lemma }} <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1>
     <p v-if="asName?.basis" class="sans small">Підстава (SPEC 63 MU-3): слово з великої літери всередині абзацу, не розпізнане (форми немає у VESUM навіть після правил MU) і ніде в корпусі не вжите з малої; анотації TOROT тут немає · {{ card.n }} вжив.</p>
+    <p v-else-if="card.model" class="sans small" data-testid="model-tag"><span class="badge" title="прогноз моделі Stanza ORV, а не золота розмітка TOROT">{{ MODEL_NOTE }}</span> <code>{{ posShown(card) }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>
     <p v-else class="sans small">TOROT: <code>{{ card.pos }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>
     <p v-if="asName" class="sans small">Тип: <b>{{ asName.kind === 'place' ? 'топонім (за газетиром)' : asName.basis ? 'невідомо (лише велика літера)' : 'невідомо (TOROT Ne не розрізняє особу/місце/народ)' }}</b>
       <template v-if="asName.modern"> · сучасна форма (VESUM): <RouterLink :to="wordTo(asName.modern)">{{ asName.modern }}</RouterLink></template>
@@ -42,7 +44,7 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
     <p v-if="asOrv" class="sans small">Чому без сучасного зв’язку: {{ asOrv.reason }} · значення (TOROT): невідомо — у XML немає глоси.</p>
     <h2>Написання</h2>
     <p class="sans"><span v-for="f in card.forms" :key="f.raw" class="chip">{{ f.raw }} ×{{ f.f }}</span></p>
-    <h2>{{ asName?.basis ? 'Свідчення (місце в тексті)' : 'Свідчення (TOROT, citation-part)' }}</h2>
+    <h2>{{ asName?.basis ? 'Свідчення (місце в тексті)' : card.model ? 'Свідчення (автоматична розмітка Stanza)' : 'Свідчення (TOROT, citation-part)' }}</h2>
     <ul class="sans small">
       <li v-for="(e, i) in card.evidence" :key="i"><RouterLink :to="textTo(e.w, e.loc)">«{{ e.raw }}»</RouterLink> · лема «{{ card.lemma }}», {{ e.morph }} · {{ e.loc }} · <RouterLink :to="witnessTo(e.w)">{{ e.w }}</RouterLink></li>
     </ul>

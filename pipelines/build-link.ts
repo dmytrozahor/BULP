@@ -17,6 +17,7 @@ import { correspondenceFor, variantFor, type Correspondence } from '../core/corr
 import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
+import type { AltLink } from '../core/vesum-alt.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -30,8 +31,10 @@ export interface Env {
   fold: (s: string, orth?: string) => Candidate[]
   /** SPEC 63 MU: also try the phonetic MU folds (second VESUM pass, only for tokens unresolved by the first) */
   phon?: boolean
+  /** SPEC 63 MM-10: key(VESUM :alt lemma) → its standard lemma (core/vesum-alt.ts altStandardMap) */
+  altStd?: ReadonlyMap<string, AltLink>
 }
-export interface Option { id: string; lemma: string; form: string; hit: VesumHit; cand: Candidate; tier: number; own: Candidate; ownConfirmed: boolean; cls: VClass; corr?: { row: Correspondence; old: string } }
+export interface Option { id: string; lemma: string; form: string; hit: VesumHit; cand: Candidate; tier: number; own: Candidate; ownConfirmed: boolean; cls: VClass; corr?: { row: Correspondence; old: string }; /** MM-10: the VESUM :alt lemma this option was reached through; `lemma` is already the standard one */ altOf?: string }
 export interface Chosen extends Option { alternatives: string[]; decidedBy: 'unique' | 'tier' | 'branches' | 'frequency' | 'first' }
 
 /** 0 = unflagged, 1 = arch/alt/short (historical or variant but not substandard), 2 = bad/err/subst/slang/vulg/obsc. */
@@ -126,7 +129,19 @@ export function withPlain(norm: string, cands: Candidate[]): Candidate[] {
   })
 }
 const candsOf = (env: Pick<Env, 'derive'>, raw: string, oldI: boolean) => { const d = env.derive(raw, oldI); return withPlain(d.norm, d.candidates) }
-export function linkOptions(t: TypeCtx, env: Env) { return preferCommon(t, linkOptionsPrep(t, env)) }
+/** MM-10: an option whose VESUM lemma is an `:alt` spelling (термінольоґія, 1928/Галичина) is moved to the standard lemma found by the cited 1928 folds (core/orth1928.ts):
+ *  the token's own chain gains those fold ids, so the trace shows ґ > г, льо > ло with their quotes. The VESUM line that proved the form stays the evidence (hit.tags minus `alt`). */
+export function remapAlt<T extends { route: Route; opts: Option[] }>(r: T | undefined, env: Pick<Env, 'altStd'>): T | undefined {
+  if (!r || !env.altStd?.size) return r
+  const opts = r.opts.map(o => {
+    const a = /:alt/.test(':' + o.hit.tags) ? env.altStd!.get(o.id) : undefined
+    if (!a) return o
+    const ext = (c: Candidate): Candidate => ({ form: a.trace.reduce((s, id) => foldById[id]!.apply(s), c.form), trace: [...c.trace, ...a.trace], branches: c.branches + a.trace.length })
+    return { ...o, id: key(a.std), lemma: a.std, tier: 0, hit: { lemma: a.std, tags: o.hit.tags.replace(/:alt/, '') }, cand: ext(o.cand), own: ext(o.own), altOf: a.alt }
+  })
+  return { ...r, opts }
+}
+export function linkOptions(t: TypeCtx, env: Env) { return remapAlt(preferCommon(t, linkOptionsPrep(t, env)), env) }
 function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)
   // MM-2: a lower-case token spelled exactly like a dictionary-cited variant (хомик, хомік) links to the standard card (хом'як), never to the surname «Хомік»
@@ -157,7 +172,8 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
       const k = key(c.form)
       return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || (vesumClass(h.tags) === c0.row.cls && !/:prop\b/.test(':' + h.tags)))).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
     })
-    const viaCorr = corr ? gated(via(corr.row.modern, corr)) : []
+    // MM-5: a cited correspondence is not vetoed by a MODEL part of speech (gate key U:… = Stanza UPOS, P-1.7): VESUM and the cited row decide, the model tag never overrides them
+    const viaCorr = corr ? (t.gate?.startsWith('U:') ? via(corr.row.modern, corr) : gated(via(corr.row.modern, corr))) : []
     return viaCorr.length ? viaCorr : gated(via(lemma))
   }
   if (t.lemma) { const opts = viaLemma(t.lemma); if (opts.length) return { route: 'torot-lemma', opts } }
@@ -165,7 +181,7 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
   if (t.stanza) {
     // PV-8b: the model lemma of a finite PAST verb is also corroborated by a cited aorist / imperfect ending + matching stem (core/oes-folds.ts oesPast); the tense is recorded as a trace step
     const past = t.past ? oesPast(t.raw, t.stanza) : undefined
-    const opts = viaLemma(t.stanza).flatMap(o => o.ownConfirmed ? [o] : past && o.cls === 'verb' ? [{ ...o, own: { ...o.own, trace: [...o.own.trace, past.id], branches: o.own.branches + 1 } }] : [])
+    const opts = viaLemma(t.stanza).flatMap(o => o.ownConfirmed || o.corr?.row.kind === 'cognate' || o.corr?.row.kind === 'cs' ? [o] : past && o.cls === 'verb' ? [{ ...o, own: { ...o.own, trace: [...o.own.trace, past.id], branches: o.own.branches + 1 } }] : [])
     if (opts.length) return { route: 'stanza-lemma', opts }
   }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza && correspondenceFor(key(t.raw))) {   // un-lemmatised witness (Sophia): the same cited suppletive correspondence applies to the raw form
