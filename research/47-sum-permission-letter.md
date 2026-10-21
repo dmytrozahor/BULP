@@ -5,9 +5,9 @@ Draft of 2026-10-21 for the owner to review, sign and send. Nothing has been sen
 **Why a letter (SPEC 63 GG-7).** sum20ua.com's robots.txt disallows crawlers (GPTBot, ClaudeBot, anthropic-ai, CCBot and others); sum.in.ua was unreachable on 2026-10-21; УМІФ's own home page (ulif.org.ua, read 2026-10-21) says that goroh.pp.ua, sum.in.ua and slovnyk.me use the electronic СУМ «неправомірно, не вказуючи авторів» and are not official. Official electronic editions named there: sum20ua.com and services.ulif.org.ua/expl (СУМ-20, first volumes) and www.inmo.org.ua/sum.html (all 11 volumes, Інститут мовознавства ім. Потебні). So the rights holders are УМІФ and the institutes of НАН, not the operator of sum.in.ua. Until permission arrives the project stores only headwords, POS/grammar, stress, sense numbers, labels, volume/page, a link and a gloss of at most 200 characters (flags `FULL_SENSES_SUM11`, `FULL_SENSES_SUM20` stay 0).
 
 **Addressees (only what official pages show).**
-- Український мовно-інформаційний фонд НАН України (УМІФ), директор Надутенко Максим Вікторович; 03039, м. Київ, пр-т Голосіївський, 3; тел. +38 044 525 81 65 (ulif.org.ua/contacts). E-mail: not shown on the pages I could open: **[owner to fill in]**.
-- Інститут української мови НАН України (iul-nasu.org.ua): address and e-mail not found on the pages I opened: **[owner to fill in]**.
-- Інститут мовознавства ім. О. О. Потебні НАН України (СУМ-11 online at inmo.org.ua/sum.html): 01001, Київ, вул. Грушевського, 4; тел. (044) 279-0292; inmo2006@ukr.net (inmo.org.ua). Add as a third addressee if the owner agrees.
+- Український мовно-інформаційний фонд НАН України (УМІФ), директор Надутенко Максим Вікторович; 03039, м. Київ, пр-т Голосіївський, 3; тел. +38 044 525 81 65 (ulif.org.ua/contacts). E-mail: alexandr.yeroshenko@hotmail.com (shown under «Контактна інформація» at https://www.ulif.org.ua/contacts, read 2026-10-22; it looks like an individual's address, so the owner should confirm before use).
+- Інститут української мови НАН України (iul-nasu.org.ua): Київ, вул. Михайла Грушевського, 4, 01001; e-mail ukrmov@gmail.com (https://iul-nasu.org.ua/pro-instytut/kontaktna-informatsiya.html, read 2026-10-22).
+- Інститут мовознавства ім. О. О. Потебні НАН України (СУМ-11 online at inmo.org.ua/sum.html): 01001, Київ, вул. Грушевського, 4; тел. (044) 279-0292; inmo2006@ukr.net, факс (044) 278-7182 (https://www.inmo.org.ua/sum.html footer, read 2026-10-22; the site has no terms-of-use page). Add as a third addressee if the owner agrees.
 
 ---
 

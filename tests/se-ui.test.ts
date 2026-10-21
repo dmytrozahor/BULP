@@ -17,6 +17,15 @@ const entry = buildEntry(rows, [{ w: 'x', loc: '1', left: 'a', node: 'вільн
 const render = (kind: string) => renderToString(createSSRApp({ render: () => h(SenseEpochs, { word: 'вільний', kind: kind as 'full', open: true, entry }) }))
 
 describe('SE-5 the block shows the sense timeline', () => {
+  it("GG-7 a row with a source article link shows «стаття ↗» next to the dictionary name, on every card kind; a row without a link shows none; the RU badge stays", async () => {
+    const url = "https://www.inmo.org.ua/sum.html?wrd=%D0%B4%D1%96%D0%BC"
+    const e = buildEntry([{ d: "sum11", g: "будівля", u: url }, { d: "r2u_hrinch09", g: "дом" }, { d: "wikt.uk", g: "дім" }], [])
+    for (const kind of ["full", "light", "dict", "orv", "arch", "mu"]) {
+      const html = await renderToString(createSSRApp({ render: () => h(SenseEpochs, { word: "дім", kind: kind as "full", open: true, entry: e }) }))
+      expect(html.match(/data-testid="se-article"/g)?.length, kind).toBe(1)
+      expect(html).toContain(`href="${url}"`); expect(html).toContain("стаття ↗"); expect(html).toContain("data-testid=\"ru-badge\"")
+    }
+  })
   it('SE-5 the fixture timeline shows the six epochs in order, a gap as «немає даних», dated quotes, coverage periods and the typed transition', async () => {
     const html = await render('full')
     const order = ['протоукраїнська', 'давньоукраїнська', 'ранньосередньоукраїнська', 'середньоукраїнська', 'пізньосередньоукраїнська', 'новітня'].map(n => html.indexOf(n + ' доба'))
