@@ -59,3 +59,31 @@ describe('GG-7 integration: a SUM headword is a strong source, the SE block know
     expect(seHeads('', join(dir, 'se-parsed'))).toEqual([{ word: 'хата', src: 'sum11' }])
   })
 })
+
+import { parseSum11, senseOf11 } from '../core/sum11-parse.ts'
+describe('GG-7 СУМ-11 scan parser stub: policy fields only', () => {
+  const page = [
+    'ХА́ТА, и, ж. 1. розм. Сільський житловий будинок з господарськими прибудовами. // Приміщення для житла. 2. перен. заст. Родина, що живе в цьому будинку.',
+    'ХАТИНА, и, ж. Див. хата.',
+    'ХЛІБ, а, ч. 1. Основний харчовий продукт, який випікають з борошна. 2. діал. Збіжжя на пні.',
+  ].join('\n')
+  it('GG-7 article → headword, stress, POS, vol/page, sense numbers, labels, gloss; the cross-reference and garbage are skipped', () => {
+    const { articles, stats } = parseSum11(page, 11, 52)
+    const a = articles.find(x => x.head === 'хата')!
+    expect(a).toMatchObject({ vol: 11, page: 52, pos: 'и, ж.' })
+    expect(a.stress).toBe('ха́та'.normalize('NFC'))
+    expect(a.senses!.map(s => s.n)).toEqual([1, 2])
+    expect(a.senses![0]).toMatchObject({ labels: ['розм.'], gloss: 'Сільський житловий будинок з господарськими прибудовами' })
+    expect(a.senses![1]!.labels).toEqual(['перен.', 'заст.'])
+    expect(articles.find(x => x.head === 'хліб')!.senses![1]!.labels).toEqual(['діал.'])
+    expect(articles.some(x => x.head === 'хатина')).toBe(false); expect(stats.crossRefs).toBe(1)
+  })
+  it('GG-7 the parser output goes through importSum: full text dropped by default, gloss ≤ 200, volume and page in the locator', () => {
+    const long = 'ГОРА, и, ж. 1. ' + 'дуже велике підвищення рельєфу над рівниною '.repeat(9) + 'на місцевості. 2. Купа.'
+    const { articles } = parseSum11(long, 11, 7)
+    const rows = importSum('sum11', articles.map(x => JSON.stringify(x)).join('\n')).rows
+    expect(rows.length).toBeGreaterThanOrEqual(1); expect(rows[0]![1].g.length).toBeLessThanOrEqual(200); expect(rows[0]![1].l).toBe('т.11 с.7')
+    expect(JSON.stringify(rows)).not.toContain('на місцевості')
+    expect(senseOf11('перен. розм. Щось: приклад.').labels).toEqual(['перен.', 'розм.'])
+  })
+})

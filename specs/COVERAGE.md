@@ -780,3 +780,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RF-5 | tests/ru-source.test.ts › RU-4 the Kyiv print of «Книга о вірі» is NOT a Russian edition; every РИБ work is, and dated works carry a citation |
 | RF-6 | manual: worker waiter ~/post-chain-ocr.sh (log ~/logs/post-chain-ocr.log) polls chain.status and starts worker-ocr.sh at nice 19 after SUCCESS/FAILED; verified by ps on the worker |
 | RF-7 | manual: decision recorded (licence split, dedupe rule against the izbornyk `gr14_*` transcription of the same edition); no ingest code until the OCR of the 1974 print exists and the `pum14` author record is decided by the owner |
+| GG-7 | tests/sum-import.test.ts › GG-7 article → headword, stress, POS, vol/page, sense numbers, labels, gloss; the cross-reference and garbage are skipped |
+| GG-7 | tests/sum-import.test.ts › GG-7 the parser output goes through importSum: full text dropped by default, gloss ≤ 200, volume and page in the locator |
