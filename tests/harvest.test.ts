@@ -16,6 +16,7 @@ const faust = await import('../harvest/faust.ts')
 const hr = await import('../harvest/hrushevsky.ts')
 const hv4 = await import('../harvest/hv4.ts')
 const hv5 = await import('../harvest/hv5.ts')
+const hv5o = await import('../harvest/hv5-orig.ts')
 const ing = await import('../pipelines/ingest-harvest.ts')
 
 describe('HV-1 harvest/ scripts: resumable, capped, logged, launched detached', () => {
@@ -206,5 +207,37 @@ describe('HV-5 litopys/izbornyk Ruthenian texts, ayuzr and gap volumes', () => {
     await ing.main(['--out', out, '--only', 'archive-ayuzr'])
     const v = JSON.parse(readFileSync(join(out, 'harvest-vocab/archive-ayuzr.json'), 'utf8'))
     expect(v).toMatchObject({ vocabOnly: true, family: 'middle-ukrainian-mixed' }); expect(v.entries['козаки']).toBeTruthy(); expect(v.entries['что']).toBeUndefined(); expect(JSON.stringify(v)).not.toMatch(/"tokens":\[/)
+  })
+})
+
+describe('HV-5 owner decisions 2026-10-21: originals only; generally accepted dating', () => {
+  it('HV-5 Сковорода: each dated work quotes the academic edition commentary (range kept); a work without a dating stays undated', () => {
+    const sk = hv5.HV5_UNITS.filter(u => u.tier === 3)
+    expect(sk.length).toBeGreaterThanOrEqual(20)
+    const dated = sk.filter(u => u.date)
+    expect(dated.map(u => u.date)).toEqual(expect.arrayContaining(['1753-1785', '1769-1774', '1768', '1774', '1775-1776', '1787']))
+    for (const u of dated) { expect(u.datePage, u.id).toMatch(/^skovoroda\/skov(117|220)\.htm$/); expect(u.dateQuote?.length, u.id).toBeGreaterThan(0) }
+    const u = dated.find(x => x.id === 'hv5:skov108')!
+    expect(hv5.item(u, '<div class="dop3"><p class=K1>текст</p></div>', 5, 200, '<div class="dop3"><p class=Prym>Дату написання трактату слід віднести до 1768 р.</p></div>')).toMatchObject({ date: '1768', dateBasis: expect.stringMatching(/skov117/) })
+    expect(hv5.item(u, '<div class="dop3"></div>', 5, 200, '<div class="dop3"><p class=Prym>інше</p></div>')).toMatchObject({ date: null })
+    expect(sk.some(x => !x.date && x.id === 'hv5:skov110')).toBe(true)
+  })
+  it('HV-5 originals: Величко vols 1–3 (1848/1851/1855), Грабянка 1853, Історія Русів 1846 from archive.org records; composition date separate from the edition year; modern translations are not sources', () => {
+    expect(hv5o.HV5_ORIG.map(w => w.editionDate)).toEqual(['1848', '1851', '1855', '1853', '1846'])
+    for (const w of hv5o.HV5_ORIG) { expect(w.ia, w.id).not.toMatch(/litopys/); expect(Number(w.date.slice(0, 4)), w.id).toBeLessThan(Number(w.editionDate)) ; expect(w.dateQuote.length).toBeGreaterThan(10) }
+    expect(hv5o.HV5_ORIG.find(w => w.id.includes('rusov'))).toMatchObject({ date: '1760-1846', lang: 'undetermined' })
+  })
+  it('HV-5 harvest:ingest on a hv5-orig OCR text: composition date and edition in the witness, ъ/ѣ kept, the editors Russian apparatus dropped', async () => {
+    const root = process.env.HARVEST_DIR!, out = join(TMP, 'out5o')
+    const w = hv5o.HV5_ORIG[3]!
+    mkdirSync(join(root, 'hv5-orig/items'), { recursive: true })
+    writeFileSync(join(root, 'hv5-orig/items/o.gz'), gzipSync('Козаки запорожскіе жили на Сѣчи и великую славу собѣ мѣли богу дякуючи\nЧто это было такое которое мы видели в рукописи\nГетман Хмельницкій з войском своим пошол под Корсунь и побѣдил поляков в той день\n'))
+    writeFileSync(join(root, 'hv5-orig/index.jsonl'), JSON.stringify({ ...hv5o.origItem(w, 'https://archive.org/details/hrabianka', 300, 200, 'test'), file: 'o' }) + '\n')
+    await ing.main(['--out', out, '--only', 'hv5-orig'])
+    const f = readdirSync(out).find(x => x.startsWith('hv_orig_'))!
+    const wit = JSON.parse(readFileSync(join(out, f), 'utf8'))
+    expect(wit).toMatchObject({ date: [1710, 1710], lang: 'ruthenian' }); expect(wit.edition).toMatch(/1853/)
+    const raw = wit.tokens.map((t: { raw: string }) => t.raw)
+    expect(raw).toContain('Сѣчи'); expect(raw).not.toContain('Что'); expect(wit.dropped.apparatus).toBeGreaterThan(0)
   })
 })

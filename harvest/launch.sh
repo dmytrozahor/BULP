@@ -31,6 +31,7 @@ JOBS=(
   "archive-hv5-gaps|node|harvest/archive.ts archive-hv5-gaps"
   "archive-ayuzr|node|harvest/archive.ts archive-ayuzr"
   "archive-hv5-authors|node|harvest/archive.ts archive-hv5-authors"
+  "hv5-orig|node|harvest/hv5-orig.ts"
   "hplt|uv|run --with pyarrow python -I harvest/hplt.py 1 299"
 )
 PIDF="$OUT/pids.json"

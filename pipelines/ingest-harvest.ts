@@ -185,6 +185,22 @@ function runLitopys(ctx: Ctx, src = 'hv5'): Sum {
   return s
 }
 
+/** HV-5 originals (harvest/hv5-orig.ts): archive.org OCR of the 19th-c. editions of Величко, Грабянка, Історія Русів; date = accepted composition date (index), the edition year stays in the edition string; editors' Russian apparatus = function-word lines dropped, ъ/ѣ kept. */
+function runOrig(ctx: Ctx, src = 'hv5-orig'): Sum {
+  const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
+  for (const it of readIndex(src)) {
+    if (ctx.limit && s.items >= ctx.limit) break
+    if (it.status !== 200 || !it.file) continue
+    s.items++
+    const buf = readItem(src, it.file); if (!buf) continue
+    const authorId = authorFor(it.author, src, it.url, it.author ? `заголовок видання: ${it.author}` : it.title, it.region)
+    const w = witnessFrom(src, it, `hv_orig_${slug(it.id.split(':')[1] ?? it.id)}`, buf.toString('utf8'), { lang: it.lang === 'undetermined' ? 'undetermined' : 'ruthenian', witnessType: 'later_ed', edition: `${it.edition} (OCR archive.org, не вичитано; дата — загальноприйняте датування твору)`, authorId, loc: `${it.title} (OCR)`, dateQuote: String(it.dateQuote ?? it.date), oldOrth: true })
+    if ('skip' in w) { bump(s, w.skip); continue }
+    save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+  }
+  return s
+}
+
 function runHrushevsky(ctx: Ctx): Sum {
   const src = 'hrushevsky', s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
   const vols = new Map<number, { it: Idx; text: string }[]>()
@@ -286,6 +302,7 @@ export async function main(argv: string[]) {
   for (const a of ARCHIVE) if (want(a)) sums.push(runArchive(ctx, a))
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
   if (want('hv5')) sums.push(runLitopys(ctx))
+  if (want('hv5-orig')) sums.push(runOrig(ctx))
   for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) sums.push(runVocab(ctx, v, fam))
   const ap = `${ctx.out}/harvest-authors.json`   // merge: a run with --only must not drop the authors of the other sources
   const prev: HAuthor[] = existsSync(ap) ? JSON.parse(readFileSync(ap, 'utf8')) : []

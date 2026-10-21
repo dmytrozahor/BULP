@@ -29,7 +29,9 @@ export interface Hv5Unit {
   dateSource?: string
   /** research/44 school id (lviv | ostroh | vilno | lutsk | kyiv-bohoiavl | lavra | berestia | unknown) + the row that gives it + its certainty */
   school?: string; schoolSource?: string; schoolConfidence?: string
-  rows?: string[]; orth: string; edition: string; tier: 1 | 2; note?: string
+  rows?: string[]; orth: string; edition: string; tier: 1 | 2 | 3; note?: string
+  /** the dating is quoted from another page (e.g. the editors' notes of the academic edition); the quotes must occur there */
+  datePage?: string
 }
 
 /** page text as the quotes are written: tags out, entities decoded, Ђ→ѣ, one space between words (same as decodeIzbornyk for the letters) */
@@ -97,9 +99,31 @@ for (const [id, path, title, ed] of [
   ['kyl', 'kyl/kyl.htm', 'Київський літопис першої чверті XVII ст.', 'Київський літопис (Ізборник)'],
 ] as const) HV5_UNITS.push(B(id, path, { title, tier: 2, orth: 'за виданням (оригінальна мова)', edition: ed, ...(id.startsWith('sof') ? { author: 'Феодосій Софонович' } : {}) }))
 
+/** TIER 3 — Сковорода, own texts, Повне зібрання творів у 2 т., К.: Наукова думка, 1973 (litopys skovoroda/): the work pages (the editors' commentary is Prym/notes and is never read).
+ *  Dating = the academic edition's own commentary (skov117 vol. 1, skov220 vol. 2), quoted per work; a range where the editors give one; no dating found → undated. */
+const SKOV_ED = 'Сковорода Г. Повне зібрання творів у 2 т., К.: Наукова думка, 1973 (Ізборник; правопис оригіналу)'
+const SKOV: [string, string, string?, string?, string[]?][] = [
+  ['skov103', 'Сад божественных пѣсней', '1753-1785', 'skovoroda/skov117.htm', ['Найбільш рання з датованих пісень відноситься до 1753 р., а найбільш пізня — 1785 р.']],
+  ['skov104', 'Пісні та фабули'],
+  ['skov105', 'Басни Харьковскія', '1769-1774', 'skovoroda/skov117.htm', ['Можна припустити, що вони були написані приблизно в 1769 р.', 'Сковорода закінчував написання 15-ти останніх байок збірки']],
+  ['skov106', 'Убуждшеся видѣша славу его'], ['skov107', 'Да лобжет мя от лобзаній уст своих!'],
+  ['skov108', 'Начальная дверь ко христіанскому добронравію', '1768', 'skovoroda/skov117.htm', ['Дату написання трактату слід віднести до 1768 р.']],
+  ['skov109', 'Наркісс. Разглагол о том: узнай себе', '1769-1771', 'skovoroda/skov117.htm', ['«Наркісс» (1769 — 1771 рр.)']],
+  ['skov110', 'Симфоніа, нареченная Книга Асхань о познаніи самого себе'], ['skov111', 'Бесѣда, нареченная двое, о том, что блаженным быть легко'],
+  ['skov112', 'Бесѣда 1-я, нареченная Observatorium (Сіон)'], ['skov113', 'Діалог, или разглагол о древнем мірѣ'], ['skov114', 'Разговор пяти путников о истинном щастіи в жизни'],
+  ['skov115', 'Кольцо'],
+  ['skov116', 'Разговор, называемый алфавит, или букварь мира', '1774', 'skovoroda/skov117.htm', ['«Алфавит, или букварь мира» створено в другій половині 1774 р.']],
+  ['skov201', 'Книжечка, называемая Silenus Alcibiadis, сирѣчь Икона Алківіадская', '1775-1776', 'skovoroda/skov220.htm', ['Твір написано в 1775 — 1776 рр.']],
+  ['skov202', 'Книжечка о чтеніи священного писанія, нареченна Жена Лотова'], ['skov203', 'Брань архистратига Михаила со Сатаною о сем: легко быть благим'],
+  ['skov204', 'Пря бѣсу со Варсавою'], ['skov205', 'Благодарный Еродій'],
+  ['skov206', 'Убогій Жайворонок', '1787', 'skovoroda/skov220.htm', ['Лист має дату: «1787-го']],
+  ['skov207', 'Діалог. Имя ему — Потоп зміин'],
+]
+for (const [id, title, date, datePage, dateQuote] of SKOV) HV5_UNITS.push(B(id, `skovoroda/${id}.htm`, { title, author: 'Григорій Сковорода', tier: 3, orth: 'правопис оригіналу (Ђ збережено)', edition: SKOV_ED, ...(date ? { date, datePage, dateQuote, dateSource: 'академічне видання 1973, примітки' } : {}) }))
+
 export const HV5_SKIPPED: string[] = [
-  '- SKIPPED (HV-5) litopys Грабянка (grab/), Величко (velichko/): the pages are the modern Ukrainian translations (Р. Іванченко 1992, В. Шевчук 1991), not the old text; Історія Русів (istrus/) is Russian-language prose (Москва 1846). NEEDS DECISION: take them vocabulary-only?',
-  '- SKIPPED (HV-5) litopys Сковорода (skovoroda/skov101…223): Повне зібрання творів 1973 — the text is printed in the editors\' modernised orthography with Latin passages and their commentary; per-work dates are in the editors\' notes (Prym), not in the text → needs a per-work dating table first. NEEDS DECISION.',
+  '- DECIDED (HV-5, owner 2026-10-21 «оригінали тільки»): Грабянка, Величко, Історія Русів — never the litopys modern translations / Russian renderings; the original 19th-c. editions are harvested from archive.org (harvest/hv5-orig.ts, records verified from the archive.org metadata), see specs/63 HV-5.',
+  '- DECIDED (HV-5, owner 2026-10-21 «загальноприйняте датування»): Сковорода — own texts only (litopys skov103–116, 201–207, 1973 academic edition), each dated by the edition own commentary (quoted per work, ranges kept); works whose commentary gives no date stay undated; the translations of Hosius/Cicero/Plutarch (skov208–210), the letters and the apparatus are not harvested.',
   '- SKIPPED (HV-5) old14_16 01–03, 08, 22–24 and old17 02, 08, 09, 18, 19, 23, 26 (apocrypha/lives/Latin and Polish works given in Ukrainian translation, anthology prefaces; same rule as research/19, nw-izb17.ts).',
   '- SKIPPED (HV-5) ukrpoetry anto03–12, 15–18, 20, 21: the same texts as old14_16/old17 pages (parallel edition), harvested once.',
   '- SKIPPED (HV-5) resource.history.org.ua (АЮЗР scans): robots.txt disallows everything; the same volumes are fetched from archive.org (archive-ayuzr).',
@@ -111,12 +135,13 @@ export function pageTitle(html: string): { h1: string; h2: string } {
   const g = (t: string) => norm(`class="dop3"${(r.match(new RegExp(`<${t}[^>]*>([\\s\\S]*?)</${t}>`, 'i'))?.[1] ?? '')}`)
   return { h1: g('h1'), h2: g('h2') }
 }
-export function item(u: Hv5Unit, html: string, bytes: number, status: number): IndexItem {
+export function item(u: Hv5Unit, html: string, bytes: number, status: number, dateText?: string): IndexItem {
   const t = norm(html)
   let date: string | null = null, dateQuote: string | null = null, dateBasis = 'undated'
   if (u.date && u.dateQuote?.length) {
-    const miss = u.dateQuote.filter(q => !t.includes(q))
-    if (!miss.length) { date = u.date; dateQuote = u.dateQuote.join(' ⁞ '); dateBasis = 'page-quote' } else dateBasis = `quote-not-found: ${miss.join(' ⁞ ')}`
+    const src = u.datePage ? (dateText ? norm(dateText) : '') : t
+    const miss = u.dateQuote.filter(q => !src.includes(q))
+    if (!miss.length) { date = u.date; dateQuote = u.dateQuote.join(' ⁞ '); dateBasis = u.datePage ? `quote of ${u.datePage}` : 'page-quote' } else dateBasis = `quote-not-found: ${miss.join(' ⁞ ')}`
   } else if (u.date && u.dateSource) { date = u.date; dateQuote = u.dateSource; dateBasis = 'research' }
   else if (!u.date && u.tier === 2) { const a = autoDate(t); if (a) { date = a.date; dateQuote = a.quote; dateBasis = 'page-sentence' } }
   const { h1, h2 } = pageTitle(html)
@@ -145,14 +170,17 @@ async function main() {
   const have = await manifestPaths()
   const h = new Harvest('hv5', { delayMs: 3000, logEvery: 5 })
   let present = 0
+  const notes = new Map<string, string>()
   for (const u of HV5_UNITS) {
     if (tier && u.tier !== tier) continue
     if (h.has(u.id)) continue
     if (have.has(u.path)) { present++; continue }
+    let dateText: string | undefined
+    if (u.datePage) { dateText = notes.get(u.datePage); if (dateText === undefined) { const r = await h.get(BASE + u.datePage); dateText = new TextDecoder('windows-1251').decode(Buffer.from(await r.res.arrayBuffer())); notes.set(u.datePage, dateText) } }
     const { status, res } = await h.get(BASE + u.path)
     const buf = Buffer.from(await res.arrayBuffer())
     if (status !== 200 || stub(buf)) { h.log(`${u.id}: HTTP ${status} / stub page (${buf.length} bytes), recorded as status ${status === 200 ? 404 : status}`); h.put(`${u.id.replace(':', '_')}.none`, '', [item(u, '', 0, status === 200 ? 404 : status)]); continue }
-    h.put(u.id.replace(':', '_'), buf, [item(u, new TextDecoder('windows-1251').decode(buf), buf.length, 200)])
+    h.put(u.id.replace(':', '_'), buf, [item(u, new TextDecoder('windows-1251').decode(buf), buf.length, 200, dateText)])
   }
   h.log(`${present} units already in pipelines/manifest.ts, skipped`)
   h.finish()
