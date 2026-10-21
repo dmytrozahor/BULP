@@ -36,7 +36,7 @@ export function admit(w: Pick<WitnessOut, 'id' | 'author' | 'authorEvidence'> & 
 export interface Ref { wi: number; ti: number }
 export interface FormAcc {
   raw: string; norm: string; modern: string; f: number; oldI: boolean
-  date: [number, number]; latest: [number, number]; firstW: string; firstLoc: string
+  date: [number, number]; latest: [number, number]; firstW: string; /** OQ: the date comes from a gated OCR witness only */ ocrDate?: boolean; firstLoc: string
   epochs: Set<string>; route: Route; chosen: Chosen; ref: Ref; first: Ref
   kwic: Ref[]; perW: Map<string, number>; orvVernacular: boolean
   regions: Set<string>   // ids of witnesses >= 1798 with a region (B-3.6)

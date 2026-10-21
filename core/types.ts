@@ -160,6 +160,8 @@ export interface StemValue { type: StemType; model: string; old: string; gender:
 export interface EpochParadigms { tags: string[]; paradigms: EpochParadigm[]; stem: Claim<StemValue> }
 
 export interface WitnessMeta extends Omit<WitnessOut, 'tokens' | 'dropped'> {
+  /** SPEC 63 OQ: OCR quality flag (core/ocr-quality.ts); absent = proofread or good OCR */
+  oq?: { score: number; band: 'low' | 'garbage'; preferred?: string[] }
   n: number; linked: number; dropped: WitnessOut['dropped']
   epochShev: Claim<EpochAssignment>; epochWl: Claim<EpochAssignment>
   /** the witness's Stanza output (.nlp.json) is flagged outOfDomain (SPEC 50 EP-2.5/EP-7.7): its model tags are shown with an extra badge */

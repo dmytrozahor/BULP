@@ -288,3 +288,193 @@ describe.skipIf(!hasData())('FX on the built data', () => {
     }
   })
 })
+
+// ───────────────────────── MM-5 … MM-10 and OQ (owner screenshots 2026-10-21; specs/mismatches.md) ─────────────────────────
+import { expandTitlo } from '../core/text.ts'
+import { MODEL_NOTE, gateSourceUk, tagLine } from '../core/torot.ts'
+import { ADJ_SOFT_FOLD, toSoftAdj, withSoftAdj } from '../core/adj-soft.ts'
+import { foldById } from '../core/orthography.ts'
+import { OQ_GARBAGE, ocrQuality, ocrScore } from '../core/ocr-quality.ts'
+import { contactCorr } from '../core/contact-corr.ts'
+import { altStandardMap } from '../core/vesum-alt.ts'
+import { remapAlt } from '../pipelines/build-link.ts'
+import { runDetectors, categoryOf, strongest, emptyLex } from '../src/lib/analyze.ts'
+import { annotate, type AnnotateData } from '../src/lib/annotate.ts'
+import { lemmaChipKeys, formContactClaims } from '../src/lib/contactLayer.ts'
+import { claim, unknown } from '../core/evidence.ts'
+import type { CoreCard } from '../core/types.ts'
+
+const E = (t: Record<string, VesumHit[]>, extra: Partial<Env> = {}): Env => ({ hits: new Map(Object.entries(t).map(([k, v]) => [key(k), v])), derive: (s, oldI) => withSoftAdj(deriveRaw(s, { oldI })), fold: (s, o) => foldRaw(s, o), ...extra })
+const linkE = (e: Env, t: TypeCtx) => { const r = linkOptions(t, e); return r ? chooseLemma(r.opts, new Map()) : undefined }
+
+describe('MM-5 «съпостати це сопостат супостат іменник а не дієслово.png»: a model tag is labelled as a model and never overrides VESUM', () => {
+  it('a Stanza card is «автоматична розмітка (Stanza), не перевірено», not «TOROT: VERB»; a gold card keeps TOROT', () => {
+    const m = tagLine({ model: true, pos: 'VERB (Stanza ORV, модель)', morph: 'Tense=Pres|VerbForm=Inf|Voice=Act' })
+    expect(m.source).toBe('Stanza'); expect(m.text).toContain(MODEL_NOTE); expect(m.text).not.toContain('TOROT'); expect(m.text).toContain('VERB'); expect(m.text).not.toContain('модель)')
+    expect(tagLine({ pos: 'V- verb', morph: 'x' }).source).toBe('TOROT')
+    expect(gateSourceUk('U:ADJ')).toBe('Stanza, модель'); expect(gateSourceUk('P:Nb')).toBe('TOROT')
+  })
+  const e = E({ супостат: [H('супостат', 'noun:anim:m:v_naz')], супостата: [H('супостат', 'noun:anim:m:v_rod')] })
+  it('the cited Wiktionary row links the model lemma съпостати / the spelling сопостат to the NOUN супостат; the Stanza VERB gate does not veto it', () => {
+    const row = correspondenceFor('съпостати')!
+    expect(row.modern).toBe('супостат'); expect(row.cls).toBe('noun'); expect(row.kind).toBe('cognate'); expect(row.quote).toContain('sǫpostatъ'); expect(row.url).toContain('wiktionary')
+    const c = linkE(e, T({ raw: 'сопостат', stanza: 'съпостати', gate: 'U:VERB' }))!
+    expect(c.lemma).toBe('супостат'); expect(c.cls).toBe('noun'); expect(c.corr!.row.kind).toBe('cognate')
+    expect(linkE(e, T({ raw: 'сопостат' }))!.lemma).toBe('супостат')   // lemma-less token
+  })
+  it('a TOROT GOLD verb tag (P:V-) is still respected: the cited row does not override gold annotation', () => {
+    expect(linkE(e, T({ raw: 'сопостат', lemma: 'съпостати', gate: 'P:V-' }))).toBeUndefined()
+  })
+})
+
+describe('MM-6 «давьныи без сучасного відповідника хоча є давній.png»: soft-stem adjectives', () => {
+  const e = E({ давній: [H('давній', 'adj:m:v_naz:compb')], давніх: [H('давній', 'adj:p:v_rod:compb')], давня: [H('давній', 'adj:f:v_naz:compb')], давнього: [H('давній', 'adj:m:v_rod:compb')] })
+  it('the sound chain gives the hard stem давний, which VESUM lacks; the labelled soft-group candidate reaches давній', () => {
+    expect(deriveRaw('давьныи', { oldI: true }).candidates.map(c => c.form)).toEqual(['давний'])
+    expect(e.hits.has('давний')).toBe(false)
+    const cs = withSoftAdj(deriveRaw('давьныи', { oldI: true })).candidates
+    expect(cs.map(c => c.form)).toContain('давній'); expect(cs.find(c => c.form === 'давній')!.trace.at(-1)).toBe('ORTH-ADJ-SOFT')
+    expect(toSoftAdj('давних')).toBe('давніх'); expect(toSoftAdj('давного')).toBe('давнього'); expect(toSoftAdj('добрий')).toBe('добрий')
+  })
+  it('the alternation is a labelled hypothesis with a citation (PAVL, two paradigms), one extra branch, resolvable in a trace', () => {
+    expect(ADJ_SOFT_FOLD.cite.kind).toBe('P'); expect(ADJ_SOFT_FOLD.cite.source).toBe('PAVL'); expect(foldById['ORTH-ADJ-SOFT']).toBe(ADJ_SOFT_FOLD)
+    expect(withSoftAdj(deriveRaw('давный', { oldI: true })).candidates.find(c => c.form === 'давній')!.branches).toBe(1)
+  })
+  it('a Stanza-ADJ token давных / давна / давного links to давній', () => {
+    for (const raw of ['давных', 'давна', 'давного']) expect(linkE(e, T({ raw, stanza: 'давьныи', gate: 'U:ADJ' }))?.lemma ?? linkE(e, T({ raw, gate: 'U:ADJ' }))?.lemma, raw).toBe('давній')
+  })
+  it('ordinary hard adjectives are untouched: a plain hit wins (добрий)', () => {
+    const e2 = E({ добрий: [H('добрий', 'adj:m:v_naz')] })
+    expect(linkE(e2, T({ raw: 'добрыи' }))!.lemma).toBe('добрий')
+  })
+})
+
+describe('MM-7 «цѣсарьствие без сучасного відповідника хоча є царство.png»: labelled ЦС correspondence; titlo expansion', () => {
+  it('the row is kind cs with the ЕСУМ «цар» quote (цѣсарь > цар) and says no sound rule is claimed', () => {
+    const r = correspondenceFor('цѣсарьствие')!
+    expect(r.kind).toBe('cs'); expect(r.modern).toBe('царство'); expect(r.quote).toContain('цѣсарь'); expect(r.url).toContain('goroh.pp.ua'); expect(r.note).toMatch(/без звукового правила|не цитується/)
+    expect(corrEvidence(r, 'цѣсарьствие').note).toContain('ЦС-відповідність')
+  })
+  it('model-lemma tokens царствіи / цесарьствии link to царство (no rule -ствие > -ство is invented)', () => {
+    const e = E({ царство: [H('царство', 'noun:inanim:n:v_naz')], царства: [H('царство', 'noun:inanim:n:v_rod')] })
+    for (const raw of ['царствіи', 'цесарьствии', 'царствия']) expect(linkE(e, T({ raw, stanza: 'цѣсарьствие', gate: 'U:NOUN' }))?.lemma, raw).toBe('царство')
+  })
+  it('titlo spellings are expanded: цр҃ствиѥ → царствиѥ, цр҃ьствиꙗ → царьствиѧ', () => {
+    expect(expandTitlo('цр҃ствиѥ').word).toBe('царствиѥ'); expect(expandTitlo('цр҃ьствиꙗ').word).toBe('царьствиѧ')
+    expect(expandTitlo('цр҃ь').word.startsWith('цар')).toBe(true)   // the old row ['цр','цар'] still works
+  })
+})
+
+describe('MM-8 «даль перша фіксація з невичитаного OCR і злиті прислівники далі дале.png»', () => {
+  it('(b) дале / далѣ are the ADVERB далі (Wiktionary: Old Ruthenian далѣ, OES дале), not forms of даль', () => {
+    const e = E({ далі: [H('даль', 'noun:inanim:f:v_rod'), H('далі', 'adv:compc:predic')], даль: [H('даль', 'noun:inanim:f:v_naz')] })
+    for (const raw of ['дале', 'далѣ']) { const c = linkE(e, T({ raw }))!; expect(c.lemma, raw).toBe('далі'); expect(c.cls).toBe('adv') }
+    expect(correspondenceFor('дале')!.quote).toContain('Old East Slavic дале')
+    expect(linkE(e, T({ raw: 'даль' }))!.lemma).toBe('даль')   // the noun itself is unchanged
+  })
+  it('(a) OQ score and bands: arch1092 OCR (S ≈ 0.34, a proofread TOROT edition exists) is excluded; good modern OCR is not; proofread text is never gated', () => {
+    const ids = new Set(['arch', 'hv_ia_arch1092', 'x'])
+    const arch = ocrQuality({ id: 'hv_ia_arch1092', witnessType: 'ocr', date: [1092, 1092] }, { tokens: 14837, linked: 8160, hapaxTypes: 5683 }, ids)
+    expect(arch.score).toBeCloseTo(0.34, 1); expect(arch.band).toBe('low'); expect(arch.excluded).toBe(true); expect(arch.preferred).toEqual(['arch'])
+    const good = ocrQuality({ id: 'x', witnessType: 'ocr', date: [1900, 1900] }, { tokens: 1000, linked: 800, hapaxTypes: 200 }, ids)
+    expect(good.band).toBe('ok'); expect(good.excluded).toBe(false)
+    expect(ocrQuality({ id: 'y', witnessType: 'ocr', date: [1500, 1500] }, { tokens: 1000, linked: 700, hapaxTypes: 200 }, ids).band).toBe('ok')   // S = 0.56 ≥ 0.45
+    expect(ocrQuality({ id: 'y', witnessType: 'ocr', date: [1500, 1500] }, { tokens: 1000, linked: 600, hapaxTypes: 300 }, ids).band).toBe('low')   // S = 0.42 < 0.45 for pre-1800
+    expect(ocrQuality({ id: 'y', witnessType: 'ocr', date: [1850, 1850] }, { tokens: 1000, linked: 600, hapaxTypes: 300 }, ids).band).toBe('ok')   // same S, later print: threshold 0.30
+    const junk = ocrQuality({ id: 'z', witnessType: 'ocr', date: [1900, 1900] }, { tokens: 1000, linked: 100, hapaxTypes: 500 }, ids)
+    expect(junk.score).toBeLessThan(OQ_GARBAGE); expect(junk.band).toBe('garbage'); expect(junk.excluded).toBe(true)
+    expect(ocrQuality({ id: 'ostromir', witnessType: 'autograph', date: [1056, 1057] }, { tokens: 100, linked: 5, hapaxTypes: 90 }, ids).excluded).toBe(false)
+    expect(ocrScore({ tokens: 0, linked: 0, hapaxTypes: 0 })).toBe(0)
+  })
+  it('a proofread edition in the corpus wins even over a good OCR score; absent from the corpus → no preference', () => {
+    const s = { tokens: 1000, linked: 900, hapaxTypes: 100 }
+    expect(ocrQuality({ id: 'hv_ia_arch1092', witnessType: 'ocr', date: [1092, 1092] }, s, new Set(['arch'])).excluded).toBe(true)
+    expect(ocrQuality({ id: 'hv_ia_arch1092', witnessType: 'ocr', date: [1092, 1092] }, s, new Set()).excluded).toBe(false)
+  })
+  it('first-attestation ranking among kept witnesses is unchanged (a gated witness is dropped before rankFirst, in the build)', () => {
+    const a = authorById[Object.keys(authorById)[0]!]!
+    const cand = (w: string, y: number, witnessType: string): FirstCand => ({ witness: w, author: a, date: [y, y], witnessType, loc: 'l', form: 'на', route: 'token', n: 1 })
+    expect(rankFirst([cand('hv_ia_arch1092', 1092, 'ocr'), cand('arch', 1092, 'autograph')])!.first.witness).toBe('arch')
+  })
+  it('real data (after a rebuild with OQ): no lexicon card takes its first attestation from a flagged OCR witness', () => {
+    const p = fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)); if (!existsSync(p) || !hasData()) return
+    const flagged = new Set((JSON.parse(readFileSync(p, 'utf8')) as { witnesses: { id: string; oq?: unknown }[] }).witnesses.filter(w => w.oq).map(w => w.id))
+    if (!flagged.size) return   // data built before OQ
+    for (const c of readFull()) if (c.first.value !== 'unknown') expect(flagged.has(c.first.value.witness), c.lemma).toBe(false)
+  })
+})
+
+describe('MM-9 «Псіхіческе в анотаторі не розпізнано психічне.png» (owner: «MM9 це суржик»): contact label on the FORM, Russian form = variant', () => {
+  const lex = () => { const l = emptyLex(); l.paradigmMap.set('психічне', [H('психічний', 'adj:n:v_naz:compb')]); l.paradigmMap.set('психічний', [H('психічний', 'adj:m:v_naz:compb')]); return l }
+  const look = (w: string) => lex().paradigmMap.get(key(w)) ?? []
+  it('the surzhyk pattern -ическ-/-ічеськ- resolves to the VESUM -ічн- form with a cited basis; the Russian form is a reconstructed VARIANT, not a source', () => {
+    const c = contactCorr('Псіхіческе', look)!
+    expect(c.standard).toBe('психічне'); expect(c.ruVariant).toBe('психическое'); expect(c.evidence[0]!.quote).toContain('-ичн-'); expect(c.evidence.some(x => x.kind === 'D' && x.quote.includes('психічний'))).toBe(true)
+    expect(Object.keys(c)).not.toContain('source')
+    expect(contactCorr('психічне', look)).toBeUndefined()   // the standard form is not a contact form
+    expect(contactCorr('Псіхіческе', () => [])).toBeUndefined()   // no VESUM counterpart, no link (no cite, no rule)
+  })
+  it('the detector labels the form «контактне / суржик» (axis contact) through the same function', () => {
+    const a = runDetectors('Псіхіческе', lex())
+    expect(Object.keys(a.claims)).toContain('russianism_morph'); expect(a.claims['russianism_morph']!.method).toContain('MOR-ICHESK'); expect(strongest(a.claims)).toBe('contact'); expect(categoryOf('russianism_morph')).toBe('contact')
+    expect(runDetectors('психічне', lex()).claims['russianism_morph']).toBeUndefined()
+  })
+  it('the annotator: the token carries the chip and the literary counterpart (not «unknown, 0 % linked»)', () => {
+    const data = { ...lex(), search: { map: new Map() }, cards: new Map() } as unknown as AnnotateData
+    const t = annotate('Псіхіческе', data)[0]!
+    expect(t.mark).toBe('contact'); expect(t.contact!.standard).toBe('психічне'); expect(t.contact!.ruVariant).toBe('психическое')
+  })
+  it('rule 2: no contact chip on the lemma card; the form sub-card shows it; a token of the standard form does not inherit the lemma aggregate', () => {
+    const sz = claim(true as const, [{ source: 'ENC', locator: 'l', quote: 'суржик', kind: 'Q' }], { score: 0.6 })
+    const card = { lemma: 'психічний', pos: 'прикметник', paradigm: [], forms: [{ raw: 'психічне', norm: 'психічне', modern: 'психічне', claims: {}, hints: [] }, { raw: 'псіхіческе', norm: 'псіхіческе', modern: 'психічне', claims: { russianism_morph: sz }, hints: [] }],
+      first: unknown(), claims: { register: unknown(), surzhyk: sz, dialect: {}, origin: unknown(), oldest: unknown() }, stats: { f: 1, ipm: 0, hk: 0, dots: 0 } } as unknown as CoreCard
+    expect(Object.keys(lemmaChipKeys(card.claims, 0))).not.toContain('surzhyk'); expect(Object.values(lemmaChipKeys(card.claims, 0)).some(Boolean)).toBe(false)
+    expect(Object.keys(formContactClaims(card.forms[1]))).toEqual(['russianism_morph']); expect(formContactClaims(card.forms[0])).toEqual({})
+    const data = { ...emptyLex(), search: { map: new Map([['психічне', [{ lemma: 'психічний', via: 'form' }]]]) }, cards: new Map([['психічний', card]]) } as unknown as AnnotateData
+    const t = annotate('психічне', data)[0]!
+    expect(t.claims['surzhyk']).toBeUndefined(); expect(t.mark).toBeUndefined()
+  })
+  it('the UI never calls a Russian form «джерело»; it says «російський варіант»; the lemma views draw no суржик chip', () => {
+    const rd = (p: string) => readFileSync(fileURLToPath(new URL(p, import.meta.url)), 'utf8')
+    expect(rd('../src/components/WordCard.vue')).toContain('російський варіант'); expect(rd('../src/components/WordCard.vue')).not.toMatch(/форма-джерело|російське джерело|джерело:/)
+    expect(rd('../src/views/WordView.vue')).not.toMatch(/text="суржик"|push\('суржик'\)/)
+    expect(rd('../src/views/FormView.vue')).toContain('контактне / суржик')
+  })
+})
+
+describe('MM-10 «термінольоґія не зведено до термінологія.png»: every VESUM :alt lemma is linked to its standard lemma', () => {
+  const heads = new Map<string, readonly [string, string]>([
+    ['термінольоґія', ['термінольоґія', 'noun:inanim:f:v_naz:alt']], ['термінологія', ['термінологія', 'noun:inanim:f:v_naz']],
+    ['аванґард', ['аванґард', 'noun:inanim:m:v_naz:alt']], ['авангард', ['Авангард', 'noun:inanim:m:v_naz:prop:geo | noun:inanim:m:v_naz']],
+    ['ляндшафт', ['ляндшафт', 'noun:inanim:m:v_naz:alt']], ['ландшафт', ['ландшафт', 'noun:inanim:m:v_naz']],
+    ['іграти', ['іграти', 'verb:imperf:inf:alt']], ['кляса', ['кляса', 'noun:inanim:f:v_naz:alt']],   // кляса → класа: no such lemma → not linked
+  ])
+  const m = altStandardMap(heads)
+  it('the map: ґ > г and льо > ло (Харківський правопис 1928, § 55 / § 54) find the standard lemma; ля > ла too; no standard lemma, no link', () => {
+    expect(m.get('термінольоґія')).toMatchObject({ std: 'термінологія', trace: ['ORTH-1928-G', 'ORTH-1928-LYO'] })
+    expect(m.get('аванґард')!.std).toBe('авангард'); expect(m.get('ляндшафт')!.std).toBe('ландшафт')
+    expect(m.has('кляса')).toBe(false); expect(m.has('іграти')).toBe(false)
+  })
+  it('both folds carry a verbatim 1928 quote and branch (VESUM decides); they are also offered to Желехівка witnesses', () => {
+    for (const id of ['ORTH-1928-G', 'ORTH-1928-LYO', 'ORTH-1928-SOFTL']) { const f = foldById[id]!; expect(f.branch).toBe(true); expect(f.cite.kind).toBe('Q'); expect(f.cite.quote.length).toBeGreaterThan(20); expect(f.cite.locator).toContain('Харківський_правопис'); expect(f.era).toContain('1928') }
+    expect(foldById['ORTH-1928-G']!.era).toContain('желехівка'); expect(foldById['ORTH-1928-SOFTL']!.era).not.toContain('желехівка')   // ля > ла would offer лубовою for любовою (GZ-2)
+    expect(foldRaw('термінольоґія', 'желехівка').map(c => c.form)).toContain('термінологія')
+    expect(foldRaw('термінольоґія', 'кулішівка').map(c => c.form)).toEqual(['термінольоґія'])   // not offered to other eras
+  })
+  it('linking: a token whose only VESUM line is the :alt lemma goes to the standard lemma card, tier 0, with the fold ids in its trace and the alt lemma recorded', () => {
+    const e = E({ термінольоґії: [H('термінольоґія', 'noun:inanim:f:v_rod:alt')] }, { altStd: m })
+    const r = linkOptions(T({ lang: 'uk', oldI: false, raw: 'термінольоґії', orth: 'желехівка' }), e)!
+    const c = chooseLemma(r.opts, new Map())!
+    expect(c.lemma).toBe('термінологія'); expect(c.tier).toBe(0); expect(c.altOf).toBe('термінольоґія'); expect(c.hit.tags).not.toContain('alt'); expect(c.cand.trace).toEqual(['ORTH-1928-G', 'ORTH-1928-LYO']); expect(c.cand.form).toBe('термінології')
+    const e0 = E({ термінольоґії: [H('термінольоґія', 'noun:inanim:f:v_rod:alt')] })   // without the map: the old behaviour (own alt card)
+    expect(chooseLemma(linkOptions(T({ lang: 'uk', oldI: false, raw: 'термінольоґії', orth: 'желехівка' }), e0)!.opts, new Map())!.lemma).toBe('термінольоґія')
+    void remapAlt
+  })
+  it('real VESUM (skips without the file): VESUM stores no pointer; ≥ 400 alt lemmas are linked, among them термінольоґія → термінологія', async () => {
+    const { VESUM_TXT, vesumLemmaList } = await import('../pipelines/vesum.ts')
+    if (!existsSync(VESUM_TXT)) return
+    const real = altStandardMap(await vesumLemmaList())
+    expect(real.size).toBeGreaterThanOrEqual(400); expect(real.get('термінольоґія')!.std).toBe('термінологія')
+    for (const l of real.values()) expect(l.std).not.toBe(l.alt)
+  }, 180000)
+})

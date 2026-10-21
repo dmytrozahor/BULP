@@ -16,7 +16,11 @@ export const ORTH1928_FOLDS: Fold[] = [
   { id: 'ORTH-1928-G', era: ['1928', 'желехівка'], branch: true,
     cite: W('щождо чужого g, то в новіших запозиченнях його треба передавати через ґ', '§ 55: 1928 writes ґ in newer loanwords (термінольоґія); the current norm writes г there (термінологія)'),
     apply: w => w.replaceAll('ґ', 'г') },
-  { id: 'ORTH-1928-SOFTL', era: ['1928', 'желехівка'], branch: true,
-    cite: W('Зокрема м\'яким л віддаємо чуже l послідовно в комплексах', '§ 54: «м\'яким л (ль, ля, льо, лю)»; examples бальо́н, бльокада, кольо́квіюм. льо/ля/лю → ло/ла/лу, only where VESUM lists the result'),
-    apply: w => w.replace(/льо/g, 'ло').replace(/ля/g, 'ла').replace(/лю/g, 'лу') },
+  { id: 'ORTH-1928-LYO', era: ['1928', 'желехівка'], branch: true,
+    cite: W('Зокрема м\'яким л віддаємо чуже l послідовно в комплексах', '§ 54: «м\'яким л (ль, ля, льо, лю)»; приклади бальо́н, бльокада, кольо́квіюм. льо → ло, лише де VESUM має результат'),
+    apply: w => w.replace(/льо/g, 'ло') },
+  // ля / лю → ла / лу: the same quote, but NOT offered to Желехівка witnesses (it would offer лубовою for любовою, tests/gz.test.ts); used for the 1928 alt-lemma map only
+  { id: 'ORTH-1928-SOFTL', era: ['1928'], branch: true,
+    cite: W('Зокрема м\'яким л віддаємо чуже l послідовно в комплексах', '§ 54: «м\'яким л (ль, ля, льо, лю)». ля / лю → ла / лу, лише де VESUM має результат'),
+    apply: w => w.replace(/ля/g, 'ла').replace(/лю/g, 'лу') },
 ]

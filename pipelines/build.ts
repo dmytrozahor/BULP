@@ -25,6 +25,7 @@ import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexInd
 import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
+import { ocrQuality, oqFlag, type OqResult } from '../core/ocr-quality.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
 import { altFile, altStandardMap } from '../core/vesum-alt.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
@@ -295,7 +296,17 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   const phraseDocs: PhraseDoc[] = [], rawIds = new Map<string, number>(), rawNames: string[] = []   // BL-12: n-gram input (lemma ids; raw spellings of unlinked tokens in pre-1600 / non-modern texts)
   const wmeta = new Map<string, Loaded>(adm.map(l => [l.w.id, l]))
   const r2uQueried = new Set<string>(existsSync(resolve(WORK, 'r2u-rows.json')) ? (rd<{ queried?: string[] }>(resolve(WORK, 'r2u-rows.json')).queried ?? []) : [])
+  // SPEC 63 OQ: per-witness OCR quality (core/ocr-quality.ts), from the link result of this very build; a gated OCR witness is kept as KWIC but never sets a first attestation, an oldest form or an epoch claim
+  const corpusIds = new Set(adm.map(a => a.w.id)), oq = new Map<string, OqResult>()
+  adm.forEach(({ w }, wi) => {
+    if (w.witnessType !== 'ocr') return
+    const seen = new Map<string, number>(); let linkedN = 0
+    w.tokens.forEach((t, ti) => { const k = t.raw.toLowerCase(); seen.set(k, (seen.get(k) ?? 0) + 1); if (linked[tix[wi]![ti]!]) linkedN++ })
+    oq.set(w.id, ocrQuality(w, { tokens: w.tokens.length, linked: linkedN, hapaxTypes: [...seen.values()].filter(v => v === 1).length }, corpusIds))
+  })
+  { const g = [...oq.values()]; lap(`OQ: ${g.length} OCR witnesses, ${g.filter(r => r.excluded).length} excluded from first attestation / epochs (${g.filter(r => r.band === 'low').length} low, ${g.filter(r => r.band === 'garbage').length} garbage, ${g.filter(r => r.preferred).length} with a proofread edition)`) }
   adm.forEach(({ w, nlp }, wi) => {
+    const oqx = oq.get(w.id), exc = !!oqx?.excluded, garbage = oqx?.band === 'garbage'   // OQ
     const m = meta[wi]!, ids = new Int32Array(w.tokens.length).fill(-1), seg = Int32Array.from(w.tokens.map(t => t.s))
     const rt = routes[w.id] = {} as Record<string, number>
     const nf = !!w.noFreq   // R2U-1: attests spellings (date, first attestation, one KWIC line) but counts nowhere
@@ -310,8 +321,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         la = { id: c.id, display: c.lemma, tags: c.hit.tags, cls: c.cls, idx: lemmaList.length, f: 0, perW: new Map(), perEpoch: new Map(), perCentury: new Map(), forms: new Map(), firstByW: new Map(), pre1400: false, dict: false, nm: { nMorph: 0, nNlp: 0 } }
         lemmas.set(c.id, la); lemmaList.push(la)
       }
-      if (!nf) { la.f++; bump(la.perW, w.id); bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e) }
-      if (w.date[1] < 1400) la.pre1400 = true
+      if (!nf) { la.f++; bump(la.perW, w.id); if (!exc) { bump(la.perCentury, m.cent); for (const e of m.ids) bump(la.perEpoch, e) } }   // OQ: no epoch claim from a gated OCR witness
+      if (w.date[1] < 1400 && !exc) la.pre1400 = true
       if (w.witnessType === 'dictionary' && (!nf || r2uQueried.has(c.lemma))) la.dict = true   // R2U-1: an r2u lemma is kept only when it was looked up (the dictionaries' equivalents do not add lemmas)
       if (!nf) ids[ti] = la.idx
       {   // NP-1: PROIEL Ne (TOROT morph) and Stanza PROPN, counted per lemma
@@ -319,22 +330,24 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         if (tok.morph) { nm.nMorph++; if (/^Ne/.test(tok.morph)) { const t = (nm.torot ??= { w: w.id, loc: tok.loc, raw: tok.raw, morph: tok.morph, n: 0, of: 0 }); t.n++ } }
         if (up) { nm.nNlp++; if (up === 'PROPN') { const s = (nm.stanza ??= { w: w.id, loc: tok.loc, raw: tok.raw, n: 0, of: 0 }); s.n++ } }
       }
-      { const fk = w.id + '\0' + raw, fb = la.firstByW.get(fk); if (fb) fb.n++; else la.firstByW.set(fk, { wid: w.id, ref, raw: tok.raw, route, loc: tok.loc, n: 1 }) }
+      { const fk = w.id + '\0' + raw, fb = la.firstByW.get(fk); if (fb) fb.n++; else if (!exc) la.firstByW.set(fk, { wid: w.id, ref, raw: tok.raw, route, loc: tok.loc, n: 1 }) }   // OQ: a gated OCR witness is never a first-attestation candidate
       let fa = la.forms.get(raw)
       if (!fa) {
         la.forms.set(raw, fa = {
           raw, norm: w.lang === 'uk' ? key(tok.raw) : derive(raw, !!w.oldI).norm, modern: c.own.form || c.form, f: 0, oldI: !!w.oldI,
-          date: w.date, latest: w.date, firstW: w.id, firstLoc: tok.loc, epochs: new Set(), route, chosen: c, ref, first: ref, kwic: [], perW: new Map(), orvVernacular: false, regions: new Set(),
+          date: w.date, latest: w.date, ocrDate: exc, firstW: w.id, firstLoc: tok.loc, epochs: new Set(), route, chosen: c, ref, first: ref, kwic: [], perW: new Map(), orvVernacular: false, regions: new Set(),
         })
       } else if (ROUTE_RANK[route] < ROUTE_RANK[fa.route]) { fa.route = route; fa.chosen = c; fa.modern = c.own.form || c.form; fa.ref = ref }
       if (!nf) fa.f++
-      if (w.date[1] < fa.date[1]) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref }
+      if (fa.ocrDate && !exc) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref; fa.ocrDate = false }   // OQ: the first real (non-gated) attestation replaces a date that came from gated OCR, even if later
+      else if (!fa.ocrDate && !exc && w.date[1] < fa.date[1]) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref }
+      else if (fa.ocrDate && exc && w.date[1] < fa.date[1]) { fa.date = w.date }
       if (w.date[1] > fa.latest[1]) fa.latest = w.date
-      if (m.pe && !nf) fa.epochs.add(m.pe)   // a dictionary spelling is no evidence of what the epoch's text looked like (research/30 §4): no epoch, no contact/dialect detection by epoch
+      if (m.pe && !nf && !exc) fa.epochs.add(m.pe)   // a dictionary spelling is no evidence of what the epoch's text looked like (research/30 §4): no epoch, no contact/dialect detection by epoch
       if (w.lang === 'orv') fa.orvVernacular = true
       if (w.region) fa.regions.add(w.id)   // B-3.6: region is provenance evidence for every admitted witness, any date
       if (nf) { if (fa.kwic.length < 6 && !fa.kwic.some(r => adm[r.wi]!.w.noFreq)) fa.kwic.push(ref) }   // R2U-1: one dictionary line per spelling
-      else if (fa.kwic.length < 6 && (fa.perW.get(w.id) ?? 0) < 2) { fa.kwic.push(ref) }
+      else if (fa.kwic.length < 6 && (fa.perW.get(w.id) ?? 0) < 2 && !garbage) { fa.kwic.push(ref) }   // OQ: near-garbage OCR is not even a KWIC line
       if (!nf) bump(fa.perW, w.id)
     })
     wLinked.set(w.id, nl); docs.push({ id: ids, seg })
@@ -679,7 +692,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   const generated = new Date().toISOString()
   const metas: WitnessMeta[] = adm.map(({ w, nlp }, i) => {
     const { tokens: _t, dropped, ...rest } = w
-    return { ...rest, n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
+    return { ...rest, ...(oq.get(w.id) && oqFlag(oq.get(w.id)!) ? { oq: oqFlag(oq.get(w.id)!) } : {}), n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))
   const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: regionN.filter(r => r.N > 0) }

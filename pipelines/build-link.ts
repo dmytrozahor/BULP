@@ -134,10 +134,10 @@ const candsOf = (env: Pick<Env, 'derive'>, raw: string, oldI: boolean) => { cons
 export function remapAlt<T extends { route: Route; opts: Option[] }>(r: T | undefined, env: Pick<Env, 'altStd'>): T | undefined {
   if (!r || !env.altStd?.size) return r
   const opts = r.opts.map(o => {
-    const a = /:alt/.test(':' + o.hit.tags) ? env.altStd!.get(o.id) : undefined
+    const a = /:alt\b/.test(':' + o.hit.tags) ? env.altStd!.get(o.id) : undefined
     if (!a) return o
     const ext = (c: Candidate): Candidate => ({ form: a.trace.reduce((s, id) => foldById[id]!.apply(s), c.form), trace: [...c.trace, ...a.trace], branches: c.branches + a.trace.length })
-    return { ...o, id: key(a.std), lemma: a.std, tier: 0, hit: { lemma: a.std, tags: o.hit.tags.replace(/:alt/, '') }, cand: ext(o.cand), own: ext(o.own), altOf: a.alt }
+    return { ...o, id: key(a.std), lemma: a.std, tier: 0, hit: { lemma: a.std, tags: o.hit.tags.replace(/:alt\b/, '') }, cand: ext(o.cand), own: ext(o.own), altOf: a.alt }
   })
   return { ...r, opts }
 }
@@ -168,7 +168,7 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
     // FX-2: a cited suppletive correspondence (азъ → я, …) replaces the lemma; only VESUM analyses of the stated POS class count
     const row = correspondenceFor(lemma)
     const corr = row ? { row, old: lemma } : undefined
-    const via = (l: string, c0?: typeof corr): Option[] => env.derive(l, t.oldI).candidates.flatMap(c => {
+    const via = (l: string, c0?: typeof corr): Option[] => env.derive(l, c0 ? false : t.oldI).candidates.flatMap(c => {
       const k = key(c.form)
       return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || (vesumClass(h.tags) === c0.row.cls && !/:prop\b/.test(':' + h.tags)))).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
     })
@@ -210,9 +210,9 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
   const out: string[] = []
   for (const l of [t.lemma, t.stanza]) if (l) {
     for (const c of env.derive(l, t.oldI).candidates) out.push(key(c.form))
-    const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form))
+    const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, false).candidates) out.push(key(c.form))
   }
-  if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, t.oldI).candidates) out.push(key(c.form)) }
+  if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, false).candidates) out.push(key(c.form)) }
   if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr) out.push(key(vr.modern)) }   // MM-2
   if (t.lang !== 'uk') for (const c of candsOf(env, t.raw, t.oldI)) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
