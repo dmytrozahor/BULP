@@ -68,7 +68,7 @@ describe('FX-1 POS gate', () => {
   })
   it('да (TOROT C-/Df) → the particle «да», not the abbreviation noun «ДА»; the ungated control would pick the noun', () => {
     for (const g of ['P:C-', 'P:Df']) { const c = link(T({ raw: 'да', lemma: 'да', gate: g }))!; expect(c.lemma, g).toBe('да'); expect(c.cls).toBe('part') }
-    expect(link(T({ raw: 'да', lemma: 'да' }))!.cls).toBe('noun')
+    expect(link(T({ raw: 'да', lemma: 'да' }))!.cls).toBe('part')   // MM-15: the abbreviation «ДА» is never the lemma of a lower-case token, even ungated
   })
   it('nothing compatible → unresolved, never guessed', () => { expect(link(T({ raw: 'да', lemma: 'да', gate: 'P:V-' }))).toBeUndefined() })
 })
@@ -223,7 +223,7 @@ describe('MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows 
 
 describe('FX-2 correspondences', () => {
   it('every row has a verbatim ЕСУМ quote and a goroh URL', () => {
-    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : /^https:\/\/goroh\.pp\.ua\//) }
+    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.includes('лигінь') ? /^https:\/\/archive\.org\/details\// : /^https:\/\/goroh\.pp\.ua\//) }
     expect(correspondenceFor('азъ')!.modern).toBe('я'); expect(correspondenceFor('есмь')).toBeUndefined()   // no fetched quote → no row
   })
   it('азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я', () => {
@@ -499,5 +499,145 @@ describe('B-3.4 / OQ: per-spelling dates skip gated OCR', () => {
   it('selectForms never ranks an ocrOnly spelling as the oldest', () => {
     const forms = [{ raw: 'a', f: 1, date: G, ocrOnly: true as const }, { raw: 'b', f: 5, date: V }, { raw: 'c', f: 2, date: V2 }]
     expect(selectForms(forms, 1)[0]!.raw).toBe('b')
+  })
+})
+
+// ───────────────────────── MM-11 … MM-16 (owner screenshots 2026-10-22; specs/mismatches.md) ─────────────────────────
+import { indexLines, ikDoublet } from '../pipelines/vesum.ts'
+import { withoutFormOf, buildEtymology } from '../core/etymology.ts'
+import { ETYMON_VOWEL } from '../pipelines/build-link.ts'
+import { featureChips } from '../core/feature-chips.ts'
+import { ZHEL_FOLDS } from '../core/zhel-folds.ts'
+import { variantFor } from '../core/correspondences.ts'
+
+/** the real VESUM v6.8.6 blocks of «легеня» (lungs) and «легінь» (young man), cut to the cells that matter */
+const VESUM_LEGEN = [
+  'легеня noun:inanim:f:v_naz', '  легені noun:inanim:f:v_rod', '  легені noun:inanim:p:v_naz', '  легенів noun:inanim:p:v_rod', '  легень noun:inanim:p:v_rod', '  легенях noun:inanim:p:v_mis',
+  'легінь noun:anim:m:v_naz', '  легеня noun:anim:m:v_rod', '  легіня noun:anim:m:v_rod', '  легені noun:anim:p:v_naz', '  легіні noun:anim:p:v_naz', '  легенів noun:anim:p:v_rod', '  легінів noun:anim:p:v_rod',
+  '  легенях noun:anim:p:v_mis', '  легінях noun:anim:p:v_mis',
+]
+describe('MM-11 «легінь злито з легені легенів і немає діалектного лигінь.png»: the lungs forms never land on легінь', () => {
+  const forms = new Set(['легінь', 'легені', 'легенів', 'легенях', 'легіні', 'легінів', 'легеня'])
+  it('VESUM lists легені / легенів under BOTH lemmas; in легінь they are the е-variant of a doublet cell (легіні ~ легені), marked ik', async () => {
+    const { hits } = await indexLines(VESUM_LEGEN, forms, new Set())
+    const h = hits.get('легені')!
+    expect([...new Set(h.map(x => x.lemma))].sort()).toEqual(['легеня', 'легінь'])
+    expect(h.filter(x => x.lemma === 'легінь').every(x => x.ik === 1)).toBe(true)
+    expect(h.filter(x => x.lemma === 'легеня').every(x => !x.ik)).toBe(true)
+    expect(hits.get('легіні')![0]!.ik).toBeUndefined(); expect(hits.get('легінь')![0]!.ik).toBeUndefined()
+    expect(ikDoublet('легені', 'легіні')).toBe('легені'); expect(ikDoublet('легіні', 'легені')).toBe('легені'); expect(ikDoublet('легені', 'легенів')).toBeNull()
+  })
+  it('the linker: легені / легенів / легенях go to легеня (the lungs), легіні / легінів / легінь stay on легінь; легінь stays an alternative of the ambiguous plural', async () => {
+    const { hits } = await indexLines(VESUM_LEGEN, forms, new Set())
+    const e = { hits, derive: (s: string, oldI: boolean) => deriveRaw(s, { oldI }), fold: (s: string, o?: string) => foldRaw(s, o) } as Env
+    // before MM-11 the frequency class decided for легінь (its unique forms are frequent, the lungs plural is only ever ambiguous)
+    const freq = new Map([['легінь', 5000], ['легеня', 3]])
+    for (const raw of ['легені', 'легенів', 'легенях']) { const r = linkOptions(T({ raw, lang: 'uk', oldI: false }), e)!, c = chooseLemma(r.opts, freq)!; expect(c.lemma, raw).toBe('легеня'); expect(c.alternatives, raw).toContain('легінь') }
+    for (const raw of ['легінь', 'легіні', 'легінів']) expect(chooseLemma(linkOptions(T({ raw, lang: 'uk', oldI: false }), e)!.opts, freq)!.lemma, raw).toBe('легінь')
+  })
+  it('real data (after a rebuild with MM-11; skips without shards): the легінь card lists no lungs spelling', () => {
+    if (!hasData()) return
+    const gen = (JSON.parse(readFileSync(fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)), 'utf8')) as { generated: string }).generated
+    if (gen < '2026-10-23') return   // data built before MM-11
+    const c = readFull().find(x => x.lemma === 'легінь'); if (!c) return
+    for (const raw of ['легені', 'легенів', 'легенях', 'легеням', 'легенями']) expect(c.forms.map(f => f.raw), raw).not.toContain(raw)
+  })
+  it('the Hutsul variant лигінь / лиґінь links to легінь: attested in the corpus (Етноґрафічний збірник т. 19, «Ішов лиґінь до дівчини»); no dictionary line found', () => {
+    for (const w of ['лигінь', 'лиґінь']) { const v = variantFor(w)!; expect(v.modern).toBe('легінь'); expect(v.quote).toContain('Ішов лиґінь до дівчини'); expect(v.url).toContain('archive.org/details/etnohr_19') }
+  })
+})
+
+describe('MM-12 «легінь етимологія See the etymology of the corresponding lemma form замість етимології.png»: a kaikki form-of pointer is not an etymology', () => {
+  const P = 'See the etymology of the corresponding lemma form.'
+  it('a pointer-only entry has no etymology of its own (the row is hidden); the card keeps only what else exists', () => {
+    expect(withoutFormOf({ text: P })).toBeUndefined()
+    expect(buildEtymology('легінь', { text: P }, undefined, [], undefined, '2026-10-03')).toBeUndefined()
+    const e = buildEtymology('легінь', { text: P }, 'псл. *x', [], undefined, '2026-10-03')!
+    expect(e.text).toBe(''); expect(e.sources).toHaveLength(1)
+    expect(JSON.stringify(e)).not.toContain('corresponding lemma form')
+  })
+  it('a pointer followed by a real sentence keeps the sentence', () => {
+    expect(withoutFormOf({ text: P + ' By surface analysis, сиді́ти (sydíty) + -я́чий (-jáčyj).' })!.text).toBe('By surface analysis, сиді́ти (sydíty) + -я́чий (-jáčyj).')
+    expect(withoutFormOf({ text: 'See the etymology of the corresponding lemma form..' })).toBeUndefined()
+    const real = { text: 'Inherited from Proto-Slavic *mě̀sto.' }; expect(withoutFormOf(real)).toBe(real)
+  })
+})
+
+describe('MM-13 «зі перша фіксація 1092 з невичитаного OCR.png»: the 1092 OCR witness is gated', () => {
+  it('OQ score of hv_ia_arch1092 as built (14 837 tokens, 8 186 linked, 5 683 hapax types) is below the pre-1800 threshold and a proofread edition exists → excluded', () => {
+    const r = ocrQuality({ id: 'hv_ia_arch1092', witnessType: 'ocr', date: [1092, 1092] }, { tokens: 14837, linked: 8186, hapaxTypes: 5683 }, new Set(['arch']))
+    expect(r.score).toBeLessThan(0.45); expect(r.excluded).toBe(true)
+  })
+  it('real data (skips without shards): зі has no first attestation from the 1092 OCR witness; the first is a vetted witness', () => {
+    if (!hasData()) return
+    const c = readFull().find(x => x.lemma === 'зі'); if (!c || c.first.value === 'unknown') return
+    expect(c.first.value.witness).not.toBe('hv_ia_arch1092'); expect(c.first.value.date[0]).toBeGreaterThan(1092)
+  })
+})
+
+describe('MM-14 «між написання можь 1200-1292 мабуть не між.png»: о > і never produces між', () => {
+  const e14 = E({ між: [H('між', 'prep:rv_rod:rv_zna:rv_oru')], межа: [H('межа', 'noun:inanim:f:v_naz')], мож: [H('мож', 'noun:inanim:m:v_naz')] })
+  it('можь (GVL s.a. 6766) reaches no між; межь and the finished spelling do; ЕСУМ «між»: *medja «межа» (е)', () => {
+    const r = (raw: string, o: Partial<TypeCtx> = {}) => { const x = linkOptions(T({ raw, ...o }), e14); return x ? chooseLemma(x.opts, new Map())?.lemma : undefined }
+    expect(r('можь')).not.toBe('між'); expect(r('межь')).toBe('між'); expect(r('між', { lang: 'uk', oldI: false })).toBe('між')
+    expect(ETYMON_VOWEL['між']!.vowel).toBe('е'); expect(ETYMON_VOWEL['між']!.quote).toContain('*medja «межа»')
+  })
+  it('мижъ (Котляревський 1798) is unaffected: no о in the spelling', () => {
+    const x = linkOptions(T({ raw: 'мижъ', lang: 'uk', orth: 'ярижка', oldI: false }), e14)
+    expect(x && chooseLemma(x.opts, new Map())?.lemma).toBe('між')
+  })
+})
+
+describe('MM-15 «да прив’язано до леми ДА великими літерами.png»: a lower-case token never links to an all-caps abbreviation lemma', () => {
+  it('lower-case «да» → the particle lemma да (VESUM «да part:bad»), not «ДА» (Державний архів); the capitals form keeps both', () => {
+    const c = linkE(env, T({ raw: 'да', lang: 'uk', oldI: false }))!
+    expect(c.lemma).toBe('да'); expect(c.cls).not.toBe('noun')
+    const r = linkOptions(T({ raw: 'ДА', lang: 'uk', oldI: false }), env)!
+    expect(r.opts.some(o => o.lemma === 'ДА')).toBe(true)
+  })
+  it('an abbreviation stays when it is the only reading', () => {
+    const e = { ...env, hits: new Map([[key('дк'), [H('ДК', 'noun:inanim:m:v_naz:nv:abbr')]]]) } as Env
+    expect(linkE(e, T({ raw: 'дк', lang: 'uk', oldI: false }))?.lemma).toBe('ДК')
+  })
+})
+
+describe('MM-16 «діалектна форма.png» (засьпіваєш у Грінченка, Львів 1893): сь before a labial and initial и- are the EDITION orthography, not the author’s dialect', () => {
+  const GRIN = { orth: 'желехівка', edition: 'Львів 1893, Наукове товариство ім. Шевченка (псевдонім Василь Чайченко)', authorRegion: 'Слобожанщина', witnessRegion: 'Слобожанщина', year: 1893 }
+  it('the Желехівка fold takes ь off before ANY hard labial (Wikipedia «перед [ʋ] і взагалі будь-якою твердою губною»): засьпіваєш → заспіваєш, сьпіви → співи, сьміється, сьвіт', () => {
+    const f = ZHEL_FOLDS.find(x => x.id === 'ORTH-ZHEL-SOFT')!
+    for (const [a, b] of [['засьпіваєш', 'заспіваєш'], ['сьпіви', 'співи'], ['засьміється', 'засміється'], ['сьвіт', 'світ']] as [string, string][]) expect(f.apply(a)).toBe(b)
+    expect(f.cite.quote).toContain('взагалі будь-якою твердою губною')
+    expect(foldRaw('засьпіваєш', 'желехівка').map(c => c.form)).toContain('заспіваєш')
+  })
+  it('инший / инші → інший by ORTH-ZHEL-INIT-I (Wikipedia «буква и на початку слова читалась як [і]»)', () => {
+    expect(foldRaw('инший', 'желехівка').map(c => c.form)).toContain('інший'); expect(foldRaw('инші', 'желехівка').map(c => c.form)).toContain('інші')
+  })
+  it('chip for Грінченко 1893: edition orthography, «не діалект автора»; for a Galician-authored witness: «галицька вимова»', () => {
+    const a = featureChips(['ORTH-ZHEL-SOFT'], GRIN)[0]!
+    expect(a.qualifier).toBe('edition'); expect(a.text).toContain('не діалект автора'); expect(a.text).toContain('Львів 1893'); expect(a.text).toContain('передана желехівкою'); expect(a.cite.quote).toContain('твердою губною')
+    const g = featureChips(['ORTH-ZHEL-SOFT'], { ...GRIN, authorRegion: 'Галичина' })[0]!
+    expect(g.qualifier).toBe('galician'); expect(g.text).toContain('галицька вимова'); expect(g.text).not.toContain('не діалект')
+  })
+  it('chip for инший: Lviv-printed Грінченко «давніша / галицька форма … не діалект автора»; Galician author «галицька форма»; an older non-Желехівка text «давніша форма»', () => {
+    expect(featureChips(['ORTH-ZHEL-INIT-I'], GRIN)[0]!.text).toMatch(/^давніша \/ галицька форма .*не діалект автора/)
+    expect(featureChips(['ORTH-ZHEL-INIT-I'], { ...GRIN, authorRegion: 'Галичина' })[0]!.text).toBe('галицька форма')
+    const old = featureChips(['ORTH-ZHEL-INIT-I'], { orth: 'ярижка', authorRegion: 'Київ', year: 1650 })[0]!
+    expect(old.qualifier).toBe('older'); expect(old.text).toBe('давніша форма')
+  })
+  it('no chip without a cited rule; the contact-label rule is untouched (the lemma header never carries a contact chip)', () => {
+    expect(featureChips(['R10', 'NOPE'], GRIN)).toEqual([])
+    expect(lemmaChipKeys({ origin: unknown(), register: unknown() } as never, 0)).toEqual({ origin: false, register: false, dialect: false })
+  })
+})
+
+describe('MM-16c «я не бачу аби фіксувалася галицька риса бажання -> бажанє»: -нє / -тє / -лє link to -ння / -ття / -лля by the cited Желехівка fold and carry a chip', () => {
+  it('бажанє / житє / знанє / весілє / зілє → бажання / життя / знання / весілля / зілля (ORTH-ZHEL-JE, quote «писано закінчення є відповідно до наддніпрянського я: зїлє, житє, знанє»)', () => {
+    for (const [a, b] of [['бажанє', 'бажання'], ['знанє', 'знання'], ['житє', 'життя'], ['весілє', 'весілля'], ['зілє', 'зілля']] as [string, string][]) expect(foldRaw(a, 'желехівка').map(c => c.form), a).toContain(b)
+    expect(ZHEL_FOLDS.find(x => x.id === 'ORTH-ZHEL-JE')!.cite.quote).toContain('відповідно до наддніпрянського я')
+  })
+  it('the chip: edition spelling for a non-Galician author, Galician spelling for a Galician author; no dialect group is claimed (no source states one)', () => {
+    const a = featureChips(['ORTH-ZHEL-JE'], { orth: 'желехівка', edition: 'Львів 1893, НТШ', authorRegion: 'Слобожанщина' })[0]!
+    expect(a.qualifier).toBe('edition'); expect(a.text).toContain('не діалект автора'); expect(a.dialect).toBeUndefined()
+    expect(featureChips(['ORTH-ZHEL-JE'], { orth: 'желехівка', authorRegion: 'Галичина' })[0]!.qualifier).toBe('galician')
   })
 })

@@ -56,6 +56,12 @@ export const CORRESPONDENCES: Correspondence[] = [
   { old: ['цѣсарьствие', 'цесарьствие', 'цѣсарьство', 'цесарьство', 'цѣсарство', 'цесарство', 'цѣсарьствиѥ', 'цесарьствиѥ', 'царьствие', 'царствие'], modern: 'царство', cls: 'noun', kind: 'cs', url: 'https://goroh.pp.ua/Етимологія/цар',
     quote: 'р. царь виникло в результаті скорочення др. цѣсарь, стсл. цѣсарь › цьсарь, що походять від імені Caesar',
     note: 'ЕСУМ, стаття «цар»: цар(ь) < цѣсарь (скорочення). Суфікс ЦС -ьствиѥ ↔ укр. -ство у джерелі не цитується, тому це ЦС-відповідність, а не звукове правило; VESUM має цісарство і царство' },
+  // MM-11 (owner file «легінь злито з легені легенів і немає діалектного лигінь 1.png»): the Hutsul / Carpathian form of легінь «young man». NO dictionary line was found (VESUM, Желехівський / r2u pages,
+  // the dsu14 and uk.wiktionary dumps have no лигінь / лиґінь); the only source is the corpus: Етноґрафічний збірник т. 19 (Коломийки, т. III, 1907), «Ішов лиґінь до дівчини», and 2 tokens in т. 33 (1912).
+  // The identification with легінь rests on that context, so the row is a labelled variant, not a sound rule (no е > и rule is cited).
+  { old: ['лигінь', 'лиґінь'], modern: 'легінь', cls: 'noun', kind: 'variant', variants: ['лигінь', 'лиґінь'], url: 'https://archive.org/details/etnohr_19',
+    quote: 'Ішов лиґінь до дівчини',
+    note: 'Корпус: Етноґрафічний збірник. Т. 19. Коломийки. Том III (1907, OCR), s. 7239; також т. 33 (1912, демонологія). Словникового рядка немає; тотожність з легінь за контекстом (юнак іде до дівчини)' },
   // MM-8b (owner file «даль перша фіксація з невичитаного OCR і злиті прислівники далі дале.png»): the old spellings дале / далѣ are the ADVERB далі, not forms of the noun даль. Wiktionary's etymology
   // of the adverb: Old Ruthenian далѣ, Old East Slavic дале. A lemma-less token with exactly one of these spellings links to the adverb (modern тексти 'далі' stay ambiguous: no POS evidence).
   { old: ['дале', 'далѣ', 'далї'], modern: 'далі', cls: 'adv', kind: 'cognate', url: 'https://en.wiktionary.org/wiki/далі#Ukrainian',
@@ -71,4 +77,4 @@ export const correspondenceFor = (oldLemma: string | undefined): Correspondence 
 export const variantFor = (form: string): Correspondence | undefined => CORRESPONDENCES.find(c => c.variants?.includes(form))
 const label = (c: Correspondence) => c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'cs' ? 'ЕСУМ (ЦС-відповідність)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
 export const corrEvidence = (c: Correspondence, oldLemma: string): Evidence => D(label(c), c.url, c.quote,
-  `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cs' ? ' [ЦС-відповідність, без звукового правила]' : c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; хомік / хомик — варіанти, стандартна форма хом\'як' : ''}]` : ''}`)
+  `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cs' ? ' [ЦС-відповідність, без звукового правила]' : c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; ' + (c.variants ?? []).join(' / ') + " — варіанти, стандартна форма " + c.modern : ''}]` : ''}`)

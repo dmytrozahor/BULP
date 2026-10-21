@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { formContactClaims } from '../lib/contactLayer.ts'
+import { featureChips } from '../../core/feature-chips.ts'
 /**
  * BL-6 form page /f/:form — everything for exactly one spelling of a lemma: its KWIC, epoch cells, witnesses, f / ipm / HK / DP with denominators (lib/formStats.ts),
  * the derivation trace and the claims. All of it comes from the lemma's detail shard (fullOf). Several lemmas can share a spelling: ?lemma= picks one.
@@ -70,6 +71,13 @@ const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron'
 const link = computed(() => fc.value && isKnown(fc.value.link) ? fc.value.link.value : undefined)
 /** MM-9 rule 2: the contact-layer label (суржик, русизм, покруч) lives here, on the form, never on the lemma card */
 const contactClaims = computed(() => formContactClaims(fc.value))
+/** MM-16: feature chips (cited spelling / pronunciation rules visible in this spelling), qualified by the witness: edition orthography vs author's dialect vs older form. NOT a contact label. */
+const featChips = computed(() => {
+  const f = fc.value; if (!f) return []
+  const w = witnessById.value.get(f.kwic[0]?.w ?? Object.keys(f.byW ?? {})[0] ?? '')
+  const author = corpus.value?.authors.find(a => a.id === w?.author)
+  return featureChips(f.derivation.map(s => s.rule), { orth: w?.orth, edition: w?.edition, authorRegion: author?.region, witnessRegion: w?.region, year: f.date?.[0] })
+})
 const rusyn = computed(() => fc.value?.claims.rusyn)
 const labelClaims = computed(() => Object.fromEntries(Object.entries(fc.value?.claims ?? {}).filter(([k]) => k !== 'rusyn')))
 /** SPEC 63 DP-2/DX-2: a spelling the corpus lacks may still be a rule-derived pronoun variant or a segmentable deictic: it gets a page too */
@@ -107,6 +115,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}<span v-if="fc.ocrOnly" class="muted"> (лише OCR низької якості, не свідчення)</span></template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
+      <p v-for="c in featChips" :key="c.rule" class="hl-line sans small" data-testid="form-feature"><span class="badge" :title="c.cite.quote">{{ c.feature }}</span> {{ c.text }} <span class="muted">· {{ c.rule }} · <a :href="c.cite.source" target="_blank" rel="noopener">джерело правила ↗</a></span></p>
       <p v-if="Object.keys(contactClaims).length" class="hl-line sans small" data-testid="form-contact"><span class="badge">контактне / суржик</span> <ClaimSet :claims="contactClaims" /></p>
       <p v-if="full" class="hl-line sans small"><span class="muted">наголос леми: </span><StressForms :variants="full.stress" /></p>   <!-- SPEC 63 CP-2: the lemma's stress on the form page -->
       <p v-if="matches.length > 1" class="small sans muted">Те саме написання в інших лемах:

@@ -80,7 +80,16 @@ export function etymConflict(d: Dating | undefined, corpus: [number, number] | u
 
 // ── assembly ─────────────────────────────────────────────────────────────────────────────────────
 export interface KaikkiRec { text: string; chain?: EtymStep[] }
-export function buildEtymology(lemma: string, k: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = []): Etymology | undefined {
+/** MM-12: kaikki puts «See the etymology of the corresponding lemma form.» on every form-of entry (a plural, a case form …); that sentence is a pointer, not an etymology. It is removed
+ *  (with whatever follows it, e.g. «By surface analysis, …», kept as the text); an entry with nothing else left has no etymology of its own. */
+export const FORM_OF_ETYM = /^See the etymology of the corresponding lemma form\.*\s*/i
+export function withoutFormOf(k: KaikkiRec | undefined): KaikkiRec | undefined {
+  if (!k || !FORM_OF_ETYM.test(k.text)) return k
+  const text = k.text.replace(FORM_OF_ETYM, '').trim()
+  return text ? { ...k, text } : undefined
+}
+export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = []): Etymology | undefined {
+  const k = withoutFormOf(k0)
   if (!k && !esumQuote && !hyps.length && !family.length) return undefined
   const sources: Evidence[] = []
   if (k) sources.push(wiktEvidence(lemma, k.text, extracted))

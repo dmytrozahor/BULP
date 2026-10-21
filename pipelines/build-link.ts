@@ -53,18 +53,20 @@ export function chooseLemma(opts: Option[], freq: ReadonlyMap<string, number>): 
   const lower = (o: Option) => (o.lemma === o.lemma.toLowerCase() ? 0 : 1)
   // FX-3: homonyms of different POS class (VESUM «да» particle vs «ДА» noun) are distinct options even though key() makes them one id
   const bk = (o: Option) => o.id + '|' + o.cls
-  for (const o of opts) { const p = best.get(bk(o)); if (!p || o.tier < p.tier || (o.tier === p.tier && (o.cand.branches < p.cand.branches || (o.cand.branches === p.cand.branches && lower(o) < lower(p))))) best.set(bk(o), o) }
+  for (const o of opts) { const p = best.get(bk(o)); if (!p || o.tier < p.tier || (o.tier === p.tier && (!!o.hit.ik < !!p.hit.ik || !!o.hit.ik === !!p.hit.ik && (o.cand.branches < p.cand.branches || (o.cand.branches === p.cand.branches && lower(o) < lower(p)))))) best.set(bk(o), o) }
   const all = [...best.values()]
   if (!all.length) return undefined
   const minTier = Math.min(...all.map(o => o.tier))
-  const pool = all.filter(o => o.tier === minTier)
+  // MM-11: a form that is the е-variant of a doublet cell in one lemma (легінь p.v_naz «легіні ~ легені») and the plain form of another lemma (легеня) goes to the other one; the variant lemma stays an alternative
+  const tiered = all.filter(o => o.tier === minTier), plain = tiered.filter(o => !o.hit.ik)
+  const pool = plain.length ? plain : tiered
   const sorted = pool.map((o, i) => ({ o, i })).sort((a, b) => fclass(freq.get(b.o.id) ?? 0) - fclass(freq.get(a.o.id) ?? 0) || a.o.cand.branches - b.o.cand.branches || (freq.get(b.o.id) ?? 0) - (freq.get(a.o.id) ?? 0) || a.i - b.i).map(x => x.o)
   const [top, second] = sorted as [Option, Option | undefined]
   const decidedBy: Chosen['decidedBy'] = !second ? (all.length > 1 ? 'tier' : 'unique')
     : fclass(freq.get(top.id) ?? 0) > fclass(freq.get(second.id) ?? 0) ? 'frequency'
     : top.cand.branches < second.cand.branches ? 'branches'
     : (freq.get(top.id) ?? 0) > (freq.get(second.id) ?? 0) ? 'frequency' : 'first'
-  const alternatives = [...sorted.slice(1), ...all.filter(o => o.tier !== minTier)].map(o => o.lemma)
+  const alternatives = [...sorted.slice(1), ...all.filter(o => !pool.includes(o))].map(o => o.lemma)
   return { ...top, alternatives, decidedBy }
 }
 
@@ -109,9 +111,11 @@ export const ONE_LETTER_PREP: ReadonlySet<string> = new Set(['с', 'в', 'к', '
 const PREP_LEMMA: Record<string, string> = { с: 'з' }
 /** MM-2a: a token written with a lower-case initial prefers common-noun (non-:prop) analyses; a surname / proper-name reading (VESUM «Хомік») is kept only when nothing else links. */
 const isProp = (o: Option) => /:prop\b/.test(':' + o.hit.tags)
+/** MM-15: an all-caps abbreviation lemma (VESUM «ДА noun:nv:abbr # Державний архів») is never the lemma of a lower-case token when a common lemma exists (да part:bad) */
+const isAbbr = (o: Option) => /:abbr\b/.test(':' + o.hit.tags)
 export function preferCommon(t: TypeCtx, r: { route: Route; opts: Option[] } | undefined): { route: Route; opts: Option[] } | undefined {
   if (!r || !t.raw || t.raw[0] === t.raw[0]!.toUpperCase() && t.raw[0] !== t.raw[0]!.toLowerCase()) return r
-  const common = r.opts.filter(o => !isProp(o))
+  const common = r.opts.filter(o => !isProp(o) && !isAbbr(o))
   return common.length && common.length < r.opts.length ? { route: r.route, opts: common } : r
 }
 const gatedBy = (t: TypeCtx, os: Option[]) => os.filter(o => compatible(t.gate, o.hit.tags))
@@ -141,7 +145,17 @@ export function remapAlt<T extends { route: Route; opts: Option[] }>(r: T | unde
   })
   return { ...r, opts }
 }
-export function linkOptions(t: TypeCtx, env: Env) { return remapAlt(preferCommon(t, linkOptionsPrep(t, env)), env) }
+/** MM-14: a closed-class lemma has ONE etymon vowel, stated by ЕСУМ, and the ikavism step R10 (о, е > і) is only the reflex of THAT vowel. між < *medja «межа» (е): a token written with о
+ *  (можь, GVL s.a. 6766 = a form of мужь / мочи) is never turned into між by о > і; it needs the е (межь, мѣжь) or the finished reflex (мижъ, між). */
+export const ETYMON_VOWEL: Record<string, { vowel: 'е'; quote: string; url: string }> = {
+  між: { vowel: 'е', quote: 'псл. *medji, *medjū, місц. в. одн. і дв. іменника *medja «межа»;', url: 'https://goroh.pp.ua/Етимологія/між' },
+}
+export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: TypeCtx, r: T | undefined): T | undefined {
+  if (!r) return r
+  const o = key(t.raw).includes('о') ? r.opts.filter(x => !(ETYMON_VOWEL[x.id] && x.cand.trace.includes('R10'))) : r.opts
+  return o.length === r.opts.length ? r : o.length ? { ...r, opts: o } : undefined
+}
+export function linkOptions(t: TypeCtx, env: Env) { return remapAlt(etymonVowelGate(t, preferCommon(t, linkOptionsPrep(t, env))), env) }
 function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)
   // MM-2: a lower-case token spelled exactly like a dictionary-cited variant (хомик, хомік) links to the standard card (хом'як), never to the surname «Хомік»

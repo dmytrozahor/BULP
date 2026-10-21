@@ -47,7 +47,8 @@ export interface WitnessOut {
 export interface WitnessMedia { kind: 'iiif' | 'youtube' | 'image'; url: string; attribution: string; licence: string; id?: string; title?: string }
 
 // ── Output: public/data/*.json ───────────────────────────────────────────────────────────────────
-export interface VesumHit { lemma: string; tags: string }
+/** `ik`: SPEC 63 MM-11 — the VESUM block of this lemma lists, for the same tags, a second form that differs only by і for е (легінь p.v_naz: легіні ~ легені); this form is the е-variant */
+export interface VesumHit { lemma: string; tags: string; ik?: 1 }
 export interface Kwic { w: string; loc: string; left: string; node: string; right: string; date: [number, number] }
 export interface TraceStep { rule: string; from: string; to: string }
 

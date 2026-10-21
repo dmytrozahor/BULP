@@ -61,6 +61,15 @@ export interface VesumIndex {
   lemmaTags: Map<string, string>
 }
 
+/** MM-11: of two forms of one cell that differ in exactly one letter, е against і, the one with е (null when they are not such a pair). */
+export function ikDoublet(a: string, b: string): string | null {
+  if (a.length !== b.length || a === b) return null
+  let at = -1
+  for (let i = 0; i < a.length; i++) if (a[i] !== b[i]) { if (at >= 0) return null; at = i }
+  const x = a[at]!, y = b[at]!
+  return x === 'е' && y === 'і' ? a : x === 'і' && y === 'е' ? b : null
+}
+
 /** Pure core of vesumIndex over any line source (tests feed fixtures). */
 export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<string> | Map<string, string>): Promise<VesumIndex> {
   const wantF = new Set([...forms].map(key))
@@ -68,12 +77,23 @@ export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<s
   const wantL = new Map<string, string | undefined>((lemmas instanceof Map ? [...lemmas] : [...lemmas].map(l => [l, undefined] as [string, undefined])).map(([l, c]) => [key(l), c]))
   const hits = new Map<string, VesumHit[]>(), paradigms = new Map<string, { form: string; tags: string }[]>(), lemmaTags = new Map<string, string>()
   let lk = '', lWanted = false
+  // MM-11: forms of the current block by tags, to find the е / і doublet of one cell (the е-form is marked `ik` on its hit, even when it came first)
+  let cells = new Map<string, { form: string; hit?: VesumHit }[]>()
   await scanVesum(lines, e => {
+    if (e.head) cells = new Map()
     if (e.head) { lk = key(e.lemma); lWanted = wantL.has(lk) && (wantL.get(lk) === undefined || wantL.get(lk) === vesumClass(e.lemmaTags)); if (lWanted && !lemmaTags.has(lk)) lemmaTags.set(lk, e.lemmaTags) }
     const fk = key(e.form)
+    let mine: VesumHit | undefined
     if (wantF.has(fk)) {
       const a = hits.get(fk) ?? []
-      if (!a.some(h => h.lemma === e.lemma && h.tags === e.tags)) { a.push({ lemma: e.lemma, tags: e.tags }); hits.set(fk, a) }
+      mine = a.find(h => h.lemma === e.lemma && h.tags === e.tags)
+      if (!mine) { mine = { lemma: e.lemma, tags: e.tags }; a.push(mine); hits.set(fk, a) }
+    }
+    if (e.tags) {
+      const cell = cells.get(e.tags) ?? []
+      cells.set(e.tags, cell)
+      for (const o of cell) { const v = ikDoublet(fk, o.form); if (v === fk) { if (mine) mine.ik = 1 } else if (v === o.form && o.hit) o.hit.ik = 1 }
+      cell.push({ form: fk, hit: mine })
     }
     if (lWanted) { const a = paradigms.get(lk) ?? []; a.push({ form: e.form, tags: e.tags }); paradigms.set(lk, a) }
   })
