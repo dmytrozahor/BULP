@@ -647,3 +647,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SL-5 | tests/plast-lch.test.ts › the committed quotes are substrings of the OCR pages (skipped without the local OCR dump) |
 | SL-5 | tests/plast-lch.test.ts › kurin slang gets its own badge and never «пластова лексика»; Plast-wide terms get the Plast badge; labels differ |
 | SL-5 | tests/plast-lch.test.ts › the source is registered; /plast, the cards and the source card use the category label and the entry source |
+| LW-1 | manual — research/45-literature-wanted.md is a generated document; every row cites its source file or an opened page, checked by reading at each regeneration (no invented editions) |
