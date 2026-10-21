@@ -681,3 +681,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-7 | tests/se.test.ts › SE-7 the build runs the stage «senses», cached like the others, and writes data/work/se.json |
 | SE-8 | tests/se.test.ts › SE-8 the sidecar is lm/se/<bucket>.json with 4096 buckets and is not loaded with the card (lazy) |
 | SE-9 | manual — policy for new dictionaries (harvester + DICT_COVER record; copyrighted = headword line and short quotes; not online = research/45 top); the decision per dictionary is SE-10 and is checked by reading the spec and research/45 |
+| SE-5 | tests/se.test.ts › SE-5 the epochs are the six project epochs; an epoch with no evidence is a gap, never filled |
+| SE-5 | tests/se.test.ts › SE-5 a period that spans two epochs is shown in both, marked as a span |
+| SE-6 | manual — the block component and its mount points are added in the next commit with tests/se-ui.test.ts (one test per card kind); until then the id is checked by reading src/views |
