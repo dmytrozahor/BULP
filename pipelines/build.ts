@@ -26,7 +26,7 @@ import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexInd
 import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
-import { ocrQuality, oqFlag, type OqResult } from '../core/ocr-quality.ts'
+import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
 import { altFile, altStandardMap } from '../core/vesum-alt.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
@@ -342,9 +342,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         })
       } else if (ROUTE_RANK[route] < ROUTE_RANK[fa.route]) { fa.route = route; fa.chosen = c; fa.modern = c.own.form || c.form; fa.ref = ref }
       if (!nf) fa.f++
-      if (fa.ocrDate && !exc) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref; fa.ocrDate = false }   // OQ: the first real (non-gated) attestation replaces a date that came from gated OCR, even if later
-      else if (!fa.ocrDate && !exc && w.date[1] < fa.date[1]) { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref }
-      else if (fa.ocrDate && exc && w.date[1] < fa.date[1]) { fa.date = w.date }
+      { const st = spellingDateStep({ date: fa.date, ocrDate: !!fa.ocrDate }, w, exc)   // OQ: gated OCR never sets a vetted spelling date (see spellingDateStep)
+        if (st === 'take') { fa.date = w.date; fa.firstW = w.id; fa.firstLoc = tok.loc; fa.first = ref; fa.ocrDate = false } else if (st === 'ocr') fa.date = w.date }
       if (w.date[1] > fa.latest[1]) fa.latest = w.date
       if (m.pe && !nf && !exc) fa.epochs.add(m.pe)   // a dictionary spelling is no evidence of what the epoch's text looked like (research/30 §4): no epoch, no contact/dialect detection by epoch
       if (w.lang === 'orv') fa.orvVernacular = true
@@ -598,7 +597,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
         const link: FormCard['link'] = claim<LinkVal>({ lemma: c.lemma, form: c.form, route: fa.route, alternatives: c.alternatives }, linkEvidence(fa),
           { method: `${fa.route}${c.own.trace.length ? '[' + c.own.trace.join('+') + ']' : ''}${c.alternatives.length ? `;tie=${c.decidedBy}` : ''}` })
         const card: FormCard = {
-          raw: fa.raw, norm: fa.norm, modern: fa.modern, f: fa.f, date: fa.date, link,
+          raw: fa.raw, norm: fa.norm, modern: fa.modern, f: fa.f, date: fa.date, ...(fa.ocrDate ? { ocrOnly: true as const } : {}), link,
           derivation: traceSteps(fa.norm, c.own), claims: det.claims, hints: det.hints, epochs: [...fa.epochs], kwic: fa.kwic.map(kwicOf),
           byW: Object.fromEntries([...fa.perW].sort((a, b) => a[0].localeCompare(b[0]))),   // BL-6c: true per-witness counts of this spelling
         }

@@ -91,4 +91,7 @@ for s in "${STEPS[@]}"; do
   fi
   touch "$M/$s"
 done
+# a published run must leave no tracked change (idle-stop treats a dirty tree as work): commit covers public/data, analysis, src/data; anything else regenerated is reported here
+if [ $publish = 1 ]; then dirt=$(git status --porcelain --untracked-files=no | head -5 | tr '
+' ' '); [ -z "$dirt" ] || log "WARNING tracked tree not clean after publish: $dirt"; fi
 status "SUCCESS run $run $([ $publish = 1 ] && echo published || echo '(verification only, nothing published)') $(date +%T) head=$(git rev-parse --short HEAD) build=$(pointer_id) secs=$(( $(date +%s) - t_start ))"

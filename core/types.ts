@@ -55,6 +55,8 @@ export interface TraceStep { rule: string; from: string; to: string }
 export interface FormCard {
   raw: string; norm: string; modern: string; f: number
   date: [number, number]                       // earliest attestation of this spelling (witness composition date)
+  /** SPEC 63 OQ: `date` comes only from gated (low-quality or superseded) OCR: «лише OCR низької якості», never compared with `claims.oldest`, never an attestation */
+  ocrOnly?: true
   link: Claim<{ lemma: string; form: string; route: 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'; alternatives: string[] }>
   derivation: TraceStep[]
   /** cs / contact / dialect labels (Claim<true>) with evidence; `rusyn` (research/10 §5) is a parallel, non-competing reading whose value is the axis label. */

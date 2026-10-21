@@ -40,3 +40,14 @@ export function ocrQuality(w: { id: string; witnessType: string; date: [number, 
 /** the compact flag stored on a witness record; absent = nothing to say */
 export const oqFlag = (r: OqResult): { score: number; band: Exclude<OqBand, 'ok'>; preferred?: string[] } | undefined =>
   r.band === 'ok' && !r.preferred ? undefined : { score: r.score, band: (r.band === 'ok' ? 'low' : r.band) as Exclude<OqBand, 'ok'>, ...(r.preferred ? { preferred: r.preferred } : {}) }
+
+/**
+ * SPEC 63 OQ, per-spelling date (B-3.4): what a token of witness `w` does to the date of a spelling, given its state so far.
+ *  'take'  — a vetted (non-gated) witness: it sets/lowers the attestation date and the first-attestation pointer; a date that so far came only from gated OCR is replaced even by a LATER vetted witness;
+ *  'ocr'   — a gated OCR witness on a spelling that so far has only gated dates: it may lower the display-only OCR date (the card is flagged `ocrOnly`; that date is never compared with, or shown as, an attestation);
+ *  null    — nothing changes (a gated witness never touches a vetted date).
+ */
+export function spellingDateStep(cur: { date: [number, number]; ocrDate: boolean }, w: { date: [number, number] }, excluded: boolean): 'take' | 'ocr' | null {
+  if (!excluded) return cur.ocrDate || w.date[1] < cur.date[1] ? 'take' : null
+  return cur.ocrDate && w.date[1] < cur.date[1] ? 'ocr' : null
+}

@@ -7,7 +7,7 @@ import { GATE, compatible, gateKey, paradigmKindOf, vesumClass } from '../core/p
 import { CORRESPONDENCES, correspondenceFor, corrEvidence } from '../core/correspondences.ts'
 import { explain, reverse } from '../core/reverse.ts'
 import { chooseLemma, linkOptions, preferCommon, ONE_LETTER_PREP, posLabel, type Env, type TypeCtx } from '../pipelines/build-link.ts'
-import { rankFirst, type FirstCand } from '../pipelines/build-annotate.ts'
+import { rankFirst, selectForms, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
 import { hasData, readFull } from './lexdata.ts'
@@ -477,4 +477,27 @@ describe('MM-10 «термінольоґія не зведено до термі
     expect(real.size).toBeGreaterThanOrEqual(400); expect(real.get('термінольоґія')!.std).toBe('термінологія')
     for (const l of real.values()) expect(l.std).not.toBe(l.alt)
   }, 180000)
+})
+
+describe('B-3.4 / OQ: per-spelling dates skip gated OCR', () => {
+  const G: [number, number] = [1798, 1798], V: [number, number] = [1850, 1850], V2: [number, number] = [1900, 1900]
+  it('fixture: a spelling dated only by a gated witness stays ocrOnly; its OCR date never beats a vetted one', async () => {
+    const { spellingDateStep } = await import('../core/ocr-quality.ts')
+    // replay the build: state starts from the FIRST token (build.ts creates the form with ocrDate = excluded)
+    const run = (toks: Array<{ date: [number, number]; exc: boolean }>) => {
+      const st = { date: toks[0]!.date, ocrDate: toks[0]!.exc }
+      for (const t of toks.slice(1)) { const a = spellingDateStep(st, t, t.exc); if (a) { st.date = t.date; if (a === 'take') st.ocrDate = false } }
+      return st
+    }
+    expect(run([{ date: G, exc: true }])).toEqual({ date: G, ocrDate: true })                               // gated only → flagged, never an attestation
+    expect(run([{ date: G, exc: true }, { date: [1700, 1700], exc: true }]).ocrDate).toBe(true)              // still OCR-only
+    const mixed = run([{ date: G, exc: true }, { date: V, exc: false }])                                    // a LATER vetted witness replaces the gated date
+    expect(mixed).toEqual({ date: V, ocrDate: false })
+    expect(run([{ date: V, exc: false }, { date: [1700, 1700], exc: true }])).toEqual({ date: V, ocrDate: false })   // a gated witness never lowers a vetted date
+    expect(run([{ date: V2, exc: false }, { date: V, exc: false }])).toEqual({ date: V, ocrDate: false })
+  })
+  it('selectForms never ranks an ocrOnly spelling as the oldest', () => {
+    const forms = [{ raw: 'a', f: 1, date: G, ocrOnly: true as const }, { raw: 'b', f: 5, date: V }, { raw: 'c', f: 2, date: V2 }]
+    expect(selectForms(forms, 1)[0]!.raw).toBe('b')
+  })
 })

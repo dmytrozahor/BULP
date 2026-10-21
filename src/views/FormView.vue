@@ -105,7 +105,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
       <SociolectBadges :word="pick.raw" /><ModernBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
-        <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
+        <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}<span v-if="fc.ocrOnly" class="muted"> (лише OCR низької якості, не свідчення)</span></template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
       <p v-if="Object.keys(contactClaims).length" class="hl-line sans small" data-testid="form-contact"><span class="badge">контактне / суржик</span> <ClaimSet :claims="contactClaims" /></p>
       <p v-if="full" class="hl-line sans small"><span class="muted">наголос леми: </span><StressForms :variants="full.stress" /></p>   <!-- SPEC 63 CP-2: the lemma's stress on the form page -->

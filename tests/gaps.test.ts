@@ -145,7 +145,7 @@ describe.skipIf(!hasData())('B-3 / B-4 properties of the built lexicon', () => {
   const cards = lex(), c = corpus()
   it('B-2.2 / B-1.1 corpus meta: rusynStatus note with evidence, regions with N', () => { expect(c.rusynStatus.evidence.length).toBeGreaterThan(3); expect(c.regions.length).toBeGreaterThan(0) })
   it('B-3.4 oldest is no younger than any stored spelling', () => {
-    for (const l of cards) if (l.claims.oldest.value !== 'unknown') for (const f of l.forms) expect(l.claims.oldest.value.date[1], l.lemma).toBeLessThanOrEqual(f.date[1])
+    for (const l of cards) if (l.claims.oldest.value !== 'unknown') for (const f of l.forms) if (!f.ocrOnly) expect(l.claims.oldest.value.date[1], l.lemma).toBeLessThanOrEqual(f.date[1])
   })
   it('B-3.6 region is evidence, never a dialect label', () => {
     const codes = new Set(c.regions.map((r: { code: string }) => r.code))
