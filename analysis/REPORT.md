@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **46 353 973**.
+Generated 2026-10-21T11:53:55.414Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **47 607 952**.
 
 ## 1. Corpus
 
@@ -1977,6 +1977,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | molodyk1843_shevchenko | shevchenko | uk | 1843 | shev.modern (high) | wl.new | 149 | 0 | 0 |
 | shevchenko_124 | shevchenko | uk | 1843 | shev.modern (high) | wl.new | 169 | 0 | 0 |
 | hv_ws_110289 | hv_тарас_шевченко | uk | 1844 | shev.modern (high) | wl.new | 367 | 5 | 433 |
+| hv_ws_215785 | hv_тарас_шевченко | uk | 1844 | shev.modern (high) | wl.new | 59 | 23 | 50 |
 | shevchenko_125 | shevchenko | uk | 1844 | shev.modern (high) | wl.new | 307 | 0 | 0 |
 | shevchenko_126 | shevchenko | uk | 1844 | shev.modern (high) | wl.new | 848 | 0 | 0 |
 | shevchenko_127 | shevchenko | uk | 1844 | shev.modern (high) | wl.new | 160 | 0 | 0 |
@@ -2013,6 +2014,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_40533 | hv_маруся_чураи | uk | 1852 | shev.modern (high) | wl.new | 59 | 4 | 48 |
 | hv_ia_etnozbirnyk1853 | hv_archive-ukr | uk | 1853 | shev.modern (high) | wl.new | 6 165 | 1700 | 101986 |
 | hv_ia_hrabianka | hv_грабянка_григоріи_іванович | uk | 1853 | shev.modern (high) | wl.new | 5 445 | 2598 | 77280 |
+| hv_ws_37424 | hv_микола_венгер | uk | 1854 | shev.modern (high) | wl.new | 148 | 7 | 353 |
 | hv_ws_517228 | hv_wikisource-uk | uk | 1854 | shev.modern (high) | wl.new | 150 | 28 | 0 |
 | hv_ws_5684 | hv_wikisource-uk | uk | 1854 | shev.modern (high) | wl.new | 30 | 8 | 0 |
 | hv_ia_hatstsuk1857 | hv_hatstsuk_mykola | uk | 1857 | shev.modern (high) | wl.new | 34 732 | 1983 | 213 |
@@ -2030,8 +2032,10 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_basenotaknazwane00unse | hv_archive-ukr | uk | 1860 | shev.modern (high) | wl.new | 738 | 5295 | 0 |
 | hv_ia_golovatskyj1860 | hv_головацькии_яків_федорович_1814_1888 | uk | 1860 | shev.modern (high) | wl.new | 1 176 | 860 | 12513 |
 | hv_ws_110393 | hv_тарас_шевченко | uk | 1860 | shev.modern (high) | wl.new | 1 026 | 15 | 1174 |
+| hv_ws_110394 | hv_тарас_шевченко | uk | 1860 | shev.modern (high) | wl.new | 479 | 8 | 581 |
 | hv_ws_110404 | hv_тарас_шевченко | uk | 1860 | shev.modern (high) | wl.new | 422 | 17 | 755 |
 | hv_ws_36971 | hv_невідомии | uk | 1860 | shev.modern (high) | wl.new | 143 | 5 | 506 |
+| hv_ws_38030 | hv_тарас_шевченко | uk | 1860 | shev.modern (high) | wl.new | 235 | 8 | 243 |
 | hv_ia_1861derk | hv_деркачов_і_п | uk | 1861 | shev.modern (high) | wl.new | 2 111 | 57 | 0 |
 | hv_ia_bandurista3 | hv_закревськии_микола | uk | 1861 | shev.modern (high) | wl.new | 69 851 | 14973 | 98996 |
 | hv_ia_derk1861 | hv_деркачов_і_п | uk | 1861 | shev.modern (high) | wl.new | 2 078 | 54 | 0 |
@@ -2045,15 +2049,18 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_39305 | hv_каленик_шеи_ковськии | uk | 1861 | shev.modern (high) | wl.new | 57 | 6 | 49 |
 | hv_ws_42055 | hv_wikisource-uk | uk | 1862 | shev.modern (high) | wl.new | 883 | 14 | 186 |
 | hv_ws_66137 | hv_пантелеи_мон_куліш | uk | 1862 | shev.modern (high) | wl.new | 100 | 11 | 5980 |
+| hv_ws_9075 | hv_пантелеи_мон_куліш | uk | 1862 | shev.modern (high) | wl.new | 4 536 | 0 | 0 |
 | kulish1862 | kulish | uk | 1862 | shev.modern (high) | wl.new | 5 961 | 0 | 0 |
 | hv_ia_aruzr_3_1 | hv_archive-ukr | uk | 1863 | shev.modern (high) | wl.new | 16 918 | 4337 | 85707 |
 | hv_ws_17763 | hv_авраам_лінкольн | uk | 1863 | shev.modern (high) | wl.new | 223 | 0 | 0 |
+| hv_ws_210777 | hv_wikisource-uk | uk | 1863 | shev.modern (high) | wl.new | 206 | 71 | 258 |
 | hv_ia_hramatikaruskoho00osad | hv_osadtsa_mikhail | uk | 1864 | shev.modern (high) | wl.new | 86 882 | 5014 | 333 |
 | hv_ws_180111 | hv_павлин_свєнціцькии | uk | 1864 | shev.modern (high) | wl.new | 178 | 7 | 4 |
 | hv_ws_40959 | hv_григоріи_залюбовськии | uk | 1864 | shev.modern (high) | wl.new | 211 | 9 | 291 |
 | hv_ia_dokumentyobiasn00brosgoog | hv_mikhail_osipovich_koi_a_lovich_v_n_polivanov_rus | uk | 1865 | shev.modern (high) | wl.new | 6 960 | 190284 | 32086 |
 | hv_ia_harkavy1865 | hv_гаркави_а_я | uk | 1865 | shev.modern (high) | wl.new | 932 | 946 | 13257 |
 | hv_ws_8837 | hv_іван_нечуи_левицькии | uk | 1865 | shev.modern (high) | wl.new | 16 836 | 33 | 61 |
+| hv_ws_36955 | hv_ксенофонт_климкович | uk | 1866 | shev.modern (high) | wl.new | 218 | 6 | 417 |
 | hv_ws_41547 | hv_ясон_блонськии | uk | 1866 | shev.modern (high) | wl.new | 289 | 18 | 9946 |
 | hv_ws_38473 | hv_данило_танячкевич | uk | 1867 | shev.modern (high) | wl.new | 95 | 5 | 6939 |
 | hv_ia_aruzr_3_2 | hv_archive-ukr | uk | 1868 | shev.modern (high) | wl.new | 10 868 | 194473 | 75412 |
@@ -2069,13 +2076,16 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_19884 | hv_ганс_крістіан_андерсен | uk | 1873 | shev.modern (high) | wl.new | 150 | 45 | 7 |
 | hv_ia_chubynsky5 | hv_чубинськии_павло_платонович_1839_1884 | uk | 1874 | shev.modern (high) | wl.new | 116 391 | 19973 | 175300 |
 | hv_ia_dragomanov | hv_драгоманов_михаи_ло_петрович | uk | 1874 | shev.modern (high) | wl.new | 66 682 | 5822 | 5351 |
+| hv_ws_206675 | hv_осип_юріи_федькович | uk | 1874 | shev.modern (high) | wl.new | 48 | 4 | 168 |
 | hv_ws_207065 | hv_григоріи_квітка_основ_яненко | uk | 1874 | shev.modern (high) | wl.new | 48 | 5 | 92 |
 | hv_ws_207982 | hv_павлин_свєнціцькии | uk | 1874 | shev.modern (high) | wl.new | 121 | 99 | 141 |
+| hv_ws_352174 | hv_микола_троцькии | uk | 1874 | shev.modern (high) | wl.new | 5 266 | 141 | 1253 |
 | hv_ia_dragomanov2 | hv_драгоманов_михаи_ло_петрович | uk | 1875 | shev.modern (high) | wl.new | 32 793 | 3776 | 1624 |
 | hv_ws_110531 | hv_сергіи_подолинськии | uk | 1875 | shev.modern (high) | wl.new | 1 815 | 19 | 1774 |
 | hv_ws_40671 | hv_микола_ковалевськии | uk | 1875 | shev.modern (high) | wl.new | 12 963 | 106 | 5442 |
 | hv_ia_ch6t1 | hv_archive-ukr | uk | 1876 | shev.modern (high) | wl.new | 13 681 | 176920 | 33845 |
 | hv_ws_10760 | hv_тарас_шевченко | uk | 1876 | shev.modern (high) | wl.new | 57 | 15 | 0 |
+| hv_ws_220953 | hv_омелян_огоновськии | uk | 1876 | shev.modern (high) | wl.new | 131 | 58 | 8 |
 | hv_ws_569010 | hv_сидір_воробкевич | uk | 1876 | shev.modern (high) | wl.new | 4 249 | 29 | 27 |
 | hv_ws_66704 | hv_михаи_ло_драгоманов | uk | 1876 | shev.modern (high) | wl.new | 7 593 | 47 | 2360 |
 | kobzar1876 | shevchenko | uk | 1876 | shev.modern (high) | wl.new | 88 813 | 0 | 4887 |
@@ -2092,8 +2102,10 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_00003699 | hv_лисенко_микола_віталіи_ович_шевченко_тарас_григо | uk | 1880 | shev.modern (high) | wl.new | 4 568 | 486 | 0 |
 | hv_ia_istoriiarusskots0101goluuoft | hv_golubinski_evgeni_evstigneevich_1834_1912 | uk | 1880 | shev.modern (high) | wl.new | 222 921 | 11963 | 106045 |
 | hv_ia_istoriiarusskots0102goluuoft | hv_golubinski_evgeni_evstigneevich_1834_1912 | uk | 1880 | shev.modern (high) | wl.new | 215 101 | 12343 | 105378 |
+| hv_ws_51179 | hv_панас_мирнии | uk | 1880 | shev.modern (high) | wl.new | 313 | 123 | 435 |
 | hv_ia_dragom2 | hv_драгоманов_михаи_ло_петрович | uk | 1882 | shev.modern (high) | wl.new | 7 761 | 100 | 36 |
 | hv_ia_fil1882zap | hv_archive-ukr | uk | 1882 | shev.modern (high) | wl.new | 2 656 | 421 | 29973 |
+| hv_ws_208456 | hv_пантелеи_мон_куліш | uk | 1882 | shev.modern (high) | wl.new | 186 | 39 | 40 |
 | kulish1882 | kulish | uk | 1882 | shev.modern (high) | wl.new | 18 720 | 0 | 352 |
 | hv_ia_fl1883zap1 | hv_сырку_п_а | uk | 1883 | shev.modern (high) | wl.new | 1 091 | 58 | 2130 |
 | hv_ia_hutorn1883 | hv_хуторнии_т | uk | 1883 | shev.modern (high) | wl.new | 19 319 | 684 | 225 |
@@ -2111,6 +2123,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | r2u_zheleh | dict_zheleh | uk | 1886 | shev.modern (high) | wl.new | 6 859 | 0 | 0 |
 | hv_ia_arhuzr_1_7 | hv_archive-ukr | uk | 1887 | shev.modern (high) | wl.new | 80 527 | 8484 | 174415 |
 | hv_ws_40422 | hv_x | uk | 1887 | shev.modern (high) | wl.new | 43 | 16 | 3883 |
+| hv_ws_41101 | hv_x | uk | 1887 | shev.modern (high) | wl.new | 35 | 4 | 259 |
 | hv_ws_42020 | hv_x | uk | 1887 | shev.modern (high) | wl.new | 46 | 9 | 225 |
 | hv_ws_42023 | hv_x | uk | 1887 | shev.modern (high) | wl.new | 55 | 6 | 161 |
 | hv_ws_210372 | hv_наталія_кобринська | uk | 1888 | shev.modern (high) | wl.new | 3 564 | 60 | 324 |
@@ -2152,9 +2165,11 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_hlasopsnetsilyna00ukra | hv_ukrai_nsʹka_hreko_katolytsʹka_tserkva | uk | 1894 | shev.modern (high) | wl.new | 34 414 | 4102 | 57 |
 | hv_ws_176260 | hv_володимир_коцовськии | uk | 1894 | shev.modern (high) | wl.new | 2 738 | 119 | 1149 |
 | hv_ws_210094 | hv_wikisource-uk | uk | 1894 | shev.modern (high) | wl.new | 79 | 4 | 0 |
+| hv_ws_210098 | hv_wikisource-uk | uk | 1894 | shev.modern (high) | wl.new | 74 | 4 | 0 |
 | hv_ws_24309 | hv_микола_лисенко | uk | 1894 | shev.modern (high) | wl.new | 11 528 | 416 | 60 |
 | hv_ws_26591 | hv_альфред_теннісон | uk | 1894 | shev.modern (high) | wl.new | 1 500 | 6 | 0 |
 | hv_ws_28623 | hv_wikisource-uk | uk | 1894 | shev.modern (high) | wl.new | 614 | 2 | 87 |
+| hv_ws_356359 | hv_михаи_ло_павлик | uk | 1894 | shev.modern (high) | wl.new | 6 962 | 230 | 1041 |
 | hv_ws_6678 | hv_михаи_ло_старицькии | uk | 1894 | shev.modern (high) | wl.new | 24 275 | 26 | 0 |
 | hv_ia_1895_t_4 | hv_archive-ukr | uk | 1895 | shev.modern (high) | wl.new | 194 209 | 4332 | 681 |
 | hv_ia_cihm_30425 | hv_oles_kiv_iosyf_1860_1903 | uk | 1895 | shev.modern (high) | wl.new | 8 490 | 1952 | 113 |
@@ -2164,11 +2179,13 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_123589 | hv_осип_маковеи | uk | 1895 | shev.modern (high) | wl.new | 10 741 | 393 | 0 |
 | hv_ws_186460 | hv_жуль_верн | uk | 1895 | shev.modern (high) | wl.new | 350 | 82 | 0 |
 | hv_ws_45741 | hv_тарас_шевченко | uk | 1895 | shev.modern (high) | wl.new | 47 158 | 777 | 11454 |
+| hv_ws_46798 | hv_тарас_шевченко | uk | 1895 | shev.modern (high) | wl.new | 30 486 | 95 | 1774 |
 | hv_ws_547252 | hv_ганна_барвінок | uk | 1895 | shev.modern (high) | wl.new | 6 146 | 6 | 0 |
 | hv_ia_1896_t_5 | hv_archive-ukr | uk | 1896 | shev.modern (high) | wl.new | 197 662 | 4301 | 824 |
 | hv_ia_31761086786126 | hv_kot_si_ubynsʹkyi_mykhai_lo_1864_1913 | uk | 1896 | shev.modern (high) | wl.new | 15 169 | 176 | 0 |
 | hv_ia_imyvevropiprotes00fran | hv_franko_ivan_1856_1916 | uk | 1896 | shev.modern (high) | wl.new | 3 969 | 80 | 0 |
 | hv_ia_imyvievropi00fran | hv_franko_ivan_1856_1916 | uk | 1896 | shev.modern (high) | wl.new | 3 967 | 79 | 0 |
+| hv_ws_341622 | hv_ольга_кобилянська | uk | 1896 | shev.modern (high) | wl.new | 124 | 26 | 0 |
 | hv_ws_433468 | hv_wikisource-uk | uk | 1896 | shev.modern (high) | wl.new | 286 | 12 | 0 |
 | hv_ia_etnohr_03_1 | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine | uk | 1897 | shev.modern (high) | wl.new | 94 981 | 3084 | 239 |
 | hv_ia_spivannykxviii | hv_грушевськии_михаи_ло_сергіи_ович_1866_1934 | uk | 1897 | shev.modern (high) | wl.new | 22 601 | 1565 | 144 |
@@ -2223,6 +2240,8 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_215555 | hv_еміль_золя | uk | 1901 | shev.modern (high) | wl.new | 9 702 | 165 | 0 |
 | hv_ws_39551 | hv_вільям_шекспір | uk | 1901 | shev.modern (high) | wl.new | 206 | 7 | 0 |
 | hv_ws_539704 | hv_іван_пулюи | uk | 1901 | shev.modern (high) | wl.new | 7 992 | 148 | 0 |
+| hv_ws_552949 | hv_михаи_ло_грушевськии | uk | 1901 | shev.modern (high) | wl.new | 9 987 | 395 | 286 |
+| hv_ws_553073 | hv_курции_руф_квінт | uk | 1901 | shev.modern (high) | wl.new | 10 121 | 215 | 0 |
 | hv_ws_553437 | hv_панас_мирнии | uk | 1901 | shev.modern (high) | wl.new | 2 269 | 14 | 0 |
 | hv_ws_604091 | hv_михаи_ло_грушевськии | uk | 1901 | shev.modern (high) | wl.new | 4 291 | 18 | 0 |
 | franko1902 | franko | uk | 1902 | shev.modern (high) | wl.new | 25 278 | 0 | 582 |
@@ -2251,6 +2270,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_dubovelystiealm00hringoog | hv_mykola_cherni_a_vsʹkyi_mykhai_lo_kot_s_i_u_bynsʹ | uk | 1903 | shev.modern (high) | wl.new | 68 837 | 2189 | 96 |
 | hv_ia_institutkaopovid00vovc | hv_vovchok_marko_1834_1907 | uk | 1903 | shev.modern (high) | wl.new | 12 859 | 285 | 0 |
 | hv_ws_129682 | hv_моріс_верн | uk | 1903 | shev.modern (high) | wl.new | 541 | 261 | 0 |
+| hv_ws_132002 | hv_микола_кареєв | uk | 1903 | shev.modern (high) | wl.new | 4 787 | 1260 | 831 |
 | hv_ws_134874 | hv_wikisource-uk | uk | 1903 | shev.modern (high) | wl.new | 14 995 | 357 | 0 |
 | hv_ws_565372 | hv_осип_бодянськии | uk | 1903 | shev.modern (high) | wl.new | 88 | 8 | 0 |
 | hv_ws_69733 | hv_іван_франко | uk | 1903 | shev.modern (high) | wl.new | 558 | 93 | 0 |
@@ -2287,8 +2307,10 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_205076 | hv_орест_авдикович | uk | 1905 | shev.modern (high) | wl.new | 676 | 365 | 0 |
 | hv_ws_238810 | hv_любов_яновська | uk | 1905 | shev.modern (high) | wl.new | 273 | 103 | 301 |
 | hv_ws_275477 | hv_wikisource-uk | uk | 1905 | shev.modern (high) | wl.new | 256 | 92 | 11673 |
+| hv_ws_508629 | hv_wikisource-uk | uk | 1905 | shev.modern (high) | wl.new | 432 | 139 | 0 |
 | hv_ws_547114 | hv_іван_пулюи | uk | 1905 | shev.modern (high) | wl.new | 220 | 42 | 0 |
 | hv_ws_547151 | hv_моріс_верн | uk | 1905 | shev.modern (high) | wl.new | 12 343 | 803 | 0 |
+| hv_ws_547901 | hv_володимир_антонович | uk | 1905 | shev.modern (high) | wl.new | 12 470 | 664 | 170 |
 | hv_ws_552700 | hv_леон_фер | uk | 1905 | shev.modern (high) | wl.new | 26 172 | 893 | 0 |
 | hv_ws_569265 | hv_галина_комарова | uk | 1905 | shev.modern (high) | wl.new | 234 | 64 | 52 |
 | hv_ws_69386 | hv_іван_франко | uk | 1905 | shev.modern (high) | wl.new | 410 | 47 | 0 |
@@ -2303,8 +2325,12 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_etnohr_18 | hv_гнатюк_володимир_михаи_лович | uk | 1906 | shev.modern (high) | wl.new | 81 472 | 8695 | 9 |
 | hv_ia_etnohr_21 | hv_роздольськии_о_і | uk | 1906 | shev.modern (high) | wl.new | 44 078 | 9784 | 0 |
 | hv_ws_179643 | hv_wikisource-uk | uk | 1906 | shev.modern (high) | wl.new | 1 740 | 45 | 99 |
+| hv_ws_201669 | hv_володимир_саміи_ленко | uk | 1906 | shev.modern (high) | wl.new | 2 211 | 1030 | 0 |
+| hv_ws_203560 | hv_євген_гребінка | uk | 1906 | shev.modern (high) | wl.new | 335 | 113 | 231 |
 | hv_ws_238255 | hv_wikisource-uk | uk | 1906 | shev.modern (high) | wl.new | 242 | 10 | 0 |
+| hv_ws_321964 | hv_василь_доманицькии | uk | 1906 | shev.modern (high) | wl.new | 5 561 | 93 | 266 |
 | hv_ws_34652 | hv_олександр_півень | uk | 1906 | shev.modern (high) | wl.new | 131 | 66 | 70 |
+| hv_ws_402780 | hv_wikisource-uk | uk | 1906 | shev.modern (high) | wl.new | 148 | 23 | 0 |
 | hv_ws_508825 | hv_михаи_ло_лозинськии | uk | 1906 | shev.modern (high) | wl.new | 12 129 | 196 | 0 |
 | hv_ws_508878 | hv_михаи_ло_лозинськии | uk | 1906 | shev.modern (high) | wl.new | 5 011 | 359 | 171 |
 | hv_ws_543528 | hv_климент_квітка | uk | 1906 | shev.modern (high) | wl.new | 13 895 | 248 | 1674 |
@@ -2336,14 +2362,19 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_istoriiaukranyr00arkagoog | hv_arkas_mykola_1852_1909 | uk | 1908 | shev.modern (high) | wl.new | 121 956 | 4266 | 16 |
 | hv_ia_istorychnipisniu00sich | hv_sichynsky_myroslav_1887 | uk | 1908 | shev.modern (high) | wl.new | 5 304 | 177 | 0 |
 | hv_ia_istorychniprychy12barv | hv_barvinsʹkyi_bohdan | uk | 1908 | shev.modern (high) | wl.new | 52 390 | 4973 | 304 |
+| hv_ws_104117 | hv_олександр_миловидов | uk | 1908 | shev.modern (high) | wl.new | 169 | 66 | 10522 |
 | hv_ws_110408 | hv_альфонс_доде | uk | 1908 | shev.modern (high) | wl.new | 2 503 | 193 | 0 |
+| hv_ws_12134 | hv_за_абеткою | uk | 1908 | shev.modern (high) | wl.new | 177 | 19 | 0 |
 | hv_ws_178317 | hv_wikisource-uk | uk | 1908 | shev.modern (high) | wl.new | 864 | 164 | 0 |
 | hv_ws_319753 | hv_марк_твен | uk | 1908 | shev.modern (high) | wl.new | 198 | 49 | 0 |
 | hv_ws_387196 | hv_сидір_твердохліб | uk | 1908 | shev.modern (high) | wl.new | 238 | 65 | 0 |
+| hv_ws_454124 | hv_борис_грінченко | uk | 1908 | shev.modern (high) | wl.new | 5 762 | 313 | 4500 |
+| hv_ws_505650 | hv_михаи_ло_лозинськии | uk | 1908 | shev.modern (high) | wl.new | 234 | 43 | 0 |
 | hv_ws_511725 | hv_василь_мазуренко | uk | 1908 | shev.modern (high) | wl.new | 16 997 | 137 | 16 |
 | hv_ws_519706 | hv_михаи_ло_лозинськии | uk | 1908 | shev.modern (high) | wl.new | 36 719 | 1564 | 0 |
 | hv_ws_522743 | hv_wikisource-uk | uk | 1908 | shev.modern (high) | wl.new | 270 | 13 | 0 |
 | hv_ws_598537 | hv_іван_франко | uk | 1908 | shev.modern (high) | wl.new | 1 587 | 44 | 1413 |
+| hv_ws_600401 | hv_павло_бородаєвськии | uk | 1908 | shev.modern (high) | wl.new | 6 218 | 701 | 726 |
 | hv_ia_31761086786100 | hv_lozynsʹkyi_mykhai_lo_1880 | uk | 1909 | shev.modern (high) | wl.new | 28 200 | 439 | 0 |
 | hv_ia_advokatskiiporad00roze | hv_rozentalʹ_ylii_a | uk | 1909 | shev.modern (high) | wl.new | 1 630 | 33 | 182 |
 | hv_ia_ch8t3 | hv_archive-ukr | uk | 1909 | shev.modern (high) | wl.new | 63 422 | 5015 | 169766 |
@@ -2360,7 +2391,11 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_iubylemykolyhoho00hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1909 | shev.modern (high) | wl.new | 1 774 | 54 | 123 |
 | hv_ia_ivanfrankopoezii00krus | hv_krushelnytsky_antin_1878_1935 | uk | 1909 | shev.modern (high) | wl.new | 49 591 | 961 | 0 |
 | hv_ws_123778 | hv_михаи_ло_драгоманов | uk | 1909 | shev.modern (high) | wl.new | 5 044 | 106 | 3052 |
+| hv_ws_26619 | hv_борис_грінченко | uk | 1909 | shev.modern (high) | wl.new | 723 | 166 | 0 |
+| hv_ws_31440 | hv_ганна_барвінок | uk | 1909 | shev.modern (high) | wl.new | 1 562 | 27 | 93 |
+| hv_ws_384963 | hv_x | uk | 1909 | shev.modern (high) | wl.new | 97 | 7 | 0 |
 | hv_ws_415566 | hv_сергіи_єфремов | uk | 1909 | shev.modern (high) | wl.new | 2 088 | 14 | 3316 |
+| hv_ws_453093 | hv_данило_лепкии | uk | 1909 | shev.modern (high) | wl.new | 7 150 | 210 | 0 |
 | hv_ws_597157 | hv_сергіи_єфремов | uk | 1909 | shev.modern (high) | wl.new | 4 706 | 73 | 1406 |
 | hv_ws_600253 | hv_сергіи_єфремов | uk | 1909 | shev.modern (high) | wl.new | 7 954 | 202 | 8263 |
 | r2u_hrinch09 | hrinchenko | uk | 1907–1909 | shev.modern (high) | wl.new | 6 481 | 0 | 0 |
@@ -2443,15 +2478,18 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_hetzakon3hoiunia00unse | hv_archive-ukr | uk | 1912 | shev.modern (high) | wl.new | 8 788 | 289 | 876 |
 | hv_ia_illiustrirovanna00hrusuoft | hv_hrushevsky_mykhalo_1866_1934 | uk | 1912 | shev.modern (high) | wl.new | 14 182 | 3274 | 161530 |
 | hv_ia_istoriiaukranyru00arka | hv_arkas_mykola_1852_1909 | uk | 1912 | shev.modern (high) | wl.new | 142 957 | 2842 | 28 |
+| hv_ws_102117 | hv_и_оганн_вольфганг_фон_гете | uk | 1912 | shev.modern (high) | wl.new | 304 | 16 | 6 |
 | hv_ws_135867 | hv_микола_аркас | uk | 1912 | shev.modern (high) | wl.new | 2 424 | 466 | 0 |
 | hv_ws_192524 | hv_wikisource-uk | uk | 1912 | shev.modern (high) | wl.new | 116 | 7 | 0 |
 | hv_ws_192525 | hv_wikisource-uk | uk | 1912 | shev.modern (high) | wl.new | 166 | 5 | 0 |
+| hv_ws_298289 | hv_дмитро_яворницькии | uk | 1912 | shev.modern (high) | wl.new | 3 092 | 51 | 1108 |
 | hv_ws_411722 | hv_григоріи_коваленко | uk | 1912 | shev.modern (high) | wl.new | 7 194 | 121 | 179 |
 | hv_ws_480712 | hv_юліан_бачинськии | uk | 1912 | shev.modern (high) | wl.new | 6 319 | 108 | 0 |
 | hv_ws_5383 | hv_іван_нечуи_левицькии | uk | 1912 | shev.modern (high) | wl.new | 14 450 | 73 | 13739 |
 | hv_ws_565353 | hv_wikisource-uk | uk | 1912 | shev.modern (high) | wl.new | 8 677 | 162 | 779 |
 | hv_ws_566306 | hv_григоріи_коваленко | uk | 1912 | shev.modern (high) | wl.new | 1 838 | 46 | 227 |
 | hv_ws_569540 | hv_в_ячеслав_прокопович | uk | 1912 | shev.modern (high) | wl.new | 5 566 | 38 | 712 |
+| hv_ws_9043 | hv_wikisource-uk | uk | 1912 | shev.modern (high) | wl.new | 543 | 158 | 6 |
 | yavornytsky1912 | yavornytsky | uk | 1912 | shev.modern (high) | wl.new | 4 020 | 0 | 0 |
 | hv_ia_amulietf00meye | hv_meyer_conrad_ferdinand_1825_1898 | uk | 1913 | shev.modern (high) | wl.new | 20 832 | 183 | 0 |
 | hv_ia_canada_19130902 | hv_archive-ukr | uk | 1913 | shev.modern (high) | wl.new | 9 339 | 223 | 18 |
@@ -2491,13 +2529,19 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_dvavoinykomediia00luts | hv_lut_syk_i_i_a_ii_eronim_i_a | uk | 1913 | shev.modern (high) | wl.new | 3 630 | 118 | 0 |
 | hv_ia_incenseburner_19131201 | hv_archive-ukr | uk | 1913 | shev.modern (high) | wl.new | 7 340 | 145 | 0 |
 | hv_ws_109655 | hv_адольф_лоос | uk | 1913 | shev.modern (high) | wl.new | 2 551 | 25 | 0 |
+| hv_ws_110406 | hv_wikisource-uk | uk | 1913 | shev.modern (high) | wl.new | 700 | 419 | 0 |
 | hv_ws_110407 | hv_wikisource-uk | uk | 1913 | shev.modern (high) | wl.new | 2 903 | 423 | 143 |
 | hv_ws_191719 | hv_іван_франко | uk | 1913 | shev.modern (high) | wl.new | 7 323 | 68 | 0 |
+| hv_ws_20477 | hv_осип_шпитко | uk | 1913 | shev.modern (high) | wl.new | 2 053 | 86 | 4 |
+| hv_ws_26452 | hv_герод | uk | 1913 | shev.modern (high) | wl.new | 1 042 | 17 | 0 |
 | hv_ws_26466 | hv_герод | uk | 1913 | shev.modern (high) | wl.new | 1 225 | 82 | 0 |
+| hv_ws_40564 | hv_гесіод | uk | 1913 | shev.modern (high) | wl.new | 8 315 | 14 | 0 |
 | hv_ws_423054 | hv_альфонс_доде | uk | 1913 | shev.modern (high) | wl.new | 136 | 11 | 0 |
 | hv_ws_484073 | hv_іван_нечуи_левицькии | uk | 1913 | shev.modern (high) | wl.new | 8 984 | 89 | 0 |
+| hv_ws_492792 | hv_михаи_ло_черкавськии | uk | 1913 | shev.modern (high) | wl.new | 6 670 | 70 | 0 |
 | hv_ws_518312 | hv_петро_франко | uk | 1913 | shev.modern (high) | wl.new | 619 | 154 | 0 |
 | hv_ws_567618 | hv_яків_чепіга_зеленкевич | uk | 1913 | shev.modern (high) | wl.new | 354 | 55 | 26 |
+| hv_ws_598658 | hv_wikisource-uk | uk | 1913 | shev.modern (high) | wl.new | 1 010 | 35 | 71 |
 | hv_ia_abukasymovikapts00fran | hv_franko_ivan_1856_1916 | uk | 1914 | shev.modern (high) | wl.new | 11 163 | 203 | 0 |
 | hv_ia_akordylirychna00nepr | hv_neprytsky_hranovsky_oleksander_1887 | uk | 1914 | shev.modern (high) | wl.new | 1 782 | 124 | 0 |
 | hv_ia_akordylirychnap00nepr | hv_neprytsky_hranovsky_oleksander_1887 | uk | 1914 | shev.modern (high) | wl.new | 1 743 | 112 | 0 |
@@ -2639,6 +2683,8 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_107962 | hv_мстислав_рус | uk | 1914 | shev.modern (high) | wl.new | 92 | 42 | 0 |
 | hv_ws_189418 | hv_д_терешівськии | uk | 1914 | shev.modern (high) | wl.new | 8 952 | 451 | 70 |
 | hv_ws_194077 | hv_wikisource-uk | uk | 1914 | shev.modern (high) | wl.new | 967 | 43 | 0 |
+| hv_ws_209564 | hv_сергіи_єфремов | uk | 1914 | shev.modern (high) | wl.new | 166 | 30 | 0 |
+| hv_ws_28493 | hv_іван_гнида | uk | 1914 | shev.modern (high) | wl.new | 415 | 98 | 0 |
 | hv_ws_35873 | hv_тарас_шевченко | uk | 1914 | shev.modern (high) | wl.new | 114 | 153 | 0 |
 | hv_ws_424298 | hv_wikisource-uk | uk | 1914 | shev.modern (high) | wl.new | 328 | 96 | 0 |
 | hv_ws_566290 | hv_григоріи_коваленко | uk | 1914 | shev.modern (high) | wl.new | 2 495 | 20 | 156 |
@@ -2690,9 +2736,11 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_26501 | hv_ерінна | uk | 1915 | shev.modern (high) | wl.new | 124 | 6 | 0 |
 | hv_ws_26502 | hv_ерінна | uk | 1915 | shev.modern (high) | wl.new | 124 | 6 | 0 |
 | hv_ws_26571 | hv_ксенарх | uk | 1915 | shev.modern (high) | wl.new | 274 | 12 | 0 |
+| hv_ws_26580 | hv_томас_мур | uk | 1915 | shev.modern (high) | wl.new | 147 | 6 | 0 |
 | hv_ws_267513 | hv_степан_руданськии | uk | 1915 | shev.modern (high) | wl.new | 2 054 | 597 | 2 |
 | hv_ws_438683 | hv_wikisource-uk | uk | 1915 | shev.modern (high) | wl.new | 136 | 9 | 0 |
 | hv_ws_455282 | hv_орфеи | uk | 1915 | shev.modern (high) | wl.new | 11 567 | 30 | 0 |
+| hv_ws_518315 | hv_михаи_ло_лозинськии | uk | 1915 | shev.modern (high) | wl.new | 2 973 | 87 | 0 |
 | hv_ws_527702 | hv_марк_твен | uk | 1915 | shev.modern (high) | wl.new | 2 480 | 37 | 0 |
 | hv_ws_538302 | hv_степан_томашівськии | uk | 1915 | shev.modern (high) | wl.new | 10 831 | 282 | 0 |
 | hv_ws_552960 | hv_wikisource-uk | uk | 1915 | shev.modern (high) | wl.new | 5 016 | 38 | 0 |
@@ -2758,6 +2806,8 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_304181 | hv_максим_горькии | uk | 1916 | shev.modern (high) | wl.new | 3 878 | 36 | 0 |
 | hv_ws_386427 | hv_іван_карпенко_карии | uk | 1916 | shev.modern (high) | wl.new | 429 | 32 | 0 |
 | hv_ws_438758 | hv_юліан_опільськии | uk | 1916 | shev.modern (high) | wl.new | 10 753 | 96 | 52 |
+| hv_ws_466412 | hv_богдан_заклинськии | uk | 1916 | shev.modern (high) | wl.new | 6 273 | 207 | 0 |
+| hv_ws_470774 | hv_x | uk | 1916 | shev.modern (high) | wl.new | 408 | 88 | 0 |
 | hv_ws_602158 | hv_василь_різниченко | uk | 1916 | shev.modern (high) | wl.new | 1 693 | 115 | 1364 |
 | hv_ia_alfrescovirshova00karmuoft | hv_karmansky_petro_1878_1956 | uk | 1917 | shev.modern (high) | wl.new | 5 297 | 175 | 0 |
 | hv_ia_borbasvitiv00well | hv_wells_h_g_herbert_george_1866_1946 | uk | 1917 | shev.modern (high) | wl.new | 40 120 | 576 | 0 |
@@ -2817,21 +2867,29 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_istoriiachervono00benh_1 | hv_benham_george_b | uk | 1917 | shev.modern (high) | wl.new | 7 559 | 186 | 0 |
 | hv_ia_istoriiamoskovsh00blag | hv_blagoveshchenskii_l_m | uk | 1917 | shev.modern (high) | wl.new | 26 487 | 248 | 6 |
 | hv_ia_ivanfranko00lozy | hv_lozynsʹkyi_mykhai_lo_1880 | uk | 1917 | shev.modern (high) | wl.new | 17 097 | 446 | 0 |
+| hv_ws_104794 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 9 332 | 28 | 213 |
 | hv_ws_110285 | hv_михаи_ло_драгоманов | uk | 1917 | shev.modern (high) | wl.new | 5 659 | 197 | 6854 |
+| hv_ws_128927 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 4 898 | 281 | 0 |
 | hv_ws_13689 | hv_василь_бобинськии | uk | 1917 | shev.modern (high) | wl.new | 165 | 0 | 0 |
+| hv_ws_13698 | hv_микола_чернявськии | uk | 1917 | shev.modern (high) | wl.new | 88 | 0 | 0 |
 | hv_ws_13820 | hv_андріи_чаи_ковськии | uk | 1917 | shev.modern (high) | wl.new | 6 842 | 269 | 0 |
 | hv_ws_1488 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 582 | 19 | 0 |
 | hv_ws_1489 | hv_центральна_рада | uk | 1917 | shev.modern (high) | wl.new | 1 092 | 15 | 0 |
+| hv_ws_1492 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 977 | 22 | 0 |
+| hv_ws_1493 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 1 372 | 18 | 0 |
 | hv_ws_198664 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 4 581 | 59 | 0 |
 | hv_ws_203997 | hv_марко_вовчок | uk | 1917 | shev.modern (high) | wl.new | 8 563 | 15 | 0 |
 | hv_ws_204845 | hv_пантелеи_мон_куліш | uk | 1917 | shev.modern (high) | wl.new | 106 | 58 | 0 |
+| hv_ws_205854 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 10 842 | 113 | 0 |
 | hv_ws_212248 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 152 | 26 | 0 |
 | hv_ws_21405 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 47 | 5 | 0 |
 | hv_ws_22815 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 262 | 42 | 0 |
 | hv_ws_228331 | hv_вільгельм_лібкнехт | uk | 1917 | shev.modern (high) | wl.new | 1 399 | 26 | 0 |
+| hv_ws_24098 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 254 | 9 | 0 |
 | hv_ws_245100 | hv_михаи_ло_грушевськии | uk | 1917 | shev.modern (high) | wl.new | 4 862 | 81 | 220 |
 | hv_ws_323837 | hv_адріан_кащенко | uk | 1917 | shev.modern (high) | wl.new | 21 411 | 347 | 62 |
 | hv_ws_349463 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 7 906 | 42 | 101 |
+| hv_ws_356366 | hv_юріи_тищенко | uk | 1917 | shev.modern (high) | wl.new | 4 049 | 30 | 0 |
 | hv_ws_357552 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 1 293 | 38 | 1977 |
 | hv_ws_39330 | hv_киі_вськии_віи_ськовии_округ | uk | 1917 | shev.modern (high) | wl.new | 262 | 37 | 0 |
 | hv_ws_396472 | hv_микола_міхновськии | uk | 1917 | shev.modern (high) | wl.new | 6 547 | 60 | 850 |
@@ -2843,6 +2901,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_532564 | hv_михаи_ло_лозинськии | uk | 1917 | shev.modern (high) | wl.new | 6 370 | 288 | 77 |
 | hv_ws_536290 | hv_михаи_ло_лозинськии | uk | 1917 | shev.modern (high) | wl.new | 16 084 | 508 | 442 |
 | hv_ws_536292 | hv_сергіи_вікул | uk | 1917 | shev.modern (high) | wl.new | 3 133 | 33 | 51 |
+| hv_ws_538136 | hv_михаи_ло_лозинськии | uk | 1917 | shev.modern (high) | wl.new | 808 | 425 | 0 |
 | hv_ws_553343 | hv_софія_русова | uk | 1917 | shev.modern (high) | wl.new | 3 396 | 66 | 598 |
 | hv_ws_559544 | hv_wikisource-uk | uk | 1917 | shev.modern (high) | wl.new | 122 | 30 | 0 |
 | hv_ws_560480 | hv_никифір_григоріі_в | uk | 1917 | shev.modern (high) | wl.new | 8 216 | 173 | 59 |
@@ -2852,6 +2911,9 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_567609 | hv_кость_дубняк | uk | 1917 | shev.modern (high) | wl.new | 1 580 | 20 | 1280 |
 | hv_ws_573407 | hv_василь_стефаник | uk | 1917 | shev.modern (high) | wl.new | 120 | 12 | 0 |
 | hv_ws_592405 | hv_павло_христюк | uk | 1917 | shev.modern (high) | wl.new | 2 492 | 23 | 0 |
+| hv_ws_598005 | hv_сергіи_єфремов | uk | 1917 | shev.modern (high) | wl.new | 14 694 | 56 | 3 |
+| hv_ws_598677 | hv_михаи_ло_грушевськии | uk | 1917 | shev.modern (high) | wl.new | 5 133 | 183 | 192 |
+| hv_ws_7686 | hv_іван_франко | uk | 1917 | shev.modern (high) | wl.new | 42 | 27 | 0 |
 | hv_ws_7775 | hv_михаи_ло_коцюбинськии | uk | 1917 | shev.modern (high) | wl.new | 4 587 | 44 | 513 |
 | stefanyk1917_dlg | stefanyk | uk | 1917 | shev.modern (high) | wl.new | 1 621 | 0 | 6 |
 | stefanyk1917_nar | stefanyk | uk | 1917 | shev.modern (high) | wl.new | 1 675 | 0 | 0 |
@@ -2936,8 +2998,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_probatkakozatsko00hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1918 | shev.modern (high) | wl.new | 18 860 | 204 | 48 |
 | hv_ia_vilnaukrana00hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1918 | shev.modern (high) | wl.new | 5 364 | 61 | 0 |
 | hv_ws_104267 | hv_лесь_мартович | uk | 1918 | shev.modern (high) | wl.new | 235 | 112 | 0 |
+| hv_ws_104580 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 6 010 | 38 | 0 |
 | hv_ws_105257 | hv_марія_колцуняк | uk | 1918 | shev.modern (high) | wl.new | 215 | 96 | 0 |
+| hv_ws_112857 | hv_гуґо_фон_гофмансталь | uk | 1918 | shev.modern (high) | wl.new | 3 233 | 148 | 0 |
+| hv_ws_162091 | hv_дорота_клушинська | uk | 1918 | shev.modern (high) | wl.new | 6 000 | 135 | 138 |
+| hv_ws_176935 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 1 554 | 516 | 0 |
 | hv_ws_178548 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 744 | 24 | 0 |
+| hv_ws_188966 | hv_микола_голубець | uk | 1918 | shev.modern (high) | wl.new | 4 612 | 163 | 0 |
+| hv_ws_198231 | hv_помер_у_1932_році_тому_ця_робота_є_в_суспільному | uk | 1918 | shev.modern (high) | wl.new | 121 | 9 | 0 |
 | hv_ws_198691 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 4 080 | 41 | 0 |
 | hv_ws_2024 | hv_іван_франко | uk | 1918 | shev.modern (high) | wl.new | 442 | 7 | 0 |
 | hv_ws_21069 | hv_юрко_шкварок | uk | 1918 | shev.modern (high) | wl.new | 182 | 10 | 0 |
@@ -2949,12 +3017,19 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_28989 | hv_генрик_сенкевич | uk | 1918 | shev.modern (high) | wl.new | 52 | 8 | 0 |
 | hv_ws_304176 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 7 993 | 117 | 0 |
 | hv_ws_30920 | hv_дмитро_багаліи | uk | 1918 | shev.modern (high) | wl.new | 997 | 256 | 274 |
+| hv_ws_31789 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 5 911 | 97 | 1011 |
 | hv_ws_32428 | hv_x | uk | 1918 | shev.modern (high) | wl.new | 179 | 13 | 0 |
 | hv_ws_32437 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 828 | 66 | 0 |
+| hv_ws_32446 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 753 | 47 | 0 |
+| hv_ws_354314 | hv_осип_назарук | uk | 1918 | shev.modern (high) | wl.new | 5 486 | 59 | 0 |
+| hv_ws_356353 | hv_володимир_саміи_ленко | uk | 1918 | shev.modern (high) | wl.new | 3 952 | 112 | 655 |
 | hv_ws_356355 | hv_ісидор_мидловськии | uk | 1918 | shev.modern (high) | wl.new | 8 448 | 94 | 0 |
 | hv_ws_358375 | hv_микола_біляшівськии | uk | 1918 | shev.modern (high) | wl.new | 3 362 | 66 | 0 |
+| hv_ws_362742 | hv_микола_гоголь | uk | 1918 | shev.modern (high) | wl.new | 67 | 17 | 0 |
 | hv_ws_36917 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 2 549 | 258 | 0 |
 | hv_ws_388119 | hv_микола_гоголь | uk | 1918 | shev.modern (high) | wl.new | 21 674 | 76 | 2 |
+| hv_ws_39589 | hv_рада_бнр | uk | 1918 | shev.modern (high) | wl.new | 259 | 5 | 4 |
+| hv_ws_416871 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 464 | 20 | 0 |
 | hv_ws_417688 | hv_дмитро_дорошенко | uk | 1918 | shev.modern (high) | wl.new | 7 039 | 109 | 1640 |
 | hv_ws_419834 | hv_василь_сімович | uk | 1918 | shev.modern (high) | wl.new | 7 992 | 1038 | 1367 |
 | hv_ws_42629 | hv_володимир_ленін | uk | 1918 | shev.modern (high) | wl.new | 23 254 | 368 | 0 |
@@ -2967,11 +3042,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_559553 | hv_софія_русова | uk | 1918 | shev.modern (high) | wl.new | 411 | 43 | 0 |
 | hv_ws_566028 | hv_микола_сумцов | uk | 1918 | shev.modern (high) | wl.new | 1 184 | 21 | 366 |
 | hv_ws_566256 | hv_микола_сумцов | uk | 1918 | shev.modern (high) | wl.new | 2 629 | 110 | 1317 |
+| hv_ws_568888 | hv_остап_грицаи | uk | 1918 | shev.modern (high) | wl.new | 2 721 | 154 | 0 |
 | hv_ws_599038 | hv_wikisource-uk | uk | 1918 | shev.modern (high) | wl.new | 13 456 | 59 | 49 |
 | hv_ws_601119 | hv_гуґо_фон_гофмансталь | uk | 1918 | shev.modern (high) | wl.new | 3 212 | 38 | 0 |
+| hv_ws_605553 | hv_вільям_ваи_марк_джеи_кобс | uk | 1918 | shev.modern (high) | wl.new | 3 779 | 21 | 0 |
 | hv_ws_65050 | hv_x | uk | 1918 | shev.modern (high) | wl.new | 338 | 2 | 0 |
 | hv_ws_65066 | hv_x | uk | 1918 | shev.modern (high) | wl.new | 141 | 7 | 0 |
 | hv_ws_65067 | hv_x | uk | 1918 | shev.modern (high) | wl.new | 739 | 16 | 0 |
+| hv_ws_69513 | hv_іван_франко | uk | 1918 | shev.modern (high) | wl.new | 243 | 37 | 0 |
 | hv_ws_9263 | hv_лев_троцькии | uk | 1918 | shev.modern (high) | wl.new | 556 | 0 | 0 |
 | sumtsov_slobozhane1918 | sumtsov | uk | 1918 | shev.modern (high) | wl.new | 44 945 | 2532 | 434 |
 | sumtsov1918 | sumtsov | uk | 1918 | shev.modern (high) | wl.new | 3 690 | 0 | 71 |
@@ -3057,6 +3135,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_kulturnonatsiona00hrusuoft | hv_hrushevsky_mykhalo_1866_1934 | uk | 1919 | shev.modern (high) | wl.new | 52 230 | 1452 | 135 |
 | hv_ia_probatkakozatsk00hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1919 | shev.modern (high) | wl.new | 19 303 | 313 | 26 |
 | hv_ia_probatkakozatsk00hrusgoog | hv_mykhai_lo_hrushevsʹkyi | uk | 1919 | shev.modern (high) | wl.new | 19 731 | 323 | 25 |
+| hv_ws_105297 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 569 | 25 | 0 |
 | hv_ws_107360 | hv_дмитро_мамін_сибіряк | uk | 1919 | shev.modern (high) | wl.new | 2 721 | 14 | 0 |
 | hv_ws_109438 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 5 300 | 49 | 0 |
 | hv_ws_122720 | hv_василь_чумак | uk | 1919 | shev.modern (high) | wl.new | 164 | 58 | 0 |
@@ -3070,8 +3149,13 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_200992 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 222 | 51 | 12 |
 | hv_ws_216683 | hv_михаи_ло_грушевськии | uk | 1919 | shev.modern (high) | wl.new | 514 | 85 | 0 |
 | hv_ws_253535 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 2 866 | 79 | 2 |
+| hv_ws_262419 | hv_дмитро_ревуцькии | uk | 1919 | shev.modern (high) | wl.new | 1 220 | 244 | 0 |
 | hv_ws_28629 | hv_мирослав_ірчан | uk | 1919 | shev.modern (high) | wl.new | 3 797 | 74 | 0 |
 | hv_ws_31375 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 953 | 140 | 0 |
+| hv_ws_31829 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 2 935 | 14 | 0 |
+| hv_ws_321428 | hv_клим_поліщук | uk | 1919 | shev.modern (high) | wl.new | 229 | 36 | 0 |
+| hv_ws_34960 | hv_василь_чумак | uk | 1919 | shev.modern (high) | wl.new | 218 | 12 | 0 |
+| hv_ws_3565 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 312 | 23 | 0 |
 | hv_ws_37816 | hv_адріан_кащенко | uk | 1919 | shev.modern (high) | wl.new | 8 525 | 17 | 0 |
 | hv_ws_379613 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 544 | 120 | 0 |
 | hv_ws_417211 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 92 | 11 | 0 |
@@ -3079,6 +3163,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_44747 | hv_андріи_заливчии | uk | 1919 | shev.modern (high) | wl.new | 333 | 21 | 0 |
 | hv_ws_45875 | hv_симон_петлюра | uk | 1919 | shev.modern (high) | wl.new | 423 | 29 | 0 |
 | hv_ws_45886 | hv_симон_петлюра | uk | 1919 | shev.modern (high) | wl.new | 234 | 10 | 0 |
+| hv_ws_45896 | hv_и_оганн_вольфганг_фон_гете | uk | 1919 | shev.modern (high) | wl.new | 33 970 | 444 | 0 |
 | hv_ws_48782 | hv_олександр_нечаєв | uk | 1919 | shev.modern (high) | wl.new | 7 256 | 111 | 0 |
 | hv_ws_518694 | hv_wikisource-uk | uk | 1919 | shev.modern (high) | wl.new | 465 | 22 | 0 |
 | hv_ws_564430 | hv_павло_житецькии | uk | 1919 | shev.modern (high) | wl.new | 1 042 | 174 | 53 |
@@ -3171,12 +3256,17 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_ivanlevytskynech00iefr | hv_i_efremov_serhii_1876_1939 | uk | 1920 | shev.modern (high) | wl.new | 45 034 | 1526 | 8 |
 | hv_ia_vsesvitniaistori01hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1920 | shev.modern (high) | wl.new | 52 824 | 1317 | 31 |
 | hv_ia_vsesvitniaistori02hrus | hv_hrushevsky_mykhalo_1866_1934 | uk | 1920 | shev.modern (high) | wl.new | 93 315 | 4623 | 43 |
+| hv_ws_106778 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 6 373 | 174 | 0 |
+| hv_ws_107328 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 1 215 | 183 | 0 |
 | hv_ws_122979 | hv_василь_чумак | uk | 1920 | shev.modern (high) | wl.new | 79 | 14 | 0 |
 | hv_ws_123342 | hv_василь_чумак | uk | 1920 | shev.modern (high) | wl.new | 494 | 11 | 0 |
 | hv_ws_13688 | hv_василь_бобинськии | uk | 1920 | shev.modern (high) | wl.new | 97 | 0 | 0 |
 | hv_ws_165550 | hv_марія_малиш_федорець | uk | 1920 | shev.modern (high) | wl.new | 153 | 18 | 0 |
+| hv_ws_179977 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 3 403 | 192 | 0 |
+| hv_ws_182399 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 145 | 24 | 0 |
 | hv_ws_189388 | hv_кость_левицькии | uk | 1920 | shev.modern (high) | wl.new | 3 637 | 123 | 0 |
 | hv_ws_192780 | hv_марко_вовчок | uk | 1920 | shev.modern (high) | wl.new | 13 739 | 21 | 0 |
+| hv_ws_198982 | hv_антін_коршнівськии | uk | 1920 | shev.modern (high) | wl.new | 3 541 | 42 | 14 |
 | hv_ws_205603 | hv_віктор_гюґо | uk | 1920 | shev.modern (high) | wl.new | 829 | 180 | 0 |
 | hv_ws_206541 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 90 | 6 | 0 |
 | hv_ws_209656 | hv_гнат_хоткевич | uk | 1920 | shev.modern (high) | wl.new | 248 | 25 | 0 |
@@ -3186,11 +3276,16 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_238831 | hv_володимир_сальськии | uk | 1920 | shev.modern (high) | wl.new | 1 087 | 41 | 0 |
 | hv_ws_24076 | hv_редьярд_кіплінг | uk | 1920 | shev.modern (high) | wl.new | 325 | 45 | 0 |
 | hv_ws_258958 | hv_гуґо_фон_гофмансталь | uk | 1920 | shev.modern (high) | wl.new | 202 | 41 | 0 |
+| hv_ws_25904 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 139 | 8 | 4 |
 | hv_ws_26807 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 1 367 | 21 | 0 |
+| hv_ws_28413 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 151 | 17 | 0 |
+| hv_ws_311004 | hv_володимир_ленін | uk | 1920 | shev.modern (high) | wl.new | 299 | 89 | 0 |
 | hv_ws_321492 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 5 586 | 157 | 0 |
 | hv_ws_352227 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 8 508 | 46 | 0 |
+| hv_ws_352881 | hv_василь_еллан_блакитнии | uk | 1920 | shev.modern (high) | wl.new | 75 | 20 | 0 |
 | hv_ws_356356 | hv_микита_шаповал | uk | 1920 | shev.modern (high) | wl.new | 5 475 | 123 | 33 |
 | hv_ws_356360 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 7 219 | 316 | 0 |
+| hv_ws_35810 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 3 573 | 34 | 0 |
 | hv_ws_381775 | hv_модест_левицькии | uk | 1920 | shev.modern (high) | wl.new | 7 072 | 72 | 50 |
 | hv_ws_38368 | hv_x | uk | 1920 | shev.modern (high) | wl.new | 20 | 0 | 46 |
 | hv_ws_398195 | hv_василь_алешко | uk | 1920 | shev.modern (high) | wl.new | 186 | 32 | 0 |
@@ -3205,11 +3300,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_471328 | hv_іван_липа | uk | 1920 | shev.modern (high) | wl.new | 2 509 | 24 | 0 |
 | hv_ws_471378 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 297 | 8 | 0 |
 | hv_ws_471379 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 248 | 9 | 0 |
+| hv_ws_471380 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 334 | 9 | 0 |
 | hv_ws_471381 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 241 | 8 | 0 |
 | hv_ws_471382 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 240 | 8 | 0 |
+| hv_ws_471383 | hv_рабіндгранат_тагоре | uk | 1920 | shev.modern (high) | wl.new | 218 | 8 | 0 |
 | hv_ws_47485 | hv_симон_петлюра | uk | 1920 | shev.modern (high) | wl.new | 838 | 2 | 0 |
 | hv_ws_475816 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 2 915 | 159 | 0 |
 | hv_ws_499974 | hv_михаи_ло_галущинськии | uk | 1920 | shev.modern (high) | wl.new | 209 | 28 | 0 |
+| hv_ws_513678 | hv_василь_барвінськии | uk | 1920 | shev.modern (high) | wl.new | 165 | 82 | 0 |
 | hv_ws_520271 | hv_михаи_ло_галущинськии | uk | 1920 | shev.modern (high) | wl.new | 12 781 | 138 | 0 |
 | hv_ws_524005 | hv_wikisource-uk | uk | 1920 | shev.modern (high) | wl.new | 136 | 14 | 0 |
 | hv_ws_567595 | hv_божена_немцова | uk | 1920 | shev.modern (high) | wl.new | 2 926 | 32 | 0 |
@@ -3246,12 +3344,15 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_izistoriirusskag00kres | hv_krestovskaia_lidiia_aleksandrovna_1889 | uk | 1921 | shev.modern (high) | wl.new | 34 827 | 874 | 7980 |
 | hv_ws_104095 | hv_сергіи_шелухін | uk | 1921 | shev.modern (high) | wl.new | 4 834 | 411 | 334 |
 | hv_ws_107907 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 944 | 318 | 0 |
+| hv_ws_10814 | hv_степан_руданськии | uk | 1921 | shev.modern (high) | wl.new | 897 | 171 | 0 |
 | hv_ws_108646 | hv_володимир_левинськии | uk | 1921 | shev.modern (high) | wl.new | 3 048 | 212 | 220 |
 | hv_ws_113339 | hv_гуґо_фон_гофмансталь | uk | 1921 | shev.modern (high) | wl.new | 4 171 | 7 | 0 |
+| hv_ws_135278 | hv_клим_поліщук | uk | 1921 | shev.modern (high) | wl.new | 409 | 86 | 0 |
 | hv_ws_13700 | hv_олена_журлива | uk | 1921 | shev.modern (high) | wl.new | 86 | 0 | 0 |
 | hv_ws_17946 | hv_михаи_ло_грушевськии | uk | 1921 | shev.modern (high) | wl.new | 650 | 306 | 0 |
 | hv_ws_180085 | hv_василь_вишивании | uk | 1921 | shev.modern (high) | wl.new | 170 | 10 | 0 |
 | hv_ws_186383 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 2 599 | 145 | 18 |
+| hv_ws_210887 | hv_володимир_островськии | uk | 1921 | shev.modern (high) | wl.new | 2 425 | 50 | 0 |
 | hv_ws_213003 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 5 221 | 49 | 92 |
 | hv_ws_216253 | hv_микола_костомаров | uk | 1921 | shev.modern (high) | wl.new | 288 | 52 | 0 |
 | hv_ws_241916 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 2 111 | 90 | 0 |
@@ -3262,6 +3363,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_323382 | hv_микола_хвильовии | uk | 1921 | shev.modern (high) | wl.new | 1 144 | 12 | 0 |
 | hv_ws_326723 | hv_осип_назарук | uk | 1921 | shev.modern (high) | wl.new | 2 743 | 171 | 0 |
 | hv_ws_326883 | hv_ілля_цьокан | uk | 1921 | shev.modern (high) | wl.new | 3 458 | 139 | 0 |
+| hv_ws_327158 | hv_осип_назарук | uk | 1921 | shev.modern (high) | wl.new | 5 628 | 86 | 0 |
 | hv_ws_352742 | hv_степан_васильченко | uk | 1921 | shev.modern (high) | wl.new | 3 836 | 45 | 0 |
 | hv_ws_35636 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 3 512 | 14 | 0 |
 | hv_ws_386633 | hv_іван_карпенко_карии | uk | 1921 | shev.modern (high) | wl.new | 122 | 7 | 0 |
@@ -3270,14 +3372,22 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_424371 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 10 257 | 812 | 3643 |
 | hv_ws_479236 | hv_ольгерд_іполит_бочковськии | uk | 1921 | shev.modern (high) | wl.new | 175 | 16 | 0 |
 | hv_ws_497926 | hv_михаи_ло_галущинськии | uk | 1921 | shev.modern (high) | wl.new | 3 358 | 117 | 0 |
+| hv_ws_498447 | hv_михаи_ло_галущинськии | uk | 1921 | shev.modern (high) | wl.new | 3 631 | 128 | 0 |
+| hv_ws_509223 | hv_петро_франко | uk | 1921 | shev.modern (high) | wl.new | 4 593 | 95 | 0 |
+| hv_ws_510203 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 203 | 51 | 70 |
 | hv_ws_514655 | hv_михаи_ло_обіднии | uk | 1921 | shev.modern (high) | wl.new | 2 084 | 26 | 0 |
 | hv_ws_54279 | hv_олександр_мицюк | uk | 1921 | shev.modern (high) | wl.new | 4 389 | 195 | 0 |
 | hv_ws_551758 | hv_сильвестр_калинець | uk | 1921 | shev.modern (high) | wl.new | 4 642 | 42 | 0 |
 | hv_ws_556756 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 11 906 | 462 | 0 |
 | hv_ws_558786 | hv_клим_поліщук | uk | 1921 | shev.modern (high) | wl.new | 145 | 26 | 0 |
 | hv_ws_559673 | hv_юліан_опільськии | uk | 1921 | shev.modern (high) | wl.new | 17 630 | 15 | 0 |
+| hv_ws_567657 | hv_володимир_охримович | uk | 1921 | shev.modern (high) | wl.new | 212 | 24 | 0 |
 | hv_ws_568714 | hv_остап_грицаи | uk | 1921 | shev.modern (high) | wl.new | 3 425 | 165 | 0 |
+| hv_ws_571387 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 2 687 | 75 | 0 |
+| hv_ws_573361 | hv_василь_біднов | uk | 1921 | shev.modern (high) | wl.new | 7 273 | 191 | 575 |
+| hv_ws_579567 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 4 166 | 94 | 1604 |
 | hv_ws_599251 | hv_леонід_білецькии | uk | 1921 | shev.modern (high) | wl.new | 4 773 | 159 | 0 |
+| hv_ws_9049 | hv_wikisource-uk | uk | 1921 | shev.modern (high) | wl.new | 134 | 15 | 0 |
 | hv_ia_2spivanyky | hv_возняк_михаи_ло_степанович | uk | 1922 | shev.modern (high) | wl.new | 17 009 | 1558 | 89 |
 | hv_ia_beztalannadraman00tobi | hv_tobilevych_i_k_ivan_karpovych_1845_1907 | uk | 1922 | shev.modern (high) | wl.new | 13 532 | 181 | 0 |
 | hv_ia_boryslavsmiietsi00franuoft | hv_franko_ivan_1856_1916 | uk | 1922 | shev.modern (high) | wl.new | 78 843 | 390 | 11 |
@@ -3319,6 +3429,9 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_itskosvatkomedii008800_1 | hv_berezovski_i_i_a_prikazki_i_monolʹogi_dli_a_naro | uk | 1922 | shev.modern (high) | wl.new | 5 627 | 109 | 78 |
 | hv_ia_ivanfedorovychsh00gogo | hv_gogolʹ_nikolai_vasilʹevich_1809_1852 | uk | 1922 | shev.modern (high) | wl.new | 8 141 | 56 | 0 |
 | hv_ws_110275 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 2 706 | 40 | 606 |
+| hv_ws_123042 | hv_василь_чумак | uk | 1922 | shev.modern (high) | wl.new | 67 | 8 | 0 |
+| hv_ws_129645 | hv_володимир_старосольськии | uk | 1922 | shev.modern (high) | wl.new | 384 | 115 | 0 |
+| hv_ws_17022 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 55 | 21 | 0 |
 | hv_ws_178376 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 135 | 13 | 0 |
 | hv_ws_182691 | hv_михаи_ло_коцюбинськии | uk | 1922 | shev.modern (high) | wl.new | 660 | 207 | 0 |
 | hv_ws_187340 | hv_іван_зубенко | uk | 1922 | shev.modern (high) | wl.new | 190 | 27 | 0 |
@@ -3326,6 +3439,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_195361 | hv_михаи_ло_лозинськии | uk | 1922 | shev.modern (high) | wl.new | 123 | 35 | 0 |
 | hv_ws_206542 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 90 | 7 | 0 |
 | hv_ws_211669 | hv_іван_герасимович | uk | 1922 | shev.modern (high) | wl.new | 16 906 | 234 | 202 |
+| hv_ws_211856 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 155 | 47 | 0 |
 | hv_ws_230338 | hv_софія_русова | uk | 1922 | shev.modern (high) | wl.new | 976 | 106 | 0 |
 | hv_ws_24697 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 129 | 17 | 0 |
 | hv_ws_270812 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 177 | 31 | 0 |
@@ -3333,10 +3447,15 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_347379 | hv_микола_хвильовии | uk | 1922 | shev.modern (high) | wl.new | 211 | 43 | 0 |
 | hv_ws_349560 | hv_герман_ґортер | uk | 1922 | shev.modern (high) | wl.new | 22 078 | 211 | 0 |
 | hv_ws_352902 | hv_осип_назарук | uk | 1922 | shev.modern (high) | wl.new | 7 148 | 287 | 162 |
+| hv_ws_353026 | hv_василь_еллан_блакитнии | uk | 1922 | shev.modern (high) | wl.new | 3 520 | 7 | 0 |
 | hv_ws_357204 | hv_осип_турянськии | uk | 1922 | shev.modern (high) | wl.new | 2 985 | 44 | 0 |
+| hv_ws_38546 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 108 | 5 | 0 |
 | hv_ws_39151 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 921 | 209 | 0 |
+| hv_ws_43365 | hv_стефан_таранушенко | uk | 1922 | shev.modern (high) | wl.new | 817 | 106 | 0 |
 | hv_ws_47087 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 1 214 | 235 | 0 |
+| hv_ws_479179 | hv_іван_липа | uk | 1922 | shev.modern (high) | wl.new | 4 323 | 17 | 0 |
 | hv_ws_4957 | hv_іван_франко | uk | 1922 | shev.modern (high) | wl.new | 68 | 28 | 0 |
+| hv_ws_49921 | hv_володимир_леонтович | uk | 1922 | shev.modern (high) | wl.new | 858 | 176 | 0 |
 | hv_ws_514876 | hv_wikisource-uk | uk | 1922 | shev.modern (high) | wl.new | 102 | 42 | 0 |
 | hv_ws_520976 | hv_адріан_кащенко | uk | 1922 | shev.modern (high) | wl.new | 4 343 | 148 | 0 |
 | hv_ws_5309 | hv_іван_франко | uk | 1922 | shev.modern (high) | wl.new | 329 | 132 | 0 |
@@ -3382,6 +3501,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_193196 | hv_леся_украі_нка | uk | 1923 | shev.modern (high) | wl.new | 3 793 | 38 | 0 |
 | hv_ws_195659 | hv_маи_к_и_огансен | uk | 1923 | shev.modern (high) | wl.new | 144 | 37 | 0 |
 | hv_ws_211337 | hv_олена_курило | uk | 1923 | shev.modern (high) | wl.new | 10 882 | 320 | 66 |
+| hv_ws_212495 | hv_степан_рудницькии | uk | 1923 | shev.modern (high) | wl.new | 641 | 207 | 0 |
 | hv_ws_240461 | hv_софія_русова | uk | 1923 | shev.modern (high) | wl.new | 11 635 | 211 | 0 |
 | hv_ws_241749 | hv_валер_ян_підмогильнии | uk | 1923 | shev.modern (high) | wl.new | 110 | 18 | 0 |
 | hv_ws_245864 | hv_петро_франко | uk | 1923 | shev.modern (high) | wl.new | 294 | 14 | 0 |
@@ -3398,6 +3518,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_360041 | hv_василь_бобинськии | uk | 1923 | shev.modern (high) | wl.new | 1 287 | 26 | 0 |
 | hv_ws_386812 | hv_марко_кропивницькии | uk | 1923 | shev.modern (high) | wl.new | 201 | 30 | 0 |
 | hv_ws_391415 | hv_і_ндржих_баар | uk | 1923 | shev.modern (high) | wl.new | 10 883 | 16 | 0 |
+| hv_ws_402781 | hv_микита_шаповал | uk | 1923 | shev.modern (high) | wl.new | 6 153 | 47 | 25 |
 | hv_ws_442415 | hv_френсіс_годжсон_бернетт | uk | 1923 | shev.modern (high) | wl.new | 72 | 46 | 0 |
 | hv_ws_53347 | hv_іван_крип_якевич | uk | 1923 | shev.modern (high) | wl.new | 5 048 | 82 | 0 |
 | hv_ws_53348 | hv_антін_могильницькии | uk | 1923 | shev.modern (high) | wl.new | 211 | 4 | 0 |
@@ -3407,6 +3528,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_559633 | hv_леся_украі_нка | uk | 1923 | shev.modern (high) | wl.new | 98 | 24 | 0 |
 | hv_ws_579568 | hv_павло_крат | uk | 1923 | shev.modern (high) | wl.new | 1 869 | 36 | 47 |
 | hv_ws_598474 | hv_едмондо_де_амічіс | uk | 1923 | shev.modern (high) | wl.new | 360 | 50 | 0 |
+| hv_ws_64920 | hv_дмитро_антонович | uk | 1923 | shev.modern (high) | wl.new | 3 440 | 102 | 9 |
 | hv_ws_65475 | hv_микола_хвильовии | uk | 1923 | shev.modern (high) | wl.new | 160 | 26 | 0 |
 | yavornytsky1923 | yavornytsky | uk | 1923 | shev.modern (high) | wl.new | 5 329 | 0 | 41 |
 | hv_ia_1924knyha_1_2 | hv_archive-ukr | uk | 1924 | shev.modern (high) | wl.new | 98 225 | 3399 | 2531 |
@@ -3432,9 +3554,11 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_grafmontekristo00duma_2 | hv_dumas_alexandre_1802_1870 | uk | 1924 | shev.modern (high) | wl.new | 96 918 | 586 | 0 |
 | hv_ia_iakirlandiiazdob00hryh | hv_hryhorovych_m | uk | 1924 | shev.modern (high) | wl.new | 11 821 | 239 | 0 |
 | hv_ws_179618 | hv_микола_зеров | uk | 1924 | shev.modern (high) | wl.new | 118 | 19 | 0 |
+| hv_ws_190350 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 5 574 | 31 | 0 |
 | hv_ws_190493 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 5 652 | 24 | 0 |
 | hv_ws_190570 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 7 202 | 22 | 0 |
 | hv_ws_190585 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 6 718 | 14 | 0 |
+| hv_ws_190661 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 5 816 | 21 | 28 |
 | hv_ws_190662 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 5 665 | 28 | 0 |
 | hv_ws_194139 | hv_маи_к_и_огансен | uk | 1924 | shev.modern (high) | wl.new | 157 | 16 | 0 |
 | hv_ws_199516 | hv_маи_к_и_огансен | uk | 1924 | shev.modern (high) | wl.new | 264 | 72 | 0 |
@@ -3443,32 +3567,44 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_205506 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 89 | 79 | 0 |
 | hv_ws_233308 | hv_борис_грінченко | uk | 1924 | shev.modern (high) | wl.new | 191 | 20 | 17 |
 | hv_ws_241951 | hv_софія_русова | uk | 1924 | shev.modern (high) | wl.new | 1 227 | 176 | 0 |
+| hv_ws_242011 | hv_михаи_ло_флеи_шман | uk | 1924 | shev.modern (high) | wl.new | 11 755 | 350 | 0 |
 | hv_ws_310866 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 1 717 | 32 | 0 |
 | hv_ws_32095 | hv_вячеслав_липинськии | uk | 1924 | shev.modern (high) | wl.new | 499 | 19 | 0 |
 | hv_ws_321984 | hv_мирослав_ірчан | uk | 1924 | shev.modern (high) | wl.new | 36 584 | 119 | 249 |
+| hv_ws_352170 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 3 359 | 532 | 0 |
 | hv_ws_35393 | hv_андріи_заливчии | uk | 1924 | shev.modern (high) | wl.new | 102 | 35 | 0 |
+| hv_ws_357904 | hv_михаи_ло_коцюбинськии | uk | 1924 | shev.modern (high) | wl.new | 47 | 6 | 0 |
 | hv_ws_440419 | hv_василь_сімович | uk | 1924 | shev.modern (high) | wl.new | 12 089 | 544 | 2980 |
+| hv_ws_451465 | hv_юліан_бачинськии | uk | 1924 | shev.modern (high) | wl.new | 51 997 | 641 | 562 |
 | hv_ws_478259 | hv_іван_дніпровськии | uk | 1924 | shev.modern (high) | wl.new | 1 486 | 41 | 0 |
 | hv_ws_478542 | hv_іван_дніпровськии | uk | 1924 | shev.modern (high) | wl.new | 141 | 15 | 0 |
 | hv_ws_532743 | hv_петро_франко | uk | 1924 | shev.modern (high) | wl.new | 385 | 29 | 0 |
+| hv_ws_537550 | hv_всеволод_петрів | uk | 1924 | shev.modern (high) | wl.new | 13 524 | 172 | 0 |
 | hv_ws_544196 | hv_михаи_ло_лозинськии | uk | 1924 | shev.modern (high) | wl.new | 132 | 36 | 0 |
 | hv_ws_545696 | hv_микола_чаи_ковськии | uk | 1924 | shev.modern (high) | wl.new | 333 | 64 | 0 |
 | hv_ws_553017 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 18 008 | 151 | 0 |
 | hv_ws_556901 | hv_wikisource-uk | uk | 1924 | shev.modern (high) | wl.new | 3 381 | 152 | 0 |
+| hv_ws_558922 | hv_софія_русова | uk | 1924 | shev.modern (high) | wl.new | 792 | 98 | 0 |
 | hv_ws_569632 | hv_климент_квітка | uk | 1924 | shev.modern (high) | wl.new | 616 | 138 | 16 |
 | hv_hrushevsky_t4 | hv_михаи_ло_грушевськии | uk | 1925 | shev.modern (high) | wl.new | 263 650 | 10229 | 6018 |
 | hv_ia_anhelskyilystopo00poli | hv_polishchuk_klym_1891_1937 | uk | 1925 | shev.modern (high) | wl.new | 4 229 | 64 | 10 |
 | hv_ia_bukvar1925 | hv_archive-ukr | uk | 1925 | shev.modern (high) | wl.new | 6 592 | 253 | 0 |
 | hv_ws_135128 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 5 717 | 192 | 0 |
+| hv_ws_189998 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 6 045 | 80 | 0 |
+| hv_ws_190717 | hv_михаи_ло_старицькии | uk | 1925 | shev.modern (high) | wl.new | 5 798 | 116 | 0 |
 | hv_ws_191646 | hv_степан_васильченко | uk | 1925 | shev.modern (high) | wl.new | 4 587 | 35 | 0 |
 | hv_ws_194222 | hv_маи_к_и_огансен | uk | 1925 | shev.modern (high) | wl.new | 466 | 117 | 0 |
+| hv_ws_229008 | hv_тодось_юрченко | uk | 1925 | shev.modern (high) | wl.new | 7 399 | 93 | 0 |
 | hv_ws_241718 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 479 | 129 | 0 |
+| hv_ws_249906 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 516 | 7 | 0 |
 | hv_ws_307362 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 2 556 | 105 | 0 |
 | hv_ws_310752 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 2 188 | 35 | 0 |
 | hv_ws_310926 | hv_гіи_ом_левассер_де_боплан | uk | 1925 | shev.modern (high) | wl.new | 4 474 | 90 | 0 |
 | hv_ws_311265 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 3 452 | 127 | 0 |
 | hv_ws_32099 | hv_вячеслав_липинськии | uk | 1925 | shev.modern (high) | wl.new | 236 | 16 | 0 |
+| hv_ws_32299 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 28 318 | 49 | 0 |
 | hv_ws_324268 | hv_володимир_винниченко | uk | 1925 | shev.modern (high) | wl.new | 8 915 | 83 | 0 |
+| hv_ws_325552 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 7 354 | 102 | 0 |
 | hv_ws_326288 | hv_василь_вражливии | uk | 1925 | shev.modern (high) | wl.new | 462 | 118 | 0 |
 | hv_ws_33206 | hv_олександр_олесь | uk | 1925 | shev.modern (high) | wl.new | 59 | 0 | 0 |
 | hv_ws_352894 | hv_сергіи_пилипенко | uk | 1925 | shev.modern (high) | wl.new | 143 | 30 | 0 |
@@ -3476,9 +3612,13 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_356358 | hv_микола_шаповал | uk | 1925 | shev.modern (high) | wl.new | 4 806 | 135 | 0 |
 | hv_ws_36126 | hv_в_ячеслав_липинськии | uk | 1925 | shev.modern (high) | wl.new | 417 | 0 | 145 |
 | hv_ws_36731 | hv_в_ячеслав_липинськии | uk | 1925 | shev.modern (high) | wl.new | 28 154 | 110 | 168 |
+| hv_ws_435209 | hv_павло_тутковськии | uk | 1925 | shev.modern (high) | wl.new | 400 | 167 | 0 |
+| hv_ws_471319 | hv_юріи_вухналь | uk | 1925 | shev.modern (high) | wl.new | 360 | 53 | 0 |
 | hv_ws_475382 | hv_аркадіи_животко | uk | 1925 | shev.modern (high) | wl.new | 2 723 | 106 | 23 |
 | hv_ws_564223 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 259 | 136 | 0 |
+| hv_ws_575600 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 4 154 | 168 | 8691 |
 | hv_ws_575680 | hv_гавриі_л_костельник | uk | 1925 | shev.modern (high) | wl.new | 366 | 88 | 0 |
+| hv_ws_594681 | hv_wikisource-uk | uk | 1925 | shev.modern (high) | wl.new | 4 016 | 383 | 878 |
 | hv_ws_59696 | hv_x | uk | 1925 | shev.modern (high) | wl.new | 314 | 14 | 0 |
 | hv_ws_60305 | hv_володимир_пещанськии | uk | 1925 | shev.modern (high) | wl.new | 166 | 26 | 0 |
 | hv_ws_6419 | hv_микола_хвильовии | uk | 1925 | shev.modern (high) | wl.new | 780 | 112 | 18 |
@@ -3486,12 +3626,15 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_9626 | hv_степан_васильченко | uk | 1925 | shev.modern (high) | wl.new | 4 763 | 38 | 0 |
 | mtt1925 | komisiia_term_praha | uk | 1925 | shev.modern (high) | wl.new | 763 | 1 | 0 |
 | hv_hrushevsky_t5 | hv_михаи_ло_грушевськии | uk | 1926 | shev.modern (high) | wl.new | 197 546 | 11345 | 50312 |
+| hv_ws_103757 | hv_в_ячеслав_липинськии | uk | 1926 | shev.modern (high) | wl.new | 3 395 | 60 | 0 |
 | hv_ws_131178 | hv_сергіи_єфремов | uk | 1926 | shev.modern (high) | wl.new | 7 564 | 371 | 4202 |
+| hv_ws_1746 | hv_микола_хвильовии | uk | 1926 | shev.modern (high) | wl.new | 407 | 4 | 16 |
 | hv_ws_179346 | hv_симон_петлюра | uk | 1926 | shev.modern (high) | wl.new | 664 | 13 | 0 |
 | hv_ws_198995 | hv_павло_сулятицькии | uk | 1926 | shev.modern (high) | wl.new | 1 009 | 233 | 8 |
 | hv_ws_201180 | hv_гаврило_одинець | uk | 1926 | shev.modern (high) | wl.new | 8 045 | 61 | 119 |
 | hv_ws_216708 | hv_микола_білінськии | uk | 1926 | shev.modern (high) | wl.new | 497 | 99 | 0 |
 | hv_ws_23171 | hv_микола_макаренко | uk | 1926 | shev.modern (high) | wl.new | 149 | 25 | 0 |
+| hv_ws_277378 | hv_дмитро_багаліи | uk | 1926 | shev.modern (high) | wl.new | 974 | 71 | 0 |
 | hv_ws_326333 | hv_и_осип_стрільчук | uk | 1926 | shev.modern (high) | wl.new | 232 | 55 | 0 |
 | hv_ws_351685 | hv_анатоль_франс | uk | 1926 | shev.modern (high) | wl.new | 954 | 175 | 0 |
 | hv_ws_35992 | hv_вячеслав_липинськии | uk | 1926 | shev.modern (high) | wl.new | 899 | 386 | 0 |
@@ -3501,6 +3644,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_427296 | hv_іван_нечуи_левицькии | uk | 1926 | shev.modern (high) | wl.new | 444 | 123 | 0 |
 | hv_ws_451931 | hv_яків_савченко | uk | 1926 | shev.modern (high) | wl.new | 8 245 | 80 | 1973 |
 | hv_ws_479178 | hv_ілько_гаврилюк | uk | 1926 | shev.modern (high) | wl.new | 7 435 | 35 | 0 |
+| hv_ws_489709 | hv_wikisource-uk | uk | 1926 | shev.modern (high) | wl.new | 1 644 | 833 | 0 |
 | hv_ws_537504 | hv_євген_плужник | uk | 1926 | shev.modern (high) | wl.new | 225 | 60 | 0 |
 | hv_ws_538117 | hv_wikisource-uk | uk | 1926 | shev.modern (high) | wl.new | 193 | 34 | 0 |
 | hv_ws_560634 | hv_євген_кагаров | uk | 1926 | shev.modern (high) | wl.new | 13 671 | 1275 | 700 |
@@ -3510,6 +3654,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_8702 | hv_кость_левицькии | uk | 1926 | shev.modern (high) | wl.new | 924 | 22 | 72 |
 | hv_hrushevsky_t6 | hv_михаи_ло_грушевськии | uk | 1927 | shev.modern (high) | wl.new | 207 134 | 16346 | 6457 |
 | hv_ia_hrushevska1 | hv_hrushevska_katerina_mykhaylivna_1900_1943 | uk | 1927 | shev.modern (high) | wl.new | 229 530 | 12307 | 925 |
+| hv_ws_176491 | hv_м_омельченко | uk | 1927 | shev.modern (high) | wl.new | 3 444 | 179 | 0 |
 | hv_ws_176884 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 2 883 | 648 | 908 |
 | hv_ws_194253 | hv_людвік_шпісс | uk | 1927 | shev.modern (high) | wl.new | 3 654 | 299 | 0 |
 | hv_ws_199390 | hv_лука_бич | uk | 1927 | shev.modern (high) | wl.new | 37 497 | 1501 | 2439 |
@@ -3517,7 +3662,9 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_21496 | hv_іван_раковськии | uk | 1927 | shev.modern (high) | wl.new | 6 619 | 136 | 0 |
 | hv_ws_21926 | hv_б_чигринець | uk | 1927 | shev.modern (high) | wl.new | 517 | 12 | 0 |
 | hv_ws_23514 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 311 | 30 | 0 |
+| hv_ws_242033 | hv_володимир_винниченко | uk | 1927 | shev.modern (high) | wl.new | 7 235 | 144 | 33 |
 | hv_ws_27438 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 275 | 46 | 0 |
+| hv_ws_282308 | hv_микола_голубець | uk | 1927 | shev.modern (high) | wl.new | 4 499 | 110 | 0 |
 | hv_ws_28279 | hv_іван_микитенко | uk | 1927 | shev.modern (high) | wl.new | 27 085 | 13 | 3 |
 | hv_ws_292014 | hv_олександр_кониськии | uk | 1927 | shev.modern (high) | wl.new | 57 | 9 | 0 |
 | hv_ws_319438 | hv_борис_тенета | uk | 1927 | shev.modern (high) | wl.new | 140 | 18 | 0 |
@@ -3529,21 +3676,26 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_324231 | hv_володимир_винниченко | uk | 1927 | shev.modern (high) | wl.new | 9 076 | 206 | 0 |
 | hv_ws_324232 | hv_валер_ян_підмогильнии | uk | 1927 | shev.modern (high) | wl.new | 159 | 30 | 0 |
 | hv_ws_324427 | hv_володимир_винниченко | uk | 1927 | shev.modern (high) | wl.new | 1 243 | 116 | 0 |
+| hv_ws_327940 | hv_борис_грінченко | uk | 1927 | shev.modern (high) | wl.new | 73 | 7 | 0 |
 | hv_ws_37296 | hv_рабіндранат_тагор | uk | 1927 | shev.modern (high) | wl.new | 316 | 58 | 0 |
 | hv_ws_388118 | hv_микола_гоголь | uk | 1927 | shev.modern (high) | wl.new | 27 990 | 280 | 321 |
 | hv_ws_403035 | hv_гео_коляда | uk | 1927 | shev.modern (high) | wl.new | 615 | 62 | 0 |
 | hv_ws_418328 | hv_проспер_меріме | uk | 1927 | shev.modern (high) | wl.new | 131 | 35 | 0 |
+| hv_ws_421074 | hv_анатоль_франс | uk | 1927 | shev.modern (high) | wl.new | 84 | 20 | 0 |
 | hv_ws_446003 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 1 730 | 30 | 0 |
 | hv_ws_446008 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 514 | 12 | 0 |
 | hv_ws_451932 | hv_микола_голубець | uk | 1927 | shev.modern (high) | wl.new | 5 251 | 175 | 568 |
 | hv_ws_468404 | hv_борис_грінченко | uk | 1927 | shev.modern (high) | wl.new | 6 320 | 23 | 0 |
 | hv_ws_468995 | hv_володимир_винниченко | uk | 1927 | shev.modern (high) | wl.new | 5 264 | 66 | 0 |
 | hv_ws_469383 | hv_микола_любченко | uk | 1927 | shev.modern (high) | wl.new | 454 | 90 | 0 |
+| hv_ws_469392 | hv_володимир_винниченко | uk | 1927 | shev.modern (high) | wl.new | 4 266 | 93 | 0 |
 | hv_ws_469474 | hv_михаи_ло_коцюбинськии | uk | 1927 | shev.modern (high) | wl.new | 7 656 | 133 | 0 |
+| hv_ws_469549 | hv_борис_грінченко | uk | 1927 | shev.modern (high) | wl.new | 9 454 | 28 | 0 |
 | hv_ws_470687 | hv_микола_любченко | uk | 1927 | shev.modern (high) | wl.new | 334 | 51 | 0 |
 | hv_ws_471330 | hv_борис_грінченко | uk | 1927 | shev.modern (high) | wl.new | 1 787 | 20 | 0 |
 | hv_ws_500049 | hv_борис_грінченко | uk | 1927 | shev.modern (high) | wl.new | 3 879 | 69 | 0 |
 | hv_ws_502015 | hv_василь_біднов | uk | 1927 | shev.modern (high) | wl.new | 2 498 | 102 | 2519 |
+| hv_ws_514885 | hv_іван_брик | uk | 1927 | shev.modern (high) | wl.new | 4 454 | 68 | 457 |
 | hv_ws_515475 | hv_іван_брик | uk | 1927 | shev.modern (high) | wl.new | 4 107 | 60 | 0 |
 | hv_ws_51648 | hv_x | uk | 1927 | shev.modern (high) | wl.new | 226 | 44 | 0 |
 | hv_ws_51649 | hv_wikisource-uk | uk | 1927 | shev.modern (high) | wl.new | 431 | 9 | 0 |
@@ -3565,11 +3717,18 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_18109 | hv_ольга_косач_кривинюкова | uk | 1928 | shev.modern (high) | wl.new | 2 272 | 45 | 0 |
 | hv_ws_191051 | hv_григоріи_гануляк | uk | 1928 | shev.modern (high) | wl.new | 1 042 | 461 | 11 |
 | hv_ws_192104 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 1 400 | 32 | 0 |
+| hv_ws_194306 | hv_маи_к_и_огансен | uk | 1928 | shev.modern (high) | wl.new | 650 | 113 | 0 |
+| hv_ws_195579 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 1 598 | 84 | 0 |
+| hv_ws_198438 | hv_помер_у_1937 | uk | 1928 | shev.modern (high) | wl.new | 141 | 6 | 0 |
 | hv_ws_199188 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 878 | 245 | 0 |
+| hv_ws_237246 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 1 296 | 269 | 0 |
 | hv_ws_259034 | hv_віктор_гюґо | uk | 1928 | shev.modern (high) | wl.new | 615 | 201 | 0 |
+| hv_ws_32905 | hv_в_ячеслав_липинськии | uk | 1928 | shev.modern (high) | wl.new | 6 756 | 87 | 0 |
 | hv_ws_349638 | hv_степан_васильченко | uk | 1928 | shev.modern (high) | wl.new | 5 235 | 13 | 20 |
 | hv_ws_355401 | hv_калістрат_анищенко | uk | 1928 | shev.modern (high) | wl.new | 7 175 | 160 | 0 |
 | hv_ws_379237 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 887 | 289 | 0 |
+| hv_ws_38190 | hv_павло_ріттер | uk | 1928 | shev.modern (high) | wl.new | 239 | 72 | 0 |
+| hv_ws_386626 | hv_ольга_косач_кривинюк | uk | 1928 | shev.modern (high) | wl.new | 175 | 45 | 0 |
 | hv_ws_419411 | hv_юліан_опільськии | uk | 1928 | shev.modern (high) | wl.new | 439 | 99 | 0 |
 | hv_ws_421806 | hv_віктор_гюґо | uk | 1928 | shev.modern (high) | wl.new | 547 | 230 | 0 |
 | hv_ws_444017 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 56 732 | 504 | 0 |
@@ -3578,6 +3737,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_455276 | hv_фрідріх_шиллер | uk | 1928 | shev.modern (high) | wl.new | 24 963 | 112 | 0 |
 | hv_ws_468471 | hv_василь_стефаник | uk | 1928 | shev.modern (high) | wl.new | 219 | 81 | 0 |
 | hv_ws_468552 | hv_василь_стефаник | uk | 1928 | shev.modern (high) | wl.new | 3 949 | 92 | 0 |
+| hv_ws_468653 | hv_володимир_винниченко | uk | 1928 | shev.modern (high) | wl.new | 3 206 | 78 | 0 |
 | hv_ws_469111 | hv_василь_стефаник | uk | 1928 | shev.modern (high) | wl.new | 5 258 | 102 | 0 |
 | hv_ws_469904 | hv_борис_грінченко | uk | 1928 | shev.modern (high) | wl.new | 1 798 | 36 | 0 |
 | hv_ws_475345 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 253 | 133 | 0 |
@@ -3589,12 +3749,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_510737 | hv_петро_франко | uk | 1928 | shev.modern (high) | wl.new | 5 485 | 30 | 12 |
 | hv_ws_510738 | hv_петро_франко | uk | 1928 | shev.modern (high) | wl.new | 3 679 | 17 | 0 |
 | hv_ws_510739 | hv_петро_франко | uk | 1928 | shev.modern (high) | wl.new | 428 | 105 | 0 |
+| hv_ws_511730 | hv_автор_михаи_ло_козоріс | uk | 1928 | shev.modern (high) | wl.new | 5 074 | 17 | 0 |
 | hv_ws_514700 | hv_микола_голубець | uk | 1928 | shev.modern (high) | wl.new | 5 924 | 207 | 0 |
 | hv_ws_518311 | hv_іван_брик | uk | 1928 | shev.modern (high) | wl.new | 19 413 | 91 | 0 |
 | hv_ws_523334 | hv_борис_тенета | uk | 1928 | shev.modern (high) | wl.new | 152 | 36 | 0 |
 | hv_ws_538116 | hv_микола_матіі_в_мельник | uk | 1928 | shev.modern (high) | wl.new | 9 265 | 61 | 31 |
 | hv_ws_545687 | hv_олекса_слісаренко | uk | 1928 | shev.modern (high) | wl.new | 111 | 8 | 0 |
 | hv_ws_546998 | hv_андріи_чаи_ковськии | uk | 1928 | shev.modern (high) | wl.new | 4 404 | 31 | 0 |
+| hv_ws_552448 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 9 620 | 219 | 0 |
 | hv_ws_567246 | hv_еліас_леннрут | uk | 1928 | shev.modern (high) | wl.new | 469 | 108 | 0 |
 | hv_ws_570353 | hv_wikisource-uk | uk | 1928 | shev.modern (high) | wl.new | 389 | 60 | 0 |
 | hv_ws_5861 | hv_пантелеи_мон_куліш | uk | 1928 | shev.modern (high) | wl.new | 3 893 | 50 | 0 |
@@ -3602,25 +3764,32 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | r2u_hrinch27 | dict_hrinch27 | uk | 1927–1928 | shev.modern (high) | wl.new | 719 | 0 | 0 |
 | r2u_yakubski | dict_yakubski | uk | 1928 | shev.modern (high) | wl.new | 1 692 | 0 | 0 |
 | hv_ia_zbirnyk_1929 | hv_балика_д | uk | 1929 | shev.modern (high) | wl.new | 30 700 | 7401 | 123 |
+| hv_ws_110405 | hv_олекса_слісаренко | uk | 1929 | shev.modern (high) | wl.new | 54 705 | 31 | 0 |
 | hv_ws_123148 | hv_андріи_заливчии | uk | 1929 | shev.modern (high) | wl.new | 237 | 22 | 0 |
 | hv_ws_125286 | hv_марко_вовчок | uk | 1929 | shev.modern (high) | wl.new | 12 141 | 295 | 0 |
 | hv_ws_191311 | hv_микола_солови_ов_несмілов | uk | 1929 | shev.modern (high) | wl.new | 3 074 | 226 | 0 |
+| hv_ws_192683 | hv_александр_дюма_батько | uk | 1929 | shev.modern (high) | wl.new | 82 | 23 | 0 |
 | hv_ws_194172 | hv_маи_к_и_огансен | uk | 1929 | shev.modern (high) | wl.new | 135 | 20 | 0 |
+| hv_ws_194578 | hv_маи_к_и_огансен | uk | 1929 | shev.modern (high) | wl.new | 151 | 14 | 0 |
 | hv_ws_196312 | hv_володимир_кузьмич | uk | 1929 | shev.modern (high) | wl.new | 735 | 84 | 0 |
 | hv_ws_196590 | hv_харків_ростов_сочі_тифліс_баку_харків | uk | 1929 | shev.modern (high) | wl.new | 9 360 | 120 | 0 |
 | hv_ws_200595 | hv_wikisource-uk | uk | 1929 | shev.modern (high) | wl.new | 520 | 63 | 0 |
 | hv_ws_23068 | hv_борис_фармаковськии | uk | 1929 | shev.modern (high) | wl.new | 9 578 | 1650 | 0 |
 | hv_ws_251439 | hv_олесь_досвітніи | uk | 1929 | shev.modern (high) | wl.new | 286 | 84 | 0 |
+| hv_ws_251543 | hv_wikisource-uk | uk | 1929 | shev.modern (high) | wl.new | 164 | 38 | 0 |
 | hv_ws_254364 | hv_ольга_кобилянська | uk | 1929 | shev.modern (high) | wl.new | 42 409 | 95 | 0 |
 | hv_ws_262814 | hv_михаи_ль_семенко | uk | 1929 | shev.modern (high) | wl.new | 184 | 18 | 0 |
 | hv_ws_313914 | hv_wikisource-uk | uk | 1929 | shev.modern (high) | wl.new | 177 | 8 | 0 |
 | hv_ws_321043 | hv_еліза_ожешко | uk | 1929 | shev.modern (high) | wl.new | 43 | 17 | 0 |
 | hv_ws_321450 | hv_густав_янсон | uk | 1929 | shev.modern (high) | wl.new | 52 006 | 141 | 0 |
 | hv_ws_360113 | hv_антон_чехов | uk | 1929 | shev.modern (high) | wl.new | 6 238 | 21 | 0 |
+| hv_ws_384631 | hv_оноре_де_бальзак | uk | 1929 | shev.modern (high) | wl.new | 83 | 19 | 0 |
 | hv_ws_386075 | hv_оноре_де_бальзак | uk | 1929 | shev.modern (high) | wl.new | 426 | 95 | 0 |
 | hv_ws_386178 | hv_оноре_де_бальзак | uk | 1929 | shev.modern (high) | wl.new | 342 | 79 | 0 |
 | hv_ws_391411 | hv_микола_гоголь | uk | 1929 | shev.modern (high) | wl.new | 8 162 | 49 | 0 |
 | hv_ws_40238 | hv_сергіи_гіляров | uk | 1929 | shev.modern (high) | wl.new | 4 905 | 966 | 0 |
+| hv_ws_41398 | hv_іван_франко | uk | 1929 | shev.modern (high) | wl.new | 15 832 | 157 | 0 |
+| hv_ws_41711 | hv_вячеслав_липинськии | uk | 1929 | shev.modern (high) | wl.new | 3 023 | 38 | 0 |
 | hv_ws_420823 | hv_wikisource-uk | uk | 1929 | shev.modern (high) | wl.new | 300 | 80 | 0 |
 | hv_ws_422471 | hv_гео_коляда | uk | 1929 | shev.modern (high) | wl.new | 6 678 | 40 | 0 |
 | hv_ws_440622 | hv_григоріи_косинка | uk | 1929 | shev.modern (high) | wl.new | 328 | 17 | 17 |
@@ -3633,23 +3802,29 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_503233 | hv_петро_франко | uk | 1929 | shev.modern (high) | wl.new | 5 934 | 225 | 0 |
 | hv_ws_509637 | hv_наталія_кобринська | uk | 1929 | shev.modern (high) | wl.new | 367 | 71 | 0 |
 | hv_ws_518771 | hv_чарльз_діккенс | uk | 1929 | shev.modern (high) | wl.new | 784 | 120 | 0 |
+| hv_ws_536288 | hv_іван_миронець | uk | 1929 | shev.modern (high) | wl.new | 15 931 | 282 | 0 |
 | hv_ws_542704 | hv_степан_томашівськии | uk | 1929 | shev.modern (high) | wl.new | 641 | 192 | 0 |
 | hv_ws_545543 | hv_степан_томашівськии | uk | 1929 | shev.modern (high) | wl.new | 217 | 28 | 0 |
 | hv_ws_567597 | hv_григоріи_косинка | uk | 1929 | shev.modern (high) | wl.new | 6 078 | 22 | 0 |
 | hv_ws_577132 | hv_михаи_ло_годкевич | uk | 1929 | shev.modern (high) | wl.new | 7 524 | 158 | 29 |
 | hv_ws_577536 | hv_михаи_ло_годкевич | uk | 1929 | shev.modern (high) | wl.new | 286 | 40 | 0 |
+| hv_ws_71073 | hv_еміль_золя | uk | 1929 | shev.modern (high) | wl.new | 527 | 122 | 0 |
 | hv_ws_8872 | hv_валер_ян_підмогильнии | uk | 1929 | shev.modern (high) | wl.new | 196 | 39 | 0 |
 | r2u_holoskevych | dict_holoskevych | uk | 1929 | shev.modern (high) | wl.new | 3 282 | 0 | 0 |
 | hv_ws_11343 | hv_осип_назарук | uk | 1930 | shev.modern (high) | wl.new | 271 | 62 | 0 |
+| hv_ws_122993 | hv_василь_чумак | uk | 1930 | shev.modern (high) | wl.new | 134 | 36 | 0 |
 | hv_ws_127068 | hv_wikisource-uk | uk | 1930 | shev.modern (high) | wl.new | 862 | 286 | 89 |
 | hv_ws_190081 | hv_даніель_дефо | uk | 1930 | shev.modern (high) | wl.new | 207 | 5 | 0 |
 | hv_ws_193073 | hv_піи_xi | uk | 1930 | shev.modern (high) | wl.new | 10 360 | 36 | 0 |
 | hv_ws_194847 | hv_маи_к_и_огансен | uk | 1930 | shev.modern (high) | wl.new | 296 | 63 | 0 |
+| hv_ws_195619 | hv_маи_к_и_огансен | uk | 1930 | shev.modern (high) | wl.new | 152 | 21 | 0 |
 | hv_ws_201221 | hv_леся_украі_нка | uk | 1930 | shev.modern (high) | wl.new | 2 233 | 32 | 0 |
+| hv_ws_201856 | hv_п_єр_бомарше | uk | 1930 | shev.modern (high) | wl.new | 1 248 | 45 | 0 |
 | hv_ws_21346 | hv_степан_шухевич | uk | 1930 | shev.modern (high) | wl.new | 195 | 17 | 0 |
 | hv_ws_225630 | hv_дмитро_грудина | uk | 1930 | shev.modern (high) | wl.new | 384 | 94 | 0 |
 | hv_ws_226351 | hv_wikisource-uk | uk | 1930 | shev.modern (high) | wl.new | 4 197 | 30 | 42 |
 | hv_ws_228229 | hv_wikisource-uk | uk | 1930 | shev.modern (high) | wl.new | 126 | 26 | 0 |
+| hv_ws_244013 | hv_wikisource-uk | uk | 1930 | shev.modern (high) | wl.new | 237 | 42 | 0 |
 | hv_ws_24817 | hv_олекса_влизько | uk | 1930 | shev.modern (high) | wl.new | 445 | 28 | 0 |
 | hv_ws_255307 | hv_іван_микитенко | uk | 1930 | shev.modern (high) | wl.new | 51 078 | 1218 | 91 |
 | hv_ws_275452 | hv_wikisource-uk | uk | 1930 | shev.modern (high) | wl.new | 104 | 9 | 0 |
@@ -3671,15 +3846,23 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_194067 | hv_маи_к_и_огансен | uk | 1931 | shev.modern (high) | wl.new | 168 | 18 | 0 |
 | hv_ws_194873 | hv_маи_к_и_огансен | uk | 1931 | shev.modern (high) | wl.new | 357 | 38 | 0 |
 | hv_ws_2014 | hv_ольга_кобилянська | uk | 1931 | shev.modern (high) | wl.new | 19 040 | 325 | 0 |
+| hv_ws_214965 | hv_володимир_леонтович | uk | 1931 | shev.modern (high) | wl.new | 129 | 10 | 0 |
+| hv_ws_217115 | hv_wikisource-uk | uk | 1931 | shev.modern (high) | wl.new | 285 | 27 | 0 |
 | hv_ws_21857 | hv_богдан_ігор_антонич | uk | 1931 | shev.modern (high) | wl.new | 255 | 114 | 0 |
 | hv_ws_240417 | hv_микола_трублаі_ні | uk | 1931 | shev.modern (high) | wl.new | 198 | 48 | 0 |
 | hv_ws_27919 | hv_дмитро_антонович | uk | 1931 | shev.modern (high) | wl.new | 1 976 | 49 | 0 |
+| hv_ws_321956 | hv_wikisource-uk | uk | 1931 | shev.modern (high) | wl.new | 8 902 | 1117 | 0 |
+| hv_ws_35117 | hv_wikisource-uk | uk | 1931 | shev.modern (high) | wl.new | 4 554 | 94 | 0 |
 | hv_ws_386552 | hv_теодор_ярчук | uk | 1931 | shev.modern (high) | wl.new | 2 835 | 73 | 0 |
 | hv_ws_40485 | hv_в_ячеслав_липинськии | uk | 1931 | shev.modern (high) | wl.new | 600 | 15 | 0 |
+| hv_ws_479191 | hv_іван_дніпровськии | uk | 1931 | shev.modern (high) | wl.new | 17 312 | 281 | 0 |
 | hv_ws_53457 | hv_x | uk | 1931 | shev.modern (high) | wl.new | 1 937 | 770 | 0 |
 | hv_ws_123582 | hv_wikisource-uk | uk | 1932 | shev.modern (high) | wl.new | 149 | 6 | 0 |
+| hv_ws_194806 | hv_маи_к_и_огансен | uk | 1932 | shev.modern (high) | wl.new | 242 | 29 | 0 |
 | hv_ws_198147 | hv_іван_ткачук | uk | 1932 | shev.modern (high) | wl.new | 242 | 57 | 0 |
+| hv_ws_198754 | hv_пилип_капельгородськии | uk | 1932 | shev.modern (high) | wl.new | 151 | 30 | 0 |
 | hv_ws_246595 | hv_ольгерд_іполит_бочковськии | uk | 1932 | shev.modern (high) | wl.new | 314 | 65 | 0 |
+| hv_ws_307849 | hv_wikisource-uk | uk | 1932 | shev.modern (high) | wl.new | 393 | 190 | 0 |
 | hv_ws_322977 | hv_колектив_авторів | uk | 1932 | shev.modern (high) | wl.new | 14 709 | 284 | 0 |
 | hv_ws_52574 | hv_ковзаняр | uk | 1932 | shev.modern (high) | wl.new | 227 | 42 | 0 |
 | hv_ws_591925 | hv_степан_левинськии | uk | 1932 | shev.modern (high) | wl.new | 243 | 52 | 0 |
@@ -3695,11 +3878,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_187564 | hv_франц_коковськии | uk | 1934 | shev.modern (high) | wl.new | 672 | 218 | 0 |
 | hv_ws_189694 | hv_іван_зубенко | uk | 1934 | shev.modern (high) | wl.new | 1 443 | 131 | 0 |
 | hv_ws_192283 | hv_осип_назарук | uk | 1934 | shev.modern (high) | wl.new | 5 821 | 189 | 0 |
+| hv_ws_206790 | hv_аркадіи_животко | uk | 1934 | shev.modern (high) | wl.new | 506 | 41 | 0 |
 | hv_ws_230249 | hv_софія_русова | uk | 1934 | shev.modern (high) | wl.new | 211 | 62 | 0 |
 | hv_ws_262129 | hv_п_п_любченко | uk | 1934 | shev.modern (high) | wl.new | 8 117 | 193 | 0 |
+| hv_ws_386021 | hv_оноре_де_бальзак | uk | 1934 | shev.modern (high) | wl.new | 193 | 51 | 0 |
 | hv_ws_455273 | hv_фрідріх_шиллер | uk | 1934 | shev.modern (high) | wl.new | 25 682 | 169 | 0 |
 | hv_ws_560094 | hv_софія_русова | uk | 1934 | shev.modern (high) | wl.new | 6 612 | 100 | 232 |
 | hv_ws_561080 | hv_микита_шаповал | uk | 1934 | shev.modern (high) | wl.new | 7 980 | 152 | 139 |
+| hv_ws_67982 | hv_wikisource-uk | uk | 1934 | shev.modern (high) | wl.new | 278 | 74 | 0 |
 | hv_ws_176601 | hv_костянтина_малицька | uk | 1935 | shev.modern (high) | wl.new | 2 094 | 73 | 0 |
 | hv_ws_203557 | hv_євген_гребінка | uk | 1935 | shev.modern (high) | wl.new | 253 | 63 | 0 |
 | hv_ws_255300 | hv_юріи_вухналь | uk | 1935 | shev.modern (high) | wl.new | 192 | 34 | 0 |
@@ -3712,14 +3898,18 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_192484 | hv_антін_лотоцькии | uk | 1936 | shev.modern (high) | wl.new | 6 799 | 202 | 0 |
 | hv_ws_193727 | hv_маи_к_и_огансен | uk | 1936 | shev.modern (high) | wl.new | 923 | 78 | 0 |
 | hv_ws_194501 | hv_wikisource-uk | uk | 1936 | shev.modern (high) | wl.new | 1 803 | 59 | 0 |
+| hv_ws_226382 | hv_wikisource-uk | uk | 1936 | shev.modern (high) | wl.new | 29 567 | 336 | 82 |
 | hv_ws_228200 | hv_ольга_кобилянська | uk | 1936 | shev.modern (high) | wl.new | 130 | 15 | 0 |
 | hv_ws_25214 | hv_богдан_ігор_антонич | uk | 1936 | shev.modern (high) | wl.new | 279 | 82 | 0 |
+| hv_ws_27341 | hv_микита_шаповал | uk | 1936 | shev.modern (high) | wl.new | 259 | 58 | 0 |
 | hv_ws_362878 | hv_wikisource-uk | uk | 1936 | shev.modern (high) | wl.new | 3 834 | 33 | 0 |
 | hv_ws_429978 | hv_wikisource-uk | uk | 1936 | shev.modern (high) | wl.new | 262 | 38 | 0 |
 | hv_ws_444328 | hv_мігель_де_сервантес | uk | 1936 | shev.modern (high) | wl.new | 1 222 | 168 | 0 |
 | hv_ws_453108 | hv_євген_грицак | uk | 1936 | shev.modern (high) | wl.new | 9 398 | 873 | 902 |
+| hv_ws_123933 | hv_михаи_ло_драгоманов | uk | 1937 | shev.modern (high) | wl.new | 822 | 94 | 0 |
 | hv_ws_132568 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 5 028 | 223 | 0 |
 | hv_ws_191942 | hv_петро_франко | uk | 1937 | shev.modern (high) | wl.new | 4 730 | 47 | 221 |
+| hv_ws_200906 | hv_богдан_лепкии | uk | 1937 | shev.modern (high) | wl.new | 322 | 46 | 0 |
 | hv_ws_205740 | hv_іван_зубенко | uk | 1937 | shev.modern (high) | wl.new | 229 | 25 | 0 |
 | hv_ws_232676 | hv_симон_петлюра | uk | 1937 | shev.modern (high) | wl.new | 9 179 | 106 | 0 |
 | hv_ws_236084 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 946 | 183 | 0 |
@@ -3727,20 +3917,38 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_287815 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 5 777 | 38 | 1005 |
 | hv_ws_287816 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 175 | 30 | 0 |
 | hv_ws_31526 | hv_антін_кравс | uk | 1937 | shev.modern (high) | wl.new | 369 | 22 | 0 |
+| hv_ws_356391 | hv_борис_грінченко | uk | 1937 | shev.modern (high) | wl.new | 207 | 32 | 0 |
+| hv_ws_378240 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 176 | 40 | 0 |
 | hv_ws_38357 | hv_wikisource-uk | uk | 1937 | shev.modern (high) | wl.new | 227 | 10 | 0 |
 | hv_ws_514861 | hv_микола_голубець | uk | 1937 | shev.modern (high) | wl.new | 4 843 | 114 | 129 |
 | hv_ws_184414 | hv_лев_толстои | uk | 1938 | shev.modern (high) | wl.new | 6 694 | 39 | 21 |
+| hv_ws_191526 | hv_франц_коковськии | uk | 1938 | shev.modern (high) | wl.new | 553 | 156 | 0 |
 | hv_ws_25175 | hv_богдан_ігор_антонич | uk | 1938 | shev.modern (high) | wl.new | 163 | 23 | 0 |
 | hv_ws_25223 | hv_богдан_ігор_антонич | uk | 1938 | shev.modern (high) | wl.new | 247 | 66 | 0 |
 | hv_ws_27128 | hv_володимир_загаи_кевич | uk | 1938 | shev.modern (high) | wl.new | 1 480 | 46 | 0 |
+| hv_ws_338536 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 231 | 19 | 0 |
+| hv_ws_338667 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 197 | 24 | 0 |
+| hv_ws_339521 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 334 | 35 | 0 |
+| hv_ws_339744 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 409 | 44 | 0 |
+| hv_ws_339760 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 187 | 20 | 0 |
+| hv_ws_342984 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 624 | 43 | 0 |
+| hv_ws_351182 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 1 590 | 106 | 0 |
+| hv_ws_351501 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 339 | 41 | 0 |
+| hv_ws_351711 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 417 | 45 | 0 |
 | hv_ws_364254 | hv_микола_гоголь | uk | 1938 | shev.modern (high) | wl.new | 184 | 24 | 0 |
 | hv_ws_37321 | hv_віктор_зелінськии | uk | 1938 | shev.modern (high) | wl.new | 439 | 39 | 0 |
+| hv_ws_384580 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 312 | 23 | 0 |
 | hv_ws_419346 | hv_wikisource-uk | uk | 1938 | shev.modern (high) | wl.new | 421 | 43 | 0 |
 | hv_ws_1867 | hv_и_осип_сталін | uk | 1939 | shev.modern (high) | wl.new | 662 | 1 | 0 |
 | hv_ws_3190 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 233 | 0 | 0 |
 | hv_ws_39985 | hv_x | uk | 1939 | shev.modern (high) | wl.new | 742 | 27 | 0 |
 | hv_ws_42198 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 128 | 17 | 0 |
 | hv_ws_42199 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 129 | 12 | 0 |
+| hv_ws_42200 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 223 | 8 | 0 |
+| hv_ws_42203 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 255 | 2 | 0 |
+| hv_ws_479190 | hv_василь_сімович | uk | 1939 | shev.modern (high) | wl.new | 5 763 | 214 | 686 |
+| hv_ws_61305 | hv_wikisource-uk | uk | 1939 | shev.modern (high) | wl.new | 274 | 4 | 0 |
+| hv_ws_64445 | hv_x | uk | 1939 | shev.modern (high) | wl.new | 179 | 6 | 0 |
 | hv_ws_64446 | hv_x | uk | 1939 | shev.modern (high) | wl.new | 57 | 6 | 0 |
 | cheremshyna1940_dlg | cheremshyna | uk | 1940 | shev.modern (high) | wl.new | 4 214 | 0 | 441 |
 | cheremshyna1940_nar | cheremshyna | uk | 1940 | shev.modern (high) | wl.new | 7 289 | 0 | 0 |
@@ -3756,18 +3964,24 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_203998 | hv_марко_вовчок | uk | 1940 | shev.modern (high) | wl.new | 8 524 | 111 | 0 |
 | hv_ws_208114 | hv_іван_нечуи_левицькии | uk | 1940 | shev.modern (high) | wl.new | 7 729 | 124 | 0 |
 | hv_ws_23285 | hv_олег_ольжич | uk | 1940 | shev.modern (high) | wl.new | 123 | 13 | 0 |
+| hv_ws_261995 | hv_марко_вовчок | uk | 1940 | shev.modern (high) | wl.new | 4 290 | 39 | 0 |
 | hv_ws_262100 | hv_марко_вовчок | uk | 1940 | shev.modern (high) | wl.new | 593 | 37 | 0 |
 | hv_ws_378652 | hv_олександр_олесь | uk | 1940 | shev.modern (high) | wl.new | 301 | 88 | 0 |
 | hv_ws_466696 | hv_wikisource-uk | uk | 1940 | shev.modern (high) | wl.new | 254 | 32 | 0 |
+| hv_ws_479727 | hv_wikisource-uk | uk | 1940 | shev.modern (high) | wl.new | 5 629 | 23 | 0 |
 | hv_ws_70192 | hv_мирон_кордуба | uk | 1940 | shev.modern (high) | wl.new | 4 639 | 222 | 0 |
 | hv_ws_71932 | hv_григоріи_квітка_основ_яненко | uk | 1940 | shev.modern (high) | wl.new | 3 507 | 54 | 0 |
 | hv_ws_71983 | hv_марко_черемшина | uk | 1940 | shev.modern (high) | wl.new | 624 | 57 | 0 |
 | hv_ws_102324 | hv_в_ячеслав_будзиновськии | uk | 1941 | shev.modern (high) | wl.new | 568 | 53 | 0 |
 | hv_ws_107824 | hv_улас_самчук | uk | 1941 | shev.modern (high) | wl.new | 903 | 4 | 0 |
 | hv_ws_110931 | hv_михаи_ло_дубовик | uk | 1941 | shev.modern (high) | wl.new | 236 | 66 | 0 |
+| hv_ws_122709 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 188 | 18 | 0 |
 | hv_ws_127293 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 248 | 37 | 0 |
 | hv_ws_17794 | hv_олекса_синявськии | uk | 1941 | shev.modern (high) | wl.new | 1 174 | 791 | 0 |
 | hv_ws_179122 | hv_андріи_чаи_ковськии | uk | 1941 | shev.modern (high) | wl.new | 389 | 120 | 0 |
+| hv_ws_180011 | hv_андріи_чаи_ковськии | uk | 1941 | shev.modern (high) | wl.new | 268 | 32 | 0 |
+| hv_ws_185942 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 194 | 28 | 0 |
+| hv_ws_185943 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 189 | 28 | 0 |
 | hv_ws_22913 | hv_яків_гальчевськии_вои_наровськии | uk | 1941 | shev.modern (high) | wl.new | 154 | 34 | 0 |
 | hv_ws_27514 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 8 538 | 127 | 0 |
 | hv_ws_28102 | hv_д_кардаш | uk | 1941 | shev.modern (high) | wl.new | 2 964 | 145 | 0 |
@@ -3775,18 +3989,128 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_304077 | hv_омелян_ярославськии | uk | 1941 | shev.modern (high) | wl.new | 161 | 15 | 0 |
 | hv_ws_32999 | hv_микола_гнатишак | uk | 1941 | shev.modern (high) | wl.new | 872 | 356 | 0 |
 | hv_ws_33604 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 1 525 | 35 | 0 |
+| hv_ws_566654 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 213 | 25 | 0 |
+| hv_ws_566813 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 204 | 19 | 0 |
+| hv_ws_57173 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 216 | 24 | 0 |
 | hv_ws_575639 | hv_украі_нські_національні_збори | uk | 1941 | shev.modern (high) | wl.new | 300 | 16 | 0 |
 | hv_ws_575642 | hv_украі_нські_національні_збори | uk | 1941 | shev.modern (high) | wl.new | 322 | 23 | 0 |
+| hv_ws_57602 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_57606 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 190 | 22 | 0 |
+| hv_ws_57607 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 164 | 23 | 0 |
+| hv_ws_57608 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_57609 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 190 | 23 | 0 |
+| hv_ws_57610 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_57611 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 206 | 22 | 0 |
+| hv_ws_59075 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 191 | 19 | 0 |
+| hv_ws_59076 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 181 | 23 | 0 |
+| hv_ws_59079 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 179 | 19 | 0 |
+| hv_ws_59080 | hv_wikisource-uk | uk | 1941 | shev.modern (high) | wl.new | 216 | 19 | 0 |
 | hv_ws_70112 | hv_мирон_кордуба | uk | 1941 | shev.modern (high) | wl.new | 6 484 | 113 | 0 |
 | hv_ws_70363 | hv_іван_франко | uk | 1941 | shev.modern (high) | wl.new | 71 | 51 | 0 |
 | hv_ws_72465 | hv_юліан_опільськии | uk | 1941 | shev.modern (high) | wl.new | 575 | 51 | 0 |
+| hv_ws_103699 | hv_святослав_ольшенко_вільха | uk | 1942 | shev.modern (high) | wl.new | 149 | 26 | 0 |
+| hv_ws_103879 | hv_микола_сціборськии | uk | 1942 | shev.modern (high) | wl.new | 8 329 | 64 | 0 |
 | hv_ws_107822 | hv_улас_самчук | uk | 1942 | shev.modern (high) | wl.new | 1 074 | 6 | 0 |
+| hv_ws_122710 | hv_wikisource-uk | uk | 1942 | shev.modern (high) | wl.new | 205 | 19 | 0 |
+| hv_ws_122711 | hv_wikisource-uk | uk | 1942 | shev.modern (high) | wl.new | 172 | 22 | 0 |
+| hv_ws_122712 | hv_wikisource-uk | uk | 1942 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_122713 | hv_wikisource-uk | uk | 1942 | shev.modern (high) | wl.new | 198 | 18 | 0 |
+| hv_ws_192066 | hv_михаи_ло_калинович | uk | 1942 | shev.modern (high) | wl.new | 10 736 | 234 | 213 |
+| hv_ws_216701 | hv_василь_стефаник | uk | 1942 | shev.modern (high) | wl.new | 255 | 160 | 0 |
 | hv_ws_24513 | hv_яків_гальчевськии_вои_наровськии | uk | 1942 | shev.modern (high) | wl.new | 153 | 40 | 0 |
+| hv_ws_26372 | hv_wikisource-uk | uk | 1942 | shev.modern (high) | wl.new | 409 | 15 | 0 |
 | hv_ws_27143 | hv_іван_мітринга | uk | 1942 | shev.modern (high) | wl.new | 139 | 11 | 0 |
 | hv_ws_31579 | hv_володимир_стрии_ськии | uk | 1942 | shev.modern (high) | wl.new | 4 197 | 36 | 0 |
+| hv_ws_46473 | hv_павло_скоропадськии | uk | 1942 | shev.modern (high) | wl.new | 670 | 17 | 0 |
+| hv_ws_122714 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 226 | 19 | 0 |
+| hv_ws_122818 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 199 | 18 | 0 |
+| hv_ws_122819 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_122820 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 184 | 18 | 0 |
+| hv_ws_122821 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_122822 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 250 | 19 | 0 |
+| hv_ws_122823 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_122824 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 159 | 18 | 0 |
+| hv_ws_122826 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 165 | 18 | 0 |
+| hv_ws_122827 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_122828 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 243 | 21 | 0 |
+| hv_ws_123032 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_123033 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 214 | 18 | 0 |
+| hv_ws_123034 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 233 | 18 | 0 |
+| hv_ws_123035 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 207 | 20 | 0 |
+| hv_ws_123036 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_127681 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 168 | 18 | 0 |
+| hv_ws_127732 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 209 | 18 | 0 |
+| hv_ws_127740 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 183 | 19 | 0 |
+| hv_ws_127810 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 165 | 18 | 0 |
+| hv_ws_127831 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 192 | 18 | 0 |
+| hv_ws_127866 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 226 | 19 | 0 |
+| hv_ws_127942 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_127961 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_127988 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 215 | 18 | 0 |
+| hv_ws_128023 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 291 | 33 | 0 |
+| hv_ws_128169 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 184 | 18 | 0 |
+| hv_ws_128224 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 241 | 18 | 0 |
+| hv_ws_128231 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 227 | 18 | 0 |
+| hv_ws_128256 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 177 | 20 | 0 |
+| hv_ws_128257 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 250 | 18 | 0 |
+| hv_ws_128272 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 260 | 19 | 0 |
+| hv_ws_128308 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128378 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128379 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128712 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 189 | 19 | 0 |
+| hv_ws_128777 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 251 | 19 | 0 |
+| hv_ws_128819 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 248 | 19 | 0 |
+| hv_ws_128833 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_128851 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128893 | hv_wikisource-uk | uk | 1943 | shev.modern (high) | wl.new | 184 | 18 | 0 |
 | hv_ws_133887 | hv_іван_франко | uk | 1943 | shev.modern (high) | wl.new | 707 | 55 | 0 |
 | hv_ws_191931 | hv_аркадіи_животко | uk | 1943 | shev.modern (high) | wl.new | 233 | 54 | 0 |
+| hv_ws_289389 | hv_пантелеи_мон_куліш | uk | 1943 | shev.modern (high) | wl.new | 139 | 30 | 0 |
+| hv_ws_126926 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_127005 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 20 | 0 |
+| hv_ws_127006 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 21 | 0 |
+| hv_ws_127100 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 173 | 20 | 0 |
+| hv_ws_127109 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 182 | 20 | 0 |
+| hv_ws_127225 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 183 | 21 | 0 |
+| hv_ws_127226 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 178 | 20 | 0 |
+| hv_ws_127258 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 20 | 0 |
+| hv_ws_127259 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 178 | 20 | 0 |
+| hv_ws_127285 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 177 | 20 | 0 |
+| hv_ws_127292 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 20 | 0 |
+| hv_ws_127315 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 20 | 0 |
 | hv_ws_127316 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 543 | 27 | 0 |
+| hv_ws_127338 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 187 | 20 | 0 |
+| hv_ws_127369 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 219 | 22 | 0 |
+| hv_ws_127391 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 173 | 20 | 0 |
+| hv_ws_127420 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 203 | 22 | 0 |
+| hv_ws_127492 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 183 | 20 | 0 |
+| hv_ws_127534 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 218 | 22 | 0 |
+| hv_ws_127559 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 176 | 20 | 0 |
+| hv_ws_127588 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 297 | 22 | 0 |
+| hv_ws_127734 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_127811 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_127943 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_128170 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128226 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128309 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_128357 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 241 | 22 | 0 |
+| hv_ws_128407 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 244 | 18 | 0 |
+| hv_ws_128711 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 236 | 18 | 0 |
+| hv_ws_128971 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_129161 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_129458 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_129736 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 193 | 20 | 0 |
+| hv_ws_129831 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_129966 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_129983 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_130009 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 154 | 23 | 0 |
+| hv_ws_130566 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 185 | 19 | 0 |
+| hv_ws_130660 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 191 | 18 | 0 |
+| hv_ws_130661 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 192 | 24 | 0 |
+| hv_ws_130804 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_130805 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_130839 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_130870 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 168 | 18 | 0 |
 | hv_ws_130871 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 18 | 0 |
 | hv_ws_130922 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 217 | 18 | 0 |
 | hv_ws_130923 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 443 | 122 | 0 |
@@ -3800,20 +4124,394 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_131438 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 240 | 18 | 0 |
 | hv_ws_131744 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 182 | 18 | 0 |
 | hv_ws_131746 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 166 | 18 | 0 |
+| hv_ws_131751 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 164 | 18 | 0 |
 | hv_ws_165539 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 494 | 62 | 0 |
 | hv_ws_357548 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 290 | 38 | 0 |
+| hv_ws_42430 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 297 | 38 | 0 |
+| hv_ws_490635 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 165 | 18 | 0 |
+| hv_ws_57612 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 175 | 18 | 0 |
+| hv_ws_57613 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 190 | 18 | 0 |
+| hv_ws_57614 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 200 | 20 | 0 |
+| hv_ws_57615 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 218 | 20 | 0 |
+| hv_ws_57616 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 209 | 19 | 0 |
+| hv_ws_57617 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 159 | 18 | 0 |
+| hv_ws_57618 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 176 | 21 | 0 |
+| hv_ws_57619 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 178 | 27 | 0 |
+| hv_ws_57620 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_57835 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_57836 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 174 | 18 | 0 |
+| hv_ws_57837 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_57838 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_57842 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_57843 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 210 | 18 | 0 |
+| hv_ws_57844 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 175 | 18 | 0 |
+| hv_ws_57896 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 24 | 0 |
+| hv_ws_58693 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 167 | 26 | 0 |
+| hv_ws_58695 | hv_wikisource-uk | uk | 1944 | shev.modern (high) | wl.new | 176 | 26 | 0 |
+| hv_ws_123593 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 927 | 112 | 0 |
+| hv_ws_124271 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 463 | 53 | 0 |
+| hv_ws_124350 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 011 | 123 | 0 |
+| hv_ws_124574 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 067 | 126 | 0 |
+| hv_ws_124780 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 897 | 108 | 0 |
+| hv_ws_124946 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 718 | 88 | 0 |
+| hv_ws_124958 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 414 | 171 | 0 |
+| hv_ws_125109 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 292 | 37 | 0 |
+| hv_ws_125184 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 482 | 60 | 0 |
+| hv_ws_125228 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 966 | 116 | 0 |
+| hv_ws_125296 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 349 | 43 | 0 |
+| hv_ws_125309 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 636 | 194 | 0 |
+| hv_ws_125417 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 958 | 113 | 0 |
+| hv_ws_125452 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 685 | 84 | 0 |
+| hv_ws_125453 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 866 | 105 | 0 |
+| hv_ws_125469 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 050 | 125 | 0 |
+| hv_ws_125482 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 095 | 132 | 0 |
+| hv_ws_125546 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 903 | 110 | 0 |
+| hv_ws_125607 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 374 | 48 | 0 |
+| hv_ws_125784 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 744 | 93 | 0 |
+| hv_ws_125885 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 984 | 122 | 0 |
+| hv_ws_125886 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 634 | 73 | 0 |
+| hv_ws_125940 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 980 | 112 | 0 |
+| hv_ws_126332 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 466 | 48 | 0 |
+| hv_ws_126483 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 154 | 139 | 0 |
+| hv_ws_126564 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 809 | 92 | 0 |
+| hv_ws_126618 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 017 | 125 | 0 |
+| hv_ws_126655 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 538 | 184 | 0 |
+| hv_ws_126682 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 493 | 57 | 0 |
+| hv_ws_126736 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 406 | 45 | 0 |
+| hv_ws_126741 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 350 | 40 | 0 |
+| hv_ws_126801 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 383 | 44 | 0 |
+| hv_ws_126845 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 724 | 90 | 0 |
+| hv_ws_127682 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_127733 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_127741 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 160 | 18 | 0 |
+| hv_ws_127812 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_127832 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 155 | 23 | 0 |
+| hv_ws_127868 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 729 | 76 | 0 |
+| hv_ws_127962 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_127989 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 923 | 95 | 0 |
+| hv_ws_128025 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 270 | 30 | 0 |
+| hv_ws_128028 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 473 | 60 | 0 |
+| hv_ws_128171 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_128172 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 348 | 46 | 0 |
+| hv_ws_128227 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_128228 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 491 | 61 | 0 |
+| hv_ws_128230 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 732 | 81 | 0 |
+| hv_ws_128258 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_128259 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 678 | 82 | 0 |
+| hv_ws_128260 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 657 | 79 | 0 |
+| hv_ws_128273 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_128274 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 751 | 90 | 0 |
+| hv_ws_128310 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 165 | 18 | 0 |
+| hv_ws_128336 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 713 | 70 | 0 |
+| hv_ws_128338 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 544 | 63 | 0 |
+| hv_ws_128341 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 810 | 98 | 0 |
+| hv_ws_128355 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 862 | 104 | 0 |
+| hv_ws_128404 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 607 | 58 | 0 |
+| hv_ws_128405 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 484 | 57 | 0 |
+| hv_ws_128406 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 868 | 109 | 0 |
+| hv_ws_128713 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 134 | 110 | 0 |
+| hv_ws_128714 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 385 | 48 | 0 |
+| hv_ws_128744 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 489 | 56 | 0 |
+| hv_ws_128776 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 395 | 48 | 0 |
+| hv_ws_128820 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 319 | 39 | 0 |
+| hv_ws_128834 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 074 | 132 | 0 |
+| hv_ws_128852 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 834 | 105 | 0 |
+| hv_ws_128864 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 939 | 117 | 0 |
+| hv_ws_128894 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_128973 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 511 | 60 | 0 |
+| hv_ws_128975 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 239 | 26 | 0 |
+| hv_ws_129163 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 452 | 48 | 0 |
+| hv_ws_129228 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 599 | 71 | 0 |
+| hv_ws_129229 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 479 | 58 | 0 |
+| hv_ws_129459 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 101 | 138 | 0 |
+| hv_ws_129563 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 929 | 103 | 0 |
+| hv_ws_129565 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 151 | 139 | 0 |
+| hv_ws_129571 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 130 | 134 | 0 |
+| hv_ws_129737 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 987 | 122 | 0 |
+| hv_ws_129814 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 251 | 150 | 0 |
+| hv_ws_129828 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 106 | 135 | 0 |
+| hv_ws_129883 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 141 | 137 | 0 |
+| hv_ws_129967 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 644 | 196 | 0 |
+| hv_ws_129981 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 563 | 63 | 0 |
+| hv_ws_129982 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 707 | 83 | 0 |
+| hv_ws_130006 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 503 | 58 | 0 |
+| hv_ws_130007 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 543 | 65 | 0 |
+| hv_ws_130139 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 108 | 134 | 0 |
+| hv_ws_130148 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 169 | 140 | 0 |
+| hv_ws_130333 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 090 | 133 | 0 |
+| hv_ws_130334 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 012 | 122 | 0 |
+| hv_ws_130521 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 651 | 191 | 0 |
+| hv_ws_130522 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 174 | 140 | 0 |
+| hv_ws_130565 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 643 | 71 | 0 |
+| hv_ws_131439 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 552 | 185 | 0 |
+| hv_ws_131440 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 418 | 168 | 0 |
+| hv_ws_131948 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 427 | 169 | 0 |
+| hv_ws_131956 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 104 | 125 | 0 |
+| hv_ws_132022 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 213 | 18 | 0 |
+| hv_ws_132023 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 211 | 18 | 0 |
+| hv_ws_134404 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 698 | 27 | 0 |
+| hv_ws_134598 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 958 | 28 | 0 |
+| hv_ws_134856 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 593 | 28 | 0 |
+| hv_ws_134941 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 926 | 27 | 0 |
+| hv_ws_135401 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 506 | 26 | 0 |
+| hv_ws_135402 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 3 747 | 450 | 0 |
+| hv_ws_135508 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 460 | 177 | 0 |
+| hv_ws_135626 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 391 | 168 | 0 |
+| hv_ws_135731 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 727 | 206 | 0 |
+| hv_ws_136004 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 008 | 120 | 0 |
+| hv_ws_136097 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 582 | 69 | 0 |
+| hv_ws_136186 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 587 | 79 | 0 |
+| hv_ws_136270 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 185 | 20 | 0 |
+| hv_ws_136685 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 175 | 20 | 0 |
+| hv_ws_136733 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 773 | 211 | 0 |
+| hv_ws_136773 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 274 | 154 | 0 |
+| hv_ws_136834 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 896 | 103 | 0 |
+| hv_ws_136887 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 964 | 236 | 0 |
+| hv_ws_136941 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 565 | 184 | 0 |
+| hv_ws_137007 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 664 | 320 | 0 |
+| hv_ws_137131 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 852 | 223 | 0 |
+| hv_ws_137182 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 819 | 99 | 0 |
+| hv_ws_137183 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 400 | 288 | 0 |
+| hv_ws_137263 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 808 | 86 | 0 |
+| hv_ws_137265 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 442 | 177 | 0 |
+| hv_ws_137304 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 979 | 239 | 0 |
+| hv_ws_137305 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 445 | 171 | 0 |
+| hv_ws_137427 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 220 | 22 | 0 |
+| hv_ws_137429 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 739 | 327 | 0 |
+| hv_ws_137604 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 775 | 217 | 0 |
+| hv_ws_137605 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 193 | 20 | 0 |
+| hv_ws_137722 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 221 | 21 | 0 |
+| hv_ws_137723 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 342 | 27 | 0 |
+| hv_ws_137962 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 513 | 58 | 0 |
+| hv_ws_137963 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 234 | 272 | 0 |
+| hv_ws_138031 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 811 | 98 | 0 |
+| hv_ws_138032 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 039 | 118 | 0 |
+| hv_ws_138063 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 708 | 84 | 0 |
+| hv_ws_138064 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 095 | 247 | 0 |
+| hv_ws_147337 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 997 | 241 | 0 |
+| hv_ws_147929 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 964 | 107 | 0 |
+| hv_ws_161137 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 420 | 173 | 0 |
+| hv_ws_161138 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 290 | 152 | 0 |
+| hv_ws_161251 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 812 | 96 | 0 |
+| hv_ws_161252 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 124 | 134 | 0 |
+| hv_ws_161379 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 676 | 199 | 0 |
+| hv_ws_161380 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 156 | 138 | 0 |
+| hv_ws_161453 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 367 | 44 | 0 |
+| hv_ws_161454 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 915 | 111 | 0 |
+| hv_ws_161619 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 059 | 246 | 0 |
+| hv_ws_161774 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 411 | 290 | 0 |
+| hv_ws_161775 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 007 | 115 | 0 |
+| hv_ws_161847 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 454 | 170 | 0 |
+| hv_ws_161849 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 494 | 172 | 0 |
+| hv_ws_161923 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 125 | 144 | 0 |
+| hv_ws_161925 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 390 | 172 | 0 |
+| hv_ws_161996 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 123 | 238 | 0 |
+| hv_ws_162017 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 039 | 249 | 0 |
+| hv_ws_162018 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 192 | 20 | 0 |
+| hv_ws_162092 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 695 | 200 | 0 |
+| hv_ws_162095 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 377 | 293 | 0 |
+| hv_ws_162169 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 762 | 210 | 0 |
+| hv_ws_162176 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 773 | 213 | 0 |
+| hv_ws_162244 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 005 | 231 | 0 |
+| hv_ws_162245 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 953 | 224 | 0 |
+| hv_ws_162307 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 753 | 213 | 0 |
+| hv_ws_162308 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 794 | 345 | 0 |
+| hv_ws_162434 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 802 | 219 | 0 |
+| hv_ws_162435 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 668 | 202 | 0 |
+| hv_ws_162564 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 453 | 61 | 0 |
+| hv_ws_162565 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 408 | 48 | 0 |
+| hv_ws_162679 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 209 | 22 | 0 |
+| hv_ws_162682 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 209 | 20 | 0 |
+| hv_ws_163013 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 195 | 20 | 0 |
+| hv_ws_163014 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 922 | 106 | 0 |
 | hv_ws_165531 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 323 | 39 | 0 |
+| hv_ws_191273 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 870 | 228 | 0 |
+| hv_ws_192837 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 605 | 198 | 0 |
+| hv_ws_199267 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 661 | 202 | 0 |
+| hv_ws_205478 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 883 | 108 | 0 |
+| hv_ws_205501 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 965 | 117 | 0 |
+| hv_ws_205544 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 823 | 100 | 0 |
+| hv_ws_205809 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 824 | 212 | 0 |
+| hv_ws_205828 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 913 | 112 | 0 |
+| hv_ws_215139 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 536 | 307 | 0 |
 | hv_ws_26246 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 9 399 | 143 | 0 |
+| hv_ws_33660 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 68 | 10 | 0 |
 | hv_ws_34371 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 219 | 6 | 0 |
+| hv_ws_39489 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 316 | 11 | 10 |
+| hv_ws_47912 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 344 | 32 | 0 |
+| hv_ws_47913 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 200 | 21 | 0 |
+| hv_ws_47914 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 224 | 27 | 0 |
+| hv_ws_52078 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 625 | 48 | 0 |
+| hv_ws_52080 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 428 | 36 | 0 |
+| hv_ws_52166 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 562 | 60 | 0 |
+| hv_ws_52182 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 363 | 34 | 0 |
+| hv_ws_52183 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 533 | 63 | 0 |
+| hv_ws_52207 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 402 | 47 | 0 |
+| hv_ws_52216 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 166 | 71 | 0 |
+| hv_ws_52218 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 480 | 43 | 0 |
+| hv_ws_52219 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 285 | 25 | 0 |
+| hv_ws_52221 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 345 | 22 | 0 |
+| hv_ws_52222 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 183 | 24 | 0 |
+| hv_ws_52228 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 796 | 149 | 0 |
+| hv_ws_52257 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 201 | 23 | 0 |
+| hv_ws_52258 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 981 | 49 | 0 |
+| hv_ws_52259 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 254 | 21 | 0 |
+| hv_ws_52260 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 197 | 20 | 0 |
+| hv_ws_52261 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 170 | 20 | 0 |
+| hv_ws_52262 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 246 | 21 | 0 |
+| hv_ws_52263 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 334 | 24 | 0 |
+| hv_ws_522970 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 127 | 254 | 0 |
+| hv_ws_52512 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 726 | 34 | 0 |
+| hv_ws_52599 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 537 | 39 | 0 |
+| hv_ws_52600 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 3 688 | 37 | 0 |
+| hv_ws_52601 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 174 | 24 | 0 |
+| hv_ws_52602 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 914 | 57 | 0 |
+| hv_ws_532218 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 385 | 161 | 0 |
+| hv_ws_532292 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 990 | 120 | 0 |
+| hv_ws_532473 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 268 | 155 | 0 |
+| hv_ws_532530 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 980 | 127 | 0 |
+| hv_ws_533616 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 049 | 127 | 0 |
+| hv_ws_533617 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 406 | 173 | 0 |
+| hv_ws_533661 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 986 | 117 | 0 |
+| hv_ws_533662 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 361 | 167 | 0 |
+| hv_ws_534042 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 947 | 116 | 0 |
+| hv_ws_534096 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 336 | 165 | 0 |
+| hv_ws_534106 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 2 248 | 277 | 0 |
+| hv_ws_534136 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 014 | 121 | 0 |
+| hv_ws_534139 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 1 250 | 151 | 0 |
 | hv_ws_559614 | hv_софія_русова | uk | 1945 | shev.modern (high) | wl.new | 371 | 63 | 0 |
+| hv_ws_56484 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 190 | 19 | 0 |
+| hv_ws_57473 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 207 | 20 | 0 |
+| hv_ws_57474 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 167 | 26 | 0 |
+| hv_ws_58721 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 197 | 23 | 0 |
+| hv_ws_58722 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 500 | 22 | 0 |
+| hv_ws_58726 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 186 | 21 | 0 |
+| hv_ws_58727 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 215 | 18 | 0 |
+| hv_ws_58728 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 526 | 21 | 0 |
+| hv_ws_58729 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 175 | 18 | 0 |
+| hv_ws_58730 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_58731 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_58732 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 274 | 45 | 0 |
+| hv_ws_58733 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 175 | 20 | 0 |
+| hv_ws_58735 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 190 | 26 | 0 |
+| hv_ws_59013 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 686 | 39 | 0 |
+| hv_ws_59014 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 166 | 20 | 0 |
+| hv_ws_59016 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 202 | 20 | 0 |
+| hv_ws_59029 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 191 | 20 | 0 |
+| hv_ws_59030 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 189 | 21 | 0 |
+| hv_ws_59031 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 176 | 20 | 0 |
+| hv_ws_59032 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 188 | 25 | 0 |
+| hv_ws_59033 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 172 | 25 | 0 |
+| hv_ws_59034 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 191 | 21 | 0 |
 | hv_ws_8690 | hv_wikisource-uk | uk | 1945 | shev.modern (high) | wl.new | 260 | 6 | 0 |
 | hv_ws_162048 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 3 804 | 183 | 0 |
+| hv_ws_1647 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 282 | 25 | 0 |
 | hv_ws_205198 | hv_олена_теліга | uk | 1946 | shev.modern (high) | wl.new | 264 | 39 | 0 |
 | hv_ws_30668 | hv_юріи_липа | uk | 1946 | shev.modern (high) | wl.new | 137 | 17 | 0 |
 | hv_ws_33526 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 137 | 2 | 0 |
 | hv_ws_3608 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 85 | 38 | 0 |
+| hv_ws_41643 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 983 | 16 | 0 |
+| hv_ws_41866 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 210 | 20 | 0 |
+| hv_ws_41868 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 249 | 18 | 0 |
+| hv_ws_52605 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_52606 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 175 | 20 | 0 |
+| hv_ws_52607 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 204 | 26 | 0 |
+| hv_ws_52608 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 203 | 20 | 0 |
+| hv_ws_52614 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 20 | 0 |
+| hv_ws_52617 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 180 | 20 | 0 |
+| hv_ws_52618 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 190 | 21 | 0 |
+| hv_ws_52619 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 187 | 20 | 0 |
+| hv_ws_52624 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 175 | 20 | 0 |
+| hv_ws_52625 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 194 | 20 | 0 |
+| hv_ws_52626 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 203 | 20 | 0 |
+| hv_ws_52627 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 236 | 20 | 0 |
+| hv_ws_52628 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 385 | 21 | 0 |
+| hv_ws_52629 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 190 | 20 | 0 |
+| hv_ws_52630 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 188 | 20 | 0 |
+| hv_ws_52631 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 196 | 20 | 0 |
+| hv_ws_52632 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 308 | 21 | 0 |
+| hv_ws_52634 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 572 | 51 | 0 |
+| hv_ws_52635 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 967 | 50 | 0 |
+| hv_ws_52636 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 251 | 27 | 0 |
+| hv_ws_52637 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 954 | 51 | 0 |
+| hv_ws_52638 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 738 | 53 | 0 |
+| hv_ws_52639 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 293 | 66 | 0 |
+| hv_ws_52641 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 564 | 41 | 0 |
+| hv_ws_52643 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 204 | 20 | 0 |
+| hv_ws_52644 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 378 | 23 | 0 |
+| hv_ws_52645 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 294 | 21 | 0 |
+| hv_ws_52646 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 200 | 20 | 0 |
+| hv_ws_52647 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 335 | 22 | 0 |
+| hv_ws_52653 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 185 | 20 | 0 |
+| hv_ws_52654 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 325 | 22 | 0 |
+| hv_ws_52712 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 199 | 20 | 0 |
+| hv_ws_52715 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 174 | 20 | 0 |
+| hv_ws_52736 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 163 | 20 | 0 |
+| hv_ws_52737 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 171 | 20 | 0 |
+| hv_ws_52738 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 206 | 21 | 0 |
+| hv_ws_52740 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 202 | 20 | 0 |
+| hv_ws_52741 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 264 | 23 | 0 |
+| hv_ws_52742 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 163 | 20 | 0 |
+| hv_ws_52743 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 20 | 0 |
+| hv_ws_52746 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 197 | 22 | 0 |
+| hv_ws_52747 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 241 | 24 | 0 |
+| hv_ws_52748 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 163 | 20 | 0 |
+| hv_ws_52749 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 20 | 0 |
+| hv_ws_52750 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 234 | 20 | 0 |
+| hv_ws_52751 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 235 | 21 | 0 |
+| hv_ws_52752 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 256 | 24 | 0 |
+| hv_ws_52753 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 189 | 20 | 0 |
+| hv_ws_52754 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 215 | 21 | 0 |
+| hv_ws_52755 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 169 | 20 | 0 |
+| hv_ws_52762 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 298 | 47 | 0 |
+| hv_ws_52764 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 182 | 20 | 0 |
+| hv_ws_52765 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 2 418 | 47 | 0 |
+| hv_ws_52766 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 169 | 20 | 0 |
+| hv_ws_52768 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 256 | 21 | 0 |
+| hv_ws_52789 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 20 | 0 |
+| hv_ws_52790 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 246 | 20 | 0 |
+| hv_ws_52830 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_52833 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 186 | 20 | 0 |
+| hv_ws_52836 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 539 | 45 | 0 |
+| hv_ws_52913 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 888 | 49 | 0 |
+| hv_ws_52914 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 628 | 59 | 0 |
+| hv_ws_53007 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 2 260 | 49 | 0 |
+| hv_ws_53068 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 706 | 49 | 0 |
+| hv_ws_53069 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 248 | 20 | 0 |
+| hv_ws_53070 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 252 | 23 | 0 |
+| hv_ws_53148 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 187 | 21 | 0 |
+| hv_ws_53149 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 629 | 51 | 0 |
+| hv_ws_53162 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 660 | 32 | 0 |
+| hv_ws_53163 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 225 | 21 | 0 |
+| hv_ws_53164 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 192 | 22 | 0 |
+| hv_ws_53213 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 174 | 20 | 0 |
+| hv_ws_53258 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 345 | 21 | 0 |
+| hv_ws_53259 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 191 | 20 | 0 |
+| hv_ws_53283 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 225 | 21 | 0 |
+| hv_ws_53295 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 341 | 21 | 0 |
+| hv_ws_53296 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 177 | 20 | 0 |
+| hv_ws_53719 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 3 071 | 52 | 0 |
+| hv_ws_53796 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 162 | 24 | 0 |
 | hv_ws_53844 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 212 | 32 | 0 |
 | hv_ws_53952 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 283 | 74 | 0 |
+| hv_ws_53953 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 196 | 18 | 0 |
+| hv_ws_54105 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 647 | 25 | 0 |
+| hv_ws_54106 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 1 462 | 32 | 0 |
+| hv_ws_54296 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 259 | 19 | 0 |
+| hv_ws_54392 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 219 | 18 | 0 |
+| hv_ws_54393 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 18 | 0 |
+| hv_ws_54435 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 171 | 18 | 0 |
+| hv_ws_54475 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 199 | 20 | 0 |
+| hv_ws_54510 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 204 | 19 | 0 |
+| hv_ws_54524 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 171 | 18 | 0 |
+| hv_ws_54551 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 166 | 18 | 0 |
+| hv_ws_54621 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 190 | 21 | 0 |
+| hv_ws_54689 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 200 | 18 | 0 |
+| hv_ws_54819 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 244 | 24 | 0 |
+| hv_ws_57088 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 6 240 | 446 | 0 |
+| hv_ws_57186 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 171 | 18 | 0 |
+| hv_ws_57216 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 236 | 20 | 0 |
+| hv_ws_57246 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 268 | 28 | 0 |
 | hv_ws_57750 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 10 770 | 989 | 0 |
 | hv_ws_57755 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 558 | 191 | 0 |
 | hv_ws_57756 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 218 | 24 | 0 |
@@ -3827,48 +4525,302 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_57765 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 231 | 25 | 0 |
 | hv_ws_57766 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 225 | 22 | 0 |
 | hv_ws_57767 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 183 | 25 | 0 |
+| hv_ws_57855 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 198 | 18 | 0 |
+| hv_ws_58736 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 201 | 18 | 0 |
+| hv_ws_58737 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 232 | 19 | 0 |
+| hv_ws_59042 | hv_wikisource-uk | uk | 1946 | shev.modern (high) | wl.new | 190 | 18 | 0 |
+| hv_ws_104464 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_104947 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 163 | 18 | 0 |
+| hv_ws_104948 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 169 | 18 | 0 |
 | hv_ws_104974 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 1 021 | 76 | 0 |
 | hv_ws_104977 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 1 078 | 76 | 0 |
+| hv_ws_104978 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 163 | 18 | 0 |
+| hv_ws_105062 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 192 | 23 | 0 |
+| hv_ws_105136 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 214 | 20 | 0 |
+| hv_ws_105137 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 196 | 24 | 0 |
+| hv_ws_105173 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 193 | 20 | 0 |
+| hv_ws_105174 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 166 | 18 | 0 |
+| hv_ws_109723 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 163 | 19 | 0 |
+| hv_ws_109724 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 170 | 21 | 0 |
+| hv_ws_109725 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 359 | 38 | 0 |
+| hv_ws_109760 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 918 | 118 | 0 |
 | hv_ws_109761 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 382 | 19 | 0 |
+| hv_ws_109766 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 164 | 19 | 0 |
+| hv_ws_109768 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 160 | 18 | 0 |
 | hv_ws_109769 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 415 | 19 | 0 |
 | hv_ws_109918 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 520 | 19 | 0 |
 | hv_ws_110015 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 452 | 29 | 0 |
 | hv_ws_110017 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 289 | 21 | 0 |
+| hv_ws_110018 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 172 | 20 | 0 |
 | hv_ws_110083 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 143 | 18 | 0 |
 | hv_ws_110084 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 150 | 18 | 0 |
 | hv_ws_110085 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 552 | 242 | 0 |
 | hv_ws_110269 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 286 | 22 | 0 |
 | hv_ws_110270 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 171 | 21 | 0 |
 | hv_ws_110288 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 173 | 22 | 0 |
+| hv_ws_110392 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 253 | 20 | 0 |
 | hv_ws_110765 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 270 | 22 | 0 |
 | hv_ws_110766 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 288 | 22 | 0 |
 | hv_ws_110875 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 250 | 21 | 0 |
+| hv_ws_110876 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 239 | 19 | 0 |
 | hv_ws_110885 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_110886 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 343 | 20 | 0 |
+| hv_ws_113324 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 190 | 22 | 0 |
+| hv_ws_113325 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 609 | 71 | 0 |
+| hv_ws_113326 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 273 | 34 | 0 |
 | hv_ws_113329 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 2 723 | 249 | 0 |
 | hv_ws_113330 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 191 | 18 | 0 |
+| hv_ws_122830 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 166 | 16 | 0 |
 | hv_ws_130868 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 94 | 36 | 0 |
 | hv_ws_161620 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 790 | 43 | 0 |
 | hv_ws_162003 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 753 | 60 | 0 |
 | hv_ws_162041 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 5 732 | 283 | 0 |
+| hv_ws_162043 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 196 | 20 | 0 |
+| hv_ws_162046 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 191 | 26 | 0 |
+| hv_ws_162080 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 174 | 20 | 0 |
 | hv_ws_178697 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 192 | 56 | 0 |
 | hv_ws_204885 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 2 713 | 57 | 0 |
+| hv_ws_205545 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 200 | 20 | 0 |
+| hv_ws_205552 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 242 | 21 | 0 |
+| hv_ws_205594 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 207 | 20 | 0 |
+| hv_ws_205773 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 233 | 29 | 0 |
+| hv_ws_205796 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 247 | 21 | 0 |
+| hv_ws_205924 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 235 | 21 | 0 |
+| hv_ws_205925 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 299 | 21 | 0 |
+| hv_ws_205957 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 210 | 21 | 0 |
+| hv_ws_205958 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 393 | 32 | 0 |
+| hv_ws_205988 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 233 | 23 | 0 |
+| hv_ws_205991 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 263 | 20 | 0 |
+| hv_ws_206013 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 202 | 22 | 0 |
+| hv_ws_206014 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 4 159 | 36 | 0 |
+| hv_ws_210464 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 366 | 23 | 0 |
+| hv_ws_214681 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 207 | 20 | 0 |
+| hv_ws_215687 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 280 | 22 | 0 |
+| hv_ws_24528 | hv_олег_ольжич | uk | 1947 | shev.modern (high) | wl.new | 4 864 | 35 | 0 |
 | hv_ws_33321 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 115 | 14 | 0 |
 | hv_ws_3616 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 92 | 48 | 0 |
+| hv_ws_57621 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 351 | 18 | 0 |
+| hv_ws_57624 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 190 | 18 | 0 |
+| hv_ws_57627 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 241 | 18 | 0 |
+| hv_ws_57630 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 170 | 19 | 0 |
+| hv_ws_57631 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 201 | 18 | 0 |
+| hv_ws_57633 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 236 | 18 | 0 |
+| hv_ws_59043 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 371 | 23 | 0 |
+| hv_ws_59997 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 186 | 23 | 0 |
+| hv_ws_64427 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_68306 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 296 | 19 | 0 |
+| hv_ws_69307 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 237 | 19 | 0 |
+| hv_ws_69309 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_69311 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 299 | 24 | 0 |
+| hv_ws_69472 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 209 | 21 | 0 |
+| hv_ws_69475 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 203 | 19 | 0 |
+| hv_ws_69479 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 192 | 24 | 0 |
+| hv_ws_69718 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 199 | 18 | 0 |
+| hv_ws_69732 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_69738 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 188 | 24 | 0 |
+| hv_ws_69782 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 166 | 18 | 0 |
+| hv_ws_69784 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 289 | 25 | 0 |
+| hv_ws_69787 | hv_wikisource-uk | uk | 1947 | shev.modern (high) | wl.new | 164 | 20 | 0 |
+| hv_ws_113291 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 247 | 19 | 0 |
+| hv_ws_113312 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 218 | 18 | 0 |
+| hv_ws_113313 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 219 | 19 | 0 |
+| hv_ws_113316 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 352 | 19 | 0 |
+| hv_ws_123153 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_136787 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 263 | 19 | 0 |
+| hv_ws_136833 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_136888 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 185 | 18 | 0 |
+| hv_ws_136942 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_137008 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 192 | 18 | 0 |
+| hv_ws_137132 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 225 | 18 | 0 |
+| hv_ws_162225 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 241 | 19 | 0 |
+| hv_ws_162231 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 246 | 18 | 0 |
+| hv_ws_162275 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 192 | 24 | 0 |
+| hv_ws_162279 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 194 | 19 | 0 |
+| hv_ws_162280 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 193 | 18 | 0 |
 | hv_ws_162311 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 271 | 28 | 0 |
+| hv_ws_162314 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 214 | 20 | 0 |
+| hv_ws_162315 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 185 | 18 | 0 |
+| hv_ws_162459 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 208 | 20 | 0 |
+| hv_ws_162460 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162462 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162463 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162465 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162466 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162467 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_162557 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 241 | 18 | 0 |
+| hv_ws_162558 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 196 | 20 | 0 |
+| hv_ws_162680 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 208 | 18 | 0 |
+| hv_ws_162729 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_162730 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 193 | 19 | 0 |
+| hv_ws_162738 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 174 | 24 | 0 |
+| hv_ws_162741 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 174 | 18 | 0 |
+| hv_ws_162901 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_162905 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_162909 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_162914 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 216 | 19 | 0 |
+| hv_ws_162917 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 211 | 18 | 0 |
+| hv_ws_162918 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 270 | 18 | 0 |
+| hv_ws_162922 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 190 | 18 | 0 |
+| hv_ws_162926 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_162928 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 241 | 18 | 0 |
+| hv_ws_162931 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 181 | 19 | 0 |
+| hv_ws_162932 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_162933 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 179 | 18 | 0 |
 | hv_ws_185774 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 1 465 | 34 | 0 |
+| hv_ws_186205 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 167 | 18 | 0 |
 | hv_ws_194866 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 139 | 13 | 0 |
 | hv_ws_195183 | hv_борис_грінченко | uk | 1948 | shev.modern (high) | wl.new | 2 004 | 35 | 0 |
+| hv_ws_198631 | hv_джек_лондон | uk | 1948 | shev.modern (high) | wl.new | 251 | 36 | 0 |
 | hv_ws_201338 | hv_редьярд_кіплінг | uk | 1948 | shev.modern (high) | wl.new | 4 803 | 34 | 0 |
+| hv_ws_205408 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_205414 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_205415 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_205487 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_205488 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_205532 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 431 | 42 | 0 |
+| hv_ws_205547 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 286 | 19 | 0 |
+| hv_ws_205805 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 204 | 18 | 0 |
+| hv_ws_205866 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_205867 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 159 | 18 | 0 |
 | hv_ws_212566 | hv_wikisource-uk | uk | 1948 | shev.modern (high) | wl.new | 3 881 | 110 | 0 |
+| hv_ws_164338 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 214 | 18 | 0 |
+| hv_ws_164341 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_164342 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 192 | 18 | 0 |
+| hv_ws_164343 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 235 | 18 | 0 |
+| hv_ws_164344 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 206 | 18 | 0 |
+| hv_ws_164345 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_164346 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 181 | 18 | 0 |
+| hv_ws_164347 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_164348 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 209 | 18 | 0 |
+| hv_ws_164349 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 226 | 18 | 0 |
+| hv_ws_164357 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_164358 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_164422 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_164423 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_164424 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_177974 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_177994 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 189 | 19 | 0 |
+| hv_ws_177998 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 198 | 18 | 0 |
+| hv_ws_177999 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 188 | 19 | 0 |
+| hv_ws_178000 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 212 | 18 | 0 |
+| hv_ws_178001 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 181 | 18 | 0 |
+| hv_ws_178002 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 177 | 18 | 0 |
+| hv_ws_178003 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 245 | 18 | 0 |
+| hv_ws_178004 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_178005 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 199 | 18 | 0 |
+| hv_ws_178006 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 239 | 21 | 0 |
+| hv_ws_178028 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 200 | 19 | 0 |
+| hv_ws_178030 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 185 | 18 | 0 |
+| hv_ws_178031 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_178032 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 187 | 19 | 0 |
+| hv_ws_178344 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 184 | 18 | 0 |
+| hv_ws_178345 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 224 | 18 | 0 |
+| hv_ws_178346 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 232 | 18 | 0 |
+| hv_ws_178399 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 245 | 18 | 0 |
+| hv_ws_178404 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 201 | 18 | 0 |
+| hv_ws_178408 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 175 | 18 | 0 |
+| hv_ws_178422 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 206 | 18 | 0 |
+| hv_ws_178423 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_178424 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 203 | 19 | 0 |
+| hv_ws_178425 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 199 | 18 | 0 |
+| hv_ws_178426 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_178427 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 193 | 18 | 0 |
+| hv_ws_178428 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 186 | 18 | 0 |
+| hv_ws_178429 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 187 | 19 | 0 |
+| hv_ws_178430 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 177 | 18 | 0 |
+| hv_ws_178431 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_178432 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 197 | 19 | 0 |
 | hv_ws_195125 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 248 | 16 | 0 |
+| hv_ws_205510 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 181 | 18 | 0 |
+| hv_ws_205511 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 167 | 18 | 0 |
 | hv_ws_343946 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 146 | 21 | 0 |
 | hv_ws_343947 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 117 | 16 | 0 |
 | hv_ws_343948 | hv_wikisource-uk | uk | 1949 | shev.modern (high) | wl.new | 117 | 16 | 0 |
 | hv_ws_162773 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 5 772 | 272 | 0 |
+| hv_ws_185140 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 227 | 18 | 0 |
+| hv_ws_185141 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 185 | 18 | 0 |
+| hv_ws_185142 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_185143 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_185144 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 215 | 19 | 0 |
+| hv_ws_185595 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 216 | 18 | 0 |
+| hv_ws_185599 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 223 | 18 | 0 |
+| hv_ws_185604 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_185612 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 205 | 18 | 0 |
+| hv_ws_185614 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 206 | 18 | 0 |
+| hv_ws_185618 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 196 | 18 | 0 |
+| hv_ws_185620 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_185682 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_185683 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 205 | 18 | 0 |
+| hv_ws_185684 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 177 | 18 | 0 |
+| hv_ws_185685 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 191 | 18 | 0 |
+| hv_ws_185686 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 188 | 18 | 0 |
 | hv_ws_185688 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 191 | 18 | 0 |
+| hv_ws_185861 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_185864 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 184 | 18 | 0 |
+| hv_ws_185865 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_185866 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 207 | 19 | 0 |
+| hv_ws_185867 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 216 | 18 | 0 |
+| hv_ws_185868 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 188 | 18 | 0 |
+| hv_ws_185869 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_185870 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 183 | 18 | 0 |
+| hv_ws_185871 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 180 | 18 | 0 |
+| hv_ws_185872 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 191 | 18 | 0 |
+| hv_ws_185873 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 207 | 19 | 0 |
+| hv_ws_185874 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 183 | 18 | 0 |
+| hv_ws_185875 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 217 | 18 | 0 |
+| hv_ws_185876 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 200 | 18 | 0 |
+| hv_ws_215897 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 231 | 19 | 0 |
+| hv_ws_215898 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 196 | 19 | 0 |
+| hv_ws_215899 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 228 | 26 | 0 |
 | hv_ws_42241 | hv_wikisource-uk | uk | 1950 | shev.modern (high) | wl.new | 33 823 | 7963 | 0 |
+| hv_ws_186209 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_204189 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 222 | 19 | 0 |
+| hv_ws_204191 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_204192 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_204196 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_204197 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 220 | 19 | 0 |
+| hv_ws_204199 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 214 | 19 | 0 |
+| hv_ws_204200 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 207 | 18 | 0 |
+| hv_ws_204201 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_204202 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 196 | 18 | 0 |
+| hv_ws_204203 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 174 | 18 | 0 |
+| hv_ws_204204 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 182 | 18 | 0 |
+| hv_ws_204205 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 197 | 18 | 0 |
+| hv_ws_204206 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_204207 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_204208 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_204209 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_204210 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_204212 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 234 | 18 | 0 |
+| hv_ws_204222 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 195 | 18 | 0 |
+| hv_ws_204788 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 161 | 18 | 0 |
+| hv_ws_204791 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 173 | 18 | 0 |
+| hv_ws_204792 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 178 | 18 | 0 |
+| hv_ws_204793 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 200 | 18 | 0 |
+| hv_ws_204794 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_204795 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_205042 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 170 | 18 | 0 |
+| hv_ws_205043 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 186 | 18 | 0 |
+| hv_ws_205044 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 549 | 33 | 0 |
+| hv_ws_205045 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 179 | 18 | 0 |
+| hv_ws_205046 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 176 | 18 | 0 |
+| hv_ws_205047 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 169 | 18 | 0 |
+| hv_ws_205142 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 167 | 21 | 0 |
 | hv_ws_205152 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 2 964 | 136 | 0 |
+| hv_ws_205164 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 506 | 19 | 0 |
+| hv_ws_205165 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 164 | 18 | 0 |
+| hv_ws_205174 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 167 | 18 | 0 |
+| hv_ws_205232 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 188 | 19 | 0 |
+| hv_ws_205233 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 227 | 21 | 0 |
+| hv_ws_205234 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 184 | 19 | 0 |
+| hv_ws_205236 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 253 | 22 | 0 |
+| hv_ws_205237 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_205238 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 172 | 18 | 0 |
+| hv_ws_205239 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 247 | 19 | 0 |
+| hv_ws_205240 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 226 | 21 | 0 |
+| hv_ws_205241 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 167 | 18 | 0 |
 | hv_ws_464843 | hv_wikisource-uk | uk | 1951 | shev.modern (high) | wl.new | 191 | 21 | 0 |
+| hv_ws_42432 | hv_wikisource-uk | uk | 1952 | shev.modern (high) | wl.new | 26 | 2 | 0 |
 | hv_ws_521224 | hv_wikisource-uk | uk | 1952 | shev.modern (high) | wl.new | 437 | 84 | 0 |
 | hv_ws_32480 | hv_wikisource-uk | uk | 1953 | shev.modern (high) | wl.new | 613 | 20 | 0 |
 | hv_ws_33949 | hv_wikisource-uk | uk | 1953 | shev.modern (high) | wl.new | 1 238 | 60 | 0 |
@@ -3887,25 +4839,84 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_132500 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 120 | 0 | 0 |
 | hv_ws_132502 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 140 | 3 | 0 |
 | hv_ws_132506 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 82 | 3 | 0 |
+| hv_ws_132626 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 21 | 0 | 0 |
+| hv_ws_132637 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 80 | 0 | 0 |
 | hv_ws_32366 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 462 | 37 | 39 |
 | hv_ws_33483 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 240 | 23 | 0 |
+| hv_ws_41689 | hv_вячеслав_липинськии | uk | 1954 | shev.modern (high) | wl.new | 1 119 | 191 | 0 |
+| hv_ws_42434 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 54 | 0 | 0 |
+| hv_ws_7807 | hv_wikisource-uk | uk | 1954 | shev.modern (high) | wl.new | 24 | 0 | 0 |
+| hv_ws_182586 | hv_іван_франко | uk | 1956 | shev.modern (high) | wl.new | 2 785 | 216 | 0 |
 | hv_ws_30543 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 1 551 | 8 | 0 |
 | hv_ws_30544 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 195 | 1 | 0 |
+| hv_ws_30545 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 1 851 | 11 | 0 |
 | hv_ws_30546 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 1 087 | 9 | 0 |
 | hv_ws_30547 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 336 | 32 | 0 |
 | hv_ws_30558 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 41 | 1 | 0 |
 | hv_ws_30560 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 33 | 0 | 0 |
+| hv_ws_30561 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 394 | 7 | 0 |
+| hv_ws_30563 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 384 | 10 | 0 |
+| hv_ws_30567 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 58 | 2 | 0 |
 | hv_ws_30638 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 126 | 9 | 0 |
 | hv_ws_30640 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 103 | 9 | 0 |
 | hv_ws_30800 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 52 | 2 | 0 |
+| hv_ws_30801 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 205 | 1 | 0 |
 | hv_ws_30803 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 31 | 0 | 0 |
 | hv_ws_31085 | hv_п_єр_луі_молін | uk | 1956 | shev.modern (high) | wl.new | 119 | 19 | 0 |
+| hv_ws_355031 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 717 | 44 | 0 |
 | hv_ws_355037 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 274 | 20 | 0 |
+| hv_ws_358751 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 184 | 20 | 0 |
+| hv_ws_464834 | hv_wikisource-uk | uk | 1956 | shev.modern (high) | wl.new | 193 | 19 | 0 |
+| hv_ws_358725 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 162 | 20 | 0 |
+| hv_ws_358726 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 194 | 19 | 0 |
+| hv_ws_358727 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 174 | 19 | 0 |
+| hv_ws_358733 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 182 | 19 | 0 |
 | hv_ws_547565 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 275 | 37 | 0 |
 | hv_ws_59432 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 74 | 2 | 0 |
 | hv_ws_59433 | hv_wikisource-uk | uk | 1957 | shev.modern (high) | wl.new | 2 727 | 9 | 0 |
+| hv_ws_136185 | hv_wikisource-uk | uk | 1958 | shev.modern (high) | wl.new | 624 | 41 | 0 |
+| hv_ws_33621 | hv_wikisource-uk | uk | 1958 | shev.modern (high) | wl.new | 204 | 21 | 0 |
 | hv_ws_598649 | hv_юріи_немирич | uk | 1958 | shev.modern (high) | wl.new | 630 | 30 | 0 |
+| hv_ws_42205 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 38 | 2 | 0 |
+| hv_ws_42207 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 42 | 2 | 0 |
+| hv_ws_42209 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 48 | 2 | 0 |
+| hv_ws_42210 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 26 | 2 | 0 |
+| hv_ws_42212 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 43 | 2 | 0 |
+| hv_ws_42213 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 70 | 2 | 0 |
+| hv_ws_42214 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 104 | 2 | 0 |
+| hv_ws_42216 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 66 | 2 | 0 |
+| hv_ws_42217 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 20 | 2 | 0 |
+| hv_ws_42218 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 31 | 2 | 0 |
+| hv_ws_42220 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 62 | 2 | 0 |
+| hv_ws_42221 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 64 | 8 | 0 |
+| hv_ws_42222 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 22 | 2 | 0 |
+| hv_ws_42223 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 49 | 2 | 0 |
+| hv_ws_42224 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 50 | 2 | 0 |
+| hv_ws_42225 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 29 | 2 | 0 |
+| hv_ws_42226 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 58 | 2 | 0 |
+| hv_ws_42227 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 43 | 4 | 0 |
+| hv_ws_42231 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 92 | 2 | 0 |
+| hv_ws_42404 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 23 | 2 | 0 |
+| hv_ws_42406 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 28 | 2 | 0 |
+| hv_ws_42410 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 66 | 2 | 0 |
+| hv_ws_42411 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 26 | 2 | 0 |
+| hv_ws_42412 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 29 | 2 | 0 |
+| hv_ws_42413 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 57 | 2 | 0 |
+| hv_ws_42414 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 32 | 0 | 0 |
+| hv_ws_42415 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 61 | 2 | 0 |
+| hv_ws_42416 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 25 | 2 | 0 |
+| hv_ws_42417 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 27 | 2 | 0 |
+| hv_ws_42418 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 120 | 2 | 0 |
+| hv_ws_42419 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 39 | 2 | 0 |
+| hv_ws_42420 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 114 | 2 | 0 |
+| hv_ws_42421 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 24 | 0 | 0 |
+| hv_ws_42422 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 39 | 2 | 0 |
+| hv_ws_42423 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 41 | 2 | 0 |
+| hv_ws_42439 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 77 | 7 | 0 |
+| hv_ws_42440 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 281 | 8 | 0 |
 | hv_ws_42628 | hv_wikisource-uk | uk | 1959 | shev.modern (high) | wl.new | 522 | 0 | 0 |
+| hv_ws_63010 | hv_ярослав_дашкевич | uk | 1959 | shev.modern (high) | wl.new | 853 | 432 | 0 |
+| hv_ws_161700 | hv_маркіян_шашкевич | uk | 1960 | shev.modern (high) | wl.new | 403 | 102 | 0 |
 | hv_ws_179247 | hv_іван_манило | uk | 1960 | shev.modern (high) | wl.new | 126 | 27 | 0 |
 | hv_ws_37443 | hv_марія_дмитренко | uk | 1960 | shev.modern (high) | wl.new | 8 680 | 55 | 0 |
 | hv_ws_42442 | hv_wikisource-uk | uk | 1960 | shev.modern (high) | wl.new | 128 | 0 | 0 |
@@ -3913,23 +4924,74 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_42477 | hv_wikisource-uk | uk | 1961 | shev.modern (high) | wl.new | 59 | 0 | 0 |
 | hv_ws_59081 | hv_wikisource-uk | uk | 1961 | shev.modern (high) | wl.new | 202 | 1 | 0 |
 | hv_ws_59090 | hv_wikisource-uk | uk | 1961 | shev.modern (high) | wl.new | 102 | 0 | 0 |
+| hv_ws_61314 | hv_wikisource-uk | uk | 1961 | shev.modern (high) | wl.new | 41 | 0 | 0 |
+| hv_ws_41825 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 7 341 | 283 | 0 |
+| hv_ws_42443 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 90 | 3 | 0 |
+| hv_ws_59046 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 154 | 3 | 0 |
+| hv_ws_59047 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 143 | 5 | 0 |
+| hv_ws_59050 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 1 055 | 2 | 0 |
+| hv_ws_59051 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 170 | 2 | 0 |
+| hv_ws_59055 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 122 | 2 | 0 |
+| hv_ws_59056 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 80 | 0 | 0 |
+| hv_ws_59060 | hv_wikisource-uk | uk | 1962 | shev.modern (high) | wl.new | 35 | 0 | 0 |
+| hv_ws_178334 | hv_wikisource-uk | uk | 1963 | shev.modern (high) | wl.new | 243 | 70 | 0 |
 | hv_ws_353416 | hv_wikisource-uk | uk | 1963 | shev.modern (high) | wl.new | 227 | 27 | 0 |
+| hv_ws_473009 | hv_wikisource-uk | uk | 1963 | shev.modern (high) | wl.new | 244 | 18 | 0 |
+| hv_ws_473010 | hv_wikisource-uk | uk | 1963 | shev.modern (high) | wl.new | 202 | 18 | 0 |
+| hv_ws_49597 | hv_x | uk | 1963 | shev.modern (high) | wl.new | 3 903 | 91 | 0 |
+| hv_ws_52793 | hv_рональд_реи_ган | uk | 1964 | shev.modern (high) | wl.new | 3 815 | 59 | 37 |
 | hv_ws_195388 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 129 | 80 | 0 |
+| hv_ws_42436 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 44 | 0 | 0 |
+| hv_ws_500813 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 199 | 21 | 0 |
+| hv_ws_501033 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 214 | 20 | 0 |
+| hv_ws_501035 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 284 | 23 | 0 |
+| hv_ws_501066 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 939 | 27 | 0 |
+| hv_ws_501069 | hv_wikisource-uk | uk | 1965 | shev.modern (high) | wl.new | 2 205 | 91 | 0 |
+| hv_ws_123373 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 3 002 | 108 | 0 |
+| hv_ws_123379 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 171 | 20 | 0 |
+| hv_ws_123380 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 170 | 20 | 0 |
+| hv_ws_123381 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 174 | 20 | 0 |
+| hv_ws_123384 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 184 | 20 | 0 |
 | hv_ws_30422 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 206 | 5 | 81 |
+| hv_ws_354875 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 211 | 20 | 0 |
+| hv_ws_358814 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 171 | 20 | 0 |
+| hv_ws_358815 | hv_wikisource-uk | uk | 1966 | shev.modern (high) | wl.new | 195 | 19 | 0 |
 | hv_ws_178818 | hv_іван_кулик | uk | 1967 | shev.modern (high) | wl.new | 308 | 109 | 0 |
 | hv_ws_166909 | hv_wikisource-uk | uk | 1970 | shev.modern (high) | wl.new | 426 | 42 | 0 |
+| hv_ws_33664 | hv_wikisource-uk | uk | 1970 | shev.modern (high) | wl.new | 198 | 23 | 0 |
 | hv_ws_355555 | hv_wikisource-uk | uk | 1970 | shev.modern (high) | wl.new | 32 485 | 2834 | 0 |
+| hv_ws_182461 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 91 | 113 | 0 |
+| hv_ws_33668 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 79 | 4 | 0 |
+| hv_ws_357610 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 185 | 21 | 0 |
+| hv_ws_357963 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 4 732 | 232 | 0 |
 | hv_ws_36244 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 838 | 25 | 0 |
 | hv_ws_36246 | hv_wikisource-uk | uk | 1971 | shev.modern (high) | wl.new | 100 | 7 | 0 |
+| hv_ws_358372 | hv_wikisource-uk | uk | 1973 | shev.modern (high) | wl.new | 235 | 21 | 0 |
+| hv_ws_41977 | hv_wikisource-uk | uk | 1973 | shev.modern (high) | wl.new | 279 | 22 | 0 |
+| hv_ws_126128 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 249 | 29 | 0 |
+| hv_ws_126732 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 177 | 21 | 0 |
+| hv_ws_136645 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 1 063 | 25 | 0 |
 | hv_ws_184116 | hv_пилип_деркач | uk | 1975 | shev.modern (high) | wl.new | 104 | 116 | 0 |
+| hv_ws_358378 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 187 | 22 | 0 |
+| hv_ws_358388 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 232 | 21 | 0 |
+| hv_ws_42240 | hv_wikisource-uk | uk | 1975 | shev.modern (high) | wl.new | 1 202 | 344 | 0 |
 | hv_ws_47761 | hv_wikisource-uk | uk | 1976 | shev.modern (high) | wl.new | 273 | 113 | 0 |
 | hv_ws_162021 | hv_wikisource-uk | uk | 1977 | shev.modern (high) | wl.new | 824 | 109 | 0 |
 | hv_ws_132822 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 8 831 | 273 | 0 |
+| hv_ws_132832 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 196 | 21 | 0 |
+| hv_ws_132833 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 182 | 21 | 0 |
+| hv_ws_132836 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 197 | 21 | 0 |
 | hv_ws_134695 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 1 557 | 41 | 0 |
 | hv_ws_13692 | hv_павло_тичина_микола_бажан | uk | 1978 | shev.modern (high) | wl.new | 84 | 0 | 0 |
+| hv_ws_162144 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 172 | 21 | 0 |
 | hv_ws_195118 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 276 | 18 | 0 |
+| hv_ws_195147 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 177 | 25 | 0 |
+| hv_ws_195158 | hv_wikisource-uk | uk | 1978 | shev.modern (high) | wl.new | 180 | 23 | 0 |
 | hv_ws_355964 | hv_wikisource-uk | uk | 1979 | shev.modern (high) | wl.new | 8 351 | 2770 | 0 |
+| hv_ws_41979 | hv_wikisource-uk | uk | 1979 | shev.modern (high) | wl.new | 249 | 21 | 0 |
 | hv_ws_136170 | hv_wikisource-uk | uk | 1980 | shev.modern (high) | wl.new | 380 | 26 | 0 |
+| hv_ws_136193 | hv_wikisource-uk | uk | 1980 | shev.modern (high) | wl.new | 743 | 33 | 0 |
+| hv_ws_136198 | hv_wikisource-uk | uk | 1980 | shev.modern (high) | wl.new | 269 | 26 | 0 |
 | hv_ws_136200 | hv_wikisource-uk | uk | 1980 | shev.modern (high) | wl.new | 791 | 39 | 0 |
 | hv_ws_136266 | hv_wikisource-uk | uk | 1980 | shev.modern (high) | wl.new | 10 658 | 305 | 0 |
 | hv_ws_44774 | hv_x | uk | 1980 | shev.modern (high) | wl.new | 788 | 168 | 4 |
@@ -3940,6 +5002,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_125048 | hv_павло_грабовськии | uk | 1985 | shev.modern (high) | wl.new | 801 | 47 | 0 |
 | hv_ws_126827 | hv_павло_грабовськии | uk | 1985 | shev.modern (high) | wl.new | 655 | 142 | 0 |
 | hv_ws_135708 | hv_wikisource-uk | uk | 1985 | shev.modern (high) | wl.new | 789 | 108 | 0 |
+| hv_ws_30503 | hv_анатоліи_свидницькии | uk | 1985 | shev.modern (high) | wl.new | 429 | 35 | 0 |
 | hv_ws_30504 | hv_анатоліи_свидницькии | uk | 1985 | shev.modern (high) | wl.new | 506 | 22 | 0 |
 | hv_ws_30505 | hv_анатоліи_свидницькии | uk | 1985 | shev.modern (high) | wl.new | 588 | 28 | 0 |
 | hv_ws_36504 | hv_wikisource-uk | uk | 1985 | shev.modern (high) | wl.new | 4 065 | 23 | 0 |
@@ -3947,12 +5010,35 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_30873 | hv_wikisource-uk | uk | 1988 | shev.modern (high) | wl.new | 53 | 2 | 0 |
 | hv_ws_30874 | hv_wikisource-uk | uk | 1988 | shev.modern (high) | wl.new | 322 | 5 | 0 |
 | hv_ws_30894 | hv_wikisource-uk | uk | 1988 | shev.modern (high) | wl.new | 304 | 6 | 0 |
+| hv_ws_3423 | hv_зеновіи_филипчук | uk | 1988 | shev.modern (high) | wl.new | 94 | 1 | 0 |
+| hv_ws_42437 | hv_wikisource-uk | uk | 1988 | shev.modern (high) | wl.new | 25 | 1 | 0 |
 | hv_ws_565452 | hv_wikisource-uk | uk | 1989 | shev.modern (high) | wl.new | 2 702 | 54 | 0 |
 | hv_ws_130889 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 463 | 22 | 0 |
 | hv_ws_133583 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 2 032 | 48 | 0 |
 | hv_ws_136059 | hv_шманьківська_сільська_рада | uk | 1990 | shev.modern (high) | wl.new | 560 | 40 | 0 |
 | hv_ws_136882 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 1 318 | 303 | 0 |
+| hv_ws_28935 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 376 | 5 | 0 |
+| hv_ws_28936 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 411 | 15 | 0 |
+| hv_ws_28937 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 67 | 8 | 0 |
+| hv_ws_28938 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 53 | 6 | 0 |
+| hv_ws_28939 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 48 | 8 | 0 |
+| hv_ws_28940 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 62 | 8 | 0 |
+| hv_ws_28941 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 50 | 3 | 0 |
+| hv_ws_28945 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 32 | 3 | 0 |
+| hv_ws_28946 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 45 | 3 | 0 |
+| hv_ws_28947 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 2 357 | 48 | 0 |
+| hv_ws_28950 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 109 | 6 | 0 |
+| hv_ws_28951 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 168 | 7 | 0 |
+| hv_ws_28952 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 169 | 10 | 0 |
+| hv_ws_28954 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 539 | 27 | 0 |
 | hv_ws_30415 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 109 | 14 | 0 |
+| hv_ws_30438 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 128 | 24 | 0 |
+| hv_ws_30439 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 134 | 7 | 0 |
+| hv_ws_30440 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 140 | 9 | 0 |
+| hv_ws_30453 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 36 | 3 | 0 |
+| hv_ws_30454 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 185 | 5 | 0 |
+| hv_ws_30456 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 52 | 8 | 0 |
+| hv_ws_30577 | hv_львівська_міська_рада | uk | 1990 | shev.modern (high) | wl.new | 54 | 8 | 0 |
 | hv_ws_30804 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 147 | 8 | 0 |
 | hv_ws_30819 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 494 | 18 | 0 |
 | hv_ws_30820 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 460 | 2 | 0 |
@@ -3960,12 +5046,18 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_30875 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 170 | 15 | 0 |
 | hv_ws_30876 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 640 | 21 | 0 |
 | hv_ws_30899 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 68 | 11 | 0 |
+| hv_ws_31867 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 110 | 11 | 0 |
+| hv_ws_31869 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 121 | 11 | 0 |
+| hv_ws_31900 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 1 004 | 45 | 0 |
+| hv_ws_33624 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 181 | 21 | 0 |
 | hv_ws_4216 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 180 | 26 | 0 |
 | hv_ws_445179 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 179 | 23 | 0 |
+| hv_ws_57236 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 36 | 0 | 0 |
 | hv_ws_7819 | hv_wikisource-uk | uk | 1990 | shev.modern (high) | wl.new | 1 194 | 33 | 0 |
 | hv_ws_107688 | hv_леонід_кравчук | uk | 1991 | shev.modern (high) | wl.new | 1 889 | 5 | 0 |
 | hv_ws_133998 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 275 | 30 | 0 |
 | hv_ws_1562 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 198 | 15 | 0 |
+| hv_ws_30634 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 479 | 12 | 0 |
 | hv_ws_30806 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 424 | 18 | 0 |
 | hv_ws_30807 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 364 | 0 | 0 |
 | hv_ws_30808 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 755 | 59 | 0 |
@@ -3980,32 +5072,42 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_30903 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 168 | 9 | 0 |
 | hv_ws_30905 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 24 | 1 | 0 |
 | hv_ws_30913 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 26 | 1 | 0 |
+| hv_ws_30914 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 49 | 5 | 0 |
 | hv_ws_30915 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 104 | 7 | 0 |
 | hv_ws_30917 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 179 | 5 | 0 |
+| hv_ws_30931 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 229 | 16 | 0 |
+| hv_ws_30932 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 97 | 11 | 0 |
+| hv_ws_30934 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 129 | 5 | 0 |
 | hv_ws_30953 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 1 853 | 39 | 0 |
 | hv_ws_30996 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 154 | 9 | 0 |
 | hv_ws_30997 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 211 | 10 | 0 |
 | hv_ws_31149 | hv_борис_єльцин | uk | 1991 | shev.modern (high) | wl.new | 143 | 6 | 0 |
+| hv_ws_31150 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 1 129 | 45 | 532 |
 | hv_ws_31160 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 190 | 2 | 0 |
+| hv_ws_31161 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 56 | 6 | 0 |
 | hv_ws_33586 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 175 | 24 | 0 |
 | hv_ws_33995 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 225 | 9 | 0 |
 | hv_ws_38332 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 210 | 7 | 0 |
 | hv_ws_408079 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 203 | 24 | 0 |
 | hv_ws_4229 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 179 | 27 | 0 |
+| hv_ws_42427 | hv_wikisource-uk | uk | 1991 | shev.modern (high) | wl.new | 34 | 8 | 0 |
 | hv_ws_569813 | hv_леонід_кравчук | uk | 1991 | shev.modern (high) | wl.new | 807 | 13 | 0 |
 | hv_ws_107886 | hv_леонід_кравчук | uk | 1992 | shev.modern (high) | wl.new | 4 324 | 6 | 0 |
 | hv_ws_162313 | hv_wikisource-uk | uk | 1992 | shev.modern (high) | wl.new | 217 | 33 | 0 |
 | hv_ws_32414 | hv_wikisource-uk | uk | 1992 | shev.modern (high) | wl.new | 166 | 22 | 0 |
 | hv_ws_33591 | hv_wikisource-uk | uk | 1992 | shev.modern (high) | wl.new | 186 | 27 | 0 |
+| hv_ws_52360 | hv_wikisource-uk | uk | 1992 | shev.modern (high) | wl.new | 146 | 14 | 0 |
 | hv_ws_577606 | hv_рада_європи | uk | 1992 | shev.modern (high) | wl.new | 4 837 | 263 | 0 |
 | hv_ws_34511 | hv_x | uk | 1993 | shev.modern (high) | wl.new | 43 | 1 | 0 |
 | hv_ws_411444 | hv_вільгельм_гауф | uk | 1993 | shev.modern (high) | wl.new | 8 401 | 38 | 0 |
+| hv_ws_52363 | hv_wikisource-uk | uk | 1993 | shev.modern (high) | wl.new | 131 | 8 | 0 |
 | hv_ws_63125 | hv_x | uk | 1993 | shev.modern (high) | wl.new | 8 571 | 568 | 4024 |
 | hv_ws_107694 | hv_леонід_кучма | uk | 1994 | shev.modern (high) | wl.new | 1 557 | 2 | 0 |
 | hv_ws_31439 | hv_wikisource-uk | uk | 1994 | shev.modern (high) | wl.new | 671 | 551 | 270 |
 | hv_ws_9387 | hv_дмитро_білии | uk | 1994 | shev.modern (high) | wl.new | 45 | 0 | 0 |
 | hv_ws_52293 | hv_wikisource-uk | uk | 1995 | shev.modern (high) | wl.new | 183 | 11 | 0 |
 | hv_ws_65071 | hv_wikisource-uk | uk | 1995 | shev.modern (high) | wl.new | 5 864 | 305 | 0 |
+| hv_ws_39027 | hv_wikisource-uk | uk | 1996 | shev.modern (high) | wl.new | 609 | 26 | 0 |
 | hv_ws_448722 | hv_wikisource-uk | uk | 1996 | shev.modern (high) | wl.new | 2 390 | 972 | 0 |
 | hv_ws_575324 | hv_верховна_рада_украі_ни | uk | 1996 | shev.modern (high) | wl.new | 12 401 | 486 | 0 |
 | hv_ws_64447 | hv_x | uk | 1996 | shev.modern (high) | wl.new | 1 250 | 15 | 0 |
@@ -4044,6 +5146,8 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_52125 | hv_гвардіи_ська_сільська_рада | uk | 2005 | shev.modern (high) | wl.new | 359 | 10 | 0 |
 | hv_ws_107891 | hv_віктор_ющенко | uk | 2006 | shev.modern (high) | wl.new | 1 266 | 16 | 0 |
 | hv_ws_123276 | hv_нді_дизаи_ну_нау_украі_нськии_нді_текстильноі_пр | uk | 2006 | shev.modern (high) | wl.new | 2 228 | 477 | 115 |
+| hv_ws_1558 | hv_віктор_ющенко | uk | 2006 | shev.modern (high) | wl.new | 1 166 | 40 | 0 |
+| hv_ws_34841 | hv_віктор_ющенко | uk | 2006 | shev.modern (high) | wl.new | 277 | 17 | 0 |
 | hv_ws_348644 | hv_wikisource-uk | uk | 2006 | shev.modern (high) | wl.new | 247 | 38 | 0 |
 | hv_ws_348646 | hv_міністерство_культури_і_туризму_украі_ни | uk | 2006 | shev.modern (high) | wl.new | 257 | 29 | 0 |
 | hv_ws_348762 | hv_wikisource-uk | uk | 2006 | shev.modern (high) | wl.new | 1 010 | 321 | 0 |
@@ -4054,7 +5158,9 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_521219 | hv_wikisource-uk | uk | 2007 | shev.modern (high) | wl.new | 1 774 | 505 | 0 |
 | hv_ws_107893 | hv_віктор_ющенко | uk | 2008 | shev.modern (high) | wl.new | 933 | 7 | 0 |
 | hv_ws_22343 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 612 | 40 | 0 |
+| hv_ws_31342 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 149 | 73 | 0 |
 | hv_ws_313442 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 266 | 38 | 0 |
+| hv_ws_3388 | hv_роман_мацюк | uk | 2008 | shev.modern (high) | wl.new | 681 | 165 | 0 |
 | hv_ws_345639 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 457 | 77 | 0 |
 | hv_ws_352173 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 456 | 114 | 0 |
 | hv_ws_354762 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 988 | 260 | 0 |
@@ -4084,7 +5190,9 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_52240 | hv_великогаі_вська_сільська_рада | uk | 2008 | shev.modern (high) | wl.new | 116 | 12 | 0 |
 | hv_ws_54180 | hv_wikisource-uk | uk | 2008 | shev.modern (high) | wl.new | 86 | 8 | 0 |
 | hv_ws_107889 | hv_віктор_ющенко | uk | 2009 | shev.modern (high) | wl.new | 2 052 | 15 | 0 |
+| hv_ws_11393 | hv_дмитро_білии | uk | 2009 | shev.modern (high) | wl.new | 100 | 20 | 0 |
 | hv_ws_126993 | hv_wikisource-uk | uk | 2009 | shev.modern (high) | wl.new | 327 | 35 | 0 |
+| hv_ws_130760 | hv_x | uk | 2009 | shev.modern (high) | wl.new | 151 | 20 | 0 |
 | hv_ws_20854 | hv_ірина_довгалюк | uk | 2009 | shev.modern (high) | wl.new | 9 443 | 869 | 184 |
 | hv_ws_313443 | hv_міністерство_культури_і_туризму_украі_ни | uk | 2009 | shev.modern (high) | wl.new | 271 | 40 | 0 |
 | hv_ws_54174 | hv_wikisource-uk | uk | 2009 | shev.modern (high) | wl.new | 66 | 11 | 0 |
@@ -4138,6 +5246,8 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_175347 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 734 | 221 | 0 |
 | hv_ws_20012 | hv_петро_порошенко | uk | 2014 | shev.modern (high) | wl.new | 1 930 | 6 | 0 |
 | hv_ws_20016 | hv_петро_порошенко | uk | 2014 | shev.modern (high) | wl.new | 1 404 | 2 | 0 |
+| hv_ws_24026 | hv_кирило_галушко | uk | 2014 | shev.modern (high) | wl.new | 77 | 18 | 0 |
+| hv_ws_24659 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 6 326 | 73 | 301 |
 | hv_ws_28824 | hv_петро_порошенко | uk | 2014 | shev.modern (high) | wl.new | 585 | 3 | 0 |
 | hv_ws_28825 | hv_петро_порошенко | uk | 2014 | shev.modern (high) | wl.new | 2 956 | 20 | 0 |
 | hv_ws_30525 | hv_постіи_нии_представник_украі_ни_при_оон | uk | 2014 | shev.modern (high) | wl.new | 72 | 6 | 0 |
@@ -4149,15 +5259,19 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_31135 | hv_петро_порошенко | uk | 2014 | shev.modern (high) | wl.new | 909 | 7 | 0 |
 | hv_ws_31145 | hv_віктор_янукович | uk | 2014 | shev.modern (high) | wl.new | 182 | 17 | 0 |
 | hv_ws_31423 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 116 | 6 | 0 |
+| hv_ws_31425 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 346 | 19 | 0 |
 | hv_ws_31426 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 342 | 15 | 0 |
 | hv_ws_31850 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 4 138 | 277 | 0 |
+| hv_ws_32116 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 3 349 | 372 | 0 |
 | hv_ws_32307 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 587 | 9 | 0 |
 | hv_ws_354252 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 18 999 | 6555 | 0 |
 | hv_ws_49919 | hv_віктор_янукович | uk | 2014 | shev.modern (high) | wl.new | 889 | 43 | 0 |
+| hv_ws_49920 | hv_x | uk | 2014 | shev.modern (high) | wl.new | 333 | 17 | 0 |
 | hv_ws_49922 | hv_x | uk | 2014 | shev.modern (high) | wl.new | 120 | 2 | 0 |
 | hv_ws_49927 | hv_x | uk | 2014 | shev.modern (high) | wl.new | 457 | 8 | 0 |
 | hv_ws_49928 | hv_x | uk | 2014 | shev.modern (high) | wl.new | 655 | 23 | 0 |
 | hv_ws_49929 | hv_x | uk | 2014 | shev.modern (high) | wl.new | 109 | 23 | 0 |
+| hv_ws_50938 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 471 | 174 | 0 |
 | hv_ws_52274 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 1 242 | 90 | 0 |
 | hv_ws_53371 | hv_wikisource-uk | uk | 2014 | shev.modern (high) | wl.new | 400 | 46 | 0 |
 | hv_ws_56291 | hv_володимир_добрянськии | uk | 2014 | shev.modern (high) | wl.new | 2 387 | 476 | 25 |
@@ -4167,6 +5281,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_162136 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 383 | 43 | 0 |
 | hv_ws_162137 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 413 | 54 | 0 |
 | hv_ws_175461 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 217 | 44 | 0 |
+| hv_ws_20189 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 865 | 5 | 0 |
 | hv_ws_29125 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 356 | 35 | 0 |
 | hv_ws_30686 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 785 | 31 | 0 |
 | hv_ws_30693 | hv_wikisource-uk | uk | 2015 | shev.modern (high) | wl.new | 275 | 6 | 0 |
@@ -4192,6 +5307,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_126976 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 346 | 27 | 0 |
 | hv_ws_175460 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 230 | 23 | 0 |
 | hv_ws_28822 | hv_петро_порошенко | uk | 2016 | shev.modern (high) | wl.new | 1 394 | 18 | 0 |
+| hv_ws_28823 | hv_петро_порошенко | uk | 2016 | shev.modern (high) | wl.new | 849 | 12 | 0 |
 | hv_ws_28867 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 651 | 93 | 0 |
 | hv_ws_29032 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 508 | 171 | 0 |
 | hv_ws_29034 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 386 | 100 | 0 |
@@ -4201,6 +5317,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_30618 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 34 | 4 | 0 |
 | hv_ws_30631 | hv_верховна_рада_украі_ни | uk | 2016 | shev.modern (high) | wl.new | 124 | 14 | 0 |
 | hv_ws_30666 | hv_петро_порошенко | uk | 2016 | shev.modern (high) | wl.new | 2 877 | 38 | 0 |
+| hv_ws_30671 | hv_петро_порошенко | uk | 2016 | shev.modern (high) | wl.new | 5 860 | 57 | 0 |
 | hv_ws_30756 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 776 | 34 | 0 |
 | hv_ws_31427 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 241 | 5 | 0 |
 | hv_ws_33899 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 665 | 61 | 0 |
@@ -4215,6 +5332,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_53913 | hv_володимир_лук_янюк | uk | 2016 | shev.modern (high) | wl.new | 450 | 21 | 0 |
 | hv_ws_53930 | hv_володимир_лук_янюк | uk | 2016 | shev.modern (high) | wl.new | 612 | 30 | 0 |
 | hv_ws_56294 | hv_володимир_добрянськии | uk | 2016 | shev.modern (high) | wl.new | 907 | 19 | 0 |
+| hv_ws_56421 | hv_wikisource-uk | uk | 2016 | shev.modern (high) | wl.new | 203 | 33 | 0 |
 | hv_ws_107901 | hv_петро_порошенко | uk | 2017 | shev.modern (high) | wl.new | 1 245 | 5 | 0 |
 | hv_ws_124935 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 4 324 | 93 | 0 |
 | hv_ws_126977 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 373 | 32 | 0 |
@@ -4226,10 +5344,14 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_32128 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 273 | 36 | 0 |
 | hv_ws_32313 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 375 | 71 | 0 |
 | hv_ws_32475 | hv_кабінет_міністрів_украі_ни | uk | 2017 | shev.modern (high) | wl.new | 116 | 9 | 0 |
+| hv_ws_32494 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 1 312 | 808 | 0 |
+| hv_ws_34358 | hv_володимир_путін | uk | 2017 | shev.modern (high) | wl.new | 251 | 15 | 0 |
 | hv_ws_34361 | hv_петро_порошенко | uk | 2017 | shev.modern (high) | wl.new | 957 | 7 | 0 |
 | hv_ws_350215 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 1 808 | 271 | 0 |
+| hv_ws_351888 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 5 884 | 2758 | 0 |
 | hv_ws_352016 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 245 | 43 | 0 |
 | hv_ws_353734 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 21 492 | 8921 | 0 |
+| hv_ws_35396 | hv_дональд_трамп | uk | 2017 | shev.modern (high) | wl.new | 2 312 | 138 | 0 |
 | hv_ws_354655 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 231 | 46 | 0 |
 | hv_ws_354741 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 11 518 | 3578 | 0 |
 | hv_ws_354801 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 2 251 | 595 | 0 |
@@ -4240,6 +5362,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_42233 | hv_x | uk | 2017 | shev.modern (high) | wl.new | 84 | 15 | 0 |
 | hv_ws_44083 | hv_джакомо_пуччіні_луі_джі_іллікі | uk | 2017 | shev.modern (high) | wl.new | 78 | 0 | 0 |
 | hv_ws_49535 | hv_володимир_лук_янюк | uk | 2017 | shev.modern (high) | wl.new | 647 | 31 | 0 |
+| hv_ws_49767 | hv_геннадіи_єфіменко | uk | 2017 | shev.modern (high) | wl.new | 1 181 | 28 | 0 |
 | hv_ws_49794 | hv_лариса_якубова | uk | 2017 | shev.modern (high) | wl.new | 977 | 24 | 0 |
 | hv_ws_52134 | hv_wikisource-uk | uk | 2017 | shev.modern (high) | wl.new | 900 | 34 | 0 |
 | hv_ws_52201 | hv_баи_ковецька_сільська_рада | uk | 2017 | shev.modern (high) | wl.new | 1 380 | 107 | 0 |
@@ -4254,6 +5377,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_353540 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 13 980 | 6325 | 0 |
 | hv_ws_355089 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 1 042 | 192 | 0 |
 | hv_ws_42668 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 989 | 26 | 0 |
+| hv_ws_44065 | hv_модест_чаи_ковськии | uk | 2018 | shev.modern (high) | wl.new | 1 398 | 6 | 0 |
 | hv_ws_46419 | hv_петро_порошенко | uk | 2018 | shev.modern (high) | wl.new | 362 | 13 | 0 |
 | hv_ws_49462 | hv_x | uk | 2018 | shev.modern (high) | wl.new | 723 | 80 | 0 |
 | hv_ws_49463 | hv_x | uk | 2018 | shev.modern (high) | wl.new | 52 | 11 | 0 |
@@ -4267,7 +5391,10 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_52086 | hv_залісянська_сільська_рада | uk | 2018 | shev.modern (high) | wl.new | 459 | 43 | 0 |
 | hv_ws_52246 | hv_чортківська_міська_рада | uk | 2018 | shev.modern (high) | wl.new | 130 | 18 | 0 |
 | hv_ws_52252 | hv_заводська_селищна_рада | uk | 2018 | shev.modern (high) | wl.new | 81 | 7 | 0 |
+| hv_ws_53929 | hv_володимир_лук_янюк | uk | 2018 | shev.modern (high) | wl.new | 857 | 66 | 0 |
 | hv_ws_56283 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 709 | 79 | 0 |
+| hv_ws_56284 | hv_володимир_добрянськии | uk | 2018 | shev.modern (high) | wl.new | 668 | 39 | 284 |
+| hv_ws_56346 | hv_володимир_добрянськии | uk | 2018 | shev.modern (high) | wl.new | 629 | 18 | 0 |
 | hv_ws_56347 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 846 | 29 | 0 |
 | hv_ws_59624 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 205 | 22 | 0 |
 | hv_ws_59625 | hv_wikisource-uk | uk | 2018 | shev.modern (high) | wl.new | 149 | 27 | 0 |
@@ -4278,6 +5405,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_126978 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 395 | 33 | 0 |
 | hv_ws_161916 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 591 | 61 | 0 |
 | hv_ws_353371 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 1 024 | 308 | 0 |
+| hv_ws_56285 | hv_володимир_добрянськии | uk | 2019 | shev.modern (high) | wl.new | 873 | 41 | 306 |
 | hv_ws_56286 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 551 | 34 | 0 |
 | hv_ws_56287 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 1 434 | 108 | 0 |
 | hv_ws_56301 | hv_леонід_кучма | uk | 2019 | shev.modern (high) | wl.new | 371 | 27 | 0 |
@@ -4289,6 +5417,7 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_584806 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 16 505 | 1049 | 0 |
 | hv_ws_59614 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 147 | 16 | 0 |
 | hv_ws_59893 | hv_wikisource-uk | uk | 2019 | shev.modern (high) | wl.new | 1 066 | 29 | 0 |
+| hv_ws_61460 | hv_володимир_добрянськии | uk | 2019 | shev.modern (high) | wl.new | 864 | 37 | 0 |
 | hv_ws_66530 | hv_володимир_добрянськии | uk | 2019 | shev.modern (high) | wl.new | 1 630 | 79 | 0 |
 | hv_ws_112944 | hv_wikisource-uk | uk | 2020 | shev.modern (high) | wl.new | 6 384 | 75 | 0 |
 | hv_ws_132020 | hv_wikisource-uk | uk | 2020 | shev.modern (high) | wl.new | 3 358 | 308 | 141 |
@@ -4329,8 +5458,11 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_586142 | hv_wikisource-uk | uk | 2022 | shev.modern (high) | wl.new | 5 303 | 336 | 0 |
 | hv_ws_354075 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 46 132 | 19995 | 0 |
 | hv_ws_354323 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 12 021 | 4126 | 0 |
+| hv_ws_380869 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 692 | 90 | 217 |
 | hv_ws_448941 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 38 766 | 4517 | 0 |
+| hv_ws_556742 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 872 | 300 | 0 |
 | hv_ws_584763 | hv_wikisource-uk | uk | 2023 | shev.modern (high) | wl.new | 7 399 | 252 | 0 |
+| hv_ws_380846 | hv_wikisource-uk | uk | 2024 | shev.modern (high) | wl.new | 1 137 | 73 | 0 |
 | hv_ws_447779 | hv_wikisource-uk | uk | 2024 | shev.modern (high) | wl.new | 33 314 | 11871 | 0 |
 | hv_ws_449423 | hv_wikisource-uk | uk | 2024 | shev.modern (high) | wl.new | 16 435 | 6116 | 0 |
 | hv_ws_453081 | hv_wikisource-uk | uk | 2024 | shev.modern (high) | wl.new | 11 858 | 4729 | 0 |
@@ -4342,25 +5474,25 @@ Generated 2026-10-17T21:28:37.904Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_564963 | hv_wikisource-uk | uk | 2026 | shev.modern (high) | wl.new | 506 | 33 | 0 |
 | hv_ws_586001 | hv_wikisource-uk | uk | 2026 | shev.modern (high) | wl.new | 347 | 29 | 0 |
 
-Admitted witnesses: 4336; N = 46 353 973. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 5468; N = 47 607 952. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=46 353 973 |
+| epoch | name | scheme | N | share of N=47 607 952 |
 |---|---|---|---|---|
 | shev.proto | протоукраїнська доба | shev | 7 214 | 0.0% |
-| shev.old | давньоукраїнська доба | shev | 259 552 | 0.6% |
+| shev.old | давньоукраїнська доба | shev | 259 552 | 0.5% |
 | shev.early_middle | ранньосередньоукраїнська доба | shev | 148 347 | 0.3% |
 | shev.middle | середньоукраїнська доба | shev | 463 197 | 1.0% |
 | shev.late_middle | пізньосередньоукраїнська доба | shev | 195 475 | 0.4% |
-| shev.modern | новітня доба | shev | 45 280 188 | 97.7% |
+| shev.modern | новітня доба | shev | 46 534 167 | 97.7% |
 | wl.rus | давньоруська (княжа доба) | wl | 265 715 | 0.6% |
-| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 683 112 | 1.5% |
+| wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 683 112 | 1.4% |
 | wl.ruthenian.chancery | ділова староукраїнська | wl | 148 167 | 0.3% |
-| wl.new | нова українська літературна мова | wl | 45 405 146 | 98.0% |
-| wl.contemporary | сучасна українська літературна мова | wl | 1 070 280 | 2.3% |
+| wl.new | нова українська літературна мова | wl | 46 659 125 | 98.0% |
+| wl.contemporary | сучасна українська літературна мова | wl | 1 136 268 | 2.4% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 82 722 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 2 102 · 15 ст.: 136 044 · 16 ст.: 109 832 · 17 ст.: 325 583 · 18 ст.: 162 331 · 19 ст.: 4 460 451 · 20 ст.: 39 996 939 · 21 ст.: 895 627
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 82 722 · 12 ст.: 144 127 · 13 ст.: 38 215 · 14 ст.: 2 102 · 15 ст.: 136 044 · 16 ст.: 109 832 · 17 ст.: 325 583 · 18 ст.: 162 331 · 19 ст.: 4 509 957 · 20 ст.: 41 161 279 · 21 ст.: 935 760
 
 ### Exclusions (B-1.1)
 
@@ -4722,7 +5854,7 @@ Admitted witnesses: 4336; N = 46 353 973. Witnesses with a Shevchenko poem each 
 | lyst18_99 | pum18 | 235 | автор «pum18» не має запису верифікації (P-2.2) |
 | shevchenko_121 | shevchenko | 4519 | текст написано російською мовою, не українською (лексикон українських форм) — «Поэма Кого, рыдая, призову я Делить тоску, печаль мою В чужом краю, кому, тоскуя…» (http://izbornyk.org.ua/shevchenko/shev121.htm) |
 | shevchenko_123 | shevchenko | 2335 | текст написано російською мовою, не українською (лексикон українських форм) — «На память 9-го ноября 1843 года княжне Варваре Николаевне Репниной ПОСВЯЩЕНИЕ Ду…» (http://izbornyk.org.ua/shevchenko/shev123.htm) |
-Authors with a vetting record but **no admitted witness** (84): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); sakovych (vetted; ректор київських братських шкіл; раніше пропущений (P-2.1, лише «віру нашу святу); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе); hv_аркадіи_зекцер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_роберт_бернз (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_осип_юріи_федькович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аркадіи_аверченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дмитро_ростовськии_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_без_автора (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_пісні (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федькович_осип_юріи_адальбертович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аполлон_маи_ков (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_лермонтов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_вільгельм_мюллер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_казки (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мазепа (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_данило_череватськии_кандидат_технічних_наук_заві (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_романов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_петренко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федір_достоєвськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_народна_пісня (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_приходько (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євгенія_ярошинська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гази_ii_ґераи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_крилов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_квливидзе (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_бекір_чобан_заде (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_толстои (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_шолом_алеи_хем (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_едвард_желіговськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_жарко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_р_гамзатов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_я_полонськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_грицько_кохнівченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_рада_безпеки_оон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_о_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_хильмі_кримчак (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_маркіян_шашкевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_хмелецькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_борис_оречкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_алкеи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_румі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_ii (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олена_пчілка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_чмир (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олекса_бобикевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_цвєтаєва (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_анонімнии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_коростовець (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_цицерон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_артур_конан_дои_л (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дональд_туск (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_запорозькии_писар_саміи_ло_зорка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_подревськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_генрік_ібсен (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_е_фуско (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
+Authors with a vetting record but **no admitted witness** (96): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); sakovych (vetted; ректор київських братських шкіл; раніше пропущений (P-2.1, лише «віру нашу святу); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе); hv_аркадіи_зекцер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_роберт_бернз (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аркадіи_аверченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дмитро_ростовськии_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_без_автора (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_пісні (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федькович_осип_юріи_адальбертович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аполлон_маи_ков (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_лермонтов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_вільгельм_мюллер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_казки (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мазепа (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_данило_череватськии_кандидат_технічних_наук_заві (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_романов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_петренко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федір_достоєвськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_народна_пісня (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_приходько (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євгенія_ярошинська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гази_ii_ґераи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_крилов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_квливидзе (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_бекір_чобан_заде (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_толстои (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_шолом_алеи_хем (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_едвард_желіговськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_жарко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_р_гамзатов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_я_полонськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_грицько_кохнівченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_рада_безпеки_оон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_о_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_хильмі_кримчак (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_хмелецькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_борис_оречкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_алкеи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_румі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_ii (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олена_пчілка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_чмир (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олекса_бобикевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_цвєтаєва (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_анонімнии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_коростовець (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_цицерон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_артур_конан_дои_л (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дональд_туск (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_запорозькии_писар_саміи_ло_зорка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_подревськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_генрік_ібсен (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_е_фуско (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_юзеф_богдан_залеськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_апухтін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євген_чикаленко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_синод_пцу (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_г_галіна_1870_1942 (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_т_юхтія_та_ч_ванька (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мирович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_усеі_н_шаміль_тохтаргази (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_христина_алчевська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_л_меи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_осман_акчокракли (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_і_бунін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_джон_кеннеді (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нськии_народ (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
 
 ## 2. Linking coverage (B-2)
 
@@ -6702,6 +7834,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | molodyk1843_shevchenko | 149 | 0 | 0 | 0 | 131 | 18 | 87.9% |
 | shevchenko_124 | 169 | 0 | 0 | 0 | 163 | 6 | 96.4% |
 | hv_ws_110289 | 367 | 0 | 0 | 0 | 211 | 156 | 57.5% |
+| hv_ws_215785 | 59 | 0 | 0 | 0 | 39 | 20 | 66.1% |
 | shevchenko_125 | 307 | 0 | 0 | 0 | 298 | 9 | 97.1% |
 | shevchenko_126 | 848 | 0 | 0 | 0 | 833 | 15 | 98.2% |
 | shevchenko_127 | 160 | 0 | 0 | 0 | 157 | 3 | 98.1% |
@@ -6738,6 +7871,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_40533 | 59 | 0 | 0 | 0 | 53 | 6 | 89.8% |
 | hv_ia_etnozbirnyk1853 | 6 165 | 0 | 0 | 0 | 2180 | 3985 | 35.4% |
 | hv_ia_hrabianka | 5 445 | 0 | 0 | 0 | 2135 | 3310 | 39.2% |
+| hv_ws_37424 | 148 | 0 | 0 | 0 | 87 | 61 | 58.8% |
 | hv_ws_517228 | 150 | 0 | 0 | 0 | 141 | 9 | 94.0% |
 | hv_ws_5684 | 30 | 0 | 0 | 0 | 25 | 5 | 83.3% |
 | hv_ia_hatstsuk1857 | 34 732 | 0 | 0 | 0 | 21041 | 13691 | 60.6% |
@@ -6755,8 +7889,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_basenotaknazwane00unse | 738 | 0 | 0 | 0 | 553 | 185 | 74.9% |
 | hv_ia_golovatskyj1860 | 1 176 | 0 | 0 | 0 | 458 | 718 | 38.9% |
 | hv_ws_110393 | 1 026 | 0 | 0 | 0 | 874 | 152 | 85.2% |
+| hv_ws_110394 | 479 | 0 | 0 | 0 | 422 | 57 | 88.1% |
 | hv_ws_110404 | 422 | 0 | 0 | 0 | 331 | 91 | 78.4% |
 | hv_ws_36971 | 143 | 0 | 0 | 0 | 98 | 45 | 68.5% |
+| hv_ws_38030 | 235 | 0 | 0 | 0 | 203 | 32 | 86.4% |
 | hv_ia_1861derk | 2 111 | 0 | 0 | 0 | 1213 | 898 | 57.5% |
 | hv_ia_bandurista3 | 69 851 | 0 | 0 | 0 | 34082 | 35769 | 48.8% |
 | hv_ia_derk1861 | 2 078 | 0 | 0 | 0 | 1289 | 789 | 62.0% |
@@ -6770,15 +7906,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_39305 | 57 | 0 | 0 | 0 | 47 | 10 | 82.5% |
 | hv_ws_42055 | 883 | 0 | 0 | 0 | 767 | 116 | 86.9% |
 | hv_ws_66137 | 100 | 0 | 0 | 0 | 89 | 11 | 89.0% |
+| hv_ws_9075 | 4 536 | 0 | 0 | 0 | 4459 | 77 | 98.3% |
 | kulish1862 | 5 961 | 0 | 0 | 0 | 4133 | 1828 | 69.3% |
 | hv_ia_aruzr_3_1 | 16 918 | 0 | 0 | 0 | 6475 | 10443 | 38.3% |
 | hv_ws_17763 | 223 | 0 | 0 | 0 | 222 | 1 | 99.6% |
+| hv_ws_210777 | 206 | 0 | 0 | 0 | 191 | 15 | 92.7% |
 | hv_ia_hramatikaruskoho00osad | 86 882 | 0 | 0 | 0 | 35118 | 51764 | 40.4% |
 | hv_ws_180111 | 178 | 0 | 0 | 0 | 140 | 38 | 78.7% |
 | hv_ws_40959 | 211 | 0 | 0 | 0 | 190 | 21 | 90.0% |
 | hv_ia_dokumentyobiasn00brosgoog | 6 960 | 0 | 0 | 0 | 3036 | 3924 | 43.6% |
 | hv_ia_harkavy1865 | 932 | 0 | 0 | 0 | 281 | 651 | 30.2% |
 | hv_ws_8837 | 16 836 | 0 | 0 | 0 | 16652 | 184 | 98.9% |
+| hv_ws_36955 | 218 | 0 | 0 | 0 | 196 | 22 | 89.9% |
 | hv_ws_41547 | 289 | 0 | 0 | 0 | 219 | 70 | 75.8% |
 | hv_ws_38473 | 95 | 0 | 0 | 0 | 90 | 5 | 94.7% |
 | hv_ia_aruzr_3_2 | 10 868 | 0 | 0 | 0 | 4084 | 6784 | 37.6% |
@@ -6794,13 +7933,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_19884 | 150 | 0 | 0 | 0 | 117 | 33 | 78.0% |
 | hv_ia_chubynsky5 | 116 391 | 0 | 0 | 0 | 88943 | 27448 | 76.4% |
 | hv_ia_dragomanov | 66 682 | 0 | 0 | 0 | 40055 | 26627 | 60.1% |
+| hv_ws_206675 | 48 | 0 | 0 | 0 | 41 | 7 | 85.4% |
 | hv_ws_207065 | 48 | 0 | 0 | 0 | 45 | 3 | 93.8% |
 | hv_ws_207982 | 121 | 0 | 0 | 0 | 86 | 35 | 71.1% |
+| hv_ws_352174 | 5 266 | 0 | 0 | 0 | 4811 | 455 | 91.4% |
 | hv_ia_dragomanov2 | 32 793 | 0 | 0 | 0 | 21869 | 10924 | 66.7% |
 | hv_ws_110531 | 1 815 | 0 | 0 | 0 | 1699 | 116 | 93.6% |
 | hv_ws_40671 | 12 963 | 0 | 0 | 0 | 10707 | 2256 | 82.6% |
 | hv_ia_ch6t1 | 13 681 | 0 | 0 | 0 | 6700 | 6981 | 49.0% |
 | hv_ws_10760 | 57 | 0 | 0 | 0 | 55 | 2 | 96.5% |
+| hv_ws_220953 | 131 | 0 | 0 | 0 | 109 | 22 | 83.2% |
 | hv_ws_569010 | 4 249 | 0 | 0 | 0 | 3794 | 455 | 89.3% |
 | hv_ws_66704 | 7 593 | 0 | 0 | 0 | 7199 | 394 | 94.8% |
 | kobzar1876 | 88 813 | 0 | 0 | 0 | 83507 | 5306 | 94.0% |
@@ -6817,8 +7959,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_00003699 | 4 568 | 0 | 0 | 0 | 2907 | 1661 | 63.6% |
 | hv_ia_istoriiarusskots0101goluuoft | 222 921 | 0 | 0 | 0 | 69931 | 152990 | 31.4% |
 | hv_ia_istoriiarusskots0102goluuoft | 215 101 | 0 | 0 | 0 | 65472 | 149629 | 30.4% |
+| hv_ws_51179 | 313 | 0 | 0 | 0 | 246 | 67 | 78.6% |
 | hv_ia_dragom2 | 7 761 | 0 | 0 | 0 | 5890 | 1871 | 75.9% |
 | hv_ia_fil1882zap | 2 656 | 0 | 0 | 0 | 988 | 1668 | 37.2% |
+| hv_ws_208456 | 186 | 0 | 0 | 0 | 145 | 41 | 78.0% |
 | kulish1882 | 18 720 | 0 | 0 | 0 | 15601 | 3119 | 83.3% |
 | hv_ia_fl1883zap1 | 1 091 | 0 | 0 | 0 | 314 | 777 | 28.8% |
 | hv_ia_hutorn1883 | 19 319 | 0 | 0 | 0 | 11292 | 8027 | 58.5% |
@@ -6836,6 +7980,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | r2u_zheleh | 6 859 | 0 | 0 | 0 | 0 | 6859 | 0.0% |
 | hv_ia_arhuzr_1_7 | 80 527 | 0 | 0 | 0 | 24525 | 56002 | 30.5% |
 | hv_ws_40422 | 43 | 0 | 0 | 0 | 43 | 0 | 100.0% |
+| hv_ws_41101 | 35 | 0 | 0 | 0 | 35 | 0 | 100.0% |
 | hv_ws_42020 | 46 | 0 | 0 | 0 | 44 | 2 | 95.7% |
 | hv_ws_42023 | 55 | 0 | 0 | 0 | 51 | 4 | 92.7% |
 | hv_ws_210372 | 3 564 | 0 | 0 | 0 | 3034 | 530 | 85.1% |
@@ -6877,9 +8022,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_hlasopsnetsilyna00ukra | 34 414 | 0 | 0 | 0 | 19641 | 14773 | 57.1% |
 | hv_ws_176260 | 2 738 | 0 | 0 | 0 | 2169 | 569 | 79.2% |
 | hv_ws_210094 | 79 | 0 | 0 | 0 | 66 | 13 | 83.5% |
+| hv_ws_210098 | 74 | 0 | 0 | 0 | 67 | 7 | 90.5% |
 | hv_ws_24309 | 11 528 | 0 | 0 | 0 | 9649 | 1879 | 83.7% |
 | hv_ws_26591 | 1 500 | 0 | 0 | 0 | 1446 | 54 | 96.4% |
 | hv_ws_28623 | 614 | 0 | 0 | 0 | 592 | 22 | 96.4% |
+| hv_ws_356359 | 6 962 | 0 | 0 | 0 | 5877 | 1085 | 84.4% |
 | hv_ws_6678 | 24 275 | 0 | 0 | 0 | 23797 | 478 | 98.0% |
 | hv_ia_1895_t_4 | 194 209 | 0 | 0 | 0 | 161477 | 32732 | 83.1% |
 | hv_ia_cihm_30425 | 8 490 | 0 | 0 | 0 | 4538 | 3952 | 53.5% |
@@ -6889,11 +8036,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_123589 | 10 741 | 0 | 0 | 0 | 9256 | 1485 | 86.2% |
 | hv_ws_186460 | 350 | 0 | 0 | 0 | 284 | 66 | 81.1% |
 | hv_ws_45741 | 47 158 | 0 | 0 | 0 | 40101 | 7057 | 85.0% |
+| hv_ws_46798 | 30 486 | 0 | 0 | 0 | 26621 | 3865 | 87.3% |
 | hv_ws_547252 | 6 146 | 0 | 0 | 0 | 5447 | 699 | 88.6% |
 | hv_ia_1896_t_5 | 197 662 | 0 | 0 | 0 | 164637 | 33025 | 83.3% |
 | hv_ia_31761086786126 | 15 169 | 0 | 0 | 0 | 13168 | 2001 | 86.8% |
 | hv_ia_imyvevropiprotes00fran | 3 969 | 0 | 0 | 0 | 3334 | 635 | 84.0% |
 | hv_ia_imyvievropi00fran | 3 967 | 0 | 0 | 0 | 3736 | 231 | 94.2% |
+| hv_ws_341622 | 124 | 0 | 0 | 0 | 113 | 11 | 91.1% |
 | hv_ws_433468 | 286 | 0 | 0 | 0 | 210 | 76 | 73.4% |
 | hv_ia_etnohr_03_1 | 94 981 | 0 | 0 | 0 | 54474 | 40507 | 57.4% |
 | hv_ia_spivannykxviii | 22 601 | 0 | 0 | 0 | 13419 | 9182 | 59.4% |
@@ -6948,6 +8097,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_215555 | 9 702 | 0 | 0 | 0 | 8350 | 1352 | 86.1% |
 | hv_ws_39551 | 206 | 0 | 0 | 0 | 160 | 46 | 77.7% |
 | hv_ws_539704 | 7 992 | 0 | 0 | 0 | 6754 | 1238 | 84.5% |
+| hv_ws_552949 | 9 987 | 0 | 0 | 0 | 8378 | 1609 | 83.9% |
+| hv_ws_553073 | 10 121 | 0 | 0 | 0 | 8653 | 1468 | 85.5% |
 | hv_ws_553437 | 2 269 | 0 | 0 | 0 | 2042 | 227 | 90.0% |
 | hv_ws_604091 | 4 291 | 0 | 0 | 0 | 3824 | 467 | 89.1% |
 | franko1902 | 25 278 | 0 | 0 | 0 | 23610 | 1668 | 93.4% |
@@ -6976,6 +8127,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_dubovelystiealm00hringoog | 68 837 | 0 | 0 | 0 | 39624 | 29213 | 57.6% |
 | hv_ia_institutkaopovid00vovc | 12 859 | 0 | 0 | 0 | 11480 | 1379 | 89.3% |
 | hv_ws_129682 | 541 | 0 | 0 | 0 | 404 | 137 | 74.7% |
+| hv_ws_132002 | 4 787 | 0 | 0 | 0 | 3788 | 999 | 79.1% |
 | hv_ws_134874 | 14 995 | 0 | 0 | 0 | 12859 | 2136 | 85.8% |
 | hv_ws_565372 | 88 | 0 | 0 | 0 | 78 | 10 | 88.6% |
 | hv_ws_69733 | 558 | 0 | 0 | 0 | 426 | 132 | 76.3% |
@@ -7012,8 +8164,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_205076 | 676 | 0 | 0 | 0 | 500 | 176 | 74.0% |
 | hv_ws_238810 | 273 | 0 | 0 | 0 | 182 | 91 | 66.7% |
 | hv_ws_275477 | 256 | 0 | 0 | 0 | 238 | 18 | 93.0% |
+| hv_ws_508629 | 432 | 0 | 0 | 0 | 357 | 75 | 82.6% |
 | hv_ws_547114 | 220 | 0 | 0 | 0 | 169 | 51 | 76.8% |
 | hv_ws_547151 | 12 343 | 0 | 0 | 0 | 10708 | 1635 | 86.8% |
+| hv_ws_547901 | 12 470 | 0 | 0 | 0 | 10349 | 2121 | 83.0% |
 | hv_ws_552700 | 26 172 | 0 | 0 | 0 | 21483 | 4689 | 82.1% |
 | hv_ws_569265 | 234 | 0 | 0 | 0 | 167 | 67 | 71.4% |
 | hv_ws_69386 | 410 | 0 | 0 | 0 | 341 | 69 | 83.2% |
@@ -7028,8 +8182,12 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_etnohr_18 | 81 472 | 0 | 0 | 0 | 67339 | 14133 | 82.7% |
 | hv_ia_etnohr_21 | 44 078 | 0 | 0 | 0 | 29416 | 14662 | 66.7% |
 | hv_ws_179643 | 1 740 | 0 | 0 | 0 | 1631 | 109 | 93.7% |
+| hv_ws_201669 | 2 211 | 0 | 0 | 0 | 1794 | 417 | 81.1% |
+| hv_ws_203560 | 335 | 0 | 0 | 0 | 251 | 84 | 74.9% |
 | hv_ws_238255 | 242 | 0 | 0 | 0 | 218 | 24 | 90.1% |
+| hv_ws_321964 | 5 561 | 0 | 0 | 0 | 5333 | 228 | 95.9% |
 | hv_ws_34652 | 131 | 0 | 0 | 0 | 109 | 22 | 83.2% |
+| hv_ws_402780 | 148 | 0 | 0 | 0 | 123 | 25 | 83.1% |
 | hv_ws_508825 | 12 129 | 0 | 0 | 0 | 10845 | 1284 | 89.4% |
 | hv_ws_508878 | 5 011 | 0 | 0 | 0 | 4086 | 925 | 81.5% |
 | hv_ws_543528 | 13 895 | 0 | 0 | 0 | 13322 | 573 | 95.9% |
@@ -7061,14 +8219,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_istoriiaukranyr00arkagoog | 121 956 | 0 | 0 | 0 | 113206 | 8750 | 92.8% |
 | hv_ia_istorychnipisniu00sich | 5 304 | 0 | 0 | 0 | 4583 | 721 | 86.4% |
 | hv_ia_istorychniprychy12barv | 52 390 | 0 | 0 | 0 | 36723 | 15667 | 70.1% |
+| hv_ws_104117 | 169 | 0 | 0 | 0 | 127 | 42 | 75.1% |
 | hv_ws_110408 | 2 503 | 0 | 0 | 0 | 2313 | 190 | 92.4% |
+| hv_ws_12134 | 177 | 0 | 0 | 0 | 144 | 33 | 81.4% |
 | hv_ws_178317 | 864 | 0 | 0 | 0 | 738 | 126 | 85.4% |
 | hv_ws_319753 | 198 | 0 | 0 | 0 | 182 | 16 | 91.9% |
 | hv_ws_387196 | 238 | 0 | 0 | 0 | 196 | 42 | 82.4% |
+| hv_ws_454124 | 5 762 | 0 | 0 | 0 | 5193 | 569 | 90.1% |
+| hv_ws_505650 | 234 | 0 | 0 | 0 | 192 | 42 | 82.1% |
 | hv_ws_511725 | 16 997 | 0 | 0 | 0 | 15755 | 1242 | 92.7% |
 | hv_ws_519706 | 36 719 | 0 | 0 | 0 | 30196 | 6523 | 82.2% |
 | hv_ws_522743 | 270 | 0 | 0 | 0 | 239 | 31 | 88.5% |
 | hv_ws_598537 | 1 587 | 0 | 0 | 0 | 1415 | 172 | 89.2% |
+| hv_ws_600401 | 6 218 | 0 | 0 | 0 | 5764 | 454 | 92.7% |
 | hv_ia_31761086786100 | 28 200 | 0 | 0 | 0 | 25181 | 3019 | 89.3% |
 | hv_ia_advokatskiiporad00roze | 1 630 | 0 | 0 | 0 | 873 | 757 | 53.6% |
 | hv_ia_ch8t3 | 63 422 | 0 | 0 | 0 | 29956 | 33466 | 47.2% |
@@ -7085,7 +8248,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_iubylemykolyhoho00hrus | 1 774 | 0 | 0 | 0 | 1220 | 554 | 68.8% |
 | hv_ia_ivanfrankopoezii00krus | 49 591 | 0 | 0 | 0 | 41915 | 7676 | 84.5% |
 | hv_ws_123778 | 5 044 | 0 | 0 | 0 | 4482 | 562 | 88.9% |
+| hv_ws_26619 | 723 | 0 | 0 | 0 | 549 | 174 | 75.9% |
+| hv_ws_31440 | 1 562 | 0 | 0 | 0 | 1485 | 77 | 95.1% |
+| hv_ws_384963 | 97 | 0 | 0 | 0 | 97 | 0 | 100.0% |
 | hv_ws_415566 | 2 088 | 0 | 0 | 0 | 2025 | 63 | 97.0% |
+| hv_ws_453093 | 7 150 | 0 | 0 | 0 | 6105 | 1045 | 85.4% |
 | hv_ws_597157 | 4 706 | 0 | 0 | 0 | 4460 | 246 | 94.8% |
 | hv_ws_600253 | 7 954 | 0 | 0 | 0 | 7500 | 454 | 94.3% |
 | r2u_hrinch09 | 6 481 | 0 | 0 | 0 | 0 | 6481 | 0.0% |
@@ -7168,15 +8335,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_hetzakon3hoiunia00unse | 8 788 | 0 | 0 | 0 | 5865 | 2923 | 66.7% |
 | hv_ia_illiustrirovanna00hrusuoft | 14 182 | 0 | 0 | 0 | 6208 | 7974 | 43.8% |
 | hv_ia_istoriiaukranyru00arka | 142 957 | 0 | 0 | 0 | 136098 | 6859 | 95.2% |
+| hv_ws_102117 | 304 | 0 | 0 | 0 | 273 | 31 | 89.8% |
 | hv_ws_135867 | 2 424 | 0 | 0 | 0 | 2102 | 322 | 86.7% |
 | hv_ws_192524 | 116 | 0 | 0 | 0 | 111 | 5 | 95.7% |
 | hv_ws_192525 | 166 | 0 | 0 | 0 | 158 | 8 | 95.2% |
+| hv_ws_298289 | 3 092 | 0 | 0 | 0 | 2831 | 261 | 91.6% |
 | hv_ws_411722 | 7 194 | 0 | 0 | 0 | 6905 | 289 | 96.0% |
 | hv_ws_480712 | 6 319 | 0 | 0 | 0 | 5406 | 913 | 85.6% |
 | hv_ws_5383 | 14 450 | 0 | 0 | 0 | 12483 | 1967 | 86.4% |
 | hv_ws_565353 | 8 677 | 0 | 0 | 0 | 8281 | 396 | 95.4% |
 | hv_ws_566306 | 1 838 | 0 | 0 | 0 | 1801 | 37 | 98.0% |
 | hv_ws_569540 | 5 566 | 0 | 0 | 0 | 5458 | 108 | 98.1% |
+| hv_ws_9043 | 543 | 0 | 0 | 0 | 431 | 112 | 79.4% |
 | yavornytsky1912 | 4 020 | 0 | 0 | 0 | 3708 | 312 | 92.2% |
 | hv_ia_amulietf00meye | 20 832 | 0 | 0 | 0 | 18183 | 2649 | 87.3% |
 | hv_ia_canada_19130902 | 9 339 | 0 | 0 | 0 | 5253 | 4086 | 56.2% |
@@ -7216,13 +8386,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_dvavoinykomediia00luts | 3 630 | 0 | 0 | 0 | 2305 | 1325 | 63.5% |
 | hv_ia_incenseburner_19131201 | 7 340 | 0 | 0 | 0 | 5885 | 1455 | 80.2% |
 | hv_ws_109655 | 2 551 | 0 | 0 | 0 | 2530 | 21 | 99.2% |
+| hv_ws_110406 | 700 | 0 | 0 | 0 | 607 | 93 | 86.7% |
 | hv_ws_110407 | 2 903 | 0 | 0 | 0 | 2529 | 374 | 87.1% |
 | hv_ws_191719 | 7 323 | 0 | 0 | 0 | 6518 | 805 | 89.0% |
+| hv_ws_20477 | 2 053 | 0 | 0 | 0 | 1722 | 331 | 83.9% |
+| hv_ws_26452 | 1 042 | 0 | 0 | 0 | 965 | 77 | 92.6% |
 | hv_ws_26466 | 1 225 | 0 | 0 | 0 | 1155 | 70 | 94.3% |
+| hv_ws_40564 | 8 315 | 0 | 0 | 0 | 7699 | 616 | 92.6% |
 | hv_ws_423054 | 136 | 0 | 0 | 0 | 128 | 8 | 94.1% |
 | hv_ws_484073 | 8 984 | 0 | 0 | 0 | 8093 | 891 | 90.1% |
+| hv_ws_492792 | 6 670 | 0 | 0 | 0 | 6460 | 210 | 96.9% |
 | hv_ws_518312 | 619 | 0 | 0 | 0 | 507 | 112 | 81.9% |
 | hv_ws_567618 | 354 | 0 | 0 | 0 | 333 | 21 | 94.1% |
+| hv_ws_598658 | 1 010 | 0 | 0 | 0 | 898 | 112 | 88.9% |
 | hv_ia_abukasymovikapts00fran | 11 163 | 0 | 0 | 0 | 9998 | 1165 | 89.6% |
 | hv_ia_akordylirychna00nepr | 1 782 | 0 | 0 | 0 | 1652 | 130 | 92.7% |
 | hv_ia_akordylirychnap00nepr | 1 743 | 0 | 0 | 0 | 1640 | 103 | 94.1% |
@@ -7364,6 +8540,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_107962 | 92 | 0 | 0 | 0 | 80 | 12 | 87.0% |
 | hv_ws_189418 | 8 952 | 0 | 0 | 0 | 8524 | 428 | 95.2% |
 | hv_ws_194077 | 967 | 0 | 0 | 0 | 931 | 36 | 96.3% |
+| hv_ws_209564 | 166 | 0 | 0 | 0 | 158 | 8 | 95.2% |
+| hv_ws_28493 | 415 | 0 | 0 | 0 | 327 | 88 | 78.8% |
 | hv_ws_35873 | 114 | 0 | 0 | 0 | 111 | 3 | 97.4% |
 | hv_ws_424298 | 328 | 0 | 0 | 0 | 273 | 55 | 83.2% |
 | hv_ws_566290 | 2 495 | 0 | 0 | 0 | 2192 | 303 | 87.9% |
@@ -7415,9 +8593,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_26501 | 124 | 0 | 0 | 0 | 119 | 5 | 96.0% |
 | hv_ws_26502 | 124 | 0 | 0 | 0 | 120 | 4 | 96.8% |
 | hv_ws_26571 | 274 | 0 | 0 | 0 | 257 | 17 | 93.8% |
+| hv_ws_26580 | 147 | 0 | 0 | 0 | 145 | 2 | 98.6% |
 | hv_ws_267513 | 2 054 | 0 | 0 | 0 | 1616 | 438 | 78.7% |
 | hv_ws_438683 | 136 | 0 | 0 | 0 | 124 | 12 | 91.2% |
 | hv_ws_455282 | 11 567 | 0 | 0 | 0 | 10718 | 849 | 92.7% |
+| hv_ws_518315 | 2 973 | 0 | 0 | 0 | 2581 | 392 | 86.8% |
 | hv_ws_527702 | 2 480 | 0 | 0 | 0 | 2167 | 313 | 87.4% |
 | hv_ws_538302 | 10 831 | 0 | 0 | 0 | 8777 | 2054 | 81.0% |
 | hv_ws_552960 | 5 016 | 0 | 0 | 0 | 4362 | 654 | 87.0% |
@@ -7483,6 +8663,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_304181 | 3 878 | 0 | 0 | 0 | 3390 | 488 | 87.4% |
 | hv_ws_386427 | 429 | 0 | 0 | 0 | 360 | 69 | 83.9% |
 | hv_ws_438758 | 10 753 | 0 | 0 | 0 | 9438 | 1315 | 87.8% |
+| hv_ws_466412 | 6 273 | 0 | 0 | 0 | 5538 | 735 | 88.3% |
+| hv_ws_470774 | 408 | 0 | 0 | 0 | 353 | 55 | 86.5% |
 | hv_ws_602158 | 1 693 | 0 | 0 | 0 | 1391 | 302 | 82.2% |
 | hv_ia_alfrescovirshova00karmuoft | 5 297 | 0 | 0 | 0 | 4459 | 838 | 84.2% |
 | hv_ia_borbasvitiv00well | 40 120 | 0 | 0 | 0 | 34890 | 5230 | 87.0% |
@@ -7542,21 +8724,29 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_istoriiachervono00benh_1 | 7 559 | 0 | 0 | 0 | 6266 | 1293 | 82.9% |
 | hv_ia_istoriiamoskovsh00blag | 26 487 | 0 | 0 | 0 | 23812 | 2675 | 89.9% |
 | hv_ia_ivanfranko00lozy | 17 097 | 0 | 0 | 0 | 15077 | 2020 | 88.2% |
+| hv_ws_104794 | 9 332 | 0 | 0 | 0 | 8323 | 1009 | 89.2% |
 | hv_ws_110285 | 5 659 | 0 | 0 | 0 | 5305 | 354 | 93.7% |
+| hv_ws_128927 | 4 898 | 0 | 0 | 0 | 4125 | 773 | 84.2% |
 | hv_ws_13689 | 165 | 0 | 0 | 0 | 164 | 1 | 99.4% |
+| hv_ws_13698 | 88 | 0 | 0 | 0 | 86 | 2 | 97.7% |
 | hv_ws_13820 | 6 842 | 0 | 0 | 0 | 6053 | 789 | 88.5% |
 | hv_ws_1488 | 582 | 0 | 0 | 0 | 541 | 41 | 93.0% |
 | hv_ws_1489 | 1 092 | 0 | 0 | 0 | 1057 | 35 | 96.8% |
+| hv_ws_1492 | 977 | 0 | 0 | 0 | 856 | 121 | 87.6% |
+| hv_ws_1493 | 1 372 | 0 | 0 | 0 | 1317 | 55 | 96.0% |
 | hv_ws_198664 | 4 581 | 0 | 0 | 0 | 4368 | 213 | 95.4% |
 | hv_ws_203997 | 8 563 | 0 | 0 | 0 | 8163 | 400 | 95.3% |
 | hv_ws_204845 | 106 | 0 | 0 | 0 | 87 | 19 | 82.1% |
+| hv_ws_205854 | 10 842 | 0 | 0 | 0 | 9527 | 1315 | 87.9% |
 | hv_ws_212248 | 152 | 0 | 0 | 0 | 130 | 22 | 85.5% |
 | hv_ws_21405 | 47 | 0 | 0 | 0 | 42 | 5 | 89.4% |
 | hv_ws_22815 | 262 | 0 | 0 | 0 | 207 | 55 | 79.0% |
 | hv_ws_228331 | 1 399 | 0 | 0 | 0 | 1307 | 92 | 93.4% |
+| hv_ws_24098 | 254 | 0 | 0 | 0 | 232 | 22 | 91.3% |
 | hv_ws_245100 | 4 862 | 0 | 0 | 0 | 4261 | 601 | 87.6% |
 | hv_ws_323837 | 21 411 | 0 | 0 | 0 | 19887 | 1524 | 92.9% |
 | hv_ws_349463 | 7 906 | 0 | 0 | 0 | 7742 | 164 | 97.9% |
+| hv_ws_356366 | 4 049 | 0 | 0 | 0 | 3936 | 113 | 97.2% |
 | hv_ws_357552 | 1 293 | 0 | 0 | 0 | 1177 | 116 | 91.0% |
 | hv_ws_39330 | 262 | 0 | 0 | 0 | 198 | 64 | 75.6% |
 | hv_ws_396472 | 6 547 | 0 | 0 | 0 | 5616 | 931 | 85.8% |
@@ -7568,6 +8758,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_532564 | 6 370 | 0 | 0 | 0 | 5533 | 837 | 86.9% |
 | hv_ws_536290 | 16 084 | 0 | 0 | 0 | 13803 | 2281 | 85.8% |
 | hv_ws_536292 | 3 133 | 0 | 0 | 0 | 2984 | 149 | 95.2% |
+| hv_ws_538136 | 808 | 0 | 0 | 0 | 650 | 158 | 80.4% |
 | hv_ws_553343 | 3 396 | 0 | 0 | 0 | 3246 | 150 | 95.6% |
 | hv_ws_559544 | 122 | 0 | 0 | 0 | 98 | 24 | 80.3% |
 | hv_ws_560480 | 8 216 | 0 | 0 | 0 | 7955 | 261 | 96.8% |
@@ -7577,6 +8768,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_567609 | 1 580 | 0 | 0 | 0 | 955 | 625 | 60.4% |
 | hv_ws_573407 | 120 | 0 | 0 | 0 | 115 | 5 | 95.8% |
 | hv_ws_592405 | 2 492 | 0 | 0 | 0 | 2348 | 144 | 94.2% |
+| hv_ws_598005 | 14 694 | 0 | 0 | 0 | 14458 | 236 | 98.4% |
+| hv_ws_598677 | 5 133 | 0 | 0 | 0 | 4501 | 632 | 87.7% |
+| hv_ws_7686 | 42 | 0 | 0 | 0 | 40 | 2 | 95.2% |
 | hv_ws_7775 | 4 587 | 0 | 0 | 0 | 4263 | 324 | 92.9% |
 | stefanyk1917_dlg | 1 621 | 0 | 0 | 0 | 1512 | 109 | 93.3% |
 | stefanyk1917_nar | 1 675 | 0 | 0 | 0 | 1586 | 89 | 94.7% |
@@ -7661,8 +8855,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_probatkakozatsko00hrus | 18 860 | 0 | 0 | 0 | 17203 | 1657 | 91.2% |
 | hv_ia_vilnaukrana00hrus | 5 364 | 0 | 0 | 0 | 4639 | 725 | 86.5% |
 | hv_ws_104267 | 235 | 0 | 0 | 0 | 201 | 34 | 85.5% |
+| hv_ws_104580 | 6 010 | 0 | 0 | 0 | 5307 | 703 | 88.3% |
 | hv_ws_105257 | 215 | 0 | 0 | 0 | 186 | 29 | 86.5% |
+| hv_ws_112857 | 3 233 | 0 | 0 | 0 | 2748 | 485 | 85.0% |
+| hv_ws_162091 | 6 000 | 0 | 0 | 0 | 5425 | 575 | 90.4% |
+| hv_ws_176935 | 1 554 | 0 | 0 | 0 | 1377 | 177 | 88.6% |
 | hv_ws_178548 | 744 | 0 | 0 | 0 | 697 | 47 | 93.7% |
+| hv_ws_188966 | 4 612 | 0 | 0 | 0 | 4266 | 346 | 92.5% |
+| hv_ws_198231 | 121 | 0 | 0 | 0 | 120 | 1 | 99.2% |
 | hv_ws_198691 | 4 080 | 0 | 0 | 0 | 3927 | 153 | 96.3% |
 | hv_ws_2024 | 442 | 0 | 0 | 0 | 428 | 14 | 96.8% |
 | hv_ws_21069 | 182 | 0 | 0 | 0 | 175 | 7 | 96.2% |
@@ -7674,12 +8874,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_28989 | 52 | 0 | 0 | 0 | 50 | 2 | 96.2% |
 | hv_ws_304176 | 7 993 | 0 | 0 | 0 | 7277 | 716 | 91.0% |
 | hv_ws_30920 | 997 | 0 | 0 | 0 | 815 | 182 | 81.7% |
+| hv_ws_31789 | 5 911 | 0 | 0 | 0 | 5440 | 471 | 92.0% |
 | hv_ws_32428 | 179 | 0 | 0 | 0 | 153 | 26 | 85.5% |
 | hv_ws_32437 | 828 | 0 | 0 | 0 | 731 | 97 | 88.3% |
+| hv_ws_32446 | 753 | 0 | 0 | 0 | 722 | 31 | 95.9% |
+| hv_ws_354314 | 5 486 | 0 | 0 | 0 | 5107 | 379 | 93.1% |
+| hv_ws_356353 | 3 952 | 0 | 0 | 0 | 3608 | 344 | 91.3% |
 | hv_ws_356355 | 8 448 | 0 | 0 | 0 | 7370 | 1078 | 87.2% |
 | hv_ws_358375 | 3 362 | 0 | 0 | 0 | 3159 | 203 | 94.0% |
+| hv_ws_362742 | 67 | 0 | 0 | 0 | 62 | 5 | 92.5% |
 | hv_ws_36917 | 2 549 | 0 | 0 | 0 | 2120 | 429 | 83.2% |
 | hv_ws_388119 | 21 674 | 0 | 0 | 0 | 20478 | 1196 | 94.5% |
+| hv_ws_39589 | 259 | 0 | 0 | 0 | 251 | 8 | 96.9% |
+| hv_ws_416871 | 464 | 0 | 0 | 0 | 416 | 48 | 89.7% |
 | hv_ws_417688 | 7 039 | 0 | 0 | 0 | 6790 | 249 | 96.5% |
 | hv_ws_419834 | 7 992 | 0 | 0 | 0 | 6876 | 1116 | 86.0% |
 | hv_ws_42629 | 23 254 | 0 | 0 | 0 | 22883 | 371 | 98.4% |
@@ -7692,11 +8899,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_559553 | 411 | 0 | 0 | 0 | 392 | 19 | 95.4% |
 | hv_ws_566028 | 1 184 | 0 | 0 | 0 | 1107 | 77 | 93.5% |
 | hv_ws_566256 | 2 629 | 0 | 0 | 0 | 2463 | 166 | 93.7% |
+| hv_ws_568888 | 2 721 | 0 | 0 | 0 | 2519 | 202 | 92.6% |
 | hv_ws_599038 | 13 456 | 0 | 0 | 0 | 12370 | 1086 | 91.9% |
 | hv_ws_601119 | 3 212 | 0 | 0 | 0 | 2993 | 219 | 93.2% |
+| hv_ws_605553 | 3 779 | 0 | 0 | 0 | 3631 | 148 | 96.1% |
 | hv_ws_65050 | 338 | 0 | 0 | 0 | 335 | 3 | 99.1% |
 | hv_ws_65066 | 141 | 0 | 0 | 0 | 136 | 5 | 96.5% |
 | hv_ws_65067 | 739 | 0 | 0 | 0 | 730 | 9 | 98.8% |
+| hv_ws_69513 | 243 | 0 | 0 | 0 | 231 | 12 | 95.1% |
 | hv_ws_9263 | 556 | 0 | 0 | 0 | 546 | 10 | 98.2% |
 | sumtsov_slobozhane1918 | 44 945 | 0 | 0 | 0 | 39645 | 5300 | 88.2% |
 | sumtsov1918 | 3 690 | 0 | 0 | 0 | 3217 | 473 | 87.2% |
@@ -7782,6 +8992,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_kulturnonatsiona00hrusuoft | 52 230 | 0 | 0 | 0 | 44939 | 7291 | 86.0% |
 | hv_ia_probatkakozatsk00hrus | 19 303 | 0 | 0 | 0 | 17639 | 1664 | 91.4% |
 | hv_ia_probatkakozatsk00hrusgoog | 19 731 | 0 | 0 | 0 | 17986 | 1745 | 91.2% |
+| hv_ws_105297 | 569 | 0 | 0 | 0 | 545 | 24 | 95.8% |
 | hv_ws_107360 | 2 721 | 0 | 0 | 0 | 2621 | 100 | 96.3% |
 | hv_ws_109438 | 5 300 | 0 | 0 | 0 | 4309 | 991 | 81.3% |
 | hv_ws_122720 | 164 | 0 | 0 | 0 | 153 | 11 | 93.3% |
@@ -7795,8 +9006,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_200992 | 222 | 0 | 0 | 0 | 197 | 25 | 88.7% |
 | hv_ws_216683 | 514 | 0 | 0 | 0 | 457 | 57 | 88.9% |
 | hv_ws_253535 | 2 866 | 0 | 0 | 0 | 2653 | 213 | 92.6% |
+| hv_ws_262419 | 1 220 | 0 | 0 | 0 | 1172 | 48 | 96.1% |
 | hv_ws_28629 | 3 797 | 0 | 0 | 0 | 3594 | 203 | 94.7% |
 | hv_ws_31375 | 953 | 0 | 0 | 0 | 906 | 47 | 95.1% |
+| hv_ws_31829 | 2 935 | 0 | 0 | 0 | 2869 | 66 | 97.8% |
+| hv_ws_321428 | 229 | 0 | 0 | 0 | 218 | 11 | 95.2% |
+| hv_ws_34960 | 218 | 0 | 0 | 0 | 215 | 3 | 98.6% |
+| hv_ws_3565 | 312 | 0 | 0 | 0 | 256 | 56 | 82.1% |
 | hv_ws_37816 | 8 525 | 0 | 0 | 0 | 8376 | 149 | 98.3% |
 | hv_ws_379613 | 544 | 0 | 0 | 0 | 527 | 17 | 96.9% |
 | hv_ws_417211 | 92 | 0 | 0 | 0 | 89 | 3 | 96.7% |
@@ -7804,6 +9020,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_44747 | 333 | 0 | 0 | 0 | 299 | 34 | 89.8% |
 | hv_ws_45875 | 423 | 0 | 0 | 0 | 386 | 37 | 91.3% |
 | hv_ws_45886 | 234 | 0 | 0 | 0 | 221 | 13 | 94.4% |
+| hv_ws_45896 | 33 970 | 0 | 0 | 0 | 32697 | 1273 | 96.3% |
 | hv_ws_48782 | 7 256 | 0 | 0 | 0 | 6054 | 1202 | 83.4% |
 | hv_ws_518694 | 465 | 0 | 0 | 0 | 438 | 27 | 94.2% |
 | hv_ws_564430 | 1 042 | 0 | 0 | 0 | 919 | 123 | 88.2% |
@@ -7896,12 +9113,17 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_ivanlevytskynech00iefr | 45 034 | 0 | 0 | 0 | 40579 | 4455 | 90.1% |
 | hv_ia_vsesvitniaistori01hrus | 52 824 | 0 | 0 | 0 | 45298 | 7526 | 85.8% |
 | hv_ia_vsesvitniaistori02hrus | 93 315 | 0 | 0 | 0 | 80341 | 12974 | 86.1% |
+| hv_ws_106778 | 6 373 | 0 | 0 | 0 | 6195 | 178 | 97.2% |
+| hv_ws_107328 | 1 215 | 0 | 0 | 0 | 1075 | 140 | 88.5% |
 | hv_ws_122979 | 79 | 0 | 0 | 0 | 77 | 2 | 97.5% |
 | hv_ws_123342 | 494 | 0 | 0 | 0 | 470 | 24 | 95.1% |
 | hv_ws_13688 | 97 | 0 | 0 | 0 | 95 | 2 | 97.9% |
 | hv_ws_165550 | 153 | 0 | 0 | 0 | 139 | 14 | 90.8% |
+| hv_ws_179977 | 3 403 | 0 | 0 | 0 | 3254 | 149 | 95.6% |
+| hv_ws_182399 | 145 | 0 | 0 | 0 | 125 | 20 | 86.2% |
 | hv_ws_189388 | 3 637 | 0 | 0 | 0 | 3338 | 299 | 91.8% |
 | hv_ws_192780 | 13 739 | 0 | 0 | 0 | 12267 | 1472 | 89.3% |
+| hv_ws_198982 | 3 541 | 0 | 0 | 0 | 3374 | 167 | 95.3% |
 | hv_ws_205603 | 829 | 0 | 0 | 0 | 719 | 110 | 86.7% |
 | hv_ws_206541 | 90 | 0 | 0 | 0 | 81 | 9 | 90.0% |
 | hv_ws_209656 | 248 | 0 | 0 | 0 | 226 | 22 | 91.1% |
@@ -7911,11 +9133,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_238831 | 1 087 | 0 | 0 | 0 | 980 | 107 | 90.2% |
 | hv_ws_24076 | 325 | 0 | 0 | 0 | 274 | 51 | 84.3% |
 | hv_ws_258958 | 202 | 0 | 0 | 0 | 192 | 10 | 95.0% |
+| hv_ws_25904 | 139 | 0 | 0 | 0 | 127 | 12 | 91.4% |
 | hv_ws_26807 | 1 367 | 0 | 0 | 0 | 1352 | 15 | 98.9% |
+| hv_ws_28413 | 151 | 0 | 0 | 0 | 146 | 5 | 96.7% |
+| hv_ws_311004 | 299 | 0 | 0 | 0 | 252 | 47 | 84.3% |
 | hv_ws_321492 | 5 586 | 0 | 0 | 0 | 5116 | 470 | 91.6% |
 | hv_ws_352227 | 8 508 | 0 | 0 | 0 | 8224 | 284 | 96.7% |
+| hv_ws_352881 | 75 | 0 | 0 | 0 | 73 | 2 | 97.3% |
 | hv_ws_356356 | 5 475 | 0 | 0 | 0 | 5204 | 271 | 95.1% |
 | hv_ws_356360 | 7 219 | 0 | 0 | 0 | 6601 | 618 | 91.4% |
+| hv_ws_35810 | 3 573 | 0 | 0 | 0 | 3427 | 146 | 95.9% |
 | hv_ws_381775 | 7 072 | 0 | 0 | 0 | 6891 | 181 | 97.4% |
 | hv_ws_38368 | 20 | 0 | 0 | 0 | 13 | 7 | 65.0% |
 | hv_ws_398195 | 186 | 0 | 0 | 0 | 173 | 13 | 93.0% |
@@ -7930,11 +9157,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_471328 | 2 509 | 0 | 0 | 0 | 2444 | 65 | 97.4% |
 | hv_ws_471378 | 297 | 0 | 0 | 0 | 292 | 5 | 98.3% |
 | hv_ws_471379 | 248 | 0 | 0 | 0 | 239 | 9 | 96.4% |
+| hv_ws_471380 | 334 | 0 | 0 | 0 | 323 | 11 | 96.7% |
 | hv_ws_471381 | 241 | 0 | 0 | 0 | 235 | 6 | 97.5% |
 | hv_ws_471382 | 240 | 0 | 0 | 0 | 234 | 6 | 97.5% |
+| hv_ws_471383 | 218 | 0 | 0 | 0 | 214 | 4 | 98.2% |
 | hv_ws_47485 | 838 | 0 | 0 | 0 | 755 | 83 | 90.1% |
 | hv_ws_475816 | 2 915 | 0 | 0 | 0 | 2847 | 68 | 97.7% |
 | hv_ws_499974 | 209 | 0 | 0 | 0 | 199 | 10 | 95.2% |
+| hv_ws_513678 | 165 | 0 | 0 | 0 | 154 | 11 | 93.3% |
 | hv_ws_520271 | 12 781 | 0 | 0 | 0 | 12225 | 556 | 95.6% |
 | hv_ws_524005 | 136 | 0 | 0 | 0 | 113 | 23 | 83.1% |
 | hv_ws_567595 | 2 926 | 0 | 0 | 0 | 2819 | 107 | 96.3% |
@@ -7971,12 +9201,15 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_izistoriirusskag00kres | 34 827 | 0 | 0 | 0 | 10844 | 23983 | 31.1% |
 | hv_ws_104095 | 4 834 | 0 | 0 | 0 | 4450 | 384 | 92.1% |
 | hv_ws_107907 | 944 | 0 | 0 | 0 | 869 | 75 | 92.1% |
+| hv_ws_10814 | 897 | 0 | 0 | 0 | 829 | 68 | 92.4% |
 | hv_ws_108646 | 3 048 | 0 | 0 | 0 | 2774 | 274 | 91.0% |
 | hv_ws_113339 | 4 171 | 0 | 0 | 0 | 4085 | 86 | 97.9% |
+| hv_ws_135278 | 409 | 0 | 0 | 0 | 351 | 58 | 85.8% |
 | hv_ws_13700 | 86 | 0 | 0 | 0 | 85 | 1 | 98.8% |
 | hv_ws_17946 | 650 | 0 | 0 | 0 | 555 | 95 | 85.4% |
 | hv_ws_180085 | 170 | 0 | 0 | 0 | 165 | 5 | 97.1% |
 | hv_ws_186383 | 2 599 | 0 | 0 | 0 | 2477 | 122 | 95.3% |
+| hv_ws_210887 | 2 425 | 0 | 0 | 0 | 2338 | 87 | 96.4% |
 | hv_ws_213003 | 5 221 | 0 | 0 | 0 | 4998 | 223 | 95.7% |
 | hv_ws_216253 | 288 | 0 | 0 | 0 | 227 | 61 | 78.8% |
 | hv_ws_241916 | 2 111 | 0 | 0 | 0 | 1676 | 435 | 79.4% |
@@ -7987,6 +9220,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_323382 | 1 144 | 0 | 0 | 0 | 1050 | 94 | 91.8% |
 | hv_ws_326723 | 2 743 | 0 | 0 | 0 | 2614 | 129 | 95.3% |
 | hv_ws_326883 | 3 458 | 0 | 0 | 0 | 3206 | 252 | 92.7% |
+| hv_ws_327158 | 5 628 | 0 | 0 | 0 | 5335 | 293 | 94.8% |
 | hv_ws_352742 | 3 836 | 0 | 0 | 0 | 3673 | 163 | 95.8% |
 | hv_ws_35636 | 3 512 | 0 | 0 | 0 | 3374 | 138 | 96.1% |
 | hv_ws_386633 | 122 | 0 | 0 | 0 | 107 | 15 | 87.7% |
@@ -7995,14 +9229,22 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_424371 | 10 257 | 0 | 0 | 0 | 8941 | 1316 | 87.2% |
 | hv_ws_479236 | 175 | 0 | 0 | 0 | 172 | 3 | 98.3% |
 | hv_ws_497926 | 3 358 | 0 | 0 | 0 | 3179 | 179 | 94.7% |
+| hv_ws_498447 | 3 631 | 0 | 0 | 0 | 3448 | 183 | 95.0% |
+| hv_ws_509223 | 4 593 | 0 | 0 | 0 | 4211 | 382 | 91.7% |
+| hv_ws_510203 | 203 | 0 | 0 | 0 | 170 | 33 | 83.7% |
 | hv_ws_514655 | 2 084 | 0 | 0 | 0 | 2015 | 69 | 96.7% |
 | hv_ws_54279 | 4 389 | 0 | 0 | 0 | 4194 | 195 | 95.6% |
 | hv_ws_551758 | 4 642 | 0 | 0 | 0 | 4448 | 194 | 95.8% |
 | hv_ws_556756 | 11 906 | 0 | 0 | 0 | 11578 | 328 | 97.2% |
 | hv_ws_558786 | 145 | 0 | 0 | 0 | 140 | 5 | 96.6% |
 | hv_ws_559673 | 17 630 | 0 | 0 | 0 | 16001 | 1629 | 90.8% |
+| hv_ws_567657 | 212 | 0 | 0 | 0 | 197 | 15 | 92.9% |
 | hv_ws_568714 | 3 425 | 0 | 0 | 0 | 3124 | 301 | 91.2% |
+| hv_ws_571387 | 2 687 | 0 | 0 | 0 | 2557 | 130 | 95.2% |
+| hv_ws_573361 | 7 273 | 0 | 0 | 0 | 6938 | 335 | 95.4% |
+| hv_ws_579567 | 4 166 | 0 | 0 | 0 | 3763 | 403 | 90.3% |
 | hv_ws_599251 | 4 773 | 0 | 0 | 0 | 4499 | 274 | 94.3% |
+| hv_ws_9049 | 134 | 0 | 0 | 0 | 122 | 12 | 91.0% |
 | hv_ia_2spivanyky | 17 009 | 0 | 0 | 0 | 11581 | 5428 | 68.1% |
 | hv_ia_beztalannadraman00tobi | 13 532 | 0 | 0 | 0 | 12568 | 964 | 92.9% |
 | hv_ia_boryslavsmiietsi00franuoft | 78 843 | 0 | 0 | 0 | 75082 | 3761 | 95.2% |
@@ -8044,6 +9286,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_itskosvatkomedii008800_1 | 5 627 | 0 | 0 | 0 | 3569 | 2058 | 63.4% |
 | hv_ia_ivanfedorovychsh00gogo | 8 141 | 0 | 0 | 0 | 7759 | 382 | 95.3% |
 | hv_ws_110275 | 2 706 | 0 | 0 | 0 | 2552 | 154 | 94.3% |
+| hv_ws_123042 | 67 | 0 | 0 | 0 | 59 | 8 | 88.1% |
+| hv_ws_129645 | 384 | 0 | 0 | 0 | 360 | 24 | 93.8% |
+| hv_ws_17022 | 55 | 0 | 0 | 0 | 52 | 3 | 94.5% |
 | hv_ws_178376 | 135 | 0 | 0 | 0 | 130 | 5 | 96.3% |
 | hv_ws_182691 | 660 | 0 | 0 | 0 | 570 | 90 | 86.4% |
 | hv_ws_187340 | 190 | 0 | 0 | 0 | 177 | 13 | 93.2% |
@@ -8051,6 +9296,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_195361 | 123 | 0 | 0 | 0 | 121 | 2 | 98.4% |
 | hv_ws_206542 | 90 | 0 | 0 | 0 | 82 | 8 | 91.1% |
 | hv_ws_211669 | 16 906 | 0 | 0 | 0 | 15801 | 1105 | 93.5% |
+| hv_ws_211856 | 155 | 0 | 0 | 0 | 150 | 5 | 96.8% |
 | hv_ws_230338 | 976 | 0 | 0 | 0 | 914 | 62 | 93.6% |
 | hv_ws_24697 | 129 | 0 | 0 | 0 | 116 | 13 | 89.9% |
 | hv_ws_270812 | 177 | 0 | 0 | 0 | 166 | 11 | 93.8% |
@@ -8058,10 +9304,15 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_347379 | 211 | 0 | 0 | 0 | 190 | 21 | 90.0% |
 | hv_ws_349560 | 22 078 | 0 | 0 | 0 | 21133 | 945 | 95.7% |
 | hv_ws_352902 | 7 148 | 0 | 0 | 0 | 6488 | 660 | 90.8% |
+| hv_ws_353026 | 3 520 | 0 | 0 | 0 | 3364 | 156 | 95.6% |
 | hv_ws_357204 | 2 985 | 0 | 0 | 0 | 2891 | 94 | 96.9% |
+| hv_ws_38546 | 108 | 0 | 0 | 0 | 108 | 0 | 100.0% |
 | hv_ws_39151 | 921 | 0 | 0 | 0 | 864 | 57 | 93.8% |
+| hv_ws_43365 | 817 | 0 | 0 | 0 | 726 | 91 | 88.9% |
 | hv_ws_47087 | 1 214 | 0 | 0 | 0 | 1087 | 127 | 89.5% |
+| hv_ws_479179 | 4 323 | 0 | 0 | 0 | 4192 | 131 | 97.0% |
 | hv_ws_4957 | 68 | 0 | 0 | 0 | 66 | 2 | 97.1% |
+| hv_ws_49921 | 858 | 0 | 0 | 0 | 801 | 57 | 93.4% |
 | hv_ws_514876 | 102 | 0 | 0 | 0 | 87 | 15 | 85.3% |
 | hv_ws_520976 | 4 343 | 0 | 0 | 0 | 4230 | 113 | 97.4% |
 | hv_ws_5309 | 329 | 0 | 0 | 0 | 314 | 15 | 95.4% |
@@ -8107,6 +9358,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_193196 | 3 793 | 0 | 0 | 0 | 3681 | 112 | 97.0% |
 | hv_ws_195659 | 144 | 0 | 0 | 0 | 132 | 12 | 91.7% |
 | hv_ws_211337 | 10 882 | 0 | 0 | 0 | 10268 | 614 | 94.4% |
+| hv_ws_212495 | 641 | 0 | 0 | 0 | 579 | 62 | 90.3% |
 | hv_ws_240461 | 11 635 | 0 | 0 | 0 | 11231 | 404 | 96.5% |
 | hv_ws_241749 | 110 | 0 | 0 | 0 | 102 | 8 | 92.7% |
 | hv_ws_245864 | 294 | 0 | 0 | 0 | 288 | 6 | 98.0% |
@@ -8123,6 +9375,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_360041 | 1 287 | 0 | 0 | 0 | 1202 | 85 | 93.4% |
 | hv_ws_386812 | 201 | 0 | 0 | 0 | 179 | 22 | 89.1% |
 | hv_ws_391415 | 10 883 | 0 | 0 | 0 | 10576 | 307 | 97.2% |
+| hv_ws_402781 | 6 153 | 0 | 0 | 0 | 5984 | 169 | 97.3% |
 | hv_ws_442415 | 72 | 0 | 0 | 0 | 60 | 12 | 83.3% |
 | hv_ws_53347 | 5 048 | 0 | 0 | 0 | 4834 | 214 | 95.8% |
 | hv_ws_53348 | 211 | 0 | 0 | 0 | 194 | 17 | 91.9% |
@@ -8132,6 +9385,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_559633 | 98 | 0 | 0 | 0 | 91 | 7 | 92.9% |
 | hv_ws_579568 | 1 869 | 0 | 0 | 0 | 1767 | 102 | 94.5% |
 | hv_ws_598474 | 360 | 0 | 0 | 0 | 312 | 48 | 86.7% |
+| hv_ws_64920 | 3 440 | 0 | 0 | 0 | 3298 | 142 | 95.9% |
 | hv_ws_65475 | 160 | 0 | 0 | 0 | 156 | 4 | 97.5% |
 | yavornytsky1923 | 5 329 | 0 | 0 | 0 | 5111 | 218 | 95.9% |
 | hv_ia_1924knyha_1_2 | 98 225 | 0 | 0 | 0 | 83288 | 14937 | 84.8% |
@@ -8157,9 +9411,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_grafmontekristo00duma_2 | 96 918 | 0 | 0 | 0 | 85780 | 11138 | 88.5% |
 | hv_ia_iakirlandiiazdob00hryh | 11 821 | 0 | 0 | 0 | 10914 | 907 | 92.3% |
 | hv_ws_179618 | 118 | 0 | 0 | 0 | 108 | 10 | 91.5% |
+| hv_ws_190350 | 5 574 | 0 | 0 | 0 | 5179 | 395 | 92.9% |
 | hv_ws_190493 | 5 652 | 0 | 0 | 0 | 5374 | 278 | 95.1% |
 | hv_ws_190570 | 7 202 | 0 | 0 | 0 | 6899 | 303 | 95.8% |
 | hv_ws_190585 | 6 718 | 0 | 0 | 0 | 6361 | 357 | 94.7% |
+| hv_ws_190661 | 5 816 | 0 | 0 | 0 | 5546 | 270 | 95.4% |
 | hv_ws_190662 | 5 665 | 0 | 0 | 0 | 5377 | 288 | 94.9% |
 | hv_ws_194139 | 157 | 0 | 0 | 0 | 150 | 7 | 95.5% |
 | hv_ws_199516 | 264 | 0 | 0 | 0 | 256 | 8 | 97.0% |
@@ -8168,32 +9424,44 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_205506 | 89 | 0 | 0 | 0 | 89 | 0 | 100.0% |
 | hv_ws_233308 | 191 | 0 | 0 | 0 | 161 | 30 | 84.3% |
 | hv_ws_241951 | 1 227 | 0 | 0 | 0 | 1144 | 83 | 93.2% |
+| hv_ws_242011 | 11 755 | 0 | 0 | 0 | 11293 | 462 | 96.1% |
 | hv_ws_310866 | 1 717 | 0 | 0 | 0 | 1645 | 72 | 95.8% |
 | hv_ws_32095 | 499 | 0 | 0 | 0 | 476 | 23 | 95.4% |
 | hv_ws_321984 | 36 584 | 0 | 0 | 0 | 35205 | 1379 | 96.2% |
+| hv_ws_352170 | 3 359 | 0 | 0 | 0 | 3112 | 247 | 92.6% |
 | hv_ws_35393 | 102 | 0 | 0 | 0 | 88 | 14 | 86.3% |
+| hv_ws_357904 | 47 | 0 | 0 | 0 | 47 | 0 | 100.0% |
 | hv_ws_440419 | 12 089 | 0 | 0 | 0 | 11233 | 856 | 92.9% |
+| hv_ws_451465 | 51 997 | 0 | 0 | 0 | 47672 | 4325 | 91.7% |
 | hv_ws_478259 | 1 486 | 0 | 0 | 0 | 1443 | 43 | 97.1% |
 | hv_ws_478542 | 141 | 0 | 0 | 0 | 135 | 6 | 95.7% |
 | hv_ws_532743 | 385 | 0 | 0 | 0 | 342 | 43 | 88.8% |
+| hv_ws_537550 | 13 524 | 0 | 0 | 0 | 13068 | 456 | 96.6% |
 | hv_ws_544196 | 132 | 0 | 0 | 0 | 121 | 11 | 91.7% |
 | hv_ws_545696 | 333 | 0 | 0 | 0 | 323 | 10 | 97.0% |
 | hv_ws_553017 | 18 008 | 0 | 0 | 0 | 17583 | 425 | 97.6% |
 | hv_ws_556901 | 3 381 | 0 | 0 | 0 | 3061 | 320 | 90.5% |
+| hv_ws_558922 | 792 | 0 | 0 | 0 | 726 | 66 | 91.7% |
 | hv_ws_569632 | 616 | 0 | 0 | 0 | 529 | 87 | 85.9% |
 | hv_hrushevsky_t4 | 263 650 | 0 | 0 | 0 | 248448 | 15202 | 94.2% |
 | hv_ia_anhelskyilystopo00poli | 4 229 | 0 | 0 | 0 | 3878 | 351 | 91.7% |
 | hv_ia_bukvar1925 | 6 592 | 0 | 0 | 0 | 5146 | 1446 | 78.1% |
 | hv_ws_135128 | 5 717 | 0 | 0 | 0 | 5541 | 176 | 96.9% |
+| hv_ws_189998 | 6 045 | 0 | 0 | 0 | 5724 | 321 | 94.7% |
+| hv_ws_190717 | 5 798 | 0 | 0 | 0 | 5565 | 233 | 96.0% |
 | hv_ws_191646 | 4 587 | 0 | 0 | 0 | 4384 | 203 | 95.6% |
 | hv_ws_194222 | 466 | 0 | 0 | 0 | 403 | 63 | 86.5% |
+| hv_ws_229008 | 7 399 | 0 | 0 | 0 | 7208 | 191 | 97.4% |
 | hv_ws_241718 | 479 | 0 | 0 | 0 | 414 | 65 | 86.4% |
+| hv_ws_249906 | 516 | 0 | 0 | 0 | 503 | 13 | 97.5% |
 | hv_ws_307362 | 2 556 | 0 | 0 | 0 | 2296 | 260 | 89.8% |
 | hv_ws_310752 | 2 188 | 0 | 0 | 0 | 2097 | 91 | 95.8% |
 | hv_ws_310926 | 4 474 | 0 | 0 | 0 | 4258 | 216 | 95.2% |
 | hv_ws_311265 | 3 452 | 0 | 0 | 0 | 3235 | 217 | 93.7% |
 | hv_ws_32099 | 236 | 0 | 0 | 0 | 229 | 7 | 97.0% |
+| hv_ws_32299 | 28 318 | 0 | 0 | 0 | 27240 | 1078 | 96.2% |
 | hv_ws_324268 | 8 915 | 0 | 0 | 0 | 8763 | 152 | 98.3% |
+| hv_ws_325552 | 7 354 | 0 | 0 | 0 | 7193 | 161 | 97.8% |
 | hv_ws_326288 | 462 | 0 | 0 | 0 | 399 | 63 | 86.4% |
 | hv_ws_33206 | 59 | 0 | 0 | 0 | 59 | 0 | 100.0% |
 | hv_ws_352894 | 143 | 0 | 0 | 0 | 136 | 7 | 95.1% |
@@ -8201,9 +9469,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_356358 | 4 806 | 0 | 0 | 0 | 4639 | 167 | 96.5% |
 | hv_ws_36126 | 417 | 0 | 0 | 0 | 394 | 23 | 94.5% |
 | hv_ws_36731 | 28 154 | 0 | 0 | 0 | 26654 | 1500 | 94.7% |
+| hv_ws_435209 | 400 | 0 | 0 | 0 | 357 | 43 | 89.3% |
+| hv_ws_471319 | 360 | 0 | 0 | 0 | 270 | 90 | 75.0% |
 | hv_ws_475382 | 2 723 | 0 | 0 | 0 | 2597 | 126 | 95.4% |
 | hv_ws_564223 | 259 | 0 | 0 | 0 | 245 | 14 | 94.6% |
+| hv_ws_575600 | 4 154 | 0 | 0 | 0 | 3822 | 332 | 92.0% |
 | hv_ws_575680 | 366 | 0 | 0 | 0 | 329 | 37 | 89.9% |
+| hv_ws_594681 | 4 016 | 0 | 0 | 0 | 3699 | 317 | 92.1% |
 | hv_ws_59696 | 314 | 0 | 0 | 0 | 309 | 5 | 98.4% |
 | hv_ws_60305 | 166 | 0 | 0 | 0 | 154 | 12 | 92.8% |
 | hv_ws_6419 | 780 | 0 | 0 | 0 | 650 | 130 | 83.3% |
@@ -8211,12 +9483,15 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_9626 | 4 763 | 0 | 0 | 0 | 4667 | 96 | 98.0% |
 | mtt1925 | 763 | 0 | 0 | 0 | 544 | 219 | 71.3% |
 | hv_hrushevsky_t5 | 197 546 | 0 | 0 | 0 | 175890 | 21656 | 89.0% |
+| hv_ws_103757 | 3 395 | 0 | 0 | 0 | 3195 | 200 | 94.1% |
 | hv_ws_131178 | 7 564 | 0 | 0 | 0 | 7200 | 364 | 95.2% |
+| hv_ws_1746 | 407 | 0 | 0 | 0 | 389 | 18 | 95.6% |
 | hv_ws_179346 | 664 | 0 | 0 | 0 | 652 | 12 | 98.2% |
 | hv_ws_198995 | 1 009 | 0 | 0 | 0 | 890 | 119 | 88.2% |
 | hv_ws_201180 | 8 045 | 0 | 0 | 0 | 7882 | 163 | 98.0% |
 | hv_ws_216708 | 497 | 0 | 0 | 0 | 440 | 57 | 88.5% |
 | hv_ws_23171 | 149 | 0 | 0 | 0 | 145 | 4 | 97.3% |
+| hv_ws_277378 | 974 | 0 | 0 | 0 | 916 | 58 | 94.0% |
 | hv_ws_326333 | 232 | 0 | 0 | 0 | 217 | 15 | 93.5% |
 | hv_ws_351685 | 954 | 0 | 0 | 0 | 839 | 115 | 87.9% |
 | hv_ws_35992 | 899 | 0 | 0 | 0 | 831 | 68 | 92.4% |
@@ -8226,6 +9501,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_427296 | 444 | 0 | 0 | 0 | 408 | 36 | 91.9% |
 | hv_ws_451931 | 8 245 | 0 | 0 | 0 | 7681 | 564 | 93.2% |
 | hv_ws_479178 | 7 435 | 0 | 0 | 0 | 7233 | 202 | 97.3% |
+| hv_ws_489709 | 1 644 | 0 | 0 | 0 | 1548 | 96 | 94.2% |
 | hv_ws_537504 | 225 | 0 | 0 | 0 | 220 | 5 | 97.8% |
 | hv_ws_538117 | 193 | 0 | 0 | 0 | 180 | 13 | 93.3% |
 | hv_ws_560634 | 13 671 | 0 | 0 | 0 | 12859 | 812 | 94.1% |
@@ -8235,6 +9511,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_8702 | 924 | 0 | 0 | 0 | 827 | 97 | 89.5% |
 | hv_hrushevsky_t6 | 207 134 | 0 | 0 | 0 | 175486 | 31648 | 84.7% |
 | hv_ia_hrushevska1 | 229 530 | 0 | 0 | 0 | 199622 | 29908 | 87.0% |
+| hv_ws_176491 | 3 444 | 0 | 0 | 0 | 3240 | 204 | 94.1% |
 | hv_ws_176884 | 2 883 | 0 | 0 | 0 | 2540 | 343 | 88.1% |
 | hv_ws_194253 | 3 654 | 0 | 0 | 0 | 3283 | 371 | 89.8% |
 | hv_ws_199390 | 37 497 | 0 | 0 | 0 | 35563 | 1934 | 94.8% |
@@ -8242,7 +9519,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_21496 | 6 619 | 0 | 0 | 0 | 6239 | 380 | 94.3% |
 | hv_ws_21926 | 517 | 0 | 0 | 0 | 508 | 9 | 98.3% |
 | hv_ws_23514 | 311 | 0 | 0 | 0 | 267 | 44 | 85.9% |
+| hv_ws_242033 | 7 235 | 0 | 0 | 0 | 7086 | 149 | 97.9% |
 | hv_ws_27438 | 275 | 0 | 0 | 0 | 262 | 13 | 95.3% |
+| hv_ws_282308 | 4 499 | 0 | 0 | 0 | 4262 | 237 | 94.7% |
 | hv_ws_28279 | 27 085 | 0 | 0 | 0 | 26512 | 573 | 97.9% |
 | hv_ws_292014 | 57 | 0 | 0 | 0 | 52 | 5 | 91.2% |
 | hv_ws_319438 | 140 | 0 | 0 | 0 | 133 | 7 | 95.0% |
@@ -8254,21 +9533,26 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_324231 | 9 076 | 0 | 0 | 0 | 8931 | 145 | 98.4% |
 | hv_ws_324232 | 159 | 0 | 0 | 0 | 152 | 7 | 95.6% |
 | hv_ws_324427 | 1 243 | 0 | 0 | 0 | 1179 | 64 | 94.9% |
+| hv_ws_327940 | 73 | 0 | 0 | 0 | 62 | 11 | 84.9% |
 | hv_ws_37296 | 316 | 0 | 0 | 0 | 291 | 25 | 92.1% |
 | hv_ws_388118 | 27 990 | 0 | 0 | 0 | 26825 | 1165 | 95.8% |
 | hv_ws_403035 | 615 | 0 | 0 | 0 | 592 | 23 | 96.3% |
 | hv_ws_418328 | 131 | 0 | 0 | 0 | 124 | 7 | 94.7% |
+| hv_ws_421074 | 84 | 0 | 0 | 0 | 74 | 10 | 88.1% |
 | hv_ws_446003 | 1 730 | 0 | 0 | 0 | 1685 | 45 | 97.4% |
 | hv_ws_446008 | 514 | 0 | 0 | 0 | 489 | 25 | 95.1% |
 | hv_ws_451932 | 5 251 | 0 | 0 | 0 | 4887 | 364 | 93.1% |
 | hv_ws_468404 | 6 320 | 0 | 0 | 0 | 6255 | 65 | 99.0% |
 | hv_ws_468995 | 5 264 | 0 | 0 | 0 | 5191 | 73 | 98.6% |
 | hv_ws_469383 | 454 | 0 | 0 | 0 | 416 | 38 | 91.6% |
+| hv_ws_469392 | 4 266 | 0 | 0 | 0 | 4217 | 49 | 98.9% |
 | hv_ws_469474 | 7 656 | 0 | 0 | 0 | 7297 | 359 | 95.3% |
+| hv_ws_469549 | 9 454 | 0 | 0 | 0 | 9391 | 63 | 99.3% |
 | hv_ws_470687 | 334 | 0 | 0 | 0 | 311 | 23 | 93.1% |
 | hv_ws_471330 | 1 787 | 0 | 0 | 0 | 1756 | 31 | 98.3% |
 | hv_ws_500049 | 3 879 | 0 | 0 | 0 | 3827 | 52 | 98.7% |
 | hv_ws_502015 | 2 498 | 0 | 0 | 0 | 2322 | 176 | 93.0% |
+| hv_ws_514885 | 4 454 | 0 | 0 | 0 | 4287 | 167 | 96.3% |
 | hv_ws_515475 | 4 107 | 0 | 0 | 0 | 3927 | 180 | 95.6% |
 | hv_ws_51648 | 226 | 0 | 0 | 0 | 209 | 17 | 92.5% |
 | hv_ws_51649 | 431 | 0 | 0 | 0 | 426 | 5 | 98.8% |
@@ -8290,11 +9574,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_18109 | 2 272 | 0 | 0 | 0 | 2057 | 215 | 90.5% |
 | hv_ws_191051 | 1 042 | 0 | 0 | 0 | 923 | 119 | 88.6% |
 | hv_ws_192104 | 1 400 | 0 | 0 | 0 | 1328 | 72 | 94.9% |
+| hv_ws_194306 | 650 | 0 | 0 | 0 | 557 | 93 | 85.7% |
+| hv_ws_195579 | 1 598 | 0 | 0 | 0 | 1541 | 57 | 96.4% |
+| hv_ws_198438 | 141 | 0 | 0 | 0 | 140 | 1 | 99.3% |
 | hv_ws_199188 | 878 | 0 | 0 | 0 | 813 | 65 | 92.6% |
+| hv_ws_237246 | 1 296 | 0 | 0 | 0 | 1179 | 117 | 91.0% |
 | hv_ws_259034 | 615 | 0 | 0 | 0 | 517 | 98 | 84.1% |
+| hv_ws_32905 | 6 756 | 0 | 0 | 0 | 6428 | 328 | 95.1% |
 | hv_ws_349638 | 5 235 | 0 | 0 | 0 | 5084 | 151 | 97.1% |
 | hv_ws_355401 | 7 175 | 0 | 0 | 0 | 6995 | 180 | 97.5% |
 | hv_ws_379237 | 887 | 0 | 0 | 0 | 772 | 115 | 87.0% |
+| hv_ws_38190 | 239 | 0 | 0 | 0 | 208 | 31 | 87.0% |
+| hv_ws_386626 | 175 | 0 | 0 | 0 | 171 | 4 | 97.7% |
 | hv_ws_419411 | 439 | 0 | 0 | 0 | 403 | 36 | 91.8% |
 | hv_ws_421806 | 547 | 0 | 0 | 0 | 499 | 48 | 91.2% |
 | hv_ws_444017 | 56 732 | 0 | 0 | 0 | 55735 | 997 | 98.2% |
@@ -8303,6 +9594,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_455276 | 24 963 | 0 | 0 | 0 | 23684 | 1279 | 94.9% |
 | hv_ws_468471 | 219 | 0 | 0 | 0 | 214 | 5 | 97.7% |
 | hv_ws_468552 | 3 949 | 0 | 0 | 0 | 3885 | 64 | 98.4% |
+| hv_ws_468653 | 3 206 | 0 | 0 | 0 | 3182 | 24 | 99.3% |
 | hv_ws_469111 | 5 258 | 0 | 0 | 0 | 5179 | 79 | 98.5% |
 | hv_ws_469904 | 1 798 | 0 | 0 | 0 | 1742 | 56 | 96.9% |
 | hv_ws_475345 | 253 | 0 | 0 | 0 | 214 | 39 | 84.6% |
@@ -8314,12 +9606,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_510737 | 5 485 | 0 | 0 | 0 | 5248 | 237 | 95.7% |
 | hv_ws_510738 | 3 679 | 0 | 0 | 0 | 3560 | 119 | 96.8% |
 | hv_ws_510739 | 428 | 0 | 0 | 0 | 382 | 46 | 89.3% |
+| hv_ws_511730 | 5 074 | 0 | 0 | 0 | 5010 | 64 | 98.7% |
 | hv_ws_514700 | 5 924 | 0 | 0 | 0 | 5469 | 455 | 92.3% |
 | hv_ws_518311 | 19 413 | 0 | 0 | 0 | 18162 | 1251 | 93.6% |
 | hv_ws_523334 | 152 | 0 | 0 | 0 | 148 | 4 | 97.4% |
 | hv_ws_538116 | 9 265 | 0 | 0 | 0 | 7947 | 1318 | 85.8% |
 | hv_ws_545687 | 111 | 0 | 0 | 0 | 104 | 7 | 93.7% |
 | hv_ws_546998 | 4 404 | 0 | 0 | 0 | 4118 | 286 | 93.5% |
+| hv_ws_552448 | 9 620 | 0 | 0 | 0 | 8757 | 863 | 91.0% |
 | hv_ws_567246 | 469 | 0 | 0 | 0 | 425 | 44 | 90.6% |
 | hv_ws_570353 | 389 | 0 | 0 | 0 | 363 | 26 | 93.3% |
 | hv_ws_5861 | 3 893 | 0 | 0 | 0 | 3721 | 172 | 95.6% |
@@ -8327,25 +9621,32 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | r2u_hrinch27 | 719 | 0 | 0 | 0 | 0 | 719 | 0.0% |
 | r2u_yakubski | 1 692 | 0 | 0 | 0 | 0 | 1692 | 0.0% |
 | hv_ia_zbirnyk_1929 | 30 700 | 0 | 0 | 0 | 18293 | 12407 | 59.6% |
+| hv_ws_110405 | 54 705 | 0 | 0 | 0 | 54315 | 390 | 99.3% |
 | hv_ws_123148 | 237 | 0 | 0 | 0 | 220 | 17 | 92.8% |
 | hv_ws_125286 | 12 141 | 0 | 0 | 0 | 11777 | 364 | 97.0% |
 | hv_ws_191311 | 3 074 | 0 | 0 | 0 | 2878 | 196 | 93.6% |
+| hv_ws_192683 | 82 | 0 | 0 | 0 | 74 | 8 | 90.2% |
 | hv_ws_194172 | 135 | 0 | 0 | 0 | 133 | 2 | 98.5% |
+| hv_ws_194578 | 151 | 0 | 0 | 0 | 143 | 8 | 94.7% |
 | hv_ws_196312 | 735 | 0 | 0 | 0 | 670 | 65 | 91.2% |
 | hv_ws_196590 | 9 360 | 0 | 0 | 0 | 9120 | 240 | 97.4% |
 | hv_ws_200595 | 520 | 0 | 0 | 0 | 499 | 21 | 96.0% |
 | hv_ws_23068 | 9 578 | 0 | 0 | 0 | 8701 | 877 | 90.8% |
 | hv_ws_251439 | 286 | 0 | 0 | 0 | 266 | 20 | 93.0% |
+| hv_ws_251543 | 164 | 0 | 0 | 0 | 151 | 13 | 92.1% |
 | hv_ws_254364 | 42 409 | 0 | 0 | 0 | 41737 | 672 | 98.4% |
 | hv_ws_262814 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
 | hv_ws_313914 | 177 | 0 | 0 | 0 | 160 | 17 | 90.4% |
 | hv_ws_321043 | 43 | 0 | 0 | 0 | 35 | 8 | 81.4% |
 | hv_ws_321450 | 52 006 | 0 | 0 | 0 | 51609 | 397 | 99.2% |
 | hv_ws_360113 | 6 238 | 0 | 0 | 0 | 6011 | 227 | 96.4% |
+| hv_ws_384631 | 83 | 0 | 0 | 0 | 76 | 7 | 91.6% |
 | hv_ws_386075 | 426 | 0 | 0 | 0 | 411 | 15 | 96.5% |
 | hv_ws_386178 | 342 | 0 | 0 | 0 | 320 | 22 | 93.6% |
 | hv_ws_391411 | 8 162 | 0 | 0 | 0 | 8028 | 134 | 98.4% |
 | hv_ws_40238 | 4 905 | 0 | 0 | 0 | 4600 | 305 | 93.8% |
+| hv_ws_41398 | 15 832 | 0 | 0 | 0 | 15024 | 808 | 94.9% |
+| hv_ws_41711 | 3 023 | 0 | 0 | 0 | 2834 | 189 | 93.7% |
 | hv_ws_420823 | 300 | 0 | 0 | 0 | 288 | 12 | 96.0% |
 | hv_ws_422471 | 6 678 | 0 | 0 | 0 | 6501 | 177 | 97.3% |
 | hv_ws_440622 | 328 | 0 | 0 | 0 | 310 | 18 | 94.5% |
@@ -8358,23 +9659,29 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_503233 | 5 934 | 0 | 0 | 0 | 5488 | 446 | 92.5% |
 | hv_ws_509637 | 367 | 0 | 0 | 0 | 339 | 28 | 92.4% |
 | hv_ws_518771 | 784 | 0 | 0 | 0 | 762 | 22 | 97.2% |
+| hv_ws_536288 | 15 931 | 0 | 0 | 0 | 15497 | 434 | 97.3% |
 | hv_ws_542704 | 641 | 0 | 0 | 0 | 605 | 36 | 94.4% |
 | hv_ws_545543 | 217 | 0 | 0 | 0 | 212 | 5 | 97.7% |
 | hv_ws_567597 | 6 078 | 0 | 0 | 0 | 5982 | 96 | 98.4% |
 | hv_ws_577132 | 7 524 | 0 | 0 | 0 | 7227 | 297 | 96.1% |
 | hv_ws_577536 | 286 | 0 | 0 | 0 | 267 | 19 | 93.4% |
+| hv_ws_71073 | 527 | 0 | 0 | 0 | 442 | 85 | 83.9% |
 | hv_ws_8872 | 196 | 0 | 0 | 0 | 180 | 16 | 91.8% |
 | r2u_holoskevych | 3 282 | 0 | 0 | 0 | 0 | 3282 | 0.0% |
 | hv_ws_11343 | 271 | 0 | 0 | 0 | 255 | 16 | 94.1% |
+| hv_ws_122993 | 134 | 0 | 0 | 0 | 131 | 3 | 97.8% |
 | hv_ws_127068 | 862 | 0 | 0 | 0 | 624 | 238 | 72.4% |
 | hv_ws_190081 | 207 | 0 | 0 | 0 | 194 | 13 | 93.7% |
 | hv_ws_193073 | 10 360 | 0 | 0 | 0 | 9772 | 588 | 94.3% |
 | hv_ws_194847 | 296 | 0 | 0 | 0 | 290 | 6 | 98.0% |
+| hv_ws_195619 | 152 | 0 | 0 | 0 | 147 | 5 | 96.7% |
 | hv_ws_201221 | 2 233 | 0 | 0 | 0 | 2199 | 34 | 98.5% |
+| hv_ws_201856 | 1 248 | 0 | 0 | 0 | 1182 | 66 | 94.7% |
 | hv_ws_21346 | 195 | 0 | 0 | 0 | 188 | 7 | 96.4% |
 | hv_ws_225630 | 384 | 0 | 0 | 0 | 357 | 27 | 93.0% |
 | hv_ws_226351 | 4 197 | 0 | 0 | 0 | 4119 | 78 | 98.1% |
 | hv_ws_228229 | 126 | 0 | 0 | 0 | 114 | 12 | 90.5% |
+| hv_ws_244013 | 237 | 0 | 0 | 0 | 222 | 15 | 93.7% |
 | hv_ws_24817 | 445 | 0 | 0 | 0 | 417 | 28 | 93.7% |
 | hv_ws_255307 | 51 078 | 0 | 0 | 0 | 49331 | 1747 | 96.6% |
 | hv_ws_275452 | 104 | 0 | 0 | 0 | 103 | 1 | 99.0% |
@@ -8396,15 +9703,23 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_194067 | 168 | 0 | 0 | 0 | 164 | 4 | 97.6% |
 | hv_ws_194873 | 357 | 0 | 0 | 0 | 334 | 23 | 93.6% |
 | hv_ws_2014 | 19 040 | 0 | 0 | 0 | 18554 | 486 | 97.4% |
+| hv_ws_214965 | 129 | 0 | 0 | 0 | 129 | 0 | 100.0% |
+| hv_ws_217115 | 285 | 0 | 0 | 0 | 255 | 30 | 89.5% |
 | hv_ws_21857 | 255 | 0 | 0 | 0 | 242 | 13 | 94.9% |
 | hv_ws_240417 | 198 | 0 | 0 | 0 | 189 | 9 | 95.5% |
 | hv_ws_27919 | 1 976 | 0 | 0 | 0 | 1862 | 114 | 94.2% |
+| hv_ws_321956 | 8 902 | 0 | 0 | 0 | 8483 | 419 | 95.3% |
+| hv_ws_35117 | 4 554 | 0 | 0 | 0 | 4185 | 369 | 91.9% |
 | hv_ws_386552 | 2 835 | 0 | 0 | 0 | 2686 | 149 | 94.7% |
 | hv_ws_40485 | 600 | 0 | 0 | 0 | 576 | 24 | 96.0% |
+| hv_ws_479191 | 17 312 | 0 | 0 | 0 | 16089 | 1223 | 92.9% |
 | hv_ws_53457 | 1 937 | 0 | 0 | 0 | 1719 | 218 | 88.7% |
 | hv_ws_123582 | 149 | 0 | 0 | 0 | 147 | 2 | 98.7% |
+| hv_ws_194806 | 242 | 0 | 0 | 0 | 215 | 27 | 88.8% |
 | hv_ws_198147 | 242 | 0 | 0 | 0 | 227 | 15 | 93.8% |
+| hv_ws_198754 | 151 | 0 | 0 | 0 | 138 | 13 | 91.4% |
 | hv_ws_246595 | 314 | 0 | 0 | 0 | 302 | 12 | 96.2% |
+| hv_ws_307849 | 393 | 0 | 0 | 0 | 374 | 19 | 95.2% |
 | hv_ws_322977 | 14 709 | 0 | 0 | 0 | 13906 | 803 | 94.5% |
 | hv_ws_52574 | 227 | 0 | 0 | 0 | 201 | 26 | 88.5% |
 | hv_ws_591925 | 243 | 0 | 0 | 0 | 232 | 11 | 95.5% |
@@ -8420,11 +9735,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_187564 | 672 | 0 | 0 | 0 | 580 | 92 | 86.3% |
 | hv_ws_189694 | 1 443 | 0 | 0 | 0 | 1359 | 84 | 94.2% |
 | hv_ws_192283 | 5 821 | 0 | 0 | 0 | 5459 | 362 | 93.8% |
+| hv_ws_206790 | 506 | 0 | 0 | 0 | 477 | 29 | 94.3% |
 | hv_ws_230249 | 211 | 0 | 0 | 0 | 194 | 17 | 91.9% |
 | hv_ws_262129 | 8 117 | 0 | 0 | 0 | 7957 | 160 | 98.0% |
+| hv_ws_386021 | 193 | 0 | 0 | 0 | 179 | 14 | 92.7% |
 | hv_ws_455273 | 25 682 | 0 | 0 | 0 | 25024 | 658 | 97.4% |
 | hv_ws_560094 | 6 612 | 0 | 0 | 0 | 6195 | 417 | 93.7% |
 | hv_ws_561080 | 7 980 | 0 | 0 | 0 | 7551 | 429 | 94.6% |
+| hv_ws_67982 | 278 | 0 | 0 | 0 | 272 | 6 | 97.8% |
 | hv_ws_176601 | 2 094 | 0 | 0 | 0 | 2022 | 72 | 96.6% |
 | hv_ws_203557 | 253 | 0 | 0 | 0 | 238 | 15 | 94.1% |
 | hv_ws_255300 | 192 | 0 | 0 | 0 | 178 | 14 | 92.7% |
@@ -8437,14 +9755,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_192484 | 6 799 | 0 | 0 | 0 | 6313 | 486 | 92.9% |
 | hv_ws_193727 | 923 | 0 | 0 | 0 | 863 | 60 | 93.5% |
 | hv_ws_194501 | 1 803 | 0 | 0 | 0 | 1739 | 64 | 96.5% |
+| hv_ws_226382 | 29 567 | 0 | 0 | 0 | 28299 | 1268 | 95.7% |
 | hv_ws_228200 | 130 | 0 | 0 | 0 | 129 | 1 | 99.2% |
 | hv_ws_25214 | 279 | 0 | 0 | 0 | 270 | 9 | 96.8% |
+| hv_ws_27341 | 259 | 0 | 0 | 0 | 237 | 22 | 91.5% |
 | hv_ws_362878 | 3 834 | 0 | 0 | 0 | 3795 | 39 | 99.0% |
 | hv_ws_429978 | 262 | 0 | 0 | 0 | 243 | 19 | 92.7% |
 | hv_ws_444328 | 1 222 | 0 | 0 | 0 | 1173 | 49 | 96.0% |
 | hv_ws_453108 | 9 398 | 0 | 0 | 0 | 8225 | 1173 | 87.5% |
+| hv_ws_123933 | 822 | 0 | 0 | 0 | 777 | 45 | 94.5% |
 | hv_ws_132568 | 5 028 | 0 | 0 | 0 | 4976 | 52 | 99.0% |
 | hv_ws_191942 | 4 730 | 0 | 0 | 0 | 4417 | 313 | 93.4% |
+| hv_ws_200906 | 322 | 0 | 0 | 0 | 307 | 15 | 95.3% |
 | hv_ws_205740 | 229 | 0 | 0 | 0 | 219 | 10 | 95.6% |
 | hv_ws_232676 | 9 179 | 0 | 0 | 0 | 8861 | 318 | 96.5% |
 | hv_ws_236084 | 946 | 0 | 0 | 0 | 870 | 76 | 92.0% |
@@ -8452,20 +9774,38 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_287815 | 5 777 | 0 | 0 | 0 | 4970 | 807 | 86.0% |
 | hv_ws_287816 | 175 | 0 | 0 | 0 | 166 | 9 | 94.9% |
 | hv_ws_31526 | 369 | 0 | 0 | 0 | 354 | 15 | 95.9% |
+| hv_ws_356391 | 207 | 0 | 0 | 0 | 189 | 18 | 91.3% |
+| hv_ws_378240 | 176 | 0 | 0 | 0 | 162 | 14 | 92.0% |
 | hv_ws_38357 | 227 | 0 | 0 | 0 | 216 | 11 | 95.2% |
 | hv_ws_514861 | 4 843 | 0 | 0 | 0 | 4494 | 349 | 92.8% |
 | hv_ws_184414 | 6 694 | 0 | 0 | 0 | 5668 | 1026 | 84.7% |
+| hv_ws_191526 | 553 | 0 | 0 | 0 | 503 | 50 | 91.0% |
 | hv_ws_25175 | 163 | 0 | 0 | 0 | 160 | 3 | 98.2% |
 | hv_ws_25223 | 247 | 0 | 0 | 0 | 240 | 7 | 97.2% |
 | hv_ws_27128 | 1 480 | 0 | 0 | 0 | 1420 | 60 | 95.9% |
+| hv_ws_338536 | 231 | 0 | 0 | 0 | 218 | 13 | 94.4% |
+| hv_ws_338667 | 197 | 0 | 0 | 0 | 190 | 7 | 96.4% |
+| hv_ws_339521 | 334 | 0 | 0 | 0 | 318 | 16 | 95.2% |
+| hv_ws_339744 | 409 | 0 | 0 | 0 | 394 | 15 | 96.3% |
+| hv_ws_339760 | 187 | 0 | 0 | 0 | 183 | 4 | 97.9% |
+| hv_ws_342984 | 624 | 0 | 0 | 0 | 567 | 57 | 90.9% |
+| hv_ws_351182 | 1 590 | 0 | 0 | 0 | 1474 | 116 | 92.7% |
+| hv_ws_351501 | 339 | 0 | 0 | 0 | 329 | 10 | 97.1% |
+| hv_ws_351711 | 417 | 0 | 0 | 0 | 381 | 36 | 91.4% |
 | hv_ws_364254 | 184 | 0 | 0 | 0 | 175 | 9 | 95.1% |
 | hv_ws_37321 | 439 | 0 | 0 | 0 | 424 | 15 | 96.6% |
+| hv_ws_384580 | 312 | 0 | 0 | 0 | 293 | 19 | 93.9% |
 | hv_ws_419346 | 421 | 0 | 0 | 0 | 409 | 12 | 97.1% |
 | hv_ws_1867 | 662 | 0 | 0 | 0 | 656 | 6 | 99.1% |
 | hv_ws_3190 | 233 | 0 | 0 | 0 | 232 | 1 | 99.6% |
 | hv_ws_39985 | 742 | 0 | 0 | 0 | 734 | 8 | 98.9% |
 | hv_ws_42198 | 128 | 0 | 0 | 0 | 128 | 0 | 100.0% |
 | hv_ws_42199 | 129 | 0 | 0 | 0 | 128 | 1 | 99.2% |
+| hv_ws_42200 | 223 | 0 | 0 | 0 | 183 | 40 | 82.1% |
+| hv_ws_42203 | 255 | 0 | 0 | 0 | 233 | 22 | 91.4% |
+| hv_ws_479190 | 5 763 | 0 | 0 | 0 | 5406 | 357 | 93.8% |
+| hv_ws_61305 | 274 | 0 | 0 | 0 | 254 | 20 | 92.7% |
+| hv_ws_64445 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
 | hv_ws_64446 | 57 | 0 | 0 | 0 | 54 | 3 | 94.7% |
 | cheremshyna1940_dlg | 4 214 | 0 | 0 | 0 | 3840 | 374 | 91.1% |
 | cheremshyna1940_nar | 7 289 | 0 | 0 | 0 | 6849 | 440 | 94.0% |
@@ -8481,18 +9821,24 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_203998 | 8 524 | 0 | 0 | 0 | 8228 | 296 | 96.5% |
 | hv_ws_208114 | 7 729 | 0 | 0 | 0 | 7624 | 105 | 98.6% |
 | hv_ws_23285 | 123 | 0 | 0 | 0 | 123 | 0 | 100.0% |
+| hv_ws_261995 | 4 290 | 0 | 0 | 0 | 4174 | 116 | 97.3% |
 | hv_ws_262100 | 593 | 0 | 0 | 0 | 575 | 18 | 97.0% |
 | hv_ws_378652 | 301 | 0 | 0 | 0 | 290 | 11 | 96.3% |
 | hv_ws_466696 | 254 | 0 | 0 | 0 | 239 | 15 | 94.1% |
+| hv_ws_479727 | 5 629 | 0 | 0 | 0 | 4815 | 814 | 85.5% |
 | hv_ws_70192 | 4 639 | 0 | 0 | 0 | 4348 | 291 | 93.7% |
 | hv_ws_71932 | 3 507 | 0 | 0 | 0 | 3373 | 134 | 96.2% |
 | hv_ws_71983 | 624 | 0 | 0 | 0 | 608 | 16 | 97.4% |
 | hv_ws_102324 | 568 | 0 | 0 | 0 | 544 | 24 | 95.8% |
 | hv_ws_107824 | 903 | 0 | 0 | 0 | 896 | 7 | 99.2% |
 | hv_ws_110931 | 236 | 0 | 0 | 0 | 228 | 8 | 96.6% |
+| hv_ws_122709 | 188 | 0 | 0 | 0 | 186 | 2 | 98.9% |
 | hv_ws_127293 | 248 | 0 | 0 | 0 | 244 | 4 | 98.4% |
 | hv_ws_17794 | 1 174 | 0 | 0 | 0 | 998 | 176 | 85.0% |
 | hv_ws_179122 | 389 | 0 | 0 | 0 | 365 | 24 | 93.8% |
+| hv_ws_180011 | 268 | 0 | 0 | 0 | 260 | 8 | 97.0% |
+| hv_ws_185942 | 194 | 0 | 0 | 0 | 187 | 7 | 96.4% |
+| hv_ws_185943 | 189 | 0 | 0 | 0 | 172 | 17 | 91.0% |
 | hv_ws_22913 | 154 | 0 | 0 | 0 | 145 | 9 | 94.2% |
 | hv_ws_27514 | 8 538 | 0 | 0 | 0 | 8189 | 349 | 95.9% |
 | hv_ws_28102 | 2 964 | 0 | 0 | 0 | 2819 | 145 | 95.1% |
@@ -8500,18 +9846,128 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_304077 | 161 | 0 | 0 | 0 | 159 | 2 | 98.8% |
 | hv_ws_32999 | 872 | 0 | 0 | 0 | 816 | 56 | 93.6% |
 | hv_ws_33604 | 1 525 | 0 | 0 | 0 | 1495 | 30 | 98.0% |
+| hv_ws_566654 | 213 | 0 | 0 | 0 | 211 | 2 | 99.1% |
+| hv_ws_566813 | 204 | 0 | 0 | 0 | 199 | 5 | 97.5% |
+| hv_ws_57173 | 216 | 0 | 0 | 0 | 198 | 18 | 91.7% |
 | hv_ws_575639 | 300 | 0 | 0 | 0 | 296 | 4 | 98.7% |
 | hv_ws_575642 | 322 | 0 | 0 | 0 | 317 | 5 | 98.4% |
+| hv_ws_57602 | 167 | 0 | 0 | 0 | 165 | 2 | 98.8% |
+| hv_ws_57606 | 190 | 0 | 0 | 0 | 186 | 4 | 97.9% |
+| hv_ws_57607 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
+| hv_ws_57608 | 176 | 0 | 0 | 0 | 169 | 7 | 96.0% |
+| hv_ws_57609 | 190 | 0 | 0 | 0 | 179 | 11 | 94.2% |
+| hv_ws_57610 | 167 | 0 | 0 | 0 | 162 | 5 | 97.0% |
+| hv_ws_57611 | 206 | 0 | 0 | 0 | 198 | 8 | 96.1% |
+| hv_ws_59075 | 191 | 0 | 0 | 0 | 186 | 5 | 97.4% |
+| hv_ws_59076 | 181 | 0 | 0 | 0 | 175 | 6 | 96.7% |
+| hv_ws_59079 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
+| hv_ws_59080 | 216 | 0 | 0 | 0 | 205 | 11 | 94.9% |
 | hv_ws_70112 | 6 484 | 0 | 0 | 0 | 6167 | 317 | 95.1% |
 | hv_ws_70363 | 71 | 0 | 0 | 0 | 64 | 7 | 90.1% |
 | hv_ws_72465 | 575 | 0 | 0 | 0 | 556 | 19 | 96.7% |
+| hv_ws_103699 | 149 | 0 | 0 | 0 | 144 | 5 | 96.6% |
+| hv_ws_103879 | 8 329 | 0 | 0 | 0 | 7933 | 396 | 95.2% |
 | hv_ws_107822 | 1 074 | 0 | 0 | 0 | 1062 | 12 | 98.9% |
+| hv_ws_122710 | 205 | 0 | 0 | 0 | 197 | 8 | 96.1% |
+| hv_ws_122711 | 172 | 0 | 0 | 0 | 167 | 5 | 97.1% |
+| hv_ws_122712 | 179 | 0 | 0 | 0 | 175 | 4 | 97.8% |
+| hv_ws_122713 | 198 | 0 | 0 | 0 | 194 | 4 | 98.0% |
+| hv_ws_192066 | 10 736 | 0 | 0 | 0 | 10489 | 247 | 97.7% |
+| hv_ws_216701 | 255 | 0 | 0 | 0 | 246 | 9 | 96.5% |
 | hv_ws_24513 | 153 | 0 | 0 | 0 | 145 | 8 | 94.8% |
+| hv_ws_26372 | 409 | 0 | 0 | 0 | 401 | 8 | 98.0% |
 | hv_ws_27143 | 139 | 0 | 0 | 0 | 136 | 3 | 97.8% |
 | hv_ws_31579 | 4 197 | 0 | 0 | 0 | 4045 | 152 | 96.4% |
+| hv_ws_46473 | 670 | 0 | 0 | 0 | 660 | 10 | 98.5% |
+| hv_ws_122714 | 226 | 0 | 0 | 0 | 219 | 7 | 96.9% |
+| hv_ws_122818 | 199 | 0 | 0 | 0 | 197 | 2 | 99.0% |
+| hv_ws_122819 | 173 | 0 | 0 | 0 | 171 | 2 | 98.8% |
+| hv_ws_122820 | 184 | 0 | 0 | 0 | 177 | 7 | 96.2% |
+| hv_ws_122821 | 195 | 0 | 0 | 0 | 188 | 7 | 96.4% |
+| hv_ws_122822 | 250 | 0 | 0 | 0 | 236 | 14 | 94.4% |
+| hv_ws_122823 | 173 | 0 | 0 | 0 | 171 | 2 | 98.8% |
+| hv_ws_122824 | 159 | 0 | 0 | 0 | 155 | 4 | 97.5% |
+| hv_ws_122826 | 165 | 0 | 0 | 0 | 161 | 4 | 97.6% |
+| hv_ws_122827 | 195 | 0 | 0 | 0 | 192 | 3 | 98.5% |
+| hv_ws_122828 | 243 | 0 | 0 | 0 | 238 | 5 | 97.9% |
+| hv_ws_123032 | 173 | 0 | 0 | 0 | 167 | 6 | 96.5% |
+| hv_ws_123033 | 214 | 0 | 0 | 0 | 204 | 10 | 95.3% |
+| hv_ws_123034 | 233 | 0 | 0 | 0 | 225 | 8 | 96.6% |
+| hv_ws_123035 | 207 | 0 | 0 | 0 | 201 | 6 | 97.1% |
+| hv_ws_123036 | 182 | 0 | 0 | 0 | 173 | 9 | 95.1% |
+| hv_ws_127681 | 168 | 0 | 0 | 0 | 165 | 3 | 98.2% |
+| hv_ws_127732 | 209 | 0 | 0 | 0 | 203 | 6 | 97.1% |
+| hv_ws_127740 | 183 | 0 | 0 | 0 | 176 | 7 | 96.2% |
+| hv_ws_127810 | 165 | 0 | 0 | 0 | 163 | 2 | 98.8% |
+| hv_ws_127831 | 192 | 0 | 0 | 0 | 186 | 6 | 96.9% |
+| hv_ws_127866 | 226 | 0 | 0 | 0 | 223 | 3 | 98.7% |
+| hv_ws_127942 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_127961 | 184 | 0 | 0 | 0 | 180 | 4 | 97.8% |
+| hv_ws_127988 | 215 | 0 | 0 | 0 | 208 | 7 | 96.7% |
+| hv_ws_128023 | 291 | 0 | 0 | 0 | 289 | 2 | 99.3% |
+| hv_ws_128169 | 184 | 0 | 0 | 0 | 181 | 3 | 98.4% |
+| hv_ws_128224 | 241 | 0 | 0 | 0 | 237 | 4 | 98.3% |
+| hv_ws_128231 | 227 | 0 | 0 | 0 | 221 | 6 | 97.4% |
+| hv_ws_128256 | 177 | 0 | 0 | 0 | 175 | 2 | 98.9% |
+| hv_ws_128257 | 250 | 0 | 0 | 0 | 245 | 5 | 98.0% |
+| hv_ws_128272 | 260 | 0 | 0 | 0 | 250 | 10 | 96.2% |
+| hv_ws_128308 | 164 | 0 | 0 | 0 | 162 | 2 | 98.8% |
+| hv_ws_128378 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
+| hv_ws_128379 | 164 | 0 | 0 | 0 | 159 | 5 | 97.0% |
+| hv_ws_128712 | 189 | 0 | 0 | 0 | 186 | 3 | 98.4% |
+| hv_ws_128777 | 251 | 0 | 0 | 0 | 244 | 7 | 97.2% |
+| hv_ws_128819 | 248 | 0 | 0 | 0 | 242 | 6 | 97.6% |
+| hv_ws_128833 | 167 | 0 | 0 | 0 | 159 | 8 | 95.2% |
+| hv_ws_128851 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
+| hv_ws_128893 | 184 | 0 | 0 | 0 | 176 | 8 | 95.7% |
 | hv_ws_133887 | 707 | 0 | 0 | 0 | 669 | 38 | 94.6% |
 | hv_ws_191931 | 233 | 0 | 0 | 0 | 207 | 26 | 88.8% |
+| hv_ws_289389 | 139 | 0 | 0 | 0 | 136 | 3 | 97.8% |
+| hv_ws_126926 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
+| hv_ws_127005 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_127006 | 167 | 0 | 0 | 0 | 165 | 2 | 98.8% |
+| hv_ws_127100 | 173 | 0 | 0 | 0 | 169 | 4 | 97.7% |
+| hv_ws_127109 | 182 | 0 | 0 | 0 | 177 | 5 | 97.3% |
+| hv_ws_127225 | 183 | 0 | 0 | 0 | 180 | 3 | 98.4% |
+| hv_ws_127226 | 178 | 0 | 0 | 0 | 176 | 2 | 98.9% |
+| hv_ws_127258 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_127259 | 178 | 0 | 0 | 0 | 176 | 2 | 98.9% |
+| hv_ws_127285 | 177 | 0 | 0 | 0 | 171 | 6 | 96.6% |
+| hv_ws_127292 | 167 | 0 | 0 | 0 | 163 | 4 | 97.6% |
+| hv_ws_127315 | 167 | 0 | 0 | 0 | 163 | 4 | 97.6% |
 | hv_ws_127316 | 543 | 0 | 0 | 0 | 537 | 6 | 98.9% |
+| hv_ws_127338 | 187 | 0 | 0 | 0 | 183 | 4 | 97.9% |
+| hv_ws_127369 | 219 | 0 | 0 | 0 | 215 | 4 | 98.2% |
+| hv_ws_127391 | 173 | 0 | 0 | 0 | 171 | 2 | 98.8% |
+| hv_ws_127420 | 203 | 0 | 0 | 0 | 198 | 5 | 97.5% |
+| hv_ws_127492 | 183 | 0 | 0 | 0 | 179 | 4 | 97.8% |
+| hv_ws_127534 | 218 | 0 | 0 | 0 | 210 | 8 | 96.3% |
+| hv_ws_127559 | 176 | 0 | 0 | 0 | 174 | 2 | 98.9% |
+| hv_ws_127588 | 297 | 0 | 0 | 0 | 286 | 11 | 96.3% |
+| hv_ws_127734 | 167 | 0 | 0 | 0 | 163 | 4 | 97.6% |
+| hv_ws_127811 | 161 | 0 | 0 | 0 | 159 | 2 | 98.8% |
+| hv_ws_127943 | 170 | 0 | 0 | 0 | 165 | 5 | 97.1% |
+| hv_ws_128170 | 164 | 0 | 0 | 0 | 162 | 2 | 98.8% |
+| hv_ws_128226 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
+| hv_ws_128309 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_128357 | 241 | 0 | 0 | 0 | 238 | 3 | 98.8% |
+| hv_ws_128407 | 244 | 0 | 0 | 0 | 241 | 3 | 98.8% |
+| hv_ws_128711 | 236 | 0 | 0 | 0 | 230 | 6 | 97.5% |
+| hv_ws_128971 | 169 | 0 | 0 | 0 | 166 | 3 | 98.2% |
+| hv_ws_129161 | 167 | 0 | 0 | 0 | 165 | 2 | 98.8% |
+| hv_ws_129458 | 173 | 0 | 0 | 0 | 168 | 5 | 97.1% |
+| hv_ws_129736 | 193 | 0 | 0 | 0 | 190 | 3 | 98.4% |
+| hv_ws_129831 | 169 | 0 | 0 | 0 | 167 | 2 | 98.8% |
+| hv_ws_129966 | 170 | 0 | 0 | 0 | 167 | 3 | 98.2% |
+| hv_ws_129983 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
+| hv_ws_130009 | 154 | 0 | 0 | 0 | 152 | 2 | 98.7% |
+| hv_ws_130566 | 185 | 0 | 0 | 0 | 183 | 2 | 98.9% |
+| hv_ws_130660 | 191 | 0 | 0 | 0 | 189 | 2 | 99.0% |
+| hv_ws_130661 | 192 | 0 | 0 | 0 | 189 | 3 | 98.4% |
+| hv_ws_130804 | 164 | 0 | 0 | 0 | 162 | 2 | 98.8% |
+| hv_ws_130805 | 173 | 0 | 0 | 0 | 169 | 4 | 97.7% |
+| hv_ws_130839 | 161 | 0 | 0 | 0 | 159 | 2 | 98.8% |
+| hv_ws_130870 | 168 | 0 | 0 | 0 | 164 | 4 | 97.6% |
 | hv_ws_130871 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
 | hv_ws_130922 | 217 | 0 | 0 | 0 | 215 | 2 | 99.1% |
 | hv_ws_130923 | 443 | 0 | 0 | 0 | 437 | 6 | 98.6% |
@@ -8525,20 +9981,394 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_131438 | 240 | 0 | 0 | 0 | 236 | 4 | 98.3% |
 | hv_ws_131744 | 182 | 0 | 0 | 0 | 180 | 2 | 98.9% |
 | hv_ws_131746 | 166 | 0 | 0 | 0 | 164 | 2 | 98.8% |
+| hv_ws_131751 | 164 | 0 | 0 | 0 | 160 | 4 | 97.6% |
 | hv_ws_165539 | 494 | 0 | 0 | 0 | 483 | 11 | 97.8% |
 | hv_ws_357548 | 290 | 0 | 0 | 0 | 282 | 8 | 97.2% |
+| hv_ws_42430 | 297 | 0 | 0 | 0 | 287 | 10 | 96.6% |
+| hv_ws_490635 | 165 | 0 | 0 | 0 | 155 | 10 | 93.9% |
+| hv_ws_57612 | 175 | 0 | 0 | 0 | 172 | 3 | 98.3% |
+| hv_ws_57613 | 190 | 0 | 0 | 0 | 188 | 2 | 98.9% |
+| hv_ws_57614 | 200 | 0 | 0 | 0 | 195 | 5 | 97.5% |
+| hv_ws_57615 | 218 | 0 | 0 | 0 | 211 | 7 | 96.8% |
+| hv_ws_57616 | 209 | 0 | 0 | 0 | 205 | 4 | 98.1% |
+| hv_ws_57617 | 159 | 0 | 0 | 0 | 157 | 2 | 98.7% |
+| hv_ws_57618 | 176 | 0 | 0 | 0 | 169 | 7 | 96.0% |
+| hv_ws_57619 | 178 | 0 | 0 | 0 | 169 | 9 | 94.9% |
+| hv_ws_57620 | 180 | 0 | 0 | 0 | 177 | 3 | 98.3% |
+| hv_ws_57835 | 178 | 0 | 0 | 0 | 176 | 2 | 98.9% |
+| hv_ws_57836 | 174 | 0 | 0 | 0 | 169 | 5 | 97.1% |
+| hv_ws_57837 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_57838 | 172 | 0 | 0 | 0 | 169 | 3 | 98.3% |
+| hv_ws_57842 | 169 | 0 | 0 | 0 | 160 | 9 | 94.7% |
+| hv_ws_57843 | 210 | 0 | 0 | 0 | 198 | 12 | 94.3% |
+| hv_ws_57844 | 175 | 0 | 0 | 0 | 173 | 2 | 98.9% |
+| hv_ws_57896 | 167 | 0 | 0 | 0 | 164 | 3 | 98.2% |
+| hv_ws_58693 | 167 | 0 | 0 | 0 | 163 | 4 | 97.6% |
+| hv_ws_58695 | 176 | 0 | 0 | 0 | 169 | 7 | 96.0% |
+| hv_ws_123593 | 927 | 0 | 0 | 0 | 875 | 52 | 94.4% |
+| hv_ws_124271 | 463 | 0 | 0 | 0 | 442 | 21 | 95.5% |
+| hv_ws_124350 | 1 011 | 0 | 0 | 0 | 947 | 64 | 93.7% |
+| hv_ws_124574 | 1 067 | 0 | 0 | 0 | 994 | 73 | 93.2% |
+| hv_ws_124780 | 897 | 0 | 0 | 0 | 836 | 61 | 93.2% |
+| hv_ws_124946 | 718 | 0 | 0 | 0 | 661 | 57 | 92.1% |
+| hv_ws_124958 | 1 414 | 0 | 0 | 0 | 1333 | 81 | 94.3% |
+| hv_ws_125109 | 292 | 0 | 0 | 0 | 278 | 14 | 95.2% |
+| hv_ws_125184 | 482 | 0 | 0 | 0 | 448 | 34 | 92.9% |
+| hv_ws_125228 | 966 | 0 | 0 | 0 | 897 | 69 | 92.9% |
+| hv_ws_125296 | 349 | 0 | 0 | 0 | 335 | 14 | 96.0% |
+| hv_ws_125309 | 1 636 | 0 | 0 | 0 | 1501 | 135 | 91.7% |
+| hv_ws_125417 | 958 | 0 | 0 | 0 | 914 | 44 | 95.4% |
+| hv_ws_125452 | 685 | 0 | 0 | 0 | 639 | 46 | 93.3% |
+| hv_ws_125453 | 866 | 0 | 0 | 0 | 797 | 69 | 92.0% |
+| hv_ws_125469 | 1 050 | 0 | 0 | 0 | 947 | 103 | 90.2% |
+| hv_ws_125482 | 1 095 | 0 | 0 | 0 | 1044 | 51 | 95.3% |
+| hv_ws_125546 | 903 | 0 | 0 | 0 | 854 | 49 | 94.6% |
+| hv_ws_125607 | 374 | 0 | 0 | 0 | 358 | 16 | 95.7% |
+| hv_ws_125784 | 744 | 0 | 0 | 0 | 713 | 31 | 95.8% |
+| hv_ws_125885 | 984 | 0 | 0 | 0 | 904 | 80 | 91.9% |
+| hv_ws_125886 | 634 | 0 | 0 | 0 | 596 | 38 | 94.0% |
+| hv_ws_125940 | 980 | 0 | 0 | 0 | 926 | 54 | 94.5% |
+| hv_ws_126332 | 466 | 0 | 0 | 0 | 427 | 39 | 91.6% |
+| hv_ws_126483 | 1 154 | 0 | 0 | 0 | 1108 | 46 | 96.0% |
+| hv_ws_126564 | 809 | 0 | 0 | 0 | 745 | 64 | 92.1% |
+| hv_ws_126618 | 1 017 | 0 | 0 | 0 | 939 | 78 | 92.3% |
+| hv_ws_126655 | 1 538 | 0 | 0 | 0 | 1431 | 107 | 93.0% |
+| hv_ws_126682 | 493 | 0 | 0 | 0 | 473 | 20 | 95.9% |
+| hv_ws_126736 | 406 | 0 | 0 | 0 | 384 | 22 | 94.6% |
+| hv_ws_126741 | 350 | 0 | 0 | 0 | 328 | 22 | 93.7% |
+| hv_ws_126801 | 383 | 0 | 0 | 0 | 364 | 19 | 95.0% |
+| hv_ws_126845 | 724 | 0 | 0 | 0 | 690 | 34 | 95.3% |
+| hv_ws_127682 | 182 | 0 | 0 | 0 | 180 | 2 | 98.9% |
+| hv_ws_127733 | 173 | 0 | 0 | 0 | 171 | 2 | 98.8% |
+| hv_ws_127741 | 160 | 0 | 0 | 0 | 158 | 2 | 98.8% |
+| hv_ws_127812 | 173 | 0 | 0 | 0 | 171 | 2 | 98.8% |
+| hv_ws_127832 | 155 | 0 | 0 | 0 | 153 | 2 | 98.7% |
+| hv_ws_127868 | 729 | 0 | 0 | 0 | 696 | 33 | 95.5% |
+| hv_ws_127962 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
+| hv_ws_127989 | 923 | 0 | 0 | 0 | 873 | 50 | 94.6% |
+| hv_ws_128025 | 270 | 0 | 0 | 0 | 265 | 5 | 98.1% |
+| hv_ws_128028 | 473 | 0 | 0 | 0 | 438 | 35 | 92.6% |
+| hv_ws_128171 | 164 | 0 | 0 | 0 | 162 | 2 | 98.8% |
+| hv_ws_128172 | 348 | 0 | 0 | 0 | 335 | 13 | 96.3% |
+| hv_ws_128227 | 179 | 0 | 0 | 0 | 171 | 8 | 95.5% |
+| hv_ws_128228 | 491 | 0 | 0 | 0 | 469 | 22 | 95.5% |
+| hv_ws_128230 | 732 | 0 | 0 | 0 | 693 | 39 | 94.7% |
+| hv_ws_128258 | 182 | 0 | 0 | 0 | 180 | 2 | 98.9% |
+| hv_ws_128259 | 678 | 0 | 0 | 0 | 621 | 57 | 91.6% |
+| hv_ws_128260 | 657 | 0 | 0 | 0 | 608 | 49 | 92.5% |
+| hv_ws_128273 | 178 | 0 | 0 | 0 | 173 | 5 | 97.2% |
+| hv_ws_128274 | 751 | 0 | 0 | 0 | 696 | 55 | 92.7% |
+| hv_ws_128310 | 165 | 0 | 0 | 0 | 163 | 2 | 98.8% |
+| hv_ws_128336 | 713 | 0 | 0 | 0 | 667 | 46 | 93.5% |
+| hv_ws_128338 | 544 | 0 | 0 | 0 | 519 | 25 | 95.4% |
+| hv_ws_128341 | 810 | 0 | 0 | 0 | 767 | 43 | 94.7% |
+| hv_ws_128355 | 862 | 0 | 0 | 0 | 811 | 51 | 94.1% |
+| hv_ws_128404 | 607 | 0 | 0 | 0 | 559 | 48 | 92.1% |
+| hv_ws_128405 | 484 | 0 | 0 | 0 | 465 | 19 | 96.1% |
+| hv_ws_128406 | 868 | 0 | 0 | 0 | 820 | 48 | 94.5% |
+| hv_ws_128713 | 1 134 | 0 | 0 | 0 | 1082 | 52 | 95.4% |
+| hv_ws_128714 | 385 | 0 | 0 | 0 | 364 | 21 | 94.5% |
+| hv_ws_128744 | 489 | 0 | 0 | 0 | 478 | 11 | 97.8% |
+| hv_ws_128776 | 395 | 0 | 0 | 0 | 365 | 30 | 92.4% |
+| hv_ws_128820 | 319 | 0 | 0 | 0 | 305 | 14 | 95.6% |
+| hv_ws_128834 | 1 074 | 0 | 0 | 0 | 1022 | 52 | 95.2% |
+| hv_ws_128852 | 834 | 0 | 0 | 0 | 800 | 34 | 95.9% |
+| hv_ws_128864 | 939 | 0 | 0 | 0 | 886 | 53 | 94.4% |
+| hv_ws_128894 | 184 | 0 | 0 | 0 | 179 | 5 | 97.3% |
+| hv_ws_128973 | 511 | 0 | 0 | 0 | 489 | 22 | 95.7% |
+| hv_ws_128975 | 1 239 | 0 | 0 | 0 | 1131 | 108 | 91.3% |
+| hv_ws_129163 | 452 | 0 | 0 | 0 | 426 | 26 | 94.2% |
+| hv_ws_129228 | 599 | 0 | 0 | 0 | 565 | 34 | 94.3% |
+| hv_ws_129229 | 479 | 0 | 0 | 0 | 460 | 19 | 96.0% |
+| hv_ws_129459 | 1 101 | 0 | 0 | 0 | 1051 | 50 | 95.5% |
+| hv_ws_129563 | 929 | 0 | 0 | 0 | 863 | 66 | 92.9% |
+| hv_ws_129565 | 1 151 | 0 | 0 | 0 | 1097 | 54 | 95.3% |
+| hv_ws_129571 | 1 130 | 0 | 0 | 0 | 1062 | 68 | 94.0% |
+| hv_ws_129737 | 987 | 0 | 0 | 0 | 946 | 41 | 95.8% |
+| hv_ws_129814 | 1 251 | 0 | 0 | 0 | 1183 | 68 | 94.6% |
+| hv_ws_129828 | 1 106 | 0 | 0 | 0 | 1058 | 48 | 95.7% |
+| hv_ws_129883 | 1 141 | 0 | 0 | 0 | 1085 | 56 | 95.1% |
+| hv_ws_129967 | 1 644 | 0 | 0 | 0 | 1503 | 141 | 91.4% |
+| hv_ws_129981 | 563 | 0 | 0 | 0 | 522 | 41 | 92.7% |
+| hv_ws_129982 | 707 | 0 | 0 | 0 | 657 | 50 | 92.9% |
+| hv_ws_130006 | 503 | 0 | 0 | 0 | 471 | 32 | 93.6% |
+| hv_ws_130007 | 543 | 0 | 0 | 0 | 522 | 21 | 96.1% |
+| hv_ws_130139 | 1 108 | 0 | 0 | 0 | 986 | 122 | 89.0% |
+| hv_ws_130148 | 1 169 | 0 | 0 | 0 | 1078 | 91 | 92.2% |
+| hv_ws_130333 | 1 090 | 0 | 0 | 0 | 1024 | 66 | 93.9% |
+| hv_ws_130334 | 1 012 | 0 | 0 | 0 | 972 | 40 | 96.0% |
+| hv_ws_130521 | 1 651 | 0 | 0 | 0 | 1484 | 167 | 89.9% |
+| hv_ws_130522 | 1 174 | 0 | 0 | 0 | 1119 | 55 | 95.3% |
+| hv_ws_130565 | 643 | 0 | 0 | 0 | 605 | 38 | 94.1% |
+| hv_ws_131439 | 1 552 | 0 | 0 | 0 | 1475 | 77 | 95.0% |
+| hv_ws_131440 | 1 418 | 0 | 0 | 0 | 1299 | 119 | 91.6% |
+| hv_ws_131948 | 1 427 | 0 | 0 | 0 | 1312 | 115 | 91.9% |
+| hv_ws_131956 | 1 104 | 0 | 0 | 0 | 991 | 113 | 89.8% |
+| hv_ws_132022 | 213 | 0 | 0 | 0 | 206 | 7 | 96.7% |
+| hv_ws_132023 | 211 | 0 | 0 | 0 | 207 | 4 | 98.1% |
+| hv_ws_134404 | 1 698 | 0 | 0 | 0 | 1576 | 122 | 92.8% |
+| hv_ws_134598 | 1 958 | 0 | 0 | 0 | 1822 | 136 | 93.1% |
+| hv_ws_134856 | 1 593 | 0 | 0 | 0 | 1424 | 169 | 89.4% |
+| hv_ws_134941 | 926 | 0 | 0 | 0 | 867 | 59 | 93.6% |
+| hv_ws_135401 | 506 | 0 | 0 | 0 | 481 | 25 | 95.1% |
+| hv_ws_135402 | 3 747 | 0 | 0 | 0 | 3463 | 284 | 92.4% |
+| hv_ws_135508 | 1 460 | 0 | 0 | 0 | 1319 | 141 | 90.3% |
+| hv_ws_135626 | 1 391 | 0 | 0 | 0 | 1241 | 150 | 89.2% |
+| hv_ws_135731 | 1 727 | 0 | 0 | 0 | 1602 | 125 | 92.8% |
+| hv_ws_136004 | 1 008 | 0 | 0 | 0 | 902 | 106 | 89.5% |
+| hv_ws_136097 | 582 | 0 | 0 | 0 | 541 | 41 | 93.0% |
+| hv_ws_136186 | 587 | 0 | 0 | 0 | 540 | 47 | 92.0% |
+| hv_ws_136270 | 185 | 0 | 0 | 0 | 181 | 4 | 97.8% |
+| hv_ws_136685 | 175 | 0 | 0 | 0 | 170 | 5 | 97.1% |
+| hv_ws_136733 | 1 773 | 0 | 0 | 0 | 1584 | 189 | 89.3% |
+| hv_ws_136773 | 1 274 | 0 | 0 | 0 | 1215 | 59 | 95.4% |
+| hv_ws_136834 | 896 | 0 | 0 | 0 | 831 | 65 | 92.7% |
+| hv_ws_136887 | 1 964 | 0 | 0 | 0 | 1854 | 110 | 94.4% |
+| hv_ws_136941 | 1 565 | 0 | 0 | 0 | 1484 | 81 | 94.8% |
+| hv_ws_137007 | 2 664 | 0 | 0 | 0 | 2418 | 246 | 90.8% |
+| hv_ws_137131 | 1 852 | 0 | 0 | 0 | 1762 | 90 | 95.1% |
+| hv_ws_137182 | 819 | 0 | 0 | 0 | 770 | 49 | 94.0% |
+| hv_ws_137183 | 2 400 | 0 | 0 | 0 | 2219 | 181 | 92.5% |
+| hv_ws_137263 | 808 | 0 | 0 | 0 | 725 | 83 | 89.7% |
+| hv_ws_137265 | 1 442 | 0 | 0 | 0 | 1300 | 142 | 90.2% |
+| hv_ws_137304 | 1 979 | 0 | 0 | 0 | 1861 | 118 | 94.0% |
+| hv_ws_137305 | 1 445 | 0 | 0 | 0 | 1332 | 113 | 92.2% |
+| hv_ws_137427 | 220 | 0 | 0 | 0 | 215 | 5 | 97.7% |
+| hv_ws_137429 | 2 739 | 0 | 0 | 0 | 2498 | 241 | 91.2% |
+| hv_ws_137604 | 1 775 | 0 | 0 | 0 | 1657 | 118 | 93.4% |
+| hv_ws_137605 | 193 | 0 | 0 | 0 | 186 | 7 | 96.4% |
+| hv_ws_137722 | 221 | 0 | 0 | 0 | 208 | 13 | 94.1% |
+| hv_ws_137723 | 342 | 0 | 0 | 0 | 325 | 17 | 95.0% |
+| hv_ws_137962 | 513 | 0 | 0 | 0 | 489 | 24 | 95.3% |
+| hv_ws_137963 | 2 234 | 0 | 0 | 0 | 2094 | 140 | 93.7% |
+| hv_ws_138031 | 811 | 0 | 0 | 0 | 772 | 39 | 95.2% |
+| hv_ws_138032 | 1 039 | 0 | 0 | 0 | 965 | 74 | 92.9% |
+| hv_ws_138063 | 708 | 0 | 0 | 0 | 629 | 79 | 88.8% |
+| hv_ws_138064 | 2 095 | 0 | 0 | 0 | 1909 | 186 | 91.1% |
+| hv_ws_147337 | 1 997 | 0 | 0 | 0 | 1788 | 209 | 89.5% |
+| hv_ws_147929 | 964 | 0 | 0 | 0 | 892 | 72 | 92.5% |
+| hv_ws_161137 | 1 420 | 0 | 0 | 0 | 1340 | 80 | 94.4% |
+| hv_ws_161138 | 1 290 | 0 | 0 | 0 | 1153 | 137 | 89.4% |
+| hv_ws_161251 | 812 | 0 | 0 | 0 | 745 | 67 | 91.7% |
+| hv_ws_161252 | 1 124 | 0 | 0 | 0 | 990 | 134 | 88.1% |
+| hv_ws_161379 | 1 676 | 0 | 0 | 0 | 1572 | 104 | 93.8% |
+| hv_ws_161380 | 1 156 | 0 | 0 | 0 | 1078 | 78 | 93.3% |
+| hv_ws_161453 | 367 | 0 | 0 | 0 | 331 | 36 | 90.2% |
+| hv_ws_161454 | 915 | 0 | 0 | 0 | 843 | 72 | 92.1% |
+| hv_ws_161619 | 2 059 | 0 | 0 | 0 | 1927 | 132 | 93.6% |
+| hv_ws_161774 | 2 411 | 0 | 0 | 0 | 2263 | 148 | 93.9% |
+| hv_ws_161775 | 1 007 | 0 | 0 | 0 | 932 | 75 | 92.6% |
+| hv_ws_161847 | 1 454 | 0 | 0 | 0 | 1341 | 113 | 92.2% |
+| hv_ws_161849 | 1 494 | 0 | 0 | 0 | 1352 | 142 | 90.5% |
+| hv_ws_161923 | 1 125 | 0 | 0 | 0 | 1050 | 75 | 93.3% |
+| hv_ws_161925 | 1 390 | 0 | 0 | 0 | 1236 | 154 | 88.9% |
+| hv_ws_161996 | 2 123 | 0 | 0 | 0 | 1921 | 202 | 90.5% |
+| hv_ws_162017 | 2 039 | 0 | 0 | 0 | 1931 | 108 | 94.7% |
+| hv_ws_162018 | 192 | 0 | 0 | 0 | 187 | 5 | 97.4% |
+| hv_ws_162092 | 1 695 | 0 | 0 | 0 | 1521 | 174 | 89.7% |
+| hv_ws_162095 | 2 377 | 0 | 0 | 0 | 2194 | 183 | 92.3% |
+| hv_ws_162169 | 1 762 | 0 | 0 | 0 | 1612 | 150 | 91.5% |
+| hv_ws_162176 | 1 773 | 0 | 0 | 0 | 1519 | 254 | 85.7% |
+| hv_ws_162244 | 2 005 | 0 | 0 | 0 | 1819 | 186 | 90.7% |
+| hv_ws_162245 | 1 953 | 0 | 0 | 0 | 1713 | 240 | 87.7% |
+| hv_ws_162307 | 1 753 | 0 | 0 | 0 | 1594 | 159 | 90.9% |
+| hv_ws_162308 | 2 794 | 0 | 0 | 0 | 2607 | 187 | 93.3% |
+| hv_ws_162434 | 1 802 | 0 | 0 | 0 | 1678 | 124 | 93.1% |
+| hv_ws_162435 | 1 668 | 0 | 0 | 0 | 1558 | 110 | 93.4% |
+| hv_ws_162564 | 453 | 0 | 0 | 0 | 418 | 35 | 92.3% |
+| hv_ws_162565 | 408 | 0 | 0 | 0 | 378 | 30 | 92.6% |
+| hv_ws_162679 | 209 | 0 | 0 | 0 | 204 | 5 | 97.6% |
+| hv_ws_162682 | 209 | 0 | 0 | 0 | 206 | 3 | 98.6% |
+| hv_ws_163013 | 195 | 0 | 0 | 0 | 193 | 2 | 99.0% |
+| hv_ws_163014 | 922 | 0 | 0 | 0 | 808 | 114 | 87.6% |
 | hv_ws_165531 | 1 323 | 0 | 0 | 0 | 1295 | 28 | 97.9% |
+| hv_ws_191273 | 1 870 | 0 | 0 | 0 | 1713 | 157 | 91.6% |
+| hv_ws_192837 | 1 605 | 0 | 0 | 0 | 1530 | 75 | 95.3% |
+| hv_ws_199267 | 1 661 | 0 | 0 | 0 | 1587 | 74 | 95.5% |
+| hv_ws_205478 | 883 | 0 | 0 | 0 | 825 | 58 | 93.4% |
+| hv_ws_205501 | 965 | 0 | 0 | 0 | 897 | 68 | 93.0% |
+| hv_ws_205544 | 823 | 0 | 0 | 0 | 788 | 35 | 95.7% |
+| hv_ws_205809 | 1 824 | 0 | 0 | 0 | 1645 | 179 | 90.2% |
+| hv_ws_205828 | 913 | 0 | 0 | 0 | 843 | 70 | 92.3% |
+| hv_ws_215139 | 2 536 | 0 | 0 | 0 | 2368 | 168 | 93.4% |
 | hv_ws_26246 | 9 399 | 0 | 0 | 0 | 9236 | 163 | 98.3% |
+| hv_ws_33660 | 68 | 0 | 0 | 0 | 63 | 5 | 92.6% |
 | hv_ws_34371 | 219 | 0 | 0 | 0 | 219 | 0 | 100.0% |
+| hv_ws_39489 | 316 | 0 | 0 | 0 | 308 | 8 | 97.5% |
+| hv_ws_47912 | 344 | 0 | 0 | 0 | 314 | 30 | 91.3% |
+| hv_ws_47913 | 200 | 0 | 0 | 0 | 198 | 2 | 99.0% |
+| hv_ws_47914 | 224 | 0 | 0 | 0 | 216 | 8 | 96.4% |
+| hv_ws_52078 | 625 | 0 | 0 | 0 | 557 | 68 | 89.1% |
+| hv_ws_52080 | 428 | 0 | 0 | 0 | 395 | 33 | 92.3% |
+| hv_ws_52166 | 2 562 | 0 | 0 | 0 | 2341 | 221 | 91.4% |
+| hv_ws_52182 | 363 | 0 | 0 | 0 | 346 | 17 | 95.3% |
+| hv_ws_52183 | 1 533 | 0 | 0 | 0 | 1327 | 206 | 86.6% |
+| hv_ws_52207 | 402 | 0 | 0 | 0 | 378 | 24 | 94.0% |
+| hv_ws_52216 | 1 166 | 0 | 0 | 0 | 1051 | 115 | 90.1% |
+| hv_ws_52218 | 480 | 0 | 0 | 0 | 445 | 35 | 92.7% |
+| hv_ws_52219 | 285 | 0 | 0 | 0 | 266 | 19 | 93.3% |
+| hv_ws_52221 | 345 | 0 | 0 | 0 | 331 | 14 | 95.9% |
+| hv_ws_52222 | 183 | 0 | 0 | 0 | 179 | 4 | 97.8% |
+| hv_ws_52228 | 1 796 | 0 | 0 | 0 | 1783 | 13 | 99.3% |
+| hv_ws_52257 | 201 | 0 | 0 | 0 | 195 | 6 | 97.0% |
+| hv_ws_52258 | 981 | 0 | 0 | 0 | 907 | 74 | 92.5% |
+| hv_ws_52259 | 254 | 0 | 0 | 0 | 247 | 7 | 97.2% |
+| hv_ws_52260 | 197 | 0 | 0 | 0 | 191 | 6 | 97.0% |
+| hv_ws_52261 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_52262 | 246 | 0 | 0 | 0 | 239 | 7 | 97.2% |
+| hv_ws_52263 | 334 | 0 | 0 | 0 | 326 | 8 | 97.6% |
+| hv_ws_522970 | 2 127 | 0 | 0 | 0 | 2012 | 115 | 94.6% |
+| hv_ws_52512 | 1 726 | 0 | 0 | 0 | 1444 | 282 | 83.7% |
+| hv_ws_52599 | 537 | 0 | 0 | 0 | 499 | 38 | 92.9% |
+| hv_ws_52600 | 3 688 | 0 | 0 | 0 | 3475 | 213 | 94.2% |
+| hv_ws_52601 | 174 | 0 | 0 | 0 | 172 | 2 | 98.9% |
+| hv_ws_52602 | 914 | 0 | 0 | 0 | 907 | 7 | 99.2% |
+| hv_ws_532218 | 1 385 | 0 | 0 | 0 | 1299 | 86 | 93.8% |
+| hv_ws_532292 | 990 | 0 | 0 | 0 | 955 | 35 | 96.5% |
+| hv_ws_532473 | 1 268 | 0 | 0 | 0 | 1186 | 82 | 93.5% |
+| hv_ws_532530 | 980 | 0 | 0 | 0 | 935 | 45 | 95.4% |
+| hv_ws_533616 | 1 049 | 0 | 0 | 0 | 972 | 77 | 92.7% |
+| hv_ws_533617 | 1 406 | 0 | 0 | 0 | 1341 | 65 | 95.4% |
+| hv_ws_533661 | 986 | 0 | 0 | 0 | 925 | 61 | 93.8% |
+| hv_ws_533662 | 1 361 | 0 | 0 | 0 | 1299 | 62 | 95.4% |
+| hv_ws_534042 | 947 | 0 | 0 | 0 | 872 | 75 | 92.1% |
+| hv_ws_534096 | 1 336 | 0 | 0 | 0 | 1259 | 77 | 94.2% |
+| hv_ws_534106 | 2 248 | 0 | 0 | 0 | 2074 | 174 | 92.3% |
+| hv_ws_534136 | 1 014 | 0 | 0 | 0 | 963 | 51 | 95.0% |
+| hv_ws_534139 | 1 250 | 0 | 0 | 0 | 1188 | 62 | 95.0% |
 | hv_ws_559614 | 371 | 0 | 0 | 0 | 357 | 14 | 96.2% |
+| hv_ws_56484 | 190 | 0 | 0 | 0 | 187 | 3 | 98.4% |
+| hv_ws_57473 | 207 | 0 | 0 | 0 | 203 | 4 | 98.1% |
+| hv_ws_57474 | 167 | 0 | 0 | 0 | 163 | 4 | 97.6% |
+| hv_ws_58721 | 197 | 0 | 0 | 0 | 190 | 7 | 96.4% |
+| hv_ws_58722 | 500 | 0 | 0 | 0 | 458 | 42 | 91.6% |
+| hv_ws_58726 | 186 | 0 | 0 | 0 | 177 | 9 | 95.2% |
+| hv_ws_58727 | 215 | 0 | 0 | 0 | 205 | 10 | 95.3% |
+| hv_ws_58728 | 526 | 0 | 0 | 0 | 485 | 41 | 92.2% |
+| hv_ws_58729 | 175 | 0 | 0 | 0 | 174 | 1 | 99.4% |
+| hv_ws_58730 | 178 | 0 | 0 | 0 | 174 | 4 | 97.8% |
+| hv_ws_58731 | 176 | 0 | 0 | 0 | 173 | 3 | 98.3% |
+| hv_ws_58732 | 274 | 0 | 0 | 0 | 253 | 21 | 92.3% |
+| hv_ws_58733 | 175 | 0 | 0 | 0 | 168 | 7 | 96.0% |
+| hv_ws_58735 | 190 | 0 | 0 | 0 | 183 | 7 | 96.3% |
+| hv_ws_59013 | 686 | 0 | 0 | 0 | 617 | 69 | 89.9% |
+| hv_ws_59014 | 166 | 0 | 0 | 0 | 164 | 2 | 98.8% |
+| hv_ws_59016 | 202 | 0 | 0 | 0 | 194 | 8 | 96.0% |
+| hv_ws_59029 | 191 | 0 | 0 | 0 | 188 | 3 | 98.4% |
+| hv_ws_59030 | 189 | 0 | 0 | 0 | 178 | 11 | 94.2% |
+| hv_ws_59031 | 176 | 0 | 0 | 0 | 174 | 2 | 98.9% |
+| hv_ws_59032 | 188 | 0 | 0 | 0 | 180 | 8 | 95.7% |
+| hv_ws_59033 | 172 | 0 | 0 | 0 | 168 | 4 | 97.7% |
+| hv_ws_59034 | 191 | 0 | 0 | 0 | 189 | 2 | 99.0% |
 | hv_ws_8690 | 260 | 0 | 0 | 0 | 260 | 0 | 100.0% |
 | hv_ws_162048 | 3 804 | 0 | 0 | 0 | 3795 | 9 | 99.8% |
+| hv_ws_1647 | 282 | 0 | 0 | 0 | 275 | 7 | 97.5% |
 | hv_ws_205198 | 264 | 0 | 0 | 0 | 264 | 0 | 100.0% |
 | hv_ws_30668 | 137 | 0 | 0 | 0 | 135 | 2 | 98.5% |
 | hv_ws_33526 | 137 | 0 | 0 | 0 | 134 | 3 | 97.8% |
 | hv_ws_3608 | 85 | 0 | 0 | 0 | 81 | 4 | 95.3% |
+| hv_ws_41643 | 983 | 0 | 0 | 0 | 876 | 107 | 89.1% |
+| hv_ws_41866 | 210 | 0 | 0 | 0 | 203 | 7 | 96.7% |
+| hv_ws_41868 | 249 | 0 | 0 | 0 | 247 | 2 | 99.2% |
+| hv_ws_52605 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
+| hv_ws_52606 | 175 | 0 | 0 | 0 | 171 | 4 | 97.7% |
+| hv_ws_52607 | 204 | 0 | 0 | 0 | 202 | 2 | 99.0% |
+| hv_ws_52608 | 203 | 0 | 0 | 0 | 198 | 5 | 97.5% |
+| hv_ws_52614 | 166 | 0 | 0 | 0 | 164 | 2 | 98.8% |
+| hv_ws_52617 | 180 | 0 | 0 | 0 | 177 | 3 | 98.3% |
+| hv_ws_52618 | 190 | 0 | 0 | 0 | 186 | 4 | 97.9% |
+| hv_ws_52619 | 187 | 0 | 0 | 0 | 183 | 4 | 97.9% |
+| hv_ws_52624 | 175 | 0 | 0 | 0 | 171 | 4 | 97.7% |
+| hv_ws_52625 | 194 | 0 | 0 | 0 | 191 | 3 | 98.5% |
+| hv_ws_52626 | 203 | 0 | 0 | 0 | 200 | 3 | 98.5% |
+| hv_ws_52627 | 236 | 0 | 0 | 0 | 230 | 6 | 97.5% |
+| hv_ws_52628 | 385 | 0 | 0 | 0 | 376 | 9 | 97.7% |
+| hv_ws_52629 | 190 | 0 | 0 | 0 | 182 | 8 | 95.8% |
+| hv_ws_52630 | 188 | 0 | 0 | 0 | 183 | 5 | 97.3% |
+| hv_ws_52631 | 196 | 0 | 0 | 0 | 193 | 3 | 98.5% |
+| hv_ws_52632 | 308 | 0 | 0 | 0 | 300 | 8 | 97.4% |
+| hv_ws_52634 | 1 572 | 0 | 0 | 0 | 1404 | 168 | 89.3% |
+| hv_ws_52635 | 967 | 0 | 0 | 0 | 865 | 102 | 89.5% |
+| hv_ws_52636 | 251 | 0 | 0 | 0 | 246 | 5 | 98.0% |
+| hv_ws_52637 | 954 | 0 | 0 | 0 | 859 | 95 | 90.0% |
+| hv_ws_52638 | 738 | 0 | 0 | 0 | 662 | 76 | 89.7% |
+| hv_ws_52639 | 1 293 | 0 | 0 | 0 | 1211 | 82 | 93.7% |
+| hv_ws_52641 | 564 | 0 | 0 | 0 | 521 | 43 | 92.4% |
+| hv_ws_52643 | 204 | 0 | 0 | 0 | 202 | 2 | 99.0% |
+| hv_ws_52644 | 378 | 0 | 0 | 0 | 359 | 19 | 95.0% |
+| hv_ws_52645 | 294 | 0 | 0 | 0 | 278 | 16 | 94.6% |
+| hv_ws_52646 | 200 | 0 | 0 | 0 | 198 | 2 | 99.0% |
+| hv_ws_52647 | 335 | 0 | 0 | 0 | 314 | 21 | 93.7% |
+| hv_ws_52653 | 185 | 0 | 0 | 0 | 181 | 4 | 97.8% |
+| hv_ws_52654 | 325 | 0 | 0 | 0 | 307 | 18 | 94.5% |
+| hv_ws_52712 | 199 | 0 | 0 | 0 | 197 | 2 | 99.0% |
+| hv_ws_52715 | 174 | 0 | 0 | 0 | 169 | 5 | 97.1% |
+| hv_ws_52736 | 163 | 0 | 0 | 0 | 158 | 5 | 96.9% |
+| hv_ws_52737 | 171 | 0 | 0 | 0 | 165 | 6 | 96.5% |
+| hv_ws_52738 | 206 | 0 | 0 | 0 | 204 | 2 | 99.0% |
+| hv_ws_52740 | 202 | 0 | 0 | 0 | 200 | 2 | 99.0% |
+| hv_ws_52741 | 264 | 0 | 0 | 0 | 262 | 2 | 99.2% |
+| hv_ws_52742 | 163 | 0 | 0 | 0 | 161 | 2 | 98.8% |
+| hv_ws_52743 | 166 | 0 | 0 | 0 | 164 | 2 | 98.8% |
+| hv_ws_52746 | 197 | 0 | 0 | 0 | 193 | 4 | 98.0% |
+| hv_ws_52747 | 241 | 0 | 0 | 0 | 239 | 2 | 99.2% |
+| hv_ws_52748 | 163 | 0 | 0 | 0 | 161 | 2 | 98.8% |
+| hv_ws_52749 | 166 | 0 | 0 | 0 | 162 | 4 | 97.6% |
+| hv_ws_52750 | 234 | 0 | 0 | 0 | 227 | 7 | 97.0% |
+| hv_ws_52751 | 235 | 0 | 0 | 0 | 233 | 2 | 99.1% |
+| hv_ws_52752 | 256 | 0 | 0 | 0 | 247 | 9 | 96.5% |
+| hv_ws_52753 | 189 | 0 | 0 | 0 | 187 | 2 | 98.9% |
+| hv_ws_52754 | 215 | 0 | 0 | 0 | 210 | 5 | 97.7% |
+| hv_ws_52755 | 169 | 0 | 0 | 0 | 164 | 5 | 97.0% |
+| hv_ws_52762 | 1 298 | 0 | 0 | 0 | 1202 | 96 | 92.6% |
+| hv_ws_52764 | 182 | 0 | 0 | 0 | 177 | 5 | 97.3% |
+| hv_ws_52765 | 2 418 | 0 | 0 | 0 | 2128 | 290 | 88.0% |
+| hv_ws_52766 | 169 | 0 | 0 | 0 | 165 | 4 | 97.6% |
+| hv_ws_52768 | 256 | 0 | 0 | 0 | 251 | 5 | 98.0% |
+| hv_ws_52789 | 166 | 0 | 0 | 0 | 162 | 4 | 97.6% |
+| hv_ws_52790 | 246 | 0 | 0 | 0 | 242 | 4 | 98.4% |
+| hv_ws_52830 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
+| hv_ws_52833 | 186 | 0 | 0 | 0 | 182 | 4 | 97.8% |
+| hv_ws_52836 | 539 | 0 | 0 | 0 | 494 | 45 | 91.7% |
+| hv_ws_52913 | 888 | 0 | 0 | 0 | 786 | 102 | 88.5% |
+| hv_ws_52914 | 1 628 | 0 | 0 | 0 | 1431 | 197 | 87.9% |
+| hv_ws_53007 | 2 260 | 0 | 0 | 0 | 1971 | 289 | 87.2% |
+| hv_ws_53068 | 1 706 | 0 | 0 | 0 | 1570 | 136 | 92.0% |
+| hv_ws_53069 | 248 | 0 | 0 | 0 | 245 | 3 | 98.8% |
+| hv_ws_53070 | 252 | 0 | 0 | 0 | 242 | 10 | 96.0% |
+| hv_ws_53148 | 187 | 0 | 0 | 0 | 185 | 2 | 98.9% |
+| hv_ws_53149 | 629 | 0 | 0 | 0 | 576 | 53 | 91.6% |
+| hv_ws_53162 | 660 | 0 | 0 | 0 | 586 | 74 | 88.8% |
+| hv_ws_53163 | 225 | 0 | 0 | 0 | 215 | 10 | 95.6% |
+| hv_ws_53164 | 192 | 0 | 0 | 0 | 190 | 2 | 99.0% |
+| hv_ws_53213 | 174 | 0 | 0 | 0 | 167 | 7 | 96.0% |
+| hv_ws_53258 | 345 | 0 | 0 | 0 | 335 | 10 | 97.1% |
+| hv_ws_53259 | 191 | 0 | 0 | 0 | 188 | 3 | 98.4% |
+| hv_ws_53283 | 225 | 0 | 0 | 0 | 218 | 7 | 96.9% |
+| hv_ws_53295 | 341 | 0 | 0 | 0 | 326 | 15 | 95.6% |
+| hv_ws_53296 | 177 | 0 | 0 | 0 | 173 | 4 | 97.7% |
+| hv_ws_53719 | 3 071 | 0 | 0 | 0 | 2747 | 324 | 89.4% |
+| hv_ws_53796 | 162 | 0 | 0 | 0 | 157 | 5 | 96.9% |
 | hv_ws_53844 | 212 | 0 | 0 | 0 | 207 | 5 | 97.6% |
 | hv_ws_53952 | 1 283 | 0 | 0 | 0 | 1246 | 37 | 97.1% |
+| hv_ws_53953 | 196 | 0 | 0 | 0 | 192 | 4 | 98.0% |
+| hv_ws_54105 | 647 | 0 | 0 | 0 | 602 | 45 | 93.0% |
+| hv_ws_54106 | 1 462 | 0 | 0 | 0 | 1255 | 207 | 85.8% |
+| hv_ws_54296 | 259 | 0 | 0 | 0 | 252 | 7 | 97.3% |
+| hv_ws_54392 | 219 | 0 | 0 | 0 | 209 | 10 | 95.4% |
+| hv_ws_54393 | 166 | 0 | 0 | 0 | 161 | 5 | 97.0% |
+| hv_ws_54435 | 171 | 0 | 0 | 0 | 169 | 2 | 98.8% |
+| hv_ws_54475 | 199 | 0 | 0 | 0 | 193 | 6 | 97.0% |
+| hv_ws_54510 | 204 | 0 | 0 | 0 | 199 | 5 | 97.5% |
+| hv_ws_54524 | 171 | 0 | 0 | 0 | 167 | 4 | 97.7% |
+| hv_ws_54551 | 166 | 0 | 0 | 0 | 162 | 4 | 97.6% |
+| hv_ws_54621 | 190 | 0 | 0 | 0 | 188 | 2 | 98.9% |
+| hv_ws_54689 | 200 | 0 | 0 | 0 | 197 | 3 | 98.5% |
+| hv_ws_54819 | 244 | 0 | 0 | 0 | 242 | 2 | 99.2% |
+| hv_ws_57088 | 6 240 | 0 | 0 | 0 | 5901 | 339 | 94.6% |
+| hv_ws_57186 | 171 | 0 | 0 | 0 | 169 | 2 | 98.8% |
+| hv_ws_57216 | 236 | 0 | 0 | 0 | 230 | 6 | 97.5% |
+| hv_ws_57246 | 268 | 0 | 0 | 0 | 262 | 6 | 97.8% |
 | hv_ws_57750 | 10 770 | 0 | 0 | 0 | 10614 | 156 | 98.6% |
 | hv_ws_57755 | 558 | 0 | 0 | 0 | 554 | 4 | 99.3% |
 | hv_ws_57756 | 218 | 0 | 0 | 0 | 216 | 2 | 99.1% |
@@ -8552,48 +10382,302 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_57765 | 231 | 0 | 0 | 0 | 229 | 2 | 99.1% |
 | hv_ws_57766 | 225 | 0 | 0 | 0 | 223 | 2 | 99.1% |
 | hv_ws_57767 | 183 | 0 | 0 | 0 | 181 | 2 | 98.9% |
+| hv_ws_57855 | 198 | 0 | 0 | 0 | 191 | 7 | 96.5% |
+| hv_ws_58736 | 201 | 0 | 0 | 0 | 199 | 2 | 99.0% |
+| hv_ws_58737 | 232 | 0 | 0 | 0 | 223 | 9 | 96.1% |
+| hv_ws_59042 | 190 | 0 | 0 | 0 | 188 | 2 | 98.9% |
+| hv_ws_104464 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_104947 | 163 | 0 | 0 | 0 | 162 | 1 | 99.4% |
+| hv_ws_104948 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
 | hv_ws_104974 | 1 021 | 0 | 0 | 0 | 1003 | 18 | 98.2% |
 | hv_ws_104977 | 1 078 | 0 | 0 | 0 | 1042 | 36 | 96.7% |
+| hv_ws_104978 | 163 | 0 | 0 | 0 | 162 | 1 | 99.4% |
+| hv_ws_105062 | 192 | 0 | 0 | 0 | 191 | 1 | 99.5% |
+| hv_ws_105136 | 214 | 0 | 0 | 0 | 211 | 3 | 98.6% |
+| hv_ws_105137 | 196 | 0 | 0 | 0 | 196 | 0 | 100.0% |
+| hv_ws_105173 | 193 | 0 | 0 | 0 | 191 | 2 | 99.0% |
+| hv_ws_105174 | 166 | 0 | 0 | 0 | 163 | 3 | 98.2% |
+| hv_ws_109723 | 163 | 0 | 0 | 0 | 160 | 3 | 98.2% |
+| hv_ws_109724 | 170 | 0 | 0 | 0 | 169 | 1 | 99.4% |
+| hv_ws_109725 | 359 | 0 | 0 | 0 | 347 | 12 | 96.7% |
+| hv_ws_109760 | 918 | 0 | 0 | 0 | 877 | 41 | 95.5% |
 | hv_ws_109761 | 382 | 0 | 0 | 0 | 373 | 9 | 97.6% |
+| hv_ws_109766 | 164 | 0 | 0 | 0 | 163 | 1 | 99.4% |
+| hv_ws_109768 | 160 | 0 | 0 | 0 | 157 | 3 | 98.1% |
 | hv_ws_109769 | 415 | 0 | 0 | 0 | 400 | 15 | 96.4% |
 | hv_ws_109918 | 520 | 0 | 0 | 0 | 475 | 45 | 91.3% |
 | hv_ws_110015 | 452 | 0 | 0 | 0 | 449 | 3 | 99.3% |
 | hv_ws_110017 | 289 | 0 | 0 | 0 | 288 | 1 | 99.7% |
+| hv_ws_110018 | 172 | 0 | 0 | 0 | 172 | 0 | 100.0% |
 | hv_ws_110083 | 143 | 0 | 0 | 0 | 143 | 0 | 100.0% |
 | hv_ws_110084 | 150 | 0 | 0 | 0 | 149 | 1 | 99.3% |
 | hv_ws_110085 | 552 | 0 | 0 | 0 | 550 | 2 | 99.6% |
 | hv_ws_110269 | 286 | 0 | 0 | 0 | 283 | 3 | 99.0% |
 | hv_ws_110270 | 171 | 0 | 0 | 0 | 171 | 0 | 100.0% |
 | hv_ws_110288 | 173 | 0 | 0 | 0 | 170 | 3 | 98.3% |
+| hv_ws_110392 | 253 | 0 | 0 | 0 | 247 | 6 | 97.6% |
 | hv_ws_110765 | 270 | 0 | 0 | 0 | 267 | 3 | 98.9% |
 | hv_ws_110766 | 288 | 0 | 0 | 0 | 287 | 1 | 99.7% |
 | hv_ws_110875 | 250 | 0 | 0 | 0 | 247 | 3 | 98.8% |
+| hv_ws_110876 | 239 | 0 | 0 | 0 | 232 | 7 | 97.1% |
 | hv_ws_110885 | 180 | 0 | 0 | 0 | 180 | 0 | 100.0% |
+| hv_ws_110886 | 343 | 0 | 0 | 0 | 334 | 9 | 97.4% |
+| hv_ws_113324 | 190 | 0 | 0 | 0 | 190 | 0 | 100.0% |
+| hv_ws_113325 | 609 | 0 | 0 | 0 | 581 | 28 | 95.4% |
+| hv_ws_113326 | 273 | 0 | 0 | 0 | 269 | 4 | 98.5% |
 | hv_ws_113329 | 2 723 | 0 | 0 | 0 | 2694 | 29 | 98.9% |
 | hv_ws_113330 | 191 | 0 | 0 | 0 | 191 | 0 | 100.0% |
+| hv_ws_122830 | 166 | 0 | 0 | 0 | 163 | 3 | 98.2% |
 | hv_ws_130868 | 94 | 0 | 0 | 0 | 92 | 2 | 97.9% |
 | hv_ws_161620 | 790 | 0 | 0 | 0 | 761 | 29 | 96.3% |
 | hv_ws_162003 | 753 | 0 | 0 | 0 | 743 | 10 | 98.7% |
 | hv_ws_162041 | 5 732 | 0 | 0 | 0 | 5716 | 16 | 99.7% |
+| hv_ws_162043 | 196 | 0 | 0 | 0 | 195 | 1 | 99.5% |
+| hv_ws_162046 | 191 | 0 | 0 | 0 | 191 | 0 | 100.0% |
+| hv_ws_162080 | 174 | 0 | 0 | 0 | 173 | 1 | 99.4% |
 | hv_ws_178697 | 192 | 0 | 0 | 0 | 177 | 15 | 92.2% |
 | hv_ws_204885 | 2 713 | 0 | 0 | 0 | 2622 | 91 | 96.6% |
+| hv_ws_205545 | 200 | 0 | 0 | 0 | 200 | 0 | 100.0% |
+| hv_ws_205552 | 242 | 0 | 0 | 0 | 238 | 4 | 98.3% |
+| hv_ws_205594 | 207 | 0 | 0 | 0 | 207 | 0 | 100.0% |
+| hv_ws_205773 | 233 | 0 | 0 | 0 | 229 | 4 | 98.3% |
+| hv_ws_205796 | 247 | 0 | 0 | 0 | 241 | 6 | 97.6% |
+| hv_ws_205924 | 235 | 0 | 0 | 0 | 229 | 6 | 97.4% |
+| hv_ws_205925 | 299 | 0 | 0 | 0 | 294 | 5 | 98.3% |
+| hv_ws_205957 | 210 | 0 | 0 | 0 | 209 | 1 | 99.5% |
+| hv_ws_205958 | 393 | 0 | 0 | 0 | 380 | 13 | 96.7% |
+| hv_ws_205988 | 233 | 0 | 0 | 0 | 228 | 5 | 97.9% |
+| hv_ws_205991 | 263 | 0 | 0 | 0 | 255 | 8 | 97.0% |
+| hv_ws_206013 | 202 | 0 | 0 | 0 | 202 | 0 | 100.0% |
+| hv_ws_206014 | 4 159 | 0 | 0 | 0 | 3947 | 212 | 94.9% |
+| hv_ws_210464 | 366 | 0 | 0 | 0 | 358 | 8 | 97.8% |
+| hv_ws_214681 | 207 | 0 | 0 | 0 | 204 | 3 | 98.6% |
+| hv_ws_215687 | 280 | 0 | 0 | 0 | 269 | 11 | 96.1% |
+| hv_ws_24528 | 4 864 | 0 | 0 | 0 | 4764 | 100 | 97.9% |
 | hv_ws_33321 | 115 | 0 | 0 | 0 | 112 | 3 | 97.4% |
 | hv_ws_3616 | 92 | 0 | 0 | 0 | 85 | 7 | 92.4% |
+| hv_ws_57621 | 351 | 0 | 0 | 0 | 338 | 13 | 96.3% |
+| hv_ws_57624 | 190 | 0 | 0 | 0 | 189 | 1 | 99.5% |
+| hv_ws_57627 | 241 | 0 | 0 | 0 | 230 | 11 | 95.4% |
+| hv_ws_57630 | 170 | 0 | 0 | 0 | 170 | 0 | 100.0% |
+| hv_ws_57631 | 201 | 0 | 0 | 0 | 201 | 0 | 100.0% |
+| hv_ws_57633 | 236 | 0 | 0 | 0 | 231 | 5 | 97.9% |
+| hv_ws_59043 | 371 | 0 | 0 | 0 | 360 | 11 | 97.0% |
+| hv_ws_59997 | 186 | 0 | 0 | 0 | 180 | 6 | 96.8% |
+| hv_ws_64427 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_68306 | 296 | 0 | 0 | 0 | 282 | 14 | 95.3% |
+| hv_ws_69307 | 237 | 0 | 0 | 0 | 234 | 3 | 98.7% |
+| hv_ws_69309 | 161 | 0 | 0 | 0 | 160 | 1 | 99.4% |
+| hv_ws_69311 | 299 | 0 | 0 | 0 | 299 | 0 | 100.0% |
+| hv_ws_69472 | 209 | 0 | 0 | 0 | 208 | 1 | 99.5% |
+| hv_ws_69475 | 203 | 0 | 0 | 0 | 203 | 0 | 100.0% |
+| hv_ws_69479 | 192 | 0 | 0 | 0 | 192 | 0 | 100.0% |
+| hv_ws_69718 | 199 | 0 | 0 | 0 | 199 | 0 | 100.0% |
+| hv_ws_69732 | 172 | 0 | 0 | 0 | 171 | 1 | 99.4% |
+| hv_ws_69738 | 188 | 0 | 0 | 0 | 187 | 1 | 99.5% |
+| hv_ws_69782 | 166 | 0 | 0 | 0 | 160 | 6 | 96.4% |
+| hv_ws_69784 | 289 | 0 | 0 | 0 | 285 | 4 | 98.6% |
+| hv_ws_69787 | 164 | 0 | 0 | 0 | 164 | 0 | 100.0% |
+| hv_ws_113291 | 247 | 0 | 0 | 0 | 246 | 1 | 99.6% |
+| hv_ws_113312 | 218 | 0 | 0 | 0 | 218 | 0 | 100.0% |
+| hv_ws_113313 | 219 | 0 | 0 | 0 | 207 | 12 | 94.5% |
+| hv_ws_113316 | 352 | 0 | 0 | 0 | 342 | 10 | 97.2% |
+| hv_ws_123153 | 173 | 0 | 0 | 0 | 167 | 6 | 96.5% |
+| hv_ws_136787 | 263 | 0 | 0 | 0 | 259 | 4 | 98.5% |
+| hv_ws_136833 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_136888 | 185 | 0 | 0 | 0 | 185 | 0 | 100.0% |
+| hv_ws_136942 | 195 | 0 | 0 | 0 | 194 | 1 | 99.5% |
+| hv_ws_137008 | 192 | 0 | 0 | 0 | 191 | 1 | 99.5% |
+| hv_ws_137132 | 225 | 0 | 0 | 0 | 218 | 7 | 96.9% |
+| hv_ws_162225 | 241 | 0 | 0 | 0 | 215 | 26 | 89.2% |
+| hv_ws_162231 | 246 | 0 | 0 | 0 | 230 | 16 | 93.5% |
+| hv_ws_162275 | 192 | 0 | 0 | 0 | 191 | 1 | 99.5% |
+| hv_ws_162279 | 194 | 0 | 0 | 0 | 192 | 2 | 99.0% |
+| hv_ws_162280 | 193 | 0 | 0 | 0 | 189 | 4 | 97.9% |
 | hv_ws_162311 | 271 | 0 | 0 | 0 | 261 | 10 | 96.3% |
+| hv_ws_162314 | 214 | 0 | 0 | 0 | 213 | 1 | 99.5% |
+| hv_ws_162315 | 185 | 0 | 0 | 0 | 181 | 4 | 97.8% |
+| hv_ws_162459 | 208 | 0 | 0 | 0 | 203 | 5 | 97.6% |
+| hv_ws_162460 | 169 | 0 | 0 | 0 | 167 | 2 | 98.8% |
+| hv_ws_162462 | 169 | 0 | 0 | 0 | 167 | 2 | 98.8% |
+| hv_ws_162463 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_162465 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_162466 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_162467 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_162557 | 241 | 0 | 0 | 0 | 240 | 1 | 99.6% |
+| hv_ws_162558 | 196 | 0 | 0 | 0 | 191 | 5 | 97.4% |
+| hv_ws_162680 | 208 | 0 | 0 | 0 | 204 | 4 | 98.1% |
+| hv_ws_162729 | 180 | 0 | 0 | 0 | 179 | 1 | 99.4% |
+| hv_ws_162730 | 193 | 0 | 0 | 0 | 192 | 1 | 99.5% |
+| hv_ws_162738 | 174 | 0 | 0 | 0 | 172 | 2 | 98.9% |
+| hv_ws_162741 | 174 | 0 | 0 | 0 | 172 | 2 | 98.9% |
+| hv_ws_162901 | 182 | 0 | 0 | 0 | 178 | 4 | 97.8% |
+| hv_ws_162905 | 179 | 0 | 0 | 0 | 179 | 0 | 100.0% |
+| hv_ws_162909 | 178 | 0 | 0 | 0 | 178 | 0 | 100.0% |
+| hv_ws_162914 | 216 | 0 | 0 | 0 | 210 | 6 | 97.2% |
+| hv_ws_162917 | 211 | 0 | 0 | 0 | 204 | 7 | 96.7% |
+| hv_ws_162918 | 270 | 0 | 0 | 0 | 270 | 0 | 100.0% |
+| hv_ws_162922 | 190 | 0 | 0 | 0 | 189 | 1 | 99.5% |
+| hv_ws_162926 | 173 | 0 | 0 | 0 | 169 | 4 | 97.7% |
+| hv_ws_162928 | 241 | 0 | 0 | 0 | 241 | 0 | 100.0% |
+| hv_ws_162931 | 181 | 0 | 0 | 0 | 181 | 0 | 100.0% |
+| hv_ws_162932 | 172 | 0 | 0 | 0 | 172 | 0 | 100.0% |
+| hv_ws_162933 | 179 | 0 | 0 | 0 | 179 | 0 | 100.0% |
 | hv_ws_185774 | 1 465 | 0 | 0 | 0 | 1461 | 4 | 99.7% |
+| hv_ws_186205 | 167 | 0 | 0 | 0 | 167 | 0 | 100.0% |
 | hv_ws_194866 | 139 | 0 | 0 | 0 | 134 | 5 | 96.4% |
 | hv_ws_195183 | 2 004 | 0 | 0 | 0 | 1975 | 29 | 98.6% |
+| hv_ws_198631 | 251 | 0 | 0 | 0 | 237 | 14 | 94.4% |
 | hv_ws_201338 | 4 803 | 0 | 0 | 0 | 4513 | 290 | 94.0% |
+| hv_ws_205408 | 170 | 0 | 0 | 0 | 169 | 1 | 99.4% |
+| hv_ws_205414 | 180 | 0 | 0 | 0 | 177 | 3 | 98.3% |
+| hv_ws_205415 | 164 | 0 | 0 | 0 | 162 | 2 | 98.8% |
+| hv_ws_205487 | 176 | 0 | 0 | 0 | 170 | 6 | 96.6% |
+| hv_ws_205488 | 169 | 0 | 0 | 0 | 162 | 7 | 95.9% |
+| hv_ws_205532 | 431 | 0 | 0 | 0 | 416 | 15 | 96.5% |
+| hv_ws_205547 | 286 | 0 | 0 | 0 | 275 | 11 | 96.2% |
+| hv_ws_205805 | 204 | 0 | 0 | 0 | 202 | 2 | 99.0% |
+| hv_ws_205866 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
+| hv_ws_205867 | 159 | 0 | 0 | 0 | 159 | 0 | 100.0% |
 | hv_ws_212566 | 3 881 | 0 | 0 | 0 | 3817 | 64 | 98.4% |
+| hv_ws_164338 | 214 | 0 | 0 | 0 | 213 | 1 | 99.5% |
+| hv_ws_164341 | 179 | 0 | 0 | 0 | 176 | 3 | 98.3% |
+| hv_ws_164342 | 192 | 0 | 0 | 0 | 187 | 5 | 97.4% |
+| hv_ws_164343 | 235 | 0 | 0 | 0 | 229 | 6 | 97.4% |
+| hv_ws_164344 | 206 | 0 | 0 | 0 | 202 | 4 | 98.1% |
+| hv_ws_164345 | 182 | 0 | 0 | 0 | 182 | 0 | 100.0% |
+| hv_ws_164346 | 181 | 0 | 0 | 0 | 180 | 1 | 99.4% |
+| hv_ws_164347 | 195 | 0 | 0 | 0 | 195 | 0 | 100.0% |
+| hv_ws_164348 | 209 | 0 | 0 | 0 | 207 | 2 | 99.0% |
+| hv_ws_164349 | 226 | 0 | 0 | 0 | 225 | 1 | 99.6% |
+| hv_ws_164357 | 176 | 0 | 0 | 0 | 176 | 0 | 100.0% |
+| hv_ws_164358 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_164422 | 176 | 0 | 0 | 0 | 170 | 6 | 96.6% |
+| hv_ws_164423 | 170 | 0 | 0 | 0 | 161 | 9 | 94.7% |
+| hv_ws_164424 | 170 | 0 | 0 | 0 | 167 | 3 | 98.2% |
+| hv_ws_177974 | 173 | 0 | 0 | 0 | 172 | 1 | 99.4% |
+| hv_ws_177994 | 189 | 0 | 0 | 0 | 188 | 1 | 99.5% |
+| hv_ws_177998 | 198 | 0 | 0 | 0 | 194 | 4 | 98.0% |
+| hv_ws_177999 | 188 | 0 | 0 | 0 | 187 | 1 | 99.5% |
+| hv_ws_178000 | 212 | 0 | 0 | 0 | 207 | 5 | 97.6% |
+| hv_ws_178001 | 181 | 0 | 0 | 0 | 178 | 3 | 98.3% |
+| hv_ws_178002 | 177 | 0 | 0 | 0 | 175 | 2 | 98.9% |
+| hv_ws_178003 | 245 | 0 | 0 | 0 | 242 | 3 | 98.8% |
+| hv_ws_178004 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
+| hv_ws_178005 | 199 | 0 | 0 | 0 | 196 | 3 | 98.5% |
+| hv_ws_178006 | 239 | 0 | 0 | 0 | 239 | 0 | 100.0% |
+| hv_ws_178028 | 200 | 0 | 0 | 0 | 200 | 0 | 100.0% |
+| hv_ws_178030 | 185 | 0 | 0 | 0 | 184 | 1 | 99.5% |
+| hv_ws_178031 | 180 | 0 | 0 | 0 | 180 | 0 | 100.0% |
+| hv_ws_178032 | 187 | 0 | 0 | 0 | 187 | 0 | 100.0% |
+| hv_ws_178344 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
+| hv_ws_178345 | 224 | 0 | 0 | 0 | 216 | 8 | 96.4% |
+| hv_ws_178346 | 232 | 0 | 0 | 0 | 228 | 4 | 98.3% |
+| hv_ws_178399 | 245 | 0 | 0 | 0 | 239 | 6 | 97.6% |
+| hv_ws_178404 | 201 | 0 | 0 | 0 | 197 | 4 | 98.0% |
+| hv_ws_178408 | 175 | 0 | 0 | 0 | 167 | 8 | 95.4% |
+| hv_ws_178422 | 206 | 0 | 0 | 0 | 202 | 4 | 98.1% |
+| hv_ws_178423 | 179 | 0 | 0 | 0 | 178 | 1 | 99.4% |
+| hv_ws_178424 | 203 | 0 | 0 | 0 | 201 | 2 | 99.0% |
+| hv_ws_178425 | 199 | 0 | 0 | 0 | 197 | 2 | 99.0% |
+| hv_ws_178426 | 172 | 0 | 0 | 0 | 165 | 7 | 95.9% |
+| hv_ws_178427 | 193 | 0 | 0 | 0 | 187 | 6 | 96.9% |
+| hv_ws_178428 | 186 | 0 | 0 | 0 | 182 | 4 | 97.8% |
+| hv_ws_178429 | 187 | 0 | 0 | 0 | 182 | 5 | 97.3% |
+| hv_ws_178430 | 177 | 0 | 0 | 0 | 170 | 7 | 96.0% |
+| hv_ws_178431 | 178 | 0 | 0 | 0 | 177 | 1 | 99.4% |
+| hv_ws_178432 | 197 | 0 | 0 | 0 | 196 | 1 | 99.5% |
 | hv_ws_195125 | 248 | 0 | 0 | 0 | 248 | 0 | 100.0% |
+| hv_ws_205510 | 181 | 0 | 0 | 0 | 178 | 3 | 98.3% |
+| hv_ws_205511 | 167 | 0 | 0 | 0 | 166 | 1 | 99.4% |
 | hv_ws_343946 | 146 | 0 | 0 | 0 | 145 | 1 | 99.3% |
 | hv_ws_343947 | 117 | 0 | 0 | 0 | 117 | 0 | 100.0% |
 | hv_ws_343948 | 117 | 0 | 0 | 0 | 117 | 0 | 100.0% |
 | hv_ws_162773 | 5 772 | 0 | 0 | 0 | 5759 | 13 | 99.8% |
+| hv_ws_185140 | 227 | 0 | 0 | 0 | 225 | 2 | 99.1% |
+| hv_ws_185141 | 185 | 0 | 0 | 0 | 184 | 1 | 99.5% |
+| hv_ws_185142 | 195 | 0 | 0 | 0 | 192 | 3 | 98.5% |
+| hv_ws_185143 | 169 | 0 | 0 | 0 | 166 | 3 | 98.2% |
+| hv_ws_185144 | 215 | 0 | 0 | 0 | 214 | 1 | 99.5% |
+| hv_ws_185595 | 216 | 0 | 0 | 0 | 204 | 12 | 94.4% |
+| hv_ws_185599 | 223 | 0 | 0 | 0 | 214 | 9 | 96.0% |
+| hv_ws_185604 | 176 | 0 | 0 | 0 | 172 | 4 | 97.7% |
+| hv_ws_185612 | 205 | 0 | 0 | 0 | 200 | 5 | 97.6% |
+| hv_ws_185614 | 206 | 0 | 0 | 0 | 202 | 4 | 98.1% |
+| hv_ws_185618 | 196 | 0 | 0 | 0 | 189 | 7 | 96.4% |
+| hv_ws_185620 | 172 | 0 | 0 | 0 | 171 | 1 | 99.4% |
+| hv_ws_185682 | 182 | 0 | 0 | 0 | 179 | 3 | 98.4% |
+| hv_ws_185683 | 205 | 0 | 0 | 0 | 187 | 18 | 91.2% |
+| hv_ws_185684 | 177 | 0 | 0 | 0 | 173 | 4 | 97.7% |
+| hv_ws_185685 | 191 | 0 | 0 | 0 | 182 | 9 | 95.3% |
+| hv_ws_185686 | 188 | 0 | 0 | 0 | 179 | 9 | 95.2% |
 | hv_ws_185688 | 191 | 0 | 0 | 0 | 188 | 3 | 98.4% |
+| hv_ws_185861 | 170 | 0 | 0 | 0 | 170 | 0 | 100.0% |
+| hv_ws_185864 | 184 | 0 | 0 | 0 | 183 | 1 | 99.5% |
+| hv_ws_185865 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_185866 | 207 | 0 | 0 | 0 | 201 | 6 | 97.1% |
+| hv_ws_185867 | 216 | 0 | 0 | 0 | 216 | 0 | 100.0% |
+| hv_ws_185868 | 188 | 0 | 0 | 0 | 183 | 5 | 97.3% |
+| hv_ws_185869 | 169 | 0 | 0 | 0 | 166 | 3 | 98.2% |
+| hv_ws_185870 | 183 | 0 | 0 | 0 | 176 | 7 | 96.2% |
+| hv_ws_185871 | 180 | 0 | 0 | 0 | 180 | 0 | 100.0% |
+| hv_ws_185872 | 191 | 0 | 0 | 0 | 189 | 2 | 99.0% |
+| hv_ws_185873 | 207 | 0 | 0 | 0 | 196 | 11 | 94.7% |
+| hv_ws_185874 | 183 | 0 | 0 | 0 | 181 | 2 | 98.9% |
+| hv_ws_185875 | 217 | 0 | 0 | 0 | 211 | 6 | 97.2% |
+| hv_ws_185876 | 200 | 0 | 0 | 0 | 188 | 12 | 94.0% |
+| hv_ws_215897 | 231 | 0 | 0 | 0 | 226 | 5 | 97.8% |
+| hv_ws_215898 | 196 | 0 | 0 | 0 | 196 | 0 | 100.0% |
+| hv_ws_215899 | 228 | 0 | 0 | 0 | 228 | 0 | 100.0% |
 | hv_ws_42241 | 33 823 | 0 | 0 | 0 | 30183 | 3640 | 89.2% |
+| hv_ws_186209 | 167 | 0 | 0 | 0 | 166 | 1 | 99.4% |
+| hv_ws_204189 | 222 | 0 | 0 | 0 | 220 | 2 | 99.1% |
+| hv_ws_204191 | 179 | 0 | 0 | 0 | 169 | 10 | 94.4% |
+| hv_ws_204192 | 161 | 0 | 0 | 0 | 157 | 4 | 97.5% |
+| hv_ws_204196 | 161 | 0 | 0 | 0 | 158 | 3 | 98.1% |
+| hv_ws_204197 | 220 | 0 | 0 | 0 | 220 | 0 | 100.0% |
+| hv_ws_204199 | 214 | 0 | 0 | 0 | 204 | 10 | 95.3% |
+| hv_ws_204200 | 207 | 0 | 0 | 0 | 198 | 9 | 95.7% |
+| hv_ws_204201 | 170 | 0 | 0 | 0 | 170 | 0 | 100.0% |
+| hv_ws_204202 | 196 | 0 | 0 | 0 | 192 | 4 | 98.0% |
+| hv_ws_204203 | 174 | 0 | 0 | 0 | 171 | 3 | 98.3% |
+| hv_ws_204204 | 182 | 0 | 0 | 0 | 177 | 5 | 97.3% |
+| hv_ws_204205 | 197 | 0 | 0 | 0 | 196 | 1 | 99.5% |
+| hv_ws_204206 | 178 | 0 | 0 | 0 | 178 | 0 | 100.0% |
+| hv_ws_204207 | 172 | 0 | 0 | 0 | 168 | 4 | 97.7% |
+| hv_ws_204208 | 161 | 0 | 0 | 0 | 158 | 3 | 98.1% |
+| hv_ws_204209 | 169 | 0 | 0 | 0 | 165 | 4 | 97.6% |
+| hv_ws_204210 | 169 | 0 | 0 | 0 | 169 | 0 | 100.0% |
+| hv_ws_204212 | 234 | 0 | 0 | 0 | 222 | 12 | 94.9% |
+| hv_ws_204222 | 195 | 0 | 0 | 0 | 192 | 3 | 98.5% |
+| hv_ws_204788 | 161 | 0 | 0 | 0 | 160 | 1 | 99.4% |
+| hv_ws_204791 | 173 | 0 | 0 | 0 | 172 | 1 | 99.4% |
+| hv_ws_204792 | 178 | 0 | 0 | 0 | 176 | 2 | 98.9% |
+| hv_ws_204793 | 200 | 0 | 0 | 0 | 196 | 4 | 98.0% |
+| hv_ws_204794 | 179 | 0 | 0 | 0 | 171 | 8 | 95.5% |
+| hv_ws_204795 | 170 | 0 | 0 | 0 | 169 | 1 | 99.4% |
+| hv_ws_205042 | 170 | 0 | 0 | 0 | 169 | 1 | 99.4% |
+| hv_ws_205043 | 186 | 0 | 0 | 0 | 182 | 4 | 97.8% |
+| hv_ws_205044 | 549 | 0 | 0 | 0 | 547 | 2 | 99.6% |
+| hv_ws_205045 | 179 | 0 | 0 | 0 | 171 | 8 | 95.5% |
+| hv_ws_205046 | 176 | 0 | 0 | 0 | 173 | 3 | 98.3% |
+| hv_ws_205047 | 169 | 0 | 0 | 0 | 168 | 1 | 99.4% |
+| hv_ws_205142 | 167 | 0 | 0 | 0 | 166 | 1 | 99.4% |
 | hv_ws_205152 | 2 964 | 0 | 0 | 0 | 2956 | 8 | 99.7% |
+| hv_ws_205164 | 506 | 0 | 0 | 0 | 455 | 51 | 89.9% |
+| hv_ws_205165 | 164 | 0 | 0 | 0 | 161 | 3 | 98.2% |
+| hv_ws_205174 | 167 | 0 | 0 | 0 | 166 | 1 | 99.4% |
+| hv_ws_205232 | 188 | 0 | 0 | 0 | 182 | 6 | 96.8% |
+| hv_ws_205233 | 227 | 0 | 0 | 0 | 226 | 1 | 99.6% |
+| hv_ws_205234 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
+| hv_ws_205236 | 253 | 0 | 0 | 0 | 250 | 3 | 98.8% |
+| hv_ws_205237 | 172 | 0 | 0 | 0 | 169 | 3 | 98.3% |
+| hv_ws_205238 | 172 | 0 | 0 | 0 | 172 | 0 | 100.0% |
+| hv_ws_205239 | 247 | 0 | 0 | 0 | 210 | 37 | 85.0% |
+| hv_ws_205240 | 226 | 0 | 0 | 0 | 226 | 0 | 100.0% |
+| hv_ws_205241 | 167 | 0 | 0 | 0 | 167 | 0 | 100.0% |
 | hv_ws_464843 | 191 | 0 | 0 | 0 | 190 | 1 | 99.5% |
+| hv_ws_42432 | 26 | 0 | 0 | 0 | 26 | 0 | 100.0% |
 | hv_ws_521224 | 437 | 0 | 0 | 0 | 356 | 81 | 81.5% |
 | hv_ws_32480 | 613 | 0 | 0 | 0 | 598 | 15 | 97.6% |
 | hv_ws_33949 | 1 238 | 0 | 0 | 0 | 1218 | 20 | 98.4% |
@@ -8612,25 +10696,84 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_132500 | 120 | 0 | 0 | 0 | 119 | 1 | 99.2% |
 | hv_ws_132502 | 140 | 0 | 0 | 0 | 136 | 4 | 97.1% |
 | hv_ws_132506 | 82 | 0 | 0 | 0 | 82 | 0 | 100.0% |
+| hv_ws_132626 | 21 | 0 | 0 | 0 | 21 | 0 | 100.0% |
+| hv_ws_132637 | 80 | 0 | 0 | 0 | 78 | 2 | 97.5% |
 | hv_ws_32366 | 462 | 0 | 0 | 0 | 449 | 13 | 97.2% |
 | hv_ws_33483 | 240 | 0 | 0 | 0 | 230 | 10 | 95.8% |
+| hv_ws_41689 | 1 119 | 0 | 0 | 0 | 996 | 123 | 89.0% |
+| hv_ws_42434 | 54 | 0 | 0 | 0 | 54 | 0 | 100.0% |
+| hv_ws_7807 | 24 | 0 | 0 | 0 | 24 | 0 | 100.0% |
+| hv_ws_182586 | 2 785 | 0 | 0 | 0 | 2700 | 85 | 96.9% |
 | hv_ws_30543 | 1 551 | 0 | 0 | 0 | 1496 | 55 | 96.5% |
 | hv_ws_30544 | 195 | 0 | 0 | 0 | 191 | 4 | 97.9% |
+| hv_ws_30545 | 1 851 | 0 | 0 | 0 | 1829 | 22 | 98.8% |
 | hv_ws_30546 | 1 087 | 0 | 0 | 0 | 1067 | 20 | 98.2% |
 | hv_ws_30547 | 336 | 0 | 0 | 0 | 322 | 14 | 95.8% |
 | hv_ws_30558 | 41 | 0 | 0 | 0 | 39 | 2 | 95.1% |
 | hv_ws_30560 | 33 | 0 | 0 | 0 | 32 | 1 | 97.0% |
+| hv_ws_30561 | 394 | 0 | 0 | 0 | 387 | 7 | 98.2% |
+| hv_ws_30563 | 384 | 0 | 0 | 0 | 373 | 11 | 97.1% |
+| hv_ws_30567 | 58 | 0 | 0 | 0 | 57 | 1 | 98.3% |
 | hv_ws_30638 | 126 | 0 | 0 | 0 | 124 | 2 | 98.4% |
 | hv_ws_30640 | 103 | 0 | 0 | 0 | 97 | 6 | 94.2% |
 | hv_ws_30800 | 52 | 0 | 0 | 0 | 50 | 2 | 96.2% |
+| hv_ws_30801 | 205 | 0 | 0 | 0 | 196 | 9 | 95.6% |
 | hv_ws_30803 | 31 | 0 | 0 | 0 | 27 | 4 | 87.1% |
 | hv_ws_31085 | 119 | 0 | 0 | 0 | 111 | 8 | 93.3% |
+| hv_ws_355031 | 717 | 0 | 0 | 0 | 712 | 5 | 99.3% |
 | hv_ws_355037 | 274 | 0 | 0 | 0 | 272 | 2 | 99.3% |
+| hv_ws_358751 | 184 | 0 | 0 | 0 | 181 | 3 | 98.4% |
+| hv_ws_464834 | 193 | 0 | 0 | 0 | 188 | 5 | 97.4% |
+| hv_ws_358725 | 162 | 0 | 0 | 0 | 158 | 4 | 97.5% |
+| hv_ws_358726 | 194 | 0 | 0 | 0 | 193 | 1 | 99.5% |
+| hv_ws_358727 | 174 | 0 | 0 | 0 | 170 | 4 | 97.7% |
+| hv_ws_358733 | 182 | 0 | 0 | 0 | 180 | 2 | 98.9% |
 | hv_ws_547565 | 275 | 0 | 0 | 0 | 267 | 8 | 97.1% |
 | hv_ws_59432 | 74 | 0 | 0 | 0 | 71 | 3 | 95.9% |
 | hv_ws_59433 | 2 727 | 0 | 0 | 0 | 2591 | 136 | 95.0% |
+| hv_ws_136185 | 624 | 0 | 0 | 0 | 614 | 10 | 98.4% |
+| hv_ws_33621 | 204 | 0 | 0 | 0 | 202 | 2 | 99.0% |
 | hv_ws_598649 | 630 | 0 | 0 | 0 | 606 | 24 | 96.2% |
+| hv_ws_42205 | 38 | 0 | 0 | 0 | 38 | 0 | 100.0% |
+| hv_ws_42207 | 42 | 0 | 0 | 0 | 42 | 0 | 100.0% |
+| hv_ws_42209 | 48 | 0 | 0 | 0 | 46 | 2 | 95.8% |
+| hv_ws_42210 | 26 | 0 | 0 | 0 | 25 | 1 | 96.2% |
+| hv_ws_42212 | 43 | 0 | 0 | 0 | 42 | 1 | 97.7% |
+| hv_ws_42213 | 70 | 0 | 0 | 0 | 69 | 1 | 98.6% |
+| hv_ws_42214 | 104 | 0 | 0 | 0 | 104 | 0 | 100.0% |
+| hv_ws_42216 | 66 | 0 | 0 | 0 | 66 | 0 | 100.0% |
+| hv_ws_42217 | 20 | 0 | 0 | 0 | 20 | 0 | 100.0% |
+| hv_ws_42218 | 31 | 0 | 0 | 0 | 30 | 1 | 96.8% |
+| hv_ws_42220 | 62 | 0 | 0 | 0 | 61 | 1 | 98.4% |
+| hv_ws_42221 | 64 | 0 | 0 | 0 | 62 | 2 | 96.9% |
+| hv_ws_42222 | 22 | 0 | 0 | 0 | 22 | 0 | 100.0% |
+| hv_ws_42223 | 49 | 0 | 0 | 0 | 46 | 3 | 93.9% |
+| hv_ws_42224 | 50 | 0 | 0 | 0 | 50 | 0 | 100.0% |
+| hv_ws_42225 | 29 | 0 | 0 | 0 | 29 | 0 | 100.0% |
+| hv_ws_42226 | 58 | 0 | 0 | 0 | 58 | 0 | 100.0% |
+| hv_ws_42227 | 43 | 0 | 0 | 0 | 43 | 0 | 100.0% |
+| hv_ws_42231 | 92 | 0 | 0 | 0 | 90 | 2 | 97.8% |
+| hv_ws_42404 | 23 | 0 | 0 | 0 | 23 | 0 | 100.0% |
+| hv_ws_42406 | 28 | 0 | 0 | 0 | 28 | 0 | 100.0% |
+| hv_ws_42410 | 66 | 0 | 0 | 0 | 64 | 2 | 97.0% |
+| hv_ws_42411 | 26 | 0 | 0 | 0 | 26 | 0 | 100.0% |
+| hv_ws_42412 | 29 | 0 | 0 | 0 | 29 | 0 | 100.0% |
+| hv_ws_42413 | 57 | 0 | 0 | 0 | 57 | 0 | 100.0% |
+| hv_ws_42414 | 32 | 0 | 0 | 0 | 32 | 0 | 100.0% |
+| hv_ws_42415 | 61 | 0 | 0 | 0 | 60 | 1 | 98.4% |
+| hv_ws_42416 | 25 | 0 | 0 | 0 | 25 | 0 | 100.0% |
+| hv_ws_42417 | 27 | 0 | 0 | 0 | 27 | 0 | 100.0% |
+| hv_ws_42418 | 120 | 0 | 0 | 0 | 116 | 4 | 96.7% |
+| hv_ws_42419 | 39 | 0 | 0 | 0 | 35 | 4 | 89.7% |
+| hv_ws_42420 | 114 | 0 | 0 | 0 | 111 | 3 | 97.4% |
+| hv_ws_42421 | 24 | 0 | 0 | 0 | 24 | 0 | 100.0% |
+| hv_ws_42422 | 39 | 0 | 0 | 0 | 37 | 2 | 94.9% |
+| hv_ws_42423 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
+| hv_ws_42439 | 77 | 0 | 0 | 0 | 77 | 0 | 100.0% |
+| hv_ws_42440 | 281 | 0 | 0 | 0 | 281 | 0 | 100.0% |
 | hv_ws_42628 | 522 | 0 | 0 | 0 | 505 | 17 | 96.7% |
+| hv_ws_63010 | 853 | 0 | 0 | 0 | 774 | 79 | 90.7% |
+| hv_ws_161700 | 403 | 0 | 0 | 0 | 368 | 35 | 91.3% |
 | hv_ws_179247 | 126 | 0 | 0 | 0 | 118 | 8 | 93.7% |
 | hv_ws_37443 | 8 680 | 0 | 0 | 0 | 8592 | 88 | 99.0% |
 | hv_ws_42442 | 128 | 0 | 0 | 0 | 127 | 1 | 99.2% |
@@ -8638,23 +10781,74 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_42477 | 59 | 0 | 0 | 0 | 59 | 0 | 100.0% |
 | hv_ws_59081 | 202 | 0 | 0 | 0 | 199 | 3 | 98.5% |
 | hv_ws_59090 | 102 | 0 | 0 | 0 | 99 | 3 | 97.1% |
+| hv_ws_61314 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
+| hv_ws_41825 | 7 341 | 0 | 0 | 0 | 7088 | 253 | 96.6% |
+| hv_ws_42443 | 90 | 0 | 0 | 0 | 89 | 1 | 98.9% |
+| hv_ws_59046 | 154 | 0 | 0 | 0 | 153 | 1 | 99.4% |
+| hv_ws_59047 | 143 | 0 | 0 | 0 | 137 | 6 | 95.8% |
+| hv_ws_59050 | 1 055 | 0 | 0 | 0 | 1030 | 25 | 97.6% |
+| hv_ws_59051 | 170 | 0 | 0 | 0 | 168 | 2 | 98.8% |
+| hv_ws_59055 | 122 | 0 | 0 | 0 | 121 | 1 | 99.2% |
+| hv_ws_59056 | 80 | 0 | 0 | 0 | 78 | 2 | 97.5% |
+| hv_ws_59060 | 35 | 0 | 0 | 0 | 33 | 2 | 94.3% |
+| hv_ws_178334 | 243 | 0 | 0 | 0 | 239 | 4 | 98.4% |
 | hv_ws_353416 | 227 | 0 | 0 | 0 | 221 | 6 | 97.4% |
+| hv_ws_473009 | 244 | 0 | 0 | 0 | 239 | 5 | 98.0% |
+| hv_ws_473010 | 202 | 0 | 0 | 0 | 196 | 6 | 97.0% |
+| hv_ws_49597 | 3 903 | 0 | 0 | 0 | 3860 | 43 | 98.9% |
+| hv_ws_52793 | 3 815 | 0 | 0 | 0 | 3781 | 34 | 99.1% |
 | hv_ws_195388 | 129 | 0 | 0 | 0 | 125 | 4 | 96.9% |
+| hv_ws_42436 | 44 | 0 | 0 | 0 | 43 | 1 | 97.7% |
+| hv_ws_500813 | 199 | 0 | 0 | 0 | 193 | 6 | 97.0% |
+| hv_ws_501033 | 214 | 0 | 0 | 0 | 211 | 3 | 98.6% |
+| hv_ws_501035 | 284 | 0 | 0 | 0 | 268 | 16 | 94.4% |
+| hv_ws_501066 | 939 | 0 | 0 | 0 | 923 | 16 | 98.3% |
+| hv_ws_501069 | 2 205 | 0 | 0 | 0 | 2197 | 8 | 99.6% |
+| hv_ws_123373 | 3 002 | 0 | 0 | 0 | 2889 | 113 | 96.2% |
+| hv_ws_123379 | 171 | 0 | 0 | 0 | 169 | 2 | 98.8% |
+| hv_ws_123380 | 170 | 0 | 0 | 0 | 167 | 3 | 98.2% |
+| hv_ws_123381 | 174 | 0 | 0 | 0 | 169 | 5 | 97.1% |
+| hv_ws_123384 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
 | hv_ws_30422 | 206 | 0 | 0 | 0 | 203 | 3 | 98.5% |
+| hv_ws_354875 | 211 | 0 | 0 | 0 | 206 | 5 | 97.6% |
+| hv_ws_358814 | 171 | 0 | 0 | 0 | 169 | 2 | 98.8% |
+| hv_ws_358815 | 195 | 0 | 0 | 0 | 191 | 4 | 97.9% |
 | hv_ws_178818 | 308 | 0 | 0 | 0 | 304 | 4 | 98.7% |
 | hv_ws_166909 | 426 | 0 | 0 | 0 | 390 | 36 | 91.5% |
+| hv_ws_33664 | 198 | 0 | 0 | 0 | 197 | 1 | 99.5% |
 | hv_ws_355555 | 32 485 | 0 | 0 | 0 | 31401 | 1084 | 96.7% |
+| hv_ws_182461 | 91 | 0 | 0 | 0 | 82 | 9 | 90.1% |
+| hv_ws_33668 | 79 | 0 | 0 | 0 | 77 | 2 | 97.5% |
+| hv_ws_357610 | 185 | 0 | 0 | 0 | 183 | 2 | 98.9% |
+| hv_ws_357963 | 4 732 | 0 | 0 | 0 | 4723 | 9 | 99.8% |
 | hv_ws_36244 | 838 | 0 | 0 | 0 | 817 | 21 | 97.5% |
 | hv_ws_36246 | 100 | 0 | 0 | 0 | 97 | 3 | 97.0% |
+| hv_ws_358372 | 235 | 0 | 0 | 0 | 231 | 4 | 98.3% |
+| hv_ws_41977 | 279 | 0 | 0 | 0 | 272 | 7 | 97.5% |
+| hv_ws_126128 | 249 | 0 | 0 | 0 | 247 | 2 | 99.2% |
+| hv_ws_126732 | 177 | 0 | 0 | 0 | 176 | 1 | 99.4% |
+| hv_ws_136645 | 1 063 | 0 | 0 | 0 | 1035 | 28 | 97.4% |
 | hv_ws_184116 | 104 | 0 | 0 | 0 | 80 | 24 | 76.9% |
+| hv_ws_358378 | 187 | 0 | 0 | 0 | 185 | 2 | 98.9% |
+| hv_ws_358388 | 232 | 0 | 0 | 0 | 226 | 6 | 97.4% |
+| hv_ws_42240 | 1 202 | 0 | 0 | 0 | 1141 | 61 | 94.9% |
 | hv_ws_47761 | 273 | 0 | 0 | 0 | 254 | 19 | 93.0% |
 | hv_ws_162021 | 824 | 0 | 0 | 0 | 793 | 31 | 96.2% |
 | hv_ws_132822 | 8 831 | 0 | 0 | 0 | 8814 | 17 | 99.8% |
+| hv_ws_132832 | 196 | 0 | 0 | 0 | 191 | 5 | 97.4% |
+| hv_ws_132833 | 182 | 0 | 0 | 0 | 181 | 1 | 99.5% |
+| hv_ws_132836 | 197 | 0 | 0 | 0 | 195 | 2 | 99.0% |
 | hv_ws_134695 | 1 557 | 0 | 0 | 0 | 1523 | 34 | 97.8% |
 | hv_ws_13692 | 84 | 0 | 0 | 0 | 84 | 0 | 100.0% |
+| hv_ws_162144 | 172 | 0 | 0 | 0 | 170 | 2 | 98.8% |
 | hv_ws_195118 | 276 | 0 | 0 | 0 | 275 | 1 | 99.6% |
+| hv_ws_195147 | 177 | 0 | 0 | 0 | 176 | 1 | 99.4% |
+| hv_ws_195158 | 180 | 0 | 0 | 0 | 179 | 1 | 99.4% |
 | hv_ws_355964 | 8 351 | 0 | 0 | 0 | 7667 | 684 | 91.8% |
+| hv_ws_41979 | 249 | 0 | 0 | 0 | 246 | 3 | 98.8% |
 | hv_ws_136170 | 380 | 0 | 0 | 0 | 379 | 1 | 99.7% |
+| hv_ws_136193 | 743 | 0 | 0 | 0 | 734 | 9 | 98.8% |
+| hv_ws_136198 | 269 | 0 | 0 | 0 | 267 | 2 | 99.3% |
 | hv_ws_136200 | 791 | 0 | 0 | 0 | 786 | 5 | 99.4% |
 | hv_ws_136266 | 10 658 | 0 | 0 | 0 | 10632 | 26 | 99.8% |
 | hv_ws_44774 | 788 | 0 | 0 | 0 | 664 | 124 | 84.3% |
@@ -8665,6 +10859,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_125048 | 801 | 0 | 0 | 0 | 726 | 75 | 90.6% |
 | hv_ws_126827 | 655 | 0 | 0 | 0 | 605 | 50 | 92.4% |
 | hv_ws_135708 | 789 | 0 | 0 | 0 | 770 | 19 | 97.6% |
+| hv_ws_30503 | 429 | 0 | 0 | 0 | 412 | 17 | 96.0% |
 | hv_ws_30504 | 506 | 0 | 0 | 0 | 481 | 25 | 95.1% |
 | hv_ws_30505 | 588 | 0 | 0 | 0 | 569 | 19 | 96.8% |
 | hv_ws_36504 | 4 065 | 0 | 0 | 0 | 4018 | 47 | 98.8% |
@@ -8672,12 +10867,35 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_30873 | 53 | 0 | 0 | 0 | 53 | 0 | 100.0% |
 | hv_ws_30874 | 322 | 0 | 0 | 0 | 321 | 1 | 99.7% |
 | hv_ws_30894 | 304 | 0 | 0 | 0 | 293 | 11 | 96.4% |
+| hv_ws_3423 | 94 | 0 | 0 | 0 | 91 | 3 | 96.8% |
+| hv_ws_42437 | 25 | 0 | 0 | 0 | 25 | 0 | 100.0% |
 | hv_ws_565452 | 2 702 | 0 | 0 | 0 | 2698 | 4 | 99.9% |
 | hv_ws_130889 | 463 | 0 | 0 | 0 | 460 | 3 | 99.4% |
 | hv_ws_133583 | 2 032 | 0 | 0 | 0 | 2014 | 18 | 99.1% |
 | hv_ws_136059 | 560 | 0 | 0 | 0 | 558 | 2 | 99.6% |
 | hv_ws_136882 | 1 318 | 0 | 0 | 0 | 1251 | 67 | 94.9% |
+| hv_ws_28935 | 376 | 0 | 0 | 0 | 371 | 5 | 98.7% |
+| hv_ws_28936 | 411 | 0 | 0 | 0 | 408 | 3 | 99.3% |
+| hv_ws_28937 | 67 | 0 | 0 | 0 | 65 | 2 | 97.0% |
+| hv_ws_28938 | 53 | 0 | 0 | 0 | 52 | 1 | 98.1% |
+| hv_ws_28939 | 48 | 0 | 0 | 0 | 48 | 0 | 100.0% |
+| hv_ws_28940 | 62 | 0 | 0 | 0 | 60 | 2 | 96.8% |
+| hv_ws_28941 | 50 | 0 | 0 | 0 | 50 | 0 | 100.0% |
+| hv_ws_28945 | 32 | 0 | 0 | 0 | 32 | 0 | 100.0% |
+| hv_ws_28946 | 45 | 0 | 0 | 0 | 44 | 1 | 97.8% |
+| hv_ws_28947 | 2 357 | 0 | 0 | 0 | 2226 | 131 | 94.4% |
+| hv_ws_28950 | 109 | 0 | 0 | 0 | 99 | 10 | 90.8% |
+| hv_ws_28951 | 168 | 0 | 0 | 0 | 165 | 3 | 98.2% |
+| hv_ws_28952 | 169 | 0 | 0 | 0 | 166 | 3 | 98.2% |
+| hv_ws_28954 | 539 | 0 | 0 | 0 | 532 | 7 | 98.7% |
 | hv_ws_30415 | 109 | 0 | 0 | 0 | 103 | 6 | 94.5% |
+| hv_ws_30438 | 128 | 0 | 0 | 0 | 125 | 3 | 97.7% |
+| hv_ws_30439 | 134 | 0 | 0 | 0 | 125 | 9 | 93.3% |
+| hv_ws_30440 | 140 | 0 | 0 | 0 | 139 | 1 | 99.3% |
+| hv_ws_30453 | 36 | 0 | 0 | 0 | 35 | 1 | 97.2% |
+| hv_ws_30454 | 185 | 0 | 0 | 0 | 185 | 0 | 100.0% |
+| hv_ws_30456 | 52 | 0 | 0 | 0 | 50 | 2 | 96.2% |
+| hv_ws_30577 | 54 | 0 | 0 | 0 | 51 | 3 | 94.4% |
 | hv_ws_30804 | 147 | 0 | 0 | 0 | 145 | 2 | 98.6% |
 | hv_ws_30819 | 494 | 0 | 0 | 0 | 494 | 0 | 100.0% |
 | hv_ws_30820 | 460 | 0 | 0 | 0 | 434 | 26 | 94.3% |
@@ -8685,12 +10903,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_30875 | 170 | 0 | 0 | 0 | 170 | 0 | 100.0% |
 | hv_ws_30876 | 640 | 0 | 0 | 0 | 636 | 4 | 99.4% |
 | hv_ws_30899 | 68 | 0 | 0 | 0 | 68 | 0 | 100.0% |
+| hv_ws_31867 | 110 | 0 | 0 | 0 | 106 | 4 | 96.4% |
+| hv_ws_31869 | 121 | 0 | 0 | 0 | 114 | 7 | 94.2% |
+| hv_ws_31900 | 1 004 | 0 | 0 | 0 | 989 | 15 | 98.5% |
+| hv_ws_33624 | 181 | 0 | 0 | 0 | 180 | 1 | 99.4% |
 | hv_ws_4216 | 180 | 0 | 0 | 0 | 174 | 6 | 96.7% |
 | hv_ws_445179 | 179 | 0 | 0 | 0 | 179 | 0 | 100.0% |
+| hv_ws_57236 | 36 | 0 | 0 | 0 | 36 | 0 | 100.0% |
 | hv_ws_7819 | 1 194 | 0 | 0 | 0 | 1192 | 2 | 99.8% |
 | hv_ws_107688 | 1 889 | 0 | 0 | 0 | 1882 | 7 | 99.6% |
 | hv_ws_133998 | 275 | 0 | 0 | 0 | 271 | 4 | 98.5% |
 | hv_ws_1562 | 198 | 0 | 0 | 0 | 196 | 2 | 99.0% |
+| hv_ws_30634 | 479 | 0 | 0 | 0 | 470 | 9 | 98.1% |
 | hv_ws_30806 | 424 | 0 | 0 | 0 | 422 | 2 | 99.5% |
 | hv_ws_30807 | 364 | 0 | 0 | 0 | 362 | 2 | 99.5% |
 | hv_ws_30808 | 755 | 0 | 0 | 0 | 750 | 5 | 99.3% |
@@ -8705,32 +10929,42 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_30903 | 168 | 0 | 0 | 0 | 162 | 6 | 96.4% |
 | hv_ws_30905 | 24 | 0 | 0 | 0 | 22 | 2 | 91.7% |
 | hv_ws_30913 | 26 | 0 | 0 | 0 | 24 | 2 | 92.3% |
+| hv_ws_30914 | 49 | 0 | 0 | 0 | 49 | 0 | 100.0% |
 | hv_ws_30915 | 104 | 0 | 0 | 0 | 101 | 3 | 97.1% |
 | hv_ws_30917 | 179 | 0 | 0 | 0 | 177 | 2 | 98.9% |
+| hv_ws_30931 | 229 | 0 | 0 | 0 | 229 | 0 | 100.0% |
+| hv_ws_30932 | 97 | 0 | 0 | 0 | 95 | 2 | 97.9% |
+| hv_ws_30934 | 129 | 0 | 0 | 0 | 129 | 0 | 100.0% |
 | hv_ws_30953 | 1 853 | 0 | 0 | 0 | 1853 | 0 | 100.0% |
 | hv_ws_30996 | 154 | 0 | 0 | 0 | 152 | 2 | 98.7% |
 | hv_ws_30997 | 211 | 0 | 0 | 0 | 210 | 1 | 99.5% |
 | hv_ws_31149 | 143 | 0 | 0 | 0 | 140 | 3 | 97.9% |
+| hv_ws_31150 | 1 129 | 0 | 0 | 0 | 947 | 182 | 83.9% |
 | hv_ws_31160 | 190 | 0 | 0 | 0 | 185 | 5 | 97.4% |
+| hv_ws_31161 | 56 | 0 | 0 | 0 | 54 | 2 | 96.4% |
 | hv_ws_33586 | 175 | 0 | 0 | 0 | 174 | 1 | 99.4% |
 | hv_ws_33995 | 225 | 0 | 0 | 0 | 221 | 4 | 98.2% |
 | hv_ws_38332 | 210 | 0 | 0 | 0 | 203 | 7 | 96.7% |
 | hv_ws_408079 | 203 | 0 | 0 | 0 | 201 | 2 | 99.0% |
 | hv_ws_4229 | 179 | 0 | 0 | 0 | 174 | 5 | 97.2% |
+| hv_ws_42427 | 34 | 0 | 0 | 0 | 33 | 1 | 97.1% |
 | hv_ws_569813 | 807 | 0 | 0 | 0 | 779 | 28 | 96.5% |
 | hv_ws_107886 | 4 324 | 0 | 0 | 0 | 4307 | 17 | 99.6% |
 | hv_ws_162313 | 217 | 0 | 0 | 0 | 214 | 3 | 98.6% |
 | hv_ws_32414 | 166 | 0 | 0 | 0 | 166 | 0 | 100.0% |
 | hv_ws_33591 | 186 | 0 | 0 | 0 | 186 | 0 | 100.0% |
+| hv_ws_52360 | 146 | 0 | 0 | 0 | 144 | 2 | 98.6% |
 | hv_ws_577606 | 4 837 | 0 | 0 | 0 | 4819 | 18 | 99.6% |
 | hv_ws_34511 | 43 | 0 | 0 | 0 | 29 | 14 | 67.4% |
 | hv_ws_411444 | 8 401 | 0 | 0 | 0 | 8295 | 106 | 98.7% |
+| hv_ws_52363 | 131 | 0 | 0 | 0 | 131 | 0 | 100.0% |
 | hv_ws_63125 | 8 571 | 0 | 0 | 0 | 7377 | 1194 | 86.1% |
 | hv_ws_107694 | 1 557 | 0 | 0 | 0 | 1555 | 2 | 99.9% |
 | hv_ws_31439 | 671 | 0 | 0 | 0 | 575 | 96 | 85.7% |
 | hv_ws_9387 | 45 | 0 | 0 | 0 | 45 | 0 | 100.0% |
 | hv_ws_52293 | 183 | 0 | 0 | 0 | 178 | 5 | 97.3% |
 | hv_ws_65071 | 5 864 | 0 | 0 | 0 | 5745 | 119 | 98.0% |
+| hv_ws_39027 | 609 | 0 | 0 | 0 | 599 | 10 | 98.4% |
 | hv_ws_448722 | 2 390 | 0 | 0 | 0 | 1910 | 480 | 79.9% |
 | hv_ws_575324 | 12 401 | 0 | 0 | 0 | 12391 | 10 | 99.9% |
 | hv_ws_64447 | 1 250 | 0 | 0 | 0 | 1246 | 4 | 99.7% |
@@ -8769,6 +11003,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_52125 | 359 | 0 | 0 | 0 | 355 | 4 | 98.9% |
 | hv_ws_107891 | 1 266 | 0 | 0 | 0 | 1264 | 2 | 99.8% |
 | hv_ws_123276 | 2 228 | 0 | 0 | 0 | 1919 | 309 | 86.1% |
+| hv_ws_1558 | 1 166 | 0 | 0 | 0 | 1159 | 7 | 99.4% |
+| hv_ws_34841 | 277 | 0 | 0 | 0 | 274 | 3 | 98.9% |
 | hv_ws_348644 | 247 | 0 | 0 | 0 | 242 | 5 | 98.0% |
 | hv_ws_348646 | 257 | 0 | 0 | 0 | 248 | 9 | 96.5% |
 | hv_ws_348762 | 1 010 | 0 | 0 | 0 | 943 | 67 | 93.4% |
@@ -8779,7 +11015,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_521219 | 1 774 | 0 | 0 | 0 | 1572 | 202 | 88.6% |
 | hv_ws_107893 | 933 | 0 | 0 | 0 | 932 | 1 | 99.9% |
 | hv_ws_22343 | 612 | 0 | 0 | 0 | 603 | 9 | 98.5% |
+| hv_ws_31342 | 149 | 0 | 0 | 0 | 146 | 3 | 98.0% |
 | hv_ws_313442 | 266 | 0 | 0 | 0 | 265 | 1 | 99.6% |
+| hv_ws_3388 | 681 | 0 | 0 | 0 | 648 | 33 | 95.2% |
 | hv_ws_345639 | 457 | 0 | 0 | 0 | 437 | 20 | 95.6% |
 | hv_ws_352173 | 456 | 0 | 0 | 0 | 345 | 111 | 75.7% |
 | hv_ws_354762 | 988 | 0 | 0 | 0 | 856 | 132 | 86.6% |
@@ -8809,7 +11047,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_52240 | 116 | 0 | 0 | 0 | 108 | 8 | 93.1% |
 | hv_ws_54180 | 86 | 0 | 0 | 0 | 85 | 1 | 98.8% |
 | hv_ws_107889 | 2 052 | 0 | 0 | 0 | 2048 | 4 | 99.8% |
+| hv_ws_11393 | 100 | 0 | 0 | 0 | 96 | 4 | 96.0% |
 | hv_ws_126993 | 327 | 0 | 0 | 0 | 321 | 6 | 98.2% |
+| hv_ws_130760 | 151 | 0 | 0 | 0 | 148 | 3 | 98.0% |
 | hv_ws_20854 | 9 443 | 0 | 0 | 0 | 9069 | 374 | 96.0% |
 | hv_ws_313443 | 271 | 0 | 0 | 0 | 271 | 0 | 100.0% |
 | hv_ws_54174 | 66 | 0 | 0 | 0 | 65 | 1 | 98.5% |
@@ -8863,6 +11103,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_175347 | 734 | 0 | 0 | 0 | 539 | 195 | 73.4% |
 | hv_ws_20012 | 1 930 | 0 | 0 | 0 | 1923 | 7 | 99.6% |
 | hv_ws_20016 | 1 404 | 0 | 0 | 0 | 1402 | 2 | 99.9% |
+| hv_ws_24026 | 77 | 0 | 0 | 0 | 77 | 0 | 100.0% |
+| hv_ws_24659 | 6 326 | 0 | 0 | 0 | 6263 | 63 | 99.0% |
 | hv_ws_28824 | 585 | 0 | 0 | 0 | 585 | 0 | 100.0% |
 | hv_ws_28825 | 2 956 | 0 | 0 | 0 | 2945 | 11 | 99.6% |
 | hv_ws_30525 | 72 | 0 | 0 | 0 | 72 | 0 | 100.0% |
@@ -8874,15 +11116,19 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_31135 | 909 | 0 | 0 | 0 | 906 | 3 | 99.7% |
 | hv_ws_31145 | 182 | 0 | 0 | 0 | 178 | 4 | 97.8% |
 | hv_ws_31423 | 116 | 0 | 0 | 0 | 115 | 1 | 99.1% |
+| hv_ws_31425 | 346 | 0 | 0 | 0 | 344 | 2 | 99.4% |
 | hv_ws_31426 | 342 | 0 | 0 | 0 | 336 | 6 | 98.2% |
 | hv_ws_31850 | 4 138 | 0 | 0 | 0 | 3899 | 239 | 94.2% |
+| hv_ws_32116 | 3 349 | 0 | 0 | 0 | 3151 | 198 | 94.1% |
 | hv_ws_32307 | 587 | 0 | 0 | 0 | 586 | 1 | 99.8% |
 | hv_ws_354252 | 18 999 | 0 | 0 | 0 | 17979 | 1020 | 94.6% |
 | hv_ws_49919 | 889 | 0 | 0 | 0 | 886 | 3 | 99.7% |
+| hv_ws_49920 | 333 | 0 | 0 | 0 | 331 | 2 | 99.4% |
 | hv_ws_49922 | 120 | 0 | 0 | 0 | 120 | 0 | 100.0% |
 | hv_ws_49927 | 457 | 0 | 0 | 0 | 446 | 11 | 97.6% |
 | hv_ws_49928 | 655 | 0 | 0 | 0 | 654 | 1 | 99.8% |
 | hv_ws_49929 | 109 | 0 | 0 | 0 | 109 | 0 | 100.0% |
+| hv_ws_50938 | 471 | 0 | 0 | 0 | 456 | 15 | 96.8% |
 | hv_ws_52274 | 1 242 | 0 | 0 | 0 | 1237 | 5 | 99.6% |
 | hv_ws_53371 | 400 | 0 | 0 | 0 | 395 | 5 | 98.8% |
 | hv_ws_56291 | 2 387 | 0 | 0 | 0 | 2252 | 135 | 94.3% |
@@ -8892,6 +11138,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_162136 | 383 | 0 | 0 | 0 | 379 | 4 | 99.0% |
 | hv_ws_162137 | 413 | 0 | 0 | 0 | 409 | 4 | 99.0% |
 | hv_ws_175461 | 217 | 0 | 0 | 0 | 210 | 7 | 96.8% |
+| hv_ws_20189 | 865 | 0 | 0 | 0 | 864 | 1 | 99.9% |
 | hv_ws_29125 | 356 | 0 | 0 | 0 | 353 | 3 | 99.2% |
 | hv_ws_30686 | 785 | 0 | 0 | 0 | 782 | 3 | 99.6% |
 | hv_ws_30693 | 275 | 0 | 0 | 0 | 275 | 0 | 100.0% |
@@ -8917,6 +11164,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_126976 | 346 | 0 | 0 | 0 | 333 | 13 | 96.2% |
 | hv_ws_175460 | 230 | 0 | 0 | 0 | 230 | 0 | 100.0% |
 | hv_ws_28822 | 1 394 | 0 | 0 | 0 | 1387 | 7 | 99.5% |
+| hv_ws_28823 | 849 | 0 | 0 | 0 | 835 | 14 | 98.4% |
 | hv_ws_28867 | 651 | 0 | 0 | 0 | 566 | 85 | 86.9% |
 | hv_ws_29032 | 508 | 0 | 0 | 0 | 479 | 29 | 94.3% |
 | hv_ws_29034 | 386 | 0 | 0 | 0 | 367 | 19 | 95.1% |
@@ -8926,6 +11174,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_30618 | 34 | 0 | 0 | 0 | 34 | 0 | 100.0% |
 | hv_ws_30631 | 124 | 0 | 0 | 0 | 123 | 1 | 99.2% |
 | hv_ws_30666 | 2 877 | 0 | 0 | 0 | 2869 | 8 | 99.7% |
+| hv_ws_30671 | 5 860 | 0 | 0 | 0 | 5847 | 13 | 99.8% |
 | hv_ws_30756 | 776 | 0 | 0 | 0 | 773 | 3 | 99.6% |
 | hv_ws_31427 | 241 | 0 | 0 | 0 | 237 | 4 | 98.3% |
 | hv_ws_33899 | 665 | 0 | 0 | 0 | 648 | 17 | 97.4% |
@@ -8940,6 +11189,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_53913 | 450 | 0 | 0 | 0 | 429 | 21 | 95.3% |
 | hv_ws_53930 | 612 | 0 | 0 | 0 | 579 | 33 | 94.6% |
 | hv_ws_56294 | 907 | 0 | 0 | 0 | 872 | 35 | 96.1% |
+| hv_ws_56421 | 203 | 0 | 0 | 0 | 200 | 3 | 98.5% |
 | hv_ws_107901 | 1 245 | 0 | 0 | 0 | 1236 | 9 | 99.3% |
 | hv_ws_124935 | 4 324 | 0 | 0 | 0 | 4272 | 52 | 98.8% |
 | hv_ws_126977 | 373 | 0 | 0 | 0 | 360 | 13 | 96.5% |
@@ -8951,10 +11201,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_32128 | 273 | 0 | 0 | 0 | 258 | 15 | 94.5% |
 | hv_ws_32313 | 375 | 0 | 0 | 0 | 365 | 10 | 97.3% |
 | hv_ws_32475 | 116 | 0 | 0 | 0 | 114 | 2 | 98.3% |
+| hv_ws_32494 | 1 312 | 0 | 0 | 0 | 1307 | 5 | 99.6% |
+| hv_ws_34358 | 251 | 0 | 0 | 0 | 250 | 1 | 99.6% |
 | hv_ws_34361 | 957 | 0 | 0 | 0 | 956 | 1 | 99.9% |
 | hv_ws_350215 | 1 808 | 0 | 0 | 0 | 1678 | 130 | 92.8% |
+| hv_ws_351888 | 5 884 | 0 | 0 | 0 | 5597 | 287 | 95.1% |
 | hv_ws_352016 | 245 | 0 | 0 | 0 | 242 | 3 | 98.8% |
 | hv_ws_353734 | 21 492 | 0 | 0 | 0 | 20271 | 1221 | 94.3% |
+| hv_ws_35396 | 2 312 | 0 | 0 | 0 | 2307 | 5 | 99.8% |
 | hv_ws_354655 | 231 | 0 | 0 | 0 | 228 | 3 | 98.7% |
 | hv_ws_354741 | 11 518 | 0 | 0 | 0 | 10789 | 729 | 93.7% |
 | hv_ws_354801 | 2 251 | 0 | 0 | 0 | 2049 | 202 | 91.0% |
@@ -8965,6 +11219,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_42233 | 84 | 0 | 0 | 0 | 80 | 4 | 95.2% |
 | hv_ws_44083 | 78 | 0 | 0 | 0 | 78 | 0 | 100.0% |
 | hv_ws_49535 | 647 | 0 | 0 | 0 | 643 | 4 | 99.4% |
+| hv_ws_49767 | 1 181 | 0 | 0 | 0 | 1173 | 8 | 99.3% |
 | hv_ws_49794 | 977 | 0 | 0 | 0 | 966 | 11 | 98.9% |
 | hv_ws_52134 | 900 | 0 | 0 | 0 | 895 | 5 | 99.4% |
 | hv_ws_52201 | 1 380 | 0 | 0 | 0 | 1363 | 17 | 98.8% |
@@ -8979,6 +11234,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_353540 | 13 980 | 0 | 0 | 0 | 13385 | 595 | 95.7% |
 | hv_ws_355089 | 1 042 | 0 | 0 | 0 | 984 | 58 | 94.4% |
 | hv_ws_42668 | 989 | 0 | 0 | 0 | 978 | 11 | 98.9% |
+| hv_ws_44065 | 1 398 | 0 | 0 | 0 | 1363 | 35 | 97.5% |
 | hv_ws_46419 | 362 | 0 | 0 | 0 | 358 | 4 | 98.9% |
 | hv_ws_49462 | 723 | 0 | 0 | 0 | 698 | 25 | 96.5% |
 | hv_ws_49463 | 52 | 0 | 0 | 0 | 50 | 2 | 96.2% |
@@ -8992,7 +11248,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_52086 | 459 | 0 | 0 | 0 | 455 | 4 | 99.1% |
 | hv_ws_52246 | 130 | 0 | 0 | 0 | 126 | 4 | 96.9% |
 | hv_ws_52252 | 81 | 0 | 0 | 0 | 80 | 1 | 98.8% |
+| hv_ws_53929 | 857 | 0 | 0 | 0 | 835 | 22 | 97.4% |
 | hv_ws_56283 | 709 | 0 | 0 | 0 | 685 | 24 | 96.6% |
+| hv_ws_56284 | 668 | 0 | 0 | 0 | 644 | 24 | 96.4% |
+| hv_ws_56346 | 629 | 0 | 0 | 0 | 619 | 10 | 98.4% |
 | hv_ws_56347 | 846 | 0 | 0 | 0 | 827 | 19 | 97.8% |
 | hv_ws_59624 | 205 | 0 | 0 | 0 | 204 | 1 | 99.5% |
 | hv_ws_59625 | 149 | 0 | 0 | 0 | 148 | 1 | 99.3% |
@@ -9003,6 +11262,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_126978 | 395 | 0 | 0 | 0 | 384 | 11 | 97.2% |
 | hv_ws_161916 | 591 | 0 | 0 | 0 | 574 | 17 | 97.1% |
 | hv_ws_353371 | 1 024 | 0 | 0 | 0 | 975 | 49 | 95.2% |
+| hv_ws_56285 | 873 | 0 | 0 | 0 | 827 | 46 | 94.7% |
 | hv_ws_56286 | 551 | 0 | 0 | 0 | 532 | 19 | 96.6% |
 | hv_ws_56287 | 1 434 | 0 | 0 | 0 | 1428 | 6 | 99.6% |
 | hv_ws_56301 | 371 | 0 | 0 | 0 | 371 | 0 | 100.0% |
@@ -9014,6 +11274,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_584806 | 16 505 | 0 | 0 | 0 | 16399 | 106 | 99.4% |
 | hv_ws_59614 | 147 | 0 | 0 | 0 | 147 | 0 | 100.0% |
 | hv_ws_59893 | 1 066 | 0 | 0 | 0 | 1058 | 8 | 99.2% |
+| hv_ws_61460 | 864 | 0 | 0 | 0 | 834 | 30 | 96.5% |
 | hv_ws_66530 | 1 630 | 0 | 0 | 0 | 1593 | 37 | 97.7% |
 | hv_ws_112944 | 6 384 | 0 | 0 | 0 | 6228 | 156 | 97.6% |
 | hv_ws_132020 | 3 358 | 0 | 0 | 0 | 3213 | 145 | 95.7% |
@@ -9054,8 +11315,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_586142 | 5 303 | 0 | 0 | 0 | 5273 | 30 | 99.4% |
 | hv_ws_354075 | 46 132 | 0 | 0 | 0 | 43969 | 2163 | 95.3% |
 | hv_ws_354323 | 12 021 | 0 | 0 | 0 | 10184 | 1837 | 84.7% |
+| hv_ws_380869 | 692 | 0 | 0 | 0 | 682 | 10 | 98.6% |
 | hv_ws_448941 | 38 766 | 0 | 0 | 0 | 37673 | 1093 | 97.2% |
+| hv_ws_556742 | 872 | 0 | 0 | 0 | 811 | 61 | 93.0% |
 | hv_ws_584763 | 7 399 | 0 | 0 | 0 | 7376 | 23 | 99.7% |
+| hv_ws_380846 | 1 137 | 0 | 0 | 0 | 1121 | 16 | 98.6% |
 | hv_ws_447779 | 33 314 | 0 | 0 | 0 | 30846 | 2468 | 92.6% |
 | hv_ws_449423 | 16 435 | 0 | 0 | 0 | 15285 | 1150 | 93.0% |
 | hv_ws_453081 | 11 858 | 0 | 0 | 0 | 9323 | 2535 | 78.6% |
@@ -9066,54 +11330,54 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_584830 | 12 391 | 0 | 0 | 0 | 12354 | 37 | 99.7% |
 | hv_ws_564963 | 506 | 0 | 0 | 0 | 496 | 10 | 98.0% |
 | hv_ws_586001 | 347 | 0 | 0 | 0 | 346 | 1 | 99.7% |
-| **total** | 46 353 973 | 33044 | 143259 | 92770 | 34573692 | 11511208 | 75.2% |
+| **total** | 47 607 952 | 33044 | 143259 | 92770 | 35751757 | 11587122 | 75.7% |
 
-Linked 34 842 765 of 46 353 973 tokens (75.2%); unresolved 11 511 208 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 36 020 830 of 47 607 952 tokens (75.7%); unresolved 11 587 122 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (11 511 208) |
+| form | f | % of unresolved (11 587 122) |
 |---|---|---|
-| р | 24528 | 0.2% |
-| н | 13844 | 0.1% |
-| и | 11942 | 0.1% |
+| р | 26327 | 0.2% |
+| н | 14012 | 0.1% |
+| и | 12135 | 0.1% |
 | на | 6944 | 0.1% |
-| к | 5594 | 0.0% |
-| вул | 4129 | 0.0% |
-| п | 3004 | 0.0% |
-| д | 2997 | 0.0% |
-| івано | 2020 | 0.0% |
+| к | 6142 | 0.1% |
+| вул | 4219 | 0.0% |
+| п | 3462 | 0.0% |
+| д | 3447 | 0.0% |
+| івано | 2060 | 0.0% |
 | до | 2017 | 0.0% |
-| південно | 1851 | 0.0% |
+| південно | 1874 | 0.0% |
 | охор | 1537 | 0.0% |
+| стор | 1514 | 0.0% |
 | да | 1491 | 0.0% |
 | его | 1485 | 0.0% |
-| ни | 1386 | 0.0% |
+| ч | 1416 | 0.0% |
+| ни | 1390 | 0.0% |
 | къ | 1359 | 0.0% |
 | ур | 1340 | 0.0% |
-| стор | 1324 | 0.0% |
-| північно | 1278 | 0.0% |
+| північно | 1295 | 0.0% |
+| матерів | 1172 | 0.0% |
 | съ | 1074 | 0.0% |
-| ч | 1062 | 0.0% |
-| ли | 1043 | 0.0% |
+| менї | 1070 | 0.0% |
+| небудь | 1062 | 0.0% |
+| ли | 1049 | 0.0% |
 | аще | 1008 | 0.0% |
+| х | 999 | 0.0% |
 | во | 989 | 0.0% |
 | охр | 974 | 0.0% |
 | имъ | 966 | 0.0% |
-| х | 938 | 0.0% |
-| небудь | 932 | 0.0% |
 | тако | 925 | 0.0% |
-| поч | 859 | 0.0% |
+| всї | 880 | 0.0% |
+| нї | 876 | 0.0% |
+| поч | 868 | 0.0% |
+| проф | 837 | 0.0% |
+| ф | 831 | 0.0% |
+| ім | 824 | 0.0% |
+| тодї | 811 | 0.0% |
+| кн | 795 | 0.0% |
 | так | 792 | 0.0% |
-| німецько | 766 | 0.0% |
-| ихъ | 758 | 0.0% |
-| менї | 756 | 0.0% |
-| под | 747 | 0.0% |
-| что | 740 | 0.0% |
-| их | 736 | 0.0% |
-| кн | 734 | 0.0% |
-| всї | 732 | 0.0% |
-| ко | 715 | 0.0% |
 
 The top-200 list is stored in corpus.json (`topUnresolved`). Typical misses: proper names and foreign words (not in VESUM), Old Rus' lexemes with no modern descendant, scribal variants and spellings that no rule maps to a VESUM form.
 
@@ -9127,42 +11391,42 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 | shev.old | 259 552 | TOROT (manual) | 22 491 | 22 234 (98.9%) | 245 | 12 | 65 | 3 250 | 9 399 | 13 682 |
 | shev.old | 259 552 | Stanza (model, P-1.7) | 49 553 | 28 887 (58.3%) | 16 567 | 4 099 |  |  |  |  |
 | shev.old | 259 552 | VESUM (modern spelling) | 4 815 | 2 631 (54.6%) | 8 | 2 176 |  |  |  |  |
-| shev.early_middle | 148 347 | Stanza (model, P-1.7) | 5 724 | 3 125 (54.6%) | 2 388 | 211 | 37 | 3 289 | 8 978 | 9 629 |
-| shev.early_middle | 148 347 | VESUM (modern spelling) | 37 468 | 22 102 (59.0%) | 26 | 15 340 |  |  |  |  |
-| shev.middle | 463 197 | Stanza (model, P-1.7) | 51 518 | 27 560 (53.5%) | 23 313 | 645 | 12 087 | 6 827 | 20 504 | 24 155 |
-| shev.middle | 463 197 | VESUM (modern spelling) | 86 139 | 51 414 (59.7%) | 87 | 34 638 |  |  |  |  |
-| shev.late_middle | 195 475 | VESUM (modern spelling) | 76 345 | 62 227 (81.5%) | 169 | 13 949 | 0 | 7 373 | 21 848 | 24 584 |
-| shev.modern | 45 280 188 | VESUM (modern spelling) | 21 201 546 | 17 438 653 (82.3%) | 73 175 | 3 689 718 | 44 | 49 313 | 359 178 | 422 949 |
+| shev.early_middle | 148 347 | Stanza (model, P-1.7) | 5 725 | 3 125 (54.6%) | 2 389 | 211 | 37 | 3 290 | 8 981 | 9 632 |
+| shev.early_middle | 148 347 | VESUM (modern spelling) | 37 469 | 22 103 (59.0%) | 26 | 15 340 |  |  |  |  |
+| shev.middle | 463 197 | Stanza (model, P-1.7) | 51 525 | 27 563 (53.5%) | 23 317 | 645 | 12 087 | 6 837 | 20 520 | 24 170 |
+| shev.middle | 463 197 | VESUM (modern spelling) | 86 149 | 51 427 (59.7%) | 82 | 34 640 |  |  |  |  |
+| shev.late_middle | 195 475 | VESUM (modern spelling) | 76 364 | 62 245 (81.5%) | 167 | 13 952 | 0 | 7 383 | 21 863 | 24 603 |
+| shev.modern | 46 534 167 | VESUM (modern spelling) | 21 959 016 | 18 091 914 (82.4%) | 74 434 | 3 792 668 | 47 | 50 976 | 367 357 | 432 182 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): vesum:grid:none: 48 207 · stanza:lemma: 38 320 · vesum:grid:noun: 25 218 · stanza:gender: 4 078 · stanza:grid:adj: 273 · torot:grid:none: 195 · torot:grid:adj: 50 · vesum:grid:adj: 40 · stanza:grid:none: 32.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): vesum:grid:none: 49 055 · stanza:lemma: 38 324 · vesum:grid:noun: 25 622 · stanza:gender: 4 079 · stanza:grid:adj: 273 · torot:grid:none: 195 · torot:grid:adj: 50 · vesum:grid:adj: 40 · stanza:grid:none: 32.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
 | lemma | kind | tokens | placed | conflict | underspecified | untagged | main conflict reasons |
 |---|---|---|---|---|---|---|---|
-| він | pron | 390 333 | 386 900 | 2 826 | 0 | 607 | stanza:lemma 2826 |
-| я | pron | 345 549 | 345 307 | 88 | 0 | 154 | stanza:lemma 88 |
-| земля | noun | 44 109 | 26 082 | 3 | 17 833 | 191 | stanza:gender 2, stanza:lemma 1 |
-| син | noun | 21 460 | 21 309 | 106 | 0 | 45 | stanza:lemma 63, stanza:gender 43 |
-| себе | pron | 102 541 | 102 533 | 0 | 0 | 8 | — |
-| ви | pron | 102 532 | 102 512 | 7 | 0 | 13 | stanza:lemma 7 |
-| ти | pron | 149 892 | 149 546 | 31 | 0 | 315 | stanza:lemma 31 |
-| ми | pron | 164 089 | 163 458 | 425 | 0 | 206 | stanza:lemma 425 |
-| рука | noun | 44 337 | 44 205 | 21 | 0 | 111 | stanza:gender 16, stanza:lemma 5 |
-| князь | noun | 19 200 | 19 150 | 25 | 0 | 25 | stanza:gender 13, stanza:lemma 12 |
-| аз | noun | 4 263 | 4 187 | 0 | 0 | 76 | — |
-| да | noun | 24 226 | 0 | 0 | 23 966 | 260 | — |
-| город | noun | 10 427 | 10 326 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
+| він | pron | 402 231 | 398 798 | 2 826 | 0 | 607 | stanza:lemma 2826 |
+| я | pron | 353 797 | 353 555 | 88 | 0 | 154 | stanza:lemma 88 |
+| земля | noun | 45 274 | 26 652 | 3 | 18 428 | 191 | stanza:gender 2, stanza:lemma 1 |
+| син | noun | 21 847 | 21 696 | 106 | 0 | 45 | stanza:lemma 63, stanza:gender 43 |
+| себе | pron | 104 964 | 104 956 | 0 | 0 | 8 | — |
+| ви | pron | 104 993 | 104 973 | 7 | 0 | 13 | stanza:lemma 7 |
+| ти | pron | 152 298 | 151 952 | 31 | 0 | 315 | stanza:lemma 31 |
+| ми | pron | 167 545 | 166 914 | 425 | 0 | 206 | stanza:lemma 425 |
+| рука | noun | 45 482 | 45 350 | 21 | 0 | 111 | stanza:gender 16, stanza:lemma 5 |
+| князь | noun | 19 695 | 19 645 | 25 | 0 | 25 | stanza:gender 13, stanza:lemma 12 |
+| аз | noun | 4 265 | 4 189 | 0 | 0 | 76 | — |
+| да | noun | 24 325 | 0 | 0 | 24 065 | 260 | — |
+| город | noun | 10 579 | 10 478 | 101 | 0 | 0 | stanza:gender 53, stanza:lemma 48 |
 
-**Stem types** (EP-4): 51 732 lemmas carry epoch paradigms; stem claim known for 1 572 (of which 376 from a Stanza lemma, model-based per decision D4), `unknown` for 33 888. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 93 · ST-09: 673 · ST-10: 243 · ST-11: 76 · ST-12: 92 · ST-13: 278 · ST-14: 65.
+**Stem types** (EP-4): 53 499 lemmas carry epoch paradigms; stem claim known for 1 572 (of which 376 from a Stanza lemma, model-based per decision D4), `unknown` for 35 460. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 93 · ST-09: 673 · ST-10: 243 · ST-11: 76 · ST-12: 92 · ST-13: 278 · ST-14: 65.
 
 **Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 510 lemmas, 47 964 reconstructed cells with 50 730 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 070 cells (6.4%), 3 079 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 131.51 MB of 1142.90 MB shard total (11.5%); shards that needed ctx dropped: 13, cell cap 2: 9.
+**Shard bytes added by `epochs`**: 134.58 MB of 1184.01 MB shard total (11.4%); shards that needed ctx dropped: 19, cell cap 2: 16.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 547 984), *token* = occurrences (denominator linked tokens 34 842 765). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 563 016), *token* = occurrences (denominator linked tokens 36 020 830). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
@@ -9173,50 +11437,50 @@ Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to g
 | R13 | C + j: подовження, -ьѥ > -ття | G | 203 | 0.0% | 396 | 0.0% |
 | R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 91 | 0.0% | 140 | 0.0% |
 | R21c | Зняття протетичного и- перед л, р (илвов > львов, ильняний > льняний) | L | 1 | 0.0% | 1 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 7287 | 1.3% | 653293 | 1.9% |
+| R04 | Занепад єрів (закон Гавліка) | G | 7288 | 1.3% | 670811 | 1.9% |
 | R21 | Протетичні в, г | L | 508 | 0.1% | 1926 | 0.0% |
 | R21d | Протетичне и- перед л, р + редукований голосний (иржа) | L | 2 | 0.0% | 3 | 0.0% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1088 | 0.2% | 6273 | 0.0% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 1089 | 0.2% | 6308 | 0.0% |
 | R10a | Аналогійне о > і в -овл- (будівля, торгівля, зимівля) | L | 5 | 0.0% | 5 | 0.0% |
 | R10b | Повноголосне і: беріг, сторін (лексична перевизначеність винятку R10) | L | 0 | 0.0% | 0 | 0.0% |
 | R10c | і у відкритому складі: кінець-тип (-ьць) | L | 1 | 0.0% | 7 | 0.0% |
 | R07 | Вставні о, е в кінцевих групах | L | 29 | 0.0% | 206 | 0.0% |
 | R09j | ѣ > а/я після j і шиплячих у суфіксі -ѣти (стоѣти > стояти, лежѣти > лежати) | L | 2 | 0.0% | 2 | 0.0% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 3808 | 0.7% | 20670 | 0.1% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 3808 | 0.7% | 20667 | 0.1% |
 | R12 | ѥ у новозакритому складі > ї | G | 29 | 0.0% | 680 | 0.0% |
-| R11 | Злиття і та у > и | G | 3074 | 0.6% | 47156 | 0.1% |
+| R11 | Злиття і та у > и | G | 3074 | 0.5% | 47156 | 0.1% |
 | R15 | Ствердіння губних у кінці складу | G | 708 | 0.1% | 2942 | 0.0% |
 | R16 | l > w після о, е | G | 223 | 0.0% | 522 | 0.0% |
 | R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 207 | 0.0% | 700 | 0.0% |
 | R17 | е > о після шиплячих перед твердим | L | 176 | 0.0% | 1167 | 0.0% |
 | R18 | Ствердіння ж, ч, ш | G | 526 | 0.1% | 1847 | 0.0% |
 | R19 | Ствердіння кінцевого р' | G | 160 | 0.0% | 603 | 0.0% |
-| R23 | Стягнення прикметникових закінчень | L | 1120 | 0.2% | 16797 | 0.0% |
+| R23 | Стягнення прикметникових закінчень | L | 1120 | 0.2% | 16865 | 0.0% |
 | R24 | Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається | G | 0 | 0.0% | 0 | 0.0% |
 
-Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 2728 types / 6006 tokens · ORTH-ZHEL-TY: 3608 types / 9203 tokens · ORTH-YAR-JER: 1569 types / 7477 tokens · ORTH-YAR-I: 564 types / 2103 tokens · ORTH-MAX-YAT: 1209 types / 2142 tokens · ORTH-MAX-JO: 95 types / 782 tokens · ORTH-MAX-JER-END: 1292 types / 2536 tokens · ORTH-ZHEL-JE: 134 types / 494 tokens · ORTH-MAX-U: 298 types / 438 tokens · ORTH-YAR-E: 226 types / 560 tokens · ORTH-MAX-E: 50 types / 89 tokens · ORTH-MAX-YAT-J: 105 types / 241 tokens · ORTH-KUL-I: 464 types / 1936 tokens · ORTH-KUL-E: 194 types / 309 tokens · ORTH-MAX-I: 724 types / 1674 tokens · ORTH-ZHEL-TE: 154 types / 272 tokens · ORTH-YAR-YAT: 306 types / 911 tokens · ORTH-MAX-Y: 736 types / 1175 tokens · ORTH-SYA: 3103 types / 0 tokens · ORTH-ZHEL-SOFT: 461 types / 795 tokens · ORTH-KUL-JER: 185 types / 50 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-ZHEL-INIT-I: 33 types / 42 tokens · ORTH-ZHEL-SKY: 44 types / 22 tokens
+Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 2728 types / 6006 tokens · ORTH-ZHEL-TY: 3608 types / 9203 tokens · ORTH-YAR-JER: 1569 types / 7477 tokens · ORTH-YAR-I: 565 types / 2104 tokens · ORTH-MAX-YAT: 1210 types / 2145 tokens · ORTH-MAX-JO: 95 types / 782 tokens · ORTH-MAX-JER-END: 1292 types / 2536 tokens · ORTH-ZHEL-JE: 133 types / 467 tokens · ORTH-MAX-U: 298 types / 438 tokens · ORTH-YAR-E: 226 types / 560 tokens · ORTH-MAX-E: 50 types / 89 tokens · ORTH-MAX-YAT-J: 105 types / 241 tokens · ORTH-KUL-I: 464 types / 1936 tokens · ORTH-KUL-E: 194 types / 309 tokens · ORTH-MAX-I: 724 types / 1674 tokens · ORTH-ZHEL-TE: 155 types / 299 tokens · ORTH-YAR-YAT: 306 types / 911 tokens · ORTH-MAX-Y: 736 types / 1175 tokens · ORTH-SYA: 3103 types / 0 tokens · ORTH-ZHEL-SOFT: 461 types / 795 tokens · ORTH-KUL-JER: 185 types / 50 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-ZHEL-INIT-I: 33 types / 42 tokens · ORTH-ZHEL-SKY: 44 types / 22 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 416 441 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 427 401 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 840 | 0 |
-| CS-C3 | cs | church_slavonic | 0.7 | 168 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 854 | 0 |
+| CS-C3 | cs | church_slavonic | 0.7 | 172 | 0 |
 | CS-C4 | cs | church_slavonic | 0.7 | 25 | 0 |
-| CS-C9 | cs | church_slavonic | 0.6 | 53 | 0 |
-| CS-C11 | cs | church_slavonic | 0.6 | 303 | 0 |
+| CS-C9 | cs | church_slavonic | 0.6 | 62 | 0 |
+| CS-C11 | cs | church_slavonic | 0.6 | 306 | 0 |
 | CS-C12 | cs | church_slavonic | 0 | 0 | 52 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 1742 |
-| LEX-LT | contact | nonnormative | 0.8 | 1197 | 0 |
-| LEX-LT-SOFT | contact | not_recommended | 0.4 | 185 | 0 |
-| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 9266 | 0 |
-| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 755 | 0 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 1771 |
+| LEX-LT | contact | nonnormative | 0.8 | 1240 | 0 |
+| LEX-LT-SOFT | contact | not_recommended | 0.4 | 194 | 0 |
+| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 9594 | 0 |
+| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 763 | 0 |
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 10022 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 10016 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
-| MOR-PART-UCH | contact | calque_participle | 0.6 | 989 | 0 |
+| MOR-PART-UCH | contact | calque_participle | 0.6 | 1036 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
 | MOR-SHIISIA | contact | russianism_morph | 0.5 | 0 | 0 |
 | MOR-TSIA | contact | russianism_orth | 0.8 | 1 | 0 |
@@ -9229,14 +11493,14 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 15 | 0 |
 | N-DIPH-IE:CHN | dialect | CHN | 0.8 | 6 | 0 |
 | N-DIPH-IE:MPL | dialect | MPL | 0.8 | 6 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 2489 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 2509 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
 | 3SG-HARD-T:POD | dialect | POD | 0.4 | 6 | 0 |
 | 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 6 | 0 |
 | SE-TRUNC-3SG:SE | dialect | SE | 0.7 | 2 | 0 |
 | SE-TRUNC-3SG:MDN | dialect | MDN | 0.7 | 2 | 0 |
-| SE-1SG-NOALT:SE | dialect | SE | 0.5 | 67 | 0 |
-| SE-1SG-NOALT:POD | dialect | POD | 0.5 | 67 | 0 |
+| SE-1SG-NOALT:SE | dialect | SE | 0.5 | 70 | 0 |
+| SE-1SG-NOALT:POD | dialect | POD | 0.5 | 70 | 0 |
 | SW-DAT-OVY:WPL | dialect | WPL | 0.5 | 8 | 0 |
 | SW-DAT-OVY:NDN | dialect | NDN | 0.5 | 8 | 0 |
 | NORTH-ADJ-UNCONTR:CHN | dialect | CHN | 0.6 | 0 | 0 |
@@ -9250,8 +11514,8 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | HARD-C-FINAL:POD | dialect | POD | 0.5 | 0 | 0 |
 | R-SOFT-FINAL:MDN | dialect | MDN | 0.3 | 1 | 0 |
 | R-SOFT-FINAL:SE | dialect | SE | 0.3 | 1 | 0 |
-| EPENTH-L-N:POD | dialect | POD | 0.4 | 245 | 0 |
-| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 245 | 0 |
+| EPENTH-L-N:POD | dialect | POD | 0.4 | 252 | 0 |
+| EPENTH-L-N:MDN | dialect | MDN | 0.4 | 252 | 0 |
 | F-TO-X:CHN | dialect | CHN | 0.2 | 44 | 0 |
 | F-TO-X:MDN | dialect | MDN | 0.2 | 44 | 0 |
 | CHN-PREP:CHN | dialect | CHN | 0.7 | 0 | 0 |
@@ -9268,11 +11532,11 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 | SW-LABIAL-J:HUT | dialect | HUT | 0.5 | 0 | 0 |
 | SW-LABIAL-J:LEM | dialect | LEM | 0.5 | 0 | 0 |
 | SW-LABIAL-J:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
-| SW-NOM-PL-OVE:BOY | dialect | BOY | 0.4 | 40 | 0 |
-| SW-NOM-PL-OVE:ZAK | dialect | ZAK | 0.4 | 40 | 0 |
-| SW-NOM-PL-OVE:SYAN | dialect | SYAN | 0.4 | 40 | 0 |
-| SW-1PL-ME:BOY | dialect | BOY | 0.3 | 26 | 0 |
-| SW-1PL-ME:ZAK | dialect | ZAK | 0.3 | 26 | 0 |
+| SW-NOM-PL-OVE:BOY | dialect | BOY | 0.4 | 42 | 0 |
+| SW-NOM-PL-OVE:ZAK | dialect | ZAK | 0.4 | 42 | 0 |
+| SW-NOM-PL-OVE:SYAN | dialect | SYAN | 0.4 | 42 | 0 |
+| SW-1PL-ME:BOY | dialect | BOY | 0.3 | 28 | 0 |
+| SW-1PL-ME:ZAK | dialect | ZAK | 0.3 | 28 | 0 |
 | SW-3SG-CONTRACT:BOY | dialect | BOY | 0.4 | 0 | 0 |
 | SW-3SG-CONTRACT:ZAK | dialect | ZAK | 0.4 | 0 | 0 |
 | SW-3SG-CONTRACT:SYAN | dialect | SYAN | 0.4 | 0 | 0 |
@@ -9541,7 +11805,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-YAR-Y: 
 
 ## 4. Lexical statistics (M-5)
 
-Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 1072498, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
+Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 1102741, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
 
 ### 4.1 Top 30 lemmas per Shevelov epoch (ipm = f / N_epoch · 10⁶)
 
@@ -9717,43 +11981,43 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 29 | свій | займенник | 577 | 2952 |
 | 30 | ми | займенник | 575 | 2942 |
 
-**shev.modern** — новітня доба, N = 45 280 188
+**shev.modern** — новітня доба, N = 46 534 167
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 1030992 | 22769 |
-| 2 | в | прийменник | 768969 | 16982 |
-| 3 | з | прийменник | 659724 | 14570 |
-| 4 | на | вигук | 633714 | 13995 |
-| 5 | той | займенник | 633458 | 13990 |
-| 6 | не | частка | 521250 | 11512 |
-| 7 | а | сполучник | 517697 | 11433 |
-| 8 | що | сполучник | 507903 | 11217 |
-| 9 | сей | займенник | 499776 | 11037 |
-| 10 | бути | дієслово | 444878 | 9825 |
-| 11 | до | іменник, с.р. | 433422 | 9572 |
-| 12 | він | займенник, ч.р. | 385093 | 8505 |
-| 13 | у | прийменник | 363137 | 8020 |
-| 14 | я | займенник | 338516 | 7476 |
-| 15 | й | сполучник | 296854 | 6556 |
-| 16 | як | займенник | 246262 | 5439 |
-| 17 | за | прислівник | 219546 | 4849 |
-| 18 | вони | займенник | 205711 | 4543 |
-| 19 | о | прийменник | 200615 | 4431 |
-| 20 | по | прийменник | 195747 | 4323 |
-| 21 | то | сполучник | 189689 | 4189 |
-| 22 | вона | займенник, ж.р. | 175323 | 3872 |
-| 23 | свій | займенник | 175203 | 3869 |
-| 24 | ми | займенник | 160860 | 3553 |
-| 25 | який | займенник | 155266 | 3429 |
-| 26 | мати | дієслово | 152640 | 3371 |
-| 27 | від | прийменник | 149254 | 3296 |
-| 28 | ти | займенник | 145810 | 3220 |
-| 29 | весь | займенник | 135687 | 2997 |
-| 30 | м | іменник, ч.р. | 134707 | 2975 |
+| 1 | і | сполучник | 1061235 | 22806 |
+| 2 | в | прийменник | 789409 | 16964 |
+| 3 | з | прийменник | 674430 | 14493 |
+| 4 | той | займенник | 653220 | 14037 |
+| 5 | на | вигук | 649327 | 13954 |
+| 6 | не | частка | 537090 | 11542 |
+| 7 | а | сполучник | 526621 | 11317 |
+| 8 | що | сполучник | 523092 | 11241 |
+| 9 | сей | займенник | 506433 | 10883 |
+| 10 | бути | дієслово | 455745 | 9794 |
+| 11 | до | іменник, с.р. | 444647 | 9555 |
+| 12 | він | займенник, ч.р. | 396991 | 8531 |
+| 13 | у | прийменник | 370586 | 7964 |
+| 14 | я | займенник | 346764 | 7452 |
+| 15 | й | сполучник | 304109 | 6535 |
+| 16 | як | займенник | 252741 | 5431 |
+| 17 | за | прислівник | 224540 | 4825 |
+| 18 | вони | займенник | 211916 | 4554 |
+| 19 | о | прийменник | 201953 | 4340 |
+| 20 | по | прийменник | 198735 | 4271 |
+| 21 | то | сполучник | 193086 | 4149 |
+| 22 | вона | займенник, ж.р. | 180949 | 3889 |
+| 23 | свій | займенник | 180090 | 3870 |
+| 24 | ми | займенник | 164316 | 3531 |
+| 25 | який | займенник | 161359 | 3468 |
+| 26 | мати | дієслово | 156752 | 3369 |
+| 27 | від | прийменник | 153832 | 3306 |
+| 28 | ти | займенник | 148216 | 3185 |
+| 29 | весь | займенник | 139910 | 3007 |
+| 30 | м | іменник, ч.р. | 138320 | 2972 |
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (12616 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (12714 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
@@ -9762,34 +12026,34 @@ Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (12616 shifts). Log Ratio > 0 = more fre
 | що | shev.middle → shev.late_middle | 530 (1144) | 1491 (7628) | 1670.0 | 2.74 | 0.0001 |
 | як | shev.middle → shev.late_middle | 85 (184) | 855 (4374) | 1566.5 | 4.58 | 0.0001 |
 | не | shev.early_middle → shev.middle | 365 (2460) | 4925 (10633) | 1114.7 | 2.11 | 0.0001 |
-| сей | shev.late_middle → shev.modern | 832 (4256) | 499776 (11037) | 1062.0 | 1.38 | 0.0001 |
-| від | shev.late_middle → shev.modern | 31 (159) | 149254 (3296) | 1036.0 | 4.38 | 0.0001 |
+| від | shev.late_middle → shev.modern | 31 (159) | 153832 (3306) | 1039.6 | 4.38 | 0.0001 |
+| сей | shev.late_middle → shev.modern | 832 (4256) | 506433 (10883) | 1025.2 | 1.35 | 0.0001 |
 | Еней | shev.middle → shev.late_middle | 21 (45) | 483 (2471) | 1013.7 | 5.77 | 0.0001 |
 | МА | shev.old → shev.early_middle | 57 (220) | 618 (4166) | 910.9 | 4.25 | 0.0001 |
 | ДА | shev.old → shev.early_middle | 53 (204) | 604 (4072) | 901.3 | 4.32 | 0.0001 |
+| той | shev.late_middle → shev.modern | 1362 (6968) | 653220 (14037) | 853.0 | 1.01 | 0.0001 |
 | па | shev.old → shev.early_middle | 38 (146) | 543 (3660) | 852.1 | 4.64 | 0.0001 |
-| той | shev.late_middle → shev.modern | 1362 (6968) | 633458 (13990) | 843.6 | 1.01 | 0.0001 |
 | той | shev.old → shev.early_middle | 976 (3760) | 1708 (11514) | 819.0 | 1.61 | 0.0001 |
 | СО | shev.old → shev.early_middle | 33 (127) | 510 (3438) | 812.7 | 4.76 | 0.0001 |
-| цей | shev.late_middle → shev.modern | 58 (297) | 130860 (2890) | 747.8 | 3.28 | 0.0001 |
+| цей | shev.late_middle → shev.modern | 58 (297) | 138265 (2971) | 776.4 | 3.32 | 0.0001 |
 **Falling** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
 | і | shev.old → shev.early_middle | 19365 (74609) | 1204 (8116) | 10773.7 | -3.20 | 0.0001 |
 | же | shev.old → shev.early_middle | 7396 (28495) | 243 (1638) | 5024.6 | -4.12 | 0.0001 |
-| Еней | shev.late_middle → shev.modern | 483 (2471) | 114 (3) | 4683.0 | -9.94 | 0.0001 |
-| ее | shev.late_middle → shev.modern | 574 (2936) | 7335 (162) | 2202.6 | -4.18 | 0.0001 |
-| е | shev.late_middle → shev.modern | 1220 (6241) | 51182 (1130) | 2151.7 | -2.46 | 0.0001 |
+| Еней | shev.late_middle → shev.modern | 483 (2471) | 115 (2) | 4706.0 | -9.97 | 0.0001 |
+| ее | shev.late_middle → shev.modern | 574 (2936) | 7336 (158) | 2232.0 | -4.22 | 0.0001 |
+| е | shev.late_middle → shev.modern | 1220 (6241) | 51335 (1103) | 2200.3 | -2.50 | 0.0001 |
 | не | shev.old → shev.early_middle | 3742 (14417) | 365 (2460) | 1658.0 | -2.55 | 0.0001 |
-| значковий | shev.late_middle → shev.modern | 147 (752) | 32 (1) | 1434.3 | -10.05 | 0.0001 |
+| значковий | shev.late_middle → shev.modern | 147 (752) | 33 (1) | 1438.9 | -10.05 | 0.0001 |
 | він | shev.old → shev.early_middle | 2498 (9624) | 179 (1207) | 1306.4 | -3.00 | 0.0001 |
 | себе | shev.old → shev.early_middle | 1746 (6727) | 37 (249) | 1293.5 | -4.75 | 0.0001 |
-| ОЕ | shev.late_middle → shev.modern | 210 (1074) | 868 (19) | 1233.1 | -5.81 | 0.0001 |
+| ОЕ | shev.late_middle → shev.modern | 210 (1074) | 869 (19) | 1243.9 | -5.85 | 0.0001 |
 | в | shev.old → shev.early_middle | 5953 (22936) | 1287 (8676) | 1209.4 | -1.40 | 0.0001 |
-| с | shev.late_middle → shev.modern | 134 (686) | 85 (2) | 1168.7 | -8.51 | 0.0001 |
-| от | shev.late_middle → shev.modern | 571 (2921) | 23470 (518) | 1026.0 | -2.50 | 0.0001 |
-| о | shev.late_middle → shev.modern | 1948 (9965) | 200615 (4431) | 988.4 | -1.17 | 0.0001 |
-| ДА | shev.late_middle → shev.modern | 534 (2732) | 21323 (471) | 984.6 | -2.54 | 0.0001 |
+| с | shev.late_middle → shev.modern | 134 (686) | 85 (2) | 1175.9 | -8.55 | 0.0001 |
+| о | shev.late_middle → shev.modern | 1948 (9965) | 201953 (4340) | 1033.4 | -1.20 | 0.0001 |
+| от | shev.late_middle → shev.modern | 571 (2921) | 24013 (516) | 1030.3 | -2.50 | 0.0001 |
+| ДА | shev.late_middle → shev.modern | 534 (2732) | 21422 (460) | 1004.7 | -2.57 | 0.0001 |
 
 Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shevchenko corpus is poetry, the old epochs are chronicles and sermons) — a shift is a statement about *this corpus*, not about the language (research/06 §3.5).
 
@@ -9797,12 +12061,12 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-1370 spellings with a church_slavonic label (denominator: 416 441 stored spellings); 220 lemmas with origin = church_slavonic.
+1400 spellings with a church_slavonic label (denominator: 427 401 stored spellings); 225 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
-| праці | праця | 1596 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1200–1292 |
 | права | право | 1092 | CS-C1 | ↔ порова (поровий: adj:f:v_naz) | 1874 |
+| праці | праця | 1596 | CS-C1 | ↔ пороці (порок: noun:inanim:m:v_mis) | 1200–1292 |
 | брати | брат | 1110–1118 | CS-C1 | ↔ бороти (бороти: verb:imperf:inf) | 1092 |
 | справа | справа | 1420 | CS-C1 | ↔ спорова (споровий: adj:f:v_naz) | not in lexicon |
 | справу | справа | 1581–1587 | CS-C1 | ↔ спорову (споровий: adj:f:v_zna) | not in lexicon |
@@ -9819,11 +12083,11 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | власні | власний | 1861 | CS-C1 | ↔ волосні (волосний: adj:p:v_naz) | 1851 |
 | власної | власний | 1861 | CS-C1 | ↔ волосної (волосний: adj:f:v_rod) | 1851 |
 | власного | власний | 1605–1610 | CS-C1 | ↔ волосного (волосний: adj:m:v_rod) | 1851 |
-| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | 1883 |
-| плачу | плакати | 1420 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | 1883 |
 | вражіння | вражіння | 1850 | CS-C1 | ↔ ворожіння (ворожіння: noun:inanim:n:v_naz) | 1895 |
+| плакати | плакати | 1092 | CS-C1 | ↔ полокати (полокати: verb:imperf:inf:arch) | 1883 |
 | справою | справа | 1581–1587 | CS-C1 | ↔ споровою (споровий: adj:f:v_oru) | not in lexicon |
 | власних | власний | 1581–1587 | CS-C1 | ↔ волосних (волосний: adj:p:v_rod) | 1851 |
+| плачу | плакати | 1420 | CS-C1 | ↔ полочу (полокати: verb:imperf:pres:s:1:arch) | 1883 |
 | власну | власний | 1861 | CS-C1 | ↔ волосну (волосний: adj:f:v_zna) | 1851 |
 | найкраще | найкращий | 1852 | CS-C11 |  | not in lexicon |
 | власність | власність | 1861 | CS-C1 | ↔ волосність (волосність: noun:inanim:f:v_naz) | not in lexicon |
@@ -9836,11 +12100,11 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | плакала | плакати | 1117–1200 | CS-C1 | ↔ полокала (полокати: verb:imperf:past:f:arch) | 1883 |
 | власности | власність | 1577 | CS-C1 | ↔ волосности (волосність: noun:inanim:f:v_rod:up19) | not in lexicon |
 | кожду | кождий | 1659 | CS-C4 | ↔ кожу (кожа: noun:inanim:f:v_zna:arch) | 1110–1118 |
-| прати | прати | 1092 | CS-C1 | ↔ пороти (пороти: verb:imperf:inf) | 1420 |
 | плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | 1110–1118 |
-| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
+| прати | прати | 1092 | CS-C1 | ↔ пороти (пороти: verb:imperf:inf) | 1420 |
 | власний | власний | 1450–1599 | CS-C1 | ↔ волосний (волосний: adj:m:v_naz) | 1851 |
 | власними | власний | 1859 | CS-C1 | ↔ волосними (волосний: adj:p:v_oru) | 1851 |
+| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 
 ## 6. Earliest attestations
 
@@ -9867,8 +12131,8 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | рик | 1036 | sophia_graffiti | sophia-269 | 110-01/269 | рік | 0 |
 | з | 1037–1050 | ilarion | ilarion | абз. 84 | с | 0 |
 | той | 1037–1050 | ilarion | ilarion | абз. 8 | томь | 2 |
-| а | 1037–1050 | ilarion | ilarion | абз. 3 | а | 0 |
 | не | 1037–1050 | ilarion | ilarion | абз. 3 | не | 0 |
+| а | 1037–1050 | ilarion | ilarion | абз. 3 | а | 0 |
 | сей | 1037–1050 | ilarion | ilarion | абз. 15 | ся | 0 |
 | бути | 1037–1050 | ilarion | ilarion | абз. 5 | бѣ | 0 |
 | у | 1037–1050 | ilarion | ilarion | абз. 12 | у | 0 |
@@ -9879,29 +12143,29 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | вона | 1037–1050 | ilarion | ilarion | абз. 10 | неѣ | 0 |
 | ми | 1037–1050 | ilarion | ilarion | абз. 56 | насъ | 0 |
 
-74739 of 74739 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+77415 of 77415 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 2026. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 2673 of 74739 lexicon lemmas. Examples: вони (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); тай (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); ДА (derived: russianism_or_hybrid); ше (derived: russianism_or_hybrid); шо (derived: russianism_or_hybrid); схід (derived: russianism_or_hybrid); АА (derived: russianism_or_hybrid); товариш (derived: russianism_or_hybrid); ІІ (derived: russianism_or_hybrid); рр (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); бій (derived: russianism_or_hybrid); східний (derived: russianism_or_hybrid); Гр (derived: russianism_or_hybrid); західний (derived: russianism_or_hybrid); даний (derived: russianism_or_hybrid); РН (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); жати (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); зам (derived: russianism_or_hybrid)
+Surzhyk claims: 2729 of 77415 lexicon lemmas. Examples: вони (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); тай (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); ДА (derived: russianism_or_hybrid); ше (derived: russianism_or_hybrid); шо (derived: russianism_or_hybrid); схід (derived: russianism_or_hybrid); товариш (derived: russianism_or_hybrid); АА (derived: russianism_or_hybrid); ІІ (derived: russianism_or_hybrid); рр (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); бій (derived: russianism_or_hybrid); даний (derived: russianism_or_hybrid); східний (derived: russianism_or_hybrid); Гр (derived: russianism_or_hybrid); західний (derived: russianism_or_hybrid); РН (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); жати (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid); отсей (derived: russianism_orth)
 
-Dialect labels (lemmas): CHN: 2327 · MPL: 11 · SE: 70 · MDN: 88 · BOY: 173 · LEM: 108 · NDN: 162 · POD: 188 · SYAN: 70 · VOL: 43 · HUT: 3 · ZAK: 104 · PKB: 43 · WPL: 56 · SLB: 2 · STP: 3 · SW: 1
+Dialect labels (lemmas): CHN: 2347 · MPL: 11 · SE: 73 · MDN: 89 · BOY: 177 · LEM: 108 · NDN: 166 · POD: 192 · SYAN: 72 · VOL: 43 · HUT: 3 · ZAK: 108 · PKB: 43 · WPL: 56 · SLB: 2 · STP: 3 · SW: 1
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 2 · rusyn: 10; stored spellings with a rusyn claim: 12 of 416441. Rule hits (forms): CARP-Y:BOY>rusyn 10, RUE-Y-VELAR 8, RUE-Y-MIX 2, PAN-SHE 1, PAN-INF-C 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 2 · rusyn: 10; stored spellings with a rusyn claim: 12 of 427401. Rule hits (forms): CARP-Y:BOY>rusyn 10, RUE-Y-VELAR 8, RUE-Y-MIX 2, PAN-SHE 1, PAN-INF-C 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
-LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 2897 types (200 973 tokens). Top: тай (29856, replace), ше (24071, replace), да (23539, replace), єсть (8234, replace), вон (4273, replace), около (3766, replace), підчас (3637, replace), сейчас (3583, replace), всьо (3576, replace), ад (3431, replace), власть (3430, replace), зам (3278, replace), дол (3120, replace), щож (3066, replace), троха (1902, replace), тоже (1814, replace), шоб (1692, replace), зара (1545, replace), іу (1505, replace), будучи (1426, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
+LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 2940 types (203 009 tokens). Top: тай (29998, replace), ше (24080, replace), да (23638, replace), єсть (8326, replace), вон (4274, replace), около (3773, replace), підчас (3704, replace), сейчас (3599, replace), всьо (3583, replace), власть (3471, replace), ад (3436, replace), зам (3306, replace), щож (3164, replace), дол (3122, replace), троха (1943, replace), тоже (1817, replace), шоб (1696, replace), зара (1546, replace), іу (1505, replace), будучи (1444, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 410 721 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 43 477 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 423 004 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 44 435 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 4336 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 5468 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
-- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (24.8%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 74 739 of 139 021 lemmas; 74 739 written, none dropped. Core lexicon.json 57.67 MiB (a build intermediate, sanity cap 256 MiB; the site loads the cd/ and ix/ parts), per column: paradigm 16.61, forms 12.26, ev (pool) 11.32, claims 6.83, first 5.69, pos 1.59, lemma 1.39, stats 1.14, paradigmKind 0.53, tags (table) 0.16 MiB. Evidence stored once in a shared pool (88 449 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 29 392 shards lex/<bucket>.json: max 255 KB, median 33 KB, total 1142.9 MiB (limit 256 KiB each). lexindex.json 7.60 MB (36400 corpus-attested flagged forms added).
+- **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (24.3%).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 77 415 of 144 545 lemmas; 77 415 written, none dropped. Core lexicon.json 59.47 MiB (a build intermediate, sanity cap 256 MiB; the site loads the cd/ and ix/ parts), per column: paradigm 17.21, forms 12.57, ev (pool) 11.61, claims 7.05, first 5.89, pos 1.65, lemma 1.45, stats 1.18, paradigmKind 0.55, tags (table) 0.16 MiB. Evidence stored once in a shared pool (90 677 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 29 626 shards lex/<bucket>.json: max 255 KB, median 34 KB, total 1184.0 MiB (limit 256 KiB each). lexindex.json 7.68 MB (36964 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
