@@ -1,40 +1,50 @@
 <script setup lang="ts">
 /**
  * SPEC 63 CV-5 (user 2026-10-16: «риночку* і такі слова теж!»): light / CV / unverified cards render the SAME card components as a lexicon card wherever the data exists —
- * KWIC lines, dialect block, derivation chain to the modern form, senses, etymology / cognates, usage labels. Every block is keyed by the lemma or the spelling and loads lazily
+ * KWIC lines, dialect block, derivation chain to the modern form, and (CP-2, LemmaBlocks) usage / loan labels, IPA, derivatives, dialect variants, senses, etymology / cognates, phrasemes. Every block is keyed by the lemma or the spelling and loads lazily
  * (senses.json, etymology.json, cognates.json); a block with no data collapses to «немає даних», nothing is invented.
  */
 import { computed } from 'vue'
 import type { Kwic as KwicLine } from '../../core/types.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
+import { useData } from '../composables/useData.ts'
+import { formRegions } from '../lib/formStats.ts'
+import { fmtNum } from '../lib/format.ts'
+import RegionMap from './RegionMap.vue'
 import Panel from './Panel.vue'
 import Kwic from './Kwic.vue'
 import DialectBlock from './DialectBlock.vue'
 import DerivationSteps from './DerivationSteps.vue'
-import SensesBlock from './SensesBlock.vue'
-import EtymologyBlock from './EtymologyBlock.vue'
-import CognatesPanel from './CognatesPanel.vue'
-import UsageChips from './UsageChips.vue'
-import SociolectBadges from './SociolectBadges.vue'
-const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
+import LemmaBlocks from './LemmaBlocks.vue'
+const props = defineProps<{ lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
 const best = computed(() => d.value.candidates[0])
+const { corpus, witnessById } = useData()
+/** SPEC 63 CP-4: region of the witnesses behind the card (a witness region, not a dialect label — SPEC 20 B-3.6) and the f / ipm line; HK needs the lemma's fMax and is not defined here */
+const byRegion = computed(() => formRegions(props.witnesses ?? props.kwic, corpus.value?.regions, w => witnessById.value.get(w)?.region))
+const nRegions = computed(() => byRegion.value.filter(r => r.f).length)
+const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value.N) * 1e6 : undefined))
 </script>
 
 <template>
   <div data-testid="thin-card">
-    <p v-if="lemma" class="sans small"><UsageChips :lemma="lemma" label /> <SociolectBadges :word="lemma" /></p>
-    <Panel id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : undefined">
+    <Panel v-if="!noKwic" id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : undefined">
       <Kwic :lines="kwic" :lemma="lemma" />
     </Panel>
     <Panel id="t-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="spelling" :lemma="lemma" /></Panel>
-    <Panel id="t-der" :open="true" :count="best?.steps.length ?? 0" title="Виведення · Derivation" :summary="best ? `${best.steps.length} кроків → ${best.form}` : 'без змін'" :empty="!best">
+    <Panel v-if="!noDerivation" id="t-der" :open="true" :count="best?.steps.length ?? 0" title="Виведення · Derivation" :summary="best ? `${best.steps.length} кроків → ${best.form}` : 'без змін'" :empty="!best">
       <p class="sans small"><span class="muted">норма: </span>{{ d.norm }}<template v-if="best"> <span class="muted"> · сучасна (гіпотеза за правилами): </span>{{ best.form }}</template></p>
       <DerivationSteps v-if="best" :steps="best.steps" :uid="`t-${spelling}`" :lemma="lemma" panel="chain" />
     </Panel>
-    <template v-if="lemma">
-      <SensesBlock :lemma="lemma" />
-      <EtymologyBlock :lemma="lemma" /><CognatesPanel :lemma="lemma" />
-    </template>
+    <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» (sense timeline) mounts here, right after the derivation block -->
+    <Panel id="t-reg" :open="false" :count="nRegions" title="Карта · регіон пам’ятки" :summary="`${nRegions} регіонів`" :empty="!nRegions" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : 'регіон пам’яток не визначено'"
+      info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
+      <RegionMap :by="byRegion" />
+    </Panel>
+    <Panel id="t-st" :open="false" title="Статистика" :summary="f ? `f = ${fmtNum(f)}${ipm !== undefined ? ' · ' + fmtNum(ipm, 2) + ' ipm' : ''}` : ''" :empty="!f" :empty-text="f === 0 || dictOnly ? 'f = 0: немає засвідчень у корпусі' : 'частоту не визначено'"
+      info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
+      <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
+    </Panel>
+    <LemmaBlocks :lemma="lemma" :spelling="spelling" />   <!-- SPEC 63 CP-2: every lemma-keyed block of the full card, with empty states -->
   </div>
 </template>

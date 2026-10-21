@@ -17,6 +17,7 @@ import { lookupUnlinked, occurrenceKwic, type UnlinkedKwic } from '../lib/unlink
 import { uvOfSpelling } from '../lib/uvData.ts'
 import UserHypotheses from './UserHypotheses.vue'
 import WitnessPanel from './WitnessPanel.vue'
+import ThinCard from './ThinCard.vue'
 import { ixCards } from '../lib/parts.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
 const { byLemma, searchIdx, annData, witnessById } = useData()
@@ -92,6 +93,8 @@ const reason = computed(() => {
       <p v-else class="muted">Правила не дають іншого кандидата.</p>
       <RouterLink :to="{ path: '/analyze', query: { q: form } }">повний аналіз за правилами →</RouterLink>
     </section>
+    <!-- SPEC 63 CP-2: dialect block, region map, f / ipm and every spelling-keyed block of the full card (KWIC and derivation are printed above) -->
+    <ThinCard v-if="!quiet" :spelling="form" :kwic="lines.map(k => ({ ...k, date: wit(k.w)?.date ?? [0, 0] as [number, number] }))" :f="entry ? +entry[1] : 0" no-kwic no-derivation />
   </template>
   <div v-else-if="!quiet" class="card" role="status">
     <h1>«{{ form }}»</h1>

@@ -3,11 +3,14 @@
  * SPEC 63 AR-1/AR-2 /ar/:id — card of an archaic lemma: a headword of the historical dictionary (BL-11) that VESUM does not know, or an `unverified` recurring unresolved cluster.
  * Everything shown is the dictionary's own header line (quote + locator) and the corpus lines; what no source states is «невідомо».
  */
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import type { Kwic } from '../../core/types.ts'
 import type { ArchDict, ArchEntry } from '../../core/archaic.ts'
 import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
-import WitnessPanel from '../components/WitnessPanel.vue'
+import WitnessBlock from '../components/WitnessBlock.vue'
+import ThinCard from '../components/ThinCard.vue'
+import { kwicFromRefs } from '../lib/refKwic.ts'
 import { archEntryOf } from '../lib/torotData.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
 const props = defineProps<{ id: string }>()
@@ -24,6 +27,9 @@ const badge = computed(() => {
   return t ? `технічний термін ${t.date[0]}` : e.value?.status === 'dictionary' ? 'застаріле слово (за словником)' : 'неперевірений кандидат'
 })
 const epochs = computed(() => Object.entries(e.value?.epochs ?? {}).sort())
+/** SPEC 63 CP-3: the corpus lines of the entry as KWIC (cut from the witness text), so the card carries the same blocks as a full card */
+const lines = ref<Kwic[]>([]); let seq = 0
+watch(e, async x => { const n = ++seq; const k = x ? await kwicFromRefs([...(x.first ? [x.first] : []), ...x.kwic], w => witnessById.value.get(w)?.date) : []; if (n === seq) lines.value = k }, { immediate: true })
 const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b) => b[1] - a[1]))
 </script>
 
@@ -59,7 +65,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
         <li v-for="(k, i) in e.kwic" :key="i"><RouterLink :to="textTo(k.w, k.loc)">«{{ k.raw }}»</RouterLink> · {{ k.loc }} · <RouterLink :to="witnessTo(k.w)">{{ k.w }}</RouterLink></li>
       </ul>
     </template>
-    <section v-if="wits.length > 1" class="card sans small" aria-label="Пам’ятки"><strong>Пам’ятки</strong><WitnessPanel :items="wits.map(([w, n]) => ({ w, n }))" /></section>
-    <p v-else-if="wits.length" class="sans small muted">Тексти: <template v-for="([w, n], i) in wits" :key="w"><template v-if="i">, </template><RouterLink :to="witnessTo(w)">{{ w }}</RouterLink> ×{{ n }}</template></p>
+    <WitnessBlock id="ar-wit" :items="wits.map(([w, n]) => ({ w, n }))" />   <!-- SPEC 63 CP-2: graph / list, empty state -->
+    <ThinCard :lemma="e.head" :spelling="e.head" :kwic="lines" :f="e.n" :witnesses="e.witnesses" />
   </template>
 </template>

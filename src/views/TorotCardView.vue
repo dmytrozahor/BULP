@@ -3,14 +3,26 @@
  * SPEC 63 PV-3 /name/:id and PV-5 /orv/:id — in-site card of a TOROT lemma that has no (VESUM-linked) modern lemma: a proper name (POS Ne) or an ORV-only lemma.
  * Everything shown is TOROT's own annotation (lemma, part-of-speech, morphology, citation-part); gloss and person/place type are «unknown» unless a cited source gives them.
  */
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
+import type { Kwic } from '../../core/types.ts'
 import type { NameCard, OrvCard } from '../../core/torot.ts'
 import { torotCard } from '../lib/torotData.ts'
 import { textTo, witnessTo, wordTo } from '../lib/nav.ts'
+import { useData } from '../composables/useData.ts'
+import { kwicFromRefs, witnessCounts } from '../lib/refKwic.ts'
+import PlastSenses from '../components/PlastSenses.vue'
+import ThinCard from '../components/ThinCard.vue'
+import WitnessBlock from '../components/WitnessBlock.vue'
 const props = defineProps<{ id: string; kind: 'name' | 'orv' }>()
 const found = computed(() => torotCard(props.kind, props.id))   // PF-1: the card's own bucket shard (tc/), not torot.json
 const card = computed<NameCard | OrvCard | undefined>(() => found.value.value)
 const err = ''
+const { witnessById } = useData()
+/** SPEC 63 CP-2/CP-3: the TOROT evidence as KWIC lines cut from the witness text, and its witnesses as the card graph; the modern form (VESUM) keys the lemma blocks when TOROT gives one */
+const lines = ref<Kwic[]>([]); let seq = 0
+watch(card, async c => { const n = ++seq; const k = c ? await kwicFromRefs(c.evidence, w => witnessById.value.get(w)?.date) : []; if (n === seq) lines.value = k }, { immediate: true })
+const wits = computed(() => witnessCounts(card.value?.evidence ?? []))
+const modern = computed(() => asName.value?.modern || undefined)
 const asName = computed(() => (props.kind === 'name' ? (card.value as NameCard | undefined) : undefined))
 const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | undefined) : undefined))
 </script>
@@ -34,5 +46,8 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
     <ul class="sans small">
       <li v-for="(e, i) in card.evidence" :key="i"><RouterLink :to="textTo(e.w, e.loc)">«{{ e.raw }}»</RouterLink> · лема «{{ card.lemma }}», {{ e.morph }} · {{ e.loc }} · <RouterLink :to="witnessTo(e.w)">{{ e.w }}</RouterLink></li>
     </ul>
+    <WitnessBlock id="tc-wit" :items="wits" />
+    <PlastSenses :word="modern ?? card.lemma" />
+    <ThinCard :lemma="modern ?? card.lemma" :spelling="card.lemma" :kwic="lines" :f="card.n" />
   </template>
 </template>

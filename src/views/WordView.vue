@@ -56,6 +56,10 @@ import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
 import IkavismChain from '../components/IkavismChain.vue'
 import DerivativesBlock from '../components/DerivativesBlock.vue'
+import WitnessBlock from '../components/WitnessBlock.vue'
+import DialectBlock from '../components/DialectBlock.vue'
+import DerivationSteps from '../components/DerivationSteps.vue'
+import { formsWitnesses } from '../lib/refKwic.ts'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
 const props = defineProps<{ lemma: string }>()
@@ -104,6 +108,10 @@ const dialects = computed(() => {
 })
 /** SPEC 60 BK-2: every spelling with its attestation year (detail shard); without dates the date gate cannot be applied, so no chip */
 const bankForms = computed(() => (full.value?.forms ?? []).map(f => ({ form: f.raw, norm: f.norm, year: f.date[0], scribal: !!f.claims.church_slavonic })))
+const witnesses = computed(() => formsWitnesses(full.value?.forms ?? []))   // SPEC 63 CP-2: the «Пам’ятки» graph / list of the form page, summed over the lemma's spellings
+/** SPEC 63 CP-2: the derivation chain and the dialect block of the full card for ONE spelling: the chip the reader picked, else the oldest spelling with a derivation (as the form page shows it) */
+const chosen = computed(() => { const fs = full.value?.forms ?? []; return fs.find(f => f.raw === active.value) ?? [...fs].filter(f => f.derivation.length).sort((a, b) => a.date[0] - b.date[0])[0] ?? fs[0] })
+const chosenDates = computed(() => chosen.value ? { [chosen.value.raw]: fmtDate(chosen.value.date) } : {})
 const epochClaims = computed(() => first.value ? (['shev', 'wl'] as const).map(s => ({ s, c: assignEpoch(first.value!.date, s) })) : [])
 const epText = (c: ReturnType<typeof assignEpoch>) => (isKnown(c) ? c.value.epochs.map(epochName).join(' / ') + ` · ${c.value.confidence}` : 'невідомо')
 /** UX-4: identical per-spelling label sets are shown once with «у N формах» */
@@ -308,6 +316,13 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <div v-else class="skeleton" style="height:8rem" />
           <p v-if="activeForm" class="small muted">показано приклади форми «{{ activeForm.raw }}»</p>
         </Panel>
+        <Panel v-if="chosen" id="h-chain" :open="false" :count="chosen.derivation.length" title="Виведення · Derivation" :summary="chosen.derivation.length ? `«${chosen.raw}»: ${chosen.derivation.length} кроків → ${chosen.modern}` : `«${chosen.raw}»: без змін → ${chosen.modern}`" :empty="!chosen.derivation.length" empty-text="правила не змінюють написання">
+          <p class="sans small"><span class="muted">написання: </span>{{ chosen.raw }} <span class="muted"> · норма: </span>{{ chosen.norm }} <span class="muted"> · сучасна: </span>{{ chosen.modern }}</p>
+          <DerivationSteps :steps="chosen.derivation" :uid="'w-' + chosen.raw" :dates="chosenDates" :lemma="card.lemma" panel="chain" />
+        </Panel>
+        <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» mounts here, after the derivation block -->
+        <Panel v-if="chosen" id="h-dia" :open="false" title="Діалект · Dialect" :summary="`написання «${chosen.raw}»: ознаки, клас форм, літературний відповідник`"><DialectBlock :spelling="chosen.raw" :lemma="card.lemma" /></Panel>
+        <WitnessBlock v-if="full" id="h-wit" :items="witnesses" />
       </div>
 
       <!-- 4. Statistics sidebar -->

@@ -648,3 +648,16 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SL-5 | tests/plast-lch.test.ts › kurin slang gets its own badge and never «пластова лексика»; Plast-wide terms get the Plast badge; labels differ |
 | SL-5 | tests/plast-lch.test.ts › the source is registered; /plast, the cards and the source card use the category label and the entry source |
 | LW-1 | manual — research/45-literature-wanted.md is a generated document; every row cites its source file or an opened page, checked by reading at each regeneration (no invented editions) |
+| CP-1 | tests/card-parity.test.ts › CP-1 every shown / empty cell: some component of its block occurs in the sources the card kind mounts |
+| CP-1 | tests/card-parity.test.ts › CP-1 the SE sense timeline row is pending on every kind but the phrase page, and every layout keeps its SE-SLOT mount point |
+| CP-1 | tests/card-parity.test.ts › CP-1 every na reason is written, and the spec prints the matrix row of every card kind |
+| CP-2 | tests/card-parity.test.ts › CP-2 LemmaBlocks renders every lemma-keyed block with an honest empty state when nothing is known |
+| CP-2 | tests/card-parity.test.ts › CP-2 ThinCard hides the blocks the host page already prints (noKwic, noDerivation) |
+| CP-2 | tests/card-parity.test.ts › CP-2 WitnessBlock with no witness is collapsed with the empty state; /w and /f sum the same per-witness tokens |
+| CP-3 | tests/card-parity.test.ts › CP-3 kwicFromRefs cuts one line per distinct (witness, locator), skips missing shards and locators, stamps the witness date and never invents a line |
+| CP-3 | tests/card-parity.test.ts › CP-3 /ar, /name, /orv, /uv, the light cards and the unlinked spelling mount ThinCard with f; /ar and /name cut their lines from the text |
+| CP-4 | tests/card-parity.test.ts › CP-2 ThinCard on a dictionary-only card collapses KWIC, map and statistics with «немає засвідчень у корпусі» |
+| CP-4 | tests/card-parity.test.ts › CP-2 ThinCard without f says «частоту не визначено», never a number |
+| CP-5 | tests/card-parity.test.ts › CP-5 /w mounts the derivation chain and the dialect block of the chosen spelling; /f mounts the lemma blocks and the lemma stress |
+| CP-6 | tests/card-parity.test.ts › CP-1 the only build-pending cells are the stress of the thin kinds, and CP-6 names the pipeline place in the spec |
+| CP-7 | tests/card-parity.test.ts › CP-1 the filled cells are counted |

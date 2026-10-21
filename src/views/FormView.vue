@@ -23,6 +23,9 @@ import { hasCirc } from '../../core/ocirc.ts'
 import { PRONOUN_VARIANTS, deriveAll } from '../../core/pronoun-variants.ts'
 import { segment } from '../../core/deictics.ts'
 import DerivationSteps from '../components/DerivationSteps.vue'
+import LemmaBlocks from '../components/LemmaBlocks.vue'
+import PlastSenses from '../components/PlastSenses.vue'
+import StressForms from '../components/StressForms.vue'
 import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
@@ -100,6 +103,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}</template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
+      <p v-if="full" class="hl-line sans small"><span class="muted">наголос леми: </span><StressForms :variants="full.stress" /></p>   <!-- SPEC 63 CP-2: the lemma's stress on the form page -->
       <p v-if="matches.length > 1" class="small sans muted">Те саме написання в інших лемах:
         <template v-for="m in matches.filter(x => x.lemma !== pick!.lemma)" :key="m.lemma"><RouterLink :to="{ path: `/f/${m.raw}`, query: { lemma: m.lemma } }">{{ m.lemma }}</RouterLink>{{ ' ' }}</template></p>
       <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі: {{ err }}</p>
@@ -140,6 +144,9 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <p v-if="rusyn && isKnown(rusyn)" class="sans small"><span class="muted">русинське прочитання: </span><ClaimBadge :claim="rusyn" :text="String(rusyn.value)" /></p>
           <p v-if="fc.hints.length" class="small sans muted">підказки (вага 0): {{ fc.hints.join(', ') }}</p>
         </Panel>
+        <!-- SE-SLOT: SPEC 63 SE «Значення за епохами» mounts here, after the derivation block -->
+        <PlastSenses :word="pick.lemma" />
+        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" />   <!-- SPEC 63 CP-2 -->
       </div>
       <aside aria-label="Статистика написання">
         <Panel id="f-st" :open="true" title="Статистика написання" :summary="`${fmtNum(stats.ipm, 2)} ipm · HK ${stats.hk} · f = ${stats.f}`">

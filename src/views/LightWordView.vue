@@ -18,6 +18,8 @@ import PlastSenses from '../components/PlastSenses.vue'
 import AttSenses from '../components/AttSenses.vue'
 import { attSenses } from '../lib/senseLines.ts'
 import ThinCard from '../components/ThinCard.vue'
+import WitnessBlock from '../components/WitnessBlock.vue'
+import { witnessCounts } from '../lib/refKwic.ts'
 import IkavismChain from '../components/IkavismChain.vue'
 import { ikavismBaseRemote } from '../lib/lightcard.ts'
 import { findLoc, loadTokens } from '../lib/witnessText.ts'
@@ -57,6 +59,8 @@ const spelling = computed(() => ex.value?.raw || cv.value?.[3][0]?.[2] || word.v
 /** CV-5: all VESUM analyses of the spelling; the card of each is one tap away (full card if the lexicon has the lemma, else /lw) */
 const analyses = computed(() => (cv.value?.[4]?.an ?? []).map(([lemma, t]) => ({ lemma, tags: t, to: byLemma.value.has(lemma) ? `/w/${encodeURIComponent(lemma)}` : `/lw/${encodeURIComponent(lemma)}`, self: key(lemma) === key(word.value), picked: cv.value?.[4]?.pick === lemma })))
 const lineSense = computed(() => (cv.value?.[3].length ? attSenses(word.value, cv.value[3], w => witnessById.value.get(w)?.date).lineSense : []))
+/** SPEC 63 CP-2: the witnesses behind the card (dictionaries for a dictionary card, texts for a corpus one) in the full card's graph / list panel */
+const witItems = computed(() => witnessCounts([...(ex.value ? [ex.value] : []), ...(cv.value?.[3] ?? []).map(a => ({ w: a[0] }))]))
 const prev = computed(() => cv.value?.[4]?.prev)
 /** SPEC 63 DO-2: a dictionary-only card (VESUM / r2u / Plast, no corpus text): explicit status, sources by name, f = 0, no «найраніше» */
 const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
@@ -100,6 +104,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
       </ul>
       <p v-if="cv[2] > cv[3].length" class="sans small muted">Показано {{ cv[3].length }} з {{ cv[2] }} засвідчень.</p>
     </template>
-    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" />
+    <WitnessBlock id="lw-wit" :items="witItems" :unit="dict ? 'словникові джерела' : undefined" />
+    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" :f="row ? row[2] : 0" />
   </template>
 </template>

@@ -146,7 +146,7 @@ describe('CV-5 thin cards render the full card components and every VESUM analys
     expect(m.get('риночок')![3][0]![0]).toBe('song_zazhuryla')
   })
   it('CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too', () => {
-    const l = rd('src/views/LightWordView.vue'), t = rd('src/components/ThinCard.vue')
+    const l = rd('src/views/LightWordView.vue'), t = rd('src/components/ThinCard.vue') + rd('src/components/LemmaBlocks.vue')
     expect(l).toContain('data-testid="vesum-analyses"'); expect(l).toMatch(/<ThinCard/); expect(rd('src/views/UnverifiedView.vue')).toMatch(/<ThinCard/)
     for (const c of ['<Kwic', '<DialectBlock', '<DerivationSteps', '<SensesBlock', '<EtymologyBlock', '<CognatesPanel', '<UsageChips']) expect(t, c).toContain(c)
   })
