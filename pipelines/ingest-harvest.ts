@@ -14,7 +14,7 @@
  *  r2u pages are read by pipelines/ingest-r2u.ts from data/raw/r2u (the harvester writes there).
  *  Authors: <out>/harvest-authors.json (provisional records whose evidence is the source's own header line); pipelines/authors.ts merges the file when it exists.
  */
-import { existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { closeSync, existsSync, fsyncSync, mkdirSync, openSync, readFileSync, renameSync, writeSync } from 'node:fs'
 import { gunzipSync } from 'node:zlib'
 import { Q } from '../core/evidence.ts'
 import type { Evidence } from '../core/evidence.ts'
@@ -223,16 +223,38 @@ function runHrushevsky(ctx: Ctx): Sum {
   return s
 }
 
+/** the vocabulary file {...header, entries, items}, written in chunks (tmp + fsync + rename like writeAtomic) so no single string nears V8's limit; the bytes equal JSON.stringify of the same object */
+export function writeVocabFile(path: string, header: object, entries: Record<string, VocabEntry>, items: object[]) {
+  const tmp = `${path}.${process.pid}.tmp`, fd = openSync(tmp, 'w')
+  try {
+    const head = JSON.stringify(header); writeSync(fd, head.slice(0, -1) + ',"entries":{')
+    let buf: string[] = [], n = 0, first = true
+    for (const [w, e] of Object.entries(entries)) {
+      buf.push((first ? '' : ',') + JSON.stringify(w) + ':' + JSON.stringify(e)); first = false
+      if (++n % 50000 === 0) { writeSync(fd, buf.join('')); buf = [] }
+    }
+    writeSync(fd, buf.join('') + '},"items":' + JSON.stringify(items) + '}'); fsyncSync(fd)
+  } finally { closeSync(fd) }
+  renameSync(tmp, path)
+}
+
 function runVocab(ctx: Ctx, src: string, family: string): Sum {
   const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
   const entries: Record<string, VocabEntry> = {}, items: object[] = []
   let licence = ''
-  let seen = 0
+  // SPEC 63 GG-4: the wiki dumps are BUNDLES (one items/ file holds ~46 articles and has ~46 index lines). Each bundle is read ONCE (before GG every index line re-read and re-counted its whole bundle:
+  // stride 100 read ~37 % of the bundles, some twice, instead of the 1 % it said), and the stride picks every `stride`-th BUNDLE, a true 1/stride sample.
+  const wikiLike = src.startsWith('wiki'), bundleNo = new Map<string, number>(), readBundles = new Set<string>()
+  let articles = 0
   for (const it of readIndex(src)) {
     if (ctx.limit && s.items >= ctx.limit) break
     if (!it.file || it.status === 204) continue
-    // deterministic sample (SPEC 63 HV-3): wikipedia-uk takes every `stride`-th item file in index order, so N reaches the target without holding the whole dump
-    if (src === 'wikipedia-uk' && ctx.stride > 1 && seen++ % ctx.stride !== 0) continue
+    if (wikiLike) {
+      if (!bundleNo.has(it.file)) bundleNo.set(it.file, bundleNo.size)
+      if (readBundles.has(it.file)) continue
+      if (src === 'wikipedia-uk' && ctx.stride > 1 && bundleNo.get(it.file)! % ctx.stride !== 0) continue
+      readBundles.add(it.file)
+    }
     const buf = readItem(src, it.file); if (!buf) continue
     s.items++; licence = it.licence
     const ym = (it.date ?? '').slice(0, 7) || null
@@ -270,12 +292,13 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
     for (const l of buf.toString('utf8').split('\n')) {
       if (!l) continue
       const r = JSON.parse(l) as { text: string }
-      const f = countText(r.text); addForms(entries, f, ym); s.tokens += Object.values(f).reduce((a, b) => a + b, 0)
+      const f = countText(r.text); addForms(entries, f, ym); s.tokens += Object.values(f).reduce((a, b) => a + b, 0); articles++
     }
   }
   const keep = src.startsWith('wikipedia') ? Object.fromEntries(Object.entries(entries).filter(([, e]) => e.f >= 2)) : entries
   mkdirSync(`${ctx.out}/harvest-vocab`, { recursive: true })
-  writeAtomic(`${ctx.out}/harvest-vocab/${src}.json`, JSON.stringify({ source: src, licence, family, vocabOnly: true, docs: s.items, tokens: s.tokens, entries: keep, items }))
+  // GG-4: streamed, never one string: the whole Wikipedia has ~3 M kept types (≈ 350 MB of JSON), close to V8's ~512 MB string limit. The header (docs, tokens) comes first, so nVocab is read without parsing the entries.
+  writeVocabFile(`${ctx.out}/harvest-vocab/${src}.json`, { source: src, licence, family, vocabOnly: true, docs: wikiLike ? articles : s.items, tokens: s.tokens }, keep, items)
   s.witnesses = 0
   return s
 }

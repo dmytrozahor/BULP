@@ -16,6 +16,7 @@ import { bucketOf } from './shard.ts'
 import { key, renderStress } from './text.ts'
 import { D } from './evidence.ts'
 import type { StressVariant } from './types.ts'
+import { HIST_SRC, histLabel } from './dx-src.ts'
 
 /** lookup key: key() plus Latin look-alikes folded to Cyrillic inside a Cyrillic word (source quirk «BЮВ» with a Latin B); used for LOOKUP only, the source spelling is shown as is */
 const LAT: Record<string, string> = { a: 'а', b: 'в', c: 'с', e: 'е', h: 'н', i: 'і', k: 'к', m: 'м', o: 'о', p: 'р', t: 'т', x: 'х', y: 'у' }
@@ -30,7 +31,7 @@ export const cvShardUrl = (word: string) => `./data/cv/${cvBucket(word)}.json`
 export type CvAtt = [w: string, loc: string, raw: string]
 /** [displayed word, VESUM tags ('' = spelling not in VESUM), attestations in total, first MAX_ATT attestations] */
 /** extra: `an` = every VESUM analysis [lemma, tags] of the first attested spelling (CV-5: риночку = риночок m v_mis / риночка f v_zna); `prev` = the word before the corpus example; `pick` = the analysis the context rule prefers (never a claim: both stay listed) */
-export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string; /** SPEC 63 DO-1: dictionary-only card = a non-zero bitmask of DICT_SRC (the `dictOnly: true` flag AND the source list in one number) */ d?: number; /** SPEC 63 CP-6: stressed-vowel index of each admissible dictionary stress of the card word (0-based in the unstressed NFC form, one number per variant; omitted for homographs and unknown words) — ≈ 8 B per card */ s?: number[] }
+export interface CvExtra { an?: [string, string][]; prev?: string; pick?: string; /** SPEC 63 DO-1: dictionary-only card = a non-zero bitmask of DICT_SRC (the `dictOnly: true` flag AND the source list in one number) */ d?: number; /** SPEC 63 GG-2: a dictionary-only card of a historical headword whose spelling a corpus text also has as a token no lemma claims: `c` = the number of such tokens (the gate of an OCR'd dictionary, never a first attestation) */ c?: number; /** SPEC 63 CP-6: stressed-vowel index of each admissible dictionary stress of the card word (0-based in the unstressed NFC form, one number per variant; omitted for homographs and unknown words) — ≈ 8 B per card */ s?: number[] }
 export type CvEntry = [word: string, tags: string, n: number, atts: CvAtt[], extra?: CvExtra]
 
 /** the user's cheap context rule (2026-10-16): a preceding на / в / у / по / при / о / об points to the locative (v_mis); applied only when exactly one analysis is a locative. The other analyses stay listed. */
@@ -46,14 +47,17 @@ export const MAX_ATT = 5
  * SPEC 63 DO-1/DO-2 — dictionary-only cards. `extra.d` is a bitmask of the dictionaries that know the word while no corpus text attests it (bytes: `"d":1`, not a name list).
  * 1 ВЕСУМ (dict_corp_vis) · 2 r2u.org.ua (its dictionaries are named by the attestation lines) · 4 Пластові словники · 8 other dictionary witnesses of the corpus.
  */
-export const DICT_SRC = [[1, 'ВЕСУМ'], [2, 'r2u.org.ua'], [4, 'Пластові словники'], [8, 'інші словники корпусу']] as const
+export const DICT_SRC: readonly (readonly [number, string])[] = [[1, 'ВЕСУМ'], [2, 'r2u.org.ua'], [4, 'Пластові словники'], [8, 'інші словники корпусу'],
+  /** SPEC 63 GG-1: one bit per historical dictionary (core/dx-src.ts), named with the period it describes */ ...HIST_SRC.map(s => [s.bit, histLabel(s)] as const)]
 export const DICT_STATUS = 'лише словник · без засвідчень у корпусі'
+/** SPEC 63 GG-2: the headword of an OCR'd dictionary corroborated by corpus tokens that no lemma claims (f stays 0: no token is linked to the card) */
+export const DICT_STATUS_C = 'лише словник · у корпусі лише невпізнані написання'
 export const dictSources = (d: number): string[] => DICT_SRC.filter(([bit]) => d & bit).map(([, name]) => name)
 export interface DictInfo { dictOnly: true; sources: string[]; /** stats: always 0 corpus tokens */ f: 0; /** no first attestation: a dictionary's year is a dictionary date, never a «найраніше» */ earliest: null; status: string }
 /** the dictionary-only reading of a CV entry (undefined for an entry that a corpus text attests) */
 export function dictInfo(e: CvEntry | undefined): DictInfo | undefined {
   const d = e?.[4]?.d; if (!d) return undefined
-  return { dictOnly: true, sources: dictSources(d), f: 0, earliest: null, status: DICT_STATUS }
+  return { dictOnly: true, sources: dictSources(d), f: 0, earliest: null, status: e?.[4]?.c ? DICT_STATUS_C : DICT_STATUS }
 }
 /** SPEC 63 CP-6: the dictionary-stress file (stress.py output) restricted to what a thin card stores: single-position, non-homograph variants */
 export interface CvStressSource { source?: string; forms: Record<string, { stressed: string; positions: number[]; ambiguous: boolean }[]> }

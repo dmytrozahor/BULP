@@ -8,6 +8,10 @@ export UV_BIN="${UV_BIN:-$HOME/.local/bin/uv}"
 export TESSDATA_PREFIX="${TESSDATA_PREFIX:-$HOME/tessdata}"
 # idle-stop: a dirty/unpushed git worktree untouched for longer than this (s) only warns and no longer blocks the stop
 export BULP_WT_MAX_AGE_S="${BULP_WT_MAX_AGE_S:-86400}"
+# SPEC 63 GG-5: how much of the vocab-only sources the ingest reads (the licence keeps them out of the KWIC, so they only add vocabulary and N-vocab; the full-text N is counted apart)
+#   BULP_WIKI_STRIDE: every k-th BUNDLE of wikipedia-uk (1 = the whole dump, ≈ 348 M words; 10 = ≈ 35 M)    BULP_HPLT_LIMIT: HPLT shards read (0 = every harvested shard)
+export BULP_WIKI_STRIDE="${BULP_WIKI_STRIDE:-1}"
+export BULP_HPLT_LIMIT="${BULP_HPLT_LIMIT:-0}"
 export OMP_THREAD_LIMIT="${OMP_THREAD_LIMIT:-1}"
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac   # cron has a minimal PATH
 mkdir -p "$BULP_LOGS/runs" "$BULP_LOGS/done" 2>/dev/null

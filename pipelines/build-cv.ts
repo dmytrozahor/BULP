@@ -10,6 +10,7 @@ import { archId } from '../core/archaic.ts'
 import { key } from '../core/text.ts'
 import { lk } from '../core/cv.ts'
 import type { WitnessOut } from '../core/types.ts'
+import { selectHist, type HistGroup, type HistStats } from '../core/dx-hist.ts'
 
 export interface CvWitness { w: Pick<WitnessOut, 'id' | 'tokens' | 'witnessType'> }
 /** what the linker says about token `ti` of witness `wi`: its VESUM lemma and whether that lemma has a full lexicon card */
@@ -17,15 +18,17 @@ export type CvLookup = (wi: number, ti: number) => { lemma: string; tags: string
 
 /** CV-5: all VESUM analyses of a spelling key, and the light-card examples (a corpus token whose lemma KEEP_MIN_F dropped) with the word before them */
 export interface CvCtx { analyses: (spellingKey: string) => [string, string][]; light: { lemma: string; tags: string; w: string; loc: string; raw: string; form?: string; prev?: string }[] }
-export interface CvResult { entries: [string, CvEntry][]; forms: [string, string][]; refs: Map<string, string[]>; stats: { vesum: number; asIs: number; tokens: number; skippedArchaic: number; skippedFull: number; refTokens: number; plastBare: number; dictOnly: number; dictVesum: number } }
+export interface CvResult { entries: [string, CvEntry][]; forms: [string, string][]; refs: Map<string, string[]>; stats: { histNew: number; histMerged: number; hist: Record<string, HistStats>; vesum: number; asIs: number; tokens: number; skippedArchaic: number; skippedFull: number; refTokens: number; plastBare: number; dictOnly: number; dictVesum: number } }
 /** SPEC 63 DO-1: every VESUM headword (lk → [word, tags], pipelines/vesum.ts vesumLemmaList) and the keys that already have a card of another kind (full lexicon, light, archaic, Plast) */
-export interface DictCtx { vesum: ReadonlyMap<string, [word: string, tags: string]>; owned: ReadonlySet<string>; /** lk() of every word a corpus text attests through a light card (KEEP_MIN_F-dropped and GZ-1 lemmas) */ attested: ReadonlySet<string> }
+export interface DictCtx { vesum: ReadonlyMap<string, [word: string, tags: string]>; owned: ReadonlySet<string>; /** lk() of every word a corpus text attests through a light card (KEEP_MIN_F-dropped and GZ-1 lemmas) */ attested: ReadonlySet<string>;
+  /** SPEC 63 GG: grouped headwords of the historical dictionaries (core/dx-hist.ts groupHist over pipelines/dx-hist-load.ts), the VESUM analysis of every candidate spelling and the full-text count of each (token TYPES of the build) */
+  hist?: { groups: Map<string, HistGroup>; /** lk() of a candidate spelling that VESUM knows as a FORM → the lk() of its lemmas (a form is never a new card) */ lemmaOf: ReadonlyMap<string, string[]>; corpus: ReadonlyMap<string, number>; /** per-dictionary counts, started by groupHist */ stats: Record<string, HistStats> } }
 const NO_ATT: CvAtt[] = [], DICT_VESUM = { d: 1 }   // shared by the ~400k dictionary-only entries (never mutated; every byte and every allocation counts at that size)
 
 export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySet<string>, hasRef: (wid: string, ti: number) => boolean, extra?: { words: string[]; owned: ReadonlySet<string> }, ctx?: CvCtx, dict?: DictCtx): CvResult {
   const scan = new CvScan(), own = new Map<string, string[]>()
   const corpus = new Set<string>()   // DO-1: lk() of every word that a corpus text (not a dictionary witness) attests
-  const st = { vesum: 0, asIs: 0, tokens: 0, skippedArchaic: 0, skippedFull: 0, refTokens: 0, plastBare: 0, dictOnly: 0, dictVesum: 0 }
+  const st = { histNew: 0, histMerged: 0, hist: {} as Record<string, HistStats>, vesum: 0, asIs: 0, tokens: 0, skippedArchaic: 0, skippedFull: 0, refTokens: 0, plastBare: 0, dictOnly: 0, dictVesum: 0 }
   ins.forEach(({ w }, wi) => {
     if (w.witnessType !== 'dictionary') return
     const r: string[] = new Array(w.tokens.length).fill('')
@@ -85,6 +88,17 @@ export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySe
       if (have.has(k) || corpus.has(k) || dict.owned.has(k) || !isCvWord(word)) continue
       entries.push([k, [word, tags, 0, NO_ATT, DICT_VESUM]]); st.dictOnly++; st.dictVesum++
     }
+  }
+  if (dict?.hist) {   // SPEC 63 GG: headwords of the historical dictionaries that no card owns (core/dx-hist.ts has the rules)
+    const at = new Map<string, number>(); entries.forEach((e, i) => at.set(e[0], i))
+    const own = (k: string): [string, 'do' | 'card'] | undefined => { const i = at.get(k); if (i !== undefined) return [k, isDictOnly(entries[i]![1]) ? 'do' : 'card']; if (dict.owned.has(k) || corpus.has(k) || dict.attested.has(k)) return [k, 'card'] }
+    const r = selectHist(dict.hist.groups, cands => {
+      for (const k of cands) { const o = own(k); if (o) return o }
+      for (const k of cands) for (const l of dict.hist!.lemmaOf.get(k) ?? []) return own(l) ?? [l, 'card']   // VESUM knows the spelling as a form: its lemma's card (or none: still no new card for a form)
+      return undefined
+    }, k => dict.hist!.corpus.get(k) ?? 0, dict.hist.stats); st.hist = dict.hist.stats
+    for (const [k, bits] of r.merges) { const i = at.get(k)!, e = entries[i]![1]; if ((e[4]!.d! & bits) === bits) continue; entries[i] = [k, [e[0], e[1], e[2], e[3], { ...e[4], d: e[4]!.d! | bits }]]; st.histMerged++ }
+    for (const n of r.news) { if (at.has(n.key)) continue; entries.push([n.key, [n.word, '', 0, NO_ATT, { d: n.mask, ...(n.c ? { c: n.c } : {}) }]]); at.set(n.key, entries.length - 1); st.dictOnly++; st.histNew++ }
   }
   return { entries, forms: scan.forms(), refs, stats: st }
 }

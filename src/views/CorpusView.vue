@@ -28,6 +28,11 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.unresolved) }}</strong><div class="small muted">не прив’язано (unresolved)</div></div>
         <div><strong style="font-size:1.6rem">{{ corpus.nWitnesses }}</strong><div class="small muted">пам’яток</div></div>
       </div>
+      <div v-if="corpus.nVocab" class="row sans" style="gap:2rem;margin-top:.8rem" data-test="n-vocab">
+        <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.nVocab) }}</strong><div class="small muted">токенів лише для словника (vocab-only), не входять до N</div></div>
+      </div>
+      <p v-if="corpus.nVocab" class="small muted">N — повнотекстовий корпус: з нього цитати (KWIC), перші засвідчення й ipm. «Лише словник» — Вікіпедія, HPLT та інші джерела під ліцензіями без права цитувати: з них беруться форми слів і лічильники, жодного рядка тексту; ці числа не змішуються з N.
+        <template v-if="corpus.vocabSources?.length">Джерела: {{ corpus.vocabSources.map(([s, n]) => s + ' ' + fmtNum(n)).join(' · ') }}. Для hplt лічаться лише слова, яких немає у ВЕСУМ.</template></p>
       <p class="small muted">Непрограмні токени не вгадуються — залишаються unresolved і лічаться (SPEC 10 M-3.3). Згенеровано: {{ corpus.generated }}.</p>
     </section>
 

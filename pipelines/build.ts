@@ -50,6 +50,8 @@ import { vesumFormLight } from '../core/gz-light.ts'
 import { capNames, muReport, type MuWitness } from './build-mu.ts'
 import { archReport, buildArchaic } from './build-archaic.ts'
 import { buildCv, writeCv, userWords } from './build-cv.ts'
+import { histHeads } from './dx-hist-load.ts'
+import { groupHist, type HistStats } from '../core/dx-hist.ts'
 import { attachCvStress, lk } from '../core/cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
@@ -442,8 +444,15 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
       })(),
       process.env['DICT_ONLY'] === '0' ? undefined : await (async () => {   // SPEC 63 DO-1: every VESUM lemma (and r2u / Plast / dictionary word) with no corpus attestation gets a dictionary-only light card
         const owned = new Set<string>([...kept.map(l => l.display), ...light.file.lemmas.map(l => l[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])].map(lk))
-        return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))) }
+        return { vesum: await vesumLemmaList(), owned, attested: new Set(light.file.lemmas.map(l => lk(l[0]))),
+          ...(process.env['DICT_HIST'] === '0' ? {} : { hist: await (async () => {   // SPEC 63 GG: headwords of the historical dictionaries (core/dx-hist.ts)
+            const stats: Record<string, HistStats> = {}, groups = groupHist(histHeads(ROOT), stats), ck = new Set<string>(); for (const g of groups.values()) for (const k of g.cands) ck.add(k)
+            const lemmaOf = new Map<string, string[]>(); for (const [k, hs] of (await vesumIndex(ck, new Set())).hits) lemmaOf.set(k, [...new Set(hs.map(h => lk(h.lemma)))])
+            const corpus = new Map<string, number>(); types.forEach((t, x) => { if (t.lang === 'uk' && typeCount[x]! > 0) { const k = lk(t.raw); if (ck.has(k)) corpus.set(k, (corpus.get(k) ?? 0) + typeCount[x]!) } })   // per token TYPE, full-text counts only
+            return { groups, lemmaOf, corpus, stats }
+          })() }) }
       })())
+    if (Object.keys(cv.stats.hist).length) lap(`GG: ${cv.stats.histNew} new dictionary-only cards from historical dictionaries, ${cv.stats.histMerged} merged into existing dictionary-only cards; ` + Object.entries(cv.stats.hist).map(([n, h]) => `${n.split(',')[0]} ${h.heads} headwords, ${h.rejected} rejected, +${h.added} (${h.sole} sole, ${h.corroborated} corpus-corroborated), ${h.merged} merged, ${h.inCards} already cards, ${h.dropped} uncorroborated`).join(' | '))
     seWanted = [...cv.entries.map(e => e[0]), ...ar.file.entries.flatMap(e => [e.id, ...e.variants])]
     for (const [wid, r] of cv.refs) { const cur = torot.refs.get(wid); if (!cur) torot.refs.set(wid, r); else r.forEach((x, i) => { if (x && !cur[i]) cur[i] = x }) }
     cvWords = cv.entries.filter(e => e[1][1] && /^[\p{L}'’-]+$/u.test(e[1][0])).map(e => e[1][0])

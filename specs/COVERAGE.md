@@ -736,3 +736,23 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-11 | tests/se-parse.test.ts › SE-11 parseAll writes one output per OCR item atomically, ignores a torn index line, and a rerun reuses unchanged outputs |
 | SE-11 | tests/se-parse.test.ts › SE-11 parsedRows keeps a row only for a card that exists (exact key, else the first derivation candidate, flagged), never creates a lemma |
 | SE-11 | tests/se-parse.test.ts › SE-11 the build stage reads the parsed rows, the parser script is an npm script and the chain runs it after the harvest |
+| GG-1 | tests/gg.test.ts › GG-1 the bits are distinct powers of two above the DO bits, and DICT_SRC names each dictionary with its period |
+| GG-1 | tests/gg.test.ts › GG-1 the old DO sources keep their bits and names (DO-2 unchanged) |
+| GG-2 | tests/gg.test.ts › GG-2 a headword that fails headwordOk (century label, digits, too short) is rejected and counted |
+| GG-2 | tests/gg.test.ts › GG-2 ONE OCR dictionary alone is dropped; with a corpus token no lemma claims it becomes a card and keeps the count |
+| GG-2 | tests/gg.test.ts › GG-2 two INDEPENDENT dictionaries are enough; Матеріали are Тимченко's papers (one lineage) and do not count twice |
+| GG-2 | tests/gg.test.ts › GG-2 a typeset (r2u) headword needs no corroboration |
+| GG-2 | tests/gg.test.ts › GG-2 folds dedupe across dictionaries: Желехівка «сьвято» and 1928 «свято» are ONE group with both bits, shown in the spelling of the lower rank |
+| GG-2 | tests/gg.test.ts › GG-2 a fold candidate that names an existing dictionary-only card MERGES its bit; an attested card is left alone; neither is a new card |
+| GG-2 | tests/gg.test.ts › GG-2 normHead: stress, case, apostrophe variants and homograph digits are removed before anything is compared |
+| GG-2 | tests/gg.test.ts › GG-2 a single OCR headword corroborated by corpus tokens is a card with the count c, and the card says so (f stays 0) |
+| GG-3 | tests/gg.test.ts › GG-3 a © dictionary headword confirmed by a second dictionary gets a card of only the word + the two bits (no sense, no quote, no attestation line) |
+| GG-3 | tests/gg.test.ts › GG-3 the bit joins the existing VESUM dictionary-only card (shared {d:1} is copied, never mutated), an owned or attested word gets nothing |
+| GG-3 | tests/gg.test.ts › GG-3 a spelling VESUM knows as a FORM of a lemma is never a new card |
+| GG-3 | tests/gg.test.ts › GG-3 DICT_HIST=0 switch and the loader are wired in build.ts; the report script exists |
+| GG-4 | tests/gg.test.ts › GG-4 a bundle shared by many index lines is read ONCE (before: once per line), the stride picks bundles, docs = articles |
+| GG-4 | tests/gg.test.ts › GG-4 writeVocabFile writes the same bytes as JSON.stringify and the header numbers read back without parsing the entries |
+| GG-5 | tests/gg.test.ts › GG-5 env.sh exposes the stride and the HPLT limit, ingest.sh uses them and re-reads a source whose parameters changed |
+| GG-5 | tests/gg.test.ts › GG-5 nVocab sums the vocab-only tokens of data/work/harvest-vocab, leaves out the other language family, and is 0 without the folder |
+| GG-5 | tests/gg.test.ts › GG-5 boot.json carries N (full text) and nVocab as two fields; the Corpus page prints both apart and says vocab-only is not in N; coverageCounts is unchanged |
+| GG-6 | tests/gg.test.ts › GG-3 DICT_HIST=0 switch and the loader are wired in build.ts; the report script exists |
