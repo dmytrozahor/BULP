@@ -87,6 +87,7 @@ describe('GG-7 shared checks', () => {
     expect(inPageRange('виключати', 'ВИКЛЮВАТИ', 'ВИКОВЗАТИ')).toBe(true); expect(inPageRange('маслина', 'ВИКЛЮВАТИ', 'ВИКОВЗАТИ')).toBe(false); expect(inPageRange('маслина', 'Вагдло', undefined)).toBe(true)
     expect(headOk("м'ясо")).toBe(true); expect(headOk('ж-к')).toBe(false); expect(headOk('ззззз')).toBe(false); expect(headOk('аб1')).toBe(false)
     expect(splitNumbered('1. а 12. б 2. в 3. г').map(s => s.n)).toEqual([1, 2, 3])
+    expect(senseOf('заст. або ірон. Той, хто торгує.').labels).toEqual(['заст.', 'ірон.'])
     expect(senseOf('перен. розм. Щось: приклад.').labels).toEqual(['перен.', 'розм.']); expect(senseOf('тільки недок. Пас. до виключати. Приклад.').labels).toEqual(['тільки недок.'])
   })
   it('resumable scan: a finished volume is skipped, output is policy fields only and the import file is written', () => {

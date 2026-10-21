@@ -9,13 +9,13 @@ import { clip, type SumArticleIn } from './sum-import.ts'
 /** usage labels as printed in СУМ-11 / СУМ-20 (closed on purpose: an unknown abbreviation stays in the gloss) */
 export const SUM_LABELS = ['розм', 'заст', 'діал', 'перен', 'спец', 'рідко', 'книжн', 'поет', 'ірон', 'жарт', 'зневажл', 'пестл', 'вульг', 'уроч', 'фольк', 'проф', 'техн', 'мед', 'бот', 'зоол', 'військ', 'юр', 'церк', 'пошир', 'неол', 'арх', 'присл', 'фам', 'лайл', 'евф', 'зменш', 'збільш', 'збірн', 'полігр', 'мат', 'фіз', 'хім', 'геол', 'мор', 'грам', 'лінгв', 'філос', 'муз', 'анат', 'буд', 'ав', 'пейор', 'ласк', 'шутл', 'канц', 'публ', 'тех', 'іст', 'рел', 'біол', 'комп', 'екон', 'спорт', 'театр', 'кіно', 'вет', 'тільки недок', 'тільки док', 'тільки мн', 'тільки одн'] as const
 const LAB = SUM_LABELS.join('|')
-const LABEL_RE = new RegExp(`^(?:переважно\\s+)?(${LAB})\\.(?:-(?:${LAB})\\.)?[\\s,;]*`, 'iu')
+const LABEL_RE = new RegExp(`^(?:(?:або|і|та)\\s+)?(?:переважно\\s+)?(${LAB})\\.(?:-(?:${LAB})\\.)?[\\s,;]*`, 'iu')
 const VALENCE_RE = /^(?:(?:на|в|у|за|до|з|із|від|про|по|над|під|перед|між|для)\s+)?(?:кого|чого|кому|чому|що|ким|чим|ком|кого-що|кому-що|кого-небудь|чого-небудь|що-небудь)(?:\s+(?:і|та|або)\s+(?:кого|чого|кому|чому|що|ким|чим))?\s*[,.]\s*/iu
 /** the article is only a cross-reference «див. X» (a «Те саме, що X» is a definition and is kept) */
 const XREF = /^[.\s,]*(?:[а-яіїє]{1,7}\.\s*)*див\./u
 
 /** one grammar block right after a headword: inflections, then POS («ж.», «недок.», «присл.») or an adjective ending «а, е.» */
-export const GRAM_SRC = String.raw`((?:,\s*[а-яіїєґ'’\-]{1,16}(?:\s[а-яіїєґ'’\-]{1,10})?){0,5}?(?:,\s*|\s+)?(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)\.(?:\s*і\s*(?:ч|ж|с)\.)?|(?:а|я),\s*(?:е|є)\.)(?:,\s*(?:перех|неперех|безос|зворот)\.)?)`
+export const GRAM_SRC = String.raw`((?:[,;]\s*[а-яіїєґ'’\-]{1,16}\.?(?:\s[а-яіїєґ'’\-]{1,10})?){0,6}?(?:,\s*|\s+)?(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)\.(?:\s*і\s*(?:ч|ж|с)\.)?|(?:а|я),\s*(?:е|є)\.)(?:,\s*(?:перех|неперех|безос|зворот)\.)?)`
 
 const ALPHA = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
 const key = (s: string): number[] => [...s.toLowerCase().normalize('NFC')].map(c => ALPHA.indexOf(c)).filter(i => i >= 0)
@@ -73,7 +73,7 @@ export function senseOf(text: string): { labels: string[]; gloss: string } {
   const labels: string[] = []
   for (let i = 0; i < 8; i++) {
     const l = LABEL_RE.exec(t)
-    if (l && labels.length < 4) { labels.push(l[0].replace(/[\s,;]+$/, '').toLowerCase().replace(/^переважно\s+/, '')); t = t.slice(l[0].length); continue }
+    if (l && labels.length < 4 && (labels.length > 0 || !/^(?:або|і|та)\s/iu.test(t))) { labels.push(l[0].replace(/[\s,;]+$/, '').toLowerCase().replace(/^(?:або|і|та)\s+/, '').replace(/^переважно\s+/, '')); t = t.slice(l[0].length); continue }
     const v = VALENCE_RE.exec(t)
     if (v) { t = t.slice(v[0].length); continue }
     break
