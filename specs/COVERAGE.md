@@ -762,3 +762,21 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-7 | tests/sum-import.test.ts › GG-7 one СУМ dictionary alone makes a card (typeset, no corroboration), merges into a dictionary-only card, names the dictionary |
 | GG-7 | tests/sum-import.test.ts › GG-7 SE periods: СУМ-11 = 1970–80, СУМ-20 = contemporary, both own-time; rows written by the pipeline are read back by the GG loader |
 | GG-8 | manual: documentation and owner follow-up only (research/45 items 23–28), no code |
+
+## RF — Russian-source flag
+| id | test or manual |
+|---|---|
+| RF-1 | tests/ru-source.test.ts › RU-2 edition: Russian place / institution in the edition statement |
+| RF-1 | tests/ru-source.test.ts › RU-2 not flagged: Ukrainian-place editions, originals, Ukrainian dictionaries, the Kyiv print of the Kopystensky book |
+| RF-1 | tests/ru-source.test.ts › RU-2 dictionary: exactly the dictionaries whose declared gloss language is Russian |
+| RF-1 | tests/ru-source.test.ts › RU-2 registry sources: dictionaries / edition / Russian-language articles (apparatus); nothing else |
+| RF-2 | tests/ru-source.test.ts › RU-2 an explicit `ru` on the witness wins; every flag carries a reason |
+| RF-3 | tests/ru-source.test.ts › RU-3 shows «рос. видання» / «рос. джерело» with the standing warning as tooltip and a link to research/46; nothing without a flag |
+| RF-3 | tests/ru-source.test.ts › RU-3 the sense row (SE «Значення за епохами») of a Russian-gloss dictionary carries the badge, a Ukrainian-gloss row does not |
+| RF-3 | tests/ru-source.test.ts › RU-3 a witness-graph plate of a Russian edition is marked (label in the plate data) |
+| RF-4 | manual: research/46-russian-sources.md (evidence file; quotes opened by the author on 2026-10-21, «no evidence found» where none) |
+| RF-5 | tests/ru-source.test.ts › RU-4 only columns 313–1180: the previous work (cols 308–311) and the Palinodia own table of contents (col 1183 on) are not read |
+| RF-5 | tests/ru-source.test.ts › RU-4 the witness: dated 1621–1622 with the research/44 citation, Ruthenian, edition named Russian (flag), footnote and Russian-apparatus lines dropped |
+| RF-5 | tests/ru-source.test.ts › RU-4 the Kyiv print of «Книга о вірі» is NOT a Russian edition; every РИБ work is, and dated works carry a citation |
+| RF-6 | manual: worker waiter ~/post-chain-ocr.sh (log ~/logs/post-chain-ocr.log) polls chain.status and starts worker-ocr.sh at nice 19 after SUCCESS/FAILED; verified by ps on the worker |
+| RF-7 | manual: decision recorded (licence split, dedupe rule against the izbornyk `gr14_*` transcription of the same edition); no ingest code until the OCR of the 1974 print exists and the `pum14` author record is decided by the owner |

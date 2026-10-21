@@ -9,6 +9,8 @@ import { useData } from '../composables/useData.ts'
 import { KIND_LONG, KIND_UK, locatorUrl } from '../lib/format.ts'
 defineProps<{ evidence: Evidence[] }>()
 import { evidenceTo } from '../lib/nav.ts'
+import RuBadge from './RuBadge.vue'
+import { ruOfEvidence } from '../../core/ru-source.ts'
 const { sourceTitle, sourceUrl, witnessById } = useData()
 </script>
 
@@ -17,6 +19,7 @@ const { sourceTitle, sourceUrl, witnessById } = useData()
     <div v-for="(e, i) in evidence" :key="i" class="ev">
       <span :class="['kind', 'kind-' + e.kind]" :title="KIND_LONG[e.kind]">{{ e.kind }} {{ KIND_UK[e.kind] }}</span>
       <RouterLink :to="evidenceTo(e.source, e.locator, witnessById.has(e.source))"><strong>{{ sourceTitle(e.source) }}</strong></RouterLink>
+      <template v-if="ruOfEvidence(e.source, witnessById.get(e.source))"> <RuBadge :flag="ruOfEvidence(e.source, witnessById.get(e.source))" /></template>
       <small v-if="SOURCES[e.source]?.license" class="muted"> · {{ SOURCES[e.source]!.license }}</small>
       <div class="small"><span class="muted">локатор: </span>
         <RouterLink v-if="witnessById.has(e.source)" :to="evidenceTo(e.source, e.locator, true)">{{ e.locator }}</RouterLink><span v-else>{{ e.locator }}</span>

@@ -10,6 +10,8 @@ import { epochById } from '../../core/epochs.ts'
 import { atOf, dictById, timeline, typeName, UNTYPED, type SeEntry, type SeRow, type TlItem } from '../../core/se.ts'
 import { seLoaded, seOf } from '../lib/seData.ts'
 import Panel from './Panel.vue'
+import RuBadge from './RuBadge.vue'
+import { ruOfDict } from '../../core/ru-source.ts'
 const props = defineProps<{ word: string; /** card kind, for the test id and the host's layout */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu'; open?: boolean; entry?: SeEntry }>()
 const data = computed(() => props.entry ?? seOf(props.word))
 const loaded = computed(() => !!props.entry || seLoaded(props.word))
@@ -49,7 +51,7 @@ const confMark = (it: TlItem) => (it.span || it.conf === 'low' ? ' ?' : '')
                 <p style="margin:.1rem 0"><span class="se-gloss">{{ glossOrNone(it.group) }}</span><span class="muted small">{{ confMark(it) }}</span>
                   <span v-if="data.groups[it.group]!.rows.length > 1 && data.groups[it.group]!.sc !== null" class="small muted"> · зіставлено, збіг {{ data.groups[it.group]!.sc }} · {{ data.groups[it.group]!.link === 'xref' ? 'за відсилкою словника' : 'виведено (inferred)' }}</span></p>
                 <ul class="small" style="margin:.1rem 0 .1rem 1rem;padding:0">
-                  <li v-for="x in rowsOf(it)" :key="x.i"><strong>{{ dictById(x.r.d)?.short ?? x.r.d }}</strong> <span class="muted">({{ edition(x.r.d) }}) · {{ rowAt(x.r) }}</span>
+                  <li v-for="x in rowsOf(it)" :key="x.i"><strong>{{ dictById(x.r.d)?.short ?? x.r.d }}</strong><template v-if="ruOfDict(x.r.d)"> <RuBadge :flag="ruOfDict(x.r.d)" /></template> <span class="muted">({{ edition(x.r.d) }}) · {{ rowAt(x.r) }}</span>
                     <template v-if="x.r.n"> №{{ x.r.n }}</template><template v-if="x.r.g && x.r.g !== glossOrNone(it.group)"> — {{ x.r.g }}</template><span v-if="x.r.m === 'd'" class="muted"> · за правилами виведення від «{{ x.r.l }}»</span><span v-if="x.r.s" class="muted"> · {{ x.r.s }}</span><template v-if="x.r.t?.length"> · <em>{{ x.r.t.map(t => typeName(t[0])).join(', ') }}</em></template>
                     <span v-if="x.r.q" class="muted"> · «{{ x.r.q }}»</span><span v-if="x.r.l" class="muted"> [{{ x.r.l }}]</span></li>
                 </ul>

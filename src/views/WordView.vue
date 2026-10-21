@@ -22,6 +22,8 @@ import { reconstruct } from '../lib/derive.ts'
 import { groupFormClaims, KIND_UK, paradigmKindOf, placedCells, topForms } from '../lib/ux.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import ClaimBadge from '../components/ClaimBadge.vue'
+import RuBadge from '../components/RuBadge.vue'
+import { RU_TIP, ruOfWitness } from '../../core/ru-source.ts'
 import ClaimSet from '../components/ClaimSet.vue'
 import FormLegend from '../components/FormLegend.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
@@ -83,6 +85,7 @@ const toggle = (raw: string) => (active.value = active.value === raw ? null : ra
 
 const first = computed(() => card.value && isKnown(card.value.first) ? card.value.first.value : undefined)
 const firstW = computed(() => first.value ? witnessById.value.get(first.value.witness) : undefined)
+const firstRu = computed(() => ruOfWitness(firstW.value))   // SPEC 63 RU-3: the first attestation comes from a Russian edition
 const firstWho = computed(() => first.value ? authorInfo(first.value.author, firstW.value).name : '')
 /** Legend samples from this lemma's own data: an attested spelling, plus the reverse() reconstructions of the lemma (confirmed by a spelling in the corpus / hypothesis only). */
 const legendOpen = ref(false)
@@ -190,7 +193,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
       <p class="hl-line sans"><span class="muted">Перша фіксація: </span>
         <ClaimBadge v-if="first" :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${firstWho}`" />
-        <ClaimBadge v-else :claim="card.first" /></p>
+        <ClaimBadge v-else :claim="card.first" /><template v-if="firstRu"> <RuBadge :flag="firstRu" /> <span class="small muted" data-testid="ru-first-note">перша фіксація з російського видання: {{ RU_TIP }}</span></template></p>
       <div class="hl-chips sans">
         <ClaimBadge v-if="keyChips.origin" :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" />
         <ClaimBadge v-if="keyChips.register" :claim="card.claims.register" text="розмовне" tone="colloquial" />
@@ -225,7 +228,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
               <ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
             <ul class="sans small" style="list-style:none;padding:0;margin:0 0 .8rem">
               <li><span class="muted">автор: </span><AuthorBadge :author="first.author" :witness="first.witness" /></li>
-              <li><span class="muted">пам’ятка: </span><RouterLink v-if="firstW" :to="witnessTo(firstW.id)">{{ firstW.title }}</RouterLink><template v-else>{{ first.witness }}</template>
+              <li><span class="muted">пам’ятка: </span><RouterLink v-if="firstW" :to="witnessTo(firstW.id)">{{ firstW.title }}</RouterLink><template v-else>{{ first.witness }}</template><template v-if="firstRu"> <RuBadge :flag="firstRu" /></template>
                 · <span class="muted">локатор:</span> <RouterLink v-if="firstF && firstW" :to="textTo(firstW.id, firstF.loc)">{{ firstF.loc }}</RouterLink><template v-else-if="firstF">{{ firstF.loc }}</template><template v-else-if="!err">…</template>
                 <template v-if="firstLink"> · <a class="srclink" :href="firstLink.url" target="_blank" rel="noopener">оригінал ↗</a></template></li>
               <li><span class="muted">дата: </span>{{ fmtDate(first.date) }}

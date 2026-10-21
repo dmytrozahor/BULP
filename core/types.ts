@@ -160,6 +160,8 @@ export interface StemValue { type: StemType; model: string; old: string; gender:
 export interface EpochParadigms { tags: string[]; paradigms: EpochParadigm[]; stem: Claim<StemValue> }
 
 export interface WitnessMeta extends Omit<WitnessOut, 'tokens' | 'dropped'> {
+  /** SPEC 63 RU-2: the edition / description of this source is Russian (core/ru-source.ts; reasons in research/46); absent = no such flag */
+  ru?: import('./ru-source.ts').RuFlag
   /** SPEC 63 OQ: OCR quality flag (core/ocr-quality.ts); absent = proofread or good OCR */
   oq?: { score: number; band: 'low' | 'garbage'; preferred?: string[] }
   n: number; linked: number; dropped: WitnessOut['dropped']

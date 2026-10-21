@@ -10,6 +10,8 @@ import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate } from '../lib/format.ts'
 import { formTo, isOldForm } from '../lib/nav.ts'
 import ClaimBadge from './ClaimBadge.vue'
+import RuBadge from './RuBadge.vue'
+import { ruOfWitness } from '../../core/ru-source.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import ClaimSet from './ClaimSet.vue'
 import BankChip from './BankChip.vue'
@@ -29,6 +31,7 @@ const { witnessById, fullOf } = useData()
 const full = computed(() => fullOf(props.t.card))
 const deriv = computed(() => full.value?.forms.find(f => f.raw === props.t.form?.raw)?.derivation ?? [])
 const first = computed(() => (props.t.card && isKnown(props.t.card.first) ? props.t.card.first.value : undefined))
+const firstRu = computed(() => (first.value ? ruOfWitness(witnessById.value.get(first.value.witness)) : undefined))   // SPEC 63 RU-3
 const who = computed(() => (first.value ? authorInfo(first.value.author, witnessById.value.get(first.value.witness)).name : ''))
 const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex: 'відомо лише з індексу ВЕСУМ/LT', rules: 'немає в словниках; спрацювали лише правила з джерелом', unknown: 'невідомо' } as const
 </script>
@@ -50,7 +53,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
       <div v-if="t.form && t.form.raw !== t.card.lemma" class="small muted">написання «<RouterLink :to="formTo(t.form.raw, t.card.lemma)">{{ t.form.raw }}</RouterLink>» → {{ t.form.modern }}
         <template v-if="deriv.length">({{ deriv.map(s => s.rule).join(' → ') }})</template></div>
       <div v-else-if="t.via === 'paradigm'" class="small muted">словоформа з парадигми ВЕСУМ</div>
-      <div v-if="first">перша фіксація: <strong>{{ fmtDate(first.date) }}</strong>, {{ who }}</div>
+      <div v-if="first">перша фіксація: <strong>{{ fmtDate(first.date) }}</strong>, {{ who }}<template v-if="firstRu"> <RuBadge :flag="firstRu" /></template></div>
       <div v-else>перша фіксація: <ClaimBadge :claim="t.card.first" /></div>
       <div v-if="t.epoch" class="small muted">епоха першої фіксації: {{ epochName(t.epoch) }}</div>
       <div style="margin:.2rem 0"><span class="muted">наголос: </span><StressForms v-if="full" :variants="full.stress" /><span v-else class="muted small">завантаження…</span></div>

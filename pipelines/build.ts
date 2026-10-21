@@ -21,6 +21,7 @@ import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
 import { RUSYN_STATUS } from '../core/rules.ts'
 import { REGIONS, regionOf } from './regions.ts'
+import { ruOfWitness } from '../core/ru-source.ts'
 import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
 import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
@@ -701,7 +702,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   const generated = new Date().toISOString()
   const metas: WitnessMeta[] = adm.map(({ w, nlp }, i) => {
     const { tokens: _t, dropped, ...rest } = w
-    return { ...rest, ...(oq.get(w.id) && oqFlag(oq.get(w.id)!) ? { oq: oqFlag(oq.get(w.id)!) } : {}), n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
+    const ru = ruOfWitness({ id: w.id, title: w.title, edition: w.edition, url: w.url })   // SPEC 63 RU-2
+    return { ...rest, ...(ru ? { ru } : {}), ...(oq.get(w.id) && oqFlag(oq.get(w.id)!) ? { oq: oqFlag(oq.get(w.id)!) } : {}), n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))
   const corpus: CorpusMeta = { generated, authors: AUTHORS, witnesses: metas, epochSizes: sizes.epoch, centurySizes: sizes.century, N: sizes.N, linked: NL, unresolved, topUnresolved, rusynStatus: RUSYN_STATUS, regions: regionN.filter(r => r.N > 0) }

@@ -6,6 +6,7 @@
  */
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { RU_TIP } from '../../core/ru-source.ts'
 import { timelineLayout, PLATE_KIND_UK, type TPoint } from '../lib/graphLayout.ts'
 const props = defineProps<{ points: (TPoint & { when?: string })[]; label?: string }>()
 const router = useRouter()
@@ -23,10 +24,11 @@ const kinds = computed(() => [...new Set(props.points.map(p => p.kind))])
           <g v-for="t in g.ticks" :key="t.label"><line :x1="t.x" :x2="t.x" :y1="g.axisY" :y2="g.axisY + 5" class="g-axis" /><text :x="t.x" :y="g.axisY + 17" text-anchor="middle" class="g-date">{{ t.label }}</text></g></g>
         <g v-for="a in g.arrows" :key="a.from + a.to"><path :d="a.d" class="g-link" marker-end="url(#tg-arr)" /><text v-if="a.dy" :x="a.mx" :y="a.my" text-anchor="middle" class="g-date g-dy">{{ a.dy }}</text></g>
         <a v-for="d in g.plates" :key="d.id" class="g-plate" :data-kind="d.kind" :href="href(d.to)" @click.prevent="router.push(d.to)">
-          <title>{{ d.title ?? d.label }} · {{ d.when }} · f = {{ d.f }}</title>
+          <title>{{ d.title ?? d.label }} · {{ d.when }} · f = {{ d.f }}<template v-if="d.ru"> · {{ d.ru }}: {{ RU_TIP }}</template></title>
           <rect :x="d.x" :y="d.y" :width="d.w" :height="d.h" rx="12" :stroke-width="d.sw" />
           <text :x="d.x + d.w / 2" :y="d.y + 17" text-anchor="middle" :class="['g-label', 'lang', { old: d.kind === 'old' }]">{{ d.label }}</text>
           <text :x="d.x + d.w / 2" :y="d.y + 31" text-anchor="middle" class="g-date">{{ d.when }}</text>
+          <text v-if="d.ru" :x="d.x + d.w - 4" :y="d.y + 10" text-anchor="end" class="g-date" data-testid="ru-mark">рос.</text>
         </a>
       </svg>
       <p v-else class="small muted">немає датованих свідчень</p>

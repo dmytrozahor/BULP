@@ -19,7 +19,7 @@ export function chainLayout(steps: TraceStep[], dates: Record<string, string> = 
   return { nodes, edges, width: x + CM, height: 78 }
 }
 
-export interface TPoint { id: string; label: string; year: number; f: number; kind: string; to: string; title?: string }
+export interface TPoint { id: string; label: string; year: number; f: number; kind: string; to: string; title?: string; /** SPEC 63 RU-3: label of the Russian-source badge (core/ru-source.ts), absent for other witnesses */ ru?: string }
 /** legend labels of the plate kinds (HTML chips, never clipped) */
 export const PLATE_KIND_UK: Record<string, string> = { old: 'давня', modern: 'сучасна', chronicle: 'літопис', folk: 'фольклор', other: 'інша пам’ятка' }
 /** a plate: rounded card with the form and its year; x is a compressed time axis (the gap grows with √Δyear, so a century of silence is not a blank screen) */
