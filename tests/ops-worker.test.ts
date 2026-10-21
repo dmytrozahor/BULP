@@ -47,6 +47,24 @@ d('RS-3 idle-stop decides from fixtures (DRY=1 never stops or touches the timer)
     const o = b.sh(`DRY=1 bash ${W}/idle-stop.sh`).out
     expect(o).toContain('unpushed commits in worktree'); expect(o).toContain('a local branch')
   })
+  it('RS-3 worktrees: a dirty one is busy, a clean pushed one is idle, a stale dirty one only warns', () => {
+    const b = box(), wt = `${b.root}/wt-agent`, f = `${wt}/src/data/data-version.json`
+    git(b.repo, 'worktree', 'add', '-q', '-b', 'agent', wt, 'origin/mvp')
+    git(wt, 'push', '-q', 'origin', 'agent'); git(b.repo, 'fetch', '-q', 'origin')
+    expect(b.sh(`DRY=1 bash ${W}/idle-stop.sh`).out).toContain('ALL CLEAR')   // clean and pushed
+    writeFileSync(f, JSON.stringify({ format: 1, buildId: 'B1', x: 1 }))
+    const busy = b.sh(`DRY=1 bash ${W}/idle-stop.sh`).out
+    expect(busy).toContain('BUSY'); expect(busy).toContain(`uncommitted changes in ${wt}`)
+    git(wt, 'checkout', 'src/data/data-version.json'); writeFileSync(`${wt}/untracked.txt`, 'x')
+    expect(b.sh(`DRY=1 bash ${W}/idle-stop.sh`).out).toContain('ALL CLEAR')   // untracked files do not count
+    // an abandoned worktree: last commit older than the max age and the dirty file untouched for days
+    const old = '2020-01-01T00:00:00'
+    spawnSync('git', ['-c', 'user.email=t@t', '-c', 'user.name=t', '-c', 'commit.gpgsign=false', 'commit', '-q', '--allow-empty', '-m', 'old'], { cwd: wt, env: { ...process.env, GIT_COMMITTER_DATE: old, GIT_AUTHOR_DATE: old } })
+    git(wt, 'push', '-q', 'origin', 'agent'); git(b.repo, 'fetch', '-q', 'origin')
+    writeFileSync(f, JSON.stringify({ format: 1, buildId: 'B1', x: 2 })); spawnSync('touch', ['-d', '2020-01-02', f])
+    const s = b.sh(`DRY=1 bash ${W}/idle-stop.sh`).out
+    expect(s).toMatch(/WARNING: worktree .*wt-agent is stale/); expect(s).toContain('ALL CLEAR'); expect(s).not.toContain('uncommitted changes in')
+  })
   it('RS-3 CDN-aware: a completed upload that is not the live pointer, an upload in progress and an unreadable record all hold the machine', () => {
     const b = box(), cdn = `${b.repo}/data/work/cdn-upload.json`
     writeFileSync(cdn, JSON.stringify({ buildId: 'B2', startedAt: 'x', done: true }))

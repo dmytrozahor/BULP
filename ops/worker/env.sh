@@ -6,6 +6,8 @@ export BULP_LOGS="${BULP_LOGS:-$HOME/logs}"
 export NODE_OPTIONS="--max-old-space-size=${BULP_HEAP_MB:-48000}"
 export UV_BIN="${UV_BIN:-$HOME/.local/bin/uv}"
 export TESSDATA_PREFIX="${TESSDATA_PREFIX:-$HOME/tessdata}"
+# idle-stop: a dirty/unpushed git worktree untouched for longer than this (s) only warns and no longer blocks the stop
+export BULP_WT_MAX_AGE_S="${BULP_WT_MAX_AGE_S:-86400}"
 export OMP_THREAD_LIMIT="${OMP_THREAD_LIMIT:-1}"
 case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac   # cron has a minimal PATH
 mkdir -p "$BULP_LOGS/runs" "$BULP_LOGS/done" 2>/dev/null

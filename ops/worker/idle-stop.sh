@@ -2,7 +2,8 @@
 # BULP worker idle-stop (owner 2026-10-17: stop the machine when it is not in use, after every build and after the site shows it).
 # Run by cron every 5 min. The instance is stopped (InstanceInitiatedShutdownBehavior=stop, disk kept) only when ALL of these hold, and held for 30 min in a row:
 #   1. no work process: build, ingest, chain, tests, OCR, local harvesters, git push/pull, npm, CDN upload
-#   2. every git worktree and every local branch is pushed (contained in some origin branch) and no tracked change under public/data or analysis
+#   2. every git worktree and local branch is pushed (contained in some origin branch); no tracked uncommitted change in any worktree (data/raw/kaikki/SOURCES.txt, harvest/__pycache__ ignored); no tracked change under public/data or analysis
+#      a worktree dirty/unpushed whose last commit and dirty-file mtimes are all older than BULP_WT_MAX_AGE_S (env.sh, default 24 h) is abandoned: warning, does not block
 #   3. nothing unpublished on the CDN: data/work/cdn-upload.json is a COMPLETED upload whose buildId is the live pointer in origin/mvp:src/data/data-version.json
 #      (the orphan data branch is no longer used)
 #   4. the GitHub Actions runs of origin/mvp head have all completed and none failed, at least one succeeded (JSON parsed with node, not grep)
@@ -15,6 +16,7 @@
 here=$(dirname "$(readlink -f "$0")"); . "$here/env.sh"
 set -u
 STATE=${IDLE_STATE:-$HOME/.idle-since}; LIMIT=${LIMIT:-1800}; REPO_SLUG=${REPO_SLUG:-dmytrozahor/BULP}; DRY=${DRY:-0}
+WT_MAX_AGE_S=${BULP_WT_MAX_AGE_S:-86400}
 cdn_file=${IDLE_CDN_FILE:-$BULP_REPO/data/work/cdn-upload.json}
 now=$(date +%s); ts=$(date -Is)
 reasons=(); sha=
@@ -56,13 +58,28 @@ check() {   # fills `reasons`; re-runnable
   if [ "${IDLE_NOFETCH:-0}" != 1 ]; then git fetch -q origin 2>/dev/null || { r "git fetch failed"; return; }; fi
   git rev-parse -q --verify origin/mvp >/dev/null || { r "no origin/mvp"; return; }
   sha=$(git rev-parse origin/mvp)
-  local wt h d b
+  local wt h d b dirty n t newest age stale stale_tips=" "
   while read -r wt; do
     h=$(git -C "$wt" rev-parse HEAD 2>/dev/null) || continue
+    # tracked uncommitted changes (an agent is mid-work); untracked files and the known-ignorable paths do not count
+    dirty=$(git -C "$wt" status --porcelain --untracked-files=no -- . ':!data/raw/kaikki/SOURCES.txt' ':!harvest/__pycache__' 2>/dev/null)
+    newest=$(git -C "$wt" log -1 --format=%ct 2>/dev/null); newest=${newest:-0}
+    if [ -n "$dirty" ]; then   # activity = newest mtime of the dirty files (or the last commit)
+      while read -r n; do t=$(stat -c %Y "$wt/$n" 2>/dev/null) && [ "$t" -gt "$newest" ] && newest=$t; done < <(printf '%s\n' "$dirty" | cut -c4-)
+    fi
+    age=$((now - newest)); stale=0; [ "$age" -gt "$WT_MAX_AGE_S" ] && stale=1
+    if [ -n "$dirty" ] || [ -z "$(git branch -r --contains "$h" 2>/dev/null)" ]; then
+      if [ "$stale" = 1 ]; then
+        echo "WARNING: worktree $wt is stale (${age}s > ${WT_MAX_AGE_S}s) with $([ -n "$dirty" ] && echo 'uncommitted changes' || echo 'unpushed commits'): not blocking the stop" >&2
+        stale_tips+="$h "; continue
+      fi
+    fi
+    [ -n "$dirty" ] && r "uncommitted changes in $wt"
     [ -n "$(git branch -r --contains "$h" 2>/dev/null)" ] || r "unpushed commits in worktree $wt"
     d=$(git -C "$wt" status --porcelain -- public/data analysis 2>/dev/null | head -1); [ -n "$d" ] && r "unpublished data in $wt: $d"
   done < <(git worktree list --porcelain | sed -n 's/^worktree //p')
   while read -r b; do
+    case "$stale_tips" in *" $b "*) continue ;; esac
     [ -n "$(git branch -r --contains "$b" 2>/dev/null)" ] || r "a local branch (tip ${b:0:8}) is not pushed"
   done < <(git for-each-ref --format='%(objectname)' refs/heads)
   local live; live=$(git show origin/mvp:src/data/data-version.json 2>/dev/null | node -e 'let t="";process.stdin.on("data",d=>t+=d).on("end",()=>{try{console.log(JSON.parse(t).buildId||"")}catch{console.log("")}})')
