@@ -38,10 +38,10 @@ run hplt --limit "$BULP_HPLT_LIMIT"
 # GG-7: the bundle-once fix changes these counts; the changed parameters make the marker miss, so the old inflated files (x46) are rebuilt
 run wikipedia-rue --bundles-once
 run wiktionary-uk --bundles-once
-# the 14th-c. charters (Пещак 1974, tracked seed), Квітка 1887 and the РИБ т. 4 / т. 19 works (owner scans: the OCR under ~/work/ocr, found by their NAME files)
+# the charters of the «Пам'ятки української мови» editions (tracked seeds: XIV ст. Пещак 1974 = pum14, XV ст. Русанівський 1965 = pum15, Волинські грамоти XVI ст. 1995 = vol16; SPEC 63 RF-8/RF-11; one run, deduped: a charter is counted once), Квітка 1887 and the РИБ т. 4 / т. 19 works (owner scans: the OCR under ~/work/ocr, found by their NAME files)
 OCR_DIR=${OCR_DIR:-$HOME/work/ocr}; export OCR_DIR
 ocrsig() { find "$OCR_DIR" -name 'page_*.txt' 2>/dev/null | wc -l; }
-runcmd pum14 "$(cat data/seed/pum14/*.json | cksum)" npx tsx pipelines/ingest-pum.ts
+runcmd pum14 "$(cat data/seed/pum14/*.json data/seed/pum15/*.json data/seed/vol16/*.json pipelines/pum-ed.ts pipelines/ingest-pum.ts 2>/dev/null | cksum)" npx tsx pipelines/ingest-pum.ts
 runcmd rib "$(ocrsig)" npx tsx pipelines/ingest-rib.ts --ocr "$OCR_DIR"
 runcmd kvitka "$(ocrsig)" npx tsx pipelines/ingest-kvitka.ts --ocr "$OCR_DIR"
 # SPEC 63 GG-7: the owner's СУМ-11 (DjVu) / СУМ-20 (PDF) scans under $BOOKS/sum11, $BOOKS/sum20 (typeset, not OCR). pipelines/sum-scan.ts parses them (resumable per volume, text never stored) into

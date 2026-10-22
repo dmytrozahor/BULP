@@ -800,6 +800,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RF-8 | tests/next-sources.test.ts › RF-8 the 82 seed charters are valid, admitted by the pum14 author record, and put 17,981 tokens into the 14th century |
 | RF-9 | tests/next-sources.test.ts › RF-9 Квітка: every повість dated from the 1887 notes, apparatus excluded, no ru flag |
 | RF-10 | tests/next-sources.test.ts › RF-10 ingest.sh runs pum14, rib and kvitka as sources; the Antirrhisis Polish column is filtered |
+| RF-11 | tests/pum-ed.test.ts › RF-11 dedupe: a charter is counted once, the vetted edition wins |
 | GG-7 | tests/sum-scan.test.ts › GG-7 СУМ-20 parser › headword, POS, volume, printed page, sense numbers, labels and the definition only |
 | GG-7 | tests/sum-scan.test.ts › GG-7 shared checks › long definition: the first ≤ 200 characters, word boundary, «…», on every sense; the import keeps it with vol/page and drops nothing else |
 | GG-7 | tests/sum-scan.test.ts › GG-7 СУМ-11 parser › capitalized headwords at a line start with grammar, running head, printed page; quotation lines and garbage skipped |

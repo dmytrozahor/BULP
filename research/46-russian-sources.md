@@ -53,6 +53,8 @@ Decided from the source's own metadata only (place and publisher in the edition 
 
 Not flagged (decided, with reason):
 - «Грамоти XIV ст.», Київ: Наукова думка, 1974 (Академія наук УРСР, Інститут мовознавства ім. О. О. Потебні; упорядник М. М. Пещак): a Ukrainian SSR publication in Kyiv. Not a Russian edition.
+- «Українські грамоти XV ст.», Київ: Наукова думка, 1965 (Академія наук УРСР, Інститут мовознавства ім. О. О. Потебні; підготовка тексту й коментарі В. М. Русанівського; owner scan `gramotyxv.pdf`; RF-11): a Ukrainian SSR publication in Kyiv. Not a Russian edition (the charters themselves come from Kyiv, Volhynia, Galicia, Moldavia, Transcarpathia).
+- «Волинські грамоти XVI ст.», Київ: Наукова думка, 1995 (Національна академія наук України, Інститут української мови, Інститут української археографії; упорядники В. Б. Задорожний, А. М. Матвієнко; owner scan `e_dzherela_gramoti_1995.pdf`; RF-11): a Ukrainian publication in Kyiv. Not a Russian edition.
 - Копистенський «Книга о вірі єдиній»: the original Kyiv print c. 1620, with no editor.
 - Зизаній «Лексис» 1596–1946 (reprint ed. Др. Ярослав Рудницький): title page names neither a Russian place nor a Russian institution.
 - Львів, Прага, Київ (pre-1917 or later) imprints without a Russian institution in the statement: not flagged. Kyiv and Kharkiv were inside the Russian Empire before 1917, but the rule uses the edition statement, not the empire's borders; a statement-based rule can miss an imperial imprint (stated limitation).
@@ -105,7 +107,7 @@ Every badge links to this file (https://github.com/dmytrozahor/BULP/blob/mvp/res
 
 Рішення ухвалюються лише за метаданими джерела (місце й видавець у відомостях про видання, заявлена мова тлумачень `DICT_COVER.lang`). Таблиця — в англійській частині (розділ 3): `edition` — 8 свідчень у поточному корпусі (kievchr, gvl, eneida1798, eneida1808, kobzar1840, три АЮЗР) + MAKSYM1834 + 8 налаштованих праць із РИБ т. 4 і т. 19 (дані чекають на OCR); `dictionary` — 8 свідчень (r2u_*) + 3 оголошені словники (timchenko-materials, biletsky-nosenko, zakrevsky) + 4 джерела реєстру (R2U, HRINCH, OPENCORPORA, AVDEEVA); `apparatus` — 2 джерела реєстру (FBRU, LONKIN) і Потебня 1887 після імпорту.
 
-Не позначено: «Грамоти XIV ст.» (Київ: Наукова думка, 1974; АН УРСР) — київське видання УРСР, не російське; Копистенський «Книга о вірі єдиній» — оригінальний київський друк; Зизаній «Лексис» (передрук Рудницького) — титул не називає російського місця чи установи; видання зі Львова, Праги та Києва без російської установи у відомостях; словники з українськими, німецькими й англійськими тлумаченнями. Обмеження: правило спирається на відомості про видання, а не на межі імперії, тому імперський друк без таких слів воно може пропустити.
+Не позначено: «Грамоти XIV ст.» (Київ: Наукова думка, 1974; АН УРСР) — київське видання УРСР, не російське; «Українські грамоти XV ст.» (Київ: Наукова думка, 1965; АН УРСР; Русанівський) і «Волинські грамоти XVI ст.» (Київ: Наукова думка, 1995; НАН України; Задорожний, Матвієнко) — київські видання, не російські (RF-11); Копистенський «Книга о вірі єдиній» — оригінальний київський друк; Зизаній «Лексис» (передрук Рудницького) — титул не називає російського місця чи установи; видання зі Львова, Праги та Києва без російської установи у відомостях; словники з українськими, німецькими й англійськими тлумаченнями. Обмеження: правило спирається на відомості про видання, а не на межі імперії, тому імперський друк без таких слів воно може пропустити.
 
 ## 4. Посилання на докази в інтерфейсі
 
