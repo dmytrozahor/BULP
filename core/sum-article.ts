@@ -15,7 +15,7 @@ const VALENCE_RE = /^(?:(?:на|в|у|за|до|з|із|від|про|по|на�
 const XREF = /^[.\s,]*(?:[а-яіїє]{1,7}\.\s*)*див\./u
 
 /** one grammar block right after a headword: inflections, then POS («ж.», «недок.», «присл.») or an adjective ending «а, е.» */
-export const GRAM_SRC = String.raw`((?:[,;]\s*[а-яіїєґ'’\-]{1,16}\.?(?:\s[а-яіїєґ'’\-]{1,10})?){0,6}?(?:,\s*|\s+)?(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)\.(?:\s*і\s*(?:ч|ж|с)\.)?|(?:а|я),\s*(?:е|є)\.)(?:,\s*(?:перех|неперех|безос|зворот)\.)?)`
+export const GRAM_SRC = String.raw`((?:[,;]\s*(?:[А-ЯІЇЄҐ'’\-]{2,40}|~?[а-яіїєґ'’\-]{0,16}~?\.?(?:\s[а-яіїєґ'’\-~]{1,10}\.?){0,2})){0,7}?[,;]?\s*(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)(?=[.,;\s])\.?(?:\s*і\s*(?:ч|ж|с)\.?)?|(?:а|я),\s*(?:е|є)(?=[.,;\s])\.?|(?:${LAB})\.)(?:,\s*(?:перех|неперех|безос|зворот)\.)?)`
 
 const ALPHA = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
 const key = (s: string): number[] => [...s.toLowerCase().normalize('NFC')].map(c => ALPHA.indexOf(c)).filter(i => i >= 0)
@@ -84,7 +84,9 @@ export function senseOf(text: string): { labels: string[]; gloss: string } {
 }
 
 /** a headword printed in CAPITALS inside the running text («МАСЛЕЧКО, а, с.»); the grammar block must follow */
-export const HEAD_CAPS = new RegExp(String.raw`(?<![\p{L}'’\-])([А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-́]{1,40})[¹²³⁴]?${GRAM_SRC}`, 'gu')
+export const HEAD_CAPS = new RegExp(String.raw`(?<![\p{L}'’\-])([А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-́]{1,40}(?: [А-ЯІЇЄҐ]{1,3}(?=,))?)(?:\s?[1-5](?=,)|[¹²³⁴])?${GRAM_SRC}`, 'gu')
+/** the printed variants after a headword («ВАГОВОЗ, ВАГОВІЗ, воза, ч.»): extra headwords of the same article */
+const variantsOf = (gram: string): string[] => gram.match(/[А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-]{2,}/g) ?? []
 export interface Cand { head: string; gram: string; start: number; end: number }
 export interface SumStats { pages: number; pagesNoText: number; candidates: number; crossRefs: number; badHead: number; outOfRange: number; badBody: number; noSense: number; entries: number; senses: number; clippedGloss: number }
 export const newStats = (): SumStats => ({ pages: 0, pagesNoText: 0, candidates: 0, crossRefs: 0, badHead: 0, outOfRange: 0, badBody: 0, noSense: 0, entries: 0, senses: 0, clippedGloss: 0 })
@@ -104,13 +106,13 @@ export function articlesOf(text: string, cands: Cand[], ph: PageHead, vol: numbe
     if (ocrScore(body.slice(0, 600)) < minScore) { st.badBody += group.length; return }
     const senses = splitNumbered(body).map(p => ({ n: p.n, ...senseOf(p.text) })).filter(s => /^[\p{L}«"(]/u.test(s.gloss) && (s.gloss.length >= 6 || s.gloss.includes(' ')) && glossOk(s.gloss)).slice(0, 12)
     if (!senses.length) { st.noSense += group.length; return }
-    for (const g of group) {
+    for (const g of group.flatMap(x => [x, ...variantsOf(x.gram).map(v => ({ ...x, head: v }))])) {
       const stress = g.head.includes('́') ? g.head.normalize('NFC').toLowerCase() : undefined
-      const head = g.head.replace(/[́¹²³⁴\d]/g, '').replace(/[’ʼ]/g, "'").toLowerCase()
+      const head = g.head.replace(/[́¹²³⁴\d ]/g, '').replace(/[’ʼ]/g, "'").toLowerCase()
       if (!headOk(head)) { st.badHead++; continue }
       if (!inPageRange(head, ph.lo, ph.hi)) { st.outOfRange++; continue }
       st.entries++; st.senses += senses.length; st.clippedGloss += senses.filter(s => s.gloss.endsWith('…')).length
-      out.push({ head, ...(stress ? { stress } : {}), pos: g.gram.replace(/\s+/g, ' ').replace(/^[,\s]+/, '').slice(0, 40), vol, ...(page !== undefined ? { page } : {}), senses: senses.map(s => ({ n: s.n, labels: s.labels, gloss: s.gloss })) })
+      out.push({ head, ...(stress ? { stress } : {}), pos: g.gram.replace(/[А-ЯІЇЄҐ'’\-]{2,}/g, '').replace(/\s+/g, ' ').replace(/^[,\s]+/, '').slice(0, 40), vol, ...(page !== undefined ? { page } : {}), senses: senses.map(s => ({ n: s.n, labels: s.labels, gloss: s.gloss })) })
     }
   })
   return out
