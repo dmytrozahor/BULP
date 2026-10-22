@@ -20,7 +20,7 @@ import { dialectTo, formTo, ruleFormsTo, ruleTo, wordTo } from '../lib/nav.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import FormClassTable from './FormClassTable.vue'
 import DeicticStructure from './DeicticStructure.vue'
-const props = defineProps<{ spelling: string; lemma?: string; regions?: { name: string; f: number }[] }>()
+const props = defineProps<{ spelling: string; lemma?: string; regions?: { name: string; f: number }[]; /** SPEC 63 OV-11: the chips only (the «Огляд» tab prints the regions itself and links the full block in «Поширення») */ compact?: boolean }>()
 const { byLemma, fullOf } = useData()
 
 const own = computed(() => (props.lemma ? byLemma.value.get(props.lemma) : undefined))
@@ -99,21 +99,21 @@ const any = computed(() => fired.value.length + lemmaDia.value.length + dpClaims
       </li>
     </ul>
     <div v-else class="small" role="status">діалектних ознак не виявлено (норма / невідомо).
-      <details class="small muted"><summary>перевірені правила: {{ rulesChecked().length }} ознак</summary>
+      <details v-if="!compact" class="small muted"><summary>перевірені правила: {{ rulesChecked().length }} ознак</summary>
         <span v-for="id in rulesChecked()" :key="id"><RouterLink :to="ruleTo(id)">{{ id }}</RouterLink>{{ ' ' }}</span></details></div>
-    <p class="small" style="margin:.4rem 0"><span class="muted">засвідчено в: </span>
+    <p v-if="!compact" class="small" style="margin:.4rem 0"><span class="muted">засвідчено в: </span>
       <template v-if="regions?.length"><template v-for="(r, i) in regions" :key="r.name"><template v-if="i">, </template>{{ r.name }} ({{ r.f }})</template></template>
       <template v-else>регіон пам’яток не відомий</template>
       <span class="muted"> — регіон пам’ятки, а не діалектна мітка (FD-2).</span></p>
 
-    <DeicticStructure v-if="seg" :word="spelling" bare />
+    <DeicticStructure v-if="seg && !compact" :word="spelling" bare />
 
-    <template v-for="cl in classes" :key="cl.cell">
+    <template v-for="cl in (compact ? [] : classes)" :key="cl.cell">
       <h3 class="small" style="margin:.6rem 0 .2rem">Клас форм: {{ cl.cell }}</h3>
       <FormClassTable :members="cl.members" :current="spelling" :caption="`усі засвідчені та виведені варіанти клітинки ${cl.cell}`" />
     </template>
 
-    <div v-for="fcl in featureClass" :key="fcl.f" class="small" style="margin:.5rem 0">
+    <div v-for="fcl in (compact ? [] : featureClass)" :key="fcl.f" class="small" style="margin:.5rem 0">
       <span class="muted">інші форми з ознакою </span><RouterLink :to="ruleTo(fcl.f)">{{ fcl.f }}</RouterLink>: <strong>{{ fcl.forms.length }}</strong>
       <template v-for="x in fcl.forms.filter(x => x.form !== spelling).slice(0, 6)" :key="x.form + x.lemma"> · <RouterLink :to="formTo(x.form, x.lemma)" class="lang">{{ x.form }}</RouterLink></template>
       · <RouterLink :to="ruleFormsTo(fcl.f)">увесь список →</RouterLink>

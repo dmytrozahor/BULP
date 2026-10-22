@@ -6,7 +6,7 @@ import { renderToString } from 'vue/server-renderer'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import { makeRouter } from '../src/router.ts'
 import { NAV_GROUPS, navRoutes, groupOf, nextIndex, BOOK_FORM } from '../src/lib/navMenu.ts'
-import { BLOCK_TAB, PANEL_TAB, TABS, tabOfId } from '../src/lib/cardTabs.ts'
+import { BLOCK_TAB, PANEL_TAB, SIDEBAR_PANELS, TABS, tabOfId } from '../src/lib/cardTabs.ts'
 import { BLOCKS, KINDS, MATRIX } from '../src/lib/cardParity.ts'
 import NavMenu from '../src/components/NavMenu.vue'
 import ThinCard from '../src/components/ThinCard.vue'
@@ -49,7 +49,7 @@ describe('OV-9 grouped navigation', () => {
 
 describe('OV-10 card tabs', () => {
   it('OV-10 every CP-1 block belongs to a tab', () => {
-    expect(TABS.map(t => t.label)).toEqual(['Форми', 'Історія', 'Значення', 'Поширення', 'Джерела'])
+    expect(TABS.map(t => t.label)).toEqual(['Огляд', 'Форми', 'Історія', 'Значення', 'Поширення', 'Джерела'])
     expect(Object.keys(BLOCK_TAB).sort()).toEqual(Object.keys(BLOCKS).sort())
     for (const [b, t] of Object.entries(BLOCK_TAB)) expect(TABS.some(x => x.id === t), b).toBe(true)
     expect(BLOCK_TAB.epochs).toBe(BLOCK_TAB.stress); expect(BLOCK_TAB.epochs).toBe('forms')    // словозміна і за епохами: one category
@@ -57,7 +57,7 @@ describe('OV-10 card tabs', () => {
     const ids = new Set<string>()
     for (const f of ['src/views/WordView.vue', 'src/views/FormView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/EtymologyBlock.vue', 'src/components/CognatesPanel.vue', 'src/components/PhrasePanel.vue'])
       for (const m of rd(f).matchAll(/<Panel[^>]* id="([a-z]+-[a-z0-9-]+)"/g)) ids.add(m[1]!)
-    for (const id of ids) expect(tabOfId(id), id).toBeTruthy()
+    for (const id of ids) expect(tabOfId(id) ?? (SIDEBAR_PANELS.includes(id) ? 'side' : undefined), id).toBeTruthy()
     expect(Object.keys(PANEL_TAB).length).toBeGreaterThan(30)
   })
   it('OV-10 every card kind mounts its blocks under the tabs', async () => {
@@ -66,7 +66,7 @@ describe('OV-10 card tabs', () => {
     for (const [name, src] of [['word', w], ['form', f], ['phrase', p]] as const) expect(src, name).toContain('<CardTabs')
     // the paradigm and the epoch cells sit in the same «Форми» tab of the word card
     const tabOf = (src: string, id: string) => { const parts = src.split(/<template #/).slice(1); return parts.find(x => x.includes(`id="${id}"`))?.split('>')[0] }
-    expect(tabOf(w, 'h-par')).toBe('forms'); expect(tabOf(w, 'h-ep')).toBe('forms'); expect(tabOf(w, 'h-prov')).toBe('history'); expect(tabOf(w, 'h-kw')).toBe('sources'); expect(tabOf(w, 'h-st')).toBe('spread'); expect(tabOf(w, 'h-sn')).toBe('meanings')
+    expect(tabOf(w, 'h-par')).toBe('forms'); expect(tabOf(w, 'h-ep')).toBe('forms'); expect(tabOf(w, 'h-prov')).toBe('history'); expect(tabOf(w, 'h-kw')).toBe('sources'); expect(tabOf(w, 'h-st')).toBe('side'); expect(tabOf(w, 'h-map')).toBe('spread'); expect(tabOf(w, 'h-sn')).toBe('meanings')
     expect(tabOf(f, 'f-ep')).toBe('forms'); expect(tabOf(f, 'f-der')).toBe('history'); expect(tabOf(f, 'f-kw')).toBe('sources'); expect(tabOf(f, 'f-dia')).toBe('spread')
     // the thin kinds go through ThinCard, which has the five tabs and the slots the hosts fill
     for (const k of ['light', 'dict', 'uv', 'unlinked', 'archaic', 'name', 'orv'] as const) expect(KINDS[k].join(' '), k).toContain('ThinCard')

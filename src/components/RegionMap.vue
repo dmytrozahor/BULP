@@ -11,7 +11,7 @@ import { useData } from '../composables/useData.ts'
 import { fmtNum } from '../lib/format.ts'
 import { FULL, loadGeo, loadHistorical, panBy, pathOf, regionRows, stepOf, VIEW, zoomAt, zoomOf, type Geo, type HistGeo, type ViewBox } from '../lib/geo.ts'
 import { TERRITORIES, TERRITORIES_NOT_DRAWN, territoryGaz, territoryGroupEvidence } from '../../core/territories.ts'
-const props = defineProps<{ card?: LemmaCard; by?: LemmaCard['stats']['byRegion'] }>()
+const props = defineProps<{ card?: LemmaCard; by?: LemmaCard['stats']['byRegion']; /** SPEC 63 OV-11: small map for the «Огляд» tab */ compact?: boolean }>()
 const { corpus } = useData()
 const geo = ref<Geo>(), hgeo = ref<HistGeo>(), err = ref(''), hot = ref<string | null>(null)
 onMounted(() => { loadGeo().then(g => (geo.value = g), e => (err.value = String(e.message ?? e))); loadHistorical().then(g => (hgeo.value = g), () => { /* historical layer is optional: the modern map stays */ }) })
@@ -62,7 +62,7 @@ const hdescribe = (x: (typeof terr.value)[number]) => `${x.t.name}: істори
 
 <template>
   <div v-if="!rows.length" class="small muted sans"><span class="unk" tabindex="0" title="немає даних — значення не встановлено (P-3.1)">невідомо</span>: у даних немає розподілу за регіонами пам’яток.</div>
-  <div v-else class="regionmap">
+  <div v-else class="regionmap" :class="{ 'rm-compact': compact }">
     <p class="small muted sans" style="margin-top:0">Регіон пам’ятки — це місце походження свідка (рукопису, видання), а <strong>не діалектна мітка</strong> слова. ipm = f / N · 10⁶ для токенів пам’яток регіону.</p>
     <div class="rm-grid">
       <div v-if="shapes.length" class="rm-wrap">

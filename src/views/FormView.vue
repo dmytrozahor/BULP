@@ -34,6 +34,9 @@ import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
 import CardTabs from '../components/CardTabs.vue'
+import CardLayout from '../components/CardLayout.vue'
+import OverviewTab from '../components/OverviewTab.vue'
+import RegionBars from '../components/RegionBars.vue'
 import Spell from '../components/Spell.vue'
 import ViewSwitch from '../components/ViewSwitch.vue'
 import AttestGraph from '../components/AttestGraph.vue'
@@ -125,7 +128,11 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі: {{ err }}</p>
     </header>
     <div v-if="!fc && !err" class="skeleton" style="height:8rem" />
-    <CardTabs v-else-if="fc && stats">
+    <CardLayout v-else-if="fc && stats">
+    <CardTabs>
+      <template #overview>
+        <OverviewTab :lemma="pick.lemma" :spelling="pick.raw" :kwic="fc.kwic" :by-region="byRegion" map-panel="f-reg" se-kind="full" :paradigm="full?.paradigm" :paradigm-kind="kind" />
+      </template>
       <template #forms>
         <Panel id="f-ep" :open="false" :count="stats.byEpoch.length" title="Клітинки за епохами" :summary="`розміщено токенів: ${stats.placed}`" :empty="!epochKinds"
           info="Лише клітинки, де стоїть це написання (з парадигм леми); токени без розмітки сюди не потрапляють.">
@@ -159,20 +166,6 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <RegionMap :by="byRegion" />
           <p class="small sans muted">f у регіоні — <template v-if="fc.byW">усі токени цього написання в пам’ятках регіону</template><template v-else>наведені приклади (≤ 6): нижня межа</template>; N — токени всіх пам’яток регіону.</p>
         </Panel>
-        <Panel id="f-st" :open="true" title="Статистика написання" :summary="`${fmtNum(stats.ipm, 2)} ipm · HK ${stats.hk} · f = ${stats.f}`">
-          <div class="row sans"><Dots :dots="stats.dots" :ipm="stats.ipm" :hk="stats.hk" :f="stats.f" :N="stats.N" /></div>
-          <p class="small sans" style="margin:.3rem 0">f = {{ stats.f }} із N = {{ fmtNum(stats.N) }} слів · {{ fmtNum(stats.ipm, 2) }} ipm · HK {{ stats.hk }}
-            <span class="muted"> (шкала леми; fMax оцінено як f<sub>леми</sub>·2<sup>HK</sup>)</span></p>
-          <p class="small sans">частка леми «{{ pick.lemma }}»: {{ fmtNum(stats.shareOfLemma * 100, 1) }}% (f = {{ full!.stats.f }})</p>
-          <p v-if="stats.dp !== undefined" class="small sans">Рівномірність за епохами (1 − DP): <strong>{{ fmtNum(1 - stats.dp, 2) }}</strong>
-            <span class="muted"> · присутнє в {{ stats.epochRange }} епохах (за розміщеними клітинками)</span></p>
-          <p v-else class="small sans muted">DP: немає розміщених токенів, щоб його обчислити.</p>
-          <table v-if="stats.byEpoch.length" class="small sans" style="border-collapse:collapse;width:100%">
-            <thead><tr><th scope="col" style="text-align:left">епоха</th><th scope="col">f</th><th scope="col">N</th><th scope="col">ipm</th></tr></thead>
-            <tbody><tr v-for="e in stats.byEpoch" :key="e.epoch"><td>{{ epochShort(e.epoch) }}</td><td>{{ e.f }}</td><td>{{ fmtNum(e.N) }}</td><td>{{ fmtNum(e.ipm, 1) }}</td></tr></tbody>
-          </table>
-          <p class="small sans muted">Розподіл за епохами — нижня межа: лише токени, розміщені в клітинках парадигми (P-3.1).</p>
-        </Panel>
         <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="spread" />
       </template>
       <template #sources>
@@ -190,5 +183,23 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
         </Panel>
       </template>
     </CardTabs>
+    <template #side>
+        <Panel id="f-st" :open="true" title="Статистика написання" :summary="`${fmtNum(stats.ipm, 2)} ipm · HK ${stats.hk} · f = ${stats.f}`">
+          <div class="row sans"><Dots :dots="stats.dots" :ipm="stats.ipm" :hk="stats.hk" :f="stats.f" :N="stats.N" /></div>
+          <p class="small sans" style="margin:.3rem 0">f = {{ stats.f }} із N = {{ fmtNum(stats.N) }} слів · {{ fmtNum(stats.ipm, 2) }} ipm · HK {{ stats.hk }}
+            <span class="muted"> (шкала леми; fMax оцінено як f<sub>леми</sub>·2<sup>HK</sup>)</span></p>
+          <p class="small sans">частка леми «{{ pick.lemma }}»: {{ fmtNum(stats.shareOfLemma * 100, 1) }}% (f = {{ full!.stats.f }})</p>
+          <p v-if="stats.dp !== undefined" class="small sans">Рівномірність за епохами (1 − DP): <strong>{{ fmtNum(1 - stats.dp, 2) }}</strong>
+            <span class="muted"> · присутнє в {{ stats.epochRange }} епохах (за розміщеними клітинками)</span></p>
+          <p v-else class="small sans muted">DP: немає розміщених токенів, щоб його обчислити.</p>
+          <table v-if="stats.byEpoch.length" class="small sans" style="border-collapse:collapse;width:100%">
+            <thead><tr><th scope="col" style="text-align:left">епоха</th><th scope="col">f</th><th scope="col">N</th><th scope="col">ipm</th></tr></thead>
+            <tbody><tr v-for="e in stats.byEpoch" :key="e.epoch"><td>{{ epochShort(e.epoch) }}</td><td>{{ e.f }}</td><td>{{ fmtNum(e.N) }}</td><td>{{ fmtNum(e.ipm, 1) }}</td></tr></tbody>
+          </table>
+          <p class="small sans muted">Розподіл за епохами — нижня межа: лише токени, розміщені в клітинках парадигми (P-3.1).</p>
+        </Panel>
+        <Panel id="f-sr" :open="true" title="За регіонами" summary="ipm у регіоні = f / N слів пам’яток регіону"><RegionBars :by="byRegion" /></Panel>
+    </template>
+    </CardLayout>
   </template>
 </template>

@@ -856,3 +856,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-16 | tests/fx.test.ts › MM-16/18/19/20 on the CLIENT (annotator and search): the same cited candidates resolve a spelling at query time, without waiting for build:data › search: the query «скорійше» / «шановати» / «прийми-ж» carries the folded keys, so the lexicon entry is found at query time |
 | MM-16 | tests/fx.test.ts › MM-16/18/19/20 on the CLIENT (annotator and search): the same cited candidates resolve a spelling at query time, without waiting for build:data › the text-view mark and the lemma-header chip: computed from the same rules; known spellings and standard lemmas get none |
 | MM-22 | tests/fx.test.ts › MM-22 «видова пара»: прийми → прийняти, whose aspect partner is приймати (en.wiktionary headword line) › aspectOf reads «прийня́ти (pryjnjáty) pf (imperfective прийма́ти)», accents removed; the pair travels in the etymology entry |
+| OV-11 | tests/ov-overview.test.ts › OV-11 Огляд is the first and default tab; Форми, Історія, Значення, Поширення, Джерела are unchanged |
+| OV-11 | tests/ov-overview.test.ts › OV-11 the four sections are expanded at once, each a compact use of the existing block |
+| OV-11 | tests/ov-overview.test.ts › OV-11 a section without data is one line, not a big empty block |
+| OV-11 | tests/ov-overview.test.ts › OV-11 the example is the earliest line plus a later one from another witness, not from an OCR witness when a clean one exists |
+| OV-12 | tests/ov-overview.test.ts › OV-12 the sidebar exists on every card layout, sticky on desktop and stacked below the content on a phone |
+| OV-12 | tests/ov-overview.test.ts › OV-12 the curve normalises per period: ipm = f / N of that century |
+| OV-12 | tests/ov-overview.test.ts › OV-12 an uncovered period is a gap: not a zero, not interpolated, the line is broken |
+| OV-12 | tests/ov-overview.test.ts › OV-12 every number carries its basis (N, period), region bars are ipm on the region N |

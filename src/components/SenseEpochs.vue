@@ -12,7 +12,7 @@ import { seLoaded, seOf } from '../lib/seData.ts'
 import Panel from './Panel.vue'
 import RuBadge from './RuBadge.vue'
 import { ruOfDict } from '../../core/ru-source.ts'
-const props = defineProps<{ word: string; /** card kind, for the test id and the host's layout */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu'; open?: boolean; entry?: SeEntry }>()
+const props = defineProps<{ word: string; /** card kind, for the test id and the host's layout */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu'; open?: boolean; entry?: SeEntry; /** SPEC 63 OV-11: one line per epoch (gloss + dictionary sources), inline, no panel; the full timeline stays in «Значення» */ compact?: boolean }>()
 const data = computed(() => props.entry ?? seOf(props.word))
 const loaded = computed(() => !!props.entry || seLoaded(props.word))
 const cells = computed(() => (data.value ? timeline(data.value) : []))
@@ -38,7 +38,14 @@ const confMark = (it: TlItem) => (it.span || it.conf === 'low' ? ' ?' : '')
 </script>
 
 <template>
-  <Panel :id="`se-${kind ?? 'card'}`" :open="open ?? false" title="Значення за епохами · Sense evolution" :summary="data ? `${nSenses} значень у словниках` : (loaded ? 'немає даних' : 'розгорніть, щоб завантажити')" :empty="loaded && !data" empty-text="немає даних про значення"
+  <div v-if="compact" class="se sans" :data-testid="`se-${kind ?? 'card'}-compact`">
+    <ol v-if="data && cells.some(c => !c.gap)" class="se-compact small">
+      <li v-for="c in cells.filter(c => !c.gap).slice(0, 5)" :key="c.epoch"><strong>{{ epName(c.epoch) }}</strong> <span class="muted">{{ epYears(c.epoch) }}</span>:
+        <template v-for="(it, k) in c.items.slice(0, 2)" :key="it.group"><template v-if="k">; </template>{{ glossOrNone(it.group) }} <span class="muted">({{ [...new Set(rowsOf(it).map(x => dictById(x.r.d)?.short ?? x.r.d))].slice(0, 3).join(', ') }})</span></template></li>
+    </ol>
+    <p v-else class="small muted">{{ loaded ? 'немає даних про значення' : 'завантаження…' }}</p>
+  </div>
+  <Panel v-else :id="`se-${kind ?? 'card'}`" :open="open ?? false" title="Значення за епохами · Sense evolution" :summary="data ? `${nSenses} значень у словниках` : (loaded ? 'немає даних' : 'розгорніть, щоб завантажити')" :empty="loaded && !data" empty-text="немає даних про значення"
     info="Послідовність значень за епохами Шевельова. Кожне значення — зі словника з його періодом охоплення (історичний словник описує давнішу мову, ніж рік друку); дата цитати переважає період. Перехід між значеннями має тип лише тоді, коли його називає джерело; інакше «зміна значення (тип не вказано джерелом)». Епоха без свідчень — прогалина, не заповнюється.">
     <div class="se sans" :data-testid="`se-${kind ?? 'card'}`">
       <template v-if="data">

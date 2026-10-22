@@ -17,6 +17,9 @@ import DialectBlock from './DialectBlock.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import LemmaBlocks from './LemmaBlocks.vue'
 import CardTabs from './CardTabs.vue'
+import CardLayout from './CardLayout.vue'
+import OverviewTab from './OverviewTab.vue'
+import RegionBars from './RegionBars.vue'
 import SenseEpochs from './SenseEpochs.vue'
 const props = defineProps<{ /** SPEC 63 SE-6: card kind of the host view (label of the sense block) */ seKind?: 'light' | 'dict' | 'orv' | 'arch' | 'mu'; lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
@@ -30,7 +33,11 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
 
 <template>
   <div data-testid="thin-card">
+    <CardLayout>
     <CardTabs>
+      <template #overview>
+        <OverviewTab :lemma="lemma" :spelling="spelling" :kwic="kwic" :by-region="byRegion" map-panel="t-reg" :se-kind="seKind ?? (dictOnly ? 'dict' : 'light')" :dict-only="dictOnly" />
+      </template>
       <template #forms><LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="forms" /><slot name="forms" /></template>
       <template #history>
         <Panel v-if="!noDerivation" id="t-der" :open="true" :count="best?.steps.length ?? 0" title="Виведення · Derivation" :summary="best ? `${best.steps.length} кроків → ${best.form}` : 'без змін'" :empty="!best">
@@ -50,10 +57,6 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
           info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
           <RegionMap :by="byRegion" />
         </Panel>
-        <Panel id="t-st" :open="false" title="Статистика" :summary="f ? `f = ${fmtNum(f)}${ipm !== undefined ? ' · ' + fmtNum(ipm, 2) + ' ipm' : ''}` : ''" :empty="!f" :empty-text="f === 0 || dictOnly ? 'f = 0: немає засвідчень у корпусі' : 'частоту не визначено'"
-          info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
-          <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
-        </Panel>
         <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="spread" />
       </template>
       <template #sources>
@@ -63,5 +66,13 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
         </Panel>
       </template>
     </CardTabs>
+    <template #side>
+        <Panel id="t-st" :open="false" title="Статистика" :summary="f ? `f = ${fmtNum(f)}${ipm !== undefined ? ' · ' + fmtNum(ipm, 2) + ' ipm' : ''}` : ''" :empty="!f" :empty-text="f === 0 || dictOnly ? 'f = 0: немає засвідчень у корпусі' : 'частоту не визначено'"
+          info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
+          <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
+        </Panel>
+        <Panel id="t-sr" :open="true" title="За регіонами" summary="ipm у регіоні = f / N слів пам’яток регіону"><RegionBars :by="byRegion" /></Panel>
+    </template>
+    </CardLayout>
   </div>
 </template>

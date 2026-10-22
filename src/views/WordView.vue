@@ -40,6 +40,10 @@ import Kwic from '../components/Kwic.vue'
 import Paradigm from '../components/Paradigm.vue'
 import Panel from '../components/Panel.vue'
 import CardTabs from '../components/CardTabs.vue'
+import CardLayout from '../components/CardLayout.vue'
+import OverviewTab from '../components/OverviewTab.vue'
+import FreqCurve from '../components/FreqCurve.vue'
+import RegionBars from '../components/RegionBars.vue'
 import Spell from '../components/Spell.vue'
 import { dialect, ipaOf, show } from '../lib/views.ts'
 import { attestOf, ctxOfTags } from '../lib/dialectView.ts'
@@ -91,6 +95,7 @@ const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron'
 const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined }))
 const modernOf = (raw: string) => card.value?.forms.find(f => f.raw === raw)?.modern ?? raw
 const lemmaAttest = computed(() => (dialect.value && card.value && full.value ? attestOf(show(card.value.lemma, dialect.value, '2019', vctx.value).text, full.value.forms.map(f => ({ raw: f.raw, byW: f.byW, kwic: f.kwic })), dialect.value, id => witnessById.value.get(id)) : undefined))
+const lastYear = computed(() => { const ys = (full.value?.forms ?? []).filter(f => !f.ocrOnly && f.date?.[1]).map(f => f.date[1]); return ys.length ? Math.max(...ys) : undefined })
 const showKwic = (raw: string) => { active.value = raw; ui.kw = true; openPanel('h-kw'); nextTick(() => document.getElementById('h-kw')?.scrollIntoView({ block: 'start' })) }
 const toggle = (raw: string) => (active.value = active.value === raw ? null : raw)
 
@@ -239,7 +244,11 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
 
     <details class="legendbox" @toggle="legendOpen = ($event.target as HTMLDetailsElement).open"><summary class="small sans muted">Умовні позначення форм</summary>
       <FormLegend :epoch="isNoun" :attested="legendSample.attested" :derived="legendSample.derived" :confirmed="legendSample.confirmed" /></details>
+    <CardLayout>
     <CardTabs>
+      <template #overview>
+        <OverviewTab :lemma="card.lemma" :spelling="chosen?.raw ?? card.lemma" :kwic="kwic" :by-region="full?.stats.byRegion" map-panel="h-map" se-kind="full" :paradigm="card.paradigm" :paradigm-kind="kind" />
+      </template>
       <template #forms>
         <!-- SPEC 60 IP-3 / DV-3 on the word card (not only the annotator): collapsed, one-line summaries -->
         <Panel id="h-ipa" :open="false" title="Вимова · IPA" :summary="ipa1 ? `${ipa1} · виведено за правилами` : 'виведено за правилами (P-1.7)'"
@@ -342,22 +351,6 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
       <template #spread>
         <DialectVariants :lemma="card.lemma" />   <!-- SPEC 63 DP-4 -->
         <Panel v-if="chosen" id="h-dia" :open="false" title="Діалект · Dialect" :summary="`написання «${chosen.raw}»: ознаки, клас форм, літературний відповідник`"><DialectBlock :spelling="chosen.raw" :lemma="card.lemma" /></Panel>
-        <Panel id="h-st" v-model:open="ui.st" title="Статистика" :summary="`${fmtNum(card.stats.ipm, 1)} ipm · HK ${card.stats.hk} · f = ${card.stats.f}`">
-          <template #info>автоматично згенеровано · ipm — на мільйон слів; HK — клас частотності; f — кількість вживань; N — розмір корпусу. <RouterLink to="/method">Як це обчислюється →</RouterLink></template>
-          <div class="row sans"><Dots :dots="card.stats.dots" :ipm="card.stats.ipm" :hk="card.stats.hk" :f="card.stats.f" :N="corpus?.N" />
-            <EvidencePopover :evidence="[STAT_CITES.dots!, STAT_CITES.hk!]" heading="Частотність: точки та HK"><span class="badge">ⓘ</span></EvidencePopover></div>
-          <p class="small sans" style="margin:.3rem 0 .8rem">{{ fmtNum(card.stats.ipm, 1) }} ipm · HK {{ card.stats.hk }} · f = {{ card.stats.f }} · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
-          <div v-if="full" class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - full.stats.dp, 2) }}</strong></span>
-            <EvidencePopover :evidence="[STAT_CITES.dp!]" heading="Дисперсія DP (Gries)"><span class="badge">ⓘ</span></EvidencePopover>
-            <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - full.stats.dp, 2)}`"><i :style="{ width: (1 - full.stats.dp) * 100 + '%' }"></i></div>
-            <span class="muted">у {{ full.stats.range }} із {{ corpus?.nWitnesses }} пам’яток</span></div>
-          <div v-else class="skeleton" style="height:2.5rem" />
-        </Panel>
-        <Panel id="h-stx" :open="false" title="Як читати статистику" summary="пояснення показників"><StatsExplainer :card="card" /></Panel>
-        <Panel id="h-tc" :open="false" title="За століттями" :summary="full ? `${full.stats.byCentury.length} століть` : 'завантаження…'" :empty="!!full && !full.stats.byCentury.length">
-          <TimeCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
-        <Panel id="h-eb" :open="false" title="За епохами" summary="частота за добами (шкала Шевельова)">
-          <EpochBars v-if="full" :stats="full.stats" :sizes="corpus?.epochSizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
         <Panel id="h-map" :open="false" title="За регіонами пам’яток" summary="карта регіонів пам’яток (не діалектна мітка)">
           <RegionMap v-if="full" :card="full" /><div v-else class="skeleton" style="height:6rem" /></Panel>
       </template>
@@ -371,5 +364,33 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <WitnessBlock v-if="full" id="h-wit" :items="witnesses" />
       </template>
     </CardTabs>
+    <template #side>
+        <Panel id="h-st" v-model:open="ui.st" title="Статистика" :summary="`${fmtNum(card.stats.ipm, 1)} ipm · HK ${card.stats.hk} · f = ${card.stats.f}`">
+          <template #info>автоматично згенеровано · ipm — на мільйон слів; HK — клас частотності; f — кількість вживань; N — розмір корпусу. <RouterLink to="/method">Як це обчислюється →</RouterLink></template>
+          <div class="row sans"><Dots :dots="card.stats.dots" :ipm="card.stats.ipm" :hk="card.stats.hk" :f="card.stats.f" :N="corpus?.N" />
+            <EvidencePopover :evidence="[STAT_CITES.dots!, STAT_CITES.hk!]" heading="Частотність: точки та HK"><span class="badge">ⓘ</span></EvidencePopover></div>
+          <p class="small sans" style="margin:.3rem 0 .8rem">{{ fmtNum(card.stats.ipm, 1) }} ipm · HK {{ card.stats.hk }} · f = {{ card.stats.f }} · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
+          <div v-if="full" class="small sans"><span>Рівномірність (1 − DP): <strong>{{ fmtNum(1 - full.stats.dp, 2) }}</strong></span>
+            <EvidencePopover :evidence="[STAT_CITES.dp!]" heading="Дисперсія DP (Gries)"><span class="badge">ⓘ</span></EvidencePopover>
+            <div class="bar" role="img" :aria-label="`рівномірність ${fmtNum(1 - full.stats.dp, 2)}`"><i :style="{ width: (1 - full.stats.dp) * 100 + '%' }"></i></div>
+            <span class="muted">у {{ full.stats.range }} із {{ corpus?.nWitnesses }} пам’яток</span></div>
+          <div v-else class="skeleton" style="height:2.5rem" />
+        </Panel>
+        <Panel id="h-stx" :open="false" title="Як читати статистику" summary="пояснення показників"><StatsExplainer :card="card" /></Panel>
+        <Panel id="h-tc" :open="true" title="За століттями" :summary="full ? `${full.stats.byCentury.length} століть` : 'завантаження…'" :empty="!!full && !full.stats.byCentury.length">
+          <FreqCurve v-if="full" :series="full.stats.byCentury" :sizes="corpus?.centurySizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
+        <Panel id="h-eb" :open="true" title="За епохами" summary="частота за добами (шкала Шевельова)">
+          <EpochBars v-if="full" :stats="full.stats" :sizes="corpus?.epochSizes ?? {}" /><div v-else class="skeleton" style="height:6rem" /></Panel>
+        <Panel id="h-sr" :open="true" title="За регіонами" summary="ipm у регіоні = f / N слів пам’яток регіону">
+          <RegionBars v-if="full" :by="full.stats.byRegion" /><div v-else class="skeleton" style="height:4rem" /></Panel>
+        <Panel id="h-sc" :open="true" title="Лічильники" :summary="`${card.forms.length} написань · ${full ? full.stats.range : '…'} пам’яток`">
+          <dl class="sidecounts small sans">
+            <dt>пам’яток</dt><dd>{{ full ? `${full.stats.range} із ${corpus?.nWitnesses ?? '…'}` : '…' }}<span class="muted"> (де слово засвідчене)</span></dd>
+            <dt>написань</dt><dd>{{ card.forms.length }}<span class="muted"> (різних записів леми)</span></dd>
+            <dt>перша фіксація</dt><dd>{{ first ? fmtDate(first.date) : 'невідомо' }}</dd>
+            <dt>остання в корпусі</dt><dd>{{ lastYear ? lastYear : 'невідомо' }}<span class="muted"> (за найпізнішим написанням)</span></dd>
+          </dl></Panel>
+    </template>
+    </CardLayout>
   </template>
 </template>

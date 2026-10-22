@@ -4,6 +4,7 @@
  * every card kind shows its blocks under these tabs (tests/ov-tabs.test.ts walks the sources), nothing is dropped.
  */
 export const TABS = [
+  { id: 'overview', label: 'Огляд', hint: 'регіони й діалект, приклад, значення, словозміна: стисло' },
   { id: 'forms', label: 'Форми', hint: 'написання, словозміна й епохи, наголос, вимова, похідні' },
   { id: 'history', label: 'Історія', hint: 'походження, перша фіксація, виведення, етимологія, запозичення' },
   { id: 'meanings', label: 'Значення', hint: 'мітки, значення й їх зміна за епохами, фразеологія, сполучення' },
@@ -18,11 +19,13 @@ export const BLOCK_TAB: Record<string, TabId> = {
   stress: 'forms', etymology: 'history', senses: 'meanings', phrasemes: 'meanings', loan: 'history', derivatives: 'forms', ipa: 'forms', senseTimeline: 'meanings',
 }
 /** panel DOM id (without the h-/t-/f- prefix where the panel exists on several kinds) -> tab: used to open the right tab for an #anchor */
+/** panels of the always-visible statistics sidebar (SPEC 63 OV-12): in no tab */
+export const SIDEBAR_PANELS = ['h-st', 'h-stx', 'h-tc', 'h-eb', 'h-sr', 'h-sc', 'f-st', 'f-sr', 't-st', 't-sr']
 export const PANEL_TAB: Record<string, TabId> = {
   'h-prov': 'history', 'h-chain': 'history', 'h-ety': 'history', 'h-cog': 'history', 'h-place': 'history', 'f-der': 'history', 't-der': 'history',
   'h-lab': 'meanings', 'h-sn': 'meanings', 't-sn': 'meanings', 'h-col': 'meanings', 'h-phr': 'meanings', 'f-cl': 'meanings',
   'h-par': 'forms', 'h-ep': 'forms', 'f-ep': 'forms', 'f-circ': 'forms', 'h-ipa': 'forms', 't-ipa': 'forms', 'h-der': 'forms',
-  'h-dia': 'spread', 'f-dia': 'spread', 't-dia': 'spread', 'h-st': 'spread', 'h-stx': 'spread', 'h-tc': 'spread', 'h-eb': 'spread', 'h-map': 'spread', 'f-st': 'spread', 'f-reg': 'spread', 't-reg': 'spread', 't-st': 'spread',
+  'h-dia': 'spread', 'f-dia': 'spread', 't-dia': 'spread', 'h-map': 'spread', 'f-reg': 'spread', 't-reg': 'spread',
   'h-kw': 'sources', 'f-kw': 'sources', 't-kw': 'sources', 'h-wit': 'sources', 'f-wit': 'sources', 'cp-wit': 'sources',
 }
 /** the tab that holds the element with this DOM id (undefined = not in a tab) */
