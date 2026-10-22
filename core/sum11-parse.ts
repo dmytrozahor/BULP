@@ -4,12 +4,12 @@
  * («Вага, и, ж. 1. …») at a line start, the later ones in CAPITALS («ПЕРЕТРИМУВАННЯ, я, с.»): a capitalized headword is taken only at a line start AND only with a grammar block right
  * after it (inflections + POS or «а, е.»), so quotation lines that begin with a capital word do not qualify. © policy: core/sum-article.ts.
  */
-import { GRAM_SRC, HEAD_CAPS, articlesOf, joinLines, newStats, pageHead, type Cand, type SumStats } from './sum-article.ts'
+import { GRAM_STRICT, HEAD_CAPS, articlesOf, joinLines, newStats, pageHead, type Cand, type SumStats } from './sum-article.ts'
 import type { SumArticleIn } from './sum-import.ts'
 
 export { SUM_LABELS as SUM11_LABELS, senseOf as senseOf11 } from './sum-article.ts'
 const MARK = '\u0001'
-const HEAD11 = new RegExp(String.raw`\u0001([А-ЯІЇЄҐ][а-яіїєґ'’\-́]{1,40})[¹²³⁴]?${GRAM_SRC}`, 'gu')
+const HEAD11 = new RegExp(String.raw`\u0001([А-ЯІЇЄҐ][а-яіїєґ'’\-́]{1,40})[¹²³⁴]?${GRAM_STRICT}`, 'gu')
 const LINE11 = /^[А-ЯІЇЄҐ][а-яіїєґ'’\-́]{1,40}[¹²³⁴]?,\s/u
 export type Sum11Stats = SumStats
 

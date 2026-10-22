@@ -7,15 +7,23 @@ import { GLOSS_MAX, glossOk, ocrScore } from './se-parse.ts'
 import { clip, type SumArticleIn } from './sum-import.ts'
 
 /** usage labels as printed in СУМ-11 / СУМ-20 (closed on purpose: an unknown abbreviation stays in the gloss) */
-export const SUM_LABELS = ['розм', 'заст', 'діал', 'перен', 'спец', 'рідко', 'книжн', 'поет', 'ірон', 'жарт', 'зневажл', 'пестл', 'вульг', 'уроч', 'фольк', 'проф', 'техн', 'мед', 'бот', 'зоол', 'військ', 'юр', 'церк', 'пошир', 'неол', 'арх', 'присл', 'фам', 'лайл', 'евф', 'зменш', 'збільш', 'збірн', 'полігр', 'мат', 'фіз', 'хім', 'геол', 'мор', 'грам', 'лінгв', 'філос', 'муз', 'анат', 'буд', 'ав', 'пейор', 'ласк', 'шутл', 'канц', 'публ', 'тех', 'іст', 'рел', 'біол', 'комп', 'екон', 'спорт', 'театр', 'кіно', 'вет', 'тільки недок', 'тільки док', 'тільки мн', 'тільки одн'] as const
+export const SUM_LABELS = ['розм', 'заст', 'діал', 'перен', 'спец', 'рідко', 'книжн', 'поет', 'ірон', 'жарт', 'зневажл', 'пестл', 'вульг', 'уроч', 'фольк', 'проф', 'техн', 'мед', 'бот', 'зоол', 'військ', 'юр', 'церк', 'пошир', 'неол', 'арх', 'присл', 'фам', 'лайл', 'евф', 'зменш', 'збільш', 'збірн', 'полігр', 'мат', 'фіз', 'хім', 'геол', 'мор', 'грам', 'лінгв', 'філос', 'муз', 'анат', 'буд', 'ав', 'пейор', 'ласк', 'шутл', 'канц', 'публ', 'тех', 'іст', 'рел', 'біол', 'комп', 'екон', 'спорт', 'театр', 'кіно', 'вет', 'зах', 'с. г', 'нар.-поет', 'текст', 'ек', 'присв', 'тільки недок', 'тільки док', 'тільки мн', 'тільки одн'] as const
 const LAB = SUM_LABELS.join('|')
 const LABEL_RE = new RegExp(`^(?:(?:або|і|та)\\s+)?(?:переважно\\s+)?(${LAB})\\.(?:-(?:${LAB})\\.)?[\\s,;]*`, 'iu')
 const VALENCE_RE = /^(?:(?:на|в|у|за|до|з|із|від|про|по|над|під|перед|між|для)\s+)?(?:кого|чого|кому|чому|що|ким|чим|ком|кого-що|кому-що|кого-небудь|чого-небудь|що-небудь)(?:\s+(?:і|та|або)\s+(?:кого|чого|кому|чому|що|ким|чим))?\s*[,.]\s*/iu
+/** notes in front of the first sense: «(одн. вакуоля, і, ж.), біол.», «; вищ. ст. важчий.», an OCR backslash */
+export const noteless = (b: string): string => b.replace(/^[\s,;.\\]+/u, '').replace(/^[({]\s*(?:одн|мн)\.[^)}]{0,90}[)}][\s,;.]*/u, '').replace(/^(?:вищ|найвищ)\.\s*ст\.\s*\S+\.\s*/u, '')
 /** the article is only a cross-reference «див. X» (a «Те саме, що X» is a definition and is kept) */
+/** abbreviations that are no OCR debris: removed before the share of plausible words is measured */
+const ABBR = /(?<![\p{L}])(?:ст|т|ін|д|п|рр|ч|ж|с|мн|одн|напр|див|знач|ім|вищ|акт|пас|мин|теп|док|недок|уч|зокр|півн|півд|сх|зх|нар|поет|прикм|присл|гол|досл|діал|заст|розм|спец|перен|проф|техн|мед|г|ек|біол|зах|текст|присв|перех|неперех|безос)\.?(?![\p{L}])/gu
+const scoreOf = (x: string): number => ocrScore(x.replace(/\([^)]{0,40}\)/g, ' ').replace(/\d+/g, ' ').replace(ABBR, ' '))
+const glossGood = (g: string): boolean => !/[А-ЯІЇЄҐ]{4,}/.test(g) && glossOk(g) || (scoreOf(g) >= 0.8 && (g.match(/(?:^|\s)[А-ЯІЇЄ]{4,}(?=\s|$)/g) ?? []).length < 2)
 const XREF = /^[.\s,]*(?:[а-яіїє]{1,7}\.\s*)*див\./u
 
 /** one grammar block right after a headword: inflections, then POS («ж.», «недок.», «присл.») or an adjective ending «а, е.» */
-export const GRAM_SRC = String.raw`((?:[,;]\s*(?:[А-ЯІЇЄҐ'’\-]{2,40}|~?[а-яіїєґ'’\-]{0,16}~?\.?(?:\s[а-яіїєґ'’\-~]{1,10}\.?){0,2})){0,7}?[,;]?\s*(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)(?=[.,;\s])\.?(?:\s*і\s*(?:ч|ж|с)\.?)?|(?:а|я),\s*(?:е|є)(?=[.,;\s])\.?|(?:${LAB})\.)(?:,\s*(?:перех|неперех|безос|зворот)\.)?)`
+export const GRAM_SRC = String.raw`((?:\s?\*|\s?\(\s*[А-ЯІЇЄҐ'’\-]{2,40}\s*\))*\s?(?:[,;\\]\s*(?:[А-ЯІЇЄҐ'’\-]{2,40}|~?[а-яіїєґё'’\-]{0,16}~?\.?(?:\s[а-яіїєґё'’\-~]{1,10}\.?){0,2})|\s+і\s+[А-ЯІЇЄҐ'’\-]{2,40}){0,7}?[,;]?\s*(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм|присудк|сл)(?=[.,;\s])(?!\.?\s+[а-яіїєґ'’\-]{2,}[,;])\.?(?:\s*і\s*(?:ч|ж|с)\.?)?|(?:а|я),\s*(?:е|є|ё)(?=[.,;\s])\.?|(?:${LAB})\.)(?:,\s*(?:перех|пер\s?ех|неперех|непер\s?ех|безос|зворот)\.)?)`
+/** the strict block (inflections + POS, or an adjective «а, е.»): for capitalized lines of the lower-case style, where quotation lines also begin with a capital */
+export const GRAM_STRICT = String.raw`((?:[,;]\s*[а-яіїєґ'’\-]{1,16}\.?(?:\s[а-яіїєґ'’\-]{1,10})?){0,6}?(?:,\s*|\s+)?(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм)\.(?:\s*і\s*(?:ч|ж|с)\.)?|(?:а|я),\s*(?:е|є)\.)(?:,\s*(?:перех|пер\s?ех|неперех|непер\s?ех|безос|зворот)\.)?)`
 
 const ALPHA = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
 const key = (s: string): number[] => [...s.toLowerCase().normalize('NFC')].map(c => ALPHA.indexOf(c)).filter(i => i >= 0)
@@ -55,21 +63,23 @@ export function joinLines(lines: string[]): string {
 }
 
 /** a headword that may become an entry: lower-case Ukrainian letters, one apostrophe or hyphen between letters, a vowel, no run of 5 consonants */
-export const headOk = (h: string): boolean => /^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(h) && h.length >= 2 && h.length <= 32 && /[аеєиіїоуюя]/.test(h) && !/[бвгґджзйклмнпрстфхцчшщ]{5,}/.test(h) && !/[бвгґджзклмнпрстфхцчшщ][йї]/.test(h)   // «й»/«ї» right after a consonant is the OCR of a stress mark («драбинйк», «заснїти»)
+export const headOk = (h: string): boolean => /^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(h) && h.length >= 2 && h.length <= 32 && /[аеєиіїоуюя]/.test(h) && !/[бвгґджзйклмнпрстфхцчшщ]{5,}/.test(h) && !/[бвгґджзклмнпрстфхцчшщ](?:ї|й(?![аеєиіїоуюя]))/.test(h)   // «й»/«ї» right after a consonant is the OCR of a stress mark («драбинйк», «заснїти»)
 
 /** sense numbers must run 1, 2, 3 … (a page number inside a quotation is not a sense); a body without «1.» is one sense */
 export function splitNumbered(body: string): { n: number; text: string }[] {
   const re = /(?:^|\s)(\d{1,2})\.\s+(?=[^\d\s])/g
   const marks: { n: number; at: number; end: number }[] = []
   let want = 1
-  for (const m of body.matchAll(re)) if (Number(m[1]) === want && (want > 1 || m.index! < 12)) { marks.push({ n: want, at: m.index!, end: m.index! + m[0].length }); want++ }
+  for (const m of body.matchAll(re)) if (Number(m[1]) === want && (want > 1 || m.index! < 30)) { marks.push({ n: want, at: m.index!, end: m.index! + m[0].length }); want++ }
   if (!marks.length) return [{ n: 1, text: body }]
   return marks.map((m, i) => ({ n: m.n, text: body.slice(m.end, marks[i + 1]?.at ?? body.length) }))
 }
 
 /** labels and valence («кого, що.») at the start of a sense, then the definition up to the first quotation or «//»; the quotation is NEVER taken. A long definition keeps its first ≤ 200 characters + «…» */
 export function senseOf(text: string): { labels: string[]; gloss: string } {
-  let t = text.replace(/\s+/g, ' ').replace(/^[\s,;.]+/, '')
+  let t = text.replace(/\s+/g, ' ').replace(/^[\s,;.\\]+/, '')
+  // plural/singular notes and degree notes in front of the definition: «(одн. вакуоля, і, ж.), біол. …», «; вищ. ст. важчий. 1. …»
+  t = t.replace(/^[({]\s*(?:одн|мн)\.[^)}]{0,80}[)}][\s,;.]*/u, '').replace(/^[\s,;.]*(?:вищ|найвищ)\.\s*ст\.\s*\S+\.\s*/u, '').replace(/^[\s,;.]*\(\s*[^)]{0,30}\)\s*\.?\s*(?=\p{Lu})/u, '')
   const labels: string[] = []
   for (let i = 0; i < 8; i++) {
     const l = LABEL_RE.exec(t)
@@ -84,12 +94,12 @@ export function senseOf(text: string): { labels: string[]; gloss: string } {
 }
 
 /** a headword printed in CAPITALS inside the running text («МАСЛЕЧКО, а, с.»); the grammar block must follow */
-export const HEAD_CAPS = new RegExp(String.raw`(?<![\p{L}'’\-])([А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-́]{1,40}(?: [А-ЯІЇЄҐ]{1,3}(?=,))?)(?:\s?[1-5](?=,)|[¹²³⁴])?${GRAM_SRC}`, 'gu')
+export const HEAD_CAPS = new RegExp(String.raw`(?<![\p{L}'’\-])([А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-́]{1,40}(?: [А-ЯІЇЄҐ]{1,5}(?=,))?)(?:\s?[1-5!](?=[,\s(])|\s[гI](?=[\s(,])|[¹²³⁴])?${GRAM_SRC}`, 'gu')
 /** the printed variants after a headword («ВАГОВОЗ, ВАГОВІЗ, воза, ч.»): extra headwords of the same article */
 const variantsOf = (gram: string): string[] => gram.match(/[А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-]{2,}/g) ?? []
 export interface Cand { head: string; gram: string; start: number; end: number }
 export interface SumStats { pages: number; pagesNoText: number; candidates: number; crossRefs: number; badHead: number; outOfRange: number; badBody: number; noSense: number; entries: number; senses: number; clippedGloss: number }
-export const newStats = (): SumStats => ({ pages: 0, pagesNoText: 0, candidates: 0, crossRefs: 0, badHead: 0, outOfRange: 0, badBody: 0, noSense: 0, entries: 0, senses: 0, clippedGloss: 0 })
+export const newStats = (): SumStats => ({ ...(process.env.SUMDBG ? { drops: [] as string[] } : {}), pages: 0, pagesNoText: 0, candidates: 0, crossRefs: 0, badHead: 0, outOfRange: 0, badBody: 0, noSense: 0, entries: 0, senses: 0, clippedGloss: 0 })
 /** pass rate of the candidates that look like articles: entries / (candidates − cross-references) */
 export const passRate = (s: SumStats): number => { const d = s.candidates - s.crossRefs; return d > 0 ? Math.round((s.entries / d) * 1000) / 1000 : 0 }
 
@@ -103,16 +113,16 @@ export function articlesOf(text: string, cands: Cand[], ph: PageHead, vol: numbe
     if (body.replace(/[\s,.;]/g, '').length < 3) { pending.push(c); return }   // «ВИКЛЮЧАТИ, аю, недок. ВИКЛЮЧИТИ, чу, док. …»: the pair shares the next body
     const group = [...pending, c]; pending = []
     if (XREF.test(body) && body.length < 120) { st.crossRefs += group.length; return }
-    if (ocrScore(body.slice(0, 600)) < minScore) { st.badBody += group.length; return }
-    const senses = splitNumbered(body).map(p => ({ n: p.n, ...senseOf(p.text) })).filter(s => /^[\p{L}«"(]/u.test(s.gloss) && (s.gloss.length >= 6 || s.gloss.includes(' ')) && glossOk(s.gloss)).slice(0, 12)
-    if (!senses.length) { st.noSense += group.length; return }
-    for (const g of group.flatMap(x => [x, ...variantsOf(x.gram).map(v => ({ ...x, head: v }))])) {
+    if (scoreOf(body.slice(0, 600)) < minScore) { st.badBody += group.length; (st as { drops?: string[] }).drops?.push(`badBody ${c.head} :: ${body.slice(0, 90)}`); return }
+    const senses = splitNumbered(noteless(body)).map(p => ({ n: p.n, ...senseOf(p.text) })).filter(s => /^[\p{L}«"(]/u.test(s.gloss) && (s.gloss.length >= 6 || s.gloss.includes(' ')) && glossGood(s.gloss)).slice(0, 12)
+    if (!senses.length) { st.noSense += group.length; (st as { drops?: string[] }).drops?.push(`noSense ${c.head} :: ${body.slice(0, 90)}`); return }
+    for (const [, g] of group.flatMap(x => [x, ...variantsOf(x.gram).map(v => ({ ...x, head: v, variant: true }))]).entries()) {
       const stress = g.head.includes('́') ? g.head.normalize('NFC').toLowerCase() : undefined
       const head = g.head.replace(/[́¹²³⁴\d ]/g, '').replace(/[’ʼ]/g, "'").toLowerCase()
-      if (!headOk(head)) { st.badHead++; continue }
-      if (!inPageRange(head, ph.lo, ph.hi)) { st.outOfRange++; continue }
+      if (!headOk(head)) { st.badHead++; (st as { drops?: string[] }).drops?.push(`badHead ${head}`); continue }
+      if (!(g as { variant?: boolean }).variant && !inPageRange(head, ph.lo, ph.hi)) { st.outOfRange++; (st as { drops?: string[] }).drops?.push(`range ${head} ${ph.lo}|${ph.hi}`); continue }
       st.entries++; st.senses += senses.length; st.clippedGloss += senses.filter(s => s.gloss.endsWith('…')).length
-      out.push({ head, ...(stress ? { stress } : {}), pos: g.gram.replace(/[А-ЯІЇЄҐ'’\-]{2,}/g, '').replace(/\s+/g, ' ').replace(/^[,\s]+/, '').slice(0, 40), vol, ...(page !== undefined ? { page } : {}), senses: senses.map(s => ({ n: s.n, labels: s.labels, gloss: s.gloss })) })
+      out.push({ head, ...(stress ? { stress } : {}), pos: g.gram.replace(/[А-ЯІЇЄҐ'’\-]{2,}/g, '').replace(/\(\s*\)/g, '').replace(/\*/g, '').replace(/\s+/g, ' ').replace(/^[,\s]+/, '').slice(0, 40), vol, ...(page !== undefined ? { page } : {}), senses: senses.map(s => ({ n: s.n, labels: s.labels, gloss: s.gloss })) })
     }
   })
   return out

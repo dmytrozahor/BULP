@@ -69,6 +69,34 @@ describe('GG-7 СУМ-11 parser', () => {
   })
 })
 
+describe('GG-7 СУМ-11 recall: layouts of the real pages', () => {
+  const P = [
+    'ВАБ\n\n10\n\nВБЯ\n\n',
+    'ВАГ АРКА, и, ж. Жін. до вагар. Приклад (А. Б., 1950, 1).\n',
+    'ВАЖЕЛЕЗНИЙ, а, є, розм. Дуже важкий. Приклад.\n',
+    'ВАЖКИЙ, а, є; вищ. ст. важчий. 1. Який має велику вагу. Приклад. 2. перен. Складний.\n',
+    'ВАЖНО, розм. 1. Присл. до важний. Приклад.\n',
+    'ВАЗОНИК, а, ч., зах. Зменш. до вазон. Приклад.\n',
+    'ВАНТАЖИТИ (УВАНТАЖИТИ), жу, жиш, недок., перех. 1. Наповнювати вантажем. Приклад.\n',
+    'ВАХМІСТР , а, ч., військ. У дореволюційній армії — старший унтер-офіцер.\n',
+    'ВАЛОЧОК *, чка, ч. Зменш.-пестл. до валок 1. Приклад.\n',
+    'ВАНДАЛ див. вандали.\n',
+    'ВАЛЬНУТИ 2, ну, нёш, док., перех. і неперех., діал. Кинути. Приклад.\n',
+  ].join('')
+  const { articles } = parseSum20(P, 11)
+  const heads = articles.map(a => a.head)
+  it('relaxed grammar: label after «а, є,», label-only adverbs, a note before «1.», OCR-split head, space before the comma, star, homonym number, «ё», parenthetical variant', () => {
+    for (const h of ['вагарка', 'важелезний', 'важкий', 'важно', 'вазоник', 'вантажити', 'вахмістр', 'валочок', 'вальнути']) expect(heads, h).toContain(h)
+    expect(articles.find(a => a.head === 'важелезний')!.senses![0]).toMatchObject({ labels: ['розм.'], gloss: 'Дуже важкий' })
+    expect(articles.find(a => a.head === 'важкий')!.senses!.map(s => s.n)).toEqual([1, 2])
+    expect(articles.find(a => a.head === 'важно')!.senses![0]).toMatchObject({ labels: ['присл.'], gloss: 'до важний' }); expect(articles.find(a => a.head === 'вазоник')!.senses![0]!.labels).toEqual(['зах.', 'зменш.'])
+  })
+  it('a printed variant (УВАНТАЖИТИ, filed under У) is an entry of the same article and is not range-checked; a cross-reference is not an entry; POS has no variant text', () => {
+    expect(heads).toContain('увантажити'); expect(articles.find(a => a.head === 'увантажити')!.senses).toEqual(articles.find(a => a.head === 'вантажити')!.senses)
+    expect(heads).not.toContain('вандал'); expect(articles.find(a => a.head === 'вантажити')!.pos).not.toMatch(/\(|[А-Я]{3}/)
+  })
+})
+
 describe('GG-7 shared checks', () => {
   it('long definition: the first ≤ 200 characters, word boundary, «…», on every sense; the import keeps it with vol/page and drops nothing else', () => {
     const def = 'вид рослини '.repeat(40).trim()
