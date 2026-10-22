@@ -788,8 +788,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-7 | tests/sum-scan.test.ts › GG-7 shared checks › long definition: the first ≤ 200 characters, word boundary, «…», on every sense; the import keeps it with vol/page and drops nothing else |
 | GG-7 | tests/sum-scan.test.ts › GG-7 СУМ-11 parser › capitalized headwords at a line start with grammar, running head, printed page; quotation lines and garbage skipped |
 | GG-7 | tests/sum-scan.test.ts › GG-7 СУМ-11 parser › CAPITAL headwords, a page without a printed number continues the count, pair headwords with «перех.» |
-| GG-7 | tests/sum-import.test.ts › GG-7 article → headword, stress, POS, vol/page, sense numbers, labels, gloss; the cross-reference and garbage are skipped |
-| GG-7 | tests/sum-import.test.ts › GG-7 the parser output goes through importSum: full text dropped by default, gloss ≤ 200, volume and page in the locator |
 | MM-11 | tests/fx.test.ts › MM-11 «легінь злито з легені легенів і немає діалектного лигінь.png»: the lungs forms never land on легінь › VESUM lists легені / легенів under BOTH lemmas; in легінь they are the е-variant of a doublet cell (легіні ~ легені), marked ik |
 | MM-11 | tests/fx.test.ts › MM-11 «легінь злито з легені легенів і немає діалектного лигінь.png»: the lungs forms never land on легінь › the linker: легені / легенів / легенях go to легеня (the lungs), легіні / легінів / легінь stay on легінь; легінь stays an alternative of the ambiguous plural |
 | MM-11 | tests/fx.test.ts › MM-11 «легінь злито з легені легенів і немає діалектного лигінь.png»: the lungs forms never land on легінь › real data (after a rebuild with MM-11; skips without shards): the легінь card lists no lungs spelling |
