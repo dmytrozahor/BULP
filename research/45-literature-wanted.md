@@ -1,6 +1,6 @@
 # 45. Literature wanted / Список потрібної літератури
 
-Updated / Оновлено: 2026-10-22 (version 2). Regenerated every 3 h by the orchestrator (SPEC 63 LW-1) / перегенерується оркестратором кожні 3 год (SPEC 63 LW-1).
+Updated / Оновлено: 2026-10-22 (version 3). Regenerated every 3 h by the orchestrator (SPEC 63 LW-1) / перегенерується оркестратором кожні 3 год (SPEC 63 LW-1).
 
 English first, then Ukrainian (as in README). Every claim comes from a file in this repository or from a page I opened; «?» marks anything I could not confirm; nothing is invented. «Not found online» only means «not found by me».
 
@@ -8,7 +8,15 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 
 # English
 
-## Changes since last update (2026-10-22)
+## Changes since last update (2026-10-22, version 3)
+
+- **Live build 202610221132-482eb8e (`public/data/boot.json` on origin/mvp):** N = 49.08M full-text tokens; nVocab = 494.7M (corpus about 544M words against Горох 260M); 5,615 witnesses; 477,951 entries (159,861 attested + 318,090 dictionary-only) against Горох 508k.
+- **Tokens by century (centurySizes):** 11th 82.7k; 12th 144k; 13th 38.6k; 14th 20.1k (was 2.1k: the `pum14` charters, entry 21, are now in); 15th 137k; 16th 225k (was 113k); 17th 640k (was 342k); 18th 493k; 19th 4.78M; 20th 41.6M; 21st 0.94M.
+- **Re-ranked:** the 13th, 14th and 15th c. are now the thinnest; the 16th c. is better but still thin next to the 17th. The items that fill the 13th–15th c. move up in the Top 10 (under «Where we stand»). New entry 29 (13th-c. sources, edition still to be identified). The 14th-c. charters № 3 and № 84 are still missing from `pum14`.
+- **No new books were supplied since version 2.** Nothing is moved to section C. Open owner questions unchanged: **Q-SE1** and the СУМ permission letter (research/47).
+- The Галицько-Волинський літопис is not requested again: it is the 13th-c. part of the Hypatian codex, and the Hypatian text is already in the corpus (`pipelines/manifest.ts`, id `hypatian`, 41 izbornyk pages). I did not check how many of the 38.6k 13th-c. tokens it supplies (?).
+
+## Changes in version 2 (2026-10-22, earlier build 202610212253-48e380c)
 
 - **Supplied by the owner (matched by title in `books`):** СУМ-11 (Словник української мови in 11 vols, 11 DjVu files `Білодід … Том 01–11.djvu`) and СУМ-20 (Словник української мови in 20 vols, 15 PDF files: `2sum20.pdf` … `15sum20.pdf`, `sum20_1.pdf`; which volume each file holds is not checked, ?); РИБ т. 4 and т. 19 (noted 2026-10-21); Зизаній «Лексис» and its reprint (`Зизаній_Hrammatika_slovienska_Lieksys.pdf`, `репринт_Зизаній_Лексис_Synonima_slavenorosskaia.pdf`); Квітка «Малоросійські повісті» 1887 т. 1; «Українські грамоти XIV ст.» 1974 (`XIV1974.pdf`). All are in section C. Rights to the СУМ editions: Q-SE1 and the permission letter (research/47).
 - **Still wanted, with a qualifier:** Копистенський «Книга о вірі єдиній» c. 1620 is in `books`, but its OCR is mostly garbage: status **wanted (better copy)** (a better scan or a proofread reprint). Квітка т. 1 is supplied; **т. 2 is wanted** (entry 20). Unchanged and still wanted: РИБ т. 7 (1882, «Апокрисис»), «Українські грамоти XV ст.», «Волинські грамоти XVI ст.», Транквіліон «Євангеліє учительне» 1619, Калліст 1616, the dialect dictionaries (entries 23–28), the Архів Коша, the hetman universals.
@@ -24,24 +32,26 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 
 ## Where we stand (evidence)
 
-- Горох: 508k headwords and a 260M-word frequency corpus (specs/63 DO). Ours (live build 202610212253-48e380c, 2026-10-22): N = 48.46M full-text tokens in 5,516 witnesses; 454,027 entries (159,444 attested + 294,583 dictionary-only) against Горох 508k. Earlier figures (analysis/corpus-10m.md §1): about 205M tokens, of which 46,353,973 full text in 4,336 witnesses.
+- Горох: 508k headwords and a 260M-word frequency corpus (specs/63 DO). Ours (live build 202610221132-482eb8e, 2026-10-22): N = 49.08M full-text tokens in 5,615 witnesses, plus nVocab 494.7M (corpus about 544M); 477,951 entries (159,861 attested + 318,090 dictionary-only) against Горох 508k. By century: 13th 38.6k, 14th 20.1k, 15th 137k, 16th 225k, 17th 640k, 18th 493k. Earlier figures (analysis/corpus-10m.md §1): about 205M tokens, of which 46,353,973 full text in 4,336 witnesses.
 - 86% of corpus tokens come from archive.org OCR (`hv_ia_*`: 40,010,549 of 46.5M, not proofread). Source: analysis/corpus-10m.md §4.1.
 - Epochs (N tokens, §4.3): proto 7,214; old 259,552; early_middle 148,347; middle 463,197; late_middle 195,475; modern 45,280,188 (97.7%). Everything before 1800 is under 1.2M tokens.
 - Regions (analysis/regions.md): Запоріжжя, Херсонщина, Таврія, Донеччина, Луганщина have 0 tokens; the 11 historical territories (Берестейщина … Курщина) have 0 witnesses; Київ has 400k, Галичина 156k, Слобожанщина 100k. specs/GAPS.md adds: Hetmanate chancery, Мазепа and Орлик absent.
 - Genre: the modern bulk is newspaper OCR; proofread book text of 1800–1950 is rare.
 
-**Top 10 now (re-ranked 2026-10-22; centuries: 14th 2,102; 15th 136k; 16th 113k; 17th 342k; 18th 493k):**
+**Top 10 now (re-ranked 2026-10-22, version 3; centuries: 13th 38.6k; 14th 20.1k; 15th 137k; 16th 225k; 17th 640k; 18th 493k):**
 
-1. «Українські грамоти XV ст.» (entry 21): the 15th c. is the thinnest after the 14th; dated, localised charters.
-2. «Волинські грамоти XVI ст.», Київ 1987 (entry 21): the 16th c. has only 113k tokens; Volhynian chancery language.
-3. РИБ т. 7, СПб. 1882, «Апокрисис» (entry 3): the one missing volume of the polemical set; 16th–17th c. prose.
-4. Транквіліон-Ставровецький, «Євангеліє учительне», 1619 (entry 1): popular ПМ language, named most valuable in research/44.
-5. Калліст, «Євангеліє учительноє», Євє 1616 (entry 2): ПМ translation «на руський язик».
-6. Копистенський, «Книга о вірі єдиній», c. 1620 (entry 4): a better scan or proofread reprint; the supplied copy has garbage OCR.
-7. Hetman universals and letters, Мазепа, Орлик, Кочубей (entry 19): 18th-c. chancery is absent.
-8. «Архів Коша Нової Запорозької Січі» (entry 17): Запоріжжя has 0 tokens.
-9. Dialect dictionaries 23–28 (GG-8), Чабаненко «Словник говірок Нижньої Наддніпрянщини» first: the 0-token South-East.
-10. Квітка, «Малоросійські повісті», т. 2 (entry 20): т. 1 is in; Слобожанщина 19th c.
+1. «Українські грамоти XV ст.», Пам'ятки української мови (entry 21; year not confirmed here, ?): the 15th c. has only 137k tokens; dated, localised charters.
+2. 13th-c. sources (entry 29; edition to be identified, ?): the 13th c. has 38.6k tokens, thinner than the 15th–17th.
+3. Clean text of 14th-c. charters № 3 and № 84 (entry 21): 82 of 84 are in `pum14` (20.1k tokens); the supplied 1974 scan holds both, so this is a transcription task, not a new book.
+4. «Волинські грамоти XVI ст.», Київ 1987 (entry 21): the 16th c. is 225k, still thin next to the 17th (640k); Volhynian chancery language.
+5. РИБ т. 7, СПб. 1882, «Апокрисис» (entry 3): the one missing volume of the polemical set; 16th–17th c. prose.
+6. Транквіліон-Ставровецький, «Євангеліє учительне», 1619 (entry 1): popular ПМ language, named most valuable in research/44.
+7. Калліст, «Євангеліє учительноє», Євє 1616 (entry 2): ПМ translation «на руський язик».
+8. Копистенський, «Книга о вірі єдиній», c. 1620 (entry 4): a better scan or proofread reprint; the supplied copy has garbage OCR.
+9. Hetman universals and letters, Мазепа, Орлик, Кочубей (entry 19): 18th-c. chancery is absent.
+10. «Архів Коша Нової Запорозької Січі» (entry 17): Запоріжжя has 0 tokens.
+
+Next, unchanged: dialect dictionaries 23–28 (GG-8), Чабаненко first (the 0-token South-East); Квітка, «Малоросійські повісті», т. 2 (entry 20).
 
 Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs and regions with zero or near-zero tokens; (3) works that unblock a SPEC item; (4) Polish and Church Slavonic items last. Format for every entry unless stated: scan PDF or DjVu at 300 dpi or more; a text layer is a bonus. Drop files into `C:\Users\User\IdeaProjects\dmitrijza\.claude\worktrees\ukr-lexicon-mvp\books`.
 
@@ -50,7 +60,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 - **Q-SE1** (SPEC 63 SE-11): the OCR of three copyrighted dictionaries is parsed, but only the headword, a gloss ≤ 200 characters, the sigla and the quotation dates are stored (СУМ XVI – першої половини XVII ст., Інститут українознавства НАН; «Матеріали до словника XV–XVIII ст.» ed. Німчук, Лиса 2002–2003; Словник мови Шевченка, Інститут мовознавства 1964). May we store more (full definitions, quotation text)? Who holds the rights: НАН, the institutes, the editors (?). Until you confirm, nothing more is stored.
 - **СУМ permission letter** (research/47): СУМ-11 and СУМ-20 are now supplied as scans; the letter asking the rights holder for permission to use them beyond headword-level data is still open.
 
-## A. Wanted from the owner (28 entries)
+## A. Wanted from the owner (29 entries)
 
 | # | Work (author, year, edition wanted) | Why it matters / unblocks | Where it may be found | Status |
 |---|---|---|---|---|
@@ -74,7 +84,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | 18 | Д. Яворницький, further works on Запоріжжя (the corpus already has `yavornytsky1912`, `yavornytsky1923`, 9,349 tokens, Катеринославщина). Which are missing: ? | South-East gap: Запоріжжя, Херсонщина, Таврія, Донеччина, Луганщина are at 0 | nothing verified | wanted |
 | 19 | Hetman chancery: universals and letters of Мазепа, Орлик, Кочубей (research/18; edition: ?) | specs/GAPS.md: absent; late_middle has only 195k tokens | edition not identified (?) | wanted |
 | 20 | Квітка-Основ'яненко, «Малороссійскія повѣсти», Харків 1887, ed. Потебня (CX-6) | Слобожанщина, 19th c.; research/39: no copy found (archive.org, 7 queries) | not found online | wanted **SUPPLIED 2026-10-21:** exactly the wanted edition: «Сочиненія Григорія Ѳедоровича Квитки (Основьяненка). Малороссійскія повѣсти, разсказанныя Грыцькомъ Основьяненкомъ», т. 1, Харьковъ 1887, ed. А. А. Потебня (Харківське земство; Каплан і Бірюков); Russian-language preface, text in the edition's own Ukrainian orthography; т. 1 holds Салдацькый патрет, Маруся, Мертвецькый велык-день, Добре роби добре и буде, Конотопська відьма. Worker `Квітка_Малоросійські_повісті_1887.pdf`; flag `ru` apparatus (research/46). Per-повість first-publication dates still need a cited source. **Dated 2026-10-22 (specs/63 RF-9; first-publication years as stated in the 1887 edition's own notes):** Суплика 1833; Салдацький патрет 1833–34 (almanac «Утренняя Звѣзда» на 1833 г., Харків, printed 1834); Маруся 1834; Мертвецький велик-день 1834; Добре роби, добре й буде and Конотопська відьма 1833–34 (the note gives only the censor mark of the first edition, Москва 4.10.1833, the mark of the 1834 book; no printing year stated). Ingested by `pipelines/ingest-kvitka.ts`; Potebnja's Russian apparatus excluded; none skipped. **Still wanted: т. 2 of the same edition.** |
-| 21 | «Пам'ятки української мови»: «Українські грамоти XIV ст.», «… XV ст.», «Волинські грамоти XVI ст.», «Приватні листи XVIII ст.», Київ 1965, 1974, 1987, 1995 (CX-6) | Dated, localised Middle Ukrainian charters; 353 `pum14` charters are excluded for lack of an author record (corpus-10m §2). Ingest status of the later volumes: ? | catalogue entry only (spec CX-6); no scan found | wanted **SUPPLIED 2026-10-21 (XIV ст. part only):** «Грамоти XIV ст.» (Пам'ятки української мови), упорядкування, вступна стаття, коментарі, словники-покажчики М. М. Пещак; відп. ред. В. М. Русанівський; АН УРСР, Інститут мовознавства ім. О. О. Потебні; Київ: Наукова думка, 1974; 84 charters; file `XIV1974.pdf` → worker `Українські_грамоти_XIV_ст_1974.pdf`. Licence: the 14th-c. texts are public domain; the 1974 apparatus (introduction, commentary, bibliography, variants, indexes) is © Наукова думка 1974 and is excluded entirely. Kyiv, USSR publication: not a `ru` edition. XV ст., Волинські грамоти XVI ст. and the later volumes remain wanted. **Status 2026-10-22 (specs/63 RF-8):** the transcription of this edition on izbornyk.org.ua (82 of 84 charters, 19,020 tokens; № 3 and № 84 missing) was NOT in the corpus: the files were untracked and author `pum14` had no verification record, so the build dropped them (the earlier «already covered» in RF-7 was wrong in effect). Now tracked in `data/seed/pum14/`, author record `pum14`, ingested by `pipelines/ingest-pum.ts` from `ops/worker/ingest.sh`, each charter dated by its own date line; projected 14th-c. tokens 2,102 → 20,083. The 1974 OCR was not used to fill № 3 and № 84 (diplomatic print, Ukrainian apparatus interleaved). Still wanted: XV ст., Волинські грамоти XVI ст., later volumes. |
+| 21 | «Пам'ятки української мови»: «Українські грамоти XIV ст.», «… XV ст.», «Волинські грамоти XVI ст.», «Приватні листи XVIII ст.», Київ 1965, 1974, 1987, 1995 (CX-6) | Dated, localised Middle Ukrainian charters; 353 `pum14` charters are excluded for lack of an author record (corpus-10m §2). Ingest status of the later volumes: ? | catalogue entry only (spec CX-6); no scan found | wanted **SUPPLIED 2026-10-21 (XIV ст. part only):** «Грамоти XIV ст.» (Пам'ятки української мови), упорядкування, вступна стаття, коментарі, словники-покажчики М. М. Пещак; відп. ред. В. М. Русанівський; АН УРСР, Інститут мовознавства ім. О. О. Потебні; Київ: Наукова думка, 1974; 84 charters; file `XIV1974.pdf` → worker `Українські_грамоти_XIV_ст_1974.pdf`. Licence: the 14th-c. texts are public domain; the 1974 apparatus (introduction, commentary, bibliography, variants, indexes) is © Наукова думка 1974 and is excluded entirely. Kyiv, USSR publication: not a `ru` edition. XV ст., Волинські грамоти XVI ст. and the later volumes remain wanted. **Status 2026-10-22 (specs/63 RF-8):** the transcription of this edition on izbornyk.org.ua (82 of 84 charters, 19,020 tokens; № 3 and № 84 missing) was NOT in the corpus: the files were untracked and author `pum14` had no verification record, so the build dropped them (the earlier «already covered» in RF-7 was wrong in effect). Now tracked in `data/seed/pum14/`, author record `pum14`, ingested by `pipelines/ingest-pum.ts` from `ops/worker/ingest.sh`, each charter dated by its own date line; projected 14th-c. tokens 2,102 → 20,083 (confirmed in build 202610221132-482eb8e: 20.1k). The 1974 OCR was not used to fill № 3 and № 84 (diplomatic print, Ukrainian apparatus interleaved). Still wanted: XV ст., Волинські грамоти XVI ст., later volumes. |
 | 22 | Онуфрій Манчук, «Жиб'ївські новелі» (Брустури 2024, 105 p., ISBN 9786178326630) | Hutsul dialect literature (research/40); copyrighted print, needs a legal copy (vocabulary-only use) | no free copy found (research/40) | wanted |
 | 23 | Чабаненко (ed.), «Словник говірок Нижньої Наддніпрянщини», 4 vols (Запоріжжя 1992). Headwords: not confirmed (?) | SPEC 63 GG-8: headword plus a short gloss (© dictionary, same policy as SE); Запоріжжя/Херсонщина/Таврія have 0 tokens (analysis/regions.md) | searched archive.org (0 hits), web search (no scan); not found online | wanted |
 | 24 | Онишкевич, «Словник бойківських говірок», ч. 1–2 (Київ 1984–85). Headwords: not confirmed (?) | GG-8, Boyko area | archive.org: 0 hits; web search: citations only, no scan | wanted |
@@ -82,6 +92,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 | 26 | Сабадош, «Словник закарпатської говірки села Сокирниця» (2008; 2nd ed. 2021, over 22.2 thousand dialect words per a search summary, unopened). The village name in the owner's brief («Холмець») is not confirmed (?) | GG-8, Transcarpathia; the largest postwar dialect dictionary of its kind | not found as a PDF; dspace.uzhnu.edu.ua (UzhNU repository, robots.txt not read) is where to ask | wanted |
 | 27 | «Словник гуцульських говірок» (2019?). The exact title is not confirmed (?): search found «Гуцульська діалектна лексика та фраземіка в українській художній мові» vol. 1 (2019) and Астаф'єва–Воронич, «Словник гуцульських говірок Річки та Яворова» (2014) | GG-8, Hutsul area (research/40) | no full text found | wanted |
 | 28 | «Словник буковинських говірок», ed. Гуйванюк (Чернівці: Рута, 2005, 688 pp.; the editor is from a search summary, the brief's «Загнітко» is not confirmed (?)) | GG-8, Bukovyna | no full text found | wanted |
+| 29 | 13th-c. Ruthenian texts other than the Hypatian codex (the Галицько-Волинський літопис is already in via `hypatian`). Candidates and editions: **not identified (?)**; I name no edition here | The 13th c. has 38.6k tokens (centurySizes, build 202610221132-482eb8e), thinner than the 15th–17th | not searched yet | wanted (edition to be identified) |
 
 ## B. We'll harvest (online, no owner action; 16 entries)
 
@@ -122,14 +133,22 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 
 # Українською
 
-## Зміни з останнього оновлення (2026-10-22)
+## Зміни з останнього оновлення (2026-10-22, версія 3)
+
+- **Жива збірка 202610221132-482eb8e (`public/data/boot.json` в origin/mvp):** N = 49,08 млн токенів повного тексту; nVocab = 494,7 млн (корпус ≈ 544 млн слів проти 260 млн у Гороха); 5 615 свідків; 477 951 стаття (159 861 засвідчена + 318 090 лише зі словників) проти 508 тис. у Гороха.
+- **Токени за століттями:** XI 82,7 тис.; XII 144 тис.; XIII 38,6 тис.; XIV 20,1 тис. (було 2,1 тис.: грамоти `pum14`, запис 21, тепер у корпусі); XV 137 тис.; XVI 225 тис. (було 113 тис.); XVII 640 тис. (було 342 тис.); XVIII 493 тис.; XIX 4,78 млн; XX 41,6 млн; XXI 0,94 млн.
+- **Переранжовано:** найтонші тепер XIII, XIV і XV ст.; XVI ст. краще, але все ще тонке порівняно з XVII. Джерела XIII–XV ст. піднято у Топ-10. Новий запис 29 (джерела XIII ст., видання ще треба визначити). Грамот XIV ст. № 3 і № 84 у `pum14` досі немає.
+- **Нових книг після версії 2 не подано.** До розділу В нічого не переносилось. Питання власнику без змін: **Q-SE1** і лист-дозвіл на СУМ (research/47).
+- Галицько-Волинський літопис повторно не просимо: це частина Іпатіївського кодексу XIII ст., а Іпатіївський текст уже в корпусі (`pipelines/manifest.ts`, id `hypatian`, 41 сторінка izbornyk). Скільки з 38,6 тис. токенів XIII ст. він дає, не перевіряв (?).
+
+## Зміни у версії 2 (2026-10-22, попередня збірка 202610212253-48e380c)
 
 - **Подано власником (збіг за назвою в `books`):** СУМ-11 (11 DjVu) і СУМ-20 (15 PDF: `2sum20.pdf` … `15sum20.pdf`, `sum20_1.pdf`); РИБ т. 4 і т. 19; Зизаній «Лексис» і передрук; Квітка «Малоросійські повісті» 1887, т. 1; «Українські грамоти XIV ст.» 1974. Усе в розділі В. Права на СУМ: Q-SE1 і лист-дозвіл (research/47).
 - **Досі потрібно:** Копистенський «Книга о вірі єдиній» (бл. 1620) є в `books`, але OCR здебільшого сміття: «потрібно (кращий примірник)», тобто кращий скан або вичитаний передрук. Квітка т. 1 подано, **потрібен т. 2** (запис 20). Також РИБ т. 7 (1882, «Апокрисис»); «Українські грамоти XV ст.»; «Волинські грамоти XVI ст.»; Транквіліон «Євангеліє учительне» 1619; Калліст 1616; діалектні словники (23–28); Архів Коша; гетьманські універсали.
 - **Стан корпусу (збірка 202610212253-48e380c):** N = 48,46 млн токенів повного тексту; 5 516 свідків; 454 027 статей (159 444 засвідчених + 294 583 лише зі словників) проти 508 тис. у Гороха. За століттями: XIV 2 102 (≈ 20 тис. після `pum14`), XV 136 044, XVI 113 006, XVII 342 145, XVIII 493 223. Після XIV ст. найтонші XV і XVI ст.
 - Питання власнику збережено: **Q-SE1** і лист-дозвіл на СУМ (research/47).
 
-**Топ-10 (2026-10-22):** 1) «Українські грамоти XV ст.»; 2) «Волинські грамоти XVI ст.» (1987); 3) РИБ т. 7 «Апокрисис» (1882); 4) Транквіліон, «Євангеліє учительне» 1619; 5) Калліст 1616; 6) Копистенський бл. 1620, кращий скан; 7) гетьманські універсали (Мазепа, Орлик, Кочубей); 8) «Архів Коша Нової Запорозької Січі»; 9) діалектні словники 23–28 (спершу Чабаненко); 10) Квітка, т. 2.
+**Топ-10 (2026-10-22, версія 3):** 1) «Українські грамоти XV ст.»; 2) джерела XIII ст. (запис 29, видання ще визначити); 3) чистий текст грамот XIV ст. № 3 і № 84 (скан 1974 р. подано, потрібна транскрипція); 4) «Волинські грамоти XVI ст.» (1987); 5) РИБ т. 7 «Апокрисис» (1882); 6) Транквіліон, «Євангеліє учительне» 1619; 7) Калліст 1616; 8) Копистенський бл. 1620, кращий скан; 9) гетьманські універсали (Мазепа, Орлик, Кочубей); 10) «Архів Коша Нової Запорозької Січі». Далі без змін: діалектні словники 23–28 (спершу Чабаненко); Квітка, т. 2.
 
 ## Зміни з 2026-10-21 (перша версія)
 
@@ -140,7 +159,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 
 ## Стан (докази)
 
-- Горох: 508 тис. заголовних слів, корпус 260 млн слів. У нас (збірка 202610212253-48e380c): 48,46 млн токенів повного тексту у 5 516 свідках; 454 027 статей. Раніше: ≈205 млн токенів, з них 46 353 973 повного тексту у 4 336 свідках.
+- Горох: 508 тис. заголовних слів, корпус 260 млн слів. У нас (збірка 202610221132-482eb8e): 49,08 млн токенів повного тексту у 5 615 свідках, плюс nVocab 494,7 млн (корпус ≈ 544 млн); 477 951 стаття. За століттями: XIII 38,6 тис., XIV 20,1 тис., XV 137 тис., XVI 225 тис., XVII 640 тис., XVIII 493 тис. Раніше: ≈205 млн токенів, з них 46 353 973 повного тексту у 4 336 свідках.
 - 86% токенів корпусу з OCR газет archive.org (не вичитано).
 - Епохи: proto 7 214; old 259 552; early_middle 148 347; middle 463 197; late_middle 195 475; modern 45 280 188 (97,7%). Усе до 1800 р. менше 1,2 млн токенів.
 - Регіони: Запоріжжя, Херсонщина, Таврія, Донеччина, Луганщина мають 0; 11 історичних територій мають 0 свідків; Київ 400 тис., Галичина 156 тис., Слобожанщина 100 тис. Гетьманська канцелярія, Мазепа й Орлик відсутні (GAPS).
@@ -153,7 +172,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 - **Q-SE1** (SPEC 63 SE-11): OCR трьох словників під © розібрано, але зберігаємо лише заголовне слово, глосу ≤ 200 знаків, сигли й дати цитат (СУМ XVI – 1-ї пол. XVII ст.; «Матеріали до словника XV–XVIII ст.»; Словник мови Шевченка). Чи можна зберігати більше (повні дефініції, текст цитат)? Правовласники: НАН, інститути, упорядники (?). До вашого підтвердження більше нічого не зберігається.
 - **Лист-дозвіл на СУМ** (research/47): СУМ-11 і СУМ-20 подано як скани; лист правовласнику щодо використання понад заголовні слова ще відкритий.
 
-## А. Потрібно від власника (22 записи; нумерація як в англійській таблиці)
+## А. Потрібно від власника (29 записів; нумерація як в англійській таблиці)
 
 Якщо не сказано інакше: статус «потрібно», «не знайдено онлайн».
 
@@ -179,6 +198,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 20. (потрібен також т. 2) Квітка-Основ'яненко, «Малороссійскія повѣсти», Харків 1887, ред. Потебня (CX-6): копії не знайдено. **ПОДАНО 2026-10-21:** саме потрібне видання: Квітка (Основьяненко), «Малороссійскія повѣсти», т. 1, Харьковъ 1887, ред. А. А. Потебня (Харківське земство); передмова російською, текст — власна українська орфографія видання. Прапорець `ru`: apparatus (research/46). Дати першодруку кожної повісті ще потребують джерела з цитатою. **Датовано 2026-10-22 (specs/63 RF-9; роки першого друку за примітками самого видання 1887 р.):** Суплика 1833; Салдацький патрет 1833–34 (альманах «Утренняя Звѣзда» на 1833 р., Харків, друк 1834); Маруся 1834; Мертвецький велик-день 1834; Добре роби, добре й буде та Конотопська відьма 1833–34 (примітка називає лише цензурну помітку першого видання, Москва 4.10.1833, — помітку книги 1834 р.; рік друку прямо не названо). Завантаження: `pipelines/ingest-kvitka.ts`; російський апарат Потебні виключено; жодної не пропущено.
 21. «Пам'ятки української мови»: грамоти XIV, XV ст., Волинські грамоти XVI ст., Приватні листи XVIII ст., Київ 1965, 1974, 1987, 1995 (CX-6). **ПОДАНО 2026-10-21 (лише XIV ст.):** «Грамоти XIV ст.», упорядкування, вступна стаття, коментарі, словники-покажчики М. М. Пещак; відп. ред. В. М. Русанівський; АН УРСР, Інститут мовознавства ім. О. О. Потебні; Київ: Наукова думка, 1974; 84 грамоти. Ліцензія: тексти XIV ст. — суспільне надбання; апарат видання 1974 р. (вступ, коментарі, бібліографія, різночитання, покажчики) — © Наукова думка, виключений повністю. Київ, УРСР: не `ru`. XV ст., Волинські грамоти XVI ст. та пізніші томи й надалі потрібні. **Стан 2026-10-22 (specs/63 RF-8):** транскрипція цього видання на izbornyk.org.ua (82 з 84 грамот, 19 020 токенів; немає № 3 і № 84) досі НЕ входила до корпусу: файли були неподані до репозиторію, а автор `pum14` не мав запису верифікації, тож збірка їх відкидала. Тепер файли в `data/seed/pum14/`, запис автора `pum14`, завантаження `pipelines/ingest-pum.ts` через `ops/worker/ingest.sh`, кожна грамота датована власним рядком дати; XIV ст.: 2 102 → 20 083 токени. OCR 1974 р. для № 3 і № 84 не використано. XV ст., Волинські грамоти XVI ст. та пізніші томи й надалі потрібні.
 22. Манчук, «Жиб'ївські новелі» (Брустури 2024, ISBN 9786178326630): гуцульська говірка, потрібна легальна копія.
+29. Тексти XIII ст., крім Іпатіївського кодексу (Галицько-Волинський літопис уже в корпусі через `hypatian`): кандидатів і видань не визначено (?), жодного видання не називаю. XIII ст. має 38,6 тис. токенів.
 23–28. Діалектні словники (SPEC 63 GG-8): Чабаненко, «Словник говірок Нижньої Наддніпрянщини» (4 т., 1992); Онишкевич, «Словник бойківських говірок» (1984–85); Лисенко, «Словник поліських говорів» (1974); Сабадош, словник закарпатської говірки (с. Сокирниця? 2008/2021, понад 22,2 тис. слів за пошуковою довідкою); гуцульські говірки (назву уточнити ?); «Словник буковинських говірок» (Рута 2005, ред. Гуйванюк ?). Онлайн-скан я не знайшов (archive.org: 0 збігів). Кількість заголовних слів не підтверджена (?). Опрацьовувати як інші © словники: заголовне слово + коротка глоса.
 
 ## Б. Зберемо самі (онлайн; 15 записів)
