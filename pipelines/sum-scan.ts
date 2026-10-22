@@ -9,7 +9,7 @@
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { resolve } from 'node:path'
+import { basename, resolve } from 'node:path'
 import { parseSum11 } from '../core/sum11-parse.ts'
 import { parseSum20 } from '../core/sum20-parse.ts'
 import { passRate, type SumStats } from '../core/sum-article.ts'
@@ -22,7 +22,10 @@ import { writeJsonAtomic } from './robust.ts'
 const VER = 2
 export function textOf(dict: SumDict, file: string): string {
   const out = dict === 'sum11' ? execFileSync('djvutxt', [file], { maxBuffer: 1 << 30 }) : execFileSync('pdftotext', ['-enc', 'UTF-8', file, '-'], { maxBuffer: 1 << 30 })
-  return out.toString('utf8')
+  const t = out.toString('utf8')
+  // a scan without a text layer: the page-by-page OCR made by the worker (~/work/ocr-sum/<name>.txt, pages joined by a form feed; never committed)
+  const ocr = resolve(process.env.OCR_SUM ?? resolve(homedir(), 'work/ocr-sum'), basename(file).replace(/\.[^.]+$/, '') + '.txt')
+  return t.length < 50_000 && existsSync(ocr) ? readFileSync(ocr, 'utf8') : t
 }
 
 export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only?: number): { vols: Record<string, { stats: SumStats; passRate: number }>; articles: number } {
@@ -34,7 +37,7 @@ export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only
     const vol = Number(m[1]); if (only !== undefined && vol !== only) continue
     const src = resolve(booksDir, f), size = statSync(src).size, jl = resolve(outDir, `t${m[1]}.jsonl`), sf = resolve(outDir, `t${m[1]}.stats.json`)
     if (existsSync(jl) && existsSync(sf)) {
-      try { const j = JSON.parse(readFileSync(sf, 'utf8')) as { srcSize: number; ver?: number; stats: SumStats }; if (j.srcSize === size && j.ver === VER) { vols[m[1]!] = { stats: j.stats, passRate: passRate(j.stats) }; console.log(`skip t${m[1]} (done)`); continue } } catch { /* torn: redo */ }
+      try { const j = JSON.parse(readFileSync(sf, 'utf8')) as { srcSize: number; ver?: number; stats: SumStats }; if (j.srcSize === size && j.ver === VER && j.stats.pages > 0) { vols[m[1]!] = { stats: j.stats, passRate: passRate(j.stats) }; console.log(`skip t${m[1]} (done)`); continue } } catch { /* torn: redo */ }
     }
     const t0 = Date.now(), r = (dict === 'sum11' ? parseSum11 : parseSum20)(textOf(dict, src), vol)
     const lines = (r.articles as SumArticleIn[]).map(a => JSON.stringify(a)).join('\n')
