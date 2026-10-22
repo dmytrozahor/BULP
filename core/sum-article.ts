@@ -55,7 +55,7 @@ export function joinLines(lines: string[]): string {
 }
 
 /** a headword that may become an entry: lower-case Ukrainian letters, one apostrophe or hyphen between letters, a vowel, no run of 5 consonants */
-export const headOk = (h: string): boolean => /^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(h) && h.length >= 2 && h.length <= 32 && /[аеєиіїоуюя]/.test(h) && !/[бвгґджзйклмнпрстфхцчшщ]{5,}/.test(h)
+export const headOk = (h: string): boolean => /^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(h) && h.length >= 2 && h.length <= 32 && /[аеєиіїоуюя]/.test(h) && !/[бвгґджзйклмнпрстфхцчшщ]{5,}/.test(h) && !/[бвгґджзклмнпрстфхцчшщ][йї]/.test(h)   // «й»/«ї» right after a consonant is the OCR of a stress mark («драбинйк», «заснїти»)
 
 /** sense numbers must run 1, 2, 3 … (a page number inside a quotation is not a sense); a body without «1.» is one sense */
 export function splitNumbered(body: string): { n: number; text: string }[] {

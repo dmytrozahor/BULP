@@ -85,7 +85,7 @@ describe('GG-7 shared checks', () => {
   it('page head, alphabet range, headword check, sense numbering, labels', () => {
     expect(pageHead('ВИКЛЮВАТИ\n\n299\n\nВИКОВЗАТИ\n\nтекст')).toMatchObject({ lo: 'ВИКЛЮВАТИ', hi: 'ВИКОВЗАТИ', page: 299, rest: ['текст'] })
     expect(inPageRange('виключати', 'ВИКЛЮВАТИ', 'ВИКОВЗАТИ')).toBe(true); expect(inPageRange('маслина', 'ВИКЛЮВАТИ', 'ВИКОВЗАТИ')).toBe(false); expect(inPageRange('маслина', 'Вагдло', undefined)).toBe(true)
-    expect(headOk("м'ясо")).toBe(true); expect(headOk('ж-к')).toBe(false); expect(headOk('ззззз')).toBe(false); expect(headOk('аб1')).toBe(false)
+    expect(headOk("м'ясо")).toBe(true); expect(headOk('ж-к')).toBe(false); expect(headOk('ззззз')).toBe(false); expect(headOk('аб1')).toBe(false); expect(headOk('драбинйк')).toBe(false); expect(headOk('війна')).toBe(true); expect(headOk("об'їхати")).toBe(true)
     expect(splitNumbered('1. а 12. б 2. в 3. г').map(s => s.n)).toEqual([1, 2, 3])
     expect(senseOf('заст. або ірон. Той, хто торгує.').labels).toEqual(['заст.', 'ірон.'])
     expect(senseOf('перен. розм. Щось: приклад.').labels).toEqual(['перен.', 'розм.']); expect(senseOf('тільки недок. Пас. до виключати. Приклад.').labels).toEqual(['тільки недок.'])

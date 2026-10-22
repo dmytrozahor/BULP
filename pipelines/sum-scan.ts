@@ -18,6 +18,8 @@ import { runSumImport } from './sum-import.ts'
 import { writeJsonAtomic } from './robust.ts'
 
 
+/** bump when a parser changes: finished volumes are parsed again */
+const VER = 2
 export function textOf(dict: SumDict, file: string): string {
   const out = dict === 'sum11' ? execFileSync('djvutxt', [file], { maxBuffer: 1 << 30 }) : execFileSync('pdftotext', ['-enc', 'UTF-8', file, '-'], { maxBuffer: 1 << 30 })
   return out.toString('utf8')
@@ -32,12 +34,12 @@ export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only
     const vol = Number(m[1]); if (only !== undefined && vol !== only) continue
     const src = resolve(booksDir, f), size = statSync(src).size, jl = resolve(outDir, `t${m[1]}.jsonl`), sf = resolve(outDir, `t${m[1]}.stats.json`)
     if (existsSync(jl) && existsSync(sf)) {
-      try { const j = JSON.parse(readFileSync(sf, 'utf8')) as { srcSize: number; stats: SumStats }; if (j.srcSize === size) { vols[m[1]!] = { stats: j.stats, passRate: passRate(j.stats) }; console.log(`skip t${m[1]} (done)`); continue } } catch { /* torn: redo */ }
+      try { const j = JSON.parse(readFileSync(sf, 'utf8')) as { srcSize: number; ver?: number; stats: SumStats }; if (j.srcSize === size && j.ver === VER) { vols[m[1]!] = { stats: j.stats, passRate: passRate(j.stats) }; console.log(`skip t${m[1]} (done)`); continue } } catch { /* torn: redo */ }
     }
     const t0 = Date.now(), r = (dict === 'sum11' ? parseSum11 : parseSum20)(textOf(dict, src), vol)
     const lines = (r.articles as SumArticleIn[]).map(a => JSON.stringify(a)).join('\n')
     writeJsonAtomic(jl, lines ? lines + '\n' : '')
-    writeJsonAtomic(sf, JSON.stringify({ srcSize: size, stats: r.stats, passRate: passRate(r.stats) }))
+    writeJsonAtomic(sf, JSON.stringify({ srcSize: size, ver: VER, stats: r.stats, passRate: passRate(r.stats) }))
     vols[m[1]!] = { stats: r.stats, passRate: passRate(r.stats) }
     console.log(`t${m[1]}: ${r.stats.pages} pages, ${r.stats.entries} entries, ${r.stats.senses} senses, pass rate ${passRate(r.stats)} (${Math.round((Date.now() - t0) / 1000)} s)`)
   }
