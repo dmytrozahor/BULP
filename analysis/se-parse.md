@@ -1,6 +1,6 @@
 # Historical-dictionary parse (SPEC 63 SE-11)
 
-Generated 2026-10-21 by `npm run parse:se` (pipelines/parse-se-dicts.ts); do not edit. Reused unchanged: 0.
+Generated 2026-10-22 by `npm run parse:se` (pipelines/parse-se-dicts.ts); do not edit. Reused unchanged: 10.
 
 Pass rate = passed / (candidate articles − cross-references). An article is skipped when its OCR score is below the dictionary threshold or its headword does not look like a word; nothing garbled is emitted. A headword is only a key: the build attaches a row to an existing card.
 
