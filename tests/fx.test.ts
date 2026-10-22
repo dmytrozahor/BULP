@@ -223,7 +223,7 @@ describe('MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows 
 
 describe('FX-2 correspondences', () => {
   it('every row has a verbatim ЕСУМ quote and a goroh URL', () => {
-    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.includes('лигінь') ? /^https:\/\/archive\.org\/details\// : /^https:\/\/goroh\.pp\.ua\//) }
+    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.some(v => v === 'лигінь' || v === 'ню') ? /^https:\/\// : /^https:\/\/goroh\.pp\.ua\//) }
     expect(correspondenceFor('азъ')!.modern).toBe('я'); expect(correspondenceFor('есмь')).toBeUndefined()   // no fetched quote → no row
   })
   it('азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я', () => {
@@ -663,5 +663,76 @@ describe('MM-16c real case «бажанєм» (71 tokens, Франко 1893 / 19
     const e = E({ бажанням: [H('бажання', 'noun:inanim:n:v_oru')] }), r = linkOptions(T({ raw: 'бажанєм', lang: 'uk', oldI: false, orth: 'желехівка' }), e)
     expect(r && chooseLemma(r.opts, new Map())?.lemma).toBe('бажання')
     expect(featureChips(['ORTH-ZHEL-JE-OBL'], { orth: 'желехівка', authorRegion: 'Галичина', edition: 'Львів 1893' })[0]!.qualifier).toBe('galician')
+  })
+})
+
+// ───────────────────────── MM-18 … MM-21 (owner remarks 2026-10-22; sources: the owner's OCR of Огоновський 1889, Смаль-Стоцький 1892 / 1914) ─────────────────────────
+import { withGal, toIish, toUvati, splitHyphenParticle, GAL_FOLDS } from '../core/gal-folds.ts'
+import { withSoftAdj } from '../core/adj-soft.ts'
+
+const Eg = (t: Record<string, VesumHit[]>): Env => E(t, {
+  derive: (s, oldI) => { const d = withSoftAdj(deriveRaw(s, { oldI })); return { ...d, candidates: withGal(d.candidates) } },
+  fold: (s, o) => withGal(foldRaw(s, o)),
+})
+const linkG = (e: Env, t: Partial<TypeCtx>) => { const r = linkOptions(T({ lang: 'uk', oldI: false, ...t }), e); return r ? chooseLemma(r.opts, new Map()) : undefined }
+
+describe('MM-18 «скорійше не прив’язано до скоріше»: -ійш- → -іш- (Смаль-Стоцький 1914 §§ 62–63: «-ший, -ї(й)ший, -іщий»)', () => {
+  const e = Eg({ скоріше: [H('скоро', 'adv:compr')], новіший: [H('новий', 'adj:m:v_naz:compr')], найсвятіша: [H('святий', 'adj:f:v_naz:superl')] })
+  it('скорійше → скоріше, новійший → новіший, найсвятійша → найсвятіша: one extra branch, the cited fold id in the trace; VESUM decides', () => {
+    expect(toIish('скорійше')).toBe('скоріше'); expect(toIish('новійший')).toBe('новіший'); expect(toIish('новий')).toBe('новий')
+    const c = linkG(e, { raw: 'скорійше' })!; expect(c.lemma).toBe('скоро'); expect(c.cand.trace).toContain('ORTH-ADJ-IISH'); expect(c.cand.branches).toBe(1)
+    expect(linkG(e, { raw: 'новійший' })!.lemma).toBe('новий'); expect(linkG(e, { raw: 'найсвятійша' })!.lemma).toBe('святий')
+    expect(GAL_FOLDS.find(f => f.id === 'ORTH-ADJ-IISH')!.cite.quote).toContain('-ї(й)ший')
+  })
+  it('a word VESUM lists as spelled keeps its plain link (no fold is needed)', () => { expect(linkG(Eg({ скорійше: [H('скорійше', 'adv')], скоріше: [H('скоро', 'adv:compr')] }), { raw: 'скорійше' })!.lemma).toBe('скорійше') })
+  it('real data (after a rebuild with MM-18; skips without shards): the скоро card lists скорійше', () => {
+    if (!hasData()) return
+    const gen = (JSON.parse(readFileSync(fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)), 'utf8')) as { generated: string }).generated
+    if (gen < '2026-10-23') return
+    const c = readFull().find(x => x.lemma === 'скоро'); if (!c) return
+    expect(c.forms.map(f => f.raw.toLowerCase())).toContain('скорійше')
+  })
+})
+
+describe('MM-19 «шановати теж має вести на шанувати»: -ова-ти → -ува-ти (Огоновський 1889 § 38: «-ува-ти замість -ова-ти»; Смаль-Стоцький 1892: «купувати (не: куповати)»)', () => {
+  const e = Eg({ шанувати: [H('шанувати', 'verb:imperf:inf')], арендували: [H('арендувати', 'verb:imperf:past:p')], ночовати: [H('ночовати', 'verb:imperf:inf')], ночувати: [H('ночувати', 'verb:imperf:inf')] })
+  it('шановати → шанувати, арендовали → арендували (the cited fold, one branch); the cause is the present stem (Огоновський), not окання', () => {
+    expect(toUvati('шановати')).toBe('шанувати'); expect(toUvati('арендовав')).toBe('арендував'); expect(toUvati('шанувати')).toBe('шанувати')
+    const c = linkG(e, { raw: 'шановати' })!; expect(c.lemma).toBe('шанувати'); expect(c.cand.trace).toContain('ORTH-VERB-OVATI')
+    expect(linkG(e, { raw: 'арендовали' })!.lemma).toBe('арендувати')
+    expect(GAL_FOLDS.find(f => f.id === 'ORTH-VERB-OVATI')!.cite.quote).toContain('замість -ова-ти')
+  })
+  it('both forms in VESUM (ночовати ~ ночувати, Огоновський p. 39): the plain spelling wins the tie', () => { expect(linkG(e, { raw: 'ночовати' })!.lemma).toBe('ночовати') })
+})
+
+describe('MM-20 «Прийми-ж теж має вести до приймати»: a hyphenated clitic particle is split off; VESUM decides first', () => {
+  const e = Eg({ прийми: [H('прийняти', 'verb:perf:impr:s:2')], було: [H('бути', 'verb:imperf:past:n')], 'будь-хто': [H('будь-хто', 'noun:anim:m:v_naz:pron:def')] })
+  it('Прийми-ж → прийняти (the imperative of the PERFECTIVE; the imperfective pair приймати is not the lemma), було-б → бути; the original token stays, the trace names the step', () => {
+    expect(splitHyphenParticle('прийми-ж')).toEqual({ host: 'прийми', particle: 'ж' })
+    const c = linkG(e, { raw: 'Прийми-ж' })!; expect(c.lemma).toBe('прийняти'); expect(c.cand.trace[0]).toBe('ORTH-PART-HYPH')
+    expect(linkG(e, { raw: 'було-б' })!.lemma).toBe('бути')
+  })
+  it('будь-хто (a VESUM word) is not split; де-не-де has no particle tail', () => {
+    expect(linkG(e, { raw: 'будь-хто' })!.lemma).toBe('будь-хто'); expect(splitHyphenParticle('де-не-де')).toBeUndefined()
+    expect(GAL_FOLDS.find(f => f.id === 'ORTH-PART-HYPH')!.cite.quote).toContain('Пишемо завсїди окремо: би, же, но, ся, то')
+  })
+})
+
+describe('MM-21 «ню прив’язалося лише до французького слова, але є й діалектне слово»: «ню» = вона (acc. after a preposition) in a Желехівка witness only', () => {
+  const e = Eg({ ню: [H('ню', 'noun:inanim:n:v_naz:nv')], вона: [H('вона', 'noun:anim:f:v_naz:pron:pers:3')] })
+  it('Желехівка witness: ню → вона (Огоновський 1889: «въ ню; при нѣй, до неи»); any other witness keeps the loan', () => {
+    const a = linkG(e, { raw: 'ню', orth: 'желехівка' })!; expect(a.lemma).toBe('вона'); expect(a.cls).toBe('pron'); expect(a.corr!.row.quote).toContain('въ ню')
+    expect(linkG(e, { raw: 'ню' })!.lemma).toBe('ню'); expect(linkG(e, { raw: 'ню', orth: 'ярижка' })!.lemma).toBe('ню')
+  })
+})
+
+describe('MM-18…20 feature chips: Galician author → «галицька форма»; OCR edition of a non-Galician author → neutral, no dialect claimed', () => {
+  it('chips carry the cited fold quote and the qualifier', () => {
+    for (const rule of ['ORTH-ADJ-IISH', 'ORTH-VERB-OVATI', 'ORTH-PART-HYPH']) {
+      const g = featureChips([rule], { authorRegion: 'Галичина' })[0]!, n = featureChips([rule], { authorRegion: 'Київ', year: 1900 })[0]!
+      expect(g.qualifier, rule).toBe('galician'); expect(n.qualifier, rule).toBe('neutral'); expect(n.cite.quote.length).toBeGreaterThan(20); expect(n.dialect).toBeUndefined()
+    }
+    expect(featureChips(['ORTH-ADJ-IISH'], { orth: 'ярижка', authorRegion: 'Київ', year: 1650 })[0]!.text).toBe('давніша форма')
+    expect(featureChips(['ORTH-ADJ-IISH'], { orth: 'желехівка', edition: 'Львів 1893, НТШ', authorRegion: 'Слобожанщина' })[0]!.text).toContain('не діалект автора')
   })
 })

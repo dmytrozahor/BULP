@@ -61,6 +61,8 @@ export const SOURCES: Record<string, Source> = {
   LEMKO:  { title: 'Лемківський Словничок (lemko.org; укладачів не названо — самоідентифікацію авторів не перевірено, P-2)', url: 'https://lemko.org/lemko2/slovnyk.html' },
   IEU:    { title: 'Internet Encyclopedia of Ukraine (CIUS; Encyclopedia of Ukraine, 1984–93, updated 2018–19; Енциклопедія українознавства)', url: 'https://www.encyclopediaofukraine.com', year: '1993' },
   NATEARTH: { title: 'Natural Earth 10m admin-1 states/provinces (public domain)', url: 'https://www.naturalearthdata.com/about/terms-of-use/', license: 'public domain' },
+  SMALST: { title: 'Смаль-Стоцький С., Гартнер Ф.: Граматика руської мови (1914; 1919) і Руска правопись зі словарцем (1892); власні скани, OCR на worker ~/work/ocr (цитати — з OCR, помилки розпізнавання збережено)', url: 'https://uk.wikipedia.org/wiki/Смаль-Стоцький_Степан', year: '1914' },
+  OGON:   { title: 'Огоновський О. Граматика руської мови. Львів, 1889; власний скан, OCR на worker ~/work/ocr (цитати — з OCR)', url: 'https://uk.wikipedia.org/wiki/Огоновський_Омелян', year: '1889' },
   SYNYAV: { title: 'Синявський О. Норми української літературної мови, 1941 (розд. 5 «Займенник», r2u.org.ua)', url: 'https://r2u.org.ua/guides/synyavsky/slovozmina_zaymennyk', year: '1941' },
   GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
   ARKUSHYN: { title: 'Аркушин Г. Л. Словник західнополіських говірок. У 2 т. Луцьк: Вежа, 2000 (скан: archive.org slzhdplhv; цитування, один заголовок + уривок тлумачення)', url: 'https://archive.org/details/slzhdplhv', year: '2000' },

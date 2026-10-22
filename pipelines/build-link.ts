@@ -18,6 +18,7 @@ import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 import type { AltLink } from '../core/vesum-alt.ts'
+import { PART_HYPH_FOLD, splitHyphenParticle } from '../core/gal-folds.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -155,11 +156,22 @@ export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: T
   const o = key(t.raw).includes('о') ? r.opts.filter(x => !(ETYMON_VOWEL[x.id] && x.cand.trace.includes('R10'))) : r.opts
   return o.length === r.opts.length ? r : o.length ? { ...r, opts: o } : undefined
 }
-export function linkOptions(t: TypeCtx, env: Env) { return remapAlt(etymonVowelGate(t, preferCommon(t, linkOptionsPrep(t, env))), env) }
+/** MM-20: a token that does not link whole and ends in a hyphenated clitic particle (прийми-ж, було-б, ходи-но) links through its HOST word (core/gal-folds.ts ORTH-PART-HYPH); VESUM decides first,
+ *  so будь-хто, де-не-де and every hyphenated word VESUM lists keep their own link. The step is recorded in the trace. */
+export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
+  const r = remapAlt(etymonVowelGate(t, preferCommon(t, linkOptionsPrep(t, env))), env)
+  if (r) return r
+  const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined
+  if (!sp) return undefined
+  const h = linkOptions({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)
+  const add = (c: Candidate): Candidate => ({ ...c, trace: [PART_HYPH_FOLD.id, ...c.trace], branches: c.branches + 1 })
+  return h ? { ...h, opts: h.opts.map(o => ({ ...o, cand: add(o.cand), own: add(o.own) })) } : undefined
+}
 function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)
   // MM-2: a lower-case token spelled exactly like a dictionary-cited variant (хомик, хомік) links to the standard card (хом'як), never to the surname «Хомік»
-  const vr = t.raw && t.raw === t.raw.toLowerCase() ? variantFor(k1) : undefined
+  const vr0 = t.raw && t.raw === t.raw.toLowerCase() ? variantFor(k1) : undefined
+  const vr = vr0 && (!vr0.orth || (t.orth && vr0.orth.includes(t.orth))) ? vr0 : undefined   // MM-21: a variant row may be restricted to witnesses of an orthography (ню = вона only in Желехівка texts)
   if (vr) {
     const mk = key(vr.modern), own: Candidate = { form: k1, trace: [], branches: 0 }
     const opts = gatedBy(t, (env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && vesumClass(h.tags) === vr.cls && !/:prop\b/.test(':' + h.tags))
@@ -227,7 +239,8 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
     const row = correspondenceFor(l); if (row) for (const c of env.derive(row.modern, false).candidates) out.push(key(c.form))
   }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, false).candidates) out.push(key(c.form)) }
-  if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr) out.push(key(vr.modern)) }   // MM-2
+  if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr && (!vr.orth || (t.orth && vr.orth.includes(t.orth)))) out.push(key(vr.modern)) }   // MM-2, MM-21
+  { const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined; if (sp) out.push(...wantedKeys({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)) }   // MM-20
   if (t.lang !== 'uk') for (const c of candsOf(env, t.raw, t.oldI)) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') { out.push(key(t.raw), key(ruleById['R11']!.apply(key(t.raw)))) }   // MM-3: the plain spelling and its ы > и

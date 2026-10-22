@@ -19,6 +19,8 @@ export interface Correspondence {
   /** 'cs' (MM-7) = a cited Church Slavonic ↔ East Slavic word correspondence (ЕСУМ); no sound rule is claimed for the suffix (-ствиѥ ↔ -ство has no quote) */
   /** sound-rule id (core/phonology.ts) behind a 'variant' / 'rule' row */
   rule?: string
+  /** MM-21: the variant row applies only to witnesses of these orthographies (era names, core/orthography.ts) */
+  orth?: string[]
   /** modern variant spellings of `modern` (lower case, dictionary-cited): the lemma-less token with exactly this spelling links to `modern` */
   variants?: string[]
   url: string
@@ -62,6 +64,12 @@ export const CORRESPONDENCES: Correspondence[] = [
   { old: ['лигінь', 'лиґінь'], modern: 'легінь', cls: 'noun', kind: 'variant', variants: ['лигінь', 'лиґінь'], url: 'https://archive.org/details/etnohr_19',
     quote: 'Ішов лиґінь до дівчини',
     note: 'Корпус: Етноґрафічний збірник. Т. 19. Коломийки. Том III (1907, OCR), s. 7239; також т. 33 (1912, демонологія). Словникового рядка немає; тотожність з легінь за контекстом (юнак іде до дівчини)' },
+  // MM-21 (owner remark ««ню» прив'язалося лише до французького слова, але є й діалектне слово»): «ню» is also the accusative of вона after a preposition (Огоновський 1889, scan p. 40, note to §68:
+  // «межи приименникъ и склоненый падежь вказуючого заименника: зъ нимъ, въ нѣмъ, къ нему, въ ню; при нѣй, коло него, до неи, за ними»). Only a Желехівка-orthography witness (the Galician print) takes the
+  // pronoun; a text without that orthography keeps the French loan ню «nude». The preposition context is not visible to the linker; the edition orthography is the (cited) prior.
+  { old: [], modern: 'вона', cls: 'pron', kind: 'variant', variants: ['ню'], orth: ['желехівка'], url: 'https://uk.wikipedia.org/wiki/Огоновський_Омелян',
+    quote: 'межи приименникъ и склоненый падежь вказуючого заименника (пень /5), якъ: зъ (съ) нимъ, въ нѣмъ, къ нему, въ ню; при нѣй, коло него, до неи, за ними',
+    note: 'Огоновський, Граматика руської мови (1889), скан p. 40 (OCR, помилки збережено): «въ ню» поряд з «при нѣй, до неи» — знахідний відмінок займенника вона після прийменника' },
   // MM-8b (owner file «даль перша фіксація з невичитаного OCR і злиті прислівники далі дале.png»): the old spellings дале / далѣ are the ADVERB далі, not forms of the noun даль. Wiktionary's etymology
   // of the adverb: Old Ruthenian далѣ, Old East Slavic дале. A lemma-less token with exactly one of these spellings links to the adverb (modern тексти 'далі' stay ambiguous: no POS evidence).
   { old: ['дале', 'далѣ', 'далї'], modern: 'далі', cls: 'adv', kind: 'cognate', url: 'https://en.wiktionary.org/wiki/далі#Ukrainian',

@@ -28,6 +28,9 @@ import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
+import { withGal } from '../core/gal-folds.ts'
+import type { Candidate } from '../core/phonology.ts'
+const withGalD = <T extends { candidates: Candidate[] }>(d: T): T => { const c = withGal(d.candidates); return c === d.candidates ? d : { ...d, candidates: c } }
 import { altFile, altStandardMap } from '../core/vesum-alt.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
 import { ltIndex } from './lt.ts'
@@ -178,8 +181,8 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     const seen = new Set(d.candidates.map(c => c.form)), extra = oesVariants(d.norm).flatMap(v => deriveRaw(v.form, { oldI }).candidates.map(c => ({ ...c, trace: [...v.trace, ...c.trace], branches: c.branches + v.trace.length }))).filter(c => !seen.has(c.form) && seen.add(c.form))
     return extra.length ? { ...d, candidates: [...d.candidates, ...extra] } : d
   }
-  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = withSoftAdj(deriveOes(s, oldI))); return d }
-  const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = foldRaw(s, orth)); return d }
+  const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = withGalD(withSoftAdj(deriveOes(s, oldI)))); return d }
+  const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = withGal(foldRaw(s, orth))); return d }
 
   // #stage tokens
   // RS-2: tokenisation is cached per witness file (types local to the witness); the global type table is merged in witness order, so the ids are the one-pass numbering
