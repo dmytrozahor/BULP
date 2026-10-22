@@ -15,7 +15,7 @@ const century = (d: [number, number]) => Math.floor((Math.round((d[0] + d[1]) / 
 const seeds = (set: (typeof PUM_SETS)[number]) => readdirSync(set.dir).filter(f => set.file.test(f)).map(f => ({ f, w: JSON.parse(readFileSync(`${set.dir}/${f}`, 'utf8')) as WitnessOut }))
 
 describe('RF-11 «Українські грамоти XV ст.» (Русанівський 1965): parser on three real charters', () => {
-  const fx = readFileSync('tests/fixtures/pum-ed/xv-sample.txt', 'utf8'), [bodyPart, tocPart] = fx.split('=== TOC')
+  const fx = readFileSync('tests/fixtures/pum-ed/xv-sample.txt', 'utf8').replace(/\r/g, ''), [bodyPart, tocPart] = fx.split('=== TOC')
   const body = bodyPart!.split('\n').slice(1), toc = tocPart!.split('\n').slice(1)
   const heads = body.map((l, i) => (/^\s*№\s?([0-9ЗОІlI]{1,3})\*?\s*$/.test(l) ? i : -1)).filter(i => i >= 0)
   const sec = (k: number) => body.slice(heads[k]! + 1, heads[k + 1] ?? body.length)
@@ -86,7 +86,7 @@ describe('RF-11 dedupe: a charter is counted once, the vetted edition wins', () 
 })
 
 describe('RF-11 «Волинські грамоти XVI ст.» (1995): parser on three real charters (OCR of the scan)', () => {
-  const fx = readFileSync('tests/fixtures/pum-ed/vol16-sample.txt', 'utf8'), [pagesPart, tocPart] = fx.split('=== TOC')
+  const fx = readFileSync('tests/fixtures/pum-ed/vol16-sample.txt', 'utf8').replace(/\r/g, ''), [pagesPart, tocPart] = fx.split('=== TOC')
   const pages = pagesPart!.split('=== PAGE ').slice(1).map(p => ({ n: Number(p.split('\n')[0]), text: p.split('\n').slice(1).join('\n') }))
   const toc = parseVol16Toc(tocPart!.split('\n').slice(1).join('\n'))
   it('the contents (page-layout OCR) give the entries in order with the document\'s own date; the garbled number column is not read (М., 58., 6.)', () => {
