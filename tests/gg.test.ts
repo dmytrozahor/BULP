@@ -147,3 +147,17 @@ describe('GG-5 ingest parameters are configurable; N and the vocab-only count ar
     expect(coverageCounts(1)).toEqual({ nAttested: 1, nDictOnly: 0 })
   })
 })
+
+describe('GG-7 nVocab is exactly the sum of the per-source token totals; bundled sources are re-ingested', () => {
+  it('GG-7 nVocab equals the sum of vocabSources (other-language family excluded) and no source is counted twice', () => {
+    const work = mkdtempSync(join(tmpdir(), 'gg-')); mkdirSync(join(work, 'harvest-vocab'))
+    const f = (s: string, fam: string, tokens: number) => writeFileSync(join(work, 'harvest-vocab', s + '.json'), JSON.stringify({ source: s, licence: 'L', family: fam, vocabOnly: true, docs: 1000, tokens, entries: { a: { f: 9e9, docs: 1e6 } }, items: [] }))
+    f('wikipedia-uk', 'uk', 300), f('hplt', 'uk', 50), f('gramoty', 'east-slavic-comparative', 7)
+    const c = vocabCounts(work)
+    expect(c.nVocab).toBe(350); expect(new Set(c.vocabSources.map(s => s[0])).size).toBe(c.vocabSources.length)
+    expect(c.nVocab).toBe(c.vocabSources.filter(s => s[0] !== 'gramoty').reduce((a, s) => a + s[1], 0))   // entries' f and docs never enter the sum
+  })
+  it('GG-7 ingest.sh re-reads wikipedia-rue and wiktionary-uk once with the bundle-once ingest (old files counted every article ~46 times)', () => {
+    const ing = rd('ops/worker/ingest.sh'); expect(ing).toContain('run wikipedia-rue --bundles-once'); expect(ing).toContain('run wiktionary-uk --bundles-once')
+  })
+})

@@ -29,9 +29,12 @@ runcmd() {
   if [ $rc -eq 0 ]; then echo "$sig" > $D/$s; for m in build unlinked vitest vuetsc vitebuild budget; do rm -f $D/$m; done
   else echo "ingest source $s FAILED rc=$rc (see $BULP_LOGS/ingest-$s.time)" >&2; failed+=("$s(rc=$rc)"); fi
 }
-for s in wikisource-uk archive-ukr hrushevsky archive-hrushevsky wikipedia-rue poets gramoty user-books faust-lukash; do run $s; done
+for s in wikisource-uk archive-ukr hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
 run wikipedia-uk --wiki-stride "$BULP_WIKI_STRIDE"
 run hplt --limit "$BULP_HPLT_LIMIT"
+# GG-7: the bundle-once fix changes these counts; the changed parameters make the marker miss, so the old inflated files (x46) are rebuilt
+run wikipedia-rue --bundles-once
+run wiktionary-uk --bundles-once
 # the 14th-c. charters (Пещак 1974, tracked seed), Квітка 1887 and the РИБ т. 4 / т. 19 works (owner scans: the OCR under ~/work/ocr, found by their NAME files)
 OCR_DIR=${OCR_DIR:-$HOME/work/ocr}; export OCR_DIR
 ocrsig() { find "$OCR_DIR" -name 'page_*.txt' 2>/dev/null | wc -l; }
