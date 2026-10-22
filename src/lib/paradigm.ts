@@ -43,7 +43,7 @@ function verb(ps: PForm[]): Grid[] {
   const imp = pick(ps, 'impers')
   if (imp.length) grids.push({ id: 'impers', title: 'Безособова форма (-но, -то)', cols: [''], rows: [{ label: 'безособова', cells: [imp] }] })
   // BL-8: participles are VESUM lemmas of their own, linked at build time (core/verbs.ts); slot by tag + suffix
-  const slot = (s: PartSlot) => ps.filter(p => participleSlot(p) === s)
+  const slot = (s: PartSlot) => ps.filter((p, i) => participleSlot(p) === s && ps.findIndex(q => q.form === p.form && participleSlot(q) === s) === i)   // one entry per spelling (the lemma form was listed once per VESUM line)
   if (ps.some(p => { const s = participleSlot(p); return s && !s.startsWith('advp') }))
     grids.push({ id: 'part', title: 'Дієприкметники', cols: ['теперішній', 'минулий'], rows: [{ label: 'активний', cells: [slot('actv.pres'), slot('actv.past')] }, { label: 'пасивний', cells: [[], slot('pasv')] }] })
   if (ps.some(p => participleSlot(p)?.startsWith('advp')))

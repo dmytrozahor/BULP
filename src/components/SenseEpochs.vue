@@ -29,7 +29,11 @@ function rowAt(r: SeRow): string {
   return at.basis === 'period' ? `період ${years(at.a, at.b)} (рік видання ${edition(r.d)} не є датою значення)` : `мова свого часу ${years(at.a, at.b)}`
 }
 const gloss = (i: number) => data.value!.groups[i]!.rows.map(r => data.value!.rows[r]!).find(r => r.g)?.g
-const glossOrNone = (i: number) => gloss(i) ?? 'слово засвідчене (текст значення словника не взято)'
+const LANG_UK: Record<string, string> = { de: 'нім.', ru: 'рос.', en: 'англ.', uk: 'укр.' }
+const rowsIn = (i: number) => data.value!.groups[i]!.rows.map(r => data.value!.rows[r]!)
+/** the gloss with its language marked when the source is not Ukrainian («arbeiten, machen» (нім.)); a Russian-side headword is only ever a labelled note, never the meaning */
+const glossOf = (i: number) => { const r = rowsIn(i).find(x => x.g); if (!r) return undefined; const c = dictById(r.d), l = c?.dir === 'ru-uk' ? 'uk' : c?.lang; return l && l !== 'uk' && l !== 'none' ? `«${r.g}» (${LANG_UK[l] ?? l})` : r.g }
+const glossOrNone = (i: number) => glossOf(i) ?? (() => { const ru = rowsIn(i).find(x => x.ru)?.ru; return ru ? `слово засвідчене; рос. відповідник: ${ru}` : 'слово засвідчене (текст значення словника не взято)' })()
 const rowsOf = (it: TlItem) => it.rows.map(i => ({ i, r: data.value!.rows[i]! }))
 const intoOf = (g: number) => data.value!.trans.filter(t => t.to === g)
 const kwOf = (g: number) => (data.value!.kw ?? []).filter(k => k.g === g)
@@ -59,7 +63,7 @@ const confMark = (it: TlItem) => (it.span || it.conf === 'low' ? ' ?' : '')
                   <span v-if="data.groups[it.group]!.rows.length > 1 && data.groups[it.group]!.sc !== null" class="small muted"> · зіставлено, збіг {{ data.groups[it.group]!.sc }} · {{ data.groups[it.group]!.link === 'xref' ? 'за відсилкою словника' : 'виведено (inferred)' }}</span></p>
                 <ul class="small" style="margin:.1rem 0 .1rem 1rem;padding:0">
                   <li v-for="x in rowsOf(it)" :key="x.i"><strong>{{ dictById(x.r.d)?.short ?? x.r.d }}</strong><template v-if="ruOfDict(x.r.d)"> <RuBadge :flag="ruOfDict(x.r.d)" /></template><template v-if="x.r.u"> <a class="se-art small" data-testid="se-article" :href="x.r.u" target="_blank" rel="noopener noreferrer" title="стаття на офіційному сайті словника">стаття ↗</a></template> <span class="muted">({{ edition(x.r.d) }}) · {{ rowAt(x.r) }}</span>
-                    <template v-if="x.r.n"> №{{ x.r.n }}</template><template v-if="x.r.g && x.r.g !== glossOrNone(it.group)"> — {{ x.r.g }}</template><span v-if="x.r.m === 'd'" class="muted"> · за правилами виведення від «{{ x.r.l }}»</span><span v-if="x.r.s" class="muted"> · {{ x.r.s }}</span><template v-if="x.r.t?.length"> · <em>{{ x.r.t.map(t => typeName(t[0])).join(', ') }}</em></template>
+                    <template v-if="x.r.n"> №{{ x.r.n }}</template><template v-if="x.r.g && x.r.g !== glossOrNone(it.group)"> — {{ x.r.g }}</template><span v-if="x.r.m === 'd'" class="muted"> · за правилами виведення від «{{ x.r.l }}»</span><span v-if="x.r.s" class="muted"> · {{ x.r.s }}</span><span v-if="x.r.ru" class="muted"> · <span class="flag-ru">рос.</span> відповідник: {{ x.r.ru }}</span><template v-if="x.r.t?.length"> · <em>{{ x.r.t.map(t => typeName(t[0])).join(', ') }}</em></template>
                     <span v-if="x.r.q" class="muted"> · «{{ x.r.q }}»</span><span v-if="x.r.l" class="muted"> [{{ x.r.l }}]</span></li>
                 </ul>
                 <p v-for="(t, ti) in intoOf(it.group)" :key="ti" class="small se-arrow">⟵ з «{{ glossOrNone(t.from) }}» · {{ t.type ? typeName(t.type) + ' («' + t.label + '»)' : UNTYPED }} · <strong>{{ status[t.status] }}</strong></p>

@@ -47,7 +47,7 @@ export type DictDir = 'ru-uk' | 'uk-ru' | 'uk-de' | 'orth'
 
 const GRAM = /^(ж|м|с|мн|ч|гл|дієсл|прикм|присл|нар|прийм|спол|част|вигук|одн|множ|ср)\.?,?$/i
 const SEP = /^[–—=:-]+$/
-const stripMarks = (s: string) => s.normalize('NFD').replace(/[\u0301\u0300]/g, '').normalize('NFC')
+export const stripMarks = (s: string) => s.normalize('NFD').replace(/[\u0301\u0300]/g, '').normalize('NFC')
 /** the article start quoted after the locator's «: » */
 export const articleStart = (loc: string): string => { const i = loc.indexOf(': '); return i < 0 ? '' : loc.slice(i + 2).trim() }
 /** The gloss a dictionary line documents, or undefined when the quoted start has none. `word` = the card word (its occurrences are removed from uk→ru articles). */

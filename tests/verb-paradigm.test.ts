@@ -30,6 +30,18 @@ describe('BL-8 modern verb paradigm: робити', () => {
     expect(acceptParticiples(rob, ['робитий'], vesumHits, key)).toEqual([])   // a wrong rule yields nothing
     expect(acc.map(participleSlot).sort()).toEqual(['actv.past', 'actv.pres', 'advp.past', 'advp.pres', 'pasv'])
   })
+  it('the passive participle: one entry per spelling (the lemma form is listed twice in VESUM) and the gendered nominatives when VESUM has them', () => {
+    const hits = new Map(vesumHits)
+    hits.set('роблений', [{ lemma: 'роблений', tags: 'adj:m:v_naz:adjp:pasv:imperf' }, { lemma: 'роблений', tags: 'adj:m:v_zna:rinanim:adjp:pasv:imperf' }, { lemma: 'роблений', tags: 'adj:m:v_naz:adjp:pasv:imperf:long' }])
+    hits.set('роблена', [{ lemma: 'роблений', tags: 'adj:f:v_naz:adjp:pasv:imperf' }]); hits.set('роблене', [{ lemma: 'роблений', tags: 'adj:n:v_naz:adjp:pasv:imperf' }])
+    const ps = [...rob, ...acceptParticiples(rob, participleCandidates(rob), hits, key)]
+    expect(ps.filter(p => p.form === 'роблений')).toHaveLength(1)
+    const pas = buildGrids(ps).find(g => g.id === 'part')!.rows.at(-1)!.cells[1]!.map(p => p.form)
+    expect(pas).toEqual(['роблений', 'роблена', 'роблене'])
+    // data built before the fix still holds the lemma three times: the cell shows it once
+    const old = [...rob, ...['m:v_naz', 'm:v_zna:rinanim', 'm:v_naz:long'].map(t => ({ form: 'роблений', tags: `adj:${t}:adjp:pasv:imperf` }))]
+    expect(buildGrids(old).find(g => g.id === 'part')!.rows.at(-1)!.cells[1]!.map(p => p.form)).toEqual(['роблений'])
+  })
   it('layout: inf, present, future, past m/f/n/pl, imperative, impersonal, participles, adverbial participles', () => {
     const ps = [...rob, ...acceptParticiples(rob, participleCandidates(rob), vesumHits, key)]
     const g = Object.fromEntries(buildGrids(ps).map(x => [x.id, x]))

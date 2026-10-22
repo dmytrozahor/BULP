@@ -26,16 +26,20 @@ export function participleCandidates(paradigm: PForm[]): string[] {
 export function acceptParticiples(paradigm: PForm[], cands: string[], hits: ReadonlyMap<string, { lemma: string; tags: string }[]>, keyOf: (s: string) => string): PForm[] {
   const asp = new Set<string>(paradigm.flatMap(p => p.tags.split(':')).filter(x => x === 'perf' || x === 'imperf'))
   const out: PForm[] = []
-  for (const c of cands) for (const h of hits.get(keyOf(c)) ?? []) {
+  for (const c of cands) for (const s of participleSurfaces(c)) for (const h of hits.get(keyOf(s)) ?? []) {
     if (h.lemma !== c || !/(^|:)(adjp|advp)(:|$)/.test(h.tags) || !h.tags.split(':').some(x => asp.has(x))) continue
-    if (!out.some(o => o.form === c && o.tags === h.tags)) out.push({ form: c, tags: h.tags })
+    if (h.tags.startsWith('adj') && !h.tags.split(':').includes('v_naz')) continue   // the lemma form is listed again as the inanimate accusative: one line per spelling
+    if (!out.some(o => o.form === s)) out.push({ form: s, tags: h.tags })
   }
   return out
 }
+
+/** The spellings to look up for a candidate: a participle in -ий also in its feminine / neuter / plural nominative (-а, -е, -і), so the gendered forms of the adjectival paradigm are linked when VESUM lists them under the lemma. */
+export const participleSurfaces = (c: string): string[] => (c.endsWith('ий') ? [c, c.slice(0, -2) + 'а', c.slice(0, -2) + 'е', c.slice(0, -2) + 'і'] : [c])
 
 /** Modern participle slot of an accepted lemma: by its tag and suffix (VESUM tags both -чи and -ши as `advp:imperf|perf`). */
 export type PartSlot = 'advp.pres' | 'advp.past' | 'actv.pres' | 'actv.past' | 'pasv'
 export function participleSlot(p: PForm): PartSlot | undefined {
   if (has(p, 'advp')) return p.form.endsWith('чи') ? 'advp.pres' : p.form.endsWith('ши') ? 'advp.past' : undefined
-  if (has(p, 'adjp')) return has(p, 'pasv') ? 'pasv' : p.form.endsWith('чий') ? 'actv.pres' : p.form.endsWith('ший') ? 'actv.past' : undefined
+  if (has(p, 'adjp')) return has(p, 'pasv') ? 'pasv' : /(?:чий|ча|че|чі)$/.test(p.form) ? 'actv.pres' : /(?:ший|ша|ше|ші)$/.test(p.form) ? 'actv.past' : undefined
 }

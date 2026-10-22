@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import {
-  DICT_COVER, MATCH_MIN, SE_EPOCH_IDS, UNTYPED, align, assignKwic, atOf, buildEntry, cuesOf, dictOfWitness, epochsOf, glossSim, rowOfLine, timeline, transitions, typeLabels, type SeRow,
+  DICT_COVER, MATCH_MIN, SE_EPOCH_IDS, UNTYPED, align, assignKwic, atOf, buildEntry, dictById, cuesOf, dictOfWitness, epochsOf, glossSim, rowOfLine, timeline, transitions, typeLabels, type SeRow,
 } from '../core/se.ts'
 import { buildSenseEntries, dictRows } from '../pipelines/build-se.ts'
 import { SE_BUCKETS, seBucket, seUrl, cardData } from '../core/parts.ts'
@@ -39,11 +39,35 @@ describe('SE-1 sense inventory with coverage periods', () => {
     expect(r.g).toBe('')
   })
   it('SE-1 r2u lines give the gloss SN-1 reads: the Russian headword of a ru→uk dictionary, the Russian gloss of a uk→ru one, the German gloss of Желехівський', () => {
-    expect(rowOfLine('r2u_umanets', R('Мускул = мъясень'), "м'ясень", "м'ясень")!.g).toBe('Мускул')
+    const um = rowOfLine('r2u_umanets', R('Мускул = мъясень'), "м'ясень", "м'ясень")!
+    expect(um.g).not.toBe('Мускул'); expect(um.ru).toBe('Мускул')   // the Russian headword is a note, never the Ukrainian meaning
     expect(rowOfLine('r2u_hrinch09', R("В'язь, -ли – мышца"), "в'язь", "в'язь")!.g).toBe('мышца')
     expect(rowOfLine('r2u_zheleh', R('Гребінка, ж. Kamm, m.'), 'гребінка', 'гребінка')!.g).toMatch(/Kamm/)
     expect(rowOfLine('wikt.uk', R('x'), 'x', 'x')).toBeUndefined()   // modern sources are not dictionary witnesses
     expect(rowOfLine('book', R('x'), 'x', 'x')).toBeUndefined()
+  })
+  it('SE-1 робити: a ru→uk article never gives its Russian headword as the Ukrainian sense; the gloss is the Ukrainian clause that holds the lemma', () => {
+    const loc = R('УсмотрѢніє = розгляд, розсуд. На ваше -ніе – на вашу думку. Делайте, как знаете – робіть, як знаєте.')
+    for (const d of ['r2u_umanets', 'r2u_doroshenko', 'r2u_izyumov', 'r2u_krymsky']) {
+      const r = rowOfLine(d, loc, 'робити', 'робіть')!
+      expect(r.g).toBe('робіть, як знаєте'); expect(r.ru).toBe('УсмотрѢніє'); expect(r.g.toLowerCase()).not.toContain('усмотр')
+    }
+    const none = rowOfLine('r2u_umanets', R('УсмотрѢніє = розгляд, розсуд. На ваше -ніе – на вашу думку.'), 'робити', 'робити')!
+    expect(none.g).toBe(''); expect(none.ru).toBe('УсмотрѢніє')
+    expect(rowOfLine('r2u_hrinch09', R('Робити, -блю, -биш. Делать'), 'робити', 'робити')!.ru).toBeUndefined()
+  })
+  it('SE-1 no SE row of a ru→uk dictionary has the text of the Russian-side headword (build path)', () => {
+    const heads = ['УсмотрѢніє', 'Делать', 'Мускул']
+    const ins = ['r2u_umanets', 'r2u_doroshenko', 'r2u_izyumov', 'r2u_krymsky', 'r2u_yakubski'].flatMap(id => heads.map((h, i) => ({ w: { id, witnessType: 'dictionary', date: [1893, 1898] as [number, number], tokens: [{ raw: 'робити', loc: `r2u X · s?w=q#${id}_${i}: ${h} = розгляд; робити, робіть` }] } })))
+    const rows = dictRows(ins, () => 'робити').get('робити')!
+    expect(rows.length).toBeGreaterThan(0)
+    const norm = (x: string) => x.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
+    for (const r of rows) { expect(heads.map(norm)).not.toContain(norm(r.g)); expect(r.ru).toBeTruthy() }
+  })
+  it('SE-1 Желехівський: the German gloss after the inflection and the part-of-speech mark is kept', () => {
+    expect(rowOfLine('r2u_zheleh', R('Робити, -блю, -биш, v. arbeiten, machen. Sl.'), 'робити', 'робити')!.g).toBe('arbeiten, machen')
+    expect(rowOfLine('r2u_zheleh', R('Робити, -блю, -биш, vb.'), 'робити', 'робити')!.g).toBe('')
+    expect(dictById('r2u_zheleh')!.lang).toBe('de')
   })
   it('SE-1 rows come from the tokens of dictionary witnesses linked to a card, one per article line, a line is not counted twice', () => {
     const w = { id: 'r2u_hrinch09', witnessType: 'dictionary', date: [1907, 1909] as [number, number], tokens: [

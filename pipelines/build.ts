@@ -59,7 +59,7 @@ import { groupHist, type HistStats } from '../core/dx-hist.ts'
 import { attachCvStress, lk } from '../core/cv.ts'
 import { MU_ORTH } from '../core/mu-fold.ts'
 import { gateKey, paradigmKindOf } from '../core/pos-gate.ts'
-import { acceptParticiples, participleCandidates } from '../core/verbs.ts'
+import { acceptParticiples, participleCandidates, participleSurfaces } from '../core/verbs.ts'
 import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
@@ -517,7 +517,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     {   // BL-8: participles / adverbial participles are VESUM lemmas of their own — link them to the kept verbs by construction + VESUM oracle (core/verbs.ts) and append them to the verb paradigm
       const cand = new Map<string, string[]>()
       for (const l of kept) if (paradigmKindOf(v2.lemmaTags.get(l.id) ?? l.tags) === 'verb') { const c = participleCandidates(v2.paradigms.get(l.id) ?? []); if (c.length) cand.set(l.id, c) }
-      const ph = (await vesumIndex(new Set([...cand.values()].flat()), new Set())).hits
+      const ph = (await vesumIndex(new Set([...cand.values()].flat().flatMap(participleSurfaces)), new Set())).hits
       let n = 0
       for (const [id, c] of cand) { const add = acceptParticiples(v2.paradigms.get(id)!, c, ph, key); if (add.length) { v2.paradigms.get(id)!.push(...add); n += add.length } }
       lap(`verb participles linked: ${n} forms for ${cand.size} verbs with candidates`)

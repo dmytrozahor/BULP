@@ -9,7 +9,7 @@
  *  - an epoch without evidence stays a gap. Nothing is guessed (P-1.1).
  */
 import { assignEpoch, EPOCHS } from './epochs.ts'
-import { articleStart, glossOf, type DictDir } from './sn.ts'
+import { articleStart, glossOf, stripMarks, type DictDir } from './sn.ts'
 import { key } from './text.ts'
 
 // ── SE-1: dictionaries and their coverage periods ─────────────────────────────────────────────────
@@ -69,6 +69,7 @@ export interface SeRow {
   /** SPEC 63 GG-7: stable link to the article on the official site */ u?: string
   /** GG-7: the headword with its stress mark as the article shows it */ a?: string
   /** GG-7: the labels printed on the sense (розм., заст., діал., перен. …) */ lb?: string[]
+  /** the Russian headword of a ru→uk article in which the lemma is the Ukrainian equivalent: a labelled cross-language note, NEVER the meaning of the Ukrainian word */ ru?: string
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }
 export const MAX_ROWS = 30, MAX_QUOTE = 200
@@ -84,6 +85,37 @@ export function atOf(r: SeRow): SeAt {
 // ── SE-1: rows from the dictionary lines the corpus already holds ────────────────────────────────
 /** the header line of an old-dictionary locator («т.2 ряд. 1572: НАДОБНОЄ с. (2) належне …») → the text after the part-of-speech mark, if any */
 const AFTER_POS = /\s(?:ч|ж|с|мн|прикм|дієсл|присл|прийм|спол|част|займ|числ|вигук|виг|дієпр|незм)\.\s*(?:\(\d+\)\s*)*(.*)$/
+const SEP_RU = /\s[=–—]\s|\s:\s/
+/**
+ * A ru→uk article («Усмотрение – розгляд, розсуд. На ваше -ние – на вашу думку …»): the part before the separator is the RUSSIAN headword, the rest is Ukrainian. The Ukrainian lemma documented by the
+ * line is an equivalent in the Ukrainian part, so its sense row carries the clause of the Ukrainian part that holds the lemma (or the whole equivalent list when the quote is a single clause);
+ * the Russian headword goes to `ru` as a labelled cross-language note, never to the gloss.
+ */
+export function ruUkSide(text: string, word: string, raw = ''): { g: string; ru?: string } {
+  const t = stripMarks(text).replace(/^\*+/, '').trim()
+  const m = SEP_RU.exec(t); if (!m) return { g: '' }
+  const ru = t.slice(0, m.index).replace(/[.,;\s]+$/, '').trim().slice(0, 60), uk = t.slice(m.index + m[0].length).replace(/\s*\([^)]*\)/g, '').trim()
+  const clauses = uk.split(/;|\.\s|\s[–—]\s/).map(x => x.replace(/[.;,\s]+$/, '').trim()).filter(Boolean)
+  const ks = [key(word), key(raw)].filter(Boolean)
+  const hit = clauses.find(x => wordsOf(x).some(w => ks.includes(key(w)))) ?? (clauses.length === 1 ? clauses[0] : undefined)
+  return { g: hit && hit.length >= 2 ? hit.slice(0, 80) : '', ...(ru ? { ru } : {}) }
+}
+
+const DE_POS = /^(?:v|vb|vt|vi|vr|vrefl|m|f|n|s|a|adj|adv|prep|conj|interj|pron|num|pl|ж|м|с|мн|гл|прикм|присл)\.?,?$/i
+const SEP_ONLY = /^[–—=:-]+$/
+/** Желехівський (uk→de): «Робити, -блю, -биш, v. arbeiten, machen. …» → the German gloss after the headword, the inflection endings and the part-of-speech mark («arbeiten, machen»). '' when there is none. */
+export function deGloss(text: string, word: string): string {
+  const toks = stripMarks(text).replace(/^\*+/, '').trim().split(/\s+/), w = key(word); let i = 0
+  while (i < toks.length) {
+    const x = toks[i]!.replace(/[,.;]+$/, '')
+    if (i === 0 || key(x) === w || /^-/.test(x) || DE_POS.test(toks[i]!) || SEP_ONLY.test(x) || /^\d+[.)]?$/.test(x)) i++
+    else break
+  }
+  const g = toks.slice(i).join(' ').replace(/\s*\(.*$/, '').split(/\.\s/)[0]!.replace(/[.;,\s]+$/, '').trim()
+  return g.length >= 2 && /\p{L}{2}/u.test(g) ? g.slice(0, 80) : ''
+}
+
+
 /**
  * A row from one dictionary attestation line (witness id, locator «…: article start», attested spelling, witness date). Returns undefined for a witness that is no sense dictionary.
  * The gloss is the one core/sn.ts glossOf reads (SN-1); Желехівський (uk-de) is read like a uk→ru article: the foreign gloss follows the headword.
@@ -92,12 +124,15 @@ export function rowOfLine(wid: string, loc: string, raw: string, word: string, w
   const c = dictOfWitness(wid)
   if (!c || c.basis === 'modern') return undefined
   const text = articleStart(loc)
-  let g = ''
+  let g = '', ru: string | undefined
   if (c.id === 'dsu14') { const m = AFTER_POS.exec(text); g = m ? m[1]!.replace(/\(.*?\)/g, '').trim().slice(0, 80) : '' }   // only the header line is kept: a gloss exists only where the header has text after the part-of-speech mark
-  else g = glossOf(loc, word, c.dir === 'uk-de' ? 'uk-ru' : c.dir) ?? ''
+  else if (c.dir === 'ru-uk') { const x = ruUkSide(text, word, raw); g = x.g; ru = x.ru }   // the Russian headword is a note, the Ukrainian side is the gloss
+  else if (c.dir === 'uk-de') g = deGloss(text, word)
+  else g = glossOf(loc, word, c.dir) ?? ''
   const row: SeRow = { d: c.id, g }
   const q = text.slice(0, MAX_QUOTE); if (q) row.q = q
   const l = /(?:#|^)((?:т\.\d+ ряд\. \d+)|(?:\d+_\d+))(?::|$)/.exec(loc)?.[1] ?? /#([^:]+):/.exec(loc)?.[1]; if (l) row.l = l
+  if (ru) row.ru = ru
   if (c.quoteDates && witnessDate && isQuoteDated(wid)) row.e = witnessDate
   const t = typeLabels(`${g} ${text}`); if (t.length) row.t = t
   void raw
