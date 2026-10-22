@@ -14,7 +14,7 @@ describe('NW-7 songs', () => {
       else if (s.kind === 'authored') expect(s.licence, s.id).not.toBe('pd-text')
       if (s.licence === 'pd-text') expect(s.witness, s.id).toBeTruthy()
       expect(s.evidence.length, s.id).toBeGreaterThan(0)
-      for (const m of s.media) { expect(m.id).toMatch(/^[\w-]{11}$/); expect(m.url).toBe('https://www.youtube.com/watch?v=' + m.id); expect(m.verified).toMatch(/^2026-10-\d\d$/) }
+      for (const m of s.media) { expect(m.id).toMatch(/^[\w-]{11}$/); expect(m.url).toBe('https://www.youtube.com/watch?v=' + m.id); expect(m.verified).toBe(s.id === 'duma-mazepy' ? '2026-10-22' : '2026-10-12') }
     }
     expect(SONGS.length).toBeGreaterThanOrEqual(10); expect(new Set(SONGS.map(s => s.id)).size).toBe(SONGS.length)
     expect(ARTISTS.every(a => a.quote.length > 10 && a.channel.startsWith('https://www.youtube.com/@'))).toBe(true)

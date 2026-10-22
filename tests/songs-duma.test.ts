@@ -6,6 +6,7 @@ import { derive as deriveRaw } from '../core/phonology.ts'
 import { fold } from '../core/orthography.ts'
 import { authorById, admissible } from '../pipelines/authors.ts'
 import { MANIFEST } from '../pipelines/manifest.ts'
+import { ruOfWitness } from '../core/ru-source.ts'
 import { admit } from '../pipelines/build-annotate.ts'
 import { chooseLemma, linkOptions, wantedKeys, type Env } from '../pipelines/build-link.ts'
 import { parsePage } from '../pipelines/ingest-wikisource.ts'
@@ -21,6 +22,7 @@ describe('SG-3 Дума Мазепи', () => {
     expect(u.dateCite).toMatchObject({ kind: 'Q', source: 'OHL', quote: 'Загалом вважалося, що «Дума» була написана коло 1698 р.' })
     expect(u.edition).toContain('Бантыш-Каменский'); expect(u.edition).toContain('Меннінг')
     expect(a.label).toBe('ukrainian'); expect(admissible(a)).toBe(true); expect(a.evidence[0]!.kind).toBe('Q'); expect(admit({ id: u.id, author: u.author }, a).ok).toBe(true)
+    expect(ruOfWitness({ id: u.id, title: u.title, edition: u.edition })).toMatchObject({ kind: 'edition' })   // RF: Москва 1859 -> «рос. видання»
     expect(s.media[0]).toMatchObject({ id: 'H4ffNF0kAjI', role: 'arrangement' }); expect(s.note).toContain('не свідчення')
   })
   describe.skipIf(!existsSync(cache))('page cache', () => {
