@@ -25,10 +25,11 @@ const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
 <template>
   <div v-for="g in groups" :key="g.sc" style="margin-bottom:.8rem">
     <h3 class="small sans muted">{{ g.title }}</h3>
-    <div v-for="r in g.rows" :key="r.id" style="margin:.35rem 0">
-      <div class="row small sans" style="justify-content:space-between"><RouterLink :to="epochTo(r.id)">{{ r.name }}</RouterLink>
-        <span :title="`f=${r.f}, N=${fmtNum(r.N)}`">{{ fmtNum(r.ipm, 1) }} ipm<span class="muted"> (f={{ r.f }}; N={{ fmtNum(r.N) }})</span></span></div>
-      <div class="bar" role="img" :aria-label="`${r.name}: ${fmtNum(r.ipm, 1)} ipm`"><i :style="{ width: r.w + '%', background: r.ramp }"></i></div>
+    <div v-for="r in g.rows" :key="r.id" class="eb-row">
+      <div class="eb-n small sans"><RouterLink :to="epochTo(r.id)">{{ r.name }}</RouterLink></div>
+      <div class="eb-line small sans"><div class="bar" role="img" :aria-label="`${r.name}: ${fmtNum(r.ipm, 1)} ipm`"><i :style="{ width: r.w + '%', background: r.ramp }"></i></div>
+        <span class="eb-v" :title="`f=${r.f}, N=${fmtNum(r.N)}`">{{ fmtNum(r.ipm, 1) }} ipm</span></div>
+      <div class="eb-meta small sans muted">f={{ r.f }}; N={{ fmtNum(r.N) }}</div>
       <div v-if="r.sh && stars(r.sh.p)" class="small sans" :title="`G² = ${fmtNum(r.sh.g2, 1)}, p ≤ ${r.sh.p}`">
         <span aria-label="статистично значущо">{{ stars(r.sh.p) }}</span> Log Ratio {{ r.sh.logRatio > 0 ? '+' : '' }}{{ fmtNum(r.sh.logRatio, 2) }} проти попередньої
         <span class="muted">(G²={{ fmtNum(r.sh.g2, 1) }})</span></div>

@@ -85,8 +85,8 @@ const epochs = computed(() => full.value?.epochs)   // SPEC 50: LemmaDetail.epoc
 const err = computed(() => detailError.get(props.lemma))
 const active = ref<string | null>(null), nForms = ref(60), allForms = ref(false)   // F2: frequent lemmas have hundreds of spellings — paged chips
 /** which panels are open: Provenance by default; the rest collapsed behind their one-line summary (UX-2) */
-const ui = reactive({ prov: true, lab: false, par: false, ep: false, kw: false, st: false })
-watch(() => props.lemma, () => { active.value = null; allForms.value = false; Object.assign(ui, { prov: true, lab: false, par: false, ep: false, kw: false, st: false }) })
+const ui = reactive({ prov: true, lab: false, par: false, ep: false, kw: false, st: true })
+watch(() => props.lemma, () => { active.value = null; allForms.value = false; Object.assign(ui, { prov: true, lab: false, par: false, ep: false, kw: false, st: true }) })
 const kind = computed(() => paradigmKindOf(card.value))
 const lemmaSenses = computed(() => (card.value ? sensesOf(card.value.lemma) : []))   // BL-9
 const isNoun = computed(() => kind.value === 'noun')
@@ -247,7 +247,22 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
     <CardLayout>
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="card.lemma" :spelling="chosen?.raw ?? card.lemma" :kwic="kwic" :by-region="full?.stats.byRegion" map-panel="h-map" se-kind="full" :paradigm="card.paradigm" :paradigm-kind="kind" />
+        <OverviewTab :lemma="card.lemma" :spelling="chosen?.raw ?? card.lemma" :kwic="kwic" :by-region="full?.stats.byRegion" map-panel="h-map" origin-panel="h-prov" :stress="full?.stress" :stress-loaded="!!full || !!err" se-kind="full" :paradigm="card.paradigm" :paradigm-kind="kind" :has-origin="!!first && card.first.value !== 'unknown'">
+          <template #origin>
+            <div v-if="first && card.first.value !== 'unknown'" data-testid="ov-first">
+              <p class="sans" style="margin:.1rem 0"><span class="muted">Перша фіксація: </span><ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
+              <ul class="sans small" style="list-style:none;padding:0;margin:.2rem 0">
+                <li><span class="muted">автор: </span><AuthorBadge :author="first.author" :witness="first.witness" /></li>
+                <li><span class="muted">пам’ятка: </span><RouterLink v-if="firstW" :to="witnessTo(firstW.id)">{{ firstW.title }}</RouterLink><template v-else>{{ first.witness }}</template><template v-if="firstRu"> <RuBadge :flag="firstRu" /></template></li>
+                <li><span class="muted">дата: </span>{{ fmtDate(first.date) }} <EvidencePopover v-if="firstW" :evidence="[firstW.dateCite]" heading="Датування пам’ятки" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover></li>
+                <li v-if="full && isKnown(full.claims.oldest)"><span class="muted">найдавніша форма: </span><ClaimBadge :claim="full.claims.oldest" :text="(full.claims.oldest.value as any).form" /></li>
+              </ul>
+            </div>
+            <p v-else class="sans small muted">Перша фіксація: <ClaimBadge :claim="card.first" /></p>
+            <ProvenanceTimeline v-if="full" :forms="full.forms" :active="active" :card="full" compact />
+            <div v-else class="skeleton" style="height:4rem" />
+          </template>
+        </OverviewTab>
       </template>
       <template #forms>
         <!-- SPEC 60 IP-3 / DV-3 on the word card (not only the annotator): collapsed, one-line summaries -->

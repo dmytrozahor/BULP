@@ -17,7 +17,7 @@ import { claimSignature } from '../lib/ux.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import ClaimSet from './ClaimSet.vue'
 import EvidenceList from './EvidenceList.vue'
-const props = defineProps<{ forms: FormCard[]; active?: string | null; card?: LemmaCard }>()
+const props = defineProps<{ forms: FormCard[]; active?: string | null; card?: LemmaCard; /** SPEC 63 OV-13: «Огляд» — only the small spellings graph and the three oldest spellings */ compact?: boolean }>()
 const open = ref<string | null>(null), n = ref(40)   // F2: paged — a frequent lemma may have hundreds of spellings
 const items = computed(() => props.forms.filter(f => !props.active || f.raw === props.active)
   .map(f => ({ f, date: f.date as [number, number] | undefined, derived: (f as FormCard & { derived?: boolean }).derived === true }))
@@ -34,7 +34,15 @@ const toggle = (k: string) => (open.value = open.value === k ? null : k)
 </script>
 
 <template>
-  <div>
+  <div v-if="compact" class="prov-compact" data-testid="prov-compact">
+    <h4 class="sans small muted">Історичні написання за датою</h4>
+    <p v-if="!points.length" class="sans small muted">датованих написань немає</p>
+    <template v-else>
+      <AttestGraph :points="points" label="Хронологія написань" />
+      <ol class="sans small prov-top"><li v-for="{ f, date } in items.filter(i => i.date).slice(0, 3)" :key="f.raw"><strong class="lang">{{ f.raw }}</strong> <span class="muted">{{ fmtDate(date!) }} · f = {{ f.f }}</span></li></ol>
+    </template>
+  </div>
+  <div v-else>
   <ViewSwitch panel="chrono">
   <template #graph><AttestGraph :points="points" label="Хронологія написань" /></template>
   <template #list>

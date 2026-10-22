@@ -36,7 +36,7 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
     <CardLayout>
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="lemma" :spelling="spelling" :kwic="kwic" :by-region="byRegion" map-panel="t-reg" :se-kind="seKind ?? (dictOnly ? 'dict' : 'light')" :dict-only="dictOnly" />
+        <OverviewTab :lemma="lemma" :spelling="spelling" :kwic="kwic" :by-region="byRegion" map-panel="t-reg" :pron-word="spelling" :stress-positions="stress" :origin-panel="noDerivation ? undefined : 't-der'" :origin-line="noDerivation ? undefined : `перша фіксація не встановлена; за правилами: норма ${d.norm}${best ? ' → сучасна (гіпотеза) ' + best.form : ''}`" :se-kind="seKind ?? (dictOnly ? 'dict' : 'light')" :dict-only="dictOnly" />
       </template>
       <template #forms><LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="forms" /><slot name="forms" /></template>
       <template #history>

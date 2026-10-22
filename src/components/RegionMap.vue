@@ -45,6 +45,7 @@ function onKey(e: KeyboardEvent) {
   e.preventDefault()
 }
 const rows = computed(() => regionRows(corpus.value?.regions, props.by ?? props.card?.stats.byRegion))
+const tableRows = computed(() => (props.compact ? [...rows.value].sort((a, b) => b.f - a.f).slice(0, 5) : rows.value))
 const max = computed(() => Math.max(0, ...rows.value.map(r => r.ipm ?? 0)))
 const byOblast = computed(() => { const m = new Map<string, (typeof rows.value)[number]>(); for (const r of rows.value) for (const o of r.oblasts) m.set(o, r); return m })
 const shapes = computed(() => (geo.value?.features ?? []).map(f => ({ code: f.properties.code, name: f.properties.name, d: pathOf(f), r: byOblast.value.get(f.properties.code) })))
@@ -85,15 +86,16 @@ const hdescribe = (x: (typeof terr.value)[number]) => `${x.t.name}: істори
       <div>
         <table class="small sans"><caption class="muted" style="text-align:left">Регіони пам’яток</caption>
           <thead><tr><th>регіон пам’ятки</th><th class="num">f</th><th class="num">N</th><th class="num">ipm</th></tr></thead>
-          <tbody><tr v-for="r in rows" :key="r.code"><td>{{ r.name }}<div class="muted">{{ r.oblasts.join(', ') }}</div></td><td class="num">{{ r.f }}</td><td class="num">{{ fmtNum(r.N) }}</td>
+          <tbody><tr v-for="r in tableRows" :key="r.code"><td>{{ r.name }}<div class="muted">{{ r.oblasts.join(', ') }}</div></td><td class="num">{{ r.f }}</td><td class="num">{{ fmtNum(r.N) }}</td>
             <td class="num"><template v-if="r.ipm === undefined"><span class="unk">немає пам’яток</span></template><template v-else>{{ fmtNum(r.ipm, 1) }} <span aria-hidden="true">{{ '▮'.repeat(Math.max(0, stepOf(r.ipm, max))) || '·' }}</span></template></td></tr></tbody></table>
+        <p v-if="compact && rows.length > tableRows.length" class="small muted sans" data-testid="rm-more">показано 5 регіонів із найбільшим f з {{ rows.length }}</p>
         <p class="small muted sans" aria-live="polite" style="min-height:1.4em">{{ hot }}</p>
       </div>
     </div>
     <p class="small sans rm-legend" aria-label="Умовні позначки">
       <span class="rm-key rm-key-modern" aria-hidden="true" /> сучасна область (суцільна межа) · <span class="rm-key rm-key-hist" aria-hidden="true" /> історична українська територія (пунктирна межа)
     </p>
-    <details class="small sans rm-terr">
+    <details v-if="!compact" class="small sans rm-terr">
       <summary>Історичні українські території на карті ({{ terr.length }}) — межа за джерелом, у дотику показано цитату</summary>
       <ul>
         <li v-for="x in terr" :key="x.t.code">

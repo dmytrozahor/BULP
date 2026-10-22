@@ -131,7 +131,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
     <CardLayout v-else-if="fc && stats">
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="pick.lemma" :spelling="pick.raw" :kwic="fc.kwic" :by-region="byRegion" map-panel="f-reg" se-kind="full" :paradigm="full?.paradigm" :paradigm-kind="kind" />
+        <OverviewTab :lemma="pick.lemma" :spelling="pick.raw" :kwic="fc.kwic" :by-region="byRegion" map-panel="f-reg" :pron-word="pick.lemma" :stress="full?.stress" :stress-loaded="!!full" origin-panel="f-der" :origin-line="fc ? `найраніше засвідчене написання «${fc.raw}»: ${fmtDate(fc.date)}${fc.ocrOnly ? ' (лише OCR низької якості, не свідчення)' : ''} · норма ${fc.norm} → сучасна ${fc.modern}` : undefined" :paradigm="full?.paradigm" :paradigm-kind="kind" />
       </template>
       <template #forms>
         <Panel id="f-ep" :open="false" :count="stats.byEpoch.length" title="Клітинки за епохами" :summary="`розміщено токенів: ${stats.placed}`" :empty="!epochKinds"
