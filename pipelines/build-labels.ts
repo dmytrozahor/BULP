@@ -12,7 +12,7 @@
  * Env: PARTS_DATA (public/data), LB_ROOT (repo root holding data/), LB_OUT (output dir for lm/lb, default PARTS_DATA/lm/lb).
  * RS-1: shards are written under lm/lb.next and swapped in after all succeeded.
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { gunzipSync } from 'node:zlib'
 import { lk } from '../core/cv.ts'
@@ -47,7 +47,7 @@ export function scanR2u(dir: string, known: (k: string) => boolean): DictScan {
       seen.add(id)
       const p = (per[table.short] ??= { articles: 0, labelled: 0, hits: 0, lemmas: 0, byAbbr: {} }); p.articles++
       const nodes = nodesOf(m[3]!), text = plainOf(nodes), url = rowUrl(l.q, l.scope, { dict, rowId })
-      const found = table.attach === 'article' ? scanArticle(table, text, table.id === 'zheleh-labels' ? undefined : undefined) : scanBracketed(table, text)
+      const found = table.attach === 'article' ? scanArticle(table, text) : scanBracketed(table, text)
       if (!found.length) continue
       p.labelled++
       let heads: string[] = []
@@ -55,8 +55,6 @@ export function scanR2u(dir: string, known: (k: string) => boolean): DictScan {
       for (const h of found) {
         const words = table.attach === 'article' ? heads : [h.word!]
         const wire = wireHit(table, h, url)
-        // the Zheleh type labels dim./aug. count only at the start of the article (they say what the HEADWORD is, not what a later sense contains)
-        if (table.id === 'zheleh-labels' && h.row.kind === 'type' && (h.row.typ === 'dim' || h.row.typ === 'aug') && text.indexOf(h.row.abbr) > 60) continue
         for (const w of words) {
           const cands = fold(tokenRaw(w), d.orth).map(c => lk(c.form)), ks = [...new Set(cands)].filter(known)
           for (const k of ks.length ? ks : []) {
@@ -193,7 +191,7 @@ function writeReport(st: Stats, scan: DictScan, written: number, shards: number)
     `## Значення (позначки на значеннях)`, '', `- рядків значень у SE: ${st.sense.rows}, з позначкою на значенні: ${st.sense.labelled}.`, '',
     `Записано ${written} записів у ${shards} шардах lm/lb.`,
   ]
-  if (existsSync('analysis')) writeFileSync('analysis/labels-coverage.md', text.join('\n') + '\n')
+  if (existsSync('analysis')) writeJsonAtomic('analysis/labels-coverage.md', text.join('\n') + '\n')
 }
 
 if (process.argv[1]?.endsWith('build-labels.ts')) main()

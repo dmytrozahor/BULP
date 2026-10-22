@@ -54,6 +54,9 @@ import RegionMap from '../components/RegionMap.vue'
 import BankChip from '../components/BankChip.vue'
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
+import LabelsBlock from '../components/LabelsBlock.vue'   // SPEC 63 LB-5
+import { useLabels } from '../lib/labelsData.ts'
+import { classUk } from '../../core/labels.ts'
 import SociolectBadges from '../components/SociolectBadges.vue'
 import PlastSenses from '../components/PlastSenses.vue'
 import ModernBadges from '../components/ModernBadges.vue'
@@ -175,8 +178,9 @@ const nKnownChips = computed(() => Object.values(keyChips.value).filter(Boolean)
 // ── UX-2 one-line summaries ──
 /** BL-20: attested forms with the second palatalization (R24) */
 const pal = computed(() => { const c = card.value?.claims.palatalization; return c && isKnown(c) ? { claim: c, forms: c.value.forms } : undefined })
+const lbs = useLabels(() => card.value?.lemma ?? '', () => full.value?.stats.byRegion)   // SPEC 63 LB-5: the dialect class etc. of the lemma
 const labParts = computed(() => {
-  const c = card.value!.claims, p: string[] = []
+  const c = card.value!.claims, p: string[] = [`діалект: ${classUk(lbs.entry.value.d)}`]
   if (pal.value) p.push(`друга палаталізація: ${pal.value.forms.length}`)
   if (isKnown(c.origin)) p.push(labelUk(String(c.origin.value)))
   if (isKnown(c.register)) p.push('розмовне')
@@ -249,7 +253,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
     <CardLayout>
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="card.lemma" :spelling="chosen?.raw ?? card.lemma" :kwic="kwic" :by-region="full?.stats.byRegion" map-panel="h-map" origin-panel="h-prov" :stress="full?.stress" :stress-loaded="!!full || !!err" se-kind="full" :paradigm="card.paradigm" :paradigm-kind="kind" :has-origin="!!first && card.first.value !== 'unknown'">
+        <OverviewTab :lemma="card.lemma" :spelling="chosen?.raw ?? card.lemma" :kwic="kwic" :by-region="full?.stats.byRegion" map-panel="h-map" labels-panel="h-lab" origin-panel="h-prov" :stress="full?.stress" :stress-loaded="!!full || !!err" se-kind="full" :paradigm="card.paradigm" :paradigm-kind="kind" :has-origin="!!first && card.first.value !== 'unknown'">
           <template #origin>
             <div v-if="first && card.first.value !== 'unknown'" data-testid="ov-first">
               <p class="sans" style="margin:.1rem 0"><span class="muted">Перша фіксація: </span><ClaimBadge :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${first.form}`" /></p>
@@ -325,6 +329,8 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <!-- 2. Labels -->
         <Panel id="h-lab" v-model:open="ui.lab" :count="labParts.length" title="Мітки · Labels" :summary="labParts.join(' · ')" :empty="!labParts.length"
           info="Літературний регістр ніколи не виводиться: є лише «розмовне» (за позначкою) або «не визначено» (SPEC 00 P-3.1). «Невідомо» означає відсутність доказів, а не «літературне». Тверді мітки з ⓘ відкривають цитату й локатор.">
+          <LabelsBlock :lemma="card.lemma" kind="full" :by-region="full?.stats.byRegion" />
+          <h3 class="sans small muted" style="margin-top:.9rem">Докази і твердження картки</h3>
           <div class="grid2 sans">
             <div><span class="muted">Регістр: </span><ClaimBadge :claim="card.claims.register" text="розмовне" unknown-text="не визначено" tone="colloquial" /></div>
             <div><span class="muted">Походження: </span><ClaimBadge :claim="card.claims.origin" :text="labelUk(String(card.claims.origin.value))" :tone="card.claims.origin.value === 'church_slavonic' ? 'cs' : ''" /></div>

@@ -28,6 +28,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/corpus', component: () => import('./views/CorpusView.vue') },
   { path: '/report', component: () => import('./views/ReportView.vue') },
   { path: '/method', component: () => import('./views/MethodView.vue') },
+  { path: '/labels-method', component: () => import('./views/LabelsMethodView.vue') },   // SPEC 63 LB-6 «Як визначаються мітки»
   { path: '/:rest(.*)*', name: 'catch-all', redirect: '/' },
 ]
 

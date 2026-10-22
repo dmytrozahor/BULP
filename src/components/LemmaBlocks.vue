@@ -9,6 +9,7 @@ import { computed } from 'vue'
 import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import Panel from './Panel.vue'
 import UsageChips from './UsageChips.vue'
+import LabelsBlock from './LabelsBlock.vue'
 import SociolectBadges from './SociolectBadges.vue'
 import ModernBadges from './ModernBadges.vue'
 import LoanChip from './LoanChip.vue'
@@ -26,7 +27,7 @@ import PhrasePanel from './PhrasePanel.vue'
 import StressForms from './StressForms.vue'
 import { cvStressVariants } from '../../core/cv.ts'
 import type { TabId } from '../lib/cardTabs.ts'
-const props = defineProps<{ lemma?: string; spelling: string; labels?: boolean; /** SPEC 63 CP-6: dictionary stress of the card word (CvExtra.s from the build) */ stress?: number[]; /** SPEC 63 OV-10: render only the blocks of this card tab (none = all blocks, as before) */ tab?: TabId }>()
+const props = defineProps<{ /** card kind (SE panel id of the labels block) */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu' | 'form'; lemma?: string; spelling: string; labels?: boolean; /** SPEC 63 CP-6: dictionary stress of the card word (CvExtra.s from the build) */ stress?: number[]; /** SPEC 63 OV-10: render only the blocks of this card tab (none = all blocks, as before) */ tab?: TabId }>()
 const w = computed(() => props.lemma ?? props.spelling)
 const variants = computed(() => cvStressVariants(props.lemma ?? props.spelling, props.stress))
 const senses = computed(() => sensesOf(w.value))
@@ -35,6 +36,10 @@ const on = (t: TabId) => !props.tab || props.tab === t
 
 <template>
   <div data-testid="lemma-blocks" :data-tab="tab">
+    <Panel v-if="on('meanings')" id="t-lab" :open="true" title="Мітки · Labels" summary="діалект · регістр · тип · значення, кожне з методом і доказами"
+      info="Діалект, регістр, тип і значення з методом («як визначено») і доказами; якщо даних немає, написано, що саме перевірено. Методологія: «Як визначаються мітки».">
+      <LabelsBlock :lemma="w" :kind="kind ?? 'light'" />
+    </Panel>
     <p v-if="on('meanings')" class="sans small"><UsageChips :lemma="w" label /> <template v-if="labels !== false"><SociolectBadges :word="w" /> <ModernBadges :word="w" /></template> <LoanChip :word="w" /></p>
     <LoanAdaptBlock v-if="labels !== false && on('history')" :word="w" />
     <p v-if="labels !== false && on('forms')" class="sans small" data-testid="cp-stress"><span class="muted">Наголос: </span><StressForms v-if="variants.length" :variants="variants" /><span v-else class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос не встановлено</span></p>

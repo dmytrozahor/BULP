@@ -9,9 +9,9 @@ import { store } from './parts.ts'
 
 const shards = store<Record<string, LbEntry>>(b => `./data/lm/lb/${b}.json`, j => j as Record<string, LbEntry>)
 /** the stored entry of a word; undefined while the shard loads or when the word has none */
-export const lbPeek = (word: string): LbEntry | undefined => { const k = lk(word); return shards.peek(String(seBucket(k)))?.[k] }
+export const lbPeek = (word: string): LbEntry | undefined => { if (!word) return undefined; const k = lk(word); return shards.peek(String(seBucket(k)))?.[k] }
 /** true once the shard of the word's bucket has arrived (so «немає даних» is shown only after the load, not during it) */
-export const lbLoaded = (word: string): boolean => shards.has(String(seBucket(lk(word))))
+export const lbLoaded = (word: string): boolean => !word || shards.has(String(seBucket(lk(word))))
 
 /**
  * The entry a card renders. While loading: `loading`. After: the stored entry, or the default («недостатньо даних» + what is needed);

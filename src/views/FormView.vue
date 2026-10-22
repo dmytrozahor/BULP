@@ -131,7 +131,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
     <CardLayout v-else-if="fc && stats">
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="pick.lemma" :spelling="pick.raw" :kwic="fc.kwic" :by-region="byRegion" map-panel="f-reg" :pron-word="pick.lemma" :stress="full?.stress" :stress-loaded="!!full" origin-panel="f-der" :origin-line="fc ? `найраніше засвідчене написання «${fc.raw}»: ${fmtDate(fc.date)}${fc.ocrOnly ? ' (лише OCR низької якості, не свідчення)' : ''} · норма ${fc.norm} → сучасна ${fc.modern}` : undefined" :paradigm="full?.paradigm" :paradigm-kind="kind" />
+        <OverviewTab :lemma="pick.lemma" :spelling="pick.raw" :kwic="fc.kwic" :by-region="byRegion" map-panel="f-reg" labels-panel="t-lab" :pron-word="pick.lemma" :stress="full?.stress" :stress-loaded="!!full" origin-panel="f-der" :origin-line="fc ? `найраніше засвідчене написання «${fc.raw}»: ${fmtDate(fc.date)}${fc.ocrOnly ? ' (лише OCR низької якості, не свідчення)' : ''} · норма ${fc.norm} → сучасна ${fc.modern}` : undefined" :paradigm="full?.paradigm" :paradigm-kind="kind" />
       </template>
       <template #forms>
         <Panel id="f-ep" :open="false" :count="stats.byEpoch.length" title="Клітинки за епохами" :summary="`розміщено токенів: ${stats.placed}`" :empty="!epochKinds"
@@ -140,14 +140,14 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <p v-else class="small sans muted">Історичні парадигми для цієї частини мови ще не побудовано.</p>
         </Panel>
         <Panel v-if="hasCirc(pick.raw)" id="f-circ" :open="true" title="Можливі читання · ô/ê" summary="читання літери з джерелами; IPA як говіркові варіанти"><CircReadings :spelling="pick.raw" /></Panel>
-        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="forms" />
+        <LemmaBlocks kind="form" :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="forms" />
       </template>
       <template #history>
         <Panel id="f-der" :open="true" :count="fc.derivation.length" title="Виведення · Derivation" :summary="fc.derivation.length ? `${fc.derivation.length} кроків → ${fc.modern}` : `без змін → ${fc.modern}`">
           <p class="sans small"><span class="muted">норма: </span>{{ fc.norm }} <span class="muted"> · сучасна: </span>{{ fc.modern }}</p>
           <DerivationSteps :steps="fc.derivation" :uid="pick.raw" :dates="chainDates" :lemma="pick.lemma" panel="chain" />
         </Panel>
-        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="history" />
+        <LemmaBlocks kind="form" :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="history" />
       </template>
       <template #meanings>
         <Panel id="f-cl" :open="false" :count="Object.keys(fc.claims).length" title="Мітки · Claims" :summary="Object.keys(fc.claims).length ? Object.keys(fc.claims).join(', ') : 'міток із доказами немає'" :empty="!Object.keys(fc.claims).length">
@@ -157,7 +157,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
         </Panel>
         <SenseEpochs :word="pick.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами», after the derivation block -->
         <PlastSenses :word="pick.lemma" />
-        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="meanings" />
+        <LemmaBlocks kind="form" :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="meanings" />
       </template>
       <template #spread>
         <Panel id="f-dia" :open="false" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
@@ -166,7 +166,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           <RegionMap :by="byRegion" />
           <p class="small sans muted">f у регіоні — <template v-if="fc.byW">усі токени цього написання в пам’ятках регіону</template><template v-else>наведені приклади (≤ 6): нижня межа</template>; N — токени всіх пам’яток регіону.</p>
         </Panel>
-        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="spread" />
+        <LemmaBlocks kind="form" :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="spread" />
       </template>
       <template #sources>
         <Panel id="f-kw" :open="true" :count="fc.kwic.length" title="Приклади · KWIC" :summary="`${fc.kwic.length} із f = ${stats.f}`" :empty="!fc.kwic.length">

@@ -190,8 +190,7 @@ export const ZHELEH_LABELS: DTable = {
     R('serb.', 'serb. = serbisch', 'type', { typ: 'loan-sr' }),
     R('tatar.', 'tatar. = tatarisch', 'type', { typ: 'loan-tt' }),
     R('dim.', 'd.; dim. = diminutivum', 'type', { typ: 'dim' }),
-    R('aug.', 'aug. = augmentativum', 'type', { typ: 'aug' }),
-    R('augm.', 'aug. = augmentativum', 'type', { typ: 'aug' }),
+    R('aug.', 'aug. = augmentativum', 'type', { typ: 'aug', re: 'aug(?:m)?\\.' }),
   ],
 }
 
@@ -262,6 +261,7 @@ export function scanArticle(table: DTable, text: string, maxStart?: number): Art
     const re = new RegExp(rowRe(row).source, 'gu')
     for (const m of text.matchAll(re)) {
       if (maxStart !== undefined && m.index! > maxStart) continue
+      if (row.kind === 'type' && (row.typ === 'dim' || row.typ === 'aug') && m.index! > 60) continue   // Желехівський: «dim.»/«aug.» say what the HEADWORD is only at the start of the article
       if (!free(m.index!, m[0].length)) continue
       taken.push([m.index!, m.index! + m[0].length])
       const key = `${row.kind}|${row.area ?? row.county ?? row.reg ?? row.typ}|${row.abbr}`

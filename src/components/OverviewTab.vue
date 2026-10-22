@@ -13,6 +13,7 @@ import OvPronunciation from './OvPronunciation.vue'
 import OriginEty from './OriginEty.vue'
 import RegionMap from './RegionMap.vue'
 import DialectBlock from './DialectBlock.vue'
+import LabelLine from './LabelLine.vue'
 import Kwic from './Kwic.vue'
 import SenseEpochs from './SenseEpochs.vue'
 import Paradigm from './Paradigm.vue'
@@ -27,6 +28,7 @@ const props = defineProps<{
   originPanel?: string; hasOrigin?: boolean; /** one-line fallback of a card without first-attestation data (e.g. the derivation norm → modern) */ originLine?: string
   /** the dialect block is keyed by the spelling of a form page; the word card passes the lemma */
   dialectSpelling?: string
+  /** DOM id of the Labels panel of the card kind (h-lab / t-lab) */ labelsPanel?: string
 }>()
 const { corpus, witnessById } = useData()
 const regs = computed(() => regionLine(props.byRegion, corpus.value?.regions))
@@ -58,6 +60,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
       <p v-if="hasRegions" class="small sans" data-testid="ov-attested"><span class="muted">засвідчено в: </span>{{ regs.map(r => `${r.name} (${r.f})`).join(', ') }}
         <span class="muted"> — регіон пам’ятки, а не діалектна мітка (FD-2).</span></p>
       <DialectBlock :spelling="dialectSpelling ?? spelling" :lemma="lemma" :regions="regionsForDialect" compact />
+      <LabelLine :lemma="lemma ?? spelling" :by-region="byRegion" :panel="labelsPanel" />   <!-- SPEC 63 LB-5: dialect class · register · type, with «як визначено» -->
     </section>
     <section class="ov-sec" data-testid="ov-senses" aria-labelledby="ov-h-se">
       <h3 id="ov-h-se" class="small sans">Значення за епохами</h3>

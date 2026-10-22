@@ -37,7 +37,7 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
     <p class="small">Кожен рядок цитує пояснення скорочення з власного списку словника (сторінка — посилання). Нічого не додано від себе, крім відповідності «скорочення → область»; повіти розкриваються за статтями uk.wikipedia (CC BY-SA 4.0).</p>
     <section v-for="t in DICT_LABEL_TABLES" :key="t.id" class="lb-table" :data-testid="`lbm-${t.id}`">
       <h4>{{ t.short }} <span class="small muted">· {{ t.rows.length }} скорочень</span></h4>
-      <p class="small"><a :href="t.list.split(' ')[0]" rel="noopener" target="_blank">{{ t.list }}</a> · {{ attachUk[t.attach] }}.</p>
+      <p class="small"><a :href="t.list.split(' ')[0]" rel="noopener" target="_blank">{{ t.list }} ↗</a> · {{ attachUk[t.attach] }}.</p>
       <table class="small"><thead><tr><th>скорочення</th><th>пояснення у словнику (дослівно)</th><th>що означає в картці</th><th>область → група говорів</th></tr></thead>
         <tbody><tr v-for="r in t.rows" :key="r.abbr">
           <td><code>{{ r.abbr }}</code></td><td><em>{{ r.meaning }}</em></td>
@@ -46,13 +46,13 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
     </section>
     <p class="small muted">Не читаємо: «Ум.», «Ув.» Грінченка (вони позначають <em>похідні форми</em>, перелічені в статті, а не заголовне слово); «Кн.» Уманця (у його списку це і «книжне слово», і джерело); позначки в прикладах ru→uk словників (це місце запису прикладу). Ніковський і Голоскевич не друкують власних списків територіальних скорочень, які ми могли б цитувати. Діалектних словників із читабельним текстом не знайдено (SV-2).</p>
     <h3>Газетьєр: область → група говорів</h3>
-    <ul class="small"><li v-for="g in GAZETTEER" :key="g.group"><strong>{{ DIALECTS[g.group] ?? g.group }}</strong> ({{ g.stems.join(', ') }}): <q>{{ g.q }}</q> — <a :href="g.loc" rel="noopener" target="_blank">uk.wikipedia</a></li></ul>
+    <ul class="small"><li v-for="g in GAZETTEER" :key="g.group"><strong>{{ DIALECTS[g.group] ?? g.group }}</strong> ({{ g.stems.join(', ') }}): <q>{{ g.q }}</q> — <a :href="g.loc" rel="noopener" target="_blank">uk.wikipedia ↗</a></li></ul>
     <p class="small muted">Області без рядка газетьєра (Київщина, Слобожанщина, Катеринославщина …) групи не отримують: показано лише область.</p>
 
     <h2 id="register">2. Регістр (вжиток)</h2>
     <p>Регістр береться з позначок джерел, окремо для леми та для кожного значення. Джерела: {{ CHECKED_REGISTER.join('; ') }}. Усе, що не позначено, — «нейтральне (немає позначок у словниках)»; це не твердження про «літературність».
       Суржик — ознака <em>форми</em>, а не леми: його видно у мітках написань, не в цьому блоці.</p>
-    <p class="small">Теги ВЕСУМ (<a :href="VESUM_TAGS_URL" rel="noopener" target="_blank">dict_uk/doc/tags.txt</a>): <span v-for="(v, k) in VESUM_TAGS" :key="k"><code>{{ k }}</code> — {{ v.def }}; </span> Тег на частині форм леми показується окремо як властивість цих форм.</p>
+    <p class="small">Теги ВЕСУМ (<a :href="VESUM_TAGS_URL" rel="noopener" target="_blank">dict_uk/doc/tags.txt ↗</a>): <span v-for="(v, k) in VESUM_TAGS" :key="k"><code>{{ k }}</code> — {{ v.def }}; </span> Тег на частині форм леми показується окремо як властивість цих форм.</p>
     <p class="small">Позначки: <span v-for="r in REGISTER" :key="r.id">{{ r.uk }} — {{ r.full }} ({{ r.axis }}); </span></p>
 
     <h2 id="type">3. Тип</h2>
@@ -63,7 +63,7 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
 
     <h2 id="limits">5. Межі</h2>
     <ul>
-      <li>Покриття діалектного класу залежить від обсягу корпусу і від того, скільки статей словників прочитано; поточні числа — у <a href="https://github.com/dmytrozahor/BULP/blob/mvp/analysis/labels-coverage.md" rel="noopener" target="_blank">analysis/labels-coverage.md</a>, їх перераховує кожна збірка даних.</li>
+      <li>Покриття діалектного класу залежить від обсягу корпусу і від того, скільки статей словників прочитано; поточні числа — у <a href="https://github.com/dmytrozahor/BULP/blob/mvp/analysis/labels-coverage.md" rel="noopener" target="_blank">analysis/labels-coverage.md ↗</a>, їх перераховує кожна збірка даних.</li>
       <li>Пороги вибрано консервативно; звіт показує, як змінилося б покриття за м’якших порогів, але картки користуються лише порогами, надрукованими вище.</li>
     </ul>
     <p><RouterLink to="/method">← загальна методологія</RouterLink></p>

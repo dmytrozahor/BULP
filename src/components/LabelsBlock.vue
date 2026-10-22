@@ -49,7 +49,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
               <strong>{{ h.dict }}</strong>: мітка «{{ h.abbr }}»<template v-if="h.meaning"> — <em>{{ h.meaning }}</em> ({{ h.list }})</template>;
               <span v-if="h.place" class="muted">позначає місце запису, не діалектність слова; </span><template v-if="h.area">область: {{ h.area }}<template v-if="h.group">, група: {{ h.group }}</template>; </template>
               <template v-if="h.word">слово «{{ h.word }}»; </template>
-              <q class="lb-q">{{ h.quote }}</q> <a v-if="h.url.startsWith('http')" :href="h.url" rel="noopener" target="_blank">стаття</a>
+              <q class="lb-q">{{ h.quote }}</q> <a v-if="h.url.startsWith('http')" :href="h.url" rel="noopener" target="_blank">стаття ↗</a>
               <span v-if="h.variant" class="muted"> · скорочення не надруковане у списку: розкрите за правилом списку «X. у. = X-ський повіт»</span>
               <details v-if="h.gov" class="small muted"><summary>повіт → губернія (uk.wikipedia, CC BY-SA)</summary>{{ h.gov }}</details>
             </li>
@@ -71,7 +71,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
         <template v-if="regs.length">
           <span v-for="v in regs" :key="v.id" class="badge" tabindex="0" :title="regTitle(v)">{{ v.abbr }} <small class="muted">{{ v.full }}</small></span>
           <ul class="small lb-ev">
-            <li v-for="v in regs" :key="v.id"><strong>{{ v.abbr }}</strong>: <template v-for="(s, i) in v.sources" :key="i"><template v-if="i">; </template>{{ s.srcUk }}<template v-if="s.sense"> (значення {{ s.sense }})</template> — <span class="muted">{{ s.detail }}</span> <a v-if="s.url?.startsWith('http')" :href="s.url" rel="noopener" target="_blank">стаття</a></template></li>
+            <li v-for="v in regs" :key="v.id"><strong>{{ v.abbr }}</strong>: <template v-for="(s, i) in v.sources" :key="i"><template v-if="i">; </template>{{ s.srcUk }}<template v-if="s.sense"> (значення {{ s.sense }})</template> — <span class="muted">{{ s.detail }}</span> <a v-if="s.url?.startsWith('http')" :href="s.url" rel="noopener" target="_blank">стаття ↗</a></template></li>
           </ul>
         </template>
         <template v-else>
@@ -86,7 +86,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
       <dd :data-testid="`lb-type-${kind ?? 'card'}`">
         <span>{{ typeBase(entry) }}</span>
         <template v-if="types.length"><span v-for="(t, i) in types" :key="i" class="badge" tabindex="0" :title="`${t.srcUk}: ${t.detail}`">{{ t.uk }}</span>
-          <ul class="small lb-ev"><li v-for="(t, i) in types" :key="i"><strong>{{ t.uk }}</strong>: {{ t.srcUk }} — <span class="muted">{{ t.detail }}</span> <a v-if="t.url?.startsWith('http')" :href="t.url" rel="noopener" target="_blank">стаття</a></li></ul></template>
+          <ul class="small lb-ev"><li v-for="(t, i) in types" :key="i"><strong>{{ t.uk }}</strong>: {{ t.srcUk }} — <span class="muted">{{ t.detail }}</span> <a v-if="t.url?.startsWith('http')" :href="t.url" rel="noopener" target="_blank">стаття ↗</a></li></ul></template>
         <span v-else class="small muted"> · словесного типу (власна назва, абревіатура, запозичення, церковнослов’янізм, архаїзм) у джерелах немає (перевірено: ВЕСУМ, словники r2u, аналіз запозичень, картка)</span>
       </dd>
 

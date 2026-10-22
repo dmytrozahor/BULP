@@ -24,6 +24,7 @@ export const BLOCKS = {
   loan: ['LoanAdaptBlock'],
   derivatives: ['DerivativesBlock', 'DimLine'],              // похідні (DV-3)
   ipa: ['IpaRow'],
+  labels: ['LabelsBlock'],                       // SPEC 63 LB-5 «Мітки»: діалект (4 класи) · регістр · тип · значення, кожне з методом і доказами
   senseTimeline: ['SenseEpochs'],                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
 } as const
 export type BlockId = keyof typeof BLOCKS
@@ -48,11 +49,11 @@ export const KIND_ROUTE: Record<KindId, string> = { word: '/w/:lemma', form: '/f
 const row = (c: Partial<Record<BlockId, Cell>>, base: Cell = 'empty'): Record<BlockId, Cell> =>
   Object.fromEntries((Object.keys(BLOCKS) as BlockId[]).map(b => [b, c[b] ?? base])) as Record<BlockId, Cell>
 /** lemma-keyed blocks of LemmaBlocks that every thin kind has, plus the shared witness / map / stats panels */
-const thin = { chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'na' } as const
+const thin = { labels: 'shown', chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'na' } as const
 /** SE sense timeline: shown on every kind but the phrase page (SenseEpochs, collapsed until opened; empty state «немає даних про значення») */
 const se = { senseTimeline: 'shown' } as const
 export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
-  word: row({ ...se, chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
+  word: row({ ...se, labels: 'shown', chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
   form: row({ ...thin, ...se, kwic: 'shown', witnesses: 'shown', epochs: 'shown', derivation: 'shown', map: 'shown', stats: 'shown', stress: 'shown' }),
   light: row({ ...thin, ...se, stress: 'empty', witnesses: 'empty' }),
   dict: row({ ...thin, ...se, stress: 'empty' }),
@@ -62,7 +63,7 @@ export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
   archaic: row({ ...thin, ...se }),
   name: row({ ...thin, ...se }),
   orv: row({ ...thin, ...se }),
-  phrase: row({ chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na' }),
+  phrase: row({ labels: 'na', chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na' }),
 }
 /** why a cell is `na` (shown next to the matrix in specs/63 CP-1) */
 export const NA: Partial<Record<KindId, string>> = {

@@ -902,3 +902,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | IN-7 | tests/incremental.test.ts › IN-7 planner: unchanged big objects are copied with Content-Encoding gzip, changed big ones are uploaded by the caller, a dir with too many exceptions or a glob name is sent whole |
 | IN-8 | tests/incremental.test.ts › IN-8 per-witness stage: 200 witnesses, one changed = 1 computed, 199 reused; the aggregate stage recomputes; upload = 1 shard + manifest |
 | IN-8 | manual — ops/worker/ingest.sh and chain.sh take --full (shell syntax checked with bash -n; not run on the worker, which is stopped) |
+| LB-1 | tests/labels.test.ts › LB-1 keyness: a fixture region table gives G², LR and Bonferroni as computed by hand |
+| LB-1 | tests/labels.test.ts › LB-1 dispersion: DP of an evenly spread lemma is near 0 and of a one-region lemma near 1 |
+| LB-1 | tests/labels.test.ts › LB-1 class assignment: a > b > c > d, a place-of-recording label is a dictionary class that is not strict, and a corpus skew is never called dialect |
+| LB-2 | tests/labels.test.ts › LB-2 every table row quotes its dictionary's explanation and every area resolves |
+| LB-2 | tests/labels.test.ts › LB-2 Грінченко: listed counties, the generic X. у. rule and the governorate quote |
+| LB-2 | tests/labels.test.ts › LB-2 Уманець and Кримський: the label attaches to one equivalent, labels in examples are not read |
+| LB-2 | tests/labels.test.ts › LB-2 Желехівський: hucul., ungr. and the start-of-article dim. |
+| LB-3 | tests/labels.test.ts › LB-3 register items: sources, per-sense СУМ labels and VESUM tags; form-level tags stay with the forms |
+| LB-3 | tests/labels.test.ts › LB-3 a lemma without any label is neutral and the block lists the dictionaries checked |
+| LB-4 | tests/labels.test.ts › LB-4 type: VESUM prop and abbr, the loan label, the church-slavonic claim and the dictionary type labels |
+| LB-5 | tests/labels.test.ts › LB-5 the Labels block renders the four rows with the how-determined tooltip and a methods link |
+| LB-5 | tests/labels.test.ts › LB-5 card parity: every card kind mounts LabelsBlock and the Огляд label line |
+| LB-6 | tests/labels.test.ts › LB-6 the methods page prints the thresholds and every dictionary table |
+| LB-7 | tests/labels.test.ts › LB-7 build-labels assembles an entry per lemma and the coverage report names the classes |
