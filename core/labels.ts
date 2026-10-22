@@ -279,6 +279,6 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   for (const r of reg) if (r[0] === 'arkh' && !ty.some(x => x[0] === 'arkh')) ty.push(['arkh', r[1] === 'd' ? 'd' : 'v', r[2], r[3]]); else if (r[0] === 'istor' && !ty.some(x => x[0] === 'istor')) ty.push(['istor', 'd', r[2], r[3]])
   const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by)
   const sense: NonNullable<LbEntry['s']> = (i.se ?? []).filter(r => r.lb.length).map(r => [r.n, r.d, r.lb])
-  const m = i.tagLine ? morphOf(i.tagLine) : ''
-  return { v: 1, d, r: reg, t: ty, ...(sense.length ? { s: sense } : {}), ...(ft.length ? { f: ft } : {}), ...(i.by?.length ? { corpus: true } : {}), ...(i.pos ? { p: i.pos } : {}), ...(i.paradigmKind ? { k: i.paradigmKind } : {}), ...(m ? { m } : {}) }
+  const m = i.tagLine ? morphOf(i.tagLine) : '', pos = i.pos ?? (i.tagLine ? POS_UK[i.tagLine.split(':')[0]!] : undefined)
+  return { v: 1, d, r: reg, t: ty, ...(sense.length ? { s: sense } : {}), ...(ft.length ? { f: ft } : {}), ...(i.by?.length ? { corpus: true } : {}), ...(pos ? { p: pos } : {}), ...(i.paradigmKind ? { k: i.paradigmKind } : {}), ...(m ? { m } : {}) }
 }
