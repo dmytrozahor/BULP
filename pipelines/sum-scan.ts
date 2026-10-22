@@ -19,7 +19,7 @@ import { writeJsonAtomic } from './robust.ts'
 
 
 /** bump when a parser changes: finished volumes are parsed again */
-const VER = 2
+const VER = 3
 export function textOf(dict: SumDict, file: string): string {
   const out = dict === 'sum11' ? execFileSync('djvutxt', [file], { maxBuffer: 1 << 30 }) : execFileSync('pdftotext', ['-enc', 'UTF-8', file, '-'], { maxBuffer: 1 << 30 })
   const t = out.toString('utf8')
