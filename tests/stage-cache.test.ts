@@ -86,24 +86,23 @@ describe('RS-2 stage cache: hits, misses, invalidation', () => {
   it('RS-2 a source file changed: only the stages whose block references it (and later ones, by the spine) recompute', async () => {
     const p = project(); await run(p)
     p.w('lib/m3.ts', 'export const m3 = (x: number) => x * 4\n')   // referenced by the s3 block only
-    expect((await run(p)).calls).toEqual(['s3', 's4'])
+    expect((await run(p)).calls).toEqual(['s3'])   // IN-3: s3 recomputed to the same value, so s4 (keyed on s3's OUTPUT) stays cached
     p.w('lib/deep.ts', 'export const helper = (x: number) => x + 200\n')   // transitive: m2 → deep, referenced by s2
-    expect((await run(p)).calls).toEqual(['s2', 's3', 's4'])
+    expect((await run(p)).calls).toEqual(['s2'])
     p.w('lib/m1.ts', 'export const m1 = (x: number) => x + 2\n')   // s1
-    expect((await run(p)).calls).toEqual(['s1', 's2', 's3', 's4'])
+    expect((await run(p)).calls).toEqual(['s1'])
     expect((await run(p)).calls).toEqual([])
   })
   it('RS-2 a stage block edited: that stage and the later ones; edited glue: only the stages that reach it (and the later ones)', async () => {
     const p = project(); await run(p)
     p.w('pipeline/main.ts', p.main('', ' /* edited */'))
-    expect((await run(p)).calls).toEqual(['s2', 's3', 's4'])
+    expect((await run(p)).calls).toEqual(['s2'])   // IN-3 early cut-off: same output, later stages hit
     p.w('pipeline/main.ts', p.main('; // glue edited'))   // glue no stage mentions: no stage depends on it
     expect((await run(p)).calls).toEqual([])
     p.w('pipeline/main.ts', p.main('', '', '; // used edited'))   // glue that the s2 block mentions
     const r = await run(p)
-    expect(r.calls).toEqual(['s2', 's3', 's4'])
+    expect(r.calls).toEqual(['s2'])
     expect(r.logs.find(l => /cache miss s2/.test(l))).toMatch(/code fingerprint changed.*build.ts code it uses: used/)
-    expect(r.logs.find(l => /cache miss s3/.test(l))).toMatch(/upstream stage "s2" has a new key .code fingerprint changed/)
   })
   it('RS-2 CRLF checkouts do not change a fingerprint', async () => {
     const p = project(); await run(p)

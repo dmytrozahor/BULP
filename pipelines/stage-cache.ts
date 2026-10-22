@@ -146,20 +146,21 @@ export const CHUNK = 4096
 function writeAll(fd: number, b: Buffer) { let off = 0; while (off < b.length) off += O.writeSync(fd, b, off, b.length - off) }
 
 /** writes `meta`, the unchunked rest of `value`, then the chunked Map/Array fields; returns the file size and the digest (the trailer) */
-export function writeEntry(path: string, meta: Omit<EntryMeta, 'fields' | 'format'>, value: Record<string, unknown>, chunked: string[], chunk = CHUNK): { bytes: number; digest: string } {
-  const tmp = `${path}.${process.pid}.tmp`, hash = createHash('sha256')
+export function writeEntry(path: string, meta: Omit<EntryMeta, 'fields' | 'format'>, value: Record<string, unknown>, chunked: string[], chunk = CHUNK): { bytes: number; digest: string; out: string } {
+  const tmp = `${path}.${process.pid}.tmp`, hash = createHash('sha256'), outHash = createHash('sha256')
   O.mkdirSync(dirname(path), { recursive: true })
   const fd = O.openSync(tmp, 'w')
   let bytes = 0
   const put = (b: Buffer) => { writeAll(fd, b); hash.update(b); bytes += b.length }
-  const frame = (v: unknown) => { const b = serialize(v); if (b.length > 0xffffffff) throw new RangeError('frame over 4 GiB'); const n = Buffer.alloc(4); n.writeUInt32LE(b.length); put(n); put(b) }
+  // IN-3: `out` = digest of the VALUE frames only (not the meta frame, which carries the compute time and the read set): equal output = equal `out`, whatever produced it
+  const frame = (v: unknown, content = true) => { const b = serialize(v); if (b.length > 0xffffffff) throw new RangeError('frame over 4 GiB'); const n = Buffer.alloc(4); n.writeUInt32LE(b.length); put(n); put(b); if (content) outHash.update(n).update(b) }
   try {
     const rest: Record<string, unknown> = {}, fields: FieldMeta[] = []
     for (const [k, v] of Object.entries(value)) {
       if (chunked.includes(k) && (v instanceof Map || Array.isArray(v))) fields.push({ name: k, kind: v instanceof Map ? 'map' : 'array', chunks: Math.ceil((v instanceof Map ? v.size : v.length) / chunk) })
       else rest[k] = v
     }
-    put(MAGIC); frame({ ...meta, format: CACHE_FORMAT, fields } satisfies EntryMeta); frame(rest)
+    put(MAGIC); frame({ ...meta, format: CACHE_FORMAT, fields } satisfies EntryMeta, false); frame(rest)
     for (const f of fields) {
       const v = value[f.name] as Map<unknown, unknown> | unknown[]
       if (v instanceof Map) { let buf: [unknown, unknown][] = []; for (const e of v) { buf.push(e); if (buf.length === chunk) { frame(buf); buf = [] } } if (buf.length) frame(buf) }
@@ -168,7 +169,7 @@ export function writeEntry(path: string, meta: Omit<EntryMeta, 'fields' | 'forma
     const digest = hash.digest(); writeAll(fd, END); writeAll(fd, digest); bytes += END.length + digest.length
     O.fsyncSync(fd); O.closeSync(fd)
     O.renameSync(tmp, path)
-    return { bytes, digest: digest.toString('hex') }
+    return { bytes, digest: digest.toString('hex'), out: outHash.digest('hex') }
   } catch (e) { try { O.closeSync(fd) } catch { /* already closed */ } try { O.unlinkSync(tmp) } catch { /* gone */ } throw e }
 }
 
@@ -251,7 +252,7 @@ export interface RunOpts {
 export interface StageStat { stage: string; status: 'hit' | 'miss' | 'off'; secs: number; bytes: number; why?: string }
 /** what the key was made of (short hashes) and the keys of the stages before it: the next run compares them to say WHY it missed (RS-2) */
 interface KeyParts { code: string; inputs?: string; files?: Record<string, string>; /** the spine's base, one entry per variable, so a miss names the one that changed */ base?: Record<string, string> }
-interface ManifestLine { key: string; file: string; bytes: number; secs: number; digest: string; item?: string; at: string; parts?: KeyParts; up?: Record<string, string> }
+interface ManifestLine { key: string; file: string; bytes: number; secs: number; digest: string; /** IN-3: digest of the stage's output value: the next stages are keyed on it (early cut-off) */ out?: string; item?: string; at: string; parts?: KeyParts; up?: Record<string, string> }
 const short = (s: string) => s.slice(0, 12)
 const MAX_NAMES = 4
 const names = (xs: string[]) => xs.length <= MAX_NAMES ? xs.join(', ') : xs.slice(0, MAX_NAMES).join(', ') + ` (+${xs.length - MAX_NAMES} more)`
@@ -354,7 +355,7 @@ export class StageCache {
     if (!why.length) why.push(item === undefined ? 'key differs for an unrecorded reason' : 'the witness file (or its nlp file) content changed')
     return why.join('; ')
   }
-  private lookup(stage: string, key: string, wantReads: boolean, explain: () => string): { value: Record<string, unknown>; meta: EntryMeta } | { why: string } {
+  private lookup(stage: string, key: string, wantReads: boolean, explain: () => string): { value: Record<string, unknown>; meta: EntryMeta; out?: string } | { why: string } {
     const cands = this.manifest(stage).filter(l => l.key === key).reverse()
     if (!cands.length) return { why: explain() }
     let why = 'entry file missing'
@@ -366,23 +367,23 @@ export class StageCache {
         if (wantReads) { const m = peekEntry(path); const ch = this.tracker.firstChanged(m.reads); if (ch) { why = `input changed: ${ch}`; continue } }
         const e = readEntry(path)
         if (wantReads) this.tracker.adopt(e.meta.reads)
-        return e
+        return { ...e, out: l.out }
       } catch (e) { why = `corrupt entry (${(e as Error).message})` }
     }
     return { why }
   }
-  private save(stage: string, key: string, secs: number, value: Record<string, unknown>, chunked: string[], reads: [string, string][], parts: KeyParts, item?: string) {
+  private save(stage: string, key: string, secs: number, value: Record<string, unknown>, chunked: string[], reads: [string, string][], parts: KeyParts, item?: string): { bytes: number; out?: string } {
     const file = `${key}-${sha(stable(reads)).slice(0, 12)}.v8`, path = join(this.dirOf(stage), file)
     try {
-      const { bytes, digest } = writeEntry(path, { stage, key, secs, reads }, value, chunked, this.cfg.chunk)
+      const { bytes, digest, out } = writeEntry(path, { stage, key, secs, reads }, value, chunked, this.cfg.chunk)
       if (this.cfg.verify) {
         const back = readEntry(path).value
         if (!isDeepStrictEqual(back, value)) { O.unlinkSync(path); throw new Error('round trip is not lossless (function, class instance or shared state in a chunked field?)') }
       }
       this.saveCode(stage)
-      this.commit(stage, { key, file, bytes, secs: Math.round(secs * 10) / 10, digest, ...(item ? { item } : {}), at: new Date().toISOString(), parts, ...(item ? {} : { up: Object.fromEntries(this.ups.map(([s, k]) => [s, short(k)])) }) })
-      return bytes
-    } catch (e) { this.log(`not cached ${stage}${item ? ' ' + item : ''}: ${(e as Error).message}`); return 0 }
+      this.commit(stage, { key, file, bytes, secs: Math.round(secs * 10) / 10, digest, out, ...(item ? { item } : {}), at: new Date().toISOString(), parts, ...(item ? {} : { up: Object.fromEntries(this.ups.map(([s, k]) => [s, short(k)])) }) })
+      return { bytes, out }
+    } catch (e) { this.log(`not cached ${stage}${item ? ' ' + item : ''}: ${(e as Error).message}`); return { bytes: 0 } }
   }
 
   /** the parts of the stage's current code fingerprint, next to its entries (atomic), once per run */
@@ -405,7 +406,7 @@ export class StageCache {
       if ('value' in hit) {
         this.log(`cache hit ${stage} (saved ~${Math.round(hit.meta.secs)} s)`)
         this.stats.push({ stage, status: 'hit', secs: hit.meta.secs, bytes: this.manifest(stage).find(l => l.key === key)?.bytes ?? 0 })
-        this.advance(stage, key, o); return hit.value as T
+        this.advance(stage, hit.out ?? key, o); return hit.value as T
       }
       why = hit.why
     }
@@ -416,10 +417,11 @@ export class StageCache {
     let value: T
     try { value = await fn() } finally { if (o.produces) this.tracker.unhide(o.produces) }
     const secs = (Date.now() - t) / 1000
-    const bytes = this.save(stage, key, secs, value, o.chunked ?? [], this.tracker.snapshot(), parts)
-    this.stats.push({ stage, status: 'miss', secs, bytes, why })
-    this.advance(stage, key, o); return value
+    const saved = this.save(stage, key, secs, value, o.chunked ?? [], this.tracker.snapshot(), parts)
+    this.stats.push({ stage, status: 'miss', secs, bytes: saved.bytes, why })
+    this.advance(stage, saved.out ?? key, o); return value
   }
+  /** IN-3 early cut-off: the spine advances with the OUTPUT digest of a stage (its key only when the output could not be digested), so a stage that was recomputed to the same result leaves everything downstream cached */
   private advance(stage: string, key: string, o: RunOpts) { if (o.parallel) this.pending.set(stage, key); else { this.spine = sha(this.spine, key); this.ups.push([stage, key]) } }
   /** fold concurrently run stages into the spine in the given (fixed) order */
   join(stages: string[]) { this.spine = sha(this.spine, ...stages.filter(s => this.pending.has(s)).map(s => this.pending.get(s)!)); for (const s of stages) if (this.pending.has(s)) this.ups.push([s, this.pending.get(s)!]) }
@@ -441,7 +443,7 @@ export class StageCache {
     }
     const m = this.itemWhy.get(stage) ?? new Map<string, number>(); this.itemWhy.set(stage, m); m.set(why, (m.get(why) ?? 0) + 1)
     const t = Date.now(), v = fn(), secs = (Date.now() - t) / 1000
-    this.items.miss++; this.items.bytes += this.save(stage, key, secs, v, [], [], parts, id)
+    this.items.miss++; this.items.bytes += this.save(stage, key, secs, v, [], [], parts, id).bytes
     return v
   }
   itemSummary(stage: string) {

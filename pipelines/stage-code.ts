@@ -19,6 +19,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { dirname, relative, resolve } from 'node:path'
 import ts from 'typescript'
 import type { CodeDetail, CodeIndex } from './stage-cache.ts'
+import { SymbolGraph } from './symbol-graph.ts'
 
 const norm = (s: string) => s.replace(/\r\n/g, '\n')
 const h = (s: string) => createHash('sha256').update(s).digest('hex')
@@ -34,6 +35,8 @@ export interface ParsedSource {
   /** all non-tail, non-stage text (kept for tests and tooling) */
   glue: string
   imports: Map<string, string>
+  /** IN-6: local name → [module file, imported name | 'default' | '*'] for every runtime import (the symbol-level fingerprint asks for exactly these) */
+  importSyms: Map<string, [string, string]>
   /** the glue statements a stage can see (before it, plus the hoisted top level), in source order */
   candidates(stage: string): Chunk[]
 }
@@ -53,7 +56,7 @@ export function parseSource(file: string, text = norm(readFileSync(file, 'utf8')
   }
   if (state === 'stage') throw new Error(`${file}: #stage ${cur} is not closed`)
   if (state === 'tail') tails.push([from, text.length + 1])
-  const imports = new Map<string, string>()
+  const imports = new Map<string, string>(), importSyms = new Map<string, [string, string]>()
   for (const m of text.matchAll(IMPORT)) {
     const spec = m[1]!; if (!spec.startsWith('.')) continue
     const clause = m[0].slice('import'.length, m[0].lastIndexOf('from'))
@@ -62,7 +65,11 @@ export function parseSource(file: string, text = norm(readFileSync(file, 'utf8')
     for (const part of clause.replace(/[{}]/g, ',').split(',')) {
       const n = part.trim(); if (!n || /^type\s/.test(n)) continue   // inline `type X`: erased too
       const local = n.includes(' as ') ? n.split(' as ')[1]!.trim() : n.startsWith('* as ') ? n.slice(5).trim() : n
-      if (/^[\w$]+$/.test(local)) imports.set(local, target)
+      if (/^[\w$]+$/.test(local)) {
+        imports.set(local, target)
+        const braced = clause.includes('{') && clause.slice(clause.indexOf('{'), clause.indexOf('}')).includes(n)
+        importSyms.set(local, [target, n.startsWith('* as ') ? '*' : !braced ? 'default' : n.includes(' as ') ? n.split(' as ')[0]!.trim() : n])
+      }
     }
   }
   const strip = (s: string) => s.replace(IMPORT, '')
@@ -101,7 +108,7 @@ export function parseSource(file: string, text = norm(readFileSync(file, 'utf8')
     walk(sf.statements, true)
     return out
   }
-  return { blocks: new Map([...blocks].map(([k, v]) => [k, strip(v)])), glue: strip(glue.join('\n')), imports, candidates }
+  return { blocks: new Map([...blocks].map(([k, v]) => [k, strip(v)])), glue: strip(glue.join('\n')), imports, importSyms, candidates }
 }
 
 function readNorm(f: string): string | undefined { return existsSync(f) ? norm(readFileSync(f, 'utf8')) : undefined }
@@ -146,10 +153,20 @@ export class SourceIndex implements CodeIndex {
     }
     return { chunks: cands.filter(c => inc.has(c)), names: needed }
   }
+  private graph_?: SymbolGraph
+  private get graph() { return this.graph_ ??= new SymbolGraph(this.root) }
+  /** IN-6: [module, imported name] requests of a set of mentioned names: the declarations they reach are fingerprinted, not whole modules */
+  requestsOf(names: Iterable<string>): [string, string][] {
+    const out: [string, string][] = []
+    for (const n of names) { const s = this.parsed.importSyms.get(n); if (s) out.push(s) }
+    return out
+  }
   private parts(stage: string) {
     const block = this.parsed.blocks.get(stage)!, { chunks, names } = this.reach(stage)
-    return { block, chunks, mods: importClosure(this.modulesOf(names), this.root) }
+    return { block, chunks, mods: this.graph.parts(this.requestsOf(names)) }
   }
+  /** IN-6: the top-level declarations of each module that a stage's fingerprint covers (tests, tooling) */
+  symbols(stage: string): Map<string, Set<string>> { return this.graph.reach(this.requestsOf(this.reach(stage).names)).decls }
   /** modules (relative paths) that make up a stage's fingerprint: closure of what its block and the glue it reaches use */
   files(stage: string): string[] { return this.parts(stage).mods.map(x => x[0]) }
   /** labels of the glue statements in a stage's fingerprint */
