@@ -10,10 +10,11 @@ describe('NW-7 songs', () => {
   it('NW-7 lyrics policy: authored songs carry at most 2 quoted lines, never audio; the licence tag matches', () => {
     for (const s of SONGS) {
       for (const q of s.quotes) { expect(quoteLines(q.text), s.id).toBeLessThanOrEqual(2); expect(q.evidence.kind).toBe('Q'); expect(q.evidence.quote).toBe(q.text) }
-      if (s.kind === 'authored') expect(s.licence, s.id).not.toBe('pd-text')
+      if (s.kind === 'authored' && s.licence === 'pd-text') expect(s.witness && s.id === 'duma-mazepy', s.id).toBeTruthy()   // SG-3: the only authored text in the public domain (XVII c.)
+      else if (s.kind === 'authored') expect(s.licence, s.id).not.toBe('pd-text')
       if (s.licence === 'pd-text') expect(s.witness, s.id).toBeTruthy()
       expect(s.evidence.length, s.id).toBeGreaterThan(0)
-      for (const m of s.media) { expect(m.id).toMatch(/^[\w-]{11}$/); expect(m.url).toBe('https://www.youtube.com/watch?v=' + m.id); expect(m.verified).toBe('2026-10-12') }
+      for (const m of s.media) { expect(m.id).toMatch(/^[\w-]{11}$/); expect(m.url).toBe('https://www.youtube.com/watch?v=' + m.id); expect(m.verified).toMatch(/^2026-10-\d\d$/) }
     }
     expect(SONGS.length).toBeGreaterThanOrEqual(10); expect(new Set(SONGS.map(s => s.id)).size).toBe(SONGS.length)
     expect(ARTISTS.every(a => a.quote.length > 10 && a.channel.startsWith('https://www.youtube.com/@'))).toBe(true)

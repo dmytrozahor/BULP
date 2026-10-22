@@ -448,6 +448,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SV-2 | tests/dialect-books.test.ts › SV southern dialect vocabularies: access log, nothing ingested without a readable institutional copy › no lexical entry cites a southern dictionary (no readable copy) |
 | SG-1 | tests/dialect-books.test.ts › SG song «Занедбай мене, я о тя не дбаю»: identification logged, no witness without a public-domain edition › the identification attempt (folk-song category, title «Занехай ти мене», no author/edition/year found) and the owner decision are logged |
 | SG-2 | manual — research/31-dialect-books.md §1 SG-2 logs the identification, the sources searched and the owner decision; reviewed by reading it |
+| SG-3 | tests/songs-duma.test.ts › SG-3 Дума Мазепи |
 | CV-1 | tests/cv.test.ts › CV-1 a dictionary token without a full card gets a light card with its attestation line; a full-card lemma and an /ar spelling get none |
 | CV-1 | tests/cv.test.ts › CV-1 an unresolved text token whose spelling is a CV word links to the card |
 | CV-1 | tests/cv.test.ts › CV-1 attestations are de-duplicated per (witness, locator) and capped, the total is kept |

@@ -81,7 +81,7 @@ const lines = (s: Song) => s.quotes.flatMap(q => songLines(q.text).map(t => ({ t
         <p v-else class="small muted sans">Тексту не наведено: {{ song.licence === 'link-only' ? 'лише посилання (права на текст не підтверджено)' : 'немає цитати' }}.</p>
         <p v-if="song.witness" class="small sans">Текст у корпусі: <RouterLink :to="{ path: '/texts', query: { w: song.witness } }">пам’ятка {{ song.witness }}</RouterLink> · <RouterLink :to="witnessTo(song.witness)">картка пам’ятки</RouterLink></p>
         <div v-if="song.witness && textRows.length" class="card">
-          <h2 class="small sans" style="margin:0 0 .3rem">Текст друку {{ wit?.date?.[0] ?? '' }} (суспільне надбання), правопис {{ wit?.orth ?? 'оригіналу' }} — кожне слово веде до картки</h2>
+          <h2 class="small sans" style="margin:0 0 .3rem">Текст {{ wit?.witnessType === 'ms_copy' ? 'копії' : 'друку ' + (wit?.date?.[0] ?? '') }} (суспільне надбання), правопис {{ wit?.orth ?? 'оригіналу' }} — кожне слово веде до картки</h2>
           <p class="reader" style="font-family:var(--serif);line-height:2">
             <template v-for="(t, i) in textRows" :key="i">
               <RouterLink v-if="t.lemma" :class="['tok', t.status]" :to="wordTo(t.lemma)" :title="`лема «${t.lemma}»`">{{ t.raw }}</RouterLink>
@@ -89,7 +89,7 @@ const lines = (s: Song) => s.quotes.flatMap(q => songLines(q.text).map(t => ({ t
             </template>
           </p>
         </div>
-        <Panel v-if="song.witness && folkVocab.length" id="s-fvocab" title="Слова пісні · леми й форми" :summary="`${folkVocab.length} лем у тексті 1834`" :open="false">
+        <Panel v-if="song.witness && folkVocab.length" id="s-fvocab" title="Слова пісні · леми й форми" :summary="`${folkVocab.length} лем у тексті`" :open="false">
           <SongVocab :lemmas="folkVocab" />
         </Panel>
         <Panel v-if="vocab" id="s-vocab" title="Слова пісні · лише лічильники" :summary="`${vocab.lemmas.length} лем, ${vocab.linked} з ${vocab.tokens} слововживань пов’язано`" :open="false">

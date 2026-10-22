@@ -73,6 +73,7 @@ const SKIP_PAGE: Record<string, RegExp> = {
 const DROP_LINE: Record<string, RegExp> = {
   // CX-5: missing-image placeholder of the proofreading layer
   sumtsov1918: /^На місці цього тексту/, bahaliy1918: /^На місці цього тексту/,
+  song_duma_mazepy: /^(33-е\.?$|ДУМА ПАНА ГЕТМАНА|Сюю пѣсню читаючи)/,   // SG-3: the document number + Russian heading of the 1859 editor; Kochubei's own closing note
   song_zhentsi: /^(О ГРИЦЬКѢ САГАЙДАЧНОМЪ|Гетьманъ Петръ Дорошенко)/,
   // CX-2: Russian censor's / printer's / dedication lines on the title pages are not the poet's text
   kobzar1840: /^(ПЕЧАТАТЬ ПОЗВОЛЯЕТСЯ|съ тѣмъ чтобы|Цензоръ|САНКТПЕТЕРБУРГЪ|ВЪ ТИПОГРАФІИ)/,

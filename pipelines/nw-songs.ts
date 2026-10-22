@@ -25,7 +25,24 @@ const maxSong = (id: string, sub: string, title: string, pages: string): Unit =>
   }
 }
 
+/**
+ * SG-3 «Дума» Мазепи («Всі покою щире прагнуть…»): the text of the copy in Kochubei's denunciation (1708), as printed by Бантыш-Каменский, Источники малороссийской истории, ч. 2,
+ * Москва 1859, док. 33 «Дума Пана Гетмана Мазепы…» (uk.wikisource, proofread from the scan, PD-old; footnote: «По списку руки черненья самаго Кочубея»).
+ * Dating = the generally accepted one: Оглоблин (1960; litopys.org.ua/coss3/ohl19.htm): «Загалом вважалося, що «Дума» була написана коло 1698 р.»; Кочубей (допит, квітень 1708) -
+ * архімандрит Нікон віддав йому пісню «л Ђ т c десять» тому; К. Меннінг пропонує початок 1670-х (оспорюване). msDate = the denunciation (1708). Kochubei's own closing remark is not Mazepa's text.
+ */
+const DUMA_TITLE = 'Источники малороссійской исторіи/2/Слѣдственное дѣло о Кочубеѣ и Искрѣ по доношенію на Гетмана Ивана Мазепу въ измѣнѣ Государю/33'
+export const DUMA_RENDER = `https://uk.wikisource.org/w/index.php?title=${encodeURIComponent(DUMA_TITLE.replace(/ /g, '_'))}&action=render`
+const DUMA_PAGE = 'https://uk.wikisource.org/wiki/' + encodeURIComponent(DUMA_TITLE.replace(/ /g, '_'))
+export const DUMA_DATE_CITE = Q('OHL', 'http://litopys.org.ua/coss3/ohl19.htm', 'Загалом вважалося, що «Дума» була написана коло 1698 р.')
+
 export const UNITS_SONGS: Unit[] = [
+  {
+    id: 'song_duma_mazepy', title: 'Дума гетьмана Мазепи «Всі покою щире прагнуть…» (копія Кочубея, у виданні Бантыша-Каменского 1859)', author: 'mazepa', kind: 'wikisource', urls: [DUMA_RENDER],
+    date: [1698, 1698], dateCite: DUMA_DATE_CITE, msDate: 1708,
+    lang: 'uk', region: 'Гетьманщина (Батурин)', witnessType: 'ms_copy', orth: 'ярижка', license: 'PD',
+    edition: 'Бантыш-Каменский Д. Н. Источники малороссійской исторіи, ч. 2. Москва, 1859, док. 33 (с. 109–110): текст за списком руки Кочубея, додано до доносу 1708 р.; дата твору — традиційна (Оглоблин: коло 1698; К. Меннінг — початок 1670-х), не дата друку',
+  },
   maxSong('song_zazhuryla', 'Зажурилась Украина, що нѣгдѣ ся-дѣти', 'Зажурилась Україна, що нігде ся діти', 'з с. 108'),
   maxSong('song_zasvystaly', 'Засвистали козаченьки', 'Засвистали козаченьки', 'з с. 140'),
   maxSong('song_baida', 'О козакѣ Байдѣ', 'О козакові Байді', 'с. 106–107'),
@@ -40,6 +57,11 @@ export const UNITS_SONGS: Unit[] = [
 ]
 
 export const AUTHORS_SONGS: Author[] = [
+  {
+    id: 'mazepa', name: 'Іван Мазепа (традиційна атрибуція «Думи»)', life: '1639–1709', label: 'ukrainian', status: 'vetted', confidence: 'implicit', region: 'Гетьманщина (Батурин)',
+    evidence: [Q('WS', DUMA_PAGE, 'Жалься, Боже, Украины, Що не вкупѣ маеть сыны!')],
+    note: 'атрибуція традиційна: Кочубей на допиті (квітень 1708) переказав, що архімандрит Нікон сказав, ніби пісню «скомпоновал он, Гетман» (Оглоблин, litopys.org.ua/coss3/ohl19.htm); у самому тексті — Україна як спільна «мати», до якої він звертається «Жалься, Боже, Украины»; автограф не збережено',
+  },
   {
     id: 'folk_maksymovych', name: 'Народна пісня (збірка Максимовича, 1834)', life: 'друк 1834', label: 'institutional', status: 'provisional', confidence: 'implicit',
     evidence: [Q('WS', PAGE, 'Украинскія народныя пѣсни')],

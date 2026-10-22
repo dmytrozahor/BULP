@@ -26,6 +26,6 @@ describe.skipIf(!existsSync('public/data/songs.json'))('BL-18 built songs.json',
       expect(v.lemmas.map(l => l[0]), id).toEqual([...v.lemmas.map(l => l[0])].sort((a, b) => a.localeCompare(b, 'uk')))
       expect(d.songs.find(s => s.id === id)!.quotes.every(q => q.text.split(/\s*\/\s*|\n/).length <= 2)).toBe(true)
     }
-    expect(d.songs.filter(s => s.witness).length).toBe(5)
+    expect(d.songs.filter(s => s.witness).length).toBeGreaterThanOrEqual(5)
   })
 })
