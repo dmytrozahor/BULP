@@ -6,9 +6,11 @@ import { SOURCES } from '../../core/sources.ts'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtNum } from '../lib/format.ts'
 import { sourceTo, epochTo } from '../lib/nav.ts'
+import { vocabView } from '../../core/vocab-view.ts'
 import WitnessTable from '../components/WitnessTable.vue'
 const { corpus, loaded, ensureCorpus } = useData()
 ensureCorpus()
+const vocab = computed(() => vocabView(corpus.value ?? {}))   // GG-8: hides the inflated pre-2babe592 counts
 const groups = computed(() => (['shev', 'wl'] as const).map(sc => {
   const eps = EPOCHS.filter(e => e.scheme === sc && !e.overlay && corpus.value?.epochSizes[e.id])
   const max = Math.max(1, ...eps.map(e => corpus.value!.epochSizes[e.id]!))
@@ -28,11 +30,12 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.unresolved) }}</strong><div class="small muted">не прив’язано (unresolved)</div></div>
         <div><strong style="font-size:1.6rem">{{ corpus.nWitnesses }}</strong><div class="small muted">пам’яток</div></div>
       </div>
-      <div v-if="corpus.nVocab" class="row sans" style="gap:2rem;margin-top:.8rem" data-test="n-vocab">
-        <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.nVocab) }}</strong><div class="small muted">токенів лише для словника (vocab-only), не входять до N</div></div>
+      <div v-if="vocab.total" class="row sans" style="gap:2rem;margin-top:.8rem" data-test="n-vocab">
+        <div><strong style="font-size:1.6rem">{{ fmtNum(vocab.total) }}</strong><div class="small muted">токенів лише для словника (vocab-only), не входять до N</div></div>
       </div>
-      <p v-if="corpus.nVocab" class="small muted">N — повнотекстовий корпус: з нього цитати (KWIC), перші засвідчення й ipm. «Лише словник» — Вікіпедія, HPLT та інші джерела під ліцензіями без права цитувати: з них беруться форми слів і лічильники, жодного рядка тексту; ці числа не змішуються з N.
-        <template v-if="corpus.vocabSources?.length">Джерела: {{ corpus.vocabSources.map(([s, n]) => s + ' ' + fmtNum(n)).join(' · ') }}. Для hplt лічаться лише слова, яких немає у ВЕСУМ.</template></p>
+      <p v-if="vocab.note" class="small muted" data-test="vocab-pending">{{ vocab.note }}</p>
+      <p v-if="vocab.total || vocab.sources.length" class="small muted">N — повнотекстовий корпус: з нього цитати (KWIC), перші засвідчення й ipm. «Лише словник» — Вікіпедія, HPLT та інші джерела під ліцензіями без права цитувати: з них беруться форми слів і лічильники, жодного рядка тексту; ці числа не змішуються з N.
+        <template v-if="vocab.sources.length">Джерела: {{ vocab.sources.map(([s, n]) => s + ' ' + fmtNum(n)).join(' · ') }}. Для hplt лічаться лише слова, яких немає у ВЕСУМ.</template></p>
       <p class="small muted">Непрограмні токени не вгадуються — залишаються unresolved і лічаться (SPEC 10 M-3.3). Згенеровано: {{ corpus.generated }}.</p>
     </section>
 

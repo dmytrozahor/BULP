@@ -19,7 +19,7 @@ import { cardMapView, ixAttest, ixHitMap, ixLexIndex, ixParadigm, witnessOf } fr
 export const toCards = unpackCore   // tests / fixtures: a packed core (format 3/4), a packed format 2 or a plain LemmaCard[] (fixture: detail embedded)
 
 /** boot.json dressed as a CorpusMeta without the witness list (`witnesses` is empty until ensureCorpus()) */
-export type BootCorpus = CorpusMeta & { nWitnesses: number; nLemmas: number; lemmaPage: number; full?: boolean; /** SPEC 63 DO-5 */ nAttested?: number; nDictOnly?: number; /** SPEC 63 GG-5: vocab-only tokens, apart from N */ nVocab?: number; vocabSources?: [string, number][] }
+export type BootCorpus = CorpusMeta & { nWitnesses: number; nLemmas: number; lemmaPage: number; full?: boolean; /** SPEC 63 DO-5 */ nAttested?: number; nDictOnly?: number; /** SPEC 63 GG-5: vocab-only tokens, apart from N */ nVocab?: number; vocabSources?: [string, number][]; vocabV?: number }
 const state = reactive({ corpus: undefined as BootCorpus | undefined, loaded: false, loading: false, error: '' as string, progress: { phase: '', frac: 0, note: '' } })
 const fullCorpus = shallowRef<CorpusMeta>()
 const searchIdx = shallowRef<SearchIndex>({ map: ixHitMap, keys: [] })
@@ -38,7 +38,7 @@ export function loadData() {
       const b = await get('boot') as BootFile
       state.corpus = markRaw({
         generated: b.generated, authors: b.authors as Author[], witnesses: [], epochSizes: b.epochSizes, centurySizes: b.centurySizes, N: b.N, linked: b.linked, unresolved: b.unresolved,
-        topUnresolved: [], rusynStatus: b.rusynStatus as CorpusMeta['rusynStatus'], regions: b.regions as CorpusMeta['regions'], nWitnesses: b.nWitnesses, nLemmas: b.nLemmas, lemmaPage: b.lemmaPage, nAttested: b.nAttested, nDictOnly: b.nDictOnly, nVocab: b.nVocab, vocabSources: b.vocabSources,
+        topUnresolved: [], rusynStatus: b.rusynStatus as CorpusMeta['rusynStatus'], regions: b.regions as CorpusMeta['regions'], nWitnesses: b.nWitnesses, nLemmas: b.nLemmas, lemmaPage: b.lemmaPage, nAttested: b.nAttested, nDictOnly: b.nDictOnly, nVocab: b.nVocab, vocabSources: b.vocabSources, vocabV: b.vocabV,
       })
       state.loaded = true
     } catch (e) { state.error = String((e as Error).message ?? e) }

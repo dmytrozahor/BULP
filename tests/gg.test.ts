@@ -12,6 +12,7 @@ import { HIST_BY_ID, HIST_SRC } from '../core/dx-src.ts'
 import { groupHist, independent, normHead, selectHist, type HistHead } from '../core/dx-hist.ts'
 import { buildCv, type DictCtx } from '../pipelines/build-cv.ts'
 import { vocabHeader, vocabTotals } from '../pipelines/vocab-n.ts'
+import { vocabView, VOCAB_PENDING } from '../core/vocab-view.ts'
 import { coverageCounts, vocabCounts } from '../pipelines/build-parts.ts'
 
 const rd = (p: string) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n')
@@ -137,13 +138,13 @@ describe('GG-5 ingest parameters are configurable; N and the vocab-only count ar
     f('wikipedia-uk', 'uk', 1000); f('hplt', 'uk', 250); f('gramoty', 'east-slavic-comparative', 99)
     writeFileSync(join(work, 'harvest-vocab', 'torn.json'), '{"source":"to')
     const t = vocabTotals(work); expect(t.nVocab).toBe(1250); expect(t.sources.map(s => s.source)).toEqual(['gramoty', 'hplt', 'wikipedia-uk'])
-    expect(vocabCounts(work)).toEqual({ nVocab: 1250, vocabSources: [['gramoty', 99], ['hplt', 250], ['wikipedia-uk', 1000]] })
+    expect(vocabCounts(work)).toEqual({ vocabV: 2, nVocab: 1250, vocabSources: [['gramoty', 99], ['hplt', 250], ['wikipedia-uk', 1000]] })
     expect(vocabTotals(join(work, 'nope')).nVocab).toBe(0)
   })
   it('GG-5 boot.json carries N (full text) and nVocab as two fields; the Corpus page prints both apart and says vocab-only is not in N; coverageCounts is unchanged', () => {
     const bp = rd('pipelines/build-parts.ts'), cv = rd('src/views/CorpusView.vue'), ud = rd('src/composables/useData.ts'), parts = rd('core/parts.ts')
     expect(bp).toContain('...vocabCounts('); expect(parts).toContain('nVocab?: number'); expect(ud).toContain('nVocab: b.nVocab')
-    expect(cv).toContain('corpus.N'); expect(cv).toContain('corpus.nVocab'); expect(cv).toContain('не входять до N')
+    expect(cv).toContain('corpus.N'); expect(cv).toContain('vocab.total'); expect(cv).toContain('не входять до N')
     expect(coverageCounts(1)).toEqual({ nAttested: 1, nDictOnly: 0 })
   })
 })
@@ -159,5 +160,21 @@ describe('GG-7 nVocab is exactly the sum of the per-source token totals; bundled
   })
   it('GG-7 ingest.sh re-reads wikipedia-rue and wiktionary-uk once with the bundle-once ingest (old files counted every article ~46 times)', () => {
     const ing = rd('ops/worker/ingest.sh'); expect(ing).toContain('run wikipedia-rue --bundles-once'); expect(ing).toContain('run wiktionary-uk --bundles-once')
+  })
+})
+
+describe('GG-8 the Corpus page never shows the inflated pre-fix vocab counts', () => {
+  const old = { nVocab: 2242602957, vocabSources: [['hplt', 50507223], ['wikipedia-uk', 2041167611], ['wikipedia-rue', 45892073], ['wiktionary-uk', 95202455], ['poets', 98772]] as [string, number][] }
+  it('GG-8 old data shape (no vocabV): total and the three inflated sources hidden, the note shown, HPLT and the small sources kept', () => {
+    const v = vocabView(old)
+    expect(v.total).toBeUndefined(); expect(v.sources).toEqual([['hplt', 50507223], ['poets', 98772]]); expect(v.pending).toEqual(['wikipedia-uk', 'wikipedia-rue', 'wiktionary-uk']); expect(v.note).toBe(VOCAB_PENDING)
+    expect(VOCAB_PENDING).toContain('оновлюється'); expect(JSON.stringify(v)).not.toContain('2242602957')
+  })
+  it('GG-8 new data shape (vocabV 2, as vocabCounts writes it): everything shown, no note', () => {
+    const work = mkdtempSync(join(tmpdir(), 'gg-')); mkdirSync(join(work, 'harvest-vocab'))
+    writeFileSync(join(work, 'harvest-vocab', 'wikipedia-uk.json'), JSON.stringify({ source: 'wikipedia-uk', licence: 'L', family: 'uk', vocabOnly: true, docs: 1, tokens: 327, entries: {}, items: [] }))
+    const c = vocabCounts(work); expect(c.vocabV).toBe(2)
+    const v = vocabView(c); expect(v.total).toBe(327); expect(v.sources).toEqual([['wikipedia-uk', 327]]); expect(v.pending).toEqual([]); expect(v.note).toBeUndefined()
+    expect(vocabView({}).note).toBeUndefined()
   })
 })
