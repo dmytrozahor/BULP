@@ -668,7 +668,6 @@ describe('MM-16c real case «бажанєм» (71 tokens, Франко 1893 / 19
 
 // ───────────────────────── MM-18 … MM-21 (owner remarks 2026-10-22; sources: the owner's OCR of Огоновський 1889, Смаль-Стоцький 1892 / 1914) ─────────────────────────
 import { withGal, toIish, toUvati, splitHyphenParticle, GAL_FOLDS } from '../core/gal-folds.ts'
-import { withSoftAdj } from '../core/adj-soft.ts'
 
 const Eg = (t: Record<string, VesumHit[]>): Env => E(t, {
   derive: (s, oldI) => { const d = withSoftAdj(deriveRaw(s, { oldI })); return { ...d, candidates: withGal(d.candidates) } },
