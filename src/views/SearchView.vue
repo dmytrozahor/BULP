@@ -16,6 +16,7 @@ import { LEMMA_PAGE } from '../../core/parts.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
+import EntryCounts from '../components/EntryCounts.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
 import { plastSearch } from '../lib/sociolectData.ts'
 import { uvSearch, type UvHit } from '../lib/uvData.ts'
@@ -78,6 +79,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
       <span class="sans small">Where does a Ukrainian word come from — every claim with its evidence.</span></p>
     <input ref="box" v-model="q" type="search" inputmode="search" enterkeyhint="search" @blur="keepFocus" placeholder="Знайти слово: князь, кънѧзь, видѣти, шо…" aria-label="Пошук слова" autofocus autocomplete="off" spellcheck="false" @keydown.enter="go" />
     <p class="small muted sans">Без урахування наголосу й регістру; приймає ѣ ъ ы ѧ. <template v-if="corpus">Корпус: {{ fmtNum(corpus.N) }} слів, {{ fmtNum(corpus.nAttested ?? corpus.nLemmas) }} лем з засвідченнями<template v-if="corpus.nDictOnly"> і ще {{ fmtNum(corpus.nDictOnly) }} лише зі словників (без засвідчень у корпусі)</template>.</template></p>
+    <p v-if="corpus?.nEntries" class="small muted sans" data-test="entry-counts">Усього {{ fmtNum(corpus.nEntries) }} статей: <EntryCounts :corpus="corpus" /></p>
   </section>
 
   <section v-if="plast.length" class="card" aria-live="polite">

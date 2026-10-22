@@ -7,6 +7,7 @@ import { useData } from '../composables/useData.ts'
 import { epochShort, fmtNum } from '../lib/format.ts'
 import { sourceTo, epochTo } from '../lib/nav.ts'
 import { vocabView } from '../../core/vocab-view.ts'
+import EntryCounts from '../components/EntryCounts.vue'
 import WitnessTable from '../components/WitnessTable.vue'
 const { corpus, loaded, ensureCorpus } = useData()
 ensureCorpus()
@@ -29,6 +30,9 @@ const lic = ['VESUM', 'TOROT', 'LT', 'WS'] as const
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.linked) }}</strong><div class="small muted">прив’язано до лем ({{ fmtNum(corpus.linked / corpus.N * 100, 1) }}%)</div></div>
         <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.unresolved) }}</strong><div class="small muted">не прив’язано (unresolved)</div></div>
         <div><strong style="font-size:1.6rem">{{ corpus.nWitnesses }}</strong><div class="small muted">пам’яток</div></div>
+      </div>
+      <div v-if="corpus.nEntries" class="row sans" style="gap:2rem;margin-top:.8rem" data-test="entry-counts">
+        <div><strong style="font-size:1.6rem">{{ fmtNum(corpus.nEntries) }}</strong><div class="small muted">статей усього: <EntryCounts :corpus="corpus" /></div></div>
       </div>
       <div v-if="vocab.total" class="row sans" style="gap:2rem;margin-top:.8rem" data-test="n-vocab">
         <div><strong style="font-size:1.6rem">{{ fmtNum(vocab.total) }}</strong><div class="small muted">токенів лише для словника (vocab-only), не входять до N</div></div>

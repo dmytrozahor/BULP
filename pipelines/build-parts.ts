@@ -6,6 +6,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
+import { bootEntries, readUvAttested } from './boot-uv.ts'
 import { unpackCore, packCore } from '../core/pack.ts'
 import { writeJsonAtomic } from './robust.ts'
 import { bucketOf } from '../core/shard.ts'
@@ -311,10 +312,8 @@ function writeTc() {
 // ── wit / boot / pg ──────────────────────────────────────────────────────────────────────────────
 /** SPEC 63 DO-5: the two coverage counters of boot.json — «з засвідченнями» (full cards + every other card a corpus text attests) and «лише словник» (cardindex `ld`) */
 export const coverageCounts = (nFull: number, ci?: Parameters<typeof cardMap>[0]): { nAttested: number; nDictOnly: number } => ({ nAttested: nFull + (ci?.lw.length ?? 0) + (ci?.ar.length ?? 0), nDictOnly: ci?.ld?.length ?? 0 })
-/** SPEC 63 CV-4: attested-only cards («засвідчене слово, немає в словниках») counted by data:unlinked (uv/meta.json); absent file / zero = the field is left out */
-export const uvAttCount = (dir: string): { nUvAtt?: number } => {
-  try { const m = JSON.parse(readFileSync(`${dir}/uv/meta.json`, 'utf8')) as { attested?: number }; return m.attested ? { nUvAtt: m.attested } : {} } catch { return {} }
-}
+/** SPEC 63 CV-4: attested-only cards («засвідчене слово, немає в словниках») counted by data:unlinked (uv/meta.json); absent file = 0; data:unlinked re-patches boot.json (pipelines/boot-uv.ts) because it runs after this */
+export const uvAttCount = (dir: string): { nUvAtt: number } => ({ nUvAtt: readUvAttested(dir) })
 /** SPEC 63 GG-5: the vocab-only token total, apart from N (pipelines/vocab-n.ts reads the file headers); absent sources give 0 */
 export const vocabCounts = (work: string): { nVocab: number; vocabSources: [string, number][]; vocabV: number } => { const v = vocabTotals(work); return { vocabV: VOCAB_V, nVocab: v.nVocab, vocabSources: v.sources.map(s => [s.source, s.tokens] as [string, number]) } }
 function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters<typeof cardMap>[0]) {
@@ -328,6 +327,7 @@ function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters
     ...vocabCounts(process.env['PARTS_WORK'] ?? 'data/work'),
     epochSizes: corpus.epochSizes, centurySizes: corpus.centurySizes, rusynStatus: corpus.rusynStatus, regions: corpus.regions, authors: corpus.authors,
   }
+  boot.nEntries = bootEntries(boot)
   out('boot.json', boot)
   console.log(`wit: ${corpus.witnesses.length} witnesses, worst shard ${(worst / 1024).toFixed(1)} KB gz; boot.json ${(gz(boot) / 1024).toFixed(1)} KB gz`)
   fresh('pg/lemmas')

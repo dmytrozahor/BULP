@@ -15,6 +15,7 @@ import { cardMap, type CardIndexFile } from '../core/cv.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
 import { VESUM_TXT, vesumIndex } from './vesum.ts'
 import { writeJsonAtomic } from './robust.ts'
+import { patchBootUv } from './boot-uv.ts'
 import { foldsToKnown, promotionVerdict, type PromoteVerdict, type PromoteWitness } from '../core/uv-promote.ts'
 
 const pub = resolve('public/data')
@@ -122,4 +123,5 @@ for (const [p, s] of ps) { const t = JSON.stringify(s), b = Buffer.byteLength(t)
 writeFileSync(resolve(uvDir, 'p', '_split.json'), JSON.stringify(uvSplitOf(plan.keys())))
 writeJsonAtomic(resolve(uvDir, 'meta.json'), JSON.stringify({ format: 1, attested: att.cards, unverified: groups.size - att.cards, byCentury: att.byCentury, byRegion: att.byRegion, rejected }))
 console.log(`uv attested-only (CV-4): ${att.cards} «засвідчене слово, немає в словниках» cards (${(att.bytes / Math.max(1, att.cards)).toFixed(0)} B avg, max ${att.maxBytes} B); per century ${JSON.stringify(att.byCentury)}; per region ${JSON.stringify(att.byRegion)}; rejected ${JSON.stringify(rejected)}`)
+{ const b = patchBootUv(pub); console.log(b ? `boot.json: nUvAtt ${b.nUvAtt}, nEntries ${b.nEntries}` : 'boot.json absent — data:parts will read uv/meta.json itself') }
 console.log(`uv: ${groups.size} «неперевірена лема» cards from ${spellings} clean spellings (of ${uv.keys().length} unlinked clean-script spellings), ${ps.size} prefix shards + ${UV_SHARDS} card shards, ${(uvBytes / 1048576).toFixed(2)} MB (max file ${(uvMax / 1024).toFixed(0)} KB)`)
