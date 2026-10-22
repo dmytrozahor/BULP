@@ -3,7 +3,7 @@
  *   s3://<bucket>/data/<buildId>/<dir>/…        buildId = <yyyymmddHHMM>-<short sha>, objects immutable (Cache-Control: immutable), application/json
  *   src/data/data-version.json                  the committed pointer { base, buildId }: the app and its data switch together when the pointer commit deploys
  *
- *   npx tsx pipelines/data-cdn.ts upload [--dry-run] [--build-id ID] [--new]   sync every dir, gzip the huge files, verify, write manifest.json + the pointer, print the buildId
+ *   npx tsx pipelines/data-cdn.ts upload [--dry-run] [--build-id ID] [--new] [--full] [--base ID]   IN-7: delta against the live build (or --base), --full = everything; sync every dir, gzip the huge files, verify, write manifest.json + the pointer, print the buildId
  *   npx tsx pipelines/data-cdn.ts verify [--build-id ID]                        compare the local files with the bucket (count + size of every object)
  *   npx tsx pipelines/data-cdn.ts prune [--keep 3]                              delete builds older than the newest N (never the live one)
  *   npx tsx pipelines/data-cdn.ts pull [dir …]                                  local dev: sync the live build into public/data (needs read access; gunzips the huge files)
@@ -20,6 +20,7 @@ import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 import { promisify } from 'node:util'
 import { BUILD_ID_RE, CDN_DIRS, buildIdOf, type DataVersion } from '../core/data-dirs.ts'
+import { checkEncodings, fetchObjects, hashFiles, manifestObjects, objKey, planDelta, runDeltaDir, type DeltaPlan } from './data-cdn-delta.ts'
 
 const execFileP = promisify(execFile)
 export const BUCKET = process.env.DATA_BUCKET ?? 'bulp-site-data-666546914501-euc1'
@@ -116,7 +117,7 @@ async function gzipUpload(f: LocalFile, id: string, data: string, bucket: string
   } finally { rmSync(tmp, { force: true }) }
 }
 
-export interface UploadOpts { dryRun: boolean; buildId?: string; fresh: boolean; data?: string; bucket?: string; state?: string; pointer?: string; dirs?: readonly string[]; aws?: Aws }
+export interface UploadOpts { /** IN-7: build to copy unchanged objects from (default: the live pointer); full: upload everything */ base?: string; full?: boolean; dryRun: boolean; buildId?: string; fresh: boolean; data?: string; bucket?: string; state?: string; pointer?: string; dirs?: readonly string[]; aws?: Aws }
 export async function upload(o: UploadOpts): Promise<{ buildId: string; ok: boolean; diff?: Diff; files: number; bytes: number }> {
   const data = o.data ?? DATA, bucket = o.bucket ?? BUCKET, aws = o.aws ?? realAws, statePath = o.state ?? STATE
   const dirs = (o.dirs ?? CDN_DIRS).filter(d => existsSync(join(data, d)))
@@ -136,9 +137,24 @@ export async function upload(o: UploadOpts): Promise<{ buildId: string; ok: bool
     for (const d of dirs) console.log('aws', syncArgs(buildId, d, files.filter(f => f.dir === d && f.big).map(f => f.rel), bucket, data).join(' '))
     return { buildId, ok: true, files: files.length, bytes }
   }
+  // IN-7: delta against the base build (server-side copy of the unchanged objects), whole-dir upload for the rest
+  const hashes = hashFiles(files, data)
+  const baseId = o.full ? undefined : o.base ?? (readPointer(o.pointer ?? POINTER).buildId || undefined)
+  const prevObjs = baseId && baseId !== buildId ? fetchObjects(aws, bucket, baseId) : undefined
+  const delta: DeltaPlan | undefined = baseId && prevObjs ? planDelta(baseId, files, hashes, prevObjs, dirs) : undefined
+  if (baseId && !prevObjs) console.log(`delta: base build ${baseId} has no format-2 manifest, uploading everything`)
+  if (delta) console.log(`delta against ${baseId}: ${delta.changedFiles} files (${(delta.changedBytes / 1e6).toFixed(1)} MB) upload, ${delta.copiedFiles} files (${(delta.copiedBytes / 1e6).toFixed(1)} MB) copied inside S3, ${delta.deleted} dropped; ${[...delta.dirs].filter(([, p]) => p.mode === 'full').map(([d, p]) => `${d}: whole dir (${p.why})`).join('; ') || 'no whole-dir fallbacks'}`)
   saveState(state, statePath)
   for (const d of dirs) {
-    const t0 = Date.now()
+    const t0 = Date.now(), dp = delta?.dirs.get(d)
+    if (delta && dp?.mode === 'delta') {
+      runDeltaDir(aws, { bucket, base: baseId!, id: buildId, dir: d, data, plan: dp, cacheControl: CACHE_CONTROL })
+      for (const r of dp.copyBig) state.big[`${d}/${r}`] = prevObjs![`${d}/${r}`]![1]
+      const bad = checkEncodings(aws, bucket, buildId, d, dp.copyBig)
+      if (bad.length) throw new Error(`copied big objects lost their gzip encoding: ${bad.slice(0, 3).join(', ')}`)
+      console.log(`delta ${d}: ${dp.upload.length + dp.uploadBig.length} uploaded, ${dp.copy + dp.copyBig.length} copied in ${Math.round((Date.now() - t0) / 1000)}s`)
+      continue
+    }
     aws(syncArgs(buildId, d, files.filter(f => f.dir === d && f.big).map(f => f.rel), bucket, data))
     console.log(`synced ${d} in ${Math.round((Date.now() - t0) / 1000)}s`)
   }
@@ -154,7 +170,7 @@ export async function upload(o: UploadOpts): Promise<{ buildId: string; ok: bool
   }))
   const res = verify(buildId, { data, bucket, aws, state: statePath, dirs })
   if (!res.ok) return { buildId, ok: false, diff: res.diff, files: files.length, bytes }
-  const manifest = { format: 1, buildId, files: files.length, bytes, created: new Date().toISOString(), dirs: Object.fromEntries(dirs.map(d => [d, files.filter(f => f.dir === d).length])) }
+  const manifest = { format: 2, buildId, base: baseId ?? null, objects: manifestObjects(files, hashes, loadState(statePath)?.big ?? state.big), files: files.length, bytes, created: new Date().toISOString(), dirs: Object.fromEntries(dirs.map(d => [d, files.filter(f => f.dir === d).length])) }
   const mf = join(tmpdir(), `cdn-manifest-${process.pid}.json`); writeFileSync(mf, JSON.stringify(manifest))
   try { aws(['s3', 'cp', mf, `s3://${bucket}/data/${buildId}/manifest.json`, '--only-show-errors', '--content-type', 'application/json', '--cache-control', CACHE_CONTROL]) } finally { rmSync(mf, { force: true }) }
   writePointer(buildId, o.pointer ?? POINTER)
@@ -200,7 +216,7 @@ if (process.argv[1]?.endsWith('data-cdn.ts')) {
   const [cmd, ...rest] = process.argv.slice(2), flag = (n: string) => rest.includes(n), val = (n: string) => { const i = rest.indexOf(n); return i >= 0 ? rest[i + 1] : undefined }
   const main = async () => {
     if (cmd === 'upload') {
-      const r = await upload({ dryRun: flag('--dry-run'), buildId: val('--build-id'), fresh: flag('--new') })
+      const r = await upload({ dryRun: flag('--dry-run'), buildId: val('--build-id'), fresh: flag('--new'), full: flag('--full'), base: val('--base') })
       if (!r.ok) { console.error(`UPLOAD FAILED verify for ${r.buildId}`); process.exit(2) }
       console.log(`BUILD_ID=${r.buildId}`)
     } else if (cmd === 'verify') {
@@ -208,7 +224,7 @@ if (process.argv[1]?.endsWith('data-cdn.ts')) {
       process.exit(verify(id).ok ? 0 : 2)
     } else if (cmd === 'prune') prune(Number(val('--keep') ?? 3))
     else if (cmd === 'pull') await pull(rest.filter(a => !a.startsWith('--')))
-    else { console.error('usage: data-cdn.ts upload [--dry-run] [--build-id ID] [--new] | verify [--build-id ID] | prune [--keep N] | pull [dir …]'); process.exit(1) }
+    else { console.error('usage: data-cdn.ts upload [--dry-run] [--build-id ID] [--new] [--full] [--base ID] | verify [--build-id ID] | prune [--keep N] | pull [dir …]'); process.exit(1) }
   }
   main().catch(e => { console.error(e); process.exit(1) })
 }

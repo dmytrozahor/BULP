@@ -23,6 +23,7 @@ import { writeAtomic } from '../harvest/lib.ts'
 import { decodeIzbornyk } from '../core/text.ts'
 import { pageParagraphs } from './ingest-izbornyk-pages.ts'
 import { MARKER } from './ingest-izbornyk.ts'
+import { Incr, itemSig, recordSource, sourceUnchanged, vocabSig } from './incr-manifest.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
 export interface Idx { id: string; url: string; date: string | null; licence: string; bytes: number; status: number; title: string; author?: string; region?: string; file?: string; [k: string]: unknown }
@@ -124,10 +125,15 @@ export function countText(text: string): Record<string, number> {
 const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<\/(p|div|li|h\d|tr)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_m, n) => String.fromCodePoint(+n)).replace(/[ \t]+/g, ' ')
 
 // ── per-source runs ──────────────────────────────────────────────────────────────────────────────────
-export interface Ctx { out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string> }
+export interface Ctx { /** IN-1: per-source content manifests + cross-source dedupe */ inc: Incr; out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
 const save = (ctx: Ctx, w: WitnessOut) => writeAtomic(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
+/** IN-1: write the witness unless another source already holds the same one (id, url or content hash) at an equal or better edition */
+function commit(ctx: Ctx, s: Sum, src: string, itemId: string, sig: string, w: WitnessOut) {
+  if (ctx.inc.claim(src, itemId, sig, w) === 'skip') { bump(s, 'duplicate'); return }
+  save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+}
 
 function runWikisource(ctx: Ctx): Sum {
   const src = 'wikisource-uk', s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
@@ -135,20 +141,23 @@ function runWikisource(ctx: Ctx): Sum {
   const parentYear = new Map<string, string>()   // «Title/sub» inherits the date of «Title» when the subpage has none
   const byFile = new Map<string, Idx[]>()
   for (const it of idx) { (byFile.get(it.file!) ?? byFile.set(it.file!, []).get(it.file!)!).push(it); if (it.date && !it.title.includes('/')) parentYear.set(it.title, it.date) }
-  for (const [file, its] of byFile) {
+  for (const [file, its0] of byFile) {
+    const its = its0.filter(it => !ctx.inc.unchanged(src, it.id, itemSig(it)))   // IN-1: a bundle whose items are all unchanged is not opened
+    s.skipped['unchanged'] = (s.skipped['unchanged'] ?? 0) + its0.length - its.length
+    if (!its.length) continue
     const buf = readItem(src, file); if (!buf) continue
     const rows = new Map(buf.toString('utf8').split('\n').filter(Boolean).map(l => JSON.parse(l) as { pageid: number; title: string; text: string; cats: string[] }).map(r => [`${src}:${r.pageid}`, r]))
     for (const it of its) {
       if (ctx.limit && s.items >= ctx.limit) return s
       const r = rows.get(it.id); if (!r) continue
       s.items++
-      if (r.cats.length && !r.cats.some(c => /українською/.test(c))) { bump(s, 'not-ukrainian-category'); continue }
-      if (ctx.manifestWs.has(r.title.split('/')[0]!)) { bump(s, 'already-in-manifest'); continue }
+      if (r.cats.length && !r.cats.some(c => /українською/.test(c))) { bump(s, 'not-ukrainian-category'); ctx.inc.skip(src, it.id, itemSig(it), 'not-ukrainian-category'); continue }
+      if (ctx.manifestWs.has(r.title.split('/')[0]!)) { bump(s, 'already-in-manifest'); ctx.inc.skip(src, it.id, itemSig(it), 'already-in-manifest'); continue }
       const date = it.date ?? parentYear.get(r.title.split('/')[0]!) ?? null
       const authorId = authorFor(it.author, src, it.url, it.author ? `автор = ${it.author}` : r.title, it.region)
       const w = witnessFrom(src, { ...it, date }, `hv_ws_${it.id.split(':')[1]}`, r.text, { lang: 'uk', witnessType: 'later_ed', edition: 'uk.wikisource (транскрипція за скан-виданням)', authorId, loc: r.title, dateQuote: `рік = ${date}` })
-      if ('skip' in w) { bump(s, w.skip); continue }
-      save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+      if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+      commit(ctx, s, src, it.id, itemSig(it), w)
     }
   }
   return s
@@ -161,12 +170,13 @@ function runArchive(ctx: Ctx, src: string): Sum {
     if (it.status !== 200 || !it.file) continue
     s.items++
     if (ctx.manifestIa.has(it.id)) { bump(s, 'already-in-manifest'); continue }
+    if (ctx.inc.unchanged(src, it.id, itemSig(it))) { bump(s, 'unchanged'); continue }
     const buf = readItem(src, it.file); if (!buf) continue
     const authorId = authorFor(it.author, src, it.url, it.author ? `creator: ${it.author}` : it.title, it.region)
     const rusyn = src === 'archive-rusyn'
     const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}` })
-    if ('skip' in w) { bump(s, w.skip); continue }
-    save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+    if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    commit(ctx, s, src, it.id, itemSig(it), w)
   }
   return s
 }
@@ -180,14 +190,15 @@ function runLitopys(ctx: Ctx, src = 'hv5'): Sum {
     s.items++
     const path = relPath(it.url)
     if (ctx.manifestUrls.has(path)) { bump(s, 'already-in-manifest'); continue }
+    if (ctx.inc.unchanged(src, it.id, itemSig(it))) { bump(s, 'unchanged'); continue }
     const buf = readItem(src, it.file); if (!buf) continue
     const { paras } = pageParagraphs(decodeIzbornyk(new TextDecoder('windows-1251').decode(buf)))
     const text = paras.map(p => p.replace(MARKER, '')).join('\n')
     const authorId = authorFor(it.author, src, it.url, it.author ? `${it.authorBasis ?? 'заголовок'}: ${it.author}` : it.title, it.region)
     const school = it.school ? { id: String(it.school), source: String(it.schoolSource ?? ''), ...(it.schoolConfidence ? { confidence: String(it.schoolConfidence) } : {}) } : undefined
     const w = witnessFrom(src, it, `hv_lit_${slug(path.replace(/\.htm$/, ''))}`, text, { lang: 'ruthenian', witnessType: String(it.witnessType ?? 'scholarly_ed'), edition: String(it.edition ?? 'litopys.org.ua'), authorId, loc: it.title, dateQuote: String(it.dateQuote ?? it.date), oldOrth: true, orth: String(it.orth ?? ''), school })
-    if ('skip' in w) { bump(s, w.skip); continue }
-    save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+    if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    commit(ctx, s, src, it.id, itemSig(it), w)
   }
   return s
 }
@@ -199,11 +210,12 @@ function runOrig(ctx: Ctx, src = 'hv5-orig'): Sum {
     if (ctx.limit && s.items >= ctx.limit) break
     if (it.status !== 200 || !it.file) continue
     s.items++
+    if (ctx.inc.unchanged(src, it.id, itemSig(it))) { bump(s, 'unchanged'); continue }
     const buf = readItem(src, it.file); if (!buf) continue
     const authorId = authorFor(it.author, src, it.url, it.author ? `заголовок видання: ${it.author}` : it.title, it.region)
     const w = witnessFrom(src, it, `hv_orig_${slug(it.id.split(':')[1] ?? it.id)}`, buf.toString('utf8'), { lang: it.lang === 'undetermined' ? 'undetermined' : 'ruthenian', witnessType: 'later_ed', edition: `${it.edition} (OCR archive.org, не вичитано; дата — загальноприйняте датування твору)`, authorId, loc: `${it.title} (OCR)`, dateQuote: String(it.dateQuote ?? it.date), oldOrth: true })
-    if ('skip' in w) { bump(s, w.skip); continue }
-    save(ctx, w); s.witnesses++; s.tokens += w.tokens.length
+    if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    commit(ctx, s, src, it.id, itemSig(it), w)
   }
   return s
 }
@@ -313,9 +325,12 @@ function runVocab(ctx: Ctx, src: string, family: string): Sum {
 const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': 'rue', 'wiktionary-uk': 'uk', hplt: 'uk', 'user-books': 'uk', poets: 'uk', 'faust-lukash': 'uk', gramoty: 'east-slavic-comparative', hv4: 'middle-ukrainian-church-slavonic', 'archive-ayuzr': 'middle-ukrainian-mixed', 'archive-hv5-gaps': 'middle-ukrainian-mixed' }
 const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky', 'archive-hv5-authors']
 
+/** bump when the OCR / language-gate rules above change: every item-level source is then read again */
+const ITEM_PARAMS = 'gate1'
 export async function main(argv: string[]) {
   const arg = (k: string) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined }
-  const ctx: Ctx = { out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), stride: Number(arg('--wiki-stride') ?? 1), manifestIa: new Set(), manifestWs: new Set(), manifestUrls: new Set() }
+  const full = argv.includes('--full')
+  const ctx: Ctx = { inc: new Incr(arg('--out') ?? 'data/work', full), out: arg('--out') ?? 'data/work', limit: Number(arg('--limit') ?? 0), stride: Number(arg('--wiki-stride') ?? 1), manifestIa: new Set(), manifestWs: new Set(), manifestUrls: new Set() }
   mkdirSync(ctx.out, { recursive: true })
   try {
     const { MANIFEST } = await import('./manifest.ts')
@@ -328,12 +343,19 @@ export async function main(argv: string[]) {
   const only = arg('--only')
   const sums: Sum[] = []
   const want = (n: string) => !only || only === n
-  if (want('wikisource-uk')) sums.push(runWikisource(ctx))
-  for (const a of ARCHIVE) if (want(a)) sums.push(runArchive(ctx, a))
+  // IN-1: item-level sources run through the content manifest (only new/changed items are read; vanished items are removed; overlaps with other sources are skipped)
+  const inc = (name: string, fn: () => Sum) => { ctx.inc.begin(name, ITEM_PARAMS); const r = fn(); ctx.inc.finish(name, ctx.limit > 0); return r }
+  if (want('wikisource-uk')) sums.push(inc('wikisource-uk', () => runWikisource(ctx)))
+  for (const a of ARCHIVE) if (want(a)) sums.push(inc(a, () => runArchive(ctx, a)))
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
-  if (want('hv5')) sums.push(runLitopys(ctx))
-  if (want('hv5-orig')) sums.push(runOrig(ctx))
-  for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) sums.push(runVocab(ctx, v, fam))
+  if (want('hv5')) sums.push(inc('hv5', () => runLitopys(ctx)))
+  if (want('hv5-orig')) sums.push(inc('hv5-orig', () => runOrig(ctx)))
+  // vocabulary sources are one aggregate each: unchanged index + parameters + existing output = not read at all
+  for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) {
+    const idxPath = `${HARVEST}/${v}/index.jsonl`, sig = vocabSig(existsSync(idxPath) ? readFileSync(idxPath, 'utf8').split('\n') : [], `${ITEM_PARAMS}|limit=${ctx.limit}|stride=${ctx.stride}`), outFile = `${ctx.out}/harvest-vocab/${v}.json`
+    if (sourceUnchanged(ctx.out, v, sig, outFile, full)) { console.log(`[ingest] ${v}: index and parameters unchanged, output kept (not read)`); continue }
+    sums.push(runVocab(ctx, v, fam)); recordSource(ctx.out, v, sig)
+  }
   mergeHarvestAuthors(ctx.out)
   for (const s of sums) console.log(`${s.source}: ${s.items} items → ${s.witnesses} witnesses, ${s.tokens} tokens${Object.keys(s.skipped).length ? ', skipped ' + JSON.stringify(s.skipped) : ''}`)
 }

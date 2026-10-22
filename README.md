@@ -20,6 +20,8 @@ UV_BIN=<path to uv> npm run build:data   # nlp/ runs via uv; add -- --no-py to r
 npm run data:publish                     # upload public/data to s3://bucket/data/<buildId>/, verify, write src/data/data-version.json (SPEC 63 PF-7)
 ```
 
+**Incremental by default (SPEC 63 IN).** Ingest keeps a content manifest per source (`data/work/ingest-manifest/`), so a rerun reads only new or changed items, removes vanished ones and skips witnesses that duplicate another source. The stage cache is keyed on the declarations a stage actually reaches (not whole modules) and on the *output* of the stages before it, so a change that does not alter a stage's result leaves later stages cached. `data:unlinked` replays unchanged texts, and `data:publish` hashes the files, copies unchanged objects inside S3 from the live build into the new immutable prefix and uploads only what changed. On the worker, `bash ops/worker/ingest.sh` and `bash ops/worker/chain.sh` do all of this by default; add `--full` to ignore every cache and manifest and rebuild and upload everything (`npm run data:publish -- --full` for the upload alone).
+
 Layout: `research/` (sources) → `specs/` (requirements) → `core/` (pure rules, evidence) → `pipelines/` (mining, build) → `src/` (Vue 3 app) → `tests/`.
 Data licences: VESUM, Brown-UK CC BY-NC-SA 4.0; TOROT CC BY-NC-SA 3.0; LanguageTool LGPL — derived data under the same terms.
 
@@ -110,3 +112,6 @@ BULP — шаблон для будь-якого лексикона з похо�
 <img width="1265" height="689" alt="image" src="https://github.com/user-attachments/assets/46981b00-060f-4557-aace-0a7f208f4a73" />
 <img width="376" height="695" alt="image" src="https://github.com/user-attachments/assets/0a6f7942-1c15-4590-b6c7-c1a24d61fa6b" />
 
+
+### Інкрементальна збірка даних (SPEC 63 IN)
+За замовчуванням усе працює на вже імпортованих даних і додає зверху лише нове. Імпорт веде маніфест вмісту для кожного джерела (`data/work/ingest-manifest/`): повторний запуск читає тільки нові або змінені елементи, явно видаляє зниклі й пропускає свідчення, що дублюють інше джерело (перемагає вичитане видання). Кеш стадій ключується за оголошеннями, яких стадія справді сягає (а не за цілими модулями), і за *виходом* попередніх стадій: зміна, що не міняє результат стадії, лишає наступні стадії в кеші. `data:unlinked` перевикористовує незмінені тексти, а `data:publish` хешує файли, копіює незмінені об'єкти всередині S3 з поточної збірки в новий незмінний префікс і вантажить лише змінене. На воркері `bash ops/worker/ingest.sh` та `bash ops/worker/chain.sh` роблять усе це за замовчуванням; прапорець `--full` ігнорує всі кеші й маніфести та перебудовує й завантажує все (`npm run data:publish -- --full` — лише завантаження).

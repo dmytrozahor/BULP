@@ -462,6 +462,7 @@ export class StageCache {
     for (const l of report(this.cfg.dir)) this.log(l)
     const hit = this.stats.filter(s => s.status === 'hit'), miss = this.stats.filter(s => s.status === 'miss')
     this.log(`${hit.length} stage hits (saved ~${Math.round(hit.reduce((a, s) => a + s.secs, 0))} s), ${miss.length} computed (${Math.round(miss.reduce((a, s) => a + s.secs, 0))} s)`)
+    this.log(`hit rate: ${hit.length}/${hit.length + miss.length} stages (${this.stats.map(s => s.stage + ' ' + s.status + (s.status === 'miss' ? ' ' + Math.round(s.secs) + 's' : '')).join(', ')})`)
   }
 }
 

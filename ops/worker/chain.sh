@@ -7,6 +7,8 @@
 #   bash chain.sh --no-publish         same, but stops after `budget`: nothing uploaded, committed or pushed (verification run)
 #   bash chain.sh --from <step>        resume the LATEST run at <step> (steps before it count as done; markers from <step> on are cleared)
 #   bash chain.sh --run <id> [--from s] resume a specific run; without --from it continues after the last step that has a marker
+#   bash chain.sh --full               FULL rebuild: stage cache off (--no-cache), per-file unlinked cache cleared, whole CDN upload (no delta against the live build). The default is INCREMENTAL (SPEC 63 IN-8):
+#                                      stage cache with early cut-off, unchanged text files replayed, only changed objects uploaded (the rest copied inside S3 from the live build).
 #   bash chain.sh --list               steps, then the runs
 #
 # Per run: $BULP_LOGS/runs/<runId>/{status, steps.log, done/<step>, <step>.a<N>.out|.err|.time}. Output files are NEVER overwritten (attempt counter N).
@@ -19,6 +21,7 @@ here=$(dirname "$(readlink -f "$0")"); . "$here/env.sh"
 publish=1; from=; run=
 while [ $# -gt 0 ]; do case $1 in
   --no-publish) publish=0 ;;
+  --full) export BULP_FULL=1 ;;
   --from) from=${2:?--from needs a step}; shift ;;
   --run) run=${2:?--run needs an id}; shift ;;
   --list) echo "steps: ${STEPS[*]}"; ls -1 "$BULP_LOGS/runs" 2>/dev/null; exit 0 ;;
@@ -52,13 +55,13 @@ st_ff() {
   local ref; ref=$(git stash list | sed -n "s/^\(stash@{[0-9]*}\): .*chain-$run\$/\1/p" | head -1)
   [ -z "$ref" ] || git stash pop -q "$ref" || { echo "stash pop conflicted; the changes stay in the stash 'chain-$run'"; return 1; }
 }
-st_build() { npm run build:data; }
-st_unlinked() { npm run data:unlinked; }
+st_build() { if [ -n "$BULP_FULL" ]; then npm run build:data -- --no-cache; else npm run build:data; fi; }
+st_unlinked() { [ -z "$BULP_FULL" ] || rm -rf data/work/unlinked-cache; npm run data:unlinked; }
 st_vitest() { npx vitest run --maxWorkers="${VITEST_WORKERS:-16}"; }
 st_vuetsc() { npx vue-tsc --noEmit; }
 st_vitebuild() { npx vite build; }
 st_budget() { npx tsx pipelines/budget.ts dist; }
-st_upload() { if [ "$ATTEMPT" = 1 ]; then npx tsx pipelines/data-cdn.ts upload --new; else npx tsx pipelines/data-cdn.ts upload; fi; }
+st_upload() { local f=; [ -z "$BULP_FULL" ] || f=--full; if [ "$ATTEMPT" = 1 ]; then npx tsx pipelines/data-cdn.ts upload --new $f; else npx tsx pipelines/data-cdn.ts upload $f; fi; }
 st_commit() {
   local id up; id=$(pointer_id); [ -n "$id" ] || { echo "pointer has no buildId"; return 1; }
   up=$(node -e "const s=JSON.parse(require('fs').readFileSync('data/work/cdn-upload.json','utf8'));console.log(s.done?s.buildId:'')" 2>/dev/null)
@@ -71,7 +74,7 @@ st_rebase() { git pull --rebase --autostash origin mvp; }
 st_push() { git push origin HEAD:mvp; }
 
 export -f pointer_id st_ff st_build st_unlinked st_vitest st_vuetsc st_vitebuild st_budget st_upload st_commit st_rebase st_push
-export run publish BULP_REPO BULP_LOGS
+export run publish BULP_REPO BULP_LOGS BULP_FULL
 t_start=$(date +%s)
 for s in "${STEPS[@]}"; do
   [ $publish = 0 ] && [[ "$PUBLISH_STEPS" == *" $s "* ]] && { log "skip $s (--no-publish)"; continue; }

@@ -4,9 +4,10 @@
  * Input: public/data/{lexicon,lexindex,cardindex,corpus,etymology,cognates,senses,usage,loanlabels,heteronyms,phrases}.json (the whole files stay for the pipeline and the full list pages).
  * ix/ is the prefix-sharded lookup index (search + analyser/annotator/derivation lookups), see core/parts.ts.
  */
-import { existsSync, mkdirSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
 import { unpackCore, packCore } from '../core/pack.ts'
+import { writeJsonAtomic } from './robust.ts'
 import { bucketOf } from '../core/shard.ts'
 import { key } from '../core/text.ts'
 import { cardMap } from '../core/cv.ts'
@@ -36,9 +37,34 @@ const fresh_ = new Set<string>(), loose = new Set<string>()
 const out = (f: string, v: unknown) => { const p = `${STAGE()}/${f}`; mkdirSync(p.slice(0, p.lastIndexOf('/')), { recursive: true }); writeFileSync(p, JSON.stringify(v)); if (![...fresh_].some(d => f.startsWith(d + '/'))) loose.add(f) }
 const fresh = (d: string) => { fresh_.add(d); rmSync(`${STAGE()}/${d}`, { recursive: true, force: true }); mkdirSync(`${STAGE()}/${d}`, { recursive: true }) }
 const parent = (p: string) => p.slice(0, p.lastIndexOf('/'))
+/** IN-4: which files of the staged outputs differ from what is in DATA (same bytes = unchanged); the swap below stays atomic, the numbers say how much of the site data really changed */
+export interface PartsDiff { files: number; changed: number; added: number; removed: number; changedFiles: string[] }
+export function diffStage(data: string, dirs: Iterable<string>, files: Iterable<string>): PartsDiff {
+  const st = `${data}/.next`, d: PartsDiff = { files: 0, changed: 0, added: 0, removed: 0, changedFiles: [] }
+  const walk = (base: string, rel: string, out: string[]) => { for (const e of readdirSync(`${base}/${rel}`, { withFileTypes: true })) { const r = `${rel}/${e.name}`; if (e.isDirectory()) walk(base, r, out); else out.push(r) } }
+  const cmp = (r: string) => {
+    d.files++
+    if (!existsSync(`${data}/${r}`)) { d.added++; d.changedFiles.push(r) }
+    else if (!readFileSync(`${st}/${r}`).equals(readFileSync(`${data}/${r}`))) { d.changed++; d.changedFiles.push(r) }
+  }
+  for (const dir of dirs) {
+    if (!existsSync(`${st}/${dir}`)) continue
+    const now: string[] = [], was: string[] = []; walk(st, dir, now); if (existsSync(`${data}/${dir}`)) walk(data, dir, was)
+    for (const r of now) cmp(r)
+    const set = new Set(now); for (const r of was) if (!set.has(r)) d.removed++
+  }
+  for (const f of files) if (existsSync(`${st}/${f}`)) cmp(f)
+  return d
+}
 /** swap the staged outputs into DATA (old dir renamed aside, new renamed in, old deleted) */
 export function commitStage(data: string, dirs: Iterable<string>, files: Iterable<string>) {
   const st = `${data}/.next`, old = `${data}/.old`
+  dirs = [...dirs]; files = [...files]
+  try {
+    const df = diffStage(data, dirs, files)
+    console.log(`parts: ${df.files} files, ${df.changed} changed, ${df.added} new, ${df.removed} removed, ${df.files - df.changed - df.added} identical`)
+    mkdirSync('data/work', { recursive: true }); writeJsonAtomic('data/work/parts-changed.json', JSON.stringify({ ...df, changedFiles: df.changedFiles.slice(0, 5000) }))
+  } catch (e) { console.log(`parts: diff skipped (${(e as Error).message})`) }
   rmSync(old, { recursive: true, force: true })
   for (const d of dirs) {
     if (!existsSync(`${st}/${d}`)) continue

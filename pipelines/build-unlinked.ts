@@ -8,6 +8,7 @@ import { resolve } from 'node:path'
 import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
+import { createHash } from 'node:crypto'
 import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
 import { UV_P_MAX_BYTES, UV_SHARDS, UvScan, planUvPrefixes, uvLeafFile, uvShard, uvSplitOf, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { cardMap, type CardIndexFile } from '../core/cv.ts'
@@ -17,7 +18,8 @@ import { writeJsonAtomic } from './robust.ts'
 import { foldsToKnown, promotionVerdict, type PromoteVerdict, type PromoteWitness } from '../core/uv-promote.ts'
 
 const pub = resolve('public/data')
-const cards = unpackCore(JSON.parse(readFileSync(resolve(pub, 'lexicon.json'), 'utf8')))
+const lexRaw = readFileSync(resolve(pub, 'lexicon.json'), 'utf8'), lexHash = createHash('sha1').update(lexRaw).digest('hex')
+const cards = unpackCore(JSON.parse(lexRaw))
 const known = new Set<string>()
 for (const c of cards) { known.add(key(c.lemma)); for (const f of c.forms) known.add(key(f.raw)) }
 type CorpusWitness = PromoteWitness & { date: [number, number]; region?: string }
@@ -25,17 +27,34 @@ const wmeta = new Map<string, CorpusWitness>(((JSON.parse(readFileSync(resolve(p
 const ocrWitness = new Set<string>([...wmeta.values()].filter(w => w.witnessType === 'ocr').map(w => w.id))
 const acc = newAccumulator(), uv = new UvScan()
 let toks = 0
+// IN-5: incremental scan. What a text file contributes (its unknown tokens, with the two flags the UV scan needs) depends only on the file's bytes and on the set of known keys (the lexicon core), so it is
+// recorded per file in data/work/unlinked-cache/ and replayed for every unchanged file: the 6 GB of texts are not parsed again and the lexicon keys are not recomputed per token.
+// A new lexicon (a different `lexHash`) or a changed file misses; entries of files that no longer exist are removed. The OCR flag is re-read from the corpus at every replay.
+const CACHE = resolve('data/work/unlinked-cache'); mkdirSync(CACHE, { recursive: true })
+const sha = (b: Buffer | string) => createHash('sha1').update(b).digest('hex')
+type Rec = [raw: string, i: number, uv: 0 | 1, joins: 0 | 1]
+const used = new Set<string>(); let replayed = 0, scanned = 0
 for (const f of readdirSync(resolve(pub, 'texts')).filter(f => f.endsWith('.json')).sort()) {
-  const j = JSON.parse(readFileSync(resolve(pub, 'texts', f), 'utf8')) as { id: string; tokens: [string, string, number, string?][] }
+  const buf = readFileSync(resolve(pub, 'texts', f)), ce = `${f}.${sha(lexHash + sha(buf)).slice(0, 16)}.json`; used.add(ce)
+  let rec: { id: string; n: number; calls: Rec[] } | undefined
+  try { rec = JSON.parse(readFileSync(resolve(CACHE, ce), 'utf8')) } catch { /* no entry */ }
+  if (rec) { replayed++; toks += rec.n; const ocr = ocrWitness.has(rec.id); for (const [raw, i, u, jn] of rec.calls) { acc.add(raw, rec.id, i); if (u) uv.add(raw, rec.id, i, ocr, !!jn) }; continue }
+  scanned++
+  const j = JSON.parse(buf.toString('utf8')) as { id: string; tokens: [string, string, number, string?][] }, calls: Rec[] = []
   j.tokens.forEach((t, i) => {
     toks++
     if (!isWordToken(t[0]) || known.has(key(t[0]))) return
     acc.add(t[0], j.id, i)
     // CV-4: a line-break split (перед- + ставляти) joins with a neighbour into a known word: a fragment, not a word
     const nb = (o: number) => j.tokens[i + o]?.[0] ?? '', joins = (o: number) => isWordToken(nb(o)) && known.has(key(o > 0 ? t[0] + nb(o) : nb(o) + t[0]))
-    if (!t[3] || t[3].startsWith('o:')) uv.add(t[0], j.id, i, ocrWitness.has(j.id), joins(1) || joins(-1))   // a token with a name / light / archaic / CV / word ref already has a card; an ORV-only ref (o:) is a TOROT/Stanza lemma, not a Ukrainian card, so the spelling still counts
+    const isUv = !t[3] || t[3].startsWith('o:'), jn = isUv && (joins(1) || joins(-1))
+    if (isUv) uv.add(t[0], j.id, i, ocrWitness.has(j.id), jn)   // a token with a name / light / archaic / CV / word ref already has a card; an ORV-only ref (o:) is a TOROT/Stanza lemma, not a Ukrainian card, so the spelling still counts
+    calls.push([t[0], i, isUv ? 1 : 0, jn ? 1 : 0])
   })
+  writeJsonAtomic(resolve(CACHE, ce), JSON.stringify({ id: j.id, n: j.tokens.length, calls }))
 }
+for (const e of readdirSync(CACHE)) if (!used.has(e) && e.endsWith('.json')) rmSync(resolve(CACHE, e), { force: true })
+console.log(`unlinked scan (IN-5): ${replayed} text files replayed from the cache, ${scanned} scanned`)
 const dir = resolve(pub, 'unlinked'); rmSync(dir, { recursive: true, force: true }); mkdirSync(dir, { recursive: true })
 // NV-5: prefix-sharded leaves (like ix/ and dx/), nothing dropped; budgets: total raw, worst leaf gz, manifest gz
 let bytes = 0, worst = 0, gzTotal = 0

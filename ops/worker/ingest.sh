@@ -2,6 +2,9 @@
 # Resumable ingest: each source marks $BULP_LOGS/done/<src>; a rerun skips finished ones.
 # A failed source fails the RUN: the other sources still go on (they are independent and resumable), but at the end the script names the failed ones,
 # writes "ingest FAILED: ..." to ~/import-step and exits non-zero. "ingest done" is written only when every source succeeded.
+# SPEC 63 IN-8: ingest is INCREMENTAL by default. pipelines/ingest-harvest.ts keeps a content manifest per source (data/work/ingest-manifest/), reads only new/changed items, removes vanished ones and skips
+# overlaps with other sources, so rerunning a source whose done-marker is stale costs only the delta. `bash ingest.sh --full` ignores the markers AND the manifests: everything is read again.
+FULL=; [ "$1" = --full ] && { FULL=--full; shift; }
 # A source that really ran invalidates the post-ingest markers (build, unlinked, ...): the data changed, so the build must be redone; untouched sources leave them.
 . "$(dirname "$(readlink -f "$0")")/env.sh"
 cd "$BULP_REPO" || exit 1
@@ -9,9 +12,9 @@ D=$BULP_LOGS/done; failed=()
 run() { # src extra-args...
   local s=$1; shift
   # GG-5: the marker keeps the parameters; a source finished with other parameters (e.g. another --wiki-stride) is read again
-  [ -f $D/$s ] && [ "$(cat $D/$s)" = "$*" ] && { echo "skip $s"; return; }
+  [ -z "$FULL" ] && [ -f $D/$s ] && [ "$(cat $D/$s)" = "$*" ] && { echo "skip $s"; return; }
   echo "ingest $s $(date +%T)" > ~/import-step
-  /usr/bin/time -v npx tsx pipelines/ingest-harvest.ts --only $s "$@" > $BULP_LOGS/ingest-$s.out 2> $BULP_LOGS/ingest-$s.time
+  /usr/bin/time -v npx tsx pipelines/ingest-harvest.ts --only $s $FULL "$@" > $BULP_LOGS/ingest-$s.out 2> $BULP_LOGS/ingest-$s.time
   local rc=$?
   cat $BULP_LOGS/ingest-$s.out
   if [ $rc -eq 0 ]; then echo "$*" > $D/$s; for m in build unlinked vitest vuetsc vitebuild budget; do rm -f $D/$m; done
@@ -21,7 +24,7 @@ run() { # src extra-args...
 # (or the seed changed) reads again, and a run that found no OCR text yet is not final. usage: runcmd <name> <signature> <command...>
 runcmd() {
   local s=$1 sig=$2; shift 2
-  [ -f $D/$s ] && [ "$(cat $D/$s)" = "$sig" ] && { echo "skip $s"; return; }
+  [ -z "$FULL" ] && [ -f $D/$s ] && [ "$(cat $D/$s)" = "$sig" ] && { echo "skip $s"; return; }
   echo "ingest $s $(date +%T)" > ~/import-step
   /usr/bin/time -v "$@" > $BULP_LOGS/ingest-$s.out 2> $BULP_LOGS/ingest-$s.time
   local rc=$?

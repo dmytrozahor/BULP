@@ -886,3 +886,19 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › the card: DimLine is mounted on the full card and on every thin kind (LemmaBlocks); the sidecar is an lm loader |
 | MM-24 | tests/fx.test.ts › MM-24 «рік приконектився до ріці що виглядає як ріка в історії»: рѣци / рѣцѣ belong to ріка, not to рік «year» (stem рок-) › before: R09 + R24r made рѣци → ріки → рік (kievchr s.a. 1117–1200, 5 tokens in the live build); now рѣци / рѣцѣ / ріци go to ріка, whatever the frequency of рік |
 | MM-24 | tests/fx.test.ts › MM-24 «рік приконектився до ріці що виглядає як ріка в історії»: рѣци / рѣцѣ belong to ріка, not to рік «year» (stem рок-) › the forms of рік «year» keep their link: роцѣ → році, рокъ → рік, року |
+| IN-1 | tests/incremental.test.ts › IN-1 a rerun reads nothing; a new item adds one file; a changed item rewrites one; a vanished item is deleted |
+| IN-1 | tests/incremental.test.ts › IN-1 --full reads everything again; a missing work file is redone |
+| IN-1 | tests/incremental.test.ts › IN-1 manifests are written atomically (no tmp left) and a torn manifest means "read again", not a crash |
+| IN-1 | tests/incremental.test.ts › IN-1 vocabulary sources are skipped when index, parameters and output are unchanged |
+| IN-2 | tests/incremental.test.ts › IN-2 overlap across sources: the same witness id / url / content is not written twice; the better edition wins; every decision is logged |
+| IN-3 | tests/incremental.test.ts › IN-3 + IN-4 hit rate is logged per stage; the spine follows the output digest |
+| IN-3 | tests/stage-cache.test.ts › IN-3 early cut-off: same output, later stages hit |
+| IN-4 | tests/incremental.test.ts › IN-4 identical bytes are unchanged; changed, new and removed files are counted |
+| IN-5 | tests/incremental.test.ts › IN-5 the second run scans nothing and writes the same unlinked/ and uv/ files; one changed text is scanned alone |
+| IN-6 | tests/incremental.test.ts › IN-6 editing an unreached declaration (or a comment after a statement) keeps the key; editing a reached or transitively reached one changes it |
+| IN-6 | tests/incremental.test.ts › IN-6 a top-level statement that is not a declaration (it runs at load and may mutate anything) and a namespace import are taken whole |
+| IN-6 | tests/incremental.test.ts › IN-6 on the real build.ts each stage reaches far fewer declarations than modules x exports (and the stage list is unchanged) |
+| IN-7 | tests/incremental.test.ts › IN-7 second build: one changed shard + one new text = 2 uploads, the rest copied server side; the new prefix verifies complete; a deleted file is not carried over |
+| IN-7 | tests/incremental.test.ts › IN-7 planner: unchanged big objects are copied with Content-Encoding gzip, changed big ones are uploaded by the caller, a dir with too many exceptions or a glob name is sent whole |
+| IN-8 | tests/incremental.test.ts › IN-8 per-witness stage: 200 witnesses, one changed = 1 computed, 199 reused; the aggregate stage recomputes; upload = 1 shard + manifest |
+| IN-8 | manual — ops/worker/ingest.sh and chain.sh take --full (shell syntax checked with bash -n; not run on the worker, which is stopped) |
