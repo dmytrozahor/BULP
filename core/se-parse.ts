@@ -124,6 +124,10 @@ const POS = new RegExp(POS_CAP.source.replace('[А-Яа-яіїє]', '[а-яії�
 const ETYM = /^\((?:пол|лат|нім|гр|тур|чес|франц|італ|ц\.-сл|цсл|ст\.-сл|рос|угор|татар|араб|перс|євр|укр|Ипат|\.пт)[^)]{0,80}\)\s*/
 /** a gloss that may be shown: word-like OCR, no run of two upper-case words (front matter, titles), no year */
 export const glossOk = (g: string): boolean => ocrScore(g) >= 0.8 && (g.match(/(?:^|\s)[А-ЯІЇЄ]{4,}(?=\s|$)/g) ?? []).length < 2 && !/(?<!\d)1[3-9]\d\d(?!\d)/.test(g)
+/** «Див. Цапе.» / «См. …»: a cross-reference line, not a sense */
+export const isXrefGloss = (g: string): boolean => /^[.\s]*(?:[а-яіїє]{1,7}\.\s*)*(?:[Дд]ив\.|См\.|См\b|Смотри)/.test(g)
+/** the stricter gate for a gloss that is SHOWN (OQ): glossOk plus no stray number token, no capital inside a word («ДДялг», «слОво»), no cross-reference */
+export const glossClean = (g: string): boolean => glossOk(g) && !isXrefGloss(g) && !/(?:^|\s)\d{1,3}[.)]?(?=\s|$)/.test(g) && !/[а-яіїєґ][А-ЯІЇЄҐ]|[А-ЯІЇЄҐ]{2,}[а-яіїєґ]/.test(g)
 export interface ParsedSense { n: number; gloss: string; dates: [number, number][]; sigla: string[]; quote?: string; period: boolean }
 export interface ParsedEntry { head: string; variants: string[]; pos?: string; senses: ParsedSense[]; score: number }
 const trimTo = (s: string, n: number) => (s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…')
@@ -190,7 +194,7 @@ export function parseArticle(spec: ParseSpec, a: RawArticle, siglaYears: Map<str
   const parts = splitSenses(body, spec.kind === 'bn' || spec.kind === 'zakrevsky' || spec.kind === 'materials')
   const senses = parts.map(p => senseOf(spec, p.n, p.text, siglaYears)).filter(s => s.gloss.length >= 2 || s.dates.length || s.sigla.length)
   const numbered = senses.filter(s => s.n > 0)
-  const out = (numbered.length ? numbered : senses).filter(s => !s.gloss || glossOk(s.gloss))   // a garbled gloss is dropped, never shown
+  const out = (numbered.length ? numbered : senses).filter(s => !s.gloss || glossClean(s.gloss))   // a garbled gloss is dropped, never shown
   if (!out.length) return undefined
   return { head: variants[0]!, variants, ...(pos2 ? { pos: pos2 } : {}), senses: out.slice(0, 8), score }
 }

@@ -76,12 +76,14 @@ export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<s
   // FX-3: a Map id → VClass restricts the paradigm/lemmaTags of an id to the lemma line of that POS class (VESUM «да» particle vs «ДА» noun are different lemmas under one key)
   const wantL = new Map<string, string | undefined>((lemmas instanceof Map ? [...lemmas] : [...lemmas].map(l => [l, undefined] as [string, undefined])).map(([l, c]) => [key(l), c]))
   const hits = new Map<string, VesumHit[]>(), paradigms = new Map<string, { form: string; tags: string }[]>(), lemmaTags = new Map<string, string>()
-  let lk = '', lWanted = false
+  // a common noun and a proper name share one key (даль / Даль): the capitalised blocks are kept apart and used only when the lemma has no lower-case block (MM-2 preferCommon: proper-name forms never land in a common lemma's cells)
+  const capP = new Map<string, { form: string; tags: string }[]>(), capTags = new Map<string, string>(), lowSeen = new Set<string>()
+  let lk = '', lWanted = false, cap = false
   // MM-11: forms of the current block by tags, to find the е / і doublet of one cell (the е-form is marked `ik` on its hit, even when it came first)
   let cells = new Map<string, { form: string; hit?: VesumHit }[]>()
   await scanVesum(lines, e => {
     if (e.head) cells = new Map()
-    if (e.head) { lk = key(e.lemma); lWanted = wantL.has(lk) && (wantL.get(lk) === undefined || wantL.get(lk) === vesumClass(e.lemmaTags)); if (lWanted && !lemmaTags.has(lk)) lemmaTags.set(lk, e.lemmaTags) }
+    if (e.head) { lk = key(e.lemma); lWanted = wantL.has(lk) && (wantL.get(lk) === undefined || wantL.get(lk) === vesumClass(e.lemmaTags)); cap = /^[A-ZА-ЯІЇЄҐ]/.test(e.lemma); if (lWanted && !cap) lowSeen.add(lk); if (lWanted) { const m = cap ? capTags : lemmaTags; if (!m.has(lk)) m.set(lk, e.lemmaTags) } }
     const fk = key(e.form)
     let mine: VesumHit | undefined
     if (wantF.has(fk)) {
@@ -95,8 +97,9 @@ export async function indexLines(lines: Lines, forms: Set<string>, lemmas: Set<s
       for (const o of cell) { const v = ikDoublet(fk, o.form); if (v === fk) { if (mine) mine.ik = 1 } else if (v === o.form && o.hit) o.hit.ik = 1 }
       cell.push({ form: fk, hit: mine })
     }
-    if (lWanted) { const a = paradigms.get(lk) ?? []; a.push({ form: e.form, tags: e.tags }); paradigms.set(lk, a) }
+    if (lWanted) { const m = cap ? capP : paradigms; const a = m.get(lk) ?? []; a.push({ form: e.form, tags: e.tags }); m.set(lk, a) }
   })
+  for (const [k, p] of capP) if (!lowSeen.has(k)) { paradigms.set(k, p); lemmaTags.set(k, capTags.get(k)!) }
   return { hits, paradigms, lemmaTags }
 }
 

@@ -33,7 +33,7 @@ const LANG_UK: Record<string, string> = { de: 'нім.', ru: 'рос.', en: 'а�
 const rowsIn = (i: number) => data.value!.groups[i]!.rows.map(r => data.value!.rows[r]!)
 /** the gloss with its language marked when the source is not Ukrainian («arbeiten, machen» (нім.)); a Russian-side headword is only ever a labelled note, never the meaning */
 const glossOf = (i: number) => { const r = rowsIn(i).find(x => x.g); if (!r) return undefined; const c = dictById(r.d), l = c?.dir === 'ru-uk' ? 'uk' : c?.lang; return l && l !== 'uk' && l !== 'none' ? `«${r.g}» (${LANG_UK[l] ?? l})` : r.g }
-const glossOrNone = (i: number) => glossOf(i) ?? (() => { const ru = rowsIn(i).find(x => x.ru)?.ru; return ru ? `слово засвідчене; рос. відповідник: ${ru}` : 'слово засвідчене (текст значення словника не взято)' })()
+const glossOrNone = (i: number) => glossOf(i) ?? (() => { const ru = rowsIn(i).find(x => x.ru)?.ru; return ru ? `слово засвідчене; рос. відповідник: ${ru}` : rowsIn(i).some(x => x.oq) ? 'слово засвідчене (текст значення словника не взято: OCR низької якості)' : 'слово засвідчене (текст значення словника не взято)' })()
 const rowsOf = (it: TlItem) => it.rows.map(i => ({ i, r: data.value!.rows[i]! }))
 const intoOf = (g: number) => data.value!.trans.filter(t => t.to === g)
 const kwOf = (g: number) => (data.value!.kw ?? []).filter(k => k.g === g)

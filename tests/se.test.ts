@@ -64,6 +64,14 @@ describe('SE-1 sense inventory with coverage periods', () => {
     const norm = (x: string) => x.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
     for (const r of rows) { expect(heads.map(norm)).not.toContain(norm(r.g)); expect(r.ru).toBeTruthy() }
   })
+  it('SE-1 даль: потом → далі, потім in several printed shapes never yields the Russian headword', () => {
+    for (const [loc, g] of [['Потомъ – далі, потім.', 'далі, потім'], ['Потомъ = далі, потім', 'далі, потім'], ['Потомъ, послѣ – далі, потім; опісля', 'далі, потім'], ['Потомъ, нар.', ''], ['Потомъ нар. Далі, потім.', '']] as const)
+      for (const d of ['r2u_umanets', 'r2u_krymsky']) {
+        const r = rowOfLine(d, R(loc), 'даль', 'далі')!
+        expect(r.g).toBe(g); expect(r.g.toLowerCase()).not.toContain('потом')
+      }
+    expect(rowOfLine('r2u_krymsky', R('Потомъ – потомъ'), 'даль', 'далі')!.g).toBe('')   // a clause with no Ukrainian text is not taken
+  })
   it('SE-1 Желехівський: the German gloss after the inflection and the part-of-speech mark is kept', () => {
     expect(rowOfLine('r2u_zheleh', R('Робити, -блю, -биш, v. arbeiten, machen. Sl.'), 'робити', 'робити')!.g).toBe('arbeiten, machen')
     expect(rowOfLine('r2u_zheleh', R('Робити, -блю, -биш, vb.'), 'робити', 'робити')!.g).toBe('')

@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync, mkdirSync, readFileSync, readdirSync, exist
 import { tmpdir } from 'node:os'
 import { resolve } from 'node:path'
 import { gzipSync } from 'node:zlib'
-import { PARSE_SPECS, bucketDates, centuryLabels, glossOk, headwordOk, ocrScore, parseDictionary, siglaDates, splitArticles, yearIn } from '../core/se-parse.ts'
+import { PARSE_SPECS, bucketDates, centuryLabels, glossClean, glossOk, headwordOk, ocrScore, parseDictionary, siglaDates, splitArticles, yearIn } from '../core/se-parse.ts'
 import { atOf, epochsOf } from '../core/se.ts'
 import { parseAll, report } from '../pipelines/parse-se-dicts.ts'
 import { parsedRows } from '../pipelines/build-se.ts'
@@ -147,6 +147,16 @@ describe('SE-11 pipeline: resumable, atomic, attaches only to existing cards', (
     const into = new Map()
     const r = parsedRows(root, k => k === 'авреоля' || k === 'встаньливий', h => (h === 'встанливъ' ? ['встаньливий'] : []), into)
     expect(r.files).toBe(2); expect(into.get('авреоля')![0].d).toBe('timchenko'); expect(into.get('встаньливий')!.every((x: { m?: string }) => x.m === 'd')).toBe(true); expect(into.has('авреа')).toBe(false); expect(r.derived).toBe(2)
+  })
+  it('SE-11 OQ gate on the cached parsed rows: garbled glosses are blanked (the dated row stays), cross-references dropped', () => {
+    const root = mkdtempSync(resolve(tmpdir(), 'se-oq-')); mkdirSync(resolve(root, 'data/work/se-parsed'), { recursive: true })
+    const rows = [['даль', { d: 'timchenko', g: 'Див. Цапе. 1 ДДялг, на дальшу відлегліость', e: [1600, 1699] }], ['даль', { d: 'timchenko', g: 'на дальшу відлегліость 1 ДДялг', e: [1600, 1699], q: 'garbage' }],
+      ['даль', { d: 'timchenko', g: 'простір, відстань', e: [1700, 1799] }]]
+    writeFileSync(resolve(root, 'data/work/se-parsed/t.json'), JSON.stringify({ rows }))
+    const into = new Map(), r = parsedRows(root, k => k === 'даль', () => [], into)
+    expect(r.xref).toEqual({ timchenko: 1 }); expect(r.blanked).toEqual({ timchenko: 1 })
+    expect(into.get('даль')).toEqual([{ d: 'timchenko', g: '', e: [1600, 1699], oq: 1 }, { d: 'timchenko', g: 'простір, відстань', e: [1700, 1799] }])
+    expect(glossClean('ДДялг, на дальшу')).toBe(false); expect(glossClean('Див. Цапе.')).toBe(false); expect(glossClean('простір, відстань')).toBe(true)
   })
   it('SE-11 the build stage reads the parsed rows, the parser script is an npm script and the chain runs it after the harvest', () => {
     expect(readFileSync('pipelines/build.ts', 'utf8')).toContain('parsedRows(ROOT'); expect(readFileSync('package.json', 'utf8')).toContain('"parse:se"'); expect(readFileSync('harvest/se-chain.sh', 'utf8')).toContain('parse-se-dicts.ts')

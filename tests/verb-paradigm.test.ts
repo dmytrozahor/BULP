@@ -42,6 +42,19 @@ describe('BL-8 modern verb paradigm: робити', () => {
     const old = [...rob, ...['m:v_naz', 'm:v_zna:rinanim', 'm:v_naz:long'].map(t => ({ form: 'роблений', tags: `adj:${t}:adjp:pasv:imperf` }))]
     expect(buildGrids(old).find(g => g.id === 'part')!.rows.at(-1)!.cells[1]!.map(p => p.form)).toEqual(['роблений'])
   })
+  it('a common noun shows lower-case forms only: the proper name of the same spelling (Даль) stays off its cells', () => {
+    const ps = ['даль noun:inanim:f:v_naz', 'далі noun:inanim:f:v_rod', 'Даль noun:anim:m:v_naz:prop:lname', 'Даля noun:anim:m:v_rod:prop:lname', 'Далеві noun:anim:m:v_dav:prop:lname'].map(l => { const [form, tags] = l.split(' '); return { form: form!, tags: tags! } })
+    const cells = buildGrids(ps).flatMap(g => g.rows.flatMap(r => r.cells.flat())).map(p => p.form)
+    expect(cells).toEqual(expect.arrayContaining(['даль', 'далі'])); expect(cells.filter(f => /^[А-Я]/.test(f))).toEqual([])
+    expect(buildGrids(ps.slice(2)).flatMap(g => g.rows.flatMap(r => r.cells.flat())).map(p => p.form)).toContain('Даля')   // a proper name alone keeps its forms
+  })
+  it('indexLines: a common lemma and a proper name with one key give the common paradigm only; a proper name alone keeps its own', async () => {
+    const L = (a: string[]) => ({ [Symbol.asyncIterator]: async function* () { for (const l of a) yield l } })
+    const { indexLines } = await import('../pipelines/vesum.ts')
+    const txt = ['даль noun:inanim:f:v_naz', ' далі noun:inanim:f:v_rod', 'Даль noun:anim:m:v_naz:prop:lname', ' Даля noun:anim:m:v_rod:prop:lname', 'Ольга noun:anim:f:v_naz:prop:fname', ' Ольги noun:anim:f:v_rod:prop:fname']
+    const r = await indexLines(L(txt) as never, new Set(), new Set(['даль', 'ольга']))
+    expect(r.paradigms.get('даль')!.map(p => p.form)).toEqual(['даль', 'далі']); expect(r.paradigms.get('ольга')!.map(p => p.form)).toEqual(['Ольга', 'Ольги'])
+  })
   it('layout: inf, present, future, past m/f/n/pl, imperative, impersonal, participles, adverbial participles', () => {
     const ps = [...rob, ...acceptParticiples(rob, participleCandidates(rob), vesumHits, key)]
     const g = Object.fromEntries(buildGrids(ps).map(x => [x.id, x]))

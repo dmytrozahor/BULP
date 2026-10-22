@@ -69,6 +69,7 @@ export interface SeRow {
   /** SPEC 63 GG-7: stable link to the article on the official site */ u?: string
   /** GG-7: the headword with its stress mark as the article shows it */ a?: string
   /** GG-7: the labels printed on the sense (розм., заст., діал., перен. …) */ lb?: string[]
+  /** OCR quality gate: the dictionary's gloss was garbled and is not kept (1) */ oq?: 1
   /** the Russian headword of a ru→uk article in which the lemma is the Ukrainian equivalent: a labelled cross-language note, NEVER the meaning of the Ukrainian word */ ru?: string
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }
@@ -97,7 +98,8 @@ export function ruUkSide(text: string, word: string, raw = ''): { g: string; ru?
   const ru = t.slice(0, m.index).replace(/[.,;\s]+$/, '').trim().slice(0, 60), uk = t.slice(m.index + m[0].length).replace(/\s*\([^)]*\)/g, '').trim()
   const clauses = uk.split(/;|\.\s|\s[–—]\s/).map(x => x.replace(/[.;,\s]+$/, '').trim()).filter(Boolean)
   const ks = [key(word), key(raw)].filter(Boolean)
-  const hit = clauses.find(x => wordsOf(x).some(w => ks.includes(key(w)))) ?? (clauses.length === 1 ? clauses[0] : undefined)
+  const notRu = (x: string) => !/[ыэёЫЭЁ]/.test(x) && key(x) !== key(ru)   // Russian-only letters or the headword itself: that clause is not Ukrainian text
+  const hit = clauses.filter(notRu).find(x => wordsOf(x).some(w => ks.includes(key(w)))) ?? (clauses.length === 1 && notRu(clauses[0]!) ? clauses[0] : undefined)
   return { g: hit && hit.length >= 2 ? hit.slice(0, 80) : '', ...(ru ? { ru } : {}) }
 }
 

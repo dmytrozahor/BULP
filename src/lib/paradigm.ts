@@ -54,8 +54,10 @@ function verb(ps: PForm[]): Grid[] {
 const generic = (ps: PForm[]): Grid[] => [{ id: 'list', title: 'Форми', cols: ['теги ВЕСУМ'], rows: ps.map(p => ({ label: p.form, cells: [[p]] })) }]
 
 /** Build the grids for a lemma's VESUM forms. Rows/columns with no forms are kept (shown as «—») except fully empty rows of rare slots. */
-export function buildGrids(ps: PForm[]): Grid[] {
-  if (!ps.length) return []
+export function buildGrids(all: PForm[]): Grid[] {
+  if (!all.length) return []
+  // a common noun's cells show lower-case forms only: capitalised forms are the proper name of the same spelling (Даль, Даля, Далеві), also in data built before the VESUM split
+  const low = all.filter(p => !/^[A-ZА-ЯІЇЄҐ]/.test(p.form)), ps = low.length ? low : all
   const pos = posOf(ps)
   const grids = pos === 'noun' ? noun(ps) : pos === 'adj' ? adj(ps) : pos === 'verb' ? verb(ps) : generic(ps)
   return grids.map(g => ({ ...g, rows: g.rows.filter(r => r.cells.some(c => c.length) || g.id === 'noun' || g.id === 'adj') })).filter(g => g.rows.length)
