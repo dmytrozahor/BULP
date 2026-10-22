@@ -94,7 +94,7 @@ describe('AT-3 /atlas page and site file', () => {
   })
   it('the route /atlas, the nav link and the view (rules link to /forms/<rule>) exist', () => {
     expect(readFileSync('src/router.ts', 'utf8')).toContain("path: '/atlas'")
-    expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/atlas"')
+    expect(readFileSync('src/lib/navMenu.ts', 'utf8')).toContain("to: '/atlas'")
     expect(readFileSync('src/views/AtlasView.vue', 'utf8')).toContain('/forms/')
   })
 })

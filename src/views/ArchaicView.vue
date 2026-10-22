@@ -40,7 +40,6 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
   <p v-else-if="!e" class="muted sans">Архаїчної картки «{{ id }}» немає.</p>
   <template v-else>
     <h1>{{ e.head }} <small class="muted sans">{{ badge }}</small></h1>
-    <PlastSenses :word="e.head" />
     <p v-if="e.status === 'unverified'" class="sans small"><b>Неперевірено:</b> повторюване нерозпізнане слово середньоукраїнського тексту (≥ 3 вживань); словникового запису для нього не знайдено, значення та частина мови — невідомо.</p>
     <template v-else-if="e.dict">
       <p class="sans small">Заголовне слово: <b>{{ e.head }}</b><template v-if="e.variants.length > 1"> · варіанти: {{ e.variants.slice(1).join(', ') }}</template><template v-if="e.dict.pos"> · частина мови за джерелом: {{ e.dict.pos }}.</template>
@@ -65,7 +64,9 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
         <li v-for="(k, i) in e.kwic" :key="i"><RouterLink :to="textTo(k.w, k.loc)">«{{ k.raw }}»</RouterLink> · {{ k.loc }} · <RouterLink :to="witnessTo(k.w)">{{ k.w }}</RouterLink></li>
       </ul>
     </template>
-    <WitnessBlock id="ar-wit" :items="wits.map(([w, n]) => ({ w, n }))" />   <!-- SPEC 63 CP-2: graph / list, empty state -->
-    <ThinCard se-kind="arch" :lemma="e.head" :spelling="e.head" :kwic="lines" :f="e.n" :witnesses="e.witnesses" />
+    <ThinCard se-kind="arch" :lemma="e.head" :spelling="e.head" :kwic="lines" :f="e.n" :witnesses="e.witnesses">
+      <template #sources><WitnessBlock id="ar-wit" :items="wits.map(([w, n]) => ({ w, n }))" /></template>   <!-- SPEC 63 CP-2: graph / list, empty state -->
+      <template #meanings><PlastSenses :word="e.head" /></template>
+    </ThinCard>
   </template>
 </template>

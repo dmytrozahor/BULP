@@ -2,6 +2,8 @@
 /** Shell: navigation + FIXTURE banner (data/*.json carry "generated": "FIXTURE" until the real pipeline overwrites them). */
 import { useData } from './composables/useData.ts'
 import { ref } from 'vue'
+import NavMenu from './components/NavMenu.vue'
+import ViewBar from './components/ViewBar.vue'
 import { loadFailures, retryEpoch, retryFailed } from './lib/fetchJson.ts'
 const { isFixture, error, loading, progress } = useData()
 
@@ -33,22 +35,9 @@ apply()
   <a class="skip" href="#main">До змісту</a>
   <header class="top">
     <RouterLink to="/" class="brand">Лексикон<small>походження словоформ</small></RouterLink>
-    <nav aria-label="Розділи">
-      <RouterLink to="/">Пошук</RouterLink>
-      <RouterLink to="/annotate">Анотатор</RouterLink>
-      <RouterLink to="/analyze">Аналіз слова</RouterLink>
-      <RouterLink to="/derive">Деривація</RouterLink>
-      <RouterLink to="/texts">Тексти</RouterLink>
-      <RouterLink to="/songs">Пісні</RouterLink>
-      <RouterLink to="/phrases">Сполучення</RouterLink>
-      <RouterLink to="/plast">Пласт</RouterLink>
-      <RouterLink to="/sophia">Софія</RouterLink>
-      <RouterLink to="/map">Мапа</RouterLink>
-      <RouterLink to="/atlas">Атлас</RouterLink>
-      <RouterLink to="/corpus">Корпус</RouterLink>
-      <RouterLink to="/report">Звіт</RouterLink>
-      <RouterLink to="/method">Метод</RouterLink>
-    </nav>
+    <NavMenu />
+    <ViewBar />
+
     <button type="button" class="themebtn" :aria-pressed="dark" @click="toggle">{{ dark ? '☀ Світла' : '☾ Темна' }}</button>
   </header>
   <p v-if="isFixture" class="fixture" role="status">Показано <strong>фікстуру</strong>: вигадані числа й приклади для розробки інтерфейсу (деривації, епохи й мітки обчислено реальним кодом). Справжні дані замінять <code>public/data</code>.</p>

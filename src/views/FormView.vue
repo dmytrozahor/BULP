@@ -33,6 +33,8 @@ import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
 import Panel from '../components/Panel.vue'
+import CardTabs from '../components/CardTabs.vue'
+import Spell from '../components/Spell.vue'
 import ViewSwitch from '../components/ViewSwitch.vue'
 import AttestGraph from '../components/AttestGraph.vue'
 import type { TPoint } from '../lib/graphLayout.ts'
@@ -110,7 +112,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
   <UnlinkedSpelling v-else-if="!pick" :form="form" />
   <template v-else>
     <header class="wordhead headline compact">
-      <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]">{{ pick.raw }}</h1>
+      <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]"><Spell :w="fc?.modern ?? pick.raw" :raw="pick.raw" /></h1>
       <SociolectBadges :word="pick.raw" /><ModernBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
         <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}<span v-if="fc.ocrOnly" class="muted"> (лише OCR низької якості, не свідчення)</span></template>
@@ -123,36 +125,24 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі: {{ err }}</p>
     </header>
     <div v-if="!fc && !err" class="skeleton" style="height:8rem" />
-    <div v-else-if="fc && stats" class="cols">
-      <div>
-        <Panel id="f-dia" :open="false" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
-        <Panel v-if="hasCirc(pick.raw)" id="f-circ" :open="true" title="Можливі читання · ô/ê" summary="читання літери з джерелами; IPA як говіркові варіанти"><CircReadings :spelling="pick.raw" /></Panel>
-        <Panel id="f-kw" :open="true" :count="fc.kwic.length" title="Приклади · KWIC" :summary="`${fc.kwic.length} із f = ${stats.f}`" :empty="!fc.kwic.length">
-          <Kwic :lines="fc.kwic" :lemma="pick.lemma" />
-        </Panel>
+    <CardTabs v-else-if="fc && stats">
+      <template #forms>
         <Panel id="f-ep" :open="false" :count="stats.byEpoch.length" title="Клітинки за епохами" :summary="`розміщено токенів: ${stats.placed}`" :empty="!epochKinds"
           info="Лише клітинки, де стоїть це написання (з парадигм леми); токени без розмітки сюди не потрапляють.">
           <EpochParadigm v-if="epochKinds" no-legend :kind="kind" :epochs="epochs" :spellings="[pick.raw]" />
           <p v-else class="small sans muted">Історичні парадигми для цієї частини мови ще не побудовано.</p>
         </Panel>
-        <Panel id="f-wit" :open="true" :count="stats.witnesses.length" title="Пам’ятки" :summary="stats.trueCounts ? `${stats.witnesses.length} пам’яток, усі ${stats.f} токенів` : `${stats.witnesses.length} у прикладах`" :empty="!stats.witnesses.length">
-          <ViewSwitch panel="witnesses"><template #graph><AttestGraph :points="witPoints" label="Хронологія пам’яток" /></template><template #list>
-          <ul class="sans small" style="list-style:none;padding:0;margin:0">
-            <li v-for="w in stats.witnesses" :key="w.w" style="margin:.2rem 0"><RouterLink v-if="witnessById.get(w.w)" :to="witnessTo(w.w)">{{ wTitle(w.w) }}</RouterLink><template v-else>{{ wTitle(w.w) }}</template>
-              <span class="count-n"> · {{ stats.trueCounts ? 'токенів' : 'прикладів' }}: {{ w.lines }}</span></li>
-          </ul></template></ViewSwitch>
-          <p v-if="stats.trueCounts" class="small sans muted">Точні лічильники: кожен пов’язаний токен цього написання, за пам’ятками (BL-6c).</p>
-          <p v-else class="small sans muted">Перелік за наведеними прикладами (≤ 6): ці дані збудовано до BL-6c — нижня межа.</p>
-        </Panel>
-        <Panel id="f-reg" :open="false" :count="byRegion.filter(r => r.f).length" title="Карта · регіон пам’ятки" :summary="`${byRegion.filter(r => r.f).length} регіонів${fc.byW ? '' : ' у прикладах'}`" :empty="!byRegion.length"
-          info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
-          <RegionMap :by="byRegion" />
-          <p class="small sans muted">f у регіоні — <template v-if="fc.byW">усі токени цього написання в пам’ятках регіону</template><template v-else>наведені приклади (≤ 6): нижня межа</template>; N — токени всіх пам’яток регіону.</p>
-        </Panel>
+        <Panel v-if="hasCirc(pick.raw)" id="f-circ" :open="true" title="Можливі читання · ô/ê" summary="читання літери з джерелами; IPA як говіркові варіанти"><CircReadings :spelling="pick.raw" /></Panel>
+        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="forms" />
+      </template>
+      <template #history>
         <Panel id="f-der" :open="true" :count="fc.derivation.length" title="Виведення · Derivation" :summary="fc.derivation.length ? `${fc.derivation.length} кроків → ${fc.modern}` : `без змін → ${fc.modern}`">
           <p class="sans small"><span class="muted">норма: </span>{{ fc.norm }} <span class="muted"> · сучасна: </span>{{ fc.modern }}</p>
           <DerivationSteps :steps="fc.derivation" :uid="pick.raw" :dates="chainDates" :lemma="pick.lemma" panel="chain" />
         </Panel>
+        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="history" />
+      </template>
+      <template #meanings>
         <Panel id="f-cl" :open="false" :count="Object.keys(fc.claims).length" title="Мітки · Claims" :summary="Object.keys(fc.claims).length ? Object.keys(fc.claims).join(', ') : 'міток із доказами немає'" :empty="!Object.keys(fc.claims).length">
           <ClaimSet v-if="Object.keys(labelClaims).length" :claims="labelClaims" />
           <p v-if="rusyn && isKnown(rusyn)" class="sans small"><span class="muted">русинське прочитання: </span><ClaimBadge :claim="rusyn" :text="String(rusyn.value)" /></p>
@@ -160,9 +150,15 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
         </Panel>
         <SenseEpochs :word="pick.lemma" kind="full" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами», after the derivation block -->
         <PlastSenses :word="pick.lemma" />
-        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" />   <!-- SPEC 63 CP-2 -->
-      </div>
-      <aside aria-label="Статистика написання">
+        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="meanings" />
+      </template>
+      <template #spread>
+        <Panel id="f-dia" :open="false" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="pick.raw" :lemma="pick.lemma" :regions="regionNames" /></Panel>
+        <Panel id="f-reg" :open="false" :count="byRegion.filter(r => r.f).length" title="Карта · регіон пам’ятки" :summary="`${byRegion.filter(r => r.f).length} регіонів${fc.byW ? '' : ' у прикладах'}`" :empty="!byRegion.length"
+          info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
+          <RegionMap :by="byRegion" />
+          <p class="small sans muted">f у регіоні — <template v-if="fc.byW">усі токени цього написання в пам’ятках регіону</template><template v-else>наведені приклади (≤ 6): нижня межа</template>; N — токени всіх пам’яток регіону.</p>
+        </Panel>
         <Panel id="f-st" :open="true" title="Статистика написання" :summary="`${fmtNum(stats.ipm, 2)} ipm · HK ${stats.hk} · f = ${stats.f}`">
           <div class="row sans"><Dots :dots="stats.dots" :ipm="stats.ipm" :hk="stats.hk" :f="stats.f" :N="stats.N" /></div>
           <p class="small sans" style="margin:.3rem 0">f = {{ stats.f }} із N = {{ fmtNum(stats.N) }} слів · {{ fmtNum(stats.ipm, 2) }} ipm · HK {{ stats.hk }}
@@ -177,7 +173,22 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
           </table>
           <p class="small sans muted">Розподіл за епохами — нижня межа: лише токени, розміщені в клітинках парадигми (P-3.1).</p>
         </Panel>
-      </aside>
-    </div>
+        <LemmaBlocks :lemma="pick.lemma" :spelling="pick.raw" :labels="false" tab="spread" />
+      </template>
+      <template #sources>
+        <Panel id="f-kw" :open="true" :count="fc.kwic.length" title="Приклади · KWIC" :summary="`${fc.kwic.length} із f = ${stats.f}`" :empty="!fc.kwic.length">
+          <Kwic :lines="fc.kwic" :lemma="pick.lemma" />
+        </Panel>
+        <Panel id="f-wit" :open="true" :count="stats.witnesses.length" title="Пам’ятки" :summary="stats.trueCounts ? `${stats.witnesses.length} пам’яток, усі ${stats.f} токенів` : `${stats.witnesses.length} у прикладах`" :empty="!stats.witnesses.length">
+          <ViewSwitch panel="witnesses"><template #graph><AttestGraph :points="witPoints" label="Хронологія пам’яток" /></template><template #list>
+          <ul class="sans small" style="list-style:none;padding:0;margin:0">
+            <li v-for="w in stats.witnesses" :key="w.w" style="margin:.2rem 0"><RouterLink v-if="witnessById.get(w.w)" :to="witnessTo(w.w)">{{ wTitle(w.w) }}</RouterLink><template v-else>{{ wTitle(w.w) }}</template>
+              <span class="count-n"> · {{ stats.trueCounts ? 'токенів' : 'прикладів' }}: {{ w.lines }}</span></li>
+          </ul></template></ViewSwitch>
+          <p v-if="stats.trueCounts" class="small sans muted">Точні лічильники: кожен пов’язаний токен цього написання, за пам’ятками (BL-6c).</p>
+          <p v-else class="small sans muted">Перелік за наведеними прикладами (≤ 6): ці дані збудовано до BL-6c — нижня межа.</p>
+        </Panel>
+      </template>
+    </CardTabs>
   </template>
 </template>

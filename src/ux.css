@@ -54,15 +54,6 @@
 }
 .epsum { margin: .3rem 0; }
 
-/* UX-6 compact mobile nav: one horizontally scrollable row (no wrapped 2-line nav), brand on its own line */
-@media (max-width: 700px) {
-  .top { flex-wrap: nowrap; flex-direction: column; align-items: stretch; gap: .1rem; padding-bottom: 0; }
-  .top .brand small { display: none; }
-  .top nav { flex-wrap: nowrap; overflow-x: auto; gap: 0 .9rem; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin: 0 calc(var(--gut) * -1); padding: 0 var(--gut); }
-  .top nav::-webkit-scrollbar { display: none; }
-  .top nav a { flex: 0 0 auto; padding: .45rem 0; font-size: .92rem; }
-}
-
 /* FX-5 pronoun grid: enclitic sub-row of a cell */
 .encrow { margin-top: .15rem; padding-top: .1rem; border-top: 1px dotted var(--line); }
 
@@ -95,3 +86,10 @@
 .panel .psum { overflow-wrap: break-word; word-break: normal; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; }
 .g-axisg .g-axis { stroke: var(--line); }
 .g-link { stroke: var(--ink); stroke-width: 2; } .g-arrow-ink { fill: var(--ink); } .g-dy { fill: var(--muted); font-style: italic; }
+
+/* SPEC 63 OV-9: phone header — brand, sheet button and switches stack in the page gutter, no horizontal scroll */
+@media (max-width: 700px) {
+  .top { flex-direction: column; align-items: stretch; gap: .35rem; }
+  .top .brand small { display: none; }
+  .top .viewbar { width: 100%; } .top .viewbar label { flex: 1 1 100%; } .top .viewbar select { flex: 1 1 auto; min-width: 0; }
+}

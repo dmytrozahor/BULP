@@ -91,7 +91,8 @@ watch(cands, async cs => {
       <ul v-if="cog.length"><li v-for="c in cog" :key="c.lemma">Спільнокореневе: <RouterLink :to="`/w/${encodeURIComponent(c.lemma)}`">{{ c.lemma }}</RouterLink> ← {{ c.pivot }} (BL-15)</li></ul>
       <RouterLink :to="{ path: '/analyze', query: { q: g[0] } }">повний аналіз за правилами →</RouterLink>
     </section>
-    <PlastSenses :word="g[0]" />
-    <ThinCard se-kind="mu" :spelling="g[0]" :kwic="kwicFull" :f="g[1]" />
+    <ThinCard se-kind="mu" :spelling="g[0]" :kwic="kwicFull" :f="g[1]">
+      <template #meanings><PlastSenses :word="g[0]" /></template>
+    </ThinCard>
   </template>
 </template>

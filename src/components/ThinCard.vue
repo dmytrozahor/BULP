@@ -16,6 +16,7 @@ import Kwic from './Kwic.vue'
 import DialectBlock from './DialectBlock.vue'
 import DerivationSteps from './DerivationSteps.vue'
 import LemmaBlocks from './LemmaBlocks.vue'
+import CardTabs from './CardTabs.vue'
 import SenseEpochs from './SenseEpochs.vue'
 const props = defineProps<{ /** SPEC 63 SE-6: card kind of the host view (label of the sense block) */ seKind?: 'light' | 'dict' | 'orv' | 'arch' | 'mu'; lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
@@ -29,23 +30,38 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
 
 <template>
   <div data-testid="thin-card">
-    <Panel v-if="!noKwic" id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : undefined">
-      <Kwic :lines="kwic" :lemma="lemma" />
-    </Panel>
-    <Panel id="t-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="spelling" :lemma="lemma" /></Panel>
-    <Panel v-if="!noDerivation" id="t-der" :open="true" :count="best?.steps.length ?? 0" title="Виведення · Derivation" :summary="best ? `${best.steps.length} кроків → ${best.form}` : 'без змін'" :empty="!best">
-      <p class="sans small"><span class="muted">норма: </span>{{ d.norm }}<template v-if="best"> <span class="muted"> · сучасна (гіпотеза за правилами): </span>{{ best.form }}</template></p>
-      <DerivationSteps v-if="best" :steps="best.steps" :uid="`t-${spelling}`" :lemma="lemma" panel="chain" />
-    </Panel>
-    <SenseEpochs :word="lemma ?? spelling" :kind="seKind ?? (dictOnly ? 'dict' : 'light')" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами»: the sense timeline, right after the derivation block -->
-    <Panel id="t-reg" :open="false" :count="nRegions" title="Карта · регіон пам’ятки" :summary="`${nRegions} регіонів`" :empty="!nRegions" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : 'регіон пам’яток не визначено'"
-      info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
-      <RegionMap :by="byRegion" />
-    </Panel>
-    <Panel id="t-st" :open="false" title="Статистика" :summary="f ? `f = ${fmtNum(f)}${ipm !== undefined ? ' · ' + fmtNum(ipm, 2) + ' ipm' : ''}` : ''" :empty="!f" :empty-text="f === 0 || dictOnly ? 'f = 0: немає засвідчень у корпусі' : 'частоту не визначено'"
-      info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
-      <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
-    </Panel>
-    <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" />   <!-- SPEC 63 CP-2: every lemma-keyed block of the full card, with empty states -->
+    <CardTabs>
+      <template #forms><LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="forms" /><slot name="forms" /></template>
+      <template #history>
+        <Panel v-if="!noDerivation" id="t-der" :open="true" :count="best?.steps.length ?? 0" title="Виведення · Derivation" :summary="best ? `${best.steps.length} кроків → ${best.form}` : 'без змін'" :empty="!best">
+          <p class="sans small"><span class="muted">норма: </span>{{ d.norm }}<template v-if="best"> <span class="muted"> · сучасна (гіпотеза за правилами): </span>{{ best.form }}</template></p>
+          <DerivationSteps v-if="best" :steps="best.steps" :uid="`t-${spelling}`" :lemma="lemma" panel="chain" />
+        </Panel>
+        <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="history" /><slot name="history" />
+      </template>
+      <template #meanings>
+        <slot name="meanings" />
+        <SenseEpochs :word="lemma ?? spelling" :kind="seKind ?? (dictOnly ? 'dict' : 'light')" />   <!-- SPEC 63 SE-5/SE-6 «Значення за епохами» -->
+        <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="meanings" />
+      </template>
+      <template #spread>
+        <Panel id="t-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="spelling" :lemma="lemma" /></Panel>
+        <Panel id="t-reg" :open="false" :count="nRegions" title="Карта · регіон пам’ятки" :summary="`${nRegions} регіонів`" :empty="!nRegions" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : 'регіон пам’яток не визначено'"
+          info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
+          <RegionMap :by="byRegion" />
+        </Panel>
+        <Panel id="t-st" :open="false" title="Статистика" :summary="f ? `f = ${fmtNum(f)}${ipm !== undefined ? ' · ' + fmtNum(ipm, 2) + ' ipm' : ''}` : ''" :empty="!f" :empty-text="f === 0 || dictOnly ? 'f = 0: немає засвідчень у корпусі' : 'частоту не визначено'"
+          info="HK і рівномірність (DP) потребують повної картки леми; для короткої картки подано лише f та ipm.">
+          <p class="sans small">f = {{ fmtNum(f ?? 0) }} · {{ ipm !== undefined ? fmtNum(ipm, 2) : '—' }} ipm · N = {{ fmtNum(corpus?.N ?? 0) }} слів</p>
+        </Panel>
+        <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="spread" />
+      </template>
+      <template #sources>
+        <slot name="sources" />
+        <Panel v-if="!noKwic" id="t-kw" :open="kwic.length > 0" :count="kwic.length" title="Приклади · KWIC" :summary="kwic.length ? `${kwic.length} рядків` : ''" :empty="!kwic.length" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : undefined">
+          <Kwic :lines="kwic" :lemma="lemma" />
+        </Panel>
+      </template>
+    </CardTabs>
   </div>
 </template>

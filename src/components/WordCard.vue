@@ -11,6 +11,7 @@ import { epochName, fmtDate } from '../lib/format.ts'
 import { formTo, isOldForm } from '../lib/nav.ts'
 import ClaimBadge from './ClaimBadge.vue'
 import RuBadge from './RuBadge.vue'
+import Spell from './Spell.vue'
 import { ruOfWitness } from '../../core/ru-source.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import ClaimSet from './ClaimSet.vue'
@@ -39,7 +40,7 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
 <template>
   <div class="wcard" aria-live="polite">
     <div class="row" style="margin-bottom:.3rem">
-      <strong :class="['lang', t.provenance, { old: isOldForm(t.raw, year) }]" style="font-size:1.25rem; font-family:var(--serif)">{{ t.raw }}</strong>
+      <strong :class="['lang', t.provenance, { old: isOldForm(t.raw, year) }]" style="font-size:1.25rem; font-family:var(--serif)"><Spell v-if="t.provenance === 'attested' && t.form?.modern" :w="t.form.modern" :raw="t.raw" quiet /><template v-else>{{ t.raw }}</template></strong>
       <span v-if="t.provenance === 'derived'" class="derived-badge">реконструкція (гіпотеза)</span>
       <span class="muted small">{{ t.provenance === 'derived' ? 'не засвідчено: виведено за правилами' : STATUS_UK[t.status] }}</span>
     </div>

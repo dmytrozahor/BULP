@@ -48,8 +48,9 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
     <ul class="sans small">
       <li v-for="(e, i) in card.evidence" :key="i"><RouterLink :to="textTo(e.w, e.loc)">«{{ e.raw }}»</RouterLink> · лема «{{ card.lemma }}», {{ e.morph }} · {{ e.loc }} · <RouterLink :to="witnessTo(e.w)">{{ e.w }}</RouterLink></li>
     </ul>
-    <WitnessBlock id="tc-wit" :items="wits" />
-    <PlastSenses :word="modern ?? card.lemma" />
-    <ThinCard se-kind="orv" :lemma="modern ?? card.lemma" :spelling="card.lemma" :kwic="lines" :f="card.n" />
+    <ThinCard se-kind="orv" :lemma="modern ?? card.lemma" :spelling="card.lemma" :kwic="lines" :f="card.n">
+      <template #sources><WitnessBlock id="tc-wit" :items="wits" /></template>
+      <template #meanings><PlastSenses :word="modern ?? card.lemma" /></template>
+    </ThinCard>
   </template>
 </template>

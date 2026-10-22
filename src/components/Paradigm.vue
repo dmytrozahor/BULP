@@ -4,6 +4,8 @@
  * Майбутній · Минулий · Наказовий. Cells are D-evidence: the verbatim VESUM tag is shown on hover/focus (title) and as text in the grid footer.
  */
 import { computed } from 'vue'
+import Spell from './Spell.vue'
+import { ctxOfTags } from '../lib/dialectView.ts'
 import { buildGrids, nonNormative, type PForm } from '../lib/paradigm.ts'
 const props = defineProps<{ paradigm: PForm[]; kind?: string }>()
 const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(props.paradigm))
@@ -21,7 +23,7 @@ const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(prop
           <th scope="row">{{ r.label }}</th>
           <td v-for="(cell, i) in r.cells" :key="i">
             <template v-if="cell.length"><span v-for="(p, j) in cell" :key="j">
-              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`">{{ p.form }}</span><span v-if="j < cell.length - 1">, </span></span></template>
+              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`"><Spell :w="p.form" :ctx="ctxOfTags(p.tags)" quiet /></span><span v-if="j < cell.length - 1">, </span></span></template>
             <span v-else class="muted">—</span>
           </td>
         </tr>

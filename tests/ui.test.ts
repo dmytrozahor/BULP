@@ -79,9 +79,10 @@ describe('SPEC 61 UX helpers (FX-5 kind, UX-4 grouping, UX-5 top-N, UX-3 placed)
 })
 
 describe('UX-6 compact mobile nav', () => {
-  it('nav is a single non-wrapping scroll row under 700px', () => {
-    const css = readFileSync('src/ux.css', 'utf8')
-    expect(css).toMatch(/max-width:\s*700px[\s\S]*\.top nav\s*\{[^}]*flex-wrap:\s*nowrap[^}]*overflow-x:\s*auto/)
+  it('nav is a «Меню» sheet with an accordion under 720px (SPEC 63 OV-9), no sideways scroll', () => {
+    const css = readFileSync('src/style.css', 'utf8')
+    expect(css).toMatch(/max-width:\s*720px[\s\S]*\.nm-groups\s*\{[^}]*display:\s*none[\s\S]*\.nm-groups\.sheet\s*\{[^}]*display:\s*flex/)
+    expect(css).not.toMatch(/\.top nav\s*\{[^}]*overflow-x:\s*auto/)
   })
 })
 
@@ -353,7 +354,7 @@ describe('SPEC 50 epoch paradigms', () => {
   })
   it('EP-7.3 three classes, each with a text badge; attestation and a differing reconstruction side by side', async () => {
     const html = await panel(epochSample())
-    expect(html).toContain('class="lang attested old">рѣка<'); expect(html).toContain('class="lang derived old">рѣку<')   // sg.acc reconstructed only
+    expect(html).toMatch(/class="lang attested old">(?:<!--\[-->)?рѣка</); expect(html).toContain('class="lang derived old">рѣку<')   // sg.acc reconstructed only
     expect(html).toContain('реконструкція'); expect(html).toContain('✓ підтверджено пам’яткою')
     const g = epochGrid(epochSample().paradigms[0], 'shev.old', stemV), ins = g.rows[4]!.cells[0]!
     expect(ins.att.map(f => f.raw)).toEqual(['рѣкою']); expect(ins.rec.map(r => r.form)).toEqual(['рѣкою'])   // same spelling in the same cell confirms
@@ -450,7 +451,7 @@ describe('W1-4 statistics explainer (U-24)', () => {
 
 describe('W1-5 /texts reader (U-8)', () => {
   it('route and nav exist; the view reads public/data/texts/<witness>.json and links words to /w/:lemma', () => {
-    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/texts"')
+    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/texts'"); expect(readFileSync('src/lib/navMenu.ts', 'utf8')).toContain("to: '/texts'")
     const v = readFileSync('src/views/TextsView.vue', 'utf8'); expect(readFileSync('src/lib/witnessText.ts', 'utf8')).toContain('./data/texts/'); expect(v).toContain('wordTo(t.lemma)'); expect(readFileSync('src/lib/witnessText.ts', 'utf8')).toContain('annotate(')
   })
   it('SSR before data load shows the skeleton, not a crash', async () => {
@@ -504,7 +505,7 @@ describe('MV-1 media panel', () => {
   })
   it('MV-1 Kwic offers «переглянути» for media witnesses; /sophia is routed and in the nav', async () => {
     expect(readFileSync('src/components/Kwic.vue', 'utf8')).toContain('переглянути')
-    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/sophia'"); expect(readFileSync('src/App.vue', 'utf8')).toContain('to="/sophia"')
+    expect(readFileSync('src/router.ts', 'utf8')).toContain("'/sophia'"); expect(readFileSync('src/lib/navMenu.ts', 'utf8')).toContain("to: '/sophia'")
     expect(await ssr(SophiaView, {}, '/sophia')).toContain('Софія Київська')
   })
 })

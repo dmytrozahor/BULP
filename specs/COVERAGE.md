@@ -220,7 +220,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | UX-3 | tests/ui.test.ts › UX-3 placedCells counts cells with attested forms only |
 | UX-4 | tests/ui.test.ts › UX-4 identical claim sets across spellings collapse into one group |
 | UX-5 | tests/ui.test.ts › UX-5 the 6 most frequent spellings |
-| UX-6 | tests/ui.test.ts › nav is a single non-wrapping scroll row under 700px |
+| UX-6 | tests/ui.test.ts › nav is a «Меню» sheet with an accordion under 720px (SPEC 63 OV-9), no sideways scroll |
 | UX-7 | tests/ui.test.ts › UX-7 a word outside the lexicon gets a rule-based analysis banner in search and on the word page |
 | GA-1 | manual — specs/GAPS.md is the audit document itself (re-audited by GA-2); no executable check |
 | DL-1 | tests/dialect-books.test.ts › each rule cite is a Q quote from an ЕУМ article (litopys um<N>.htm) and rule ids are unique |
@@ -833,3 +833,18 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-20 | tests/fx.test.ts › MM-20 «Прийми-ж теж має вести до приймати»: a hyphenated clitic particle is split off; VESUM decides first › будь-хто (a VESUM word) is not split; де-не-де has no particle tail |
 | MM-21 | tests/fx.test.ts › MM-21 «ню прив’язалося лише до французького слова, але є й діалектне слово»: «ню» = вона (acc. after a preposition) in a Желехівка witness only › Желехівка witness: ню → вона (Огоновський 1889: «въ ню; при нѣй, до неи»); any other witness keeps the loan |
 | MM-18 | tests/fx.test.ts › MM-18…20 feature chips: Galician author → «галицька форма»; OCR edition of a non-Galician author → neutral, no dialect claimed › chips carry the cited fold quote and the qualifier |
+| OV-1 | tests/ov.test.ts › OV-1 the baseline shows a historical spelling in modern orthography with the original one click away; KWIC and the text view do not use Spell |
+| OV-2 | tests/ov.test.ts › OV-2 the dialect switch lists exactly the dialects with a cited rule; NORTH and SW are empty |
+| OV-3 | tests/ov.test.ts › OV-3 respelling by cited rules with the source quote |
+| OV-3 | tests/ov.test.ts › OV-3 a rule that needs gender, part of speech or stress does not fire without it, and unchanged words carry no mark |
+| OV-3 | tests/ov.test.ts › OV-3 Galician neuter nouns lose the length and take -є |
+| OV-3 | tests/ov.test.ts › OV-3 MM-16: the Желехівка chips (-є, и-) carry no dialect group, so the dialect view takes -є from the ЕУМ rows (SW-NO-LENGTH) and generates nothing for и-
+| OV-4 | tests/ov.test.ts › OV-4 generated vs attested |
+| OV-5 | tests/ov.test.ts › OV-5 the orthography switch writes the modern word in each cited orthography |
+| OV-6 | tests/ov.test.ts › OV-6 lossy letters are marked ? unless the etymology decides |
+| OV-7 | tests/ov.test.ts › OV-7 the IPA changes with the dialect and not with the orthography |
+| OV-8 | tests/ov.test.ts › OV-8 the stored choice is read and written in try/catch |
+| OV-9 | tests/ov-nav.test.ts › OV-9 every former top-level route is in a nav group under the same URL |
+| OV-9 | tests/ov-nav.test.ts › OV-9 the menus render as disclosure buttons and the keyboard rule wraps |
+| OV-10 | tests/ov-nav.test.ts › OV-10 every CP-1 block belongs to a tab |
+| OV-10 | tests/ov-nav.test.ts › OV-10 every card kind mounts its blocks under the tabs |

@@ -13,6 +13,7 @@ import type { CellForm, EpochParadigms, StemValue, WitnessMeta } from '../../cor
 import { useData } from '../composables/useData.ts'
 import { epochGrid, epochTabs, type GCell } from '../lib/epochGrid.ts'
 import { placedCells } from '../lib/ux.ts'
+import Spell from './Spell.vue'
 import { epochName, epochShort, fmtDate } from '../lib/format.ts'
 import { stemSample } from '../../core/morph-tables.ts'
 import { epochById } from '../../core/epochs.ts'
@@ -20,7 +21,7 @@ import AuthorBadge from './AuthorBadge.vue'
 import ClaimBadge from './ClaimBadge.vue'
 import EvidencePopover from './EvidencePopover.vue'
 import FormLegend from './FormLegend.vue'
-const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean; kind?: string }>()
+const props = defineProps<{ epochs?: EpochParadigms; loading?: boolean; spellings?: string[]; start?: string; witnesses?: WitnessMeta[]; sizes?: Record<string, number>; noLegend?: boolean; kind?: string; /** SPEC 63 OV-1: modern spelling of a historical one (the card's forms), so the cells show the baseline orthography */ modernOf?: (raw: string) => string | undefined }>()
 const emit = defineEmits<{ kwic: [raw: string] }>()
 const { corpus, ensureCorpus } = useData()
 if (!props.witnesses) ensureCorpus()   // cell examples index corpus.witnesses
@@ -106,7 +107,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                       <!-- attested: solid -->
                       <EvidencePopover v-for="f in c.att" :key="f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key}`" :label="`${f.raw}, ${c.key}`"
                         :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
-                        <span class="ef att"><strong :class="['lang', 'attested', { old: oldEp(f.raw) }]">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
+                        <span class="ef att"><strong :class="['lang', 'attested', { old: oldEp(f.raw) }]"><Spell v-if="modernOf?.(f.raw)" :w="modernOf(f.raw)!" :raw="f.raw" quiet /><template v-else>{{ f.raw }}</template></strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                           <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="f.amb && f.amb > 1" class="sb" :title="`токен міг стояти в ${f.amb} клітинках`">≈{{ f.amb }}</span>
                           <span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30): форма може не відбивати живу мову">ЦС</span>
                           <span v-if="ood(f)" class="sb" title="текст поза доменом моделі Stanza">модель поза доменом</span></span>
@@ -122,7 +123,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                       <div v-if="c.enc?.length" class="encrow small">
                         <EvidencePopover v-for="f in c.enc" :key="'e' + f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key} · енклітична форма`" :label="`${f.raw}, ${c.key}, енклітична форма`"
                           :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
-                          <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong :class="['lang', 'attested', { old: oldEp(f.raw) }]">{{ f.raw }}</strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
+                          <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong :class="['lang', 'attested', { old: oldEp(f.raw) }]"><Spell v-if="modernOf?.(f.raw)" :w="modernOf(f.raw)!" :raw="f.raw" quiet /><template v-else>{{ f.raw }}</template></strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                             <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30)">ЦС</span></span>
                         </EvidencePopover>
                       </div>

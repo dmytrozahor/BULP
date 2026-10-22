@@ -99,7 +99,6 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
     <p v-else-if="dict" class="sans small muted">Слово є у словнику, але жоден текст нашого корпусу його не засвідчує, тому частот, першої фіксації й прикладів немає — нічого не вигадано. Правила, виведення з написання й довідкові блоки нижче працюють без корпусу.</p>
     <p v-else-if="cv && cv[2] === 0" class="sans small muted">Слово засвідчене у пластових словниках (значення нижче); у корпусі текстів і в історичних словниках не трапляється.</p>
     <p v-else class="sans small muted">Слово засвідчене лише в словниках (заголовне слово або цитований відповідник); у корпусі текстів не трапляється, тому повної картки з частотами немає.</p>
-    <PlastSenses :word="word" />
     <AttSenses v-if="cv && cv[3].length" :word="word" :atts="cv[3]" />
     <IkavismChain v-if="row && base.length" :lemma="row[0]" :paradigm="base" />
     <p v-if="ex" class="sans small">Приклад: <RouterLink :to="textTo(ex.w, ex.loc)">«{{ ex.raw }}»</RouterLink> · {{ ex.loc }} · <RouterLink :to="witnessTo(ex.w)">{{ ex.w }}</RouterLink></p>
@@ -110,7 +109,9 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
       </ul>
       <p v-if="cv[2] > cv[3].length" class="sans small muted">Показано {{ cv[3].length }} з {{ cv[2] }} засвідчень.</p>
     </template>
-    <WitnessBlock id="lw-wit" :items="witItems" :unit="dict ? 'словникові джерела' : undefined" />
-    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" :f="row ? row[2] : 0" :stress="cv?.[4]?.s" />
+    <ThinCard :lemma="word" :spelling="spelling" :kwic="kwic" :dict-only="!!dict" :f="row ? row[2] : 0" :stress="cv?.[4]?.s">
+      <template #sources><WitnessBlock id="lw-wit" :items="witItems" :unit="dict ? 'словникові джерела' : undefined" /></template>
+      <template #meanings><PlastSenses :word="word" /></template>
+    </ThinCard>
   </template>
 </template>
