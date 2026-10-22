@@ -148,12 +148,14 @@ export function remapAlt<T extends { route: Route; opts: Option[] }>(r: T | unde
 }
 /** MM-14: a closed-class lemma has ONE etymon vowel, stated by ЕСУМ, and the ikavism step R10 (о, е > і) is only the reflex of THAT vowel. між < *medja «межа» (е): a token written with о
  *  (можь, GVL s.a. 6766 = a form of мужь / мочи) is never turned into між by о > і; it needs the е (межь, мѣжь) or the finished reflex (мижъ, між). */
-export const ETYMON_VOWEL: Record<string, { vowel: 'е'; quote: string; url: string }> = {
-  між: { vowel: 'е', quote: 'псл. *medji, *medjū, місц. в. одн. і дв. іменника *medja «межа»;', url: 'https://goroh.pp.ua/Етимологія/між' },
+export const ETYMON_VOWEL: Record<string, { vowel: 'е' | 'о'; /** the spelling letters that contradict the etymon vowel */ forbid: RegExp; /** the chain steps that would manufacture the lemma from such a token */ via: string[]; quote: string; url: string }> = {
+  між: { vowel: 'е', forbid: /о/, via: ['R10'], quote: 'псл. *medji, *medjū, місц. в. одн. і дв. іменника *medja «межа»;', url: 'https://goroh.pp.ua/Етимологія/між' },
+  // MM-24 (owner: «рік приконектився до ріці»): рѣци / рѣцѣ (loc. sg. of рѣка «river») was turned into the velar-stem masculine «рік» by R09 + R24r; the stem of рік «year» is рок-
+  рік: { vowel: 'о', forbid: /ѣ/, via: ['R24r'], quote: 'псл. rоkъ «термін, умовлений час», пов’язане чергуванням голосних з *rekti «ректи»; др. рокъ «вік; доля»', url: 'https://goroh.pp.ua/Етимологія/рік' },
 }
 export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: TypeCtx, r: T | undefined): T | undefined {
   if (!r) return r
-  const o = key(t.raw).includes('о') ? r.opts.filter(x => !(ETYMON_VOWEL[x.id] && x.cand.trace.includes('R10'))) : r.opts
+  const raw = key(t.raw), o = r.opts.filter(x => { const e = ETYMON_VOWEL[x.id]; return !(e && e.forbid.test(raw) && e.via.some(v => x.cand.trace.includes(v))) })
   return o.length === r.opts.length ? r : o.length ? { ...r, opts: o } : undefined
 }
 /** MM-20: a token that does not link whole and ends in a hyphenated clitic particle (прийми-ж, було-б, ходи-но) links through its HOST word (core/gal-folds.ts ORTH-PART-HYPH); VESUM decides first,

@@ -71,6 +71,7 @@ import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
 import IkavismChain from '../components/IkavismChain.vue'
 import DerivativesBlock from '../components/DerivativesBlock.vue'
+import DimLine from '../components/DimLine.vue'
 import WitnessBlock from '../components/WitnessBlock.vue'
 import DialectBlock from '../components/DialectBlock.vue'
 import DerivationSteps from '../components/DerivationSteps.vue'
@@ -216,6 +217,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <span v-else-if="!err" class="muted small sans">наголос: завантаження…</span>
         <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
       <p v-for="fc in headFeatures" :key="fc.rule" class="hl-line sans small" data-testid="lemma-feature"><span class="badge" :title="fc.cite.quote">{{ fc.feature }}</span> {{ fc.text }} <span class="muted">· {{ fc.rule }}</span></p>
+      <DimLine :lemma="card.lemma" />
       <p class="hl-line sans"><span class="muted">Перша фіксація: </span>
         <ClaimBadge v-if="first" :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${firstWho}`" />
         <ClaimBadge v-else :claim="card.first" /><template v-if="firstRu"> <RuBadge :flag="firstRu" /> <span class="small muted" data-testid="ru-first-note">перша фіксація з російського видання: {{ RU_TIP }}</span></template></p>

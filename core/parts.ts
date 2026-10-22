@@ -57,7 +57,7 @@ export interface IxManifest { format: 1; leaves: [string, number][] }
 
 // ── per-lemma sidecars ───────────────────────────────────────────────────────────────────────────
 export const LM_BUCKETS = 256
-export const LM_NAMES = ['etymology', 'cognates', 'senses', 'usage', 'loanlabels', 'heteronyms', 'phrases'] as const
+export const LM_NAMES = ['etymology', 'cognates', 'senses', 'usage', 'loanlabels', 'heteronyms', 'phrases', 'dim'] as const
 export type LmName = (typeof LM_NAMES)[number]
 /** the key a sidecar entry is filed under: the lemma (phrases: lower-cased lemma, heteronyms: heteronymKey of the spelling, passed in by the caller) */
 export const lmBucket = (k: string) => bucketOf(k, LM_BUCKETS)

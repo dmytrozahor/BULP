@@ -22,7 +22,7 @@ export const BLOCKS = {
   senses: ['SensesBlock'],
   phrasemes: ['PhrasePanel'],
   loan: ['LoanAdaptBlock'],
-  derivatives: ['DerivativesBlock'],              // похідні (DV-3)
+  derivatives: ['DerivativesBlock', 'DimLine'],              // похідні (DV-3)
   ipa: ['IpaRow'],
   senseTimeline: ['SenseEpochs'],                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
 } as const

@@ -15,6 +15,7 @@ import LoanChip from './LoanChip.vue'
 import LoanAdaptBlock from './LoanAdaptBlock.vue'
 import IpaRow from './IpaRow.vue'
 import DerivativesBlock from './DerivativesBlock.vue'
+import DimLine from './DimLine.vue'
 import DialectVariants from './DialectVariants.vue'
 import DeicticStructure from './DeicticStructure.vue'
 import HeteronymReadings from './HeteronymReadings.vue'
@@ -41,6 +42,7 @@ const on = (t: TabId) => !props.tab || props.tab === t
       info="IPA — не словникова вимова, а результат правил; кожне правило з цитатою всередині. Словниковий наголос (ukrainian-word-stress) береться з даних картки (CP-6), де збірка його знайшла.">
       <IpaRow :variants="variants" :lemma="w" />
     </Panel>
+    <DimLine v-if="on('forms')" :lemma="w" />
     <DerivativesBlock v-if="on('forms')" panel :lemma="w" />
     <DialectVariants v-if="on('spread')" :lemma="w" />
     <DeicticStructure v-if="on('forms')" :word="spelling" />

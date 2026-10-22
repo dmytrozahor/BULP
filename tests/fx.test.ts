@@ -773,3 +773,59 @@ describe('MM-22 «видова пара»: прийми → прийняти, wh
     expect(e.aspect!.partner).toEqual(['приймати']); expect(e.sources).toEqual([])
   })
 })
+
+// ───────────────────────── MM-23 diminutive / endearing / augmentative / intensive → base ─────────────────────────
+import { parseSumRel, parseWiktRel, addDim, type DimEntry } from '../core/dim-links.ts'
+import { writeDim } from '../pipelines/build-dim.ts'
+import { mkdtempSync, mkdirSync, writeFileSync as wf, readFileSync as rf } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+
+describe('MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source', () => {
+  it('СУМ glosses: «Зменш.-пестл. до тонкий» → dim-aff, «Пестл.», «Збільш.», «Підсил.», «Зменш.» and the spelled-out forms; a gloss that merely contains «до» is not a link', () => {
+    expect(parseSumRel('Зменш.-пестл. до тонкий.')).toEqual({ rel: 'dim-aff', base: 'тонкий' })
+    expect(parseSumRel('Зменшено-пестливе до хата')).toEqual({ rel: 'dim-aff', base: 'хата' })
+    expect(parseSumRel('Пестл. до рука')).toEqual({ rel: 'aff', base: 'рука' })
+    expect(parseSumRel('Зменш. до малий')).toEqual({ rel: 'dim', base: 'малий' })
+    expect(parseSumRel('Збільш. до здоровий')).toEqual({ rel: 'aug', base: 'здоровий' })
+    expect(parseSumRel('Підсил. до тонкий')).toEqual({ rel: 'int', base: 'тонкий' })
+    expect(parseSumRel('Те, що йде до тонкий')).toBeUndefined(); expect(parseSumRel('Той, хто повертається до дому')).toBeUndefined(); expect(parseSumRel('')).toBeUndefined()
+  })
+  it('en.wiktionary lines: «diminutive of …», «endearing diminutive of …», «augmentative of …», accents removed', () => {
+    expect(parseWiktRel('diminutive of тонки́й (tonkýj)')).toEqual({ rel: 'dim', base: 'тонкий' })
+    expect(parseWiktRel('endearing diminutive of хата (xáta)')).toEqual({ rel: 'dim-aff', base: 'хата' })
+    expect(parseWiktRel('augmentative of здоровий')).toEqual({ rel: 'aug', base: 'здоровий' }); expect(parseWiktRel('plural of хата')).toBeUndefined()
+  })
+  it('addDim stores the link under the derivative (with quote and locator) and the derivative under the base, once', () => {
+    const m = new Map<string, DimEntry>()
+    expect(addDim(m, 'тоненький', 'тонкий', 'dim-aff', 'sum11', 'Зменш.-пестл. до тонкий', 'т.9 с.1')).toBe(true); expect(addDim(m, 'тоненький', 'тонкий', 'dim-aff', 'sum11', 'x', 'y')).toBe(false)
+    addDim(m, 'тоненький', 'тонкий', 'dim', 'wikt', 'diminutive of тонкий', 'u'); addDim(m, 'тонесенький', 'тонкий', 'int', 'sum20', 'Підсил. до тонкий', '')
+    expect(m.get('тоненький')!.of!.map(o => o[2])).toEqual(['sum11', 'wikt']); expect(m.get('тонкий')!.ds!.map(d => d[0])).toEqual(['тоненький', 'тонесенький']); expect(addDim(m, 'a', 'a', 'dim', 'wikt', '', '')).toBe(false)
+  })
+  it('the build step: СУМ rows + kaikki lines → dim.json with the derivative and the base entries; counts per source; links outside the lexicon are dropped', async () => {
+    const root = mkdtempSync(join(tmpdir(), 'dim-')), pub = join(root, 'pub'); mkdirSync(join(root, 'data/work/se-parsed'), { recursive: true }); mkdirSync(join(root, 'data/raw/kaikki'), { recursive: true }); mkdirSync(pub)
+    wf(join(root, 'data/work/se-parsed/sum11.json'), JSON.stringify({ id: 'sum11', dict: 'sum11', rows: [['тоненький', { d: 'sum11', g: 'Зменш.-пестл. до тонкий', l: 'т.10 с.150' }], ['біленький', { d: 'sum11', g: 'Зменш.-пестл. до білий', l: 'т.1 с.1' }], ['зайвий', { d: 'sum11', g: 'Те, що до тонкий' }]] }))
+    wf(join(root, 'data/raw/kaikki/uk.jsonl'), [{ word: 'малесенький', senses: [{ glosses: ['diminutive of малий (malyj)'] }] }, { word: 'щось', senses: [{ glosses: ['diminutive of ніщо'] }] }].map(x => JSON.stringify(x)).join('\n') + '\n')
+    const r = await writeDim(root, pub, 'now', ['тонкий', 'тоненький', 'білий', 'малий'])
+    expect(r.sum).toBe(2); expect(r.wikt).toBe(1)
+    const f = JSON.parse(rf(join(pub, 'dim.json'), 'utf8')) as { entries: Record<string, DimEntry> }
+    expect(f.entries['тоненький']!.of![0]).toEqual(['тонкий', 'dim-aff', 'sum11', 'Зменш.-пестл. до тонкий', 'т.10 с.150']); expect(f.entries['тонкий']!.ds![0]).toEqual(['тоненький', 'dim-aff', 'sum11'])
+    expect(f.entries['малесенький']!.of![0]![2]).toBe('wikt'); expect(f.entries['щось']).toBeUndefined(); expect(f.entries['зайвий']).toBeUndefined()
+  })
+  it('the card: DimLine is mounted on the full card and on every thin kind (LemmaBlocks); the sidecar is an lm loader', () => {
+    const rdf = (p: string) => rf(p, 'utf8')
+    expect(rdf('src/views/WordView.vue')).toContain('<DimLine'); expect(rdf('src/components/LemmaBlocks.vue')).toContain('<DimLine'); expect(rdf('src/lib/dimData.ts')).toContain("lmLoad<DimFile>('dim'")
+  })
+})
+
+describe('MM-24 «рік приконектився до ріці що виглядає як ріка в історії»: рѣци / рѣцѣ belong to ріка, not to рік «year» (stem рок-)', () => {
+  const e24 = E({ ріка: [H('ріка', 'noun:inanim:f:v_naz')], рік: [H('рік', 'noun:inanim:m:v_naz')], році: [H('рік', 'noun:inanim:m:v_mis')], року: [H('рік', 'noun:inanim:m:v_rod')] })
+  const lem = (raw: string) => { const r = linkOptions(T({ raw }), e24); return r ? chooseLemma(r.opts, new Map([['рік', 20000], ['ріка', 10]]))?.lemma : undefined }
+  it('before: R09 + R24r made рѣци → ріки → рік (kievchr s.a. 1117–1200, 5 tokens in the live build); now рѣци / рѣцѣ / ріци go to ріка, whatever the frequency of рік', () => {
+    for (const raw of ['рѣци', 'рѣцѣ', 'рѣцѣ']) expect(lem(raw), raw).toBe('ріка')
+    expect(ETYMON_VOWEL['рік']!.quote).toContain('rоkъ'); expect(ETYMON_VOWEL['рік']!.quote).toContain('рокъ')
+  })
+  it('the forms of рік «year» keep their link: роцѣ → році, рокъ → рік, року', () => {
+    expect(lem('роцѣ')).toBe('рік'); expect(lem('року')).toBe('рік'); expect(lem('рокъ')).toBe('рік')
+  })
+})
