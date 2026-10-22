@@ -34,6 +34,8 @@ export const KINDS = {
   light: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
   dict: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
   uv: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
+  /** CV-4: a promoted unlinked group (≥ 2 vetted witnesses, no dictionary): the same view as `uv`, with the «засвідчене слово, немає в словниках» status */
+  att: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
   unlinked: ['src/components/UnlinkedSpelling.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
   archaic: ['src/views/ArchaicView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
   name: ['src/views/TorotCardView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
@@ -41,7 +43,7 @@ export const KINDS = {
   phrase: ['src/views/PhraseView.vue'],
 } as const
 export type KindId = keyof typeof KINDS
-export const KIND_ROUTE: Record<KindId, string> = { word: '/w/:lemma', form: '/f/:form', light: '/lw/:lemma (corpus)', dict: '/lw/:lemma (dictionary-only, DO)', uv: '/uv/:id', unlinked: '/f/:form (unlinked)', archaic: '/ar/:id', name: '/name/:id', orv: '/orv/:id', phrase: '/p/:id' }
+export const KIND_ROUTE: Record<KindId, string> = { word: '/w/:lemma', form: '/f/:form', light: '/lw/:lemma (corpus)', dict: '/lw/:lemma (dictionary-only, DO)', uv: '/uv/:id', att: '/uv/:id (attested-only, CV-4)', unlinked: '/f/:form (unlinked)', archaic: '/ar/:id', name: '/name/:id', orv: '/orv/:id', phrase: '/p/:id' }
 
 const row = (c: Partial<Record<BlockId, Cell>>, base: Cell = 'empty'): Record<BlockId, Cell> =>
   Object.fromEntries((Object.keys(BLOCKS) as BlockId[]).map(b => [b, c[b] ?? base])) as Record<BlockId, Cell>
@@ -55,6 +57,7 @@ export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
   light: row({ ...thin, ...se, stress: 'empty', witnesses: 'empty' }),
   dict: row({ ...thin, ...se, stress: 'empty' }),
   uv: row({ ...thin, ...se }),
+  att: row({ ...thin, ...se }),
   unlinked: row({ ...thin, ...se }),
   archaic: row({ ...thin, ...se }),
   name: row({ ...thin, ...se }),

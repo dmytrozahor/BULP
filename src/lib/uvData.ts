@@ -12,19 +12,19 @@ export const fetchUv: UvFetch = path => {
 }
 /** the list of deeper prefix leaves (absent = no first-two-letters shard was split) */
 const splitOf = async (get: UvFetch): Promise<UvSplit | null> => (await get(UV_SPLIT_FILE)) as UvSplit | null
-export interface UvHit { group: string; head: string; matched: string; exact: boolean }
+export interface UvHit { group: string; head: string; matched: string; exact: boolean; /** CV-4: promoted to «засвідчене слово, немає в словниках» */ att?: true }
 
 /** Unlinked spellings whose key equals / starts with the query (≥ 2 letters), one hit per group, exact first, then the shorter spelling. Ranked by the caller AFTER verified cards. */
 export async function uvSearch(q: string, limit = 30, get: UvFetch = fetchUv): Promise<UvHit[]> {
   const qk = key(q.trim()); if ([...qk].length < UV_MIN_QUERY) return []
   const split = await splitOf(get), shards = (await Promise.all(uvLeavesFor(qk, split).map(f => get(`p/${f}`)))) as (UvPrefixShard | null)[]
   const hits = new Map<string, UvHit & { len: number }>()
-  for (const sh of shards) for (const [sk, [group, head]] of Object.entries(sh ?? {})) {
+  for (const sh of shards) for (const [sk, [group, head, att]] of Object.entries(sh ?? {})) {
     if (!sk.startsWith(qk)) continue
-    const h = { group, head, matched: sk, exact: sk === qk, len: sk.length }, cur = hits.get(group)
+    const h = { group, head, matched: sk, exact: sk === qk, len: sk.length, ...(att ? { att: true as const } : {}) }, cur = hits.get(group)
     if (!cur || Number(h.exact) > Number(cur.exact) || (h.exact === cur.exact && h.len < cur.len)) hits.set(group, h)
   }
-  return [...hits.values()].sort((a, b) => Number(b.exact) - Number(a.exact) || a.len - b.len || a.head.localeCompare(b.head, 'uk')).slice(0, limit)
+  return [...hits.values()].sort((a, b) => Number(b.exact) - Number(a.exact) || Number(!!b.att) - Number(!!a.att) || a.len - b.len || a.head.localeCompare(b.head, 'uk')).slice(0, limit)
 }
 export async function loadUvGroup(id: string, get: UvFetch = fetchUv): Promise<UvGroup | undefined> {
   const sh = (await get(`g/${uvShard(id)}`)) as Record<string, UvGroup> | null

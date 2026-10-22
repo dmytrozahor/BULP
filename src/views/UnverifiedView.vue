@@ -5,7 +5,8 @@
  */
 import { computed, ref, shallowRef, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
-import { uvOccurrences, uvStatus, type UvGroup } from '../../core/uv.ts'
+import { uvAttested, uvOccurrences, uvStatus, type UvGroup } from '../../core/uv.ts'
+import { uvAttestedLine } from '../../core/uv-promote.ts'
 import { useData } from '../composables/useData.ts'
 import { deriveWithSteps } from '../lib/derive.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
@@ -43,6 +44,13 @@ const cands = computed(() => {
   }
   return out.slice(0, 12)
 })
+/** CV-4: an attested-only card (≥ 2 vetted witnesses, no dictionary): dates and regions of the witnesses behind it (a witness region, not a dialect claim) */
+const att = computed(() => !!g.value && uvAttested(g.value) && !g.value[4])
+const attFacts = computed(() => {
+  const ws = [...new Set(occs.value.map(o => o.w))].map(wit).filter((w): w is NonNullable<ReturnType<typeof wit>> => !!w)
+  const ys = ws.flatMap(w => w.date), regions = [...new Set(ws.map(w => w.region).filter((r): r is string => !!r))]
+  return { dates: ys.length ? fmtDate([Math.min(...ys), Math.max(...ys)]) : '', regions }
+})
 const ocr = computed(() => occs.value.some(o => /\bOCR\b/i.test(wit(o.w)?.title ?? '')))
 const epochs = computed(() => [...new Set(occs.value.flatMap(o => { const e = wit(o.w)?.epochShev; return e && isKnown(e) ? e.value.epochs.map(epochShort) : [] }))])
 /** BL-15: the Proto-Slavic pivot of a candidate that is a lexicon lemma */
@@ -61,7 +69,7 @@ watch(cands, async cs => {
     <header class="wordhead headline compact">
       <h1 class="lemma">{{ g[0] }}</h1>
       <p class="hl-line sans">
-        <span class="derived-badge" :title="status.confirmed ? 'Лема TOROT у кількох пам’ятках; жоден словник слова не містить, ВЕСУМ його не знає' : 'Жоден словник не містить слова, ВЕСУМ його не знає: це група написань із текстів, не підтверджена лема'">{{ status.label }}</span>
+        <span class="derived-badge" data-testid="uv-status" :title="att ? 'Засвідчено кількома вичитаними пам’ятками; жоден словник слова не містить, ВЕСУМ його не знає; частину мови не визначено' : status.confirmed ? 'Лема TOROT у кількох пам’ятках; жоден словник слова не містить, ВЕСУМ його не знає' : 'Жоден словник не містить слова, ВЕСУМ його не знає: це група написань із текстів, не підтверджена лема'">{{ status.label }}</span>
         <span class="muted"> зустрічається </span>{{ fmtNum(g[1]) }}<span class="muted"> разів у </span>{{ fmtNum(g[2]) }}<span class="muted"> пам’ятках</span>
         <template v-if="epochs.length"><span class="muted"> · епохи: </span>{{ epochs.join(', ') }}</template>
       </p>
@@ -69,7 +77,8 @@ watch(cands, async cs => {
     <section class="card sans small" aria-label="Написання">
       <strong>Написання в тексті</strong> <span class="muted">(згруповані за ключем згортання: ѣ=е, ы=и, оу=у, ъ/ь опущені; ключ «{{ id }}»)</span>
       <p><RouterLink v-for="[raw, n] in g[3]" :key="raw" :to="formTo(raw)" class="chip" style="text-decoration:none">{{ raw }} ×{{ fmtNum(n) }}</RouterLink></p>
-      <p v-if="status.confirmed" class="muted">Слово засвідчене лемою TOROT «{{ g[4] }}» у кількох пам’ятках (MM-4). Словникової статті немає ні у ВЕСУМ, ні в r2u, тому значення й частина мови — лише з розмітки TOROT, а сучасний відповідник невідомий.</p>
+      <p v-if="att" class="muted" data-testid="att-line"><b>{{ uvAttestedLine(g[2]) }}.</b> Частину мови не визначено: її не підтверджує ні правило, ні контекст.<template v-if="attFacts.dates"> Роки пам’яток: {{ attFacts.dates }}.</template><template v-if="attFacts.regions.length"> Регіони пам’яток: {{ attFacts.regions.join(', ') }}.</template></p>
+      <p v-else-if="status.confirmed" class="muted">Слово засвідчене лемою TOROT «{{ g[4] }}» у кількох пам’ятках (MM-4). Словникової статті немає ні у ВЕСУМ, ні в r2u, тому значення й частина мови — лише з розмітки TOROT, а сучасний відповідник невідомий.</p>
       <p v-else class="muted">Це не словникова стаття і не підтверджена лема: леми, значення й частини мови немає в жодному джерелі.</p>
       <p v-if="ocr" class="muted">Серед пам’яток є OCR-скан: розпізнавання могло спотворити слово.</p>
     </section>

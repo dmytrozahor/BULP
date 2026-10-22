@@ -284,6 +284,10 @@ function writeTc() {
 // ── wit / boot / pg ──────────────────────────────────────────────────────────────────────────────
 /** SPEC 63 DO-5: the two coverage counters of boot.json — «з засвідченнями» (full cards + every other card a corpus text attests) and «лише словник» (cardindex `ld`) */
 export const coverageCounts = (nFull: number, ci?: Parameters<typeof cardMap>[0]): { nAttested: number; nDictOnly: number } => ({ nAttested: nFull + (ci?.lw.length ?? 0) + (ci?.ar.length ?? 0), nDictOnly: ci?.ld?.length ?? 0 })
+/** SPEC 63 CV-4: attested-only cards («засвідчене слово, немає в словниках») counted by data:unlinked (uv/meta.json); absent file / zero = the field is left out */
+export const uvAttCount = (dir: string): { nUvAtt?: number } => {
+  try { const m = JSON.parse(readFileSync(`${dir}/uv/meta.json`, 'utf8')) as { attested?: number }; return m.attested ? { nUvAtt: m.attested } : {} } catch { return {} }
+}
 /** SPEC 63 GG-5: the vocab-only token total, apart from N (pipelines/vocab-n.ts reads the file headers); absent sources give 0 */
 export const vocabCounts = (work: string): { nVocab: number; vocabSources: [string, number][]; vocabV: number } => { const v = vocabTotals(work); return { vocabV: VOCAB_V, nVocab: v.nVocab, vocabSources: v.sources.map(s => [s.source, s.tokens] as [string, number]) } }
 function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters<typeof cardMap>[0]) {
@@ -293,7 +297,7 @@ function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters
   let worst = 0
   parts.forEach((p, b) => { if (Object.keys(p).length) { worst = Math.max(worst, gz(p)); out(`wit/${b}.json`, p) } })
   const boot: BootFile = {
-    format: 1, generated: corpus.generated, N: corpus.N, linked: corpus.linked, unresolved: corpus.unresolved, nLemmas: cards.length, ...coverageCounts(cards.length, ci), nWitnesses: corpus.witnesses.length, lemmaPage: LEMMA_PAGE,
+    format: 1, generated: corpus.generated, N: corpus.N, linked: corpus.linked, unresolved: corpus.unresolved, nLemmas: cards.length, ...coverageCounts(cards.length, ci), ...uvAttCount(DATA), nWitnesses: corpus.witnesses.length, lemmaPage: LEMMA_PAGE,
     ...vocabCounts(process.env['PARTS_WORK'] ?? 'data/work'),
     epochSizes: corpus.epochSizes, centurySizes: corpus.centurySizes, rusynStatus: corpus.rusynStatus, regions: corpus.regions, authors: corpus.authors,
   }

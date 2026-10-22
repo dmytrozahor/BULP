@@ -82,6 +82,8 @@ export interface BootFile {
   nLemmas: number; nWitnesses: number; lemmaPage: number
   /** SPEC 63 DO-5: «з засвідченнями» = nAttested (full lexicon cards + corpus-attested light cards), «лише словник» = nDictOnly; nLemmas stays the number of full lexicon cards (the paged lemma list) */
   nAttested?: number; nDictOnly?: number
+  /** SPEC 63 CV-4: «засвідчене слово, немає в словниках» cards (uv/ groups promoted by core/uv-promote.ts); not in nAttested / nLemmas */
+  nUvAtt?: number
   /** SPEC 63 GG-5: tokens of the vocab-only sources (licence: vocabulary and counts, no KWIC), NEVER part of `N`; `vocabSources` = [source, tokens] */
   nVocab?: number; vocabSources?: [string, number][]; /** GG-8: >= 2 = counts made by the bundle-once ingest (core/vocab-view.ts) */ vocabV?: number
   epochSizes: Record<string, number>; centurySizes: Record<string, number>

@@ -156,7 +156,7 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
       <li v-for="h in uvHits" :key="h.group">
         <RouterLink :to="`/uv/${encodeURIComponent(h.group)}`">
           <span class="lem">{{ h.head }}</span>
-          <span class="badge">неперевірена</span>
+          <span class="badge" :title="h.att ? 'Засвідчено кількома вичитаними пам’ятками; у словниках немає' : undefined">{{ h.att ? 'засвідчене слово' : 'неперевірена' }}</span>
           <span v-if="h.matched !== h.head.toLowerCase()" class="small sans">знайдено: «{{ h.matched }}»</span>
         </RouterLink>
       </li>

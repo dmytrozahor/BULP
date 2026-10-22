@@ -492,7 +492,22 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CV-5 | tests/uv.test.ts › CV-5 риночку: both analyses get a card with all analyses listed, the context pick is stored, the example is kept |
 | CV-5 | tests/uv.test.ts › CV-5 LightWordView lists all analyses and mounts ThinCard (KWIC, dialect, derivation, senses, etymology, cognates); UnverifiedView mounts it too |
 | CV-5 | tests/uv.test.ts › CV-5 both VESUM analyses of риночку (риночок v_mis, риночка v_zna) open a card |
-| CV-4 | manual — pending: CV-4 (unlinked spellings as «неперевірена лема» cards, searchable) is being implemented; the test row replaces this line when it lands |
+| CV-4 | tests/cv4.test.ts › CV-4 two vetted witnesses promote the group; the verdict names the witnesses behind the card |
+| CV-4 | tests/cv4.test.ts › CV-4 one witness does not promote |
+| CV-4 | tests/cv4.test.ts › CV-4 gated OCR only (OQ flag) does not promote; OCR that passes OQ counts; a dictionary witness sends the word to the DO path |
+| CV-4 | tests/cv4.test.ts › CV-4 OCR-garbage patterns do not promote: mixed case, letter runs, consonant runs, no vowel, edge marks, hyphen stubs, over-long runs, Serbian letters |
+| CV-4 | tests/cv4.test.ts › CV-4 a name (capitalised everywhere) does not promote; a word seen once in lower case does |
+| CV-4 | tests/cv4.test.ts › CV-4 a line-break fragment (joins a neighbour into a known word in half of its occurrences) and a word shorter than 3 letters do not promote |
+| CV-4 | tests/cv4.test.ts › CV-4 a garbage VARIANT supplies no witness: the group needs two witnesses from its good spellings |
+| CV-4 | tests/cv4.test.ts › CV-4 a spelling that a cited fold turns into a known form is a variant of a known word, not a new word |
+| CV-4 | tests/cv4.test.ts › CV-4 a promoted group carries the marker, keeps a KWIC line of every vetted witness (gated OCR first in the file does not crowd it out) and is read as attested |
+| CV-4 | tests/cv4.test.ts › CV-4 without a promote callback nothing changes (old data and the plain scan stay «неперевірена лема») |
+| CV-4 | tests/cv4.test.ts › CV-4 the status line is «засвідчено N пам’ятками, у словниках немає» |
+| CV-4 | tests/cv4.test.ts › CV-4 thin-card budget: a promoted group with 12 spellings and 8 witnesses stays under 700 bytes |
+| CV-4 | tests/cv4.test.ts › CV-4 search marks a promoted spelling (att) and lists it before a plain one of the same length class |
+| CV-4 | tests/cv4.test.ts › CV-4 card-parity: the `att` kind has the row of `uv`, mounts the same view and the shared ThinCard / LemmaBlocks, and has its own route label |
+| CV-4 | tests/cv4.test.ts › CV-4 the view prints the status line (att-line), the witnesses’ dates and regions, and no POS claim |
+| CV-4 | tests/cv4.test.ts › CV-4 the build wires the rule: witnesses from corpus.json, the join test against known forms, the folds, meta.json with counts per century and region |
 | PF-1 | tests/parts.test.ts › PF-1 every key lives in exactly one leaf, found by ixLeaf from the manifest alone |
 | PF-1 | tests/parts.test.ts › PF-1 searchRemote returns what the in-memory search() returns for lemma / form / paradigm hits, reading only prefix shards |
 | PF-1 | tests/parts.test.ts › PF-1 shards split deeper than 2 letters when they are over the limit, never past IX_MAX |
