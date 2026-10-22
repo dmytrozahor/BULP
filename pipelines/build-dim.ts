@@ -3,7 +3,8 @@
  * Sources: the parsed СУМ-11 / СУМ-20 glosses (data/work/se-parsed/<dict>.json, written by pipelines/sum-import.ts: the gloss already holds «Зменш.-пестл. до тонкий», the row holds volume / page)
  * and the en.wiktionary sense lines of the kaikki dump (data/raw/kaikki/uk.jsonl). A link is kept when the derivative or the base is a card of the lexicon.
  */
-import { createReadStream, existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createReadStream, existsSync, readdirSync, readFileSync } from 'node:fs'
+import { writeJsonAtomic } from './robust.ts'
 import { createInterface } from 'node:readline'
 import { resolve } from 'node:path'
 import { addDim, parseSumRel, parseWiktRel, type DimEntry, type DimFile, type DimSrcId } from '../core/dim-links.ts'
@@ -55,6 +56,6 @@ export async function writeDim(root: string, pub: string, generated: string, lem
   const s = sumLinks(root, keep, into), w = await wiktLinks(resolve(root, 'data/raw/kaikki/uk.jsonl'), keep, into)
   const entries = Object.fromEntries([...into].sort((a, b) => a[0].localeCompare(b[0], 'uk')))
   const file: DimFile = { format: 1, generated, entries }
-  writeFileSync(resolve(pub, 'dim.json'), JSON.stringify(file))
+  writeJsonAtomic(resolve(pub, 'dim.json'), JSON.stringify(file))
   return { derivatives: [...into.values()].filter(e => e.of).length, bases: [...into.values()].filter(e => e.ds).length, sum: s.links, wikt: w.links }
 }
