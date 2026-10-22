@@ -23,4 +23,9 @@ export const ZHEL_FOLDS: Fold[] = [
   { id: 'ORTH-ZHEL-JE', era: ['желехівка'], branch: true,
     cite: W('писано закінчення є відповідно до наддніпрянського я: зїлє, житє, знанє', 'final -є → -я; after a soft consonant also the geminate (знанє → знання)'),
     apply: w => /[нлтдсзцчшжр]є$/.test(w) ? w.replace(/([нлтдсзцчшжр])є$/, '$1$1я') : w.replace(/є$/, 'я') },
+  // MM-16c: the same statement read for the case endings of those nouns (бажанєм = бажанням, 71 tokens in Франко 1893 / 1902 / 1906). The quote speaks of «закінчення є» in general; the extension to -єм / -єми / -єх is
+  // OURS (the page lists only nominatives) and therefore branches: VESUM must list the geminate form. -ню / -нї (dative, locative) are NOT folded: no source states how Желехівка wrote them.
+  { id: 'ORTH-ZHEL-JE-OBL', era: ['желехівка'], branch: true,
+    cite: W('писано закінчення є відповідно до наддніпрянського я: зїлє, житє, знанє', 'extension to the endings -єм, -єми, -єх (бажанєм → бажанням): not listed on the page, applied by analogy, VESUM decides'),
+    apply: R(/([нлтдсзцчшжр])є(м|ми|х)$/, '$1$1я$2') },
 ]

@@ -641,3 +641,27 @@ describe('MM-16c «я не бачу аби фіксувалася галицьк
     expect(featureChips(['ORTH-ZHEL-JE'], { orth: 'желехівка', authorRegion: 'Галичина' })[0]!.qualifier).toBe('galician')
   })
 })
+
+describe('MM-17 «Ꙗрославъ має бути пов’язано з Ярослав альтернативне написання.jpg»: the Kyiv Chronicle’s Cyrillic ӕ (U+04D5) is the iotated a (N07), so the name cards link to the modern name', () => {
+  const e17 = E({ ярослав: [H('Ярослав', 'noun:anim:m:v_naz:prop:fname'), H('Ярослав', 'noun:inanim:m:v_naz:prop:geo')], як: [H('як', 'adv')], яко: [H('яко', 'conj:subord')] })
+  it('ӕрославъ / Ӕрослава / ꙗрославъ derive to ярослав; a common word (ꙗко, ӕко) to яко by the same fold', () => {
+    for (const raw of ['ӕрославъ', 'Ӕрославъ', 'ꙗрославъ', 'Ꙗрославъ', 'Ӕрослава']) expect(deriveRaw(raw, { oldI: true }).candidates.map(c => c.form).some(f => f.startsWith('ярослав')), raw).toBe(true)
+    for (const raw of ['ꙗко', 'ӕко']) expect(deriveRaw(raw, { oldI: true }).candidates.map(c => c.form), raw).toContain('яко')
+  })
+  it('the name card: the Stanza lemma Ӕрославъ (PROPN gate) links to the VESUM proper name Ярослав (this is what fills «сучасна форма»)', () => {
+    const r = linkOptions(T({ raw: 'Ӕрославъ', stanza: 'Ӕрославъ', gate: 'U:PROPN' }), e17)
+    expect(r && r.opts.some(o => o.lemma === 'Ярослав' && /:prop\b/.test(o.hit.tags))).toBe(true)
+  })
+})
+
+describe('MM-16c real case «бажанєм» (71 tokens, Франко 1893 / 1902 / 1906, Львів, Желехівка): the oblique -єм links to бажання', () => {
+  it('бажанєм → бажанням, бажанєми → бажаннями, знанєх → знаннях by ORTH-ZHEL-JE-OBL (a branching fold: VESUM decides)', () => {
+    for (const [a, b] of [['бажанєм', 'бажанням'], ['бажанєми', 'бажаннями'], ['знанєх', 'знаннях']] as [string, string][]) expect(foldRaw(a, 'желехівка').map(c => c.form), a).toContain(b)
+    expect(foldRaw('бажанєм', 'желехівка').some(c => c.trace.includes('ORTH-ZHEL-JE-OBL'))).toBe(true)
+  })
+  it('the token links to бажання through the lemma бажання (VESUM бажання noun:inanim:p:v_oru?) and carries the Galician chip for Франко', () => {
+    const e = E({ бажанням: [H('бажання', 'noun:inanim:n:v_oru')] }), r = linkOptions(T({ raw: 'бажанєм', lang: 'uk', oldI: false, orth: 'желехівка' }), e)
+    expect(r && chooseLemma(r.opts, new Map())?.lemma).toBe('бажання')
+    expect(featureChips(['ORTH-ZHEL-JE-OBL'], { orth: 'желехівка', authorRegion: 'Галичина', edition: 'Львів 1893' })[0]!.qualifier).toBe('galician')
+  })
+})
