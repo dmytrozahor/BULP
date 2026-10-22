@@ -1,6 +1,6 @@
 /** SPEC 63 LB-5: the words of the «Мітки» block, as pure functions (tested; the components only lay them out). Every label is value + method + evidence. */
 import {
-  CHECKED_REGISTER, classUk, HOW, KIND_UK, REG_SRC_UK, TH, TYPE_SRC_UK, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk, regAbbr, regUk,
+  CHECKED_REGISTER, classUk, HOW, HOW_SUM, KIND_UK, REG_SRC_UK, TH, TYPE_SRC_UK, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk, regAbbr, regUk,
   type DialectResult, type LbEntry, type RegItem, type TypeItem,
 } from '../../core/labels.ts'
 import { DICT_LABEL_TABLES, tableById, type DictHit } from '../../core/dict-labels.ts'
@@ -16,7 +16,7 @@ export function hitView(h: DictHit): HitView {
   return {
     dict: t?.short ?? (h.t === 'claim' ? 'ЕУМ та словники діалектів (цитата в картці)' : h.t), abbr: h.a,
     meaning: row?.meaning ?? (h.t === 'claim' ? h.q : ''), list: t?.list ?? h.u, quote: h.q, url: h.u,
-    area: h.v ? areaUk(h.v) : h.place ?? (h.g ? DIALECTS[h.g] ?? h.g : ''), group: grp.join(', '), place: !!h.p, variant: !!h.variant, ...(h.w ? { word: h.w } : {}), ...(h.gq ? { gov: h.gq } : {}),
+    area: h.v && h.kind === 'area' ? areaUk(h.v) : h.place ?? (h.g ? DIALECTS[h.g] ?? h.g : ''), group: grp.join(', '), place: !!h.p, variant: !!h.variant, ...(h.w ? { word: h.w } : {}), ...(h.gq ? { gov: h.gq } : {}),
   }
 }
 
@@ -27,12 +27,13 @@ export function dialectHeadline(d: DialectResult, regionName: (code: string) => 
     const areas = [...new Set([...(d.areas ?? []).map(areaUk), ...hv.filter(h => !h.place && h.area).map(h => h.area), ...hv.filter(h => h.place).map(h => h.area)])].filter(Boolean)
     const groups = (d.groups ?? []).map(g => DIALECTS[g] ?? g)
     if (d.strict === false) return `словник записав слово в: ${areas.slice(0, 4).join(', ')}${areas.length > 4 ? '…' : ''}`
-    return `діалектне за словником${areas.length ? ': ' + areas.slice(0, 4).join(', ') + (areas.length > 4 ? '…' : '') : ' (область не названо)'}${groups.length ? ` · група говорів: ${groups.slice(0, 3).join(', ')}` : ''}`
+    return `діалектне за словником${areas.length ? ': ' + areas.slice(0, 4).join(', ') + (areas.length > 4 ? '…' : '') : ' (регіон не вказано)'}${groups.length ? ` · група говорів: ${groups.slice(0, 3).join(', ')}` : ''}`
   }
   if (d.c === 'corpus' && d.corp?.top) {
     const t = d.corp.top
     return `засвідчено переважно в пам’ятках з ${regionName(t.code)} (LR ${t.lr.toFixed(1)}, G² ${t.g2.toFixed(1)})`
   }
+  if (d.c === 'general' && d.sub === 'sum') return `загальновживане за словником: ${d.sumNorm!.map(x => `${x.d === 'sum11' ? 'СУМ-11' : x.d === 'sum20' ? 'СУМ-20' : x.d}, ${x.n} ${x.n === 1 ? 'значення' : 'значень'}`).join('; ')} — жодне з них не має позначки діал., зах., розм., заст. тощо${d.corp ? `; у корпусі лише ${d.corp.f} вживань (для порівняння регіонів замало)` : '; корпус не містить засвідчень'}`
   if (d.c === 'general') return `загальновживане: засвідчено в ${d.corp!.att} з ${d.corp!.nReg} регіонів (DP ${d.corp!.dp.toFixed(2)})`
   return `недостатньо даних: ${d.need ?? ''}`
 }
@@ -40,7 +41,7 @@ export function dialectHeadline(d: DialectResult, regionName: (code: string) => 
 export function dialectHow(d: DialectResult): string {
   const base = d.c === 'dict' && d.strict === false
     ? 'Словник не називає слово діалектним, а лише вказує, де його записали (повіт чи губернія). Це не діалектна мітка.'
-    : HOW[d.c]
+    : d.c === 'general' && d.sub === 'sum' ? HOW_SUM : HOW[d.c]
   return `${classUk(d)}. ${base} Детально: «${METHODS_TITLE}».`
 }
 

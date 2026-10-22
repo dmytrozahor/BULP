@@ -19,8 +19,8 @@ import { lk } from '../core/cv.ts'
 import { fold } from '../core/orthography.ts'
 import { seBucket } from '../core/parts.ts'
 import { unpackCore } from '../core/pack.ts'
-import { assembleEntry, CLASS_UK, dialectOf, TH, type LbEntry, type RegionCount, type Thresholds } from '../core/labels.ts'
-import { DICT_LABEL_TABLES, scanArticle, scanBracketed, tableOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
+import { assembleEntry, CLASS_UK, SUM_NONRESTRICTIVE, SUM_NORM_UK, dialectOf, TH, type LbEntry, type RegionCount, type Thresholds } from '../core/labels.ts'
+import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tableOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
 import { nodesOf, plainOf, parseCell, r2uDictById, rowUrl } from './r2u.ts'
 import { tokenRaw } from './ingest-r2u.ts'
 import { swapDir, writeJsonAtomic } from './robust.ts'
@@ -79,6 +79,8 @@ export interface Stats {
   register: { withLabel: number; total: number; bySrc: Record<string, number> }
   type: { total: number; withWordType: number }
   sense: { rows: number; labelled: number }
+  /** LB-8: lemmas per label of the sources that are not r2u dumps (СУМ-11, СУМ-20, en/uk.Вікісловник): «<table id>: <label>» → lemmas; plain «діал.» rows without a table as «<source>: діал.» */
+  src: Record<string, number>
   /** class counts of the corpus cards under other thresholds (a sensitivity check, not what the cards use) */
   alt: { name: string; cover: number; total: number }[]
 }
@@ -96,7 +98,7 @@ export function main(): Stats {
   const usageFile = readJson<{ lemmas: Record<string, [string, string, string][]> }>(`${PUB}/usage.json`)
   const usage = new Map(Object.entries(usageFile?.lemmas ?? {}).map(([k, v]) => [lk(k), v]))
   const loan = readJson<{ labels: Record<string, [string, string]> }>(`${PUB}/loanlabels.json`)
-  const seFile = readJson<Record<string, { rows: { d: string; n?: number; lb?: string[] }[] }>>(resolve(ROOT, 'data/work/se.json'))
+  const seFile = readJson<Record<string, { rows: { d: string; n?: number; lb?: string[]; g?: string; u?: string; l?: string }[] }>>(resolve(ROOT, 'data/work/se.json'))
   // witness-region tables from the detail shards
   const byRegion = new Map<string, RegionCount[]>()
   const lexDir = `${PUB}/lex`
@@ -118,12 +120,25 @@ export function main(): Stats {
   console.log(`labels: r2u scanned (${Object.entries(scan.per).map(([s, p]) => `${s} ${p.articles} статей / ${p.labelled} з позначкою / ${p.hits} позначок / ${p.lemmas} лем`).join('; ')})`)
 
   const entries = new Map<string, LbEntry>()
-  const st: Stats = { full: {}, fullTotal: 0, all: {}, allTotal: 0, register: { withLabel: 0, total: 0, bySrc: {} }, type: { total: 0, withWordType: 0 }, sense: { rows: 0, labelled: 0 }, alt: ALT.map(a => ({ name: a.name, cover: 0, total: 0 })) }
-  const seRows = (k: string) => (seFile?.[k]?.rows ?? []).filter(r => r.lb?.length).map(r => ({ n: r.n, d: r.d, lb: r.lb! }))
+  const st: Stats = { full: {}, fullTotal: 0, all: {}, allTotal: 0, register: { withLabel: 0, total: 0, bySrc: {} }, type: { total: 0, withWordType: 0 }, sense: { rows: 0, labelled: 0 }, src: {}, alt: ALT.map(a => ({ name: a.name, cover: 0, total: 0 })) }
+  const seRows = (k: string) => (seFile?.[k]?.rows ?? []).filter(r => r.lb?.length).map(r => ({ n: r.n, d: r.d, lb: r.lb!, ...(r.g ? { g: r.g } : {}), ...(r.u ? { u: r.u } : {}) }))
+  /** LB-9: the lemma's headword in СУМ-11 / СУМ-20 (one entry per dictionary; restricted = a sense carries a label other than the non-restrictive ones) */
+  const sumRows = (k: string) => {
+    const by = new Map<string, { d: string; n: number; restricted: boolean; u?: string; l?: string }>()
+    for (const r of seFile?.[k]?.rows ?? []) {
+      if (r.d !== 'sum11' && r.d !== 'sum20') continue
+      const x = by.get(r.d) ?? by.set(r.d, { d: r.d, n: 0, restricted: false }).get(r.d)!
+      x.n++; if ((r.lb ?? []).some(l => !SUM_NONRESTRICTIVE.has(l.trim().toLowerCase()))) x.restricted = true
+      if (!x.u && r.u) x.u = r.u; if (!x.l && r.l) x.l = r.l
+    }
+    return [...by.values()]
+  }
   const count = (e: LbEntry, full: boolean) => {
-    st.allTotal++; bump(st.all, e.d.c); st.register.total++; if (e.r.length) { st.register.withLabel++; for (const s of new Set(e.r.map(r => r[1]))) bump(st.register.bySrc, s) }
+    st.allTotal++; bump(st.all, e.d.c); if (e.d.sub === 'sum') bump(st.all, 'general-sum'); st.register.total++; if (e.r.length) { st.register.withLabel++; for (const s of new Set(e.r.map(r => r[1]))) bump(st.register.bySrc, s) }
     st.type.total++; if (e.t.length) st.type.withWordType++
-    if (full) { st.fullTotal++; bump(st.full, e.d.c); if (e.d.c === 'dict') bump(st.full, e.d.strict ? 'dict-strict' : 'dict-place') }
+    for (const h of e.d.dict ?? []) if (EXTRA_LABEL_TABLES.some(t => t.id === h.t)) bump(st.src, `${h.t}: ${h.a}`)
+    for (const [s] of e.d.plain ?? []) bump(st.src, `${s === 'w' ? 'uk.Вікісловник' : s === 'k' ? 'en.Вікісловник' : 'СУМ'}: діал. (регіон не вказано)`)
+    if (full) { st.fullTotal++; bump(st.full, e.d.c); if (e.d.sub === 'sum') bump(st.full, 'general-sum'); if (e.d.c === 'dict') bump(st.full, e.d.strict ? 'dict-strict' : 'dict-place') }
     if (e.d.c === 'dict') bump(st.all, e.d.strict ? 'dict-strict' : 'dict-place')
   }
   for (const c of cards) {
@@ -136,7 +151,7 @@ export function main(): Stats {
     const prop = c.claims.proper as { value: unknown; evidence: { quote: string; locator: string }[] } | undefined
     const cs = c.claims.origin as { value: unknown; evidence: { quote: string; locator: string }[] }
     const e = assembleEntry({
-      by: byRegion.get(k), dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], tagCount: tc, nForms: c.paradigm.length, se: seRows(k), pos: c.pos, paradigmKind: c.paradigmKind,
+      by: byRegion.get(k), dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], tagCount: tc, nForms: c.paradigm.length, se: seRows(k), pos: c.pos, paradigmKind: c.paradigmKind, lemma: c.lemma, sum: sumRows(k),
       tagLine: c.paradigm[0]?.tags, kind: 'full',
       ...(prop && prop.value !== 'unknown' && prop.evidence[0] ? { proper: { kind: String(prop.value), quote: prop.evidence[0].quote, locator: prop.evidence[0].locator } } : {}),
       ...(cs.value === 'church_slavonic' && cs.evidence[0] ? { cs: { quote: cs.evidence[0].quote, locator: cs.evidence[0].locator } } : {}),
@@ -148,7 +163,7 @@ export function main(): Stats {
   }
   for (const [k, tags] of cvTags) {
     if (entries.has(k)) continue
-    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), tagLine: tags, kind: 'dict', ...(loan?.labels[k] ? { loan: loan.labels[k]! } : {}) })
+    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), sum: sumRows(k), lemma: k, tagLine: tags, kind: 'dict', ...(loan?.labels[k] ? { loan: loan.labels[k]! } : {}) })
     entries.set(k, e); count(e, false)
   }
   if (seFile) for (const e of Object.values(seFile)) for (const r of e.rows) { st.sense.rows++; if (r.lb?.length) st.sense.labelled++ }
@@ -171,20 +186,23 @@ export function main(): Stats {
 
 const pc = (n: number, d: number) => `${n} (${d ? ((100 * n) / d).toFixed(1) : '0.0'} %)`
 function writeReport(st: Stats, scan: DictScan, written: number, shards: number): void {
-  const cls = (o: Record<string, number>, tot: number) => (['dict', 'corpus', 'general', 'few'] as const).flatMap(c => [`| ${CLASS_UK[c]} | ${pc(o[c] ?? 0, tot)} |`, ...(c === 'dict' ? [`|   з них: мітка позначає слово діалектним / регіональним | ${pc(o['dict-strict'] ?? 0, tot)} |`, `|   з них: словник лише називає місце запису (повіт, губернію) | ${pc(o['dict-place'] ?? 0, tot)} |`] : [])]).join('\n')
+  const cls = (o: Record<string, number>, tot: number) => (['dict', 'corpus', 'general', 'few'] as const).flatMap(c => [`| ${c === 'general' ? CLASS_UK[c] + ' (за корпусом)' : CLASS_UK[c]} | ${pc(c === 'general' ? (o.general ?? 0) - (o['general-sum'] ?? 0) : o[c] ?? 0, tot)} |`, ...(c === 'general' ? [`| ${SUM_NORM_UK} | ${pc(o['general-sum'] ?? 0, tot)} |`] : []), ...(c === 'dict' ? [`|   з них: мітка позначає слово діалектним / регіональним | ${pc(o['dict-strict'] ?? 0, tot)} |`, `|   з них: словник лише називає місце запису (повіт, губернію) | ${pc(o['dict-place'] ?? 0, tot)} |`] : [])]).join('\n')
   const cov = (o: Record<string, number>) => (o.dict ?? 0) + (o.corpus ?? 0) + (o.general ?? 0)
+  const covNoSum = (o: Record<string, number>) => cov(o) - (o['general-sum'] ?? 0)
   const text = [
     '# Покриття міток (SPEC 63 LB)', '',
     `Згенеровано \`pipelines/build-labels.ts\`: ${new Date().toISOString()}. Пороги: f ≥ ${TH.fMin}; регіон ≥ ${TH.fRegionMin} вживань, LR ≥ ${TH.lrMin}, p < ${TH.alpha}/(число регіонів з матеріалом) (Бонферроні), регіонів з матеріалом ≥ ${TH.regionsMin}; «загальновживане»: регіонів ≥ ${TH.k}, DP ≤ ${TH.dpMax}.`, '',
     `## Діалектний клас — леми з засвідченням у корпусі (${st.fullTotal})`, '', '| клас | леми |', '|---|---|', cls(st.full, st.fullTotal),
-    `| **a+b+c (клас визначено)** | **${pc(cov(st.full), st.fullTotal)}** |`, '',
+    `| **a+b+c без підкласу СУМ** | **${pc(covNoSum(st.full), st.fullTotal)}** |`, `| **a+b+c з підкласом СУМ (LB-9)** | **${pc(cov(st.full), st.fullTotal)}** |`, '',
     '### Чутливість до порогів (лише для перевірки; картки використовують «взяті пороги»)', '', '| пороги | клас визначено |', '|---|---|', ...st.alt.map(a => `| ${a.name} | ${pc(a.cover, a.total)} |`), '',
     `## Діалектний клас — усі статті (${st.allTotal}: картки корпусу + словникові)`, '', '| клас | статті |', '|---|---|', cls(st.all, st.allTotal),
-    `| **a+b+c (клас визначено)** | **${pc(cov(st.all), st.allTotal)}** |`, '',
+    `| **a+b+c без підкласу СУМ** | **${pc(covNoSum(st.all), st.allTotal)}** |`, `| **a+b+c з підкласом СУМ (LB-9)** | **${pc(cov(st.all), st.allTotal)}** |`, '',
     '## Позначки словників (діалектні / територіальні / вжиток), прочитані з власних списків скорочень', '',
     '| словник | статей у дампі | статей з позначкою | позначок | лем із позначкою |', '|---|---|---|---|---|',
     ...Object.entries(scan.per).map(([s, p]) => `| ${s} | ${p.articles} | ${p.labelled} | ${p.hits} | ${p.lemmas} |`), '',
     ...Object.entries(scan.per).map(([s, p]) => `- ${s}: ${Object.entries(p.byAbbr).sort((a, b) => b[1] - a[1]).slice(0, 25).map(([a, n]) => `«${a}» ${n}`).join(', ') || 'позначок не знайдено'}`), '',
+    '## Мітки нових джерел (LB-8): лем із міткою', '', ...(Object.keys(st.src).length ? Object.entries(st.src).sort((a, b) => b[1] - a[1]).map(([k, n]) => `- ${k}: ${n}`) : ['- немає даних (ні СУМ, ні Вікісловника у вхідних файлах)']),
+    '', 'ВЕСУМ (dict_uk doc/tags.txt): територіальних тегів немає; `arch` («застаріле/архаїчне/(інколи) діалектне») діалектним слово не робить.', '',
     `## Регістр / вжиток`, '', `- лем із хоча б однією позначкою: ${pc(st.register.withLabel, st.register.total)}; решта — «нейтральне (немає позначок у словниках)» з переліком перевірених джерел.`,
     `- за джерелами (лема може мати кілька): ${Object.entries(st.register.bySrc).map(([s, n]) => `${s} ${n}`).join(', ') || '—'}`, '',
     `## Тип`, '', `- лем зі словесним типом (власна назва, абревіатура, запозичення, ЦС, архаїзм …): ${pc(st.type.withWordType, st.type.total)}; частина мови і морфологічний клас показані завжди.`, '',

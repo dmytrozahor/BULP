@@ -57,7 +57,10 @@ export const WIKT_CATEGORIES: { cat: string; label: string }[] = [
   ['Застарілі вирази', 'zast'], ['Застарілі вирази/uk', 'zast'], ['Історизми', 'istor'], ['Історизми/uk', 'istor'], ['Архаїчні вирази', 'arkh'], ['Архаїчні вирази/uk', 'arkh'],
   ['Поетичні вирази', 'poet'], ['Поетичні вирази/uk', 'poet'], ['Народно-поетичні вирази', 'narpoet'], ['Народно-поетичні вирази/uk', 'narpoet'],
   ['Книжні слова', 'knyzh'], ['Книжні слова/uk', 'knyzh'], ["Церковнослов'янізми", 'cerkslov'], ["Церковнослов'янізми/uk", 'cerkslov'],
-  ['Лемківські вирази', 'lemk'], ['Фольклорні терміни', 'folk'], ['Фольклорні терміни/uk', 'folk'],
+  ['Лемківські вирази', 'lemk'],
+  // LB-8: uk.wiktionary categories that name an area (the label is «dial»; core/dict-labels.ts WIKTUK_REGION says which area)
+  ['Західноукраїнський діалект', 'dial'], ['Західноукраїнський діалект/uk', 'dial'], ['Західноукраїнські слова', 'dial'], ['Західноукраїнські слова, що потрапили до словників літературної мови', 'dial'],
+  ['Західнополіський говір', 'dial'], ['Закарпатський говір', 'dial'], ['Фольклорні терміни', 'folk'], ['Фольклорні терміни/uk', 'folk'],
 ].map(([cat, label]) => ({ cat: cat!, label: label! }))
 
 /** VESUM lemma tag → label (slang, arch, vulg, obsc only; `bad`/`subst`/`err` are the surzhyk/nonstandard axes, `rare` is grammatical — research/08). */

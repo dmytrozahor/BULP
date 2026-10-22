@@ -4,11 +4,11 @@
  * (core/labels.ts TH, core/dict-labels.ts tables, core/autolabel.ts GAZETTEER), so the page cannot drift from the code.
  */
 import { RouterLink } from 'vue-router'
-import { CHECKED_REGISTER, HOW, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
-import { DICT_LABEL_TABLES, groupsOfArea, resolveRow } from '../../core/dict-labels.ts'
+import { CHECKED_REGISTER, HOW, HOW_SUM, SUM_NORM_UK, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
+import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, groupsOfArea, resolveRow } from '../../core/dict-labels.ts'
 import { GAZETTEER } from '../../core/autolabel.ts'
 import { DIALECTS } from '../../core/rules.ts'
-const attachUk = { article: 'мітка стоїть будь-де в статті українського заголовного слова → усі заголовні слова статті', after: 'мітка в дужках ПІСЛЯ українського відповідника (ru→uk словник) → лише цей відповідник', before: 'мітка в дужках ПЕРЕД українським відповідником (ru→uk словник) → лише цей відповідник' } as const
+const attachUk = { article: 'мітка стоїть будь-де в статті українського заголовного слова → усі заголовні слова статті', after: 'мітка в дужках ПІСЛЯ українського відповідника (ru→uk словник) → лише цей відповідник', before: 'мітка в дужках ПЕРЕД українським відповідником (ru→uk словник) → лише цей відповідник', sense: 'мітка надрукована на значенні статті (розібрані рядки СУМ) → лише це значення; заголовне слово стоїть у рядку', tag: 'тег значення en.Вікісловника (набір kaikki) → мітка леми, адреса — стаття слова', category: 'категорія статті uk.Вікісловника → мітка леми, адреса — стаття слова' } as const
 const kindUk = { area: 'область', dialectal: 'діалектне', register: 'регістр', type: 'тип слова' } as const
 const rowArea = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { const x = resolveRow(r); return x.area ? areaUk(x.area) : x.places[0] ?? '' }
 const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { const x = resolveRow(r); return x.group.map(g => DIALECTS[g.group] ?? g.group).join(', ') }
@@ -30,12 +30,13 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
         Регіон береться, якщо G² показує перевагу, p &lt; {{ TH.alpha }}/k, де k — число регіонів з матеріалом (поправка Бонферроні), LR ≥ {{ TH.lrMin }} (щонайменше вдвічі), у регіоні ≥ {{ TH.fRegionMin }} вживань, у лемі ≥ {{ TH.fMin }} вживань і регіонів з матеріалом ≥ {{ TH.regionsMin }}.
         Це <strong>не діалектна мітка</strong> (FD-2): регіон пам’ятки — місце видання чи авторства джерела.</li>
       <li><strong>{{ CLASS_UK.general }}</strong>. {{ HOW.general }} Міра розсіювання — нормований DP Грайса (0 — розподіл такий, як у корпусі, 1 — усе в одному регіоні): DP = ½ Σ|частка леми в регіоні − частка регіону в корпусі|, поділений на (1 − найменша частка регіону). Умови: ≥ {{ TH.fMin }} вживань, ≥ {{ TH.k }} регіонів, DP ≤ {{ TH.dpMax }}.</li>
+      <li><strong>{{ SUM_NORM_UK }}</strong> (підклас загальновживаного, рахується окремо). {{ HOW_SUM }} Умова: для слова немає порівнюваних даних корпусу (немає засвідчень, або вживань менше ніж {{ TH.fMin }}, або регіонів з матеріалом менше ніж {{ TH.regionsMin }}), воно є заголовним у СУМ-11 або СУМ-20, жодне з його значень не має позначки (окрім «перен.», граматичних і словотвірних приміток: «тільки недок.», «тільки мн.», «присл.», «зменш.» …), і жодне інше джерело не дає діалектної чи регістрової позначки.</li>
       <li><strong>{{ CLASS_UK.few }}</strong>. {{ HOW.few }} Картка пише, чого саме бракує (скільки вживань, регіонів).</li>
     </ol>
 
     <h3>Словники і їхні списки скорочень</h3>
     <p class="small">Кожен рядок цитує пояснення скорочення з власного списку словника (сторінка — посилання). Нічого не додано від себе, крім відповідності «скорочення → область»; повіти розкриваються за статтями uk.wikipedia (CC BY-SA 4.0).</p>
-    <section v-for="t in DICT_LABEL_TABLES" :key="t.id" class="lb-table" :data-testid="`lbm-${t.id}`">
+    <section v-for="t in [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES]" :key="t.id" class="lb-table" :data-testid="`lbm-${t.id}`">
       <h4>{{ t.short }} <span class="small muted">· {{ t.rows.length }} скорочень</span></h4>
       <p class="small"><a :href="t.list.split(' ')[0]" rel="noopener" target="_blank">{{ t.list }} ↗</a> · {{ attachUk[t.attach] }}.</p>
       <table class="small"><thead><tr><th>скорочення</th><th>пояснення у словнику (дослівно)</th><th>що означає в картці</th><th>область → група говорів</th></tr></thead>

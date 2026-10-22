@@ -69,6 +69,14 @@ export const KAIKKI_TAGS: AbbrTable = {
     { abbr: 'slang', usage: 'zharh', meaning: 'Denotes language that is unique to a particular profession or subject, i.e. jargon.' },
     { abbr: 'vulgar', usage: 'vulg', meaning: 'Language considered distasteful, obscene, profane, or otherwise unsuitable for use in polite or formal speech.' },
     { abbr: 'derogatory', usage: 'znevazh', meaning: 'A word form expressing a negative or belittling attitude towards the person or thing referred to.' },
+    // LB-8: regional context labels (category pages fetched 2026-10-22); they name an area, see KAIKKI_REGION in core/dict-labels.ts
+    { abbr: 'regional', usage: 'dial', meaning: 'Category:Regional Ukrainian — Categories containing terms in regional varieties of Ukrainian.' },
+    { abbr: 'Southwestern', usage: 'dial', meaning: 'Category:Southwestern Ukrainian — Terms or senses in Ukrainian as spoken in Western and Central Ukraine.' },
+    { abbr: 'Western', usage: 'dial', meaning: 'Category:Southwestern Ukrainian — Terms or senses in Ukrainian as spoken in Western and Central Ukraine.' },
+    { abbr: 'Southeastern', usage: 'dial', meaning: 'Category:Southeastern Ukrainian — Terms or senses in Ukrainian as spoken in Central, Southern (incl. Crimea), Eastern Ukraine.' },
+    { abbr: 'Transcarpathian', usage: 'dial', meaning: 'Category:Transcarpathian Ukrainian — Terms or senses in Ukrainian as spoken in Transcarpathia region.' },
+    { abbr: 'Slobozhan', usage: 'dial', meaning: 'Category:Slobozhan Ukrainian — Terms or senses in Ukrainian as spoken in Sloboda Ukraine.' },
+    { abbr: 'Pokuttia–Bukovina', usage: 'dial', meaning: 'Category:Pokuttia–Bukovina Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine.' },
     { abbr: 'poetic', usage: 'poet', meaning: 'Language, commonly associated with poetry, that is typically chosen to have an artistic or cultural impact on the listener.' },
   ],
 }

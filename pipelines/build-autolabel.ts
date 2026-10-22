@@ -16,6 +16,7 @@ import { D, type Claim } from '../core/evidence.ts'
 import { GAZETTEER, HRINCH_ABBR, KAIKKI_KEEP, KAIKKI_TAGS, R2U_ABBR, regionDialectClaims, type R2uPair } from '../core/autolabel.ts'
 import { DIALECT_LEX } from '../core/dialect-lex.ts'
 import type { UsageRow } from '../core/usage.ts'
+import { KAIKKI_CATEGORY_TAG } from '../core/dict-labels.ts'
 import { R2U_DIR, storedRows, tokenRaw } from './ingest-r2u.ts'
 import { r2uDictById, rowUrl } from './r2u.ts'
 
@@ -31,11 +32,11 @@ export async function loadKaikki(root: string): Promise<{ words: KaikkiTags; sen
     obj = {}
     const rl = createInterface({ input: createReadStream(src, 'utf8'), crlfDelay: Infinity })
     for await (const line of rl) {
-      let e: { word?: string; lang_code?: string; senses?: { tags?: string[]; glosses?: string[] }[] }
+      let e: { word?: string; lang_code?: string; senses?: { tags?: string[]; glosses?: string[]; categories?: ({ name?: string } | string)[] }[] }
       try { e = JSON.parse(line) } catch { continue }
       if (e.lang_code !== 'uk' || !e.word) continue
       for (const s of e.senses ?? []) {
-        const tags = s.tags ?? []
+        const tags = [...(s.tags ?? []), ...(s.categories ?? []).map(c => KAIKKI_CATEGORY_TAG[typeof c === 'string' ? c : c.name ?? '']).filter((t): t is string => !!t)]   // LB-8: a region category stands for its label
         if (tags.includes('form-of') || tags.includes('alt-of')) continue
         for (const t of tags) if (KAIKKI_KEEP.has(t)) { const l = (obj[key(e.word)] ??= []); if (!l.some(x => x[0] === t)) l.push([t, (s.glosses?.[0] ?? '').slice(0, 120)]) }
       }

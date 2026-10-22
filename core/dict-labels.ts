@@ -22,6 +22,9 @@ export const AREAS: Record<string, string> = {
   chernihivshchyna: 'Чернігівщина', sumshchyna: 'Сумщина', katerynoslavshchyna: 'Катеринославщина', khersonshchyna: 'Херсонщина',
   tavria: 'Таврія', bessarabia: 'Бессарабія', don: 'Донщина', kuban: 'Кубань і Чорноморія', terek: 'Терщина',
   livoberezhzhia: 'Лівобережна Україна', pravoberezhzhia: 'Правобережна Україна', west: 'захід України', east: 'схід України',
+  /** LB-8 Wiktionary: «Southwestern Ukrainian» = «Ukrainian as spoken in Western and Central Ukraine» (en.wiktionary category text) */ southwest: 'південно-західна Україна (захід і центр)',
+  /** «Southeastern Ukrainian» = «Central, Southern (incl. Crimea), Eastern Ukraine» */ southeast: 'південно-східна Україна (центр, південь, схід)',
+  pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
 }
 /** governorate (nominative, as uk.wikipedia names it) → area */
 const GOV_AREA: Record<string, string> = {
@@ -43,7 +46,8 @@ export interface DRow {
   /** a county abbreviation: the adjective of the county in COUNTIES (resolves the governorate) */ county?: string
   /** a regex source when the printed abbreviation needs more than the literal (spacing in «Н. Вол. у.») */ re?: string
 }
-export type Attach = 'article' | 'after' | 'before'
+/** sense = the label printed on a sense of a parsed dictionary row (СУМ); tag = an en.wiktionary sense tag; category = a uk.wiktionary category of the article */
+export type Attach = 'article' | 'after' | 'before' | 'sense' | 'tag' | 'category'
 export interface DTable {
   id: string
   /** r2u dictionary ids (pipelines/r2u.ts R2U_DICTS) read with this table */ dicts: number[]
@@ -196,6 +200,67 @@ export const ZHELEH_LABELS: DTable = {
 
 for (const r of HRINCH_LABELS.rows) if (r.kind === 'area' && !['Галиц.', 'Гуцул.', 'Угор.'].includes(r.abbr)) r.scope = 'place'
 export const DICT_LABEL_TABLES: DTable[] = [HRINCH_LABELS, UMANETS_LABELS, KRYM_LABELS, ZHELEH_LABELS]
+
+// ── LB-8: label sources that are not read from r2u pages ──────────────────────────────────────────────────
+const SUM_ARCH = 'https://archive.org/details/SUM-20'
+/**
+ * СУМ-20, том 1 (К.: Наукова думка, 2010), «СПИСОК ОСНОВНИХ УМОВНИХ СКОРОЧЕНЬ» (с. 61 ff.) and the «Ремарки» of the preface (§ 2.8); archive.org item SUM-20, file SUM-20_1_djvu.txt, read 2026-10-22.
+ * The list prints exactly two labels that name a territory: «діал.» and «зах.»; «прост.» is "поширені на всій або значній території" (a register, not a region). Nothing else is regional.
+ */
+export const SUM20_LABELS: DTable = {
+  id: 'sum20-labels', dicts: [], short: 'СУМ-20', source: 'SUM20', list: `${SUM_ARCH} (т. 1, «Список основних умовних скорочень», с. 61)`, attach: 'sense',
+  rows: [
+    R('діал.', 'діал. — діалектне слово (вислів). Ремарка діал. характеризує одиниці, які, зберігаючи свою територіально обмежену належність, уживаються в мові художньої літератури або в усно-розмовній мові осіб, що спілкуються літературною мовою', 'dialectal', { reg: 'dial' }),
+    R('зах.', 'зах. — західноукраїнське слово (вислів). Ремарка зах. характеризує одиниці, що вживалися в західноукраїнській літературно-мовній практиці протягом 2 пол. ХІХ — 1-ї пол. ХХ ст. і які, не будучи вузькодіалектними, не ввійшли, однак, до загальноукраїнської літературної мови', 'area', { area: 'west' }),
+  ],
+}
+/** СУМ-11, том 1 (К.: Наукова думка, 1970), «Основні умовні скорочення у словнику» and the preface § 28 («При діалектних словах подається позначка — діал.»); archive.org item bilodid_slovnyk_ukr_v11_tom_1, read 2026-10-22. */
+export const SUM11_LABELS: DTable = {
+  id: 'sum11-labels', dicts: [], short: 'СУМ-11', source: 'SUM11', list: 'https://archive.org/details/bilodid_slovnyk_ukr_v11_tom_1 (т. 1, «Список основних умовних скорочень у словнику»; передмова § 28)', attach: 'sense',
+  rows: [
+    R('діал.', 'діал. — діалектне слово. При діалектних словах подається позначка — діал.', 'dialectal', { reg: 'dial' }),
+    R('зах.', 'зах. — західноукраїнське слово', 'area', { area: 'west' }),
+  ],
+}
+/**
+ * en.wiktionary context labels (kaikki data/raw/kaikki/uk.jsonl): the sense tags and categories that name a region, with the category page's own words (fetched 2026-10-22).
+ * «regional» / «dialectal» name no region. Tag «Northern» (1 sense) and «Ukraine» (3) have no category text that says what they cover and are not read.
+ */
+export const KAIKKI_REGION: DTable = {
+  id: 'kaikki-region', dicts: [], short: 'en.Вікісловник (kaikki)', source: 'KAIKKI', list: 'https://en.wiktionary.org/wiki/Category:Southwestern_Ukrainian (категорії «<регіон> Ukrainian»)', attach: 'tag',
+  rows: [
+    R('dialectal', 'dialectal — Of or relating to a dialect (Appendix:Glossary)', 'dialectal', { reg: 'dial' }),
+    R('regional', 'Category:Regional Ukrainian — Categories containing terms in regional varieties of Ukrainian. … terms should be recategorized by the particular regional variety they belong to, or categorized as dialectal.', 'dialectal', { reg: 'dial' }),
+    R('Southwestern', 'Category:Southwestern Ukrainian — Terms or senses in Ukrainian as spoken in Western and Central Ukraine. (label Southwestern, aliases Western, Western Ukraine)', 'area', { area: 'southwest' }),
+    R('Western', 'Category:Southwestern Ukrainian — Terms or senses in Ukrainian as spoken in Western and Central Ukraine. (label Southwestern, aliases Western, Western Ukraine)', 'area', { area: 'southwest' }),
+    R('Southeastern', 'Category:Southeastern Ukrainian — Terms or senses in Ukrainian as spoken in Central, Southern (incl. Crimea), Eastern Ukraine, and Russia (Belgorod, Voronezh, Rostov Oblast, Krasnodar Krai). (label Southeastern, aliases Eastern, Eastern Ukraine)', 'area', { area: 'southeast' }),
+    R('Transcarpathian', 'Category:Transcarpathian Ukrainian — Terms or senses in Ukrainian as spoken in Transcarpathia region (Zakarpattia Oblast in Ukraine), and eastern Slovakia. (label Transcarpathian, alias Transcarpathia)', 'area', { area: 'zakarpattia' }),
+    R('Slobozhan', 'Category:Slobozhan Ukrainian — Terms or senses in Ukrainian as spoken in Sloboda Ukraine (Sumy, Kharkiv, Luhansk Oblast), and Russia (Belgorod, Voronezh, Rostov Oblast). (label Slobozhan, alias Sloboda)', 'area', { area: 'slobozhanshchyna' }),
+    R('Pokuttia–Bukovina', 'Category:Pokuttia–Bukovina Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine. (label Pokuttia–Bukovina, aliases Bukovina, Bukovinian, Pokuttia, Pokuttian, Upper Prutian)', 'area', { area: 'pokuttia' }),
+  ],
+}
+/** en.wiktionary categories of a sense that carry no tag (Transcarpathian, Slobozhan, Pokuttia–Bukovina senses have an empty tag list) → the label of KAIKKI_REGION that produces the category */
+export const KAIKKI_CATEGORY_TAG: Record<string, string> = {
+  'Southwestern Ukrainian': 'Southwestern', 'Southeastern Ukrainian': 'Southeastern', 'Transcarpathian Ukrainian': 'Transcarpathian', 'Slobozhan Ukrainian': 'Slobozhan',
+  'Pokuttia–Bukovina Ukrainian': 'Pokuttia–Bukovina', 'Regional Ukrainian': 'regional',
+}
+/** uk.wiktionary categories of the article (harvest: pipelines/usage-wikt.ts, core/usage.ts WIKT_CATEGORIES). The category NAME is the quote; the area is the one the name states. */
+export const WIKTUK_REGION: DTable = {
+  id: 'wiktuk-region', dicts: [], short: 'uk.Вікісловник', source: 'WIKTUK', list: 'https://uk.wiktionary.org/wiki/Категорія:Західноукраїнський_діалект (категорії статей)', attach: 'category',
+  rows: [
+    R('Діалектні вирази', 'Категорія:Діалектні вирази — діалектне слово, регіон не названо', 'dialectal', { reg: 'dial' }),
+    R('Діалектизми', 'Категорія:Діалектизми — діалектне слово, регіон не названо', 'dialectal', { reg: 'dial' }),
+    R('Західноукраїнський діалект', 'Категорія:Західноукраїнський діалект', 'area', { area: 'west' }),
+    R('Західноукраїнські слова', 'Категорія:Західноукраїнські слова', 'area', { area: 'west' }),
+    R('Західноукраїнські слова, що потрапили до словників літературної мови', 'Категорія:Західноукраїнські слова, що потрапили до словників літературної мови', 'area', { area: 'west' }),
+    R('Західнополіський говір', 'Категорія:Західнополіський говір', 'area', { area: 'polissia' }),
+    R('Закарпатський говір', 'Категорія:Закарпатський говір', 'area', { area: 'zakarpattia' }),
+    R('Лемківські вирази', 'Категорія:Лемківські вирази', 'area', { area: 'lemko' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION]
+/** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
+export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))
 
 /** an abbreviation of a table, with the area it names resolved */
@@ -331,4 +396,4 @@ export function wireHit(table: DTable, h: ArticleHit, url: string): DictHit {
     ...(h.word ? { w: h.word } : {}),
   }
 }
-export const tableById = (id: string): DTable | undefined => DICT_LABEL_TABLES.find(t => t.id === id)
+export const tableById = (id: string): DTable | undefined => [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES].find(t => t.id === id)

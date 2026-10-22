@@ -56,6 +56,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
           </ul>
           <p v-if="hits.length > 6" class="small muted">і ще {{ hits.length - 6 }} позначок</p>
         </template>
+        <p v-if="d.sumNorm?.length" class="small muted" data-testid="lb-sumnorm">Підстава: {{ d.sumNorm.map(x => `${x.d === 'sum11' ? 'СУМ-11' : x.d === 'sum20' ? 'СУМ-20' : x.d}${x.l ? ' ' + x.l : ''}, значень: ${x.n}`).join('; ') }}; жодне значення не має позначки діал., зах. чи регістрової. <template v-for="x in d.sumNorm" :key="x.d"><a v-if="x.u" :href="x.u" rel="noopener" target="_blank">стаття {{ x.d }} ↗ </a></template></p>
         <p v-if="d.plain?.length" class="small muted">«діал.» без назви області: {{ d.plain.map(plainLine).join('; ') }}</p>
         <details v-if="d.corp" class="small lb-corp" :open="d.c === 'corpus'">
           <summary>регіони пам’яток: {{ d.corp.f }} уживань, {{ d.corp.att }} з {{ d.corp.nReg }} регіонів, DP {{ d.corp.dp.toFixed(2) }}</summary>

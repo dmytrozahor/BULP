@@ -5,15 +5,17 @@
  *
  * Four things are decided per lemma, and only from data the project holds:
  *  LB-1 DIALECT, exactly one class (priority a > b > c > d; the corpus numbers are kept for every class):
- *       a «діалектне за словником»        a dictionary label names a dialect or an area (core/dict-labels.ts; Wiktionary / СУМ «діал.» name none: «діалектне, область не названо»)
+ *       a «діалектне за словником»        a dictionary label names a dialect or an area (core/dict-labels.ts; Wiktionary / СУМ «діал.» name none: «діалектне (регіон не вказано)»)
  *       b «регіонально марковане (корпус)» the witness-region distribution is significantly skewed (G², log ratio, Bonferroni, minimum f, ≥ 2 regions): a REGIONAL ASSOCIATION, not a dialect claim (FD-2)
- *       c «загальновживане»                attested in ≥ K regions with a low Gries DP, and no dictionary dialect label
+ *       c «загальновживане»                attested in ≥ K regions with a low Gries DP, and no dictionary dialect label;
+ *                                          sub-class «за словником (СУМ, без обмежувальних позначок)» (LB-9): no usable corpus dispersion, but a plain СУМ-11/СУМ-20 headword whose senses carry no
+ *                                          dialect, regional or register label (the dictionary's own normative status, shown separately and counted separately)
  *       d «недостатньо даних»              the corpus has too few uses; the card says how many are needed
  *  LB-3 REGISTER per lemma and per sense: СУМ sense labels, VESUM tags, uk/en Wiktionary tags, the r2u dictionaries' own labels; none → «нейтральне (немає позначок у словниках)» + the list of dictionaries checked
  *  LB-4 TYPE: part of speech + morphological class + word type (власна назва / абревіатура / запозичення / церковнослов'янізм / архаїзм / …) where a source says so
  *  Surzhyk is a property of a FORM (MM-9), never of a lemma: the block says so instead of a value.
  */
-import { DICT_LABEL_TABLES, AREAS, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
+import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
 
 // ── thresholds (LB-1; every one is printed on the methods page) ───────────────────────────────────────
 export const TH = {
@@ -60,7 +62,8 @@ export function dpNorm(by: RegionCount[]): number {
 }
 
 export type DialectClass = 'dict' | 'corpus' | 'general' | 'few'
-export const classUk = (d: { c: DialectClass; strict?: boolean }): string => (d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : CLASS_UK[d.c])
+export const SUM_NORM_UK = 'загальновживане за словником (СУМ, без обмежувальних позначок)'
+export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' }): string => (d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : CLASS_UK[d.c])
 export const CLASS_UK: Record<DialectClass, string> = {
   dict: 'діалектне за словником', corpus: 'регіонально марковане (корпус)', general: 'загальновживане', few: 'недостатньо даних',
 }
@@ -72,8 +75,12 @@ export interface CorpusSummary {
   /** the over-represented region that passes the thresholds, if any */ top?: Keyness
   /** the region table (the evidence of b and c) */ rows: RegionCount[]
 }
+/** a headword of СУМ-11 / СУМ-20 none of whose senses carries a dialect, regional or register label: [dictionary id, number of its sense rows, article link?, volume/page?] */
+export interface SumNorm { d: string; n: number; u?: string; l?: string }
 export interface DialectResult {
   c: DialectClass
+  /** c only: 'sum' = no corpus dispersion, class from the dictionary's unrestricted headword (LB-9) */ sub?: 'sum'
+  /** (c, sub sum) the headwords the class rests on */ sumNorm?: SumNorm[]
   /** (a): true = some label marks the word or sense as dialectal / regional; false = the dictionaries only record WHERE it was noted (county, governorate) */ strict?: boolean
   /** (a) the dictionary hits (area / dialectal kinds) */ dict?: DictHit[]
   /** area ids named by the dictionaries */ areas?: string[]
@@ -92,7 +99,7 @@ export function corpusSummary(by: RegionCount[] | undefined, th: Thresholds = TH
 }
 
 /** The ONE class of a lemma. `dict` = area / dialectal hits of the dictionaries; `plain` = «діал.» marks without an area. */
-export function dialectOf(dict: DictHit[], plain: [string, string][], by: RegionCount[] | undefined, th: Thresholds = TH): DialectResult {
+export function dialectOf(dict: DictHit[], plain: [string, string][], by: RegionCount[] | undefined, th: Thresholds = TH, sumNorm?: SumNorm[]): DialectResult {
   const corp = corpusSummary(by, th)
   const areaHits = dict.filter(h => (h.kind === 'area' && (h.v || h.place)) || h.kind === 'dialectal')
   if (areaHits.length || plain.length) {
@@ -106,6 +113,8 @@ export function dialectOf(dict: DictHit[], plain: [string, string][], by: Region
     if (corp.att >= th.k && corp.dp <= th.dpMax) return { c: 'general', corp }
   }
   const f = corp?.f ?? 0
+  // LB-9: no corpus dispersion to compare (no material, too few uses, fewer than 2 regions with material): an unrestricted СУМ headword is the dictionary's normative status
+  if (sumNorm?.length && (!corp || corp.f < th.fMin || corp.nReg < th.regionsMin)) return { c: 'general', sub: 'sum', sumNorm, ...(corp ? { corp } : {}) }
   const need = !corp ? `корпус не містить засвідчень цієї леми; для класу потрібно ≥ ${TH.fMin} уживань у ≥ ${TH.regionsMin} регіонах з матеріалом, або позначка словника`
     : f < TH.fMin ? `у корпусі ${f} ${f === 1 ? 'вживання' : 'вживань'}; потрібно ≥ ${TH.fMin} (ще ${TH.fMin - f}), або позначка словника`
     : corp.nReg < TH.regionsMin ? `регіонів з матеріалом ${corp.nReg}; потрібно ≥ ${TH.regionsMin}`
@@ -131,7 +140,7 @@ export const REGISTER: RegisterDef[] = [
   { id: 'narpoet', uk: 'нар.-поет.', full: 'народнопоетичне', axis: 'тематична' }, { id: 'cerkslov', uk: 'церк.-слов.', full: 'церковнослов’янське', axis: 'тематична' },
   { id: 'folk', uk: 'фольк.', full: 'фольклорне', axis: 'тематична' },
   { id: 'spec', uk: 'спец.', full: 'спеціальне (термін галузі)', axis: 'сфера' },
-  { id: 'rare', uk: 'рідко', full: 'рідковживане', axis: 'стилістична' },
+  { id: 'rare', uk: 'рідко', full: 'рідковживане', axis: 'стилістична' }, { id: 'prost', uk: 'прост.', full: 'просторічне (поза літературною мовою, не обмежене територією)', axis: 'стилістична' },
   { id: 'bad', uk: 'покруч', full: 'покруч (нелітературна форма)', axis: 'нестандартність' }, { id: 'subst', uk: 'нестандартна форма', full: 'нестандартна форма', axis: 'нестандартність' },
   { id: 'alt', uk: 'альт. напис.', full: 'альтернативне написання (не за чинним правописом)', axis: 'нестандартність' }, { id: 'err', uk: 'помилкове', full: 'помилкове написання', axis: 'нестандартність' },
   { id: 'fig', uk: 'перен.', full: 'переносне значення', axis: 'зміст значення' },
@@ -141,7 +150,7 @@ export const regDef = Object.fromEntries(REGISTER.map(r => [r.id, r])) as Record
 export const SUM_LABEL: Record<string, string> = {
   'розм.': 'rozm', 'заст.': 'zast', 'книжн.': 'knyzh', 'спец.': 'spec', 'діал.': 'dial', 'перен.': 'fig', 'ірон.': 'iron', 'зневажл.': 'znevazh', 'жарт.': 'zhart',
   'вульг.': 'vulg', 'поет.': 'poet', 'уроч.': 'urochyste', 'фольк.': 'folk', 'нар.-поет.': 'narpoet', 'рідко': 'rare', 'пестл.': 'lasky', 'ласк.': 'lasky',
-  'лайл.': 'laiyl', 'евф.': 'euphem', 'арх.': 'arkh', 'істор.': 'istor', 'церк.': 'cerkslov', 'розм': 'rozm', 'заст': 'zast', 'книжн': 'knyzh',
+  'лайл.': 'laiyl', 'евф.': 'euphem', 'прост.': 'prost', 'жарг.': 'zharh', 'арх.': 'arkh', 'істор.': 'istor', 'церк.': 'cerkslov', 'розм': 'rozm', 'заст': 'zast', 'книжн': 'knyzh',
 }
 /** VESUM lemma tags (dict_uk doc/tags.txt, fetched 2026-10-22) that are labels, with the tag file's own words */
 export const VESUM_TAGS: Record<string, { reg: string; def: string }> = {
@@ -229,13 +238,48 @@ export const emptyEntry = (): LbEntry => ({ v: 1, d: { c: 'few', need: `корп
 
 /** plain-Ukrainian «як визначено» of each class, for the tooltip and the methods page */
 export const HOW: Record<DialectClass, string> = {
-  dict: 'Словник, який ми прочитали, сам позначає це слово діалектним або називає край, де його записано. Мітка і її розшифровка цитуються з самого словника.',
+  dict: 'Словник, який ми прочитали, сам позначає це слово діалектним або називає край, де його записано. Мітка і її розшифровка цитуються з самого словника. Мітка «діал.» без назви краю дає «діалектне (регіон не вказано)»; територіальна мітка («зах.», «гуц.», тег Вікісловника) називає регіон; мітка, що лише називає місце запису (повіт, губернія), показується як «місце запису (не обов’язково діалектне)».',
   corpus: `Слово засвідчене в пам’ятках переважно одного регіону: різниця з рештою корпусу значуща (G² з поправкою Бонферроні на число регіонів) і щонайменше вдвічі за відносною частотою. Це асоціація з регіоном пам’яток, а не діалектна мітка.`,
   general: `Слово засвідчене щонайменше в ${TH.k} регіонах, розподіл близький до розподілу всього корпусу (DP ≤ ${TH.dpMax}), діалектної мітки у словниках немає.`,
   few: `У корпусі замало уживань (потрібно ≥ ${TH.fMin}), а позначки словника немає: клас не визначено, і ми не вгадуємо.`,
 }
+/** tooltip of the sub-class «загальновживане за словником» (LB-9) */
+export const HOW_SUM = 'Для цього слова немає даних про розсіювання в корпусі (замало вживань або регіонів), тому клас узято зі словника: слово є заголовним у СУМ-11 / СУМ-20, і жодне його значення не має позначки діал., зах. чи регістрової позначки. Це нормативний статус за словником, а не вимір поширення: ми не стверджуємо, що слово засвідчене в усіх регіонах.'
 export const areaUk = (id: string): string => AREAS[id] ?? id
-export { DICT_LABEL_TABLES, tableById }
+export { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, tableById }
+
+// ── LB-8/LB-9: СУМ and Wiktionary labels ──────────────────────────────────────────────────────────────────
+/** СУМ dictionary id of a parsed row (SeRow.d) → its cited label table */
+const SUM_TABLES = { sum11: SUM11_LABELS, sum20: SUM20_LABELS } as const
+/**
+ * labels of a СУМ sense that do not restrict the word to a register, a region or a sphere: a figurative sense, and the grammatical / derivational notes
+ * (only imperfective / perfective / plural / singular, adverbial use, diminutive, augmentative, collective, possessive). Every other label (розм., прост., заст., рідко., діал., зах.,
+ * the sphere labels техн., мед., хім. … and the stylistic пестл., зневажл., ірон. …) restricts the word and keeps it out of the sub-class.
+ */
+export const SUM_NONRESTRICTIVE = new Set(['перен.', 'тільки недок.', 'тільки док.', 'тільки мн.', 'тільки одн.', 'присл.', 'зменш.', 'збільш.', 'збірн.', 'присв.'])
+const enWiki = (w: string) => `https://en.wiktionary.org/wiki/${encodeURIComponent(w)}#Ukrainian`
+const ukWiki = (w: string) => `https://uk.wiktionary.org/wiki/${encodeURIComponent(w)}`
+/** a regional hit from a Wiktionary usage row (src k = en.wiktionary sense tag «tag<TAB>gloss», w = uk.wiktionary category), if the row names an AREA; «dialectal» / «regional» / «Діалектні вирази» name none */
+export function wiktRegionHit(src: string, detail: string, lemma?: string): DictHit | undefined {
+  if (src === 'k') {
+    const [tag, gloss] = detail.split('\t'), row = extraRow(KAIKKI_REGION, tag ?? '')
+    if (row?.kind !== 'area') return undefined
+    return { t: KAIKKI_REGION.id, a: row.abbr, kind: 'area', v: row.area!, q: `[${tag}] ${gloss ?? ''}`.trim().slice(0, 200), u: lemma ? enWiki(lemma) : KAIKKI_REGION.list }
+  }
+  if (src === 'w') {
+    const row = extraRow(WIKTUK_REGION, detail)
+    if (row?.kind !== 'area') return undefined
+    return { t: WIKTUK_REGION.id, a: row.abbr, kind: 'area', v: row.area!, q: `Категорія:${detail}`, u: lemma ? ukWiki(lemma) : WIKTUK_REGION.list }
+  }
+  return undefined
+}
+/** a hit from a label printed on a СУМ-11 / СУМ-20 sense («діал.» → dialectal, «зах.» → area), or undefined (not a regional label, or not a СУМ row) */
+export function sumLabelHit(d: string, lb: string, gloss?: string, url?: string): DictHit | undefined {
+  const t = SUM_TABLES[d as keyof typeof SUM_TABLES]; if (!t) return undefined
+  const row = extraRow(t, lb.trim().toLowerCase()); if (!row) return undefined
+  const q = `${row.abbr} ${gloss ?? ''}`.trim().slice(0, 200)
+  return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
+}
 
 // ── assembling one lemma's entry (used by pipelines/build-labels.ts and the tests) ──────────────────────
 export interface AssembleIn {
@@ -244,7 +288,10 @@ export interface AssembleIn {
   usage: [string, string, string][]
   /** VESUM tag → number of the lemma's paradigm forms carrying it */ tagCount?: Record<string, number>
   nForms?: number
-  se?: { n?: number; d: string; lb: string[] }[]
+  se?: { n?: number; d: string; lb: string[]; g?: string; u?: string }[]
+  /** LB-9: the lemma's headword in СУМ-11 / СУМ-20, one entry per dictionary: [dictionary id, sense rows, restricted by a label that is not in SUM_NONRESTRICTIVE, link?, volume/page?] */
+  sum?: { d: string; n: number; restricted: boolean; u?: string; l?: string }[]
+  /** the lemma, for the article links of Wiktionary hits */ lemma?: string
   pos?: string
   paradigmKind?: string
   /** SPEC 60 NP-1 proper-name kind claim, with the evidence quote */ proper?: { kind: string; quote: string; locator: string }
@@ -264,10 +311,14 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   if (i.tagLine) for (const t of i.tagLine.split(':')) if (VESUM_TAGS[t] || VESUM_TYPE[t]) tags.push(t)
   const usage = i.usage.filter(u => u[1] !== 'r')
   const plain: [string, string][] = []
-  for (const [id, src, detail] of usage) if (DIALECT_REG.has(id)) plain.push([src, detail])
-  for (const r of i.se ?? []) for (const lb of r.lb) if (SUM_LABEL[lb.trim()] === 'dial') plain.push(['s', `${r.d}\t${lb}`])
+  for (const [id, src, detail] of usage) if (DIALECT_REG.has(id)) { const h = wiktRegionHit(src, detail, i.lemma); if (h) dict.push(h); else plain.push([src, detail]) }   // LB-8: a Wiktionary label that names an area is an area hit; «dialectal» / «regional» name none
+  const sumHit = (r: { d: string; g?: string; u?: string }, lb: string) => sumLabelHit(r.d, lb, r.g, r.u)
+  for (const r of i.se ?? []) for (const lb of r.lb) {
+    const h = sumHit(r, lb)
+    if (h) { if (!dict.some(x => x.t === h.t && x.a === h.a)) dict.push(h) } else if (SUM_LABEL[lb.trim()] === 'dial') plain.push(['s', `${r.d}\t${lb}`])
+  }
   const regUsage = usage.filter(u => !DIALECT_REG.has(u[0]))
-  const reg = registerItems(regUsage, tags.filter(t => VESUM_TAGS[t]), dict.filter(h => h.kind === 'register'), (i.se ?? []).map(r => ({ ...r, lb: r.lb.filter(l => SUM_LABEL[l.trim()] !== 'dial') })))
+  const reg = registerItems(regUsage, tags.filter(t => VESUM_TAGS[t]), dict.filter(h => h.kind === 'register'), (i.se ?? []).map(r => ({ ...r, lb: r.lb.filter(l => SUM_LABEL[l.trim()] !== 'dial' && !sumHit(r, l)) })))
   const ft: [string, number, number][] = formTags.filter(t => VESUM_TAGS[t]).map(t => [t, i.tagCount![t]!, n])
   const ty: TypeItem[] = []
   for (const t of new Set(tags)) { const v = VESUM_TYPE[t]; if (v) ty.push([v.typ, 'v', t]) }
@@ -277,7 +328,8 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   for (const h of dict) if (h.kind === 'type') ty.push([h.v, 'd', `${h.t}\t${h.a}\t${h.q}`, h.u])
   if (i.kind === 'archaic') ty.push(['arkh', 'k', 'архаїчна картка: слово відсутнє у ВЕСУМ, засвідчене лише у старих джерелах'])
   for (const r of reg) if (r[0] === 'arkh' && !ty.some(x => x[0] === 'arkh')) ty.push(['arkh', r[1] === 'd' ? 'd' : 'v', r[2], r[3]]); else if (r[0] === 'istor' && !ty.some(x => x[0] === 'istor')) ty.push(['istor', 'd', r[2], r[3]])
-  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by)
+  const sumNorm: SumNorm[] = i.sum?.length && i.sum.every(x => !x.restricted) && !reg.length && !dict.some(h => h.kind !== 'type') && !plain.length ? i.sum.map(x => ({ d: x.d, n: x.n, ...(x.u ? { u: x.u } : {}), ...(x.l ? { l: x.l } : {}) })) : []
+  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by, TH, sumNorm)
   const sense: NonNullable<LbEntry['s']> = (i.se ?? []).filter(r => r.lb.length).map(r => [r.n, r.d, r.lb])
   const m = i.tagLine ? morphOf(i.tagLine) : '', pos = i.pos ?? (i.tagLine ? POS_UK[i.tagLine.split(':')[0]!] : undefined)
   return { v: 1, d, r: reg, t: ty, ...(sense.length ? { s: sense } : {}), ...(ft.length ? { f: ft } : {}), ...(i.by?.length ? { corpus: true } : {}), ...(pos ? { p: pos } : {}), ...(i.paradigmKind ? { k: i.paradigmKind } : {}), ...(m ? { m } : {}) }

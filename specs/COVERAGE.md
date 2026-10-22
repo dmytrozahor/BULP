@@ -917,3 +917,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-5 | tests/labels.test.ts › LB-5 card parity: every card kind mounts LabelsBlock and the Огляд label line |
 | LB-6 | tests/labels.test.ts › LB-6 the methods page prints the thresholds and every dictionary table |
 | LB-7 | tests/labels.test.ts › LB-7 build-labels assembles an entry per lemma and the coverage report names the classes |
+| LB-8 | tests/labels.test.ts › LB-8 СУМ tables quote the dictionaries |
+| LB-8 | tests/labels.test.ts › LB-8 СУМ «зах.» is a regional label (area, not a register); «діал.» without a region is «діалектне (регіон не вказано)» |
+| LB-8 | tests/labels.test.ts › LB-8 Вікісловник: a region tag or category names an area (mapped through the cited table), «dialectal» / «regional» name none |
+| LB-8 | tests/labels.test.ts › LB-8 the harvest reads the new tags and categories; every row of a table is reachable and cited |
+| LB-8 | tests/labels.test.ts › LB-8 VESUM has no territorial tag (dict_uk doc/tags.txt) |
+| LB-8 | tests/labels.test.ts › LB-8 the methods page prints the new tables with their lists |
+| LB-9 | tests/labels.test.ts › LB-9 only when the corpus gives no dispersion; priority a > b > c(corpus) > c(СУМ) > d |
+| LB-9 | tests/labels.test.ts › LB-9 a headword qualifies only if no sense of it and no other source restricts it |
+| LB-9 | tests/labels.test.ts › LB-9 the card says it is a dictionary status, not a measurement |
