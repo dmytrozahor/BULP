@@ -55,3 +55,5 @@ export function featureChips(rules: readonly string[], ctx: FeatureCtx = {}): Fe
   return out
 }
 export const FEATURE_RULES: readonly string[] = ZHEL_FOLDS.map(f => f.id).filter(id => id in FEATURES)
+/** every rule that has a chip (Желехівка folds and the Galician-grammar folds) */
+export const FEATURE_RULE_IDS: readonly string[] = Object.keys(FEATURES)

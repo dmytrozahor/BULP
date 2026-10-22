@@ -23,7 +23,8 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
     <template v-if="entry">
       <p v-if="entry.conflict" class="sans small" role="note" style="border-left:3px solid #b8860b;padding-left:.5rem">
         <strong>Розбіжність датувань ({{ entry.conflict }}).</strong> {{ CONFLICT_UK[entry.conflict] }}. <span class="muted">{{ entry.conflictNote }}</span></p>
-      <h3 class="sans small muted">З словників (витягнуте, не гіпотеза проєкту)</h3>
+      <p v-if="entry.aspect" class="sans small" data-testid="aspect-pair">видова пара: <template v-for="(p, i) in entry.aspect.partner" :key="p"><template v-if="i">, </template><RouterLink :to="'/w/' + encodeURIComponent(p)">{{ p }}</RouterLink></template> <span class="muted">({{ entry.aspect.asp === 'pf' ? 'це слово — доконаний вид' : 'це слово — недоконаний вид' }}; Вікісловник)</span></p>
+      <h3 v-if="entry.text || entry.chain?.length" class="sans small muted">З словників (витягнуте, не гіпотеза проєкту)</h3>
       <p v-if="entry.text" class="sans" lang="en">{{ entry.text }}</p>
       <ul v-if="entry.chain?.length" class="sans small" style="list-style:none;padding:0;margin:0 0 .5rem" lang="en">
         <li v-for="(s, i) in entry.chain" :key="i"><span class="muted">{{ LANG_UK[s.rel] ?? s.rel }}: </span>{{ s.text }}</li>

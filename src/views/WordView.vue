@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { lemmaChipKeys } from '../lib/contactLayer.ts'
+import { featureMarks } from '../lib/featureMarks.ts'
 /**
  * DWDS-like word card, research/07 §3.1 (two columns; stacked on mobile). SPEC 61 UX: summary first, evidence on demand — a headline (lemma · POS · stress · IPA ·
  * first attestation · ≤ 5 key chips), then collapsible panels with one-line summaries (Panel.vue). Nothing is removed (Evidence Invariant): every claim is still one tap away.
@@ -8,6 +9,7 @@ import { lemmaChipKeys } from '../lib/contactLayer.ts'
  * SPEC 61 FX-5: the paradigm panels follow the lemma's paradigm kind (lib/ux.ts paradigmKindOf — data field if present, else VESUM tags).
  */
 import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from 'vue'
+import { key } from '../../core/text.ts'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
 import type { Claim } from '../../core/evidence.ts'
@@ -154,6 +156,14 @@ const keyChips = computed(() => {
   const c = card.value!.claims
   return lemmaChipKeys(c, dialects.value.length)   // MM-9 rule 2: no contact chip on the lemma card
 })
+/** MM-16 (owner rule): a lemma whose OWN headword spelling falls under a cited feature rule (a dialect / orthography lemma such as инший) shows the chip too; a standard lemma gets none, its forms carry it.
+ *  The qualifier is decided by the witness of the lemma's first attestation. Contact labels stay form-level (MM-9 rule 2). */
+const headFeatures = computed(() => {
+  const c = card.value; if (!c || !isKnown(c.first)) return []
+  const v = c.first.value as { witness?: string }, w = v.witness ? witnessById.value.get(v.witness) : undefined
+  const au = corpus.value?.authors.find(a => a.id === w?.author)
+  return featureMarks(c.lemma, { orth: w?.orth, edition: w?.edition, witnessRegion: w?.region, authorRegion: au?.region, year: w?.date[0] }, k => k !== key(c.lemma) && searchIdx.value.map.has(k))
+})
 const nKnownChips = computed(() => Object.values(keyChips.value).filter(Boolean).length)
 
 // ── UX-2 one-line summaries ──
@@ -200,6 +210,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <span v-else-if="full" class="unk small sans" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос не встановлено</span>
         <span v-else-if="!err" class="muted small sans">наголос: завантаження…</span>
         <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
+      <p v-for="fc in headFeatures" :key="fc.rule" class="hl-line sans small" data-testid="lemma-feature"><span class="badge" :title="fc.cite.quote">{{ fc.feature }}</span> {{ fc.text }} <span class="muted">· {{ fc.rule }}</span></p>
       <p class="hl-line sans"><span class="muted">Перша фіксація: </span>
         <ClaimBadge v-if="first" :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${firstWho}`" />
         <ClaimBadge v-else :claim="card.first" /><template v-if="firstRu"> <RuBadge :flag="firstRu" /> <span class="small muted" data-testid="ru-first-note">перша фіксація з російського видання: {{ RU_TIP }}</span></template></p>

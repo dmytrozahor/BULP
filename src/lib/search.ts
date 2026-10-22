@@ -4,6 +4,8 @@
  * Old letters ѣ ъ ы ѧ are indexed as written AND via stage-N normalisation, so the user may type either.
  */
 import type { CoreCard } from '../../core/types.ts'
+import { withGal, splitHyphenParticle } from '../../core/gal-folds.ts'
+import { fold } from '../../core/orthography.ts'
 import { key, normalizeOld } from '../../core/text.ts'
 
 export type Via = 'lemma' | 'form' | 'paradigm'
@@ -32,7 +34,14 @@ export function buildIndex(cards: CoreCard[]): SearchIndex {
 }
 
 /** The query variants: as typed, and with Old-Cyrillic letters normalised (титла/ѣ-variants collapse). */
-export const queryKeys = (q: string) => [...new Set([key(q.trim()), key(normalizeOld(q.trim()).norm)])].filter(Boolean)
+export const queryKeys = (q: string) => {
+  const t = key(q.trim()), base = [t, key(normalizeOld(q.trim()).norm)]
+  // MM-16/18/19/20: the SAME cited candidates the build tries (core/gal-folds.ts, Желехівка folds, the hyphenated-particle host) are also query variants, so «скорійше», «шановати», «сьпівати», «прийми-ж»
+  // find скоріше / шанувати / співати / прийняти without waiting for the next data build; they come after the typed key
+  const sp = splitHyphenParticle(t)
+  const extra = t.length > 2 ? [...withGal(fold(t, 'желехівка')).map(c => key(c.form)), ...(sp ? [sp.host] : [])] : []
+  return [...new Set([...base, ...extra])].filter(Boolean)
+}
 
 const lowerBound = (a: string[], x: string) => { let lo = 0, hi = a.length; while (lo < hi) { const m = (lo + hi) >> 1; a[m]! < x ? (lo = m + 1) : (hi = m) } return lo }
 

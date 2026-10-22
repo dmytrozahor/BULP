@@ -22,6 +22,8 @@ export interface Etymology {
   /** the Wiktionary text itself (English prose), also contained in sources[0].quote when ≤ 300 chars */
   text: string
   chain?: EtymStep[]
+  /** MM-22: aspect and partner(s) (Вікісловник, en) — the «видова пара» line of the card */
+  aspect?: AspectPair
   hypotheses: EtymHypothesis[]
   family?: FamilyLink[]
   conflict?: EtymConflict
@@ -79,22 +81,32 @@ export function etymConflict(d: Dating | undefined, corpus: [number, number] | u
 }
 
 // ── assembly ─────────────────────────────────────────────────────────────────────────────────────
-export interface KaikkiRec { text: string; chain?: EtymStep[] }
+/** MM-22: the aspect of a verb and its partner(s), from the en.wiktionary headword line «прийня́ти (pryjnjáty) pf (imperfective прийма́ти)» (kaikki head_templates[].expansion) */
+export interface AspectPair { asp: 'pf' | 'impf'; partner: string[] }
+export interface KaikkiRec { text: string; chain?: EtymStep[]; aspect?: AspectPair }
+const ACUTE = /́/g
+export function aspectOf(expansions: (string | undefined)[]): AspectPair | undefined {
+  for (const x of expansions) {
+    const m = /\b(pf|impf)\b[^()]*\((?:imperfective|perfective)\s+([^)]+)\)/.exec((x ?? '').normalize('NFC'))
+    if (m) return { asp: m[1] as 'pf' | 'impf', partner: m[2]!.split(',').map(s => s.replace(ACUTE, '').trim()).filter(Boolean) }
+  }
+  return undefined
+}
 /** MM-12: kaikki puts «See the etymology of the corresponding lemma form.» on every form-of entry (a plural, a case form …); that sentence is a pointer, not an etymology. It is removed
  *  (with whatever follows it, e.g. «By surface analysis, …», kept as the text); an entry with nothing else left has no etymology of its own. */
 export const FORM_OF_ETYM = /^See the etymology of the corresponding lemma form\.*\s*/i
 export function withoutFormOf(k: KaikkiRec | undefined): KaikkiRec | undefined {
   if (!k || !FORM_OF_ETYM.test(k.text)) return k
   const text = k.text.replace(FORM_OF_ETYM, '').trim()
-  return text ? { ...k, text } : undefined
+  return text ? { ...k, text } : undefined   // (the aspect of a form-of entry is the lemma's business: dropped with the pointer)
 }
 export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = []): Etymology | undefined {
   const k = withoutFormOf(k0)
-  if (!k && !esumQuote && !hyps.length && !family.length) return undefined
+  if (!k && !esumQuote && !hyps.length && !family.length && !k0?.aspect) return undefined
   const sources: Evidence[] = []
-  if (k) sources.push(wiktEvidence(lemma, k.text, extracted))
+  if (k && k.text) sources.push(wiktEvidence(lemma, k.text, extracted))
   if (esumQuote) sources.push(esumEvidence(lemma, esumQuote))
-  const e: Etymology = { sources, text: k?.text ?? '', hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}) }
+  const e: Etymology = { sources, text: k?.text ?? '', hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}), ...((k ?? k0)?.aspect ? { aspect: (k ?? k0)!.aspect } : {}) }
   const c = k ? etymConflict(dictDating(k.text), corpusFirst) : undefined
   if (c) { e.conflict = c.conflict; e.conflictNote = c.note }
   return e

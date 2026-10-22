@@ -18,6 +18,10 @@ import { hitsOf, runDetectors, strongest, type Category, type LexData } from './
 import { contactCorr, type ContactCorr } from '../../core/contact-corr.ts'
 import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
+import { fold } from '../../core/orthography.ts'
+import { foldById } from '../../core/orthography.ts'
+import { PART_HYPH_FOLD, splitHyphenParticle, withGal } from '../../core/gal-folds.ts'
+import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
 export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup }
@@ -31,6 +35,7 @@ export interface AnnotatedToken {
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   numeral?: Numeral                                  // BL-4/N11: a Cyrillic numeral (value, not a word; same object on every token of the run)
+  features?: string[]                                // MM-16: ids of the cited feature rules (core/feature-chips.ts) that link this spelling (сь before a labial, -ійш-, hyphenated particle …)
   contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
 }
@@ -57,6 +62,22 @@ export function shevEpochOf(card: CoreCard): string | undefined {
   return isKnown(a) ? a.value.epochs[0] : undefined
 }
 
+function foldSteps(start: string, trace: string[]): TraceStep[] {
+  const out: TraceStep[] = []; let cur = start
+  for (const id of trace) { const f = foldById[id]; if (!f) continue; const next = f.apply(cur); out.push({ rule: id, from: cur, to: next }); cur = next }
+  return out
+}
+function galLink(k: string, data: AnnotateData) {
+  const sp = splitHyphenParticle(k)
+  const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...withGal(fold(k, 'желехівка'))]
+  for (const c of cands) {
+    if (c.form === k) continue
+    const h = (data.search.map.get(key(c.form)) ?? [])[0], card = h && data.cards.get(h.lemma)
+    if (h && card) return { c, via: h.via, card }
+  }
+  return undefined
+}
+
 export function annotate(text: string, data: AnnotateData, year?: number): AnnotatedToken[] {
   const out: AnnotatedToken[] = []
   let from = 0
@@ -78,6 +99,9 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
         mark: strongest(claims), epoch: shevEpochOf(card) })
       continue
     }
+    // MM-16 / MM-20: the SAME cited candidates the build tries (Желехівка folds, core/gal-folds.ts, the hyphenated-particle split) for a spelling the lexicon lacks; a hypothesis ('derived'), never a corpus link
+    const gal = hit ? undefined : galLink(k, data)
+    if (gal) { out.push({ ...base, provenance: 'derived', derivedFrom: { form: gal.c.form, trace: foldSteps(k, gal.c.trace) }, status: 'attested', lemma: gal.card.lemma, card: gal.card, via: gal.via, claims: claimsOf(gal.card), hints: [], mark: strongest(claimsOf(gal.card)), epoch: shevEpochOf(gal.card), features: gal.c.trace.filter(id => FEATURE_RULE_IDS.includes(id)) }); continue }
     // SPEC 30 D-4.1: an old-script spelling that is not in the lexicon but derives (core/phonology) to a lexicon form is linked as 'derived' (a hypothesis)
     const a = runDetectors(t.raw, data, year)
     const has = Object.keys(a.claims).length > 0

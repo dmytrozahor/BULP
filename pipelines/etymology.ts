@@ -13,7 +13,7 @@ import { createInterface } from 'node:readline'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { EtymStep, KaikkiRec } from '../core/etymology.ts'
-import { goroh, FORM_OF_ETYM } from '../core/etymology.ts'
+import { goroh, FORM_OF_ETYM, aspectOf } from '../core/etymology.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const KAIKKI_IN = resolve(ROOT, 'data/raw/kaikki/uk.jsonl'), KAIKKI_OUT = resolve(ROOT, 'data/work/etymology-kaikki.json'), GOROH_OUT = resolve(ROOT, 'data/work/etymology-goroh.json')
@@ -38,12 +38,16 @@ export async function extractKaikki(file = KAIKKI_IN): Promise<{ file: string; s
   const rl = createInterface({ input: createReadStream(file, { encoding: 'utf8' }), crlfDelay: Infinity })
   for await (const line of rl) {
     if (!line) continue
-    const j = JSON.parse(line) as { word?: string; etymology_text?: string; etymology_templates?: { name: string; expansion?: string }[] }
+    const j = JSON.parse(line) as { word?: string; etymology_text?: string; etymology_templates?: { name: string; expansion?: string }[]; head_templates?: { expansion?: string }[] }
     const t = (j.etymology_text ?? '').trim().replace(FORM_OF_ETYM, '').trim()   // MM-12: the form-of pointer is not an etymology
-    if (!j.word || !t || /^from\s*\?+$/i.test(t)) continue
-    const rec: KaikkiRec = { text: t, ...(chainOf(j.etymology_templates).length ? { chain: chainOf(j.etymology_templates) } : {}) }
+    const aspect = aspectOf((j.head_templates ?? []).map(h => h.expansion))   // MM-22
+    const noEty = !t || /^from\s*\?+$/i.test(t)
+    if (!j.word || (noEty && !aspect)) continue
+    const rec: KaikkiRec = { text: noEty ? '' : t, ...(!noEty && chainOf(j.etymology_templates).length ? { chain: chainOf(j.etymology_templates) } : {}), ...(aspect ? { aspect } : {}) }
     const old = words[j.word]
-    if (!old || t.length > old.text.length) words[j.word] = rec   // several parts of speech: keep the fuller statement
+    if (!old) words[j.word] = rec
+    else if (rec.text.length > old.text.length) words[j.word] = { ...rec, ...(old.aspect && !rec.aspect ? { aspect: old.aspect } : {}) }   // several parts of speech: keep the fuller statement
+    else if (rec.aspect && !old.aspect) old.aspect = rec.aspect
   }
   return { file: 'kaikki.org-dictionary-Ukrainian.jsonl (enwiktionary dump 2026-09-02, extracted 2026-10-03)', sha256: sha.digest('hex'), extracted: '2026-10-03', words }
 }

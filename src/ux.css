@@ -58,6 +58,7 @@
 .encrow { margin-top: .15rem; padding-top: .1rem; border-top: 1px dotted var(--line); }
 
 /* BL-16: the locator a link landed on */
+.tok.feat { text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: 3px; }   /* MM-16: a cited orthography / dialect / historical feature is visible here */
 .tok.hit { background: color-mix(in srgb, var(--accent) 22%, transparent); outline: 2px solid var(--accent); border-radius: 3px; }
 
 /* SPEC 63 UI-1…UI-3: compact cards, SVG graph views (theme tokens only), «граф / список» switch */

@@ -735,3 +735,41 @@ describe('MM-18…20 feature chips: Galician author → «галицька фо�
     expect(featureChips(['ORTH-ADJ-IISH'], { orth: 'желехівка', edition: 'Львів 1893, НТШ', authorRegion: 'Слобожанщина' })[0]!.text).toContain('не діалект автора')
   })
 })
+
+describe('MM-16/18/19/20 on the CLIENT (annotator and search): the same cited candidates resolve a spelling at query time, without waiting for build:data', () => {
+  const mk = (lemma: string, forms: string[]) => ({ lemma, claims: { register: unknown(), origin: unknown(), dialect: {} }, first: unknown(), forms: [] }) as unknown as CoreCard
+  const data = (pairs: [string, string][]) => ({ ...emptyLex(), search: { map: new Map(pairs.map(([k, l]) => [k, [{ lemma: l, form: k, via: 'paradigm' }]])), keys: [] }, cards: new Map(pairs.map(([, l]) => [l, mk(l, [])])) }) as unknown as AnnotateData
+  it('annotating «скорійше» gives скоро (скоріше), with the cited rule in the trace and the feature id', () => {
+    const t = annotate('скорійше', data([['скоріше', 'скоро']]))[0]!
+    expect(t.lemma).toBe('скоро'); expect(t.provenance).toBe('derived'); expect(t.derivedFrom!.form).toBe('скоріше'); expect(t.derivedFrom!.trace.map(s => s.rule)).toEqual(['ORTH-ADJ-IISH']); expect(t.features).toEqual(['ORTH-ADJ-IISH'])
+  })
+  it('шановати → шанувати (MM-19), Прийми-ж → прийняти (MM-20, the annotator uses the same split as the build), засьпіваєш → заспівати (MM-16)', () => {
+    expect(annotate('шановати', data([['шанувати', 'шанувати']]))[0]!.lemma).toBe('шанувати')
+    const p = annotate('Прийми-ж', data([['прийми', 'прийняти']]))[0]!; expect(p.lemma).toBe('прийняти'); expect(p.features).toEqual(['ORTH-PART-HYPH'])
+    expect(annotate('засьпіваєш', data([['заспіваєш', 'заспівати']]))[0]!.features).toEqual(['ORTH-ZHEL-SOFT'])
+  })
+  it('a spelling the lexicon knows is left alone (no feature, no derivation)', () => { const t = annotate('шановати', data([['шановати', 'шановати'], ['шанувати', 'шанувати']]))[0]!; expect(t.provenance).toBe('attested'); expect(t.features).toBeUndefined() })
+  it('search: the query «скорійше» / «шановати» / «прийми-ж» carries the folded keys, so the lexicon entry is found at query time', async () => {
+    const { queryKeys } = await import('../src/lib/search.ts')
+    expect(queryKeys('скорійше')).toEqual(expect.arrayContaining(['скорійше', 'скоріше'])); expect(queryKeys('шановати')).toContain('шанувати'); expect(queryKeys('Прийми-ж')).toContain('прийми'); expect(queryKeys('вода')).toEqual(['вода'])
+  })
+  it('the text-view mark and the lemma-header chip: computed from the same rules; known spellings and standard lemmas get none', async () => {
+    const { featureMarks } = await import('../src/lib/featureMarks.ts'), known = (s: Set<string>) => (k: string) => s.has(k)
+    const m = featureMarks('засьпіваєш', { orth: 'желехівка', edition: 'Львів 1893, НТШ', authorRegion: 'Слобожанщина' }, known(new Set(['заспіваєш'])))
+    expect(m.map(c => c.rule)).toEqual(['ORTH-ZHEL-SOFT']); expect(m[0]!.text).toContain('не діалект автора')
+    expect(featureMarks('засьпіваєш', { orth: 'желехівка' }, known(new Set(['засьпіваєш', 'заспіваєш'])))).toEqual([])   // the spelling itself is known
+    expect(featureMarks('засьпіваєш', { orth: 'ярижка' }, known(new Set(['заспіваєш'])))).toEqual([])   // not a Желехівка witness
+    expect(featureMarks('інший', { orth: 'желехівка' }, known(new Set())).length).toBe(0)   // a standard lemma
+    expect(featureMarks('инший', { orth: 'желехівка', authorRegion: 'Галичина' }, k => k === 'інший')[0]!.text).toBe('галицька форма')   // lemma-header chip of a feature lemma, Galician author
+  })
+})
+
+describe('MM-22 «видова пара»: прийми → прийняти, whose aspect partner is приймати (en.wiktionary headword line)', () => {
+  it('aspectOf reads «прийня́ти (pryjnjáty) pf (imperfective прийма́ти)», accents removed; the pair travels in the etymology entry', async () => {
+    const { aspectOf, buildEtymology: be } = await import('../core/etymology.ts')
+    expect(aspectOf(['прийня́ти (pryjnjáty) pf (imperfective прийма́ти)'])).toEqual({ asp: 'pf', partner: ['приймати'] })
+    expect(aspectOf(['робити impf (perfective зробити, ...)'])?.asp).toBe('impf'); expect(aspectOf(['вода f'])).toBeUndefined()
+    const e = be('прийняти', { text: '', aspect: { asp: 'pf', partner: ['приймати'] } }, undefined, [], undefined, '2026-10-03')!
+    expect(e.aspect!.partner).toEqual(['приймати']); expect(e.sources).toEqual([])
+  })
+})
