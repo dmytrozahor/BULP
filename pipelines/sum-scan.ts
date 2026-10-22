@@ -50,7 +50,7 @@ export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only
 
 if (process.argv[1] && /sum-scan\.ts$/.test(process.argv[1].replaceAll('\\', '/'))) {
   const a = process.argv.slice(2), vi = a.indexOf('--vol'), only = vi >= 0 ? Number(a[vi + 1]) : undefined
-  const pos = a.filter((x, i) => !x.startsWith('--') && i !== vi + 1), dict = pos[0] as SumDict
+  const pos = a.filter((x, i) => !x.startsWith('--') && (vi < 0 || i !== vi + 1)), dict = pos[0] as SumDict
   if (!SUM_DICTS.includes(dict)) { console.error('usage: tsx pipelines/sum-scan.ts <sum11|sum20> [books dir] [out dir] [--vol N]'); process.exit(2) }
   const books = resolve(pos[1] ?? resolve(process.env.BOOKS ?? resolve(homedir(), 'work/books'), dict)), out = resolve(pos[2] ?? `data/work/${dict}-parsed`)
   const r = runSumScan(dict, books, out, only)
