@@ -25,6 +25,10 @@ export const REGIONS: Region[] = [
   { code: 'poltavshchyna', name: 'Полтавщина', oblasts: ['UA-53'], match: /^Полтав(а|щина)$/ },
   { code: 'chernihivshchyna', name: 'Чернігівщина', oblasts: ['UA-74'], match: /^Чернігівщина$/ },
   { code: 'slobozhanshchyna', name: 'Слобожанщина', oblasts: ['UA-63', 'UA-59'], match: /^Слобожанщина$/ },
+  // SPEC 63 HV-6: regions named by the НТШ records' own footers (county → region, harvest/hv6-places.ts); Закарпаття UA-21, Буковина (північна) UA-77, Поділля UA-05 + UA-68
+  { code: 'zakarpattia', name: 'Закарпаття', oblasts: ['UA-21'], match: /^Закарпаття$/ },
+  { code: 'bukovyna', name: 'Буковина', oblasts: ['UA-77'], match: /^Буковина$/ },
+  { code: 'podillia', name: 'Поділля', oblasts: ['UA-05', 'UA-68'], match: /^Поділля$/ },
   ...SOUTH_EAST,   // SPEC 63 CX-5
   ...HISTORICAL,
 ]

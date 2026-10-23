@@ -17,6 +17,7 @@ const hr = await import('../harvest/hrushevsky.ts')
 const hv4 = await import('../harvest/hv4.ts')
 const hv5 = await import('../harvest/hv5.ts')
 const hv5o = await import('../harvest/hv5-orig.ts')
+const hv6 = await import('../harvest/hv6.ts')
 const ing = await import('../pipelines/ingest-harvest.ts')
 
 describe('HV-1 harvest/ scripts: resumable, capped, logged, launched detached', () => {
@@ -239,5 +240,64 @@ describe('HV-5 owner decisions 2026-10-21: originals only; generally accepted da
     expect(wit).toMatchObject({ date: [1710, 1710], lang: 'ruthenian' }); expect(wit.edition).toMatch(/1853/)
     const raw = wit.tokens.map((t: { raw: string }) => t.raw)
     expect(raw).toContain('Сѣчи'); expect(raw).not.toContain('Что'); expect(wit.dropped.apparatus).toBeGreaterThan(0)
+  })
+})
+
+describe('HV-6 НТШ Етноґрафічний збірник: records with the place of recording', () => {
+  const body = (a: string) => `${a} Давно, як ще у горах опришки ходили, то люде мали ся дуже тяжко, бо вони приходили до хат та брали собі що хотіли, а господарі не сміли слова сказати. Раз прийшов до одного газди опришок та каже: дай мені, газдо, хліба та сира, бо я голодний, а газда дав йому і ще бриндзі на дорогу.`
+  const vol = [
+    'ВСТУП', '', 'Редакція дякує збирачам за їх працю. Паралелі: Головацкій, Народ. пісні, т. II, стр. 6, ч. 43.', '', '76. Як Довбуш носив паску святити.', '',
+    body('Довбуш пішов до церкви.'), '', 'Зап. 1908 р. в Зеленици (прис. Зеленої), Надвірн. пов., від Петра Остапішака, Ант. Онищук.', '',
+    'Паралелі: Етн. Зб. т. V, стр. 12. Пор. Кольберг, Pokucie II, 55.', '', '77. Опришок і газда.', '', body('Опришок і газда.'), '', 'Записав у Ляхівцях, Богородч. пов. від Николихи Басараб, Богдан Заклинський.', '',
+    '78. Без місця.', '', body('Без місця запису.'), '', 'Зап. від Івана Петрика в Бавдрові, Невідомського пов., М. Капій.', '',
+    '79. Бачка.', '', body('Із Бачки.'), '', 'Зап. в липни, 1897, в Керестурі, Бач-Бодроґської стол. від Юлі Модніар.', '',
+  ].join('\n')
+  const { records, stats } = hv6.splitVolume(vol, { vol: '26', year: 1910 })
+  it('HV-6 a record is the text before its footer, cut after the numbered heading; region, ISO, year and collector come from the footer', () => {
+    expect(records[0]).toMatchObject({ title: 'Як Довбуш носив паску святити.', date: 1908, footer: { region: 'Галичина', regionIso: ['UA-26'], county: 'Надвірна', village: 'Зеленици', collector: 'Ант. Онищук' } })
+    expect(records[0]!.text).toMatch(/^Довбуш пішов до церкви/); expect(records[0]!.dateBasis).toMatch(/recording year stated/)
+    expect(records[1]).toMatchObject({ date: 1910, footer: { county: 'Богородчани', collector: 'Богдан Заклинський' } })
+    expect(records[1]!.dateBasis).toMatch(/volume year 1910/)
+  })
+  it('HV-6 the editors notes and parallels never enter a record; a footer without a county of the table is not placed (never guessed)', () => {
+    for (const r of records) { expect(r.text).not.toMatch(/Паралелі|Кольберг|стр\./) }
+    expect(stats.footers).toBe(4); expect(stats.unplaced).toBe(1); expect(records.map(r => r.title)).not.toContain('Без місця.')
+    expect(hv6.parseFooter('Зап. від Івана в Бавдрові, Невідомського пов., М. Капій.', 1910)).toBeNull()
+  })
+  it('HV-6 counties outside the regions table keep their historical name and the ISO code of their country subdivision; OCR-damaged county stems still resolve', () => {
+    expect(records[2]!.footer).toMatchObject({ region: 'Бачка', regionIso: ['RS-VO'], year: 1897 })
+    expect(hv6.parseFooter('Зап. 1904 р. в Мшанци, Старом. пов., від Гриця.', 1910)).toMatchObject({ region: 'Галичина', county: 'Старий Самбір' })
+    expect(hv6.parseFooter('Зап. 1903 р. в Мшанци, Снятип. пов., від Гриця.', 1910)).toMatchObject({ county: 'Снятин', regionIso: ['UA-26'] })
+    expect(hv6.parseFooter('Зап. від Тимка, с. Коріньок, Корочанського повіту, П. Тарасевський.', 1914)).toMatchObject({ region: 'Білгородщина' })
+  })
+  it('HV-6 OQ gate: garbage glyph runs and short fragments are refused', () => {
+    expect(hv6.oqGate(body('x')).ok).toBe(true)
+    expect(hv6.oqGate('І]Ь лл Іс*г ' + 'ш§г ттт кв$ '.repeat(30)).ok).toBe(false)
+    expect(hv6.oqGate('Давно було').reason).toBe('too-short')
+  })
+  it('HV-6 volumes: one scan per volume, duplicates and the missing volume listed, MUE т. 1 included', () => {
+    const ids = hv6.HV6_VOLUMES.map(x => x.ia)
+    expect(new Set(ids).size).toBe(ids.length)
+    for (const d of ['etnohr_37-38', 'etnografichnyizb1519nauk', 'etnologia']) { expect(ids).not.toContain(d); expect(hv6.HV6_DUPES[d]).toBeTruthy() }
+    expect(hv6.HV6_VOLUMES.filter(x => x.series === 'МУЕ')).toHaveLength(1); expect(ids).toContain('etnohr_19'); expect(hv6.HV6_MISSING.join()).toMatch(/т\. 20/)
+  })
+  it('HV-6 harvest:ingest: a per-record witness with region and date; the whole-volume archive-ukr witness of the same archive.org id is superseded (no double count)', async () => {
+    const root = process.env.HARVEST_DIR!, out = join(TMP, 'out6')
+    const vo = hv6.HV6_VOLUMES.find(x => x.ia === 'etnohr_26')!
+    mkdirSync(join(root, 'hv6/items'), { recursive: true }); mkdirSync(join(root, 'archive-ukr/items'), { recursive: true })
+    const lines = records.map((r, i) => ({ ...hv6.recordItem(vo, r, 'Володимир Гнатюк', i), file: 'etnohr_26' }))
+    const volLine = { id: 'hv6v:etnohr_26', url: 'https://archive.org/details/etnohr_26', date: '1910', licence: 'PD', bytes: 9, status: 200, title: 'ЕЗ т. 26', type: 'volume', records: records.length, file: 'etnohr_26' }
+    writeFileSync(join(root, 'hv6/items/etnohr_26.gz'), gzipSync(JSON.stringify(records.map(r => r.text))))
+    writeFileSync(join(root, 'hv6/index.jsonl'), [...lines, volLine].map(l => JSON.stringify(l)).join('\n') + '\n')
+    writeFileSync(join(root, 'archive-ukr/items/w.gz'), gzipSync(vol))
+    writeFileSync(join(root, 'archive-ukr/index.jsonl'), JSON.stringify({ id: 'etnohr_26', url: 'https://archive.org/details/etnohr_26', date: '1910', licence: 'PD', bytes: 9, status: 200, title: 'ЕЗ т. 26', file: 'w' }) + '\n')
+    await ing.main(['--out', out, '--only', 'hv6'])
+    await ing.main(['--out', out, '--only', 'archive-ukr'])
+    const files = readdirSync(out).filter(f => f.startsWith('hv_ez_'))
+    expect(files).toHaveLength(3)
+    const w0 = JSON.parse(readFileSync(join(out, files.find(f => f.includes('_1.json'))!), 'utf8'))
+    expect(w0).toMatchObject({ lang: 'uk', region: 'Галичина', date: [1908, 1908], witnessType: 'ocr' })
+    expect(w0.dateCite.quote).toMatch(/recording year stated/); expect(w0.edition).toMatch(/Надвірна/)
+    expect(readdirSync(out).filter(f => f.startsWith('hv_ia_etnohr_26'))).toHaveLength(0)
   })
 })

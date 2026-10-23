@@ -6,6 +6,8 @@
  *    wikisource-uk (date = header «рік» or the category «Роботи NNNN»; only pages categorised «Роботи українською мовою»), archive-* (archive.org OCR: Cyrillic-only tokens,
  *    lines with Russian letters/function words dropped as apparatus), hrushevsky (izbornyk, one witness per volume).
  *    Undated works are NOT ingested (counted in the summary) — a made-up date would corrupt first attestations.
+ *    hv6 (HV-6, НТШ «Етноґрафічний збірник» / «Матеріали до укр.-руської етнольоґії», archive.org OCR): one witness per record with the region of its own footer (county → region, ISO), recording year, collector;
+ *    the whole-volume archive-* witnesses of the same archive.org ids are superseded.
  *    hv5 (HV-5, litopys.org.ua / izbornyk.org.ua pages: Ruthenian texts of the 14th–18th c.; one witness per page, primary-text paragraphs only, Russian-function-word lines dropped but ъ/ѣ kept;
  *    pages that pipelines/manifest.ts already ingests are skipped; the research/44 school travels as WitnessOut.school). archive-hv5-authors (Сумцов, Руданський, Черемшина): archive-* rules.
  *  VOCABULARY ONLY (copyright / share-alike / not Ukrainian): wikipedia-uk, wikipedia-rue, wiktionary-uk, hplt, poets, faust-lukash, gramoty →
@@ -125,7 +127,7 @@ export function countText(text: string): Record<string, number> {
 const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<\/(p|div|li|h\d|tr)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_m, n) => String.fromCodePoint(+n)).replace(/[ \t]+/g, ' ')
 
 // ── per-source runs ──────────────────────────────────────────────────────────────────────────────────
-export interface Ctx { /** IN-1: per-source content manifests + cross-source dedupe */ inc: Incr; out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string> }
+export interface Ctx { /** IN-1: per-source content manifests + cross-source dedupe */ inc: Incr; out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string>; /** HV-6: archive.org ids whose whole-volume OCR is replaced by per-record witnesses with regions */ hv6Ia?: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
 const save = (ctx: Ctx, w: WitnessOut) => writeAtomic(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
@@ -197,6 +199,27 @@ function runLitopys(ctx: Ctx, src = 'hv5'): Sum {
     const authorId = authorFor(it.author, src, it.url, it.author ? `${it.authorBasis ?? 'заголовок'}: ${it.author}` : it.title, it.region)
     const school = it.school ? { id: String(it.school), source: String(it.schoolSource ?? ''), ...(it.schoolConfidence ? { confidence: String(it.schoolConfidence) } : {}) } : undefined
     const w = witnessFrom(src, it, `hv_lit_${slug(path.replace(/\.htm$/, ''))}`, text, { lang: 'ruthenian', witnessType: String(it.witnessType ?? 'scholarly_ed'), edition: String(it.edition ?? 'litopys.org.ua'), authorId, loc: it.title, dateQuote: String(it.dateQuote ?? it.date), oldOrth: true, orth: String(it.orth ?? ''), school })
+    if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    commit(ctx, s, src, it.id, itemSig(it), w)
+  }
+  return s
+}
+
+/** HV-6 (harvest/hv6.ts): НТШ «Етноґрафічний збірник» / «Матеріали до українсько-руської етнольоґії», one witness per RECORD. The region, county, recording year and collector are the record's own footer (index line);
+ *  the text is the batch file's JSON array entry. Language 'uk' (dialect text), witnessType 'ocr'. The record's tokens go through the OCR / Russian-apparatus gate of textTokens like every archive text. */
+function runHv6(ctx: Ctx, src = 'hv6'): Sum {
+  const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
+  const byId = new Map<string, Idx>(); for (const it of readIndex(src)) byId.set(it.id, it)   // a re-written volume may repeat lines: the last wins
+  const cache = new Map<string, string[]>()
+  for (const it of byId.values()) {
+    if (ctx.limit && s.items >= ctx.limit) break
+    if (it.type === 'volume' || it.status !== 200 || !it.file) continue
+    s.items++
+    if (ctx.inc.unchanged(src, it.id, itemSig(it))) { bump(s, 'unchanged'); continue }
+    let texts = cache.get(it.file); if (!texts) { const b = readItem(src, it.file); if (!b) continue; texts = JSON.parse(b.toString('utf8')) as string[]; cache.set(it.file, texts) }
+    const text = texts[Number(it.idx)]; if (typeof text !== 'string') continue
+    const authorId = authorFor(it.author, src, it.url, it.author ? `${it.collectorBasis === 'footer' ? 'зап.' : 'укладач тому'}: ${it.author}` : it.title, it.region)
+    const w = witnessFrom(src, it, `hv_ez_${slug(String(it.id).replace(/^hv6:/, ''))}`, text, { lang: 'uk', witnessType: 'ocr', edition: `${it.volume}, НТШ Львів (OCR archive.org, не вичитано; місце запису — з примітки запису: ${it.county}, ${it.region})`, authorId, loc: `${it.title} (OCR)`, dateQuote: `${it.dateBasis}; ${it.regionCite}` })
     if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
     commit(ctx, s, src, it.id, itemSig(it), w)
   }
@@ -340,6 +363,8 @@ export async function main(argv: string[]) {
       if (u.kind === 'wikisource') ctx.manifestWs.add(u.title)
     }
   } catch { /* no manifest in a bare sample run */ }
+  // HV-6: archive.org ids with per-record witnesses supersede their whole-volume archive-* witnesses (only volumes that really yielded records)
+  ctx.hv6Ia = new Set(readIndex('hv6').filter(i => i.type === 'volume' && i.status === 200 && Number(i.records) > 0).map(i => String(i.id).replace(/^hv6v:/, '')))
   const only = arg('--only')
   const sums: Sum[] = []
   const want = (n: string) => !only || only === n
@@ -350,6 +375,7 @@ export async function main(argv: string[]) {
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
   if (want('hv5')) sums.push(inc('hv5', () => runLitopys(ctx)))
   if (want('hv5-orig')) sums.push(inc('hv5-orig', () => runOrig(ctx)))
+  if (want('hv6')) sums.push(inc('hv6', () => runHv6(ctx)))
   // vocabulary sources are one aggregate each: unchanged index + parameters + existing output = not read at all
   for (const [v, fam] of Object.entries(VOCAB)) if (want(v)) {
     const idxPath = `${HARVEST}/${v}/index.jsonl`, sig = vocabSig(existsSync(idxPath) ? readFileSync(idxPath, 'utf8').split('\n') : [], `${ITEM_PARAMS}|limit=${ctx.limit}|stride=${ctx.stride}`), outFile = `${ctx.out}/harvest-vocab/${v}.json`

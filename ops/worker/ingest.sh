@@ -32,7 +32,12 @@ runcmd() {
   if [ $rc -eq 0 ]; then echo "$sig" > $D/$s; for m in build unlinked vitest vuetsc vitebuild budget; do rm -f $D/$m; done
   else echo "ingest source $s FAILED rc=$rc (see $BULP_LOGS/ingest-$s.time)" >&2; failed+=("$s(rc=$rc)"); fi
 }
-for s in wikisource-uk archive-ukr hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
+# SPEC 63 HV-6: the НТШ volumes of harvest/hv6.ts are ingested per record (with the place of recording); the whole-volume archive-ukr witnesses of the same archive.org ids are then dropped as superseded.
+# The marker of archive-ukr carries the number of such volumes, so a rerun happens when the hv6 harvester has finished more of them.
+hv6sig() { grep '"type":"volume"' data/raw/harvest/hv6/index.jsonl 2>/dev/null | grep -c '"status":200'; }
+for s in wikisource-uk hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
+run hv6
+run archive-ukr --hv6-volumes "$(hv6sig)"
 run wikipedia-uk --wiki-stride "$BULP_WIKI_STRIDE"
 run hplt --limit "$BULP_HPLT_LIMIT"
 # GG-7: the bundle-once fix changes these counts; the changed parameters make the marker miss, so the old inflated files (x46) are rebuilt
