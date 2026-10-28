@@ -19,7 +19,8 @@ import { lk } from '../core/cv.ts'
 import { fold } from '../core/orthography.ts'
 import { seBucket } from '../core/parts.ts'
 import { unpackCore } from '../core/pack.ts'
-import { assembleEntry, CLASS_UK, SUM_NONRESTRICTIVE, SUM_NORM_UK, dialectOf, TH, type LbEntry, type RegionCount, type Thresholds } from '../core/labels.ts'
+import { assembleEntry, CLASS_KEYS, CLASS_KEY_UK, CLASS_UK, SUM_NONRESTRICTIVE, SUM_NORM_UK, dialectOf, classKeyOf, gradeOf, GRADE_UK, summarizeWitnesses, witFromRegionRows, TH, type LbEntry, type RegionCount, type Thresholds, type WitSummary } from '../core/labels.ts'
+import { cvFacts, lightFacts, archaicFacts, witMeta } from './lb-facts.ts'
 import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tableOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
 import { nodesOf, plainOf, parseCell, r2uDictById, rowUrl } from './r2u.ts'
 import { tokenRaw } from './ingest-r2u.ts'
@@ -81,6 +82,8 @@ export interface Stats {
   sense: { rows: number; labelled: number }
   /** LB-8: lemmas per label of the sources that are not r2u dumps (СУМ-11, СУМ-20, en/uk.Вікісловник): «<table id>: <label>» → lemmas; plain «діал.» rows without a table as «<source>: діал.» */
   src: Record<string, number>
+  /** LB-11: counts per class key (CLASS_KEYS) and grade, over all entries and over the corpus-attested ones; `few` reasons */
+  lb11: { all: Record<string, number>; att: Record<string, number>; total: number; attTotal: number; grade: Record<string, number>; few: Record<string, number> }
   /** class counts of the corpus cards under other thresholds (a sensitivity check, not what the cards use) */
   alt: { name: string; cover: number; total: number }[]
 }
@@ -101,18 +104,25 @@ export function main(): Stats {
   const seFile = readJson<Record<string, { rows: { d: string; n?: number; lb?: string[]; g?: string; u?: string; l?: string; v?: string[] }[] }>>(resolve(ROOT, 'data/work/se.json'))
   // witness-region tables from the detail shards
   const byRegion = new Map<string, RegionCount[]>()
+  const wm = witMeta(readJson<{ witnesses: { id: string; region?: string; date: [number, number] }[]; regions: { code: string; name: string }[] }>(`${PUB}/corpus.json`))
+  const witOf = new Map<string, WitSummary>()
   const lexDir = `${PUB}/lex`
   if (existsSync(lexDir)) for (const f of readdirSync(lexDir)) {
     if (!f.endsWith('.json')) continue
-    const s = readJson<{ lemmas?: string[]; details?: { stats?: { byRegion?: RegionCount[] } }[] }>(`${lexDir}/${f}`); if (!s?.lemmas) continue
-    s.lemmas.forEach((l, i) => { const b = s.details?.[i]?.stats?.byRegion; if (b?.length) byRegion.set(lk(l), b) })
+    const s = readJson<{ lemmas?: string[]; details?: { stats?: { byRegion?: RegionCount[] }; forms?: { byW?: Record<string, number> }[] }[] }>(`${lexDir}/${f}`); if (!s?.lemmas) continue
+    s.lemmas.forEach((l, i) => {
+      const d = s.details?.[i], b = d?.stats?.byRegion; if (b?.length) byRegion.set(lk(l), b)
+      const ids = new Set<string>(); for (const fm of d?.forms ?? []) for (const w of Object.keys(fm.byW ?? {})) ids.add(w)
+      const w = ids.size ? summarizeWitnesses(ids, wm.meta) : undefined; if (w) witOf.set(lk(l), w)
+    })
   }
   // dictionary-only entries
   const cvTags = new Map<string, string>()
+  const cvEntries = new Map<string, unknown[]>()
   const cvDir = `${PUB}/cv`
   if (existsSync(cvDir)) for (const f of readdirSync(cvDir)) {
     const s = readJson<Record<string, unknown[]>>(`${cvDir}/${f}`); if (!s) continue
-    for (const [k, e] of Object.entries(s)) cvTags.set(lk(k), typeof e[1] === 'string' ? e[1] : '')
+    for (const [k, e] of Object.entries(s)) { cvTags.set(lk(k), typeof e[1] === 'string' ? e[1] : ''); cvEntries.set(lk(k), e) }
   }
   const cardKeys = new Set(cards.map(c => lk(c.lemma)))
   const known = (k: string) => cardKeys.has(k) || cvTags.has(k) || usage.has(k)
@@ -120,8 +130,8 @@ export function main(): Stats {
   console.log(`labels: r2u scanned (${Object.entries(scan.per).map(([s, p]) => `${s} ${p.articles} статей / ${p.labelled} з позначкою / ${p.hits} позначок / ${p.lemmas} лем`).join('; ')})`)
 
   const entries = new Map<string, LbEntry>()
-  const st: Stats = { full: {}, fullTotal: 0, all: {}, allTotal: 0, register: { withLabel: 0, total: 0, bySrc: {} }, type: { total: 0, withWordType: 0 }, sense: { rows: 0, labelled: 0 }, src: {}, alt: ALT.map(a => ({ name: a.name, cover: 0, total: 0 })) }
   const seRows = (k: string) => (seFile?.[k]?.rows ?? []).filter(r => r.lb?.length).map(r => ({ n: r.n, d: r.d, lb: r.lb!, ...(r.g ? { g: r.g } : {}), ...(r.u ? { u: r.u } : {}), ...(r.v ? { v: r.v } : {}) }))
+  const st: Stats = { full: {}, fullTotal: 0, all: {}, allTotal: 0, register: { withLabel: 0, total: 0, bySrc: {} }, type: { total: 0, withWordType: 0 }, sense: { rows: 0, labelled: 0 }, src: {}, lb11: { all: {}, att: {}, total: 0, attTotal: 0, grade: {}, few: {} }, alt: ALT.map(a => ({ name: a.name, cover: 0, total: 0 })) }
   /** LB-9: the lemma's headword in СУМ-11 / СУМ-20 (one entry per dictionary; restricted = a sense carries a label other than the non-restrictive ones) */
   const sumRows = (k: string) => {
     const by = new Map<string, { d: string; n: number; restricted: boolean; u?: string; l?: string }>()
@@ -133,7 +143,10 @@ export function main(): Stats {
     }
     return [...by.values()]
   }
-  const count = (e: LbEntry, full: boolean) => {
+  const count = (e: LbEntry, full: boolean, att = full) => {
+    const k = classKeyOf(e.d), g = gradeOf(e.d) ?? 'none'
+    st.lb11.total++; bump(st.lb11.all, k); bump(st.lb11.grade, `${k}:${g}`); if (att) { st.lb11.attTotal++; bump(st.lb11.att, k) }
+    if (k === 'few') bump(st.lb11.few, e.d.why ?? '—')
     st.allTotal++; bump(st.all, e.d.c); if (e.d.sub === 'sum') bump(st.all, 'general-sum'); st.register.total++; if (e.r.length) { st.register.withLabel++; for (const s of new Set(e.r.map(r => r[1]))) bump(st.register.bySrc, s) }
     st.type.total++; if (e.t.length) st.type.withWordType++
     for (const h of e.d.dict ?? []) if (EXTRA_LABEL_TABLES.some(t => t.id === h.t)) bump(st.src, `${h.t}: ${h.a}`)
@@ -148,11 +161,13 @@ export function main(): Stats {
     const claimDict: [string, string, string][] = []
     for (const [code, cl] of Object.entries(c.claims.dialect ?? {})) { const c2 = cl as { method?: string; evidence: { source: string; quote: string; locator: string }[] }; const ev = /^LEX-/.test(c2.method ?? '') ? c2.evidence.find(e => e.source === 'ENC') : undefined; if (ev) claimDict.push([code, ev.quote, ev.locator]) }
     void dia
+    const fv = c.first?.value, wit = witOf.get(k) ?? witFromRegionRows(byRegion.get(k) ?? [], wm.regionName, typeof fv === 'object' ? fv.date[0] : 0)
     const prop = c.claims.proper as { value: unknown; evidence: { quote: string; locator: string }[] } | undefined
     const cs = c.claims.origin as { value: unknown; evidence: { quote: string; locator: string }[] }
     const e = assembleEntry({
       by: byRegion.get(k), dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], tagCount: tc, nForms: c.paradigm.length, se: seRows(k), pos: c.pos, paradigmKind: c.paradigmKind, lemma: c.lemma, sum: sumRows(k),
-      tagLine: c.paradigm[0]?.tags, kind: 'full',
+      tagLine: c.paradigm[0]?.tags, kind: 'full', vesum: c.paradigm.length > 0,
+      ...(wit ? { wit } : {}),
       ...(prop && prop.value !== 'unknown' && prop.evidence[0] ? { proper: { kind: String(prop.value), quote: prop.evidence[0].quote, locator: prop.evidence[0].locator } } : {}),
       ...(cs.value === 'church_slavonic' && cs.evidence[0] ? { cs: { quote: cs.evidence[0].quote, locator: cs.evidence[0].locator } } : {}),
       ...(loan?.labels[c.lemma] ? { loan: loan.labels[c.lemma]! } : {}), claimDict,
@@ -163,8 +178,22 @@ export function main(): Stats {
   }
   for (const [k, tags] of cvTags) {
     if (entries.has(k)) continue
-    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), sum: sumRows(k), lemma: k, tagLine: tags, kind: 'dict', ...(loan?.labels[k] ? { loan: loan.labels[k]! } : {}) })
-    entries.set(k, e); count(e, false)
+    const cf = cvFacts(cvEntries.get(k), wm.meta)
+    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), sum: sumRows(k), lemma: k, tagLine: tags, kind: 'dict', ...cf.facts, ...(loan?.labels[k] ? { loan: loan.labels[k]! } : {}) })
+    entries.set(k, e); count(e, false, cf.attested)
+  }
+  // LB-11: light cards (VESUM lemmas attested in an admitted witness) and archaic cards, which the loops above do not visit
+  const light = readJson<{ lemmas: [string, string, number, string][] }>(`${PUB}/light.json`)
+  for (const row of light?.lemmas ?? []) {
+    const k = lk(row[0]); if (entries.has(k)) continue
+    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), sum: sumRows(k), lemma: row[0], tagLine: row[1], kind: 'light', ...lightFacts(row, wm.meta), ...(loan?.labels[row[0]] ? { loan: loan.labels[row[0]]! } : {}) })
+    entries.set(k, e); count(e, false, true)
+  }
+  const arch = readJson<{ entries: { id: string; witnesses?: Record<string, number>; dict?: { w?: string } }[] }>(`${PUB}/archaic.json`)
+  for (const a of arch?.entries ?? []) {
+    const k = lk(a.id); if (entries.has(k)) continue
+    const e = assembleEntry({ dict: scan.hits.get(k) ?? [], usage: usage.get(k) ?? [], se: seRows(k), sum: sumRows(k), lemma: a.id, kind: 'archaic', ...archaicFacts(a, wm.meta) })
+    entries.set(k, e); count(e, false, true)
   }
   if (seFile) for (const e of Object.values(seFile)) for (const r of e.rows) { st.sense.rows++; if (r.lb?.length) st.sense.labelled++ }
 
@@ -172,7 +201,7 @@ export function main(): Stats {
   const parts = new Map<number, Record<string, LbEntry>>()
   let written = 0
   for (const [k, e] of entries) {
-    if (e.d.c === 'few' && !e.d.corp && !e.r.length && !e.t.length && !e.s && !e.p) continue
+    // LB-11: every entry is written, none is left to the default (the class is exhaustive)
     const b = seBucket(k); ;(parts.get(b) ?? parts.set(b, {}).get(b)!)[k] = e; written++
   }
   const next = `${OUT}.next`
@@ -184,6 +213,15 @@ export function main(): Stats {
   return st
 }
 
+function lb11Report(st: Stats): string[] {
+  const row = (k: string) => `| ${CLASS_KEY_UK[k as keyof typeof CLASS_KEY_UK]} | ${pc(st.lb11.all[k] ?? 0, st.lb11.total)} | ${pc(st.lb11.att[k] ?? 0, st.lb11.attTotal)} |`
+  return [
+    `## LB-11: сім класів, кожен запис має рівно один (усього ${st.lb11.total}; засвідчених у корпусі ${st.lb11.attTotal})`, '',
+    '| клас | усі записи | засвідчені в корпусі |', '|---|---|---|', ...CLASS_KEYS.map(row), '',
+    '### Ступінь доказу', '', ...Object.entries(st.lb11.grade).sort().map(([k, n]) => `- ${k.replace(/:(strong|medium|weak|none)$/, (_m, g) => ': ' + (g === 'none' ? 'без ступеня' : GRADE_UK[g as 'strong']))}: ${n}`), '',
+    '### Чому «невизначено»', '', ...(Object.keys(st.lb11.few).length ? Object.entries(st.lb11.few).sort((a, b) => b[1] - a[1]).map(([k, n]) => `- ${k}: ${n}`) : ['- таких записів немає']), '',
+  ]
+}
 const pc = (n: number, d: number) => `${n} (${d ? ((100 * n) / d).toFixed(1) : '0.0'} %)`
 function writeReport(st: Stats, scan: DictScan, written: number, shards: number): void {
   const cls = (o: Record<string, number>, tot: number) => (['dict', 'corpus', 'general', 'few'] as const).flatMap(c => [`| ${c === 'general' ? CLASS_UK[c] + ' (за корпусом)' : CLASS_UK[c]} | ${pc(c === 'general' ? (o.general ?? 0) - (o['general-sum'] ?? 0) : o[c] ?? 0, tot)} |`, ...(c === 'general' ? [`| ${SUM_NORM_UK} | ${pc(o['general-sum'] ?? 0, tot)} |`] : []), ...(c === 'dict' ? [`|   з них: мітка позначає слово діалектним / регіональним | ${pc(o['dict-strict'] ?? 0, tot)} |`, `|   з них: словник лише називає місце запису (повіт, губернію) | ${pc(o['dict-place'] ?? 0, tot)} |`] : [])]).join('\n')
@@ -195,7 +233,7 @@ function writeReport(st: Stats, scan: DictScan, written: number, shards: number)
     `## Діалектний клас — леми з засвідченням у корпусі (${st.fullTotal})`, '', '| клас | леми |', '|---|---|', cls(st.full, st.fullTotal),
     `| **a+b+c без підкласу СУМ** | **${pc(covNoSum(st.full), st.fullTotal)}** |`, `| **a+b+c з підкласом СУМ (LB-9)** | **${pc(cov(st.full), st.fullTotal)}** |`, '',
     '### Чутливість до порогів (лише для перевірки; картки використовують «взяті пороги»)', '', '| пороги | клас визначено |', '|---|---|', ...st.alt.map(a => `| ${a.name} | ${pc(a.cover, a.total)} |`), '',
-    `## Діалектний клас — усі статті (${st.allTotal}: картки корпусу + словникові)`, '', '| клас | статті |', '|---|---|', cls(st.all, st.allTotal),
+    ...lb11Report(st), `## Діалектний клас — усі статті (${st.allTotal}: картки корпусу + словникові)`, '', '| клас | статті |', '|---|---|', cls(st.all, st.allTotal),
     `| **a+b+c без підкласу СУМ** | **${pc(covNoSum(st.all), st.allTotal)}** |`, `| **a+b+c з підкласом СУМ (LB-9)** | **${pc(cov(st.all), st.allTotal)}** |`, '',
     '## Позначки словників (діалектні / територіальні / вжиток), прочитані з власних списків скорочень', '',
     '| словник | статей у дампі | статей з позначкою | позначок | лем із позначкою |', '|---|---|---|---|---|',

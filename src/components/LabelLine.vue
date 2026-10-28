@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
 import { useLabels } from '../lib/labelsData.ts'
 import { useData } from '../composables/useData.ts'
 import { openPanel } from '../lib/cardTabs.ts'
-import { dialectHeadline, dialectHow, METHODS_PATH, NEUTRAL, regTitle, regViews, typeBase } from '../lib/labelsText.ts'
+import { dialectHeadline, dialectHow, gradeLine, METHODS_PATH, NEUTRAL, regTitle, regViews, typeBase } from '../lib/labelsText.ts'
 import { classUk } from '../../core/labels.ts'
 import type { LemmaCard } from '../../core/types.ts'
 const props = defineProps<{ lemma: string; byRegion?: LemmaCard['stats']['byRegion']; /** DOM id of the Labels panel to open */ panel?: string }>()
@@ -21,7 +21,7 @@ const regs = computed(() => regViews(entry.value.r))
 
 <template>
   <p class="small sans ov-labels" data-testid="ov-labels">
-    <span class="muted">Діалект: </span><span class="badge" tabindex="0" :title="dialectHow(d)">{{ classUk(d) }}</span>
+    <span class="muted">Діалект: </span><span class="badge" tabindex="0" :title="dialectHow(d)">{{ classUk(d) }}</span> <span class="muted">({{ gradeLine(d) }})</span>
     <span class="small"> {{ dialectHeadline(d, regionName) }}</span>
     <span class="muted"> · Регістр: </span>
     <template v-if="regs.length"><span v-for="v in regs.slice(0, 4)" :key="v.id" class="badge" tabindex="0" :title="regTitle(v)">{{ v.abbr }}</span></template>

@@ -61,11 +61,77 @@ export function dpNorm(by: RegionCount[]): number {
   return dp / (1 - minS)
 }
 
-export type DialectClass = 'dict' | 'corpus' | 'general' | 'few'
+export type DialectClass = 'dict' | 'corpus' | 'general' | 'few' | 'witness' | 'base'
 export const SUM_NORM_UK = 'загальновживане за словником (СУМ, без обмежувальних позначок)'
-export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' }): string => (d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : CLASS_UK[d.c])
+export const VESUM_NORM_UK = 'нормативне (ВЕСУМ), регіональних даних немає'
+export const MARKED_UK = { sum: 'у СУМ, із позначкою вжитку; регіональних даних немає', vesum: 'у ВЕСУМ, із позначкою вжитку; регіональних даних немає' } as const
+export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[] }): string => (d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub && d.marks?.length ? MARKED_UK[d.sub] : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : d.c === 'general' && d.sub === 'vesum' ? VESUM_NORM_UK : CLASS_UK[d.c])
 export const CLASS_UK: Record<DialectClass, string> = {
-  dict: 'діалектне за словником', corpus: 'регіонально марковане (корпус)', general: 'загальновживане', few: 'недостатньо даних',
+  dict: 'діалектне за словником', corpus: 'регіонально марковане (корпус)', general: 'загальновживане', few: 'невизначено',
+  witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника',
+}
+
+// ── LB-11: exhaustive classification — evidence grade, the seven classes, the facts the tail classes read ─────────────
+export type Grade = 'strong' | 'medium' | 'weak'
+export const GRADE_UK: Record<Grade, string> = { strong: 'сильний', medium: 'середній', weak: 'слабкий' }
+/** G² at which a corpus skew counts as strong (χ² df 1, p < 0.001: 10.83) */
+export const G2_STRONG = 10.83
+/** the seven classes of LB-11, in order of precedence; the key under which shares are counted */
+export type ClassKey = 'dict' | 'corpus' | 'general' | 'norm' | 'witness' | 'base' | 'few'
+export const CLASS_KEYS: ClassKey[] = ['dict', 'corpus', 'general', 'norm', 'witness', 'base', 'few']
+export const CLASS_KEY_UK: Record<ClassKey, string> = {
+  dict: 'діалектне за словником', corpus: 'регіонально марковане за корпусом', general: 'загальновживане за корпусом', norm: 'літературна норма за словником',
+  witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника', few: 'невизначено',
+}
+export const classKeyOf = (d: { c: DialectClass; sub?: 'sum' | 'vesum' }): ClassKey => (d.c === 'general' && d.sub ? 'norm' : d.c)
+/** the evidence grade of a result (derived from the stored result, so older shards get it too); undefined = no class (невизначено) */
+export function gradeOf(d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[]; corp?: { top?: { g2: number } } }): Grade | undefined {
+  if (d.c === 'dict') return d.strict === false ? 'medium' : 'strong'
+  if (d.c === 'corpus') return (d.corp?.top?.g2 ?? 0) >= G2_STRONG ? 'strong' : 'medium'
+  if (d.c === 'general') return d.sub ? (d.marks?.length ? 'weak' : 'medium') : 'strong'
+  if (d.c === 'witness' || d.c === 'base') return 'weak'
+  return undefined
+}
+/** the witnesses a word is attested in, when no class 1–4 applies (class 5) */
+export interface WitSummary {
+  /** number of witnesses */ n: number
+  /** n is a lower bound (only a sample of the attestations is on the card) */ atLeast?: true
+  /** regions of those witnesses: [code, name] */ regions: [string, string][]
+  /** witnesses of unknown region */ unk?: number
+  /** first and last year of the witnesses */ from: number; to: number
+}
+/** a dictionary with a documented regional base, quoted from its own preface (class 6) */
+export interface DictBase { id: string; short: string; region: string; quote: string; url: string }
+export const DICT_BASES: DictBase[] = [
+  { id: 'r2u_zheleh', short: 'Желехівський', region: 'галицьке середовище', url: 'https://r2u.org.ua/html/zheleh_details.html',
+    quote: 'Високий Сойм Галицкий, котрий запоміг видавництво два рази ухвалюючи підмогу грошеву (передмова до II тому; словар укладено у Львові й Станіславі з матеріалів Закревского, Піскунова, Верхратского, Маґури в «Галичанині» і рукописів земляків «з ріжних сторін»)' },
+  { id: 'r2u_umanets', short: 'Уманець–Спілка', region: 'змішана основа: Наддніпрянщина, Галичина, Буковина, Угорська Русь', url: 'https://r2u.org.ua/html/umanets_pered.html',
+    quote: 'материял, зібраний … за цїлих двадцять років з різних кутків Української, Галицької, Буковинської і навіть з Угорскої Руси (передмова, Львів 1893)' },
+  { id: 'arkushyn', short: 'Аркушин', region: 'західнополіські говірки', url: 'https://archive.org/details/slzhdplhv',
+    quote: 'Словник західнополіських говірок (Аркушин, 2000): основу названо в заголовку словника' },
+]
+export const baseOf = (id: string): DictBase | undefined => DICT_BASES.find(b => b.id === id)
+/** what the tail of dialectOf reads beyond the corpus table and the dictionary hits */
+export interface TailFacts {
+  /** the lemma is a VESUM headword */ vesum?: boolean
+  /** the lemma is a headword of СУМ-11 / СУМ-20 (known from the dictionary bit, no sense rows read) */ sumHead?: ('sum11' | 'sum20')[]
+  /** register marks (ids) the entry carries: they do not keep it out of class 4, they lower its grade */ marks?: string[]
+  /** names of the only source dictionaries, for the reason of «невизначено» */ srcNames?: string[]
+  /** the lemma's witnesses (class 5) */ wit?: WitSummary
+  /** the ids of the dictionaries that are its ONLY source (class 6) */ bases?: string[]
+}
+/** «XII ст.» or «XII–XV ст.» from a year range */
+export function periodUk(from: number, to: number): string {
+  const rom = (c: number) => ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII', 'XIII', 'XIV', 'XV', 'XVI', 'XVII', 'XVIII', 'XIX', 'XX', 'XXI'][c] ?? String(c)
+  const a = Math.ceil(from / 100), b = Math.ceil(to / 100)
+  return a === b ? `${rom(a)} ст.` : `${rom(a)}–${rom(b)} ст.`
+}
+/** the class-5 sentence: the count, the regions and the period; old witnesses are named «давньоукраїнське» */
+export function witnessLine(w: WitSummary): string {
+  const reg = w.regions.map(r => r[1])
+  const old = w.to <= 1400 ? 'давньоукраїнське, ' : ''
+  const where = reg.length === 1 ? `з ${reg[0]}` : `з регіонів: ${reg.join(', ')}`
+  return `${old}засвідчено лише в ${w.atLeast ? 'щонайменше ' : ''}${w.n} ${w.n === 1 ? 'пам’ятці' : 'пам’ятках'} ${where}, ${periodUk(w.from, w.to)}${w.unk ? ` (ще ${w.unk} без встановленого регіону)` : ''} (слабкий доказ)`
 }
 export interface CorpusSummary {
   /** total uses */ f: number
@@ -79,7 +145,11 @@ export interface CorpusSummary {
 export interface SumNorm { d: string; n: number; u?: string; l?: string }
 export interface DialectResult {
   c: DialectClass
-  /** c only: 'sum' = no corpus dispersion, class from the dictionary's unrestricted headword (LB-9) */ sub?: 'sum'
+  /** c only: 'sum' = class from the dictionary's unrestricted СУМ headword (LB-9); 'vesum' = a VESUM headword without a restrictive tag (LB-11) */ sub?: 'sum' | 'vesum'
+  /** sub sum / vesum: the register marks (ids) the headword carries; they restrict the style, not the region, so the class stays but the grade is weak */ marks?: string[]
+  /** (witness) LB-11 */ wit?: WitSummary
+  /** (base) LB-11: the dictionaries whose regional base the class rests on */ bases?: string[]
+  /** (few) LB-11: why none of the seven classes applies */ why?: string
   /** (c, sub sum) the headwords the class rests on */ sumNorm?: SumNorm[]
   /** (a): true = some label marks the word or sense as dialectal / regional; false = the dictionaries only record WHERE it was noted (county, governorate) */ strict?: boolean
   /** (a) the dictionary hits (area / dialectal kinds) */ dict?: DictHit[]
@@ -99,7 +169,7 @@ export function corpusSummary(by: RegionCount[] | undefined, th: Thresholds = TH
 }
 
 /** The ONE class of a lemma. `dict` = area / dialectal hits of the dictionaries; `plain` = «діал.» marks without an area. */
-export function dialectOf(dict: DictHit[], plain: [string, string][], by: RegionCount[] | undefined, th: Thresholds = TH, sumNorm?: SumNorm[]): DialectResult {
+export function dialectOf(dict: DictHit[], plain: [string, string][], by: RegionCount[] | undefined, th: Thresholds = TH, sumNorm?: SumNorm[], facts?: TailFacts): DialectResult {
   const corp = corpusSummary(by, th)
   const areaHits = dict.filter(h => (h.kind === 'area' && (h.v || h.place)) || h.kind === 'dialectal')
   if (areaHits.length || plain.length) {
@@ -112,15 +182,28 @@ export function dialectOf(dict: DictHit[], plain: [string, string][], by: Region
     if (corp.top) return { c: 'corpus', corp }
     if (corp.att >= th.k && corp.dp <= th.dpMax) return { c: 'general', corp }
   }
+  return tailClass(corp, sumNorm, facts, !!(sumNorm?.length || facts?.vesum))
+}
+/** LB-11: classes 4–7, after 1–3 found nothing. `restrictedOk` = no dictionary or register label restricts the word (the caller decides: sumNorm is non-empty only then). */
+export function tailClass(corp: CorpusSummary | undefined, sumNorm: SumNorm[] | undefined, facts: TailFacts | undefined, restrictedOk: boolean): DialectResult {
   const f = corp?.f ?? 0
-  // LB-9: no corpus dispersion to compare (no material, too few uses, fewer than 2 regions with material): an unrestricted СУМ headword is the dictionary's normative status
-  if (sumNorm?.length && (!corp || corp.f < th.fMin || corp.nReg < th.regionsMin)) return { c: 'general', sub: 'sum', sumNorm, ...(corp ? { corp } : {}) }
+  // 4: the dictionary's normative status (СУМ-11/20 headword, LB-9; VESUM headword, LB-11); the corpus shows no skew that passes the thresholds
+  const marks = facts?.marks?.length ? { marks: facts.marks } : {}
+  if (restrictedOk && sumNorm?.length) return { c: 'general', sub: 'sum', sumNorm, ...marks, ...(corp ? { corp } : {}) }
+  if (restrictedOk && facts?.sumHead?.length) return { c: 'general', sub: 'sum', sumNorm: facts.sumHead.map(d => ({ d, n: 0 })), ...marks, ...(corp ? { corp } : {}) }
+  if (restrictedOk && facts?.vesum) return { c: 'general', sub: 'vesum', ...marks, ...(corp ? { corp } : {}) }
+  // 5: the only attestations are in witnesses with a known region
+  if (facts?.wit && facts.wit.n > 0 && facts.wit.regions.length) return { c: 'witness', wit: facts.wit, ...(corp ? { corp } : {}) }
+  // 6: the only source is a dictionary with a documented regional base
+  const bases = (facts?.bases ?? []).filter(b => baseOf(b))
+  if (bases.length) return { c: 'base', bases, ...(corp ? { corp } : {}) }
+  const why = facts?.wit && facts.wit.n > 0 ? `засвідчено в ${facts.wit.n} ${facts.wit.n === 1 ? 'пам’ятці' : 'пам’ятках'}, але регіон ${facts.wit.n === 1 ? 'її' : 'жодної'} не встановлено` : facts?.srcNames?.length ? `єдині джерела: ${facts.srcNames.join('; ')}; їхні передмови, які ми прочитали, не називають регіональної бази, а пам’яток з відомим регіоном немає` : 'єдине джерело — запис без регіональної бази і без пам’яток з відомим регіоном'
   const need = !corp ? `корпус не містить засвідчень цієї леми; для класу потрібно ≥ ${TH.fMin} уживань у ≥ ${TH.regionsMin} регіонах з матеріалом, або позначка словника`
     : f < TH.fMin ? `у корпусі ${f} ${f === 1 ? 'вживання' : 'вживань'}; потрібно ≥ ${TH.fMin} (ще ${TH.fMin - f}), або позначка словника`
     : corp.nReg < TH.regionsMin ? `регіонів з матеріалом ${corp.nReg}; потрібно ≥ ${TH.regionsMin}`
     : corp.att < TH.k ? `засвідчено в ${corp.att} з ${corp.nReg} регіонів: для «загальновживаного» потрібно ≥ ${TH.k}, а розподіл не відхиляється значущо (регіонального перекосу немає)`
     : `розподіл по регіонах нерівномірний (DP ${corp.dp.toFixed(2)} > ${TH.dpMax}), але жоден регіон не проходить порогів значущості`
-  return { c: 'few', ...(corp ? { corp } : {}), need }
+  return { c: 'few', ...(corp ? { corp } : {}), need, why }
 }
 
 // ── register / usage (LB-3) ────────────────────────────────────────────────────────────────────────
@@ -234,15 +317,18 @@ export interface LbEntry {
   /** VESUM tags carried by only SOME paradigm forms: [tag, forms with it, all forms] — a property of those forms, not of the lemma */ f?: [string, number, number][]
   /** part of speech as the card prints it, paradigm kind, morphological summary of the lemma's tag line */ p?: string; k?: string; m?: string
 }
-export const emptyEntry = (): LbEntry => ({ v: 1, d: { c: 'few', need: `корпус не містить засвідчень цієї леми; для класу потрібно ≥ ${TH.fMin} уживань у ≥ ${TH.regionsMin} регіонах з матеріалом, або позначка словника` }, r: [], t: [] })
+export const emptyEntry = (): LbEntry => ({ v: 1, d: { c: 'few', need: `корпус не містить засвідчень цієї леми; для класу потрібно ≥ ${TH.fMin} уживань у ≥ ${TH.regionsMin} регіонах з матеріалом, або позначка словника`, why: 'запис міток цього слова відсутній у зібраних даних' }, r: [], t: [] })
 
 /** plain-Ukrainian «як визначено» of each class, for the tooltip and the methods page */
 export const HOW: Record<DialectClass, string> = {
   dict: 'Словник, який ми прочитали, сам позначає це слово діалектним або називає край, де його записано. Мітка і її розшифровка цитуються з самого словника. Мітка «діал.» без назви краю дає «діалектне (регіон не вказано)»; територіальна мітка («зах.», «гуц.», тег Вікісловника) називає регіон; мітка, що лише називає місце запису (повіт, губернія), показується як «місце запису (не обов’язково діалектне)».',
   corpus: `Слово засвідчене в пам’ятках переважно одного регіону: різниця з рештою корпусу значуща (G² з поправкою Бонферроні на число регіонів) і щонайменше вдвічі за відносною частотою. Це асоціація з регіоном пам’яток, а не діалектна мітка.`,
   general: `Слово засвідчене щонайменше в ${TH.k} регіонах, розподіл близький до розподілу всього корпусу (DP ≤ ${TH.dpMax}), діалектної мітки у словниках немає.`,
-  few: `У корпусі замало уживань (потрібно ≥ ${TH.fMin}), а позначки словника немає: клас не визначено, і ми не вгадуємо.`,
+  few: 'Жодна з шести підстав не підходить: немає позначки словника, значущого перекосу чи розсіювання в корпусі, нормативного заголовного слова, пам’яток з відомим регіоном, словника з відомою базою. Клас не визначено, і ми не вгадуємо; картка називає причину.',
+  witness: 'Усі засвідчення слова — у пам’ятках одного регіону (чи кількох названих). Це слабкий доказ: він каже, звідки є тексти, а не що слово діалектне. Регіон пам’ятки — місце видання чи авторства джерела.',
+  base: 'Слово є лише в словнику, чия власна передмова називає край, де зібрано його матеріал. Це слабкий доказ: це походження збірки, а не діалектна мітка слова.',
 }
+export const HOW_VESUM = 'Слово є заголовним у ВЕСУМ без жодного тега, що обмежує вжиток (rare, coll, arch, slang, vulg, obsc, bad, subst, alt, err). У ВЕСУМ немає територіальних тегів, тому регіональних даних про слово немає: це нормативний статус за словником, а не вимір поширення.'
 /** tooltip of the sub-class «загальновживане за словником» (LB-9) */
 export const HOW_SUM = 'Для цього слова немає даних про розсіювання в корпусі (замало вживань або регіонів), тому клас узято зі словника: слово є заголовним у СУМ-11 / СУМ-20, і жодне його значення не має позначки діал., зах. чи регістрової позначки. Це нормативний статус за словником, а не вимір поширення: ми не стверджуємо, що слово засвідчене в усіх регіонах.'
 export const areaUk = (id: string): string => AREAS[id] ?? id
@@ -300,6 +386,11 @@ export interface AssembleIn {
   /** dialect claims of the card whose evidence is a dictionary quote (hand-cited ЕУМ / books): [group code, quote, locator] */ claimDict?: [string, string, string][]
   /** card kind: 'full' | 'dict' | 'archaic' | … */ kind: string
   /** the tag line of one VESUM entry (cv) or of the first paradigm form */ tagLine?: string
+  /** LB-11: the lemma is a VESUM headword */ vesum?: boolean
+  /** LB-11: the lemma's witnesses (class 5) */ wit?: WitSummary
+  /** LB-11: ids of the dictionaries that are the ONLY source of the entry (class 6) */ bases?: string[]
+  /** LB-11: СУМ-11/20 headword known from the dictionary bit */ sumHead?: ('sum11' | 'sum20')[]
+  /** LB-11: names of the only source dictionaries */ srcNames?: string[]
 }
 const DIALECT_REG = new Set(['dial', 'lemk'])
 export function assembleEntry(i: AssembleIn): LbEntry {
@@ -328,9 +419,34 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   for (const h of dict) if (h.kind === 'type') ty.push([h.v, 'd', `${h.t}\t${h.a}\t${h.q}`, h.u])
   if (i.kind === 'archaic') ty.push(['arkh', 'k', 'архаїчна картка: слово відсутнє у ВЕСУМ, засвідчене лише у старих джерелах'])
   for (const r of reg) if (r[0] === 'arkh' && !ty.some(x => x[0] === 'arkh')) ty.push(['arkh', r[1] === 'd' ? 'd' : 'v', r[2], r[3]]); else if (r[0] === 'istor' && !ty.some(x => x[0] === 'istor')) ty.push(['istor', 'd', r[2], r[3]])
-  const sumNorm: SumNorm[] = i.sum?.length && i.sum.every(x => !x.restricted) && !reg.length && !dict.some(h => h.kind !== 'type') && !plain.length ? i.sum.map(x => ({ d: x.d, n: x.n, ...(x.u ? { u: x.u } : {}), ...(x.l ? { l: x.l } : {}) })) : []
-  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by, TH, sumNorm)
+  const territorialFree = !dict.some(h => h.kind === 'area' || h.kind === 'dialectal') && !plain.length
+  const marks = [...new Set(reg.map(r => r[0]))]
+  const sumNorm: SumNorm[] = i.sum?.length && territorialFree ? i.sum.map(x => ({ d: x.d, n: x.n, ...(x.u ? { u: x.u } : {}), ...(x.l ? { l: x.l } : {}) })) : []
+  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by, TH, sumNorm, { ...(i.vesum && territorialFree ? { vesum: true } : {}), ...(marks.length ? { marks } : {}), ...(i.srcNames?.length ? { srcNames: i.srcNames } : {}), ...(i.sumHead?.length ? { sumHead: i.sumHead } : {}), ...(i.wit ? { wit: i.wit } : {}), ...(i.bases?.length ? { bases: i.bases } : {}) })
   const sense: NonNullable<LbEntry['s']> = (i.se ?? []).filter(r => r.lb.length).map(r => [r.n, r.d, r.lb])
   const m = i.tagLine ? morphOf(i.tagLine) : '', pos = i.pos ?? (i.tagLine ? POS_UK[i.tagLine.split(':')[0]!] : undefined)
   return { v: 1, d, r: reg, t: ty, ...(sense.length ? { s: sense } : {}), ...(ft.length ? { f: ft } : {}), ...(i.by?.length ? { corpus: true } : {}), ...(pos ? { p: pos } : {}), ...(i.paradigmKind ? { k: i.paradigmKind } : {}), ...(m ? { m } : {}) }
+}
+
+// ── LB-11: the witness summary of class 5 ───────────────────────────────────────────────────────────────
+export interface WitMetaLite { /** region code and name, or undefined when the witness has no established region */ region?: [string, string]; from: number; to: number }
+/** Summarise the witnesses a word is attested in: count, the regions of those with an established region, the others as \`unk\`, and the year range. Undefined when no id is known. */
+export function summarizeWitnesses(ids: Iterable<string>, meta: (id: string) => WitMetaLite | undefined, atLeast = false): WitSummary | undefined {
+  const seen = new Set<string>(), regs = new Map<string, string>()
+  let unk = 0, from = Infinity, to = -Infinity
+  for (const id of ids) {
+    if (seen.has(id)) continue
+    seen.add(id)
+    const m = meta(id); if (!m) { unk++; continue }
+    if (m.region) regs.set(m.region[0], m.region[1]); else unk++
+    if (m.from > 0) from = Math.min(from, m.from)
+    if (m.to > 0) to = Math.max(to, m.to)
+  }
+  if (!seen.size) return undefined
+  return { n: seen.size, ...(atLeast ? { atLeast: true as const } : {}), regions: [...regs].sort((a, b) => a[0].localeCompare(b[0])), ...(unk ? { unk } : {}), from: Number.isFinite(from) ? from : 0, to: Number.isFinite(to) ? to : 0 }
+}
+/** fallback when no witness ids are at hand (shards without \`byW\`): the regions with at least one use, the card's first-attestation year */
+export function witFromRegionRows(rows: RegionCount[], names: (code: string) => string, year: number): WitSummary | undefined {
+  const att = rows.filter(r => r.f > 0); if (!att.length) return undefined
+  return { n: att.reduce((a, r) => a + r.f, 0), atLeast: true, regions: att.map(r => [r.code, names(r.code)] as [string, string]), from: year, to: year }
 }

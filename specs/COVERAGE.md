@@ -956,3 +956,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-25 | tests/fx.test.ts › MM-25 «Отношеніє»: a Russian headword of our r2u dictionaries that is not a Ukrainian lemma is classified by date and region, with the native-derivation test › never labelled: a Ukrainian lemma / VESUM form, a cited dialect form, a word that is no r2u Russian headword |
 | MM-25 | tests/fx.test.ts › MM-25 «Отношеніє»: a Russian headword of our r2u dictionaries that is not a Ukrainian lemma is classified by date and region, with the native-derivation test › the native-derivation test: отношеніє keeps BOTH ЦС features (от-, -ніє) and no cited sound rule reaches відношення; a native -нье / житье reaches життя by R13 |
 | MM-25 | tests/fx.test.ts › MM-25 the annotator: «Отношеніє» is no longer «unknown» when the r2u index says it is a Russian headword › modern text: суржик with відношення / ставлення from the r2u article; 1750: ЦС / книжна form; a word the lexicon knows is never labelled; without the r2u index nothing changes |
+| LB-11 | tests/lb-all.test.ts › LB-11 classes 1–3 keep their order and carry their grades (strong / medium) |
+| LB-11 | tests/lb-all.test.ts › LB-11 class 4: a VESUM headword without a restrictive tag is «нормативне (ВЕСУМ), регіональних даних немає», grade середній |
+| LB-11 | tests/lb-all.test.ts › LB-11 class 5: «засвідчено лише в N пам’ятках з X, століття (слабкий доказ)»; old witnesses are «давньоукраїнське» |
+| LB-11 | tests/lb-all.test.ts › LB-11 class 6: the base of a dictionary is quoted from its own preface; classes 5 and 6 are never called «діалектне» |
+| LB-11 | tests/lb-all.test.ts › LB-11 class 7 «невизначено» says why and has no grade |
+| LB-11 | tests/lb-all.test.ts › LB-11 precedence: dictionary > corpus > normative > witnesses > base; the corpus rows are kept with every class |
+| LB-12 | tests/lb-all.test.ts › LB-12 the same grade line is on the Labels block and the Огляд line (every card kind mounts them), and in the tooltip |
+| LB-12 | tests/lb-all.test.ts › LB-12 the methods page explains every class and grade in plain Ukrainian and prints the quoted dictionary bases |
+| LB-13 | tests/lb-all.test.ts › LB-13 witnesses are summarised by region and years; witnesses without a region are counted apart |
+| LB-13 | tests/lb-all.test.ts › LB-13 VESUM, dictionary bases and witnesses are read from cv, light and archaic entries |
+| LB-13 | tests/lb-all.test.ts › LB-13 build-labels writes every entry (no default skipping), counts the seven classes over all and attested entries, and reports the reason of «невизначено» |

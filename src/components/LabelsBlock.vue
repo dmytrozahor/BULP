@@ -14,7 +14,7 @@ import { useLabels } from '../lib/labelsData.ts'
 import { useData } from '../composables/useData.ts'
 import { openPanel } from '../lib/cardTabs.ts'
 import {
-  dialectHeadline, dialectHow, formTagsLine, hitView, METHODS_PATH, METHODS_TITLE, NEUTRAL, neutralChecked, regTitle, regViews, SURZHYK_NOTE, THRESHOLDS_LINE, typeBase, typeViews,
+  baseEvidence, dialectHeadline, dialectHow, gradeLine, formTagsLine, hitView, METHODS_PATH, METHODS_TITLE, NEUTRAL, neutralChecked, regTitle, regViews, SURZHYK_NOTE, THRESHOLDS_LINE, typeBase, typeViews,
 } from '../lib/labelsText.ts'
 import { classUk } from '../../core/labels.ts'
 import type { LemmaCard } from '../../core/types.ts'
@@ -25,6 +25,8 @@ const regionName = (code: string) => corpus.value?.regions?.find(r => r.code ===
 const d = computed(() => entry.value.d)
 const headline = computed(() => dialectHeadline(d.value, regionName))
 const how = computed(() => dialectHow(d.value))
+const grade = computed(() => gradeLine(d.value))
+const bases = computed(() => baseEvidence(d.value))
 const hits = computed(() => (d.value.dict ?? []).map(hitView))
 const regs = computed(() => regViews(entry.value.r))
 const types = computed(() => typeViews(entry.value.t))
@@ -41,6 +43,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
       <dt class="muted">Діалект</dt>
       <dd :data-testid="`lb-dialect-${kind ?? 'card'}`">
         <span :class="['badge', d.c === 'dict' ? 'dialect' : '']" tabindex="0" :title="how" data-testid="lb-class">{{ classUk(d) }}</span>
+        <span class="badge" tabindex="0" :title="grade" data-testid="lb-grade">{{ grade }}</span>
         <span class="small"> — {{ headline }}</span>
         <button type="button" class="chip small lb-how" :title="how" :aria-label="`як визначено: ${how}`">як визначено</button>
         <template v-if="d.c === 'dict' && hits.length">
@@ -57,6 +60,9 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
           <p v-if="hits.length > 6" class="small muted">і ще {{ hits.length - 6 }} позначок</p>
         </template>
         <p v-if="d.sumNorm?.length" class="small muted" data-testid="lb-sumnorm">Підстава: {{ d.sumNorm.map(x => `${x.d === 'sum11' ? 'СУМ-11' : x.d === 'sum20' ? 'СУМ-20' : x.d}${x.l ? ' ' + x.l : ''}, значень: ${x.n}`).join('; ') }}; жодне значення не має позначки діал., зах. чи регістрової. <template v-for="x in d.sumNorm" :key="x.d"><a v-if="x.u" :href="x.u" rel="noopener" target="_blank">стаття {{ x.d }} ↗ </a></template></p>
+        <ul v-if="bases.length" class="small lb-ev" data-testid="lb-base"><li v-for="b in bases" :key="b.short"><strong>{{ b.short }}</strong>: основа — {{ b.region }}; <q class="lb-q">{{ b.quote }}</q> <a :href="b.url" rel="noopener" target="_blank">передмова ↗</a></li></ul>
+        <p v-if="d.c === 'witness' && d.wit" class="small muted" data-testid="lb-wit">Регіон пам’ятки — місце видання чи авторства джерела, а не діалектна мітка слова; цей доказ слабкий.</p>
+        <p v-if="d.c === 'few'" class="small muted" data-testid="lb-why">Причина: {{ d.why ?? d.need }}.</p>
         <p v-if="d.plain?.length" class="small muted">«діал.» без назви області: {{ d.plain.map(plainLine).join('; ') }}</p>
         <details v-if="d.corp" class="small lb-corp" :open="d.c === 'corpus'">
           <summary>регіони пам’яток: {{ d.corp.f }} уживань, {{ d.corp.att }} з {{ d.corp.nReg }} регіонів, DP {{ d.corp.dp.toFixed(2) }}</summary>
