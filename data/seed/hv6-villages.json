@@ -1,0 +1,167 @@
+{
+ "берлин": {
+  "region": "Галичина",
+  "iso": [
+   "UA-46"
+  ],
+  "qid": "Q4084992",
+  "label": "Берлин",
+  "admin": "Львівська область",
+  "url": "https://www.wikidata.org/wiki/Q4084992",
+  "retrieved": "2026-10-28"
+ },
+ "солочин": {
+  "region": "Закарпаття",
+  "iso": [
+   "UA-21"
+  ],
+  "qid": "Q3890077",
+  "label": "Солочин",
+  "admin": "Закарпатська область",
+  "url": "https://www.wikidata.org/wiki/Q3890077",
+  "retrieved": "2026-10-28"
+ },
+ "дрогобич": {
+  "region": "Галичина",
+  "iso": [
+   "UA-46"
+  ],
+  "qid": "Q158821",
+  "label": "Дрогобич",
+  "admin": "Львівська область",
+  "url": "https://www.wikidata.org/wiki/Q158821",
+  "retrieved": "2026-10-28"
+ },
+ "короп": {
+  "region": "Чернігівщина",
+  "iso": [
+   "UA-74"
+  ],
+  "qid": "Q1493180",
+  "label": "Короп",
+  "admin": "Чернігівська область",
+  "url": "https://www.wikidata.org/wiki/Q1493180",
+  "retrieved": "2026-10-28"
+ },
+ "керестур": {
+  "region": "Банат",
+  "iso": [
+   "RO-TM"
+  ],
+  "qid": "Q843155",
+  "label": "Керестур",
+  "admin": "Тіміш",
+  "url": "https://www.wikidata.org/wiki/Q843155",
+  "retrieved": "2026-10-28"
+ },
+ "хітар": {
+  "region": "Галичина",
+  "iso": [
+   "UA-46"
+  ],
+  "qid": "Q4497918",
+  "label": "Хітар",
+  "admin": "Львівська область",
+  "url": "https://www.wikidata.org/wiki/Q4497918",
+  "retrieved": "2026-10-28"
+ },
+ "голови": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q4142049",
+  "label": "Голови",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q4142049",
+  "retrieved": "2026-10-28"
+ },
+ "тулова": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q4465144",
+  "label": "Тулова",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q4465144",
+  "retrieved": "2026-10-28"
+ },
+ "стецева": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q4442506",
+  "label": "Стецева",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q4442506",
+  "retrieved": "2026-10-28"
+ },
+ "бабина": {
+  "region": "Галичина",
+  "iso": [
+   "UA-46"
+  ],
+  "qid": "Q4074322",
+  "label": "Бабина",
+  "admin": "Львівська область",
+  "url": "https://www.wikidata.org/wiki/Q4074322",
+  "retrieved": "2026-10-28"
+ },
+ "корнич": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q660075",
+  "label": "Корнич",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q660075",
+  "retrieved": "2026-10-28"
+ },
+ "жураки": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q4181855",
+  "label": "Жураки",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q4181855",
+  "retrieved": "2026-10-28"
+ },
+ "струтин": {
+  "region": "Галичина",
+  "iso": [
+   "UA-46"
+  ],
+  "qid": "Q59558",
+  "label": "Струтин",
+  "admin": "Львівська область",
+  "url": "https://www.wikidata.org/wiki/Q59558",
+  "retrieved": "2026-10-28"
+ },
+ "ніжин": {
+  "region": "Чернігівщина",
+  "iso": [
+   "UA-74"
+  ],
+  "qid": "Q952457",
+  "label": "Ніжин",
+  "admin": "Чернігівська область",
+  "url": "https://www.wikidata.org/wiki/Q952457",
+  "retrieved": "2026-10-28"
+ },
+ "кобаки": {
+  "region": "Галичина",
+  "iso": [
+   "UA-26"
+  ],
+  "qid": "Q4225048",
+  "label": "Кобаки",
+  "admin": "Івано-Франківська область",
+  "url": "https://www.wikidata.org/wiki/Q4225048",
+  "retrieved": "2026-10-28"
+ }
+}

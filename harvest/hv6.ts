@@ -8,8 +8,10 @@
  * DATE = the recording year of the footer; none stated → the volume year, labelled `dateBasis: volume`. OQ: the old scans are noisy, so a record must pass the gate below (tuned on etnohr_26, etnohr_12, etnograf_zb_35).
  * Usage: tsx harvest/hv6.ts   (resumable; index.jsonl is the truth; the volume line is written last)
  */
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
-import { Harvest, ROOT_DIR, decisionNeeded, type IndexItem } from './lib.ts'
+import { execFileSync } from 'node:child_process'
+import { existsSync, readFileSync, readdirSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { Harvest, ROOT_DIR, UA, decisionNeeded, sleep, type IndexItem } from './lib.ts'
 import { PLACES, REGION_WORDS, lookupCounty, type PlaceRow } from './hv6-places.ts'
 import { HV6_TAGGED, gazVillage, mergeIndex, parseVillageIndex, splitTagged, type VillageIndex } from './hv6b.ts'
 
@@ -181,7 +183,19 @@ export function wholeVolumeIds(): Set<string> {
 
 type SavedIndex = Record<string, { county: string; line: number; quote: string }[]>
 const dehydrate = (i: VillageIndex): SavedIndex => Object.fromEntries(Object.entries(i).map(([k, v]) => [k, v.map(x => ({ county: x.county.name, line: x.line, quote: x.quote }))]))
-const rehydrate = (s: SavedIndex | VillageIndex): VillageIndex => Object.fromEntries(Object.entries(s ?? {}).map(([k, v]) => [k, v.map(x => ({ county: typeof x.county === 'string' ? PLACES.find(p => p.name === x.county)! : x.county, line: x.line, quote: x.quote }))]))
+const rehydrate = (s: SavedIndex | VillageIndex): VillageIndex => Object.fromEntries(Object.entries(s ?? {}).map(([k, v]) => [k, v.map((x: { county: string; line: number; quote: string }) => ({ county: PLACES.find(p => p.name === x.county)!, line: x.line, quote: x.quote }))]))
+
+/** the download goes through curl: node's fetch times out connecting to the archive.org item servers (dnNNN.us/eu.archive.org) from the harvester box (UND_ERR_CONNECT_TIMEOUT, 2026-10-28), curl does not. Same pacing (2 s), 3 retries, 403/429 stop the script. */
+async function curlGet(h: Harvest, url: string): Promise<{ status: number; buf: Buffer }> {
+  await sleep(2000)
+  const tmp = `${tmpdir()}/hv6-${process.pid}.dl`
+  try {
+    const code = execFileSync('curl', ['-sL', '--max-time', '600', '--retry', '3', '--retry-delay', '20', '-A', UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
+    const status = Number(code)
+    if (status === 403 || status === 429) h.stop(`HTTP ${status} for ${url}`)
+    return { status, buf: status === 200 ? readFileSync(tmp) : Buffer.alloc(0) }
+  } catch (e) { return h.stop(`curl failed (${(e as Error).message.slice(0, 120)}) for ${url}`) } finally { rmSync(tmp, { force: true }) }
+}
 
 async function main() {
   decisionNeeded('- DECIDED (HV-6): ' + Object.entries(HV6_DUPES).map(([k, w]) => `${k}: ${w}`).join('; '))
@@ -197,9 +211,8 @@ async function main() {
     const creators = ([] as string[]).concat((m.creator as string[] | string | undefined) ?? []).filter(c => /[А-ЯІЇЄҐа-яіїєґ]/.test(c))
     const editor = creators.find(c => /Гнатюк|Франко/.test(c))?.replace(/\s+Михайлович$/, '') ?? creators[0] ?? null
     if (!yearOk || !file) { h.log(`${vol.ia}: record mismatch (year ${yearOk}, text layer ${!!file}); not harvested`); h.put(`${vol.ia}.none`, '', [{ id: vid, url: `https://archive.org/details/${vol.ia}`, date: null, licence: LIC, bytes: 0, status: 0, title: vol.ia, type: 'volume', verified: `mismatch: ${m.date}` }]); continue }
-    const { status, res } = await h.get(`https://archive.org/download/${vol.ia}/${encodeURIComponent(file)}`, { soft5xx: true })
+    const { status, buf } = await curlGet(h, `https://archive.org/download/${vol.ia}/${encodeURIComponent(file)}`)
     if (status !== 200) { h.put(`${vol.ia}.none`, '', [{ id: vid, url: `https://archive.org/details/${vol.ia}`, date: null, licence: LIC, bytes: 0, status, title: vol.ia, type: 'volume' }]); continue }
-    const buf = Buffer.from(await res.arrayBuffer())
     const text = buf.toString('utf8')
     let { records, stats } = splitVolume(text, vol)
     if (HV6_TAGGED.has(vol.ia)) {   // HV-6b: songs signed with a village; county from the index of places printed in т. 17 (kept in state.json for т. 18, 19)

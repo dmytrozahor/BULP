@@ -18,6 +18,8 @@ const hv4 = await import('../harvest/hv4.ts')
 const hv5 = await import('../harvest/hv5.ts')
 const hv5o = await import('../harvest/hv5-orig.ts')
 const hv6 = await import('../harvest/hv6.ts')
+const hv6b = await import('../harvest/hv6b.ts')
+const hv6g = await import('../harvest/hv6-gazetteer.ts')
 const ing = await import('../pipelines/ingest-harvest.ts')
 
 describe('HV-1 harvest/ scripts: resumable, capped, logged, launched detached', () => {
@@ -299,5 +301,41 @@ describe('HV-6 НТШ Етноґрафічний збірник: records with th
     expect(w0).toMatchObject({ lang: 'uk', region: 'Галичина', date: [1908, 1908], witnessType: 'ocr' })
     expect(w0.dateCite.quote).toMatch(/recording year stated/); expect(w0.edition).toMatch(/Надвірна/)
     expect(readdirSync(out).filter(f => f.startsWith('hv_ia_etnohr_26'))).toHaveLength(0)
+  })
+})
+
+describe('HV-6b place of recording from the volume own text: village-signed songs, index of places, cited gazetteer', () => {
+  const song = (n: number, tag: string) => `${n}. Ой зійшов я сьвіт навкола з сивими волами, не здибав я дівчиноньку з чорними бровами, ${n}\nА на мени люди брешут як на того вовка, а я вірно сохну по ній ще з минулого року. (${tag}).`
+  const text = [
+    'Сі села приналежать до ось яких повітів:', '', '1. Бережани (Вишки, Гиновичі, Ясениця).', '', '2. Дрогобич (Мединичі, Ясениця,', 'Нагуєвичі).', '', '3. Вижниця (Берегомет, Розтоки).', '',
+    ...[1, 2, 3].map(n => song(n, 'Мединичі')), ...[4, 5].map(n => song(n, 'Ясениця')), song(6, 'Кнг.'), ...[7, 8, 9].map(n => song(n, 'Розтоки')), song(10, 'Невідоме'),
+  ].join('\n\n')
+  const idx = hv6b.parseVillageIndex(text)
+  it('HV-6b the volume index «N. Повіт (села)» gives village → county with the line and the quote; a village under two counties is ambiguous', () => {
+    expect(hv6b.villageCounty(idx, 'Мединичі')).toMatchObject({ county: { name: 'Дрогобич', region: 'Галичина', iso: ['UA-46'] }, quote: expect.stringContaining('Дрогобич (Мединичі') })
+    expect(hv6b.villageCounty(idx, 'Ясениця')).toBeNull(); expect(idx['ясениця']).toHaveLength(2)
+    expect(hv6b.villageCounty(idx, 'Розтоки')).toMatchObject({ county: { region: 'Буковина', iso: ['UA-77'] } })
+  })
+  it('HV-6b songs signed with a village are one record per village; unresolved, ambiguous and abbreviation tags are not placed (never guessed)', () => {
+    const { records, stats } = hv6b.splitTagged(text, idx, { vol: '17', year: 1905 })
+    expect(records.map(r => r.footer.village).sort()).toEqual(['Мединичі', 'Розтоки'])
+    expect(records[0]!.footer).toMatchObject({ county: expect.any(String), year: null }); expect(records[0]!.dateBasis).toMatch(/volume year 1905/)
+    expect(stats).toMatchObject({ tagged: 10, ambiguous: 1, villages: 2 }); expect(stats.unresolved).toBe(2)
+    expect(records.find(r => r.footer.village === 'Мединичі')!.text.match(/сьвіт навкола/g)).toHaveLength(3)
+  })
+  it('HV-6b the Wikidata gazetteer keeps a village only when its label is ONE settlement and its subdivision maps to a region; every row cites the QID', () => {
+    const rows = [
+      { l: 'Керестур', item: 'http://www.wikidata.org/entity/Q1', iso: 'RS-VO', isoL: 'Воєводина' },
+      { l: 'Тростянець', item: 'http://www.wikidata.org/entity/Q2', iso: 'UA-46', isoL: 'Львівська область' }, { l: 'Тростянець', item: 'http://www.wikidata.org/entity/Q3', iso: 'UA-26', isoL: 'Івано-Франківська область' },
+      { l: 'Іспас', item: 'http://www.wikidata.org/entity/Q4', iso: 'CA-AB', isoL: 'Альберта' },
+    ]
+    const g = hv6g.resolveRows(rows, '2026-10-28')
+    expect(Object.keys(g)).toEqual(['керестур']); expect(g['керестур']).toMatchObject({ region: 'Бачка', qid: 'Q1', url: 'https://www.wikidata.org/wiki/Q1', retrieved: '2026-10-28' })
+  })
+  it('HV-6b a village footer resolves only to a region that the same volume places by county; without a gazetteer row it stays unplaced', () => {
+    expect(hv6.footerByVillage('Зап. 1897 в Невідомім від Марії.', 1910, new Set(['Бачка']))).toBeNull()
+    const vol = ['Зап. в липни, 1897, в Керестурі, Бач-Бодроґ. стол. від Юлі.', '', 'Зап. в липни, 1897, в Коцурі, Бач-Бодроґ. стол. від Марії.', '', 'Зап. в липни, 1897, в Конурі, Бач-Бодроґ. стол. від Івана.'].join('\n')
+    expect(hv6.footerVillages(vol, 1910)).toEqual([])   // every footer names its county here: nothing left for the gazetteer
+    expect(hv6.footerVillages('Зап. в серпні, 1897, у Невідомому від Марії.', 1910)).toEqual(['Невідомому'])
   })
 })

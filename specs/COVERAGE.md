@@ -447,6 +447,10 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | HV-6 | tests/harvest.test.ts › HV-6 OQ gate: garbage glyph runs and short fragments are refused |
 | HV-6 | tests/harvest.test.ts › HV-6 volumes: one scan per volume, duplicates and the missing volume listed, MUE т. 1 included |
 | HV-6 | tests/harvest.test.ts › HV-6 harvest:ingest: a per-record witness with region and date; the whole-volume archive-ukr witness of the same archive.org id is superseded (no double count) |
+| HV-6 | tests/harvest.test.ts › HV-6b the volume index «N. Повіт (села)» gives village → county with the line and the quote; a village under two counties is ambiguous |
+| HV-6 | tests/harvest.test.ts › HV-6b songs signed with a village are one record per village; unresolved, ambiguous and abbreviation tags are not placed (never guessed) |
+| HV-6 | tests/harvest.test.ts › HV-6b the Wikidata gazetteer keeps a village only when its label is ONE settlement and its subdivision maps to a region; every row cites the QID |
+| HV-6 | tests/harvest.test.ts › HV-6b a village footer resolves only to a region that the same volume places by county; without a gazetteer row it stays unplaced |
 | PL-1 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › every PL row cites its own ЕУМ article (um155 East, um161 North, um168 West) with a verbatim quote that contains its example |
 | PL-2 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › gates: the rows are undated (no dating quote), so the blanket 1798 applies; the group gates (CHN 1501, WPL 1301) lie below it |
 | PL-2 | tests/dialect-books.test.ts › PL Polissian dialects: ЕУМ-cited diphthongs, [е]/[и], [гі]/[кі]; akanye only where a source attests it › no row claims akanye, hard р or ы for MPL/WPL: ЕУМ um167/um168 attest none of them; the only akanye rows are CHN (um155) and SLB (um169) |
