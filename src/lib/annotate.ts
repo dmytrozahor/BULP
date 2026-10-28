@@ -22,9 +22,10 @@ import { fold } from '../../core/orthography.ts'
 import { foldById } from '../../core/orthography.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, withGal } from '../../core/gal-folds.ts'
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
+import { classifyRu, type RuClass, type RuLookups } from '../../core/ru-contact.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
-export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup }
+export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup; /** MM-25: Russian headwords of the r2u ru→uk dictionaries (optional; without it no Russianism is detected) */ ru?: Pick<RuLookups, 'ruHead' | 'isDialect'> }
 
 export interface AnnotatedToken {
   raw: string; start: number; end: number; key: string
@@ -35,6 +36,7 @@ export interface AnnotatedToken {
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   numeral?: Numeral                                  // BL-4/N11: a Cyrillic numeral (value, not a word; same object on every token of the run)
+  ruClass?: RuClass                                  // MM-25: a Russian headword of the r2u dictionaries that is no Ukrainian lemma: type by year (суржик / ЦС-книжна / язичіє), counterparts from the same article
   features?: string[]                                // MM-16: ids of the cited feature rules (core/feature-chips.ts) that link this spelling (сь before a labial, -ійш-, hyphenated particle …)
   contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
@@ -114,8 +116,9 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
         via: via.h!.via, claims, hints: [], mark: strongest(claims), epoch: shevEpochOf(dcard) })
       continue
     }
+    const ruClass = data.ru && !a.known ? classifyRu(t.raw, { year }, { ...data.ru, isUkrainian: kk => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0 }) : undefined   // MM-25
     const contact = contactCorr(t.raw, f => hitsOf(data, f))   // MM-9: the SAME rule as MOR-ICHESK (core/rules.ts), so chip and counterpart agree
-    out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}) })
+    out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}), ...(ruClass ? { ruClass } : {}) })
   }
   return out
 }

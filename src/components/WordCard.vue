@@ -80,6 +80,13 @@ const STATUS_UK = { attested: 'засвідчено в корпусі', lexindex
       · <span class="muted">російський варіант (реконструкція):</span> {{ t.contact.ruVariant }}
       <EvidencePopover :evidence="t.contact.evidence" heading="Контактна відповідність" />
     </div>
+    <div v-if="t.ruClass" class="small" style="margin-top:.35rem" data-testid="ru-class">
+      <span class="badge" :title="'тип форми визначено за роком тексту і регіоном; мітка належить формі, не лемі'">{{ t.ruClass.label }}</span>
+      <template v-if="t.ruClass.standard.length"> літературні відповідники (r2u): <template v-for="(s, i) in t.ruClass.standard" :key="s.lemma"><template v-if="i">, </template><RouterLink :to="`/w/${encodeURIComponent(s.lemma)}`"><strong>{{ s.lemma }}</strong></RouterLink></template></template>
+      · <span class="muted">російський варіант:</span> {{ t.ruClass.ruVariant }}
+      <template v-if="t.ruClass.possible.length > 1"> · <span class="muted">можливо також: {{ t.ruClass.possible.slice(1).join(', ') }} (без року тексту тип не визначити)</span></template>
+      <EvidencePopover :evidence="t.ruClass.evidence" heading="Докази: російське слово в r2u" />
+    </div>
     <div v-if="Object.keys(t.claims).length" class="row" style="margin-top:.35rem">
       <ClaimSet :claims="t.claims" />
     </div>

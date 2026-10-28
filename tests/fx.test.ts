@@ -829,3 +829,47 @@ describe('MM-24 «рік приконектився до ріці що вигл�
     expect(lem('роцѣ')).toBe('рік'); expect(lem('року')).toBe('рік'); expect(lem('рокъ')).toBe('рік')
   })
 })
+
+// ───────────────────────── MM-25 «Отношеніє»: what kind of form is it? ─────────────────────────
+import { classifyRu, nativePath, ruKey, type RuHit } from '../core/ru-contact.ts'
+import { derive as deriveOld } from '../core/phonology.ts'
+
+describe('MM-25 «Отношеніє»: a Russian headword of our r2u dictionaries that is not a Ukrainian lemma is classified by date and region, with the native-derivation test', () => {
+  const HIT: RuHit = { dict: 'Уманець–Спілка 1893–98', locator: 's?w=отношение', equivalents: ['відношення', 'ставлення'], quote: 'Отношеніе = відношення, ставлення' }
+  const look = (uk: string[] = [], dia: string[] = []) => ({ ruHead: (k: string) => (k === 'отношение' ? [HIT] : []), isUkrainian: (k: string) => uk.includes(k), isDialect: (k: string) => dia.includes(k) })
+  it('the fold: Отношеніє / отношеніе / отношенїє / отношенье → the Russian headword отношение', () => { for (const w of ['Отношеніє', 'отношеніе', 'отношение']) expect(ruKey(w), w).toBe('отношение') })
+  it('a modern text (or none): «контактне / суржик (русизм)», the standard counterparts quoted from the r2u article, the Russian form is a VARIANT', () => {
+    for (const year of [undefined, 1925, 2020]) {
+      const c = classifyRu('Отношеніє', { year }, look())!
+      expect(c.kind, String(year)).toBe('surzhyk'); expect(c.label).toContain('суржик'); expect(c.standard.map(s => s.lemma)).toEqual(['відношення', 'ставлення']); expect(c.standard[0]!.dict).toContain('Уманець'); expect(c.ruVariant).toBe('отношение')
+      expect(Object.keys(c)).not.toContain('source')
+    }
+    expect(classifyRu('Отношеніє', {}, look())!.possible).toEqual(['surzhyk', 'yazychie', 'cs'])
+  })
+  it('1750: церковнослов’янська / книжна форма, NOT surzhyk; 1870 in Галичина / Закарпаття: язичіє (with the cited definition); 1870 elsewhere: undecided, types listed', () => {
+    const cs = classifyRu('отношеніє', { year: 1750 }, look())!; expect(cs.kind).toBe('cs'); expect(cs.label).toContain('церковнослов'); expect(cs.label).not.toContain('суржик')
+    const y = classifyRu('отношеніє', { year: 1870, region: 'Галичина' }, look())!; expect(y.kind).toBe('yazychie'); expect(y.evidence.some(e => e.quote.includes('Основою язичія'))).toBe(true); expect(classifyRu('отношеніє', { year: 1870, region: 'Закарпаття' }, look())!.kind).toBe('yazychie')
+    const a = classifyRu('отношеніє', { year: 1870, region: 'Київ' }, look())!; expect(a.kind).toBe('ambiguous'); expect(a.possible).toEqual(['cs', 'surzhyk'])
+  })
+  it('never labelled: a Ukrainian lemma / VESUM form, a cited dialect form, a word that is no r2u Russian headword', () => {
+    expect(classifyRu('Отношеніє', { year: 2000 }, look(['отношеніє']))).toBeUndefined(); expect(classifyRu('Отношеніє', { year: 2000 }, look([], ['отношеніє']))).toBeUndefined()
+    expect(classifyRu('відношення', { year: 2000 }, look(['відношення']))).toBeUndefined(); expect(classifyRu('столиця', { year: 2000 }, look())).toBeUndefined()
+  })
+  it('the native-derivation test: отношеніє keeps BOTH ЦС features (от-, -ніє) and no cited sound rule reaches відношення; a native -нье / житье reaches життя by R13', () => {
+    const vesum = new Set(['відношення', 'життя', 'знання'])
+    const n = nativePath('отношеніє', (s, o) => deriveOld(s, { oldI: o }), k => vesum.has(k)); expect(n.native).toBeUndefined(); expect(n.kept).toEqual(['от-', '-ніє'])
+    const z = nativePath('житье', (s, o) => deriveOld(s, { oldI: o }), k => vesum.has(k)); expect(z.native!.form).toBe('життя'); expect(z.native!.trace).toContain('R13')
+  })
+})
+
+describe('MM-25 the annotator: «Отношеніє» is no longer «unknown» when the r2u index says it is a Russian headword', () => {
+  it('modern text: суржик with відношення / ставлення from the r2u article; 1750: ЦС / книжна form; a word the lexicon knows is never labelled; without the r2u index nothing changes', () => {
+    const ru = { ruHead: (k: string) => k === 'отношение' ? [{ dict: 'Уманець–Спілка 1893–98', locator: 's?w=отношение', equivalents: ['відношення', 'ставлення'], quote: 'Отношеніе = відношення, ставлення' }] : [], isDialect: () => false }
+    const data = { ...emptyLex(), search: { map: new Map(), keys: [] }, cards: new Map(), ru } as unknown as AnnotateData
+    const m = annotate('Отношеніє', data)[0]!; expect(m.ruClass!.kind).toBe('surzhyk'); expect(m.ruClass!.standard.map(s => s.lemma)).toEqual(['відношення', 'ставлення']); expect(m.status).toBe('unknown')
+    expect(annotate('отношеніє', data, 1750)[0]!.ruClass!.kind).toBe('cs')
+    const known = { ...data, search: { map: new Map([['отношеніє', [{ lemma: 'x', form: 'отношеніє', via: 'form' }]]]), keys: [] } } as unknown as AnnotateData
+    expect(annotate('отношеніє', known)[0]!.ruClass).toBeUndefined()
+    expect(annotate('Отношеніє', { ...data, ru: undefined } as unknown as AnnotateData)[0]!.ruClass).toBeUndefined()
+  })
+})
