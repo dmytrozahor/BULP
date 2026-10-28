@@ -936,3 +936,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-9 | tests/labels.test.ts › LB-9 only when the corpus gives no dispersion; priority a > b > c(corpus) > c(СУМ) > d |
 | LB-9 | tests/labels.test.ts › LB-9 a headword qualifies only if no sense of it and no other source restricts it |
 | LB-9 | tests/labels.test.ts › LB-9 the card says it is a dictionary status, not a measurement |
+| LB-10 | tests/region.test.ts › LB-10 every real archive.org publisher / Wikisource place string maps to its place |
+| LB-10 | tests/region.test.ts › LB-10 a composite locus, an area and an unknown name stay unmapped |
+| LB-10 | tests/region.test.ts › LB-10 every place has a Wikidata fact, the modern name maps back to itself, abroad places carry no oblast |
+| LB-10 | tests/region.test.ts › LB-10 Wikidata oblast facts spot-checked |
+| LB-10 | tests/region.test.ts › LB-10 Ukrainian places land in the project regions, abroad places in their own region without an oblast |
+| LB-10 | tests/region.test.ts › LB-10 the old region strings keep their rows |
+| LB-10 | tests/region.test.ts › LB-10 publisher, corporate creator, description imprint and the series table, in that order, each with its verbatim value |
+| LB-10 | tests/region.test.ts › LB-10 the committed table: every row names a known place, a field and a verbatim value; placed items fill the witness region and cite the field |

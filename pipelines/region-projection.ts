@@ -12,12 +12,13 @@
  *   4. the label build (pipelines/build-labels.ts, with LB-8/LB-9 as committed) is run on both tables → class counts for corpus-attested lemmas and for all entries, plus the threshold variants.
  */
 import { spawnSync } from 'node:child_process'
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, symlinkSync, writeFileSync, copyFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, symlinkSync, copyFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import type { LbStatsJson } from './region-projection-types.ts'
 import { REGIONS, regionOf } from './regions.ts'
+import { writeJsonAtomic } from './robust.ts'
 import { fillWitnessRegions } from './witness-region.ts'
 
 const arg = (k: string, d?: string) => { const i = process.argv.indexOf(k); return i >= 0 ? process.argv[i + 1] : d }
@@ -96,7 +97,7 @@ async function main() {
         if (si === 0 && d.stats.byRegion) { checked++; const live = new Map(d.stats.byRegion.map(r => [r.code, r.f] as const)); if (by.some(r => (live.get(r.code) ?? 0) !== r.f) || d.stats.byRegion.some(r => r.N !== (liveN.get(r.code) ?? r.N))) mism++ }
       })
     })
-    S.forEach((s, si) => writeFileSync(`${s.dir}/lex/${f}`, JSON.stringify(outs[si])))
+    S.forEach((s, si) => writeJsonAtomic(`${s.dir}/lex/${f}`, JSON.stringify(outs[si])))
   }
   console.log(`lemmas ${lemmas}; BEFORE table agrees with the live byRegion on ${checked - mism}/${checked}`)
 
@@ -107,7 +108,7 @@ async function main() {
   if (r2u) symlinkSync(r2u, `${root}/data/raw/r2u`, 'junction')
   const se: Record<string, unknown> = {}
   if (existsSync(`${mirror}/lm/se`)) for (const f of readdirSync(`${mirror}/lm/se`)) Object.assign(se, readJson(`${mirror}/lm/se/${f}`))
-  writeFileSync(`${root}/data/work/se.json`, JSON.stringify(se))
+  writeJsonAtomic(`${root}/data/work/se.json`, JSON.stringify(se))
   const results: Record<string, LbStatsJson> = {}
   for (const s of S) {
     const pub = s.dir
@@ -170,7 +171,7 @@ async function main() {
     `| **a+b+c без підкласу СУМ** | **${pc(covNo(B.all), B.allTotal)}** | **${pc(covNo(A.all), A.allTotal)}** |`, `| **a+b+c з підкласом СУМ** | **${pc(cov(B.all), B.allTotal)}** | **${pc(cov(A.all), A.allTotal)}** |`, '',
     '### Чутливість до порогів (лише перевірка; картки використовують «взяті пороги»), леми з засвідченням у корпусі, без підкласу СУМ', '', '| пороги | до | після |', '|---|---:|---:|',
     ...A.alt.map((a, i) => `| ${a.name} | ${pc(B.alt[i]!.cover, B.alt[i]!.total)} | ${pc(a.cover, a.total)} |`), '')
-  writeFileSync(outPath, out.join('\n') + '\n')
+  writeJsonAtomic(outPath, out.join('\n') + '\n')
   console.log(`written ${outPath}`)
   void cls
 }

@@ -6,7 +6,8 @@
  * with its location in brackets, the imprint line of the `description`, or the quoted reference work of IA_SERIES. An item that names no place (or two) is not written.
  * robots.txt of archive.org disallows only /control/ and /report/; pacing below.
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { readFileSync, mkdirSync } from 'node:fs'
+import { writeJsonAtomic } from './robust.ts'
 import { dirname, resolve } from 'node:path'
 import { placeFromIaMeta, type IaMeta, type IaPlace } from '../core/witness-place.ts'
 
@@ -44,7 +45,7 @@ async function main() {
   const places: Record<string, IaPlace> = {}, byField: Record<string, number> = {}
   for (const id of ids.sort()) { const p = placeFromIaMeta(metas.get(id) ?? { identifier: id }); if (p) { places[id] = p; byField[p.field] = (byField[p.field] ?? 0) + 1 } }
   const file: IaPlacesFile = { format: 1, retrieved: new Date().toISOString().slice(0, 10), items: ids.length, placed: Object.keys(places).length, byField, places }
-  mkdirSync(dirname(OUT), { recursive: true }); writeFileSync(OUT, JSON.stringify(file, null, 1) + '\n')
+  mkdirSync(dirname(OUT), { recursive: true }); writeJsonAtomic(OUT, JSON.stringify(file, null, 1) + '\n')
   console.log(`ia-places: ${file.placed} of ${file.items} archive.org items placed ${JSON.stringify(byField)} → ${OUT}`)
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('pipelines/ia-places.ts')) await main()

@@ -27,10 +27,6 @@ const NEVER = /(?!)/   // rows that only a PLACE can fill (SPEC 63 LB-10): no re
  */
 const OBLAST_ROWS: Region[] = [
   { code: 'sumshchyna', name: 'Сумщина (Сумська обл.)', oblasts: ['UA-59'], match: NEVER },
-  { code: 'vinnychchyna', name: 'Вінниччина (Вінницька обл.)', oblasts: ['UA-05'], match: NEVER },
-  { code: 'khmelnychchyna', name: 'Хмельниччина (Хмельницька обл.)', oblasts: ['UA-68'], match: NEVER },
-  { code: 'chernivetska', name: 'Північна Буковина (Чернівецька обл.)', oblasts: ['UA-77'], match: NEVER },
-  { code: 'zakarpattia', name: 'Закарпаття', oblasts: ['UA-21'], match: NEVER },
   { code: 'kirovohradshchyna', name: 'Кіровоградщина (Кіровоградська обл.)', oblasts: ['UA-35'], match: NEVER },
 ]
 /** Places outside Ukraine are not a Ukrainian region: no oblast (nothing is drawn on the map), but each city is a region of its own for dispersion. */

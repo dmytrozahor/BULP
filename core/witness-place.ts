@@ -137,11 +137,11 @@ export function placesIn(s: string): string[] {
 }
 
 /** a string that also names an area (not a place) is a composite locus: «Київ / Лівобережжя», «Галичина; Львів» */
-const AREA = /(?<![\p{L}\p{N}])(?:лівобереж|галичин|волин|полісс|україн|молдав|валах|центральн)/u
+const AREA = /(?<![\p{L}\p{N}])(?:ливобереж|галичин|волин|полисс|украин|молдав|валах|центральн)/u
 /** The ONE place of a string, or undefined when it names none or several (composite locus, left out). */
 export function placeOf(s: string | undefined): PlaceRule | undefined {
   if (!s) return undefined
-  if (AREA.test(placeKey(s))) return undefined
+  if (AREA.test(placeKey(s)) || / или | або /.test(s)) return undefined
   const ids = placesIn(s)
   return ids.length === 1 ? PLACE_RULES.find(r => r.id === ids[0]) : undefined
 }

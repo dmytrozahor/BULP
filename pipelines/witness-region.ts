@@ -25,7 +25,7 @@ export function readIaPlaces(path = IA_PLACES_PATH): IaPlacesFile | undefined {
 
 export interface FillReport { filled: number; tokens: number; byField: Record<string, number> }
 /** Sets `region` / `regionCite` on the witnesses that have none (in place); returns what was filled. A witness that already has a region string is never overwritten. */
-export function fillWitnessRegions(ws: Pick<WitnessOut, 'id' | 'url' | 'region' | 'regionCite' | 'tokens'>[], file: IaPlacesFile | undefined = readIaPlaces()): FillReport {
+export function fillWitnessRegions(ws: Pick<WitnessOut, 'id' | 'url' | 'title' | 'region' | 'regionCite' | 'tokens'>[], file: IaPlacesFile | undefined = readIaPlaces()): FillReport {
   const rep: FillReport = { filled: 0, tokens: 0, byField: {} }
   if (!file) return rep
   for (const w of ws) {
