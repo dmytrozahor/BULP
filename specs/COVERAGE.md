@@ -949,3 +949,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-11 | tests/arkushyn.test.ts › LB-11 Аркушин parser › gates: out-of-range and garbled headwords never get in; the Latin binomial tail is cut |
 | LB-11 | tests/arkushyn.test.ts › LB-11 Аркушин parser › © policy: gloss ≤ 200 with «…» on a word boundary; rows carry label зпол., place, no quote field |
 | LB-11 | tests/arkushyn.test.ts › LB-11 Аркушин parser › LB-11 class (a): a row of the dictionary gives «діалектне за словником» with the place; GG source is registered |
+| LB-11 | tests/arkushyn.test.ts › LB-11 new-card gates: a headword out of the alphabetical order, a truncated adjective or a transcription mismatch is marked unverified (unv) and kept off new cards |

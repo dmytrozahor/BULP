@@ -72,6 +72,7 @@ export interface SeRow {
   /** GG-7: the labels printed on the sense (розм., заст., діал., перен. …) */ lb?: string[]
   /** OCR quality gate: the dictionary's gloss was garbled and is not kept (1) */ oq?: 1
   /** Аркушин (LB-11): villages the entry names (the book list verbatim, ≤ 3), their number, and «усі н. пп.» */ v?: string[]; vn?: number; va?: 1
+  /** LB-11: the headword failed the OCR gates for NEW cards (alphabetical sequence, strict score); the row still labels an existing lemma */ unv?: 1
   /** the Russian headword of a ru→uk article in which the lemma is the Ukrainian equivalent: a labelled cross-language note, NEVER the meaning of the Ukrainian word */ ru?: string
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }

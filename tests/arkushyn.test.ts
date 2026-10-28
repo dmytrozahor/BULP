@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ARK_LABEL, arkRows, parseArkushyn, parseVillages, villageNumbers } from '../core/arkushyn-parse.ts'
+import { ARK_LABEL, arkRows, markSequence, parseArkushyn, strictHead, parseVillages, villageNumbers } from '../core/arkushyn-parse.ts'
 import { sumLabelHit, assembleEntry } from '../core/labels.ts'
 import { HIST_BY_ID } from '../core/dx-src.ts'
 import { groupHist } from '../core/dx-hist.ts'
@@ -50,5 +50,13 @@ describe('LB-11 Аркушин parser', () => {
     const e = assembleEntry({ dict: [], usage: [], kind: 'dict', se: [{ d: 'arkushyn', lb: [ARK_LABEL], g: 'гадюка', v: ['Білин'] }] })
     expect(e.d.c).toBe('dict'); expect(e.d.strict).toBe(true)
     const g = groupHist([{ word: 'авка', src: 'arkushyn' }]); expect(HIST_BY_ID.arkushyn!.bit).toBe(2097152); expect(g.size).toBe(1)
+  })
+  it('LB-11 new-card gates: a headword out of the alphabetical order, a truncated adjective or a transcription mismatch is marked unverified (unv) and kept off new cards', () => {
+    const mk = (head: string, pos = '-и, ж.', tr = ''): import('../core/arkushyn-parse.ts').ArkRow => ({ head, pos, vol: 1, page: 1, senses: [{ n: 1, labels: [], gloss: 'x' }], ...(tr ? { tr } : {}) })
+    const rs = [mk('абетка'), mk('бабка'), mk('вдзхрг'), mk('гора'), mk('дорога'), mk('жито', '-а, -е'), mk('колтезча', '-и, ж.', '|колотеча|'), mk('нудни', '-а, -е'), mk('порох')]
+    markSequence(rs)
+    expect(rs.map(r => r.seq)).toEqual([true, true, false, true, true, true, false, false, true])
+    expect(strictHead('ab'), 'short/mixed').toBe(false); expect(strictHead('гора')).toBe(true)
+    const [, row] = arkRows(rs[2]!)[0]!; expect(row.unv).toBe(1)
   })
 })

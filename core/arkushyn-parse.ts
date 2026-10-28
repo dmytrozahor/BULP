@@ -26,7 +26,7 @@ const LAB_RE = new RegExp(`^[\\s,;]*(${LABS.join('|')})\\.(?=[\\s,;"'“«]|$)`,
 export interface ArkStats {
   pages: number; lines: number; candidates: number
   badHead: number; outOfRange: number; noGram: number; noSense: number; badGloss: number
-  entries: number; senses: number; clipped: number; withVillages: number; villageHits: number; unknownVillage: number
+  entries: number; senses: number; clipped: number; withVillages: number; villageHits: number; unknownVillage: number; seqDropped?: number
 }
 export const newArkStats = (): ArkStats => ({ pages: 0, lines: 0, candidates: 0, badHead: 0, outOfRange: 0, noGram: 0, noSense: 0, badGloss: 0, entries: 0, senses: 0, clipped: 0, withVillages: 0, villageHits: 0, unknownVillage: 0 })
 /** pass rate of the candidate articles: entries with a clean headword and at least one clean sense gloss / candidates */
@@ -182,6 +182,8 @@ export interface ArkRow {
   /** number of villages named */ vn?: number
   /** the entry says «усі н. пп.» / «у багатьох н. пп.» */ all?: boolean
   /** recorded from Холмщина emigrants */ holm?: boolean
+  /** transcription text before the grammar remark (used by the gates only, never written to the rows) */ tr?: string
+  /** passed the gates for NEW cards: strict headword score and the alphabetical sequence of the volume (LB-11) */ seq?: boolean
 }
 
 /** the entries of one volume */
@@ -197,6 +199,7 @@ export function parseArkushyn(pages: string[], vol: number, pageNo: (i: number) 
     const g = findGram(rest)
     // the body: after the grammar remark; without one, from the first quotation mark after the transcription
     let body: string, pos: string | undefined
+    const tr = g ? rest.slice(0, g.start) : ''
     if (g) { body = rest.slice(g.end); pos = POS_FIX.reduce((s, [r, v]) => s.replace(r, v), g.text).replace(/\s+/g, ' ').slice(0, 40) }
     else {
       let q = -1; for (let i = 0; i < rest.length; i++) if (isQuoteMark(rest, i) && (i === 0 || /\s|[|)]/.test(rest[i - 1]!))) { q = i; break }
@@ -220,8 +223,9 @@ export function parseArkushyn(pages: string[], vol: number, pageNo: (i: number) 
     st.unknownVillage += vn.nums.length - names.length
     if (names.length) { st.withVillages++; st.villageHits += names.length }
     st.entries++; st.senses += senses.length; st.clipped += senses.filter(s => s.gloss.endsWith('…')).length
-    rows.push({ head, ...(pos ? { pos } : {}), vol, page: e.page, senses, ...(names.length ? { v: names.slice(0, 3), vn: names.length } : {}), ...(vn.all ? { all: true } : {}), ...(vn.holm ? { holm: true } : {}) })
+    rows.push({ head, ...(pos ? { pos } : {}), vol, page: e.page, senses, ...(names.length ? { v: names.slice(0, 3), vn: names.length } : {}), ...(vn.all ? { all: true } : {}), ...(vn.holm ? { holm: true } : {}), ...(tr ? { tr } : {}) })
   }
+  markSequence(rows, st)
   return { rows, stats: st }
 }
 
@@ -229,6 +233,41 @@ export function parseArkushyn(pages: string[], vol: number, pageNo: (i: number) 
 export function arkRows(a: ArkRow): [string, import('./se.ts').SeRow][] {
   return a.senses.map(s => [a.head, {
     d: ARK_DICT, g: s.gloss, ...(a.pos ? { p: a.pos } : {}), n: s.n, l: `т.${a.vol} с.${a.page}`, lb: [ARK_LABEL, ...s.labels],
-    ...(s.oq ? { oq: 1 as const } : {}), ...(a.v ? { v: a.v, vn: a.vn } : {}), ...(a.all ? { va: 1 as const } : {}),
+    ...(s.oq ? { oq: 1 as const } : {}), ...(a.seq === false ? { unv: 1 as const } : {}), ...(a.v ? { v: a.v, vn: a.vn } : {}), ...(a.all ? { va: 1 as const } : {}),
   }])
+}
+
+// ── LB-11: gates for NEW dictionary-only cards (the text is OCR) ─────────────────────────────────────
+const ALPHA = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюя'
+const keyOf = (h: string): number[] => [...h.toLowerCase().normalize('NFC').replace(/[́'’ʼ-]/g, '')].map(c => ALPHA.indexOf(c)).filter(i => i >= 0)
+const cmpKey = (a: number[], b: number[]): number => { for (let i = 0; i < Math.max(a.length, b.length); i++) { const d = (a[i] ?? -1) - (b[i] ?? -1); if (d) return d } return 0 }
+/** strict headword: ≥ 3 letters, every token a plausible word (ocrScore 1), one script (Cyrillic) */
+export const strictHead = (h: string): boolean => h.replace(/['\-]/g, '').length >= 3 && ocrScore(h.replace(/[-']/g, ' ')) >= 1 && !/[^а-яіїєґ'\-]/u.test(h) && !/ьть$|іь|ьь/.test(h)
+const lev = (a: string, b: string): number => { const d = Array.from({ length: a.length + 1 }, (_, i) => [i, ...new Array<number>(b.length).fill(0)]); for (let j = 1; j <= b.length; j++) d[0]![j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i]![j] = Math.min(d[i - 1]![j]! + 1, d[i]![j - 1]! + 1, d[i - 1]![j - 1]! + (a[i - 1] === b[j - 1] ? 0 : 1)); return d[a.length]![b.length]! }
+const fl = (s: string): string => s.toLowerCase().replace(/[^а-яіїєґ]/gu, '').replace(/ї/g, 'і').replace(/й(?=[аеєиіоуюя])/g, '').replace(/ь/g, '')
+/** the first transcription variant must resemble the headword (dialect forms differ by a few letters; an OCR slip in the headword shows up as a larger distance) */
+function trOk(r: ArkRow): boolean {
+  if (!r.tr) return true
+  const v = r.tr.replace(/^[^\p{L}]+/u, '').split(/[,;|)]/)[0] ?? '', a = fl(r.head), b = fl(v)
+  if (b.length < 2) return true
+  return lev(a.replace(/^г/, ''), b.replace(/^г/, '')) <= Math.floor(a.length / 9)
+}
+/** adjective / reflexive headwords whose last letter OCR drops («-ий» → «-и», «-ись» → «-ис») are ambiguous: kept off new cards */
+const truncated = (r: ArkRow): boolean => (/^-\S+,\s*-\S+$/.test(r.pos ?? '') && /и$/.test(r.head)) || (/^-ого,\s*ч\.$/.test(r.pos ?? '') && /и$/.test(r.head)) || (/(?:недок|док)\.$/.test(r.pos ?? '') && /[иеєу]с$/.test(r.head))
+/**
+ * Alphabetical sequence: the headwords of a volume in page order must be non-decreasing in the Ukrainian alphabet; an OCR-garbled headword breaks the order. The longest non-decreasing
+ * subsequence is the verified spine; a headword outside it (or failing `strictHead`) gets \`seq = false\` and is kept off the new cards (its row still labels an existing lemma).
+ */
+export function markSequence(rows: ArkRow[], st?: ArkStats): void {
+  const ks = rows.map(r => keyOf(r.head)), n = rows.length
+  const tails: number[] = [], prev = new Array<number>(n).fill(-1)
+  for (let i = 0; i < n; i++) {
+    let lo = 0, hi = tails.length
+    while (lo < hi) { const mid = (lo + hi) >> 1; if (cmpKey(ks[tails[mid]!]!, ks[i]!) <= 0) lo = mid + 1; else hi = mid }
+    if (lo > 0) prev[i] = tails[lo - 1]!
+    tails[lo] = i
+  }
+  const spine = new Set<number>()
+  for (let i = tails[tails.length - 1] ?? -1; i >= 0; i = prev[i]!) spine.add(i)
+  rows.forEach((r, i) => { r.seq = spine.has(i) && strictHead(r.head) && trOk(r) && !truncated(r); if (!r.seq && st) st.seqDropped = (st.seqDropped ?? 0) + 1 })
 }

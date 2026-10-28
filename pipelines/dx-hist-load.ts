@@ -27,7 +27,7 @@ export function seHeads(root: string, dir0 = resolve(root, 'data/work/se-parsed'
   for (const f of readdirSync(dir).sort()) {
     if (!f.endsWith('.json')) continue
     let j: { dict: string; rows: [string, unknown][] }; try { j = JSON.parse(readFileSync(resolve(dir, f), 'utf8')) } catch { continue }   // torn output: skipped
-    for (const h of new Set(j.rows.map(r => r[0]))) out.push({ word: h, src: j.dict })
+    for (const h of new Set(j.rows.filter(r => !(r[1] as { unv?: number })?.unv).map(r => r[0]))) out.push({ word: h, src: j.dict })
   }
   return out
 }

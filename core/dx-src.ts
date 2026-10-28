@@ -41,7 +41,7 @@ export const HIST_SRC: HistSrc[] = [
   S('shevchenko', 131072, 'Словник мови Шевченка', '1837–61; друк 1964', 14),
   S('zakrevsky', 262144, 'Закревський, Словарь малороссийских идиомов', '1861', 15),
   Y('sum11', 524288, 'Словник української мови в 11 томах (СУМ-11)', '1970–80', 16),
-  Y('arkushyn', 2097152, 'Аркушин, Словник західнополіських говірок', '1980–99; друк 2000', 18),
+  { ...Y('arkushyn', 2097152, 'Аркушин, Словник західнополіських говірок', '1980–99; друк 2000', 18), ocr: true },   // LB-11: OCR text, new cards need the gates + corroboration
   Y('sum20', 1048576, 'Словник української мови (СУМ-20)', '2010–', 17),
 ]
 export const HIST_BY_ID: Record<string, HistSrc> = Object.fromEntries(HIST_SRC.flatMap(s => s.ids.map(i => [i, s] as const)))
