@@ -1,0 +1,3376 @@
+{
+ "format": 1,
+ "retrieved": "2026-10-23",
+ "items": 992,
+ "placed": 671,
+ "byField": {
+  "publisher": 581,
+  "description": 42,
+  "creator": 41,
+  "series": 7
+ },
+ "places": {
+  "12tsvitnia190800lozy": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, PA : Z druk. \"Narodnoï Voli\""
+  },
+  "1806pr1": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "Санктпетербург: печатано в типографии Шнора, 1806"
+  },
+  "1815-1": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "- Санктпетербургъ: въ Медицинской типографіи, 1815"
+  },
+  "1815-2": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "- Санктпетербургъ: въ Медицинской типографіи, 1815"
+  },
+  "1861derk": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: Друк. Каткова і Т-ва, 1861"
+  },
+  "1884narysy": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Типография И. и А. Давиденко (Киев)"
+  },
+  "1895-t-4": {
+   "place": "lviv",
+   "field": "description",
+   "value": "- Львів: З друкарні Інстітута Ставропігійського, 1895"
+  },
+  "1920barv": {
+   "place": "winnipeg",
+   "field": "description",
+   "value": "- Вінніпеґ: Накладом \"Української книгарні\", 1920"
+  },
+  "31761084433580": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. Ukraïnsʹko-rusʹkoï vydavn. s-ky"
+  },
+  "31761086786100": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom avtora"
+  },
+  "31761086786118": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. avtora"
+  },
+  "31761086786126": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Koshtom avtora"
+  },
+  "31761090251661": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Vydani͡e Tov-va \"Prosvita\""
+  },
+  "31761117098871": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kyïv?] ; Derz͡h. vyd-vo Ukraïny"
+  },
+  "CAT10737692": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Kharkov"
+  },
+  "CAT10928163": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyiv : Derzh. vyd-vo"
+  },
+  "CAT10978537": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Kharʹkov"
+  },
+  "Chekhov-Medvid": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Vyd-vo \"Rusalka\""
+  },
+  "abukasymovikapts00fran": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg, Man. : Nakladom Rusʹkoï Knyharnï"
+  },
+  "advokatskiiporad00roze": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Nʹi͡u Iork [New York] : s.n."
+  },
+  "akafistk00kolo": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakl. M. Bilousa"
+  },
+  "akordyantologii00frangoog": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakladom ukraïnsʹko-rusʹkoï vydavnychoï spilky"
+  },
+  "akordyantologiia00franuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Nakl. Ukraïnsko-ruskoï vydavnychoï spilky"
+  },
+  "akordylirychna00nepr": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : \"ZHyttia i mystetstvo\""
+  },
+  "akordylirychnap00nepr": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : \"ZHyttia i mystetstvo\""
+  },
+  "aktova1914": {
+   "place": "chernihiv",
+   "field": "description",
+   "value": "Черниговъ: Типографія Г. М. Веселой, 1914"
+  },
+  "alfrescovirshova00karmuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Ukraïnska knyzhka"
+  },
+  "amaliunhaabodoch00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom \"Rusʹkoï knyharnï\""
+  },
+  "amerykanetsvesel00rusm": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, Pa. : Z univerzalnoï drukarnï"
+  },
+  "amerykanetsvesel00rusm_0": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton : Z Unïverzal'noï Drukarnï"
+  },
+  "amulietf00meye": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom vydavnychoï spilky \"Dïla\""
+  },
+  "anhelskyilystopo00poli": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Rusalka"
+  },
+  "anton0vych": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "Петербург : Тип. В. Киршбаума, 1877"
+  },
+  "antoniiikleopatr00shak": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Z druk. Naukovoho t-va im. Shevchenka"
+  },
+  "antoniikleopatra00shakuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Naukove T-vo im. Shevchenka"
+  },
+  "arabskikazky00oles": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "U Kyïvi : Z druk. 1-oĭ Kyïvsʹk. drukarsʹk. spilky"
+  },
+  "arendarvklopotik00bili": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïnsʹkoï Knyharni"
+  },
+  "arendarvklopotik00bili_1": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïnsʹkoï Knyharni"
+  },
+  "argonavtykomedii00tsehuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : z Drukarnï Nauk. t-va im. Shevchenka"
+  },
+  "arkhitekturauriz00shchuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. avtora"
+  },
+  "arkhyv12": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv13": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv15": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv1907": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv1910": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv1911": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv7": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "arkhyv8": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "artystka00krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Nakl. Literatunoho instituta"
+  },
+  "artystpovist00shevuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Liaptsig : Ukraïnska nakladnia"
+  },
+  "artystykomediiav00nyko": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakladom \"Zahalʹnoi knyhozbirni\""
+  },
+  "aruzr-3-1": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "- Киев : Унив. тип., 1859"
+  },
+  "aruzr-3-2": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Киев: Тип. Е. Федорова, 1868"
+  },
+  "arytmetychniprav00chep": {
+   "place": "berlin",
+   "field": "publisher",
+   "value": "Berlin : Naklad Ukrainsʹkoi Viisʹkovoi Misii"
+  },
+  "asyriiskyitsaras00tols": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakl. Rusʹkoï knyharnï"
+  },
+  "asyriskytsarasar00tols": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakl. Rusʹkoï knyharni"
+  },
+  "azbukakarpatorus0000volo": {
+   "place": "uzhhorod",
+   "field": "publisher",
+   "value": "Uz͡hhorod : Unio"
+  },
+  "baky00lafo": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom Rusʹkoï knyharnï"
+  },
+  "bakyliub00lafo": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyïa : Halytska nakladnia IAkova Orenshtana"
+  },
+  "bandurista-1": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: В Унив. тип., 1860"
+  },
+  "bandurista2": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: В Унив. тип., 1860"
+  },
+  "bandurista3": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: В Унив. тип., 1861"
+  },
+  "batkivshchynaiyn00fran": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Nakladom i drukom \"Novyn\""
+  },
+  "batkosumnaistory00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Koshtom Ruskoï Knyharni"
+  },
+  "benhurpovistzcha00wall": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : [s.n.]"
+  },
+  "beresteiskauniia00liko": {
+   "place": "zhovkva",
+   "field": "publisher",
+   "value": "ZHovkva : Nakl. Chytalni ukraïnskykh bohosloviv im. Markiiana Shashkevycha u Lvovi"
+  },
+  "beryychytai008800": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N.Y. : Svoboda"
+  },
+  "besidyprotykatyl00cice": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Nakl. Zahalʹnoï knyhozbirni"
+  },
+  "bezmaskyistoriia00liunuoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakl. avtora"
+  },
+  "beztalannadraman00tobi": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Vyd. \"Prosvity\" u Lʹvovi,"
+  },
+  "biblneopovidan00franuoft": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg, Man. : Koshtom I. Kovaliuka"
+  },
+  "biliamashyny00vynnuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyv : Dzvin"
+  },
+  "biloruskevidrodz00bogd": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Soi͡uz vyzvolenni͡a Ukraïny"
+  },
+  "biloruskevidrodz00bohd": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakl. Soi͡uza vyzvolenni͡a Ukraïny"
+  },
+  "bilshezasoromyvs00rudyuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Ternopil : Niu-ork : Nakladom Vyd-va \"Podilska Teatralna Biblioteka\" v Ternopoli"
+  },
+  "bludnysynobrazzz00luts": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, Penn.: Z unïverzalʹnoï drukarnï"
+  },
+  "blyskavytssusp00iats": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakl. Ukraïnskoï knyharni"
+  },
+  "blyskavytssuspil00iats": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom Ukraïnsʹkoï Knyharnï"
+  },
+  "boaconstrictorpo00fran": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom redakt͡siï \"Zori͡e\""
+  },
+  "bohdanivsynokist00shch": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka vydavnycha spilka Ukraïnsʹkoho holosu"
+  },
+  "bohy00inge": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Ukr. robitnychykh vistyĭ\""
+  },
+  "bohyzhazhdutkrov00fran": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakl. Ukraïnsʹkoï knyharnï"
+  },
+  "boiaryniadramaty008800": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Vyd. Ukr. Vyd-va ; Druk. I.Visman ta I. Mordkhylevych"
+  },
+  "borbasvitiv00well": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadyĭskoho Farmera\""
+  },
+  "borbasvitiv00well_0": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom Rusʹkoï Knyharnï"
+  },
+  "borbaukranskoh00doly": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeh : Nakladom Ruskoï knyharnï"
+  },
+  "boritesiapoboret00ukra": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Wien, Ukraïnsʹka partii͡a sotsii͡alistiv-revoli͡utsioneriv"
+  },
+  "boritesiapoboret1101ukra": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Wien : Ukraïnsʹka partii͡a sotsii͡alistiv-revoli͡utsioneriv"
+  },
+  "borotbaosontse00unse": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom i z drukarnï \"Robitnychoho Slova\""
+  },
+  "borotbazaistnova00desm": {
+   "place": "vancouver",
+   "field": "publisher",
+   "value": "Vancouver : Nakladom \"Pravdy i voli\""
+  },
+  "bortsizamriikain00toho": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg, Man. : Nakladom Ukr. knyharni"
+  },
+  "bortsizamrikania00toho": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg, Man. : Nakl. Ukraïnsʹkoï knyharni"
+  },
+  "bortsizapravduis00kash": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Ukraïnske vyd-vo v Katerynoslavi"
+  },
+  "boryslavsmiietsi00franuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nauk. t-va imeni Shevchenka"
+  },
+  "bpysaniafed03fedkuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U L'vovi Z drukarni Naukovoho tovarystva im. Shevchenka"
+  },
+  "bratymouhliopovi00kipluoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Dzvin"
+  },
+  "budennykhlib00krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Nakl. Literaturnoho instituta"
+  },
+  "bukovynskirussko00rusnuoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakl. M. Bilousova"
+  },
+  "bukvar00unse": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. t͡s.k. Vyd-va ruskikh knykhok shkilʹnykh"
+  },
+  "bukvar1925": {
+   "place": "winnipeg",
+   "field": "description",
+   "value": "- Вінніпег: З друкарні “Канадійського Фармера”, 1925"
+  },
+  "bukvardliadtyy00dojauoft": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakl. \"Kanadyyskoho Farmera\""
+  },
+  "bulotamokhomporo00kalyuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Rusalka"
+  },
+  "buntarsynrevoliu00irchuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu-ork ; Kultura"
+  },
+  "canadianfarmer_19040317-19190124": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Першим виданням українською мовою стала в 1903 році газета «Канадійський Фармер» (виходила у Вінніпегу до 1981).",
+   "url": "https://uk.wikipedia.org/wiki/Україномовна_преса_Канади"
+  },
+  "canadianfarmer_19060104-19091220": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Першим виданням українською мовою стала в 1903 році газета «Канадійський Фармер» (виходила у Вінніпегу до 1981).",
+   "url": "https://uk.wikipedia.org/wiki/Україномовна_преса_Канади"
+  },
+  "canadianfarmer_19100501-19121202": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Першим виданням українською мовою стала в 1903 році газета «Канадійський Фармер» (виходила у Вінніпегу до 1981).",
+   "url": "https://uk.wikipedia.org/wiki/Україномовна_преса_Канади"
+  },
+  "canadianfarmer_19150101-19171228": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Першим виданням українською мовою стала в 1903 році газета «Канадійський Фармер» (виходила у Вінніпегу до 1981).",
+   "url": "https://uk.wikipedia.org/wiki/Україномовна_преса_Канади"
+  },
+  "canadianfarmer_19180104-19200305": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Першим виданням українською мовою стала в 1903 році газета «Канадійський Фармер» (виходила у Вінніпегу до 1981).",
+   "url": "https://uk.wikipedia.org/wiki/Україномовна_преса_Канади"
+  },
+  "canadianmorning_19050715-19131231": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Виходила 1905—1920 у Вінніпезі як місячник, тижневик (1907) і двотижневик. … З 1920 виходить під назвою «Канадійський Ранок».",
+   "url": "https://uk.wikipedia.org/wiki/Ранок_(газета)"
+  },
+  "canadianmorning_19180501-19230227_19481029": {
+   "place": "winnipeg",
+   "field": "series",
+   "value": "Виходила 1905—1920 у Вінніпезі як місячник, тижневик (1907) і двотижневик. … З 1920 виходить під назвою «Канадійський Ранок».",
+   "url": "https://uk.wikipedia.org/wiki/Ранок_(газета)"
+  },
+  "ch8t3": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "- Киев : Унив. тип., 1859"
+  },
+  "chary_na_Ukraini": {
+   "place": "lviv",
+   "field": "description",
+   "value": "Львів: З друкарні Наукового Товариства імені Шевченка, 1905"
+  },
+  "charynaukrani00antouoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Z drukarni Naykovoho tovarystva im. Shevchenka"
+  },
+  "chekaienasvelyka00lepkuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Zakhodom Tovarystva \"Prosvita\" u Lvovi"
+  },
+  "cherhovizavdanni00leni": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakl. Komunistychnoï partiï skh. Halychyny"
+  },
+  "chernihivkabuval00kost": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Vyd-vo \"Rataĭ\""
+  },
+  "chernyhivkabuval00kost": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakl. Kanadiskoho Rusyna"
+  },
+  "chernyhivkabuval00kost_0": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom i drukom Kanadiĭsʹkoho Rusyna"
+  },
+  "chernytsiamarian00shev": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadyĭskoho Farmera\""
+  },
+  "chervonakalynazb00unse": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Vyd-vo Ukraïnsʹkoho narodnʹoho uchytelʹstva"
+  },
+  "chervonashapochk00vilsuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : \"Svit dytyny\""
+  },
+  "chervonazoriauto00bogduoft": {
+   "place": "berlin",
+   "field": "publisher",
+   "value": "Berlin : Kosmos"
+  },
+  "chervonemarevo00poli": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U L'vovi Novi shliakhi"
+  },
+  "chervonemarevona00poliuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. vyd. spilky \"Novi shliakhy\""
+  },
+  "chervonyishliak1923unse_0": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonyishliak1923unse_1": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonyishliak1923unse_2": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonyishliakh1923unse": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonyishliakh1924unse": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonyishliakh1926unse": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : [V-vo \"Chervonyĭ shli︠a︡kh\"]"
+  },
+  "chervonykobzarzb00unse": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : [Nakladom Robitnychoi̇ drukarnï]"
+  },
+  "chervonykobzarzb00unse_0": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : [Nakladom Robitnychoi̇ drukarnï]"
+  },
+  "chmelykromandlia00koro": {
+   "place": "prague",
+   "field": "publisher",
+   "value": "Praha : Drukarnia \"Polityky\""
+  },
+  "cholovikshchored00timmuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lvov : Naklad H. Hanuliaka"
+  },
+  "cholovikshchored00tymm": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. Hr. Hanuliaka"
+  },
+  "chomumykhochemus00leve": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "[Lʹviv] : Nakladom Vyd-va"
+  },
+  "chomupopynezheni00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeh : Ruska knyharnia"
+  },
+  "chomupozychalyvi00shch": {
+   "place": "geneva",
+   "field": "publisher",
+   "value": "[Geneva] : Partii͡a Ukraïnsʹkykh Sot͡sii͡alïstiv-Revoli͡ut͡sioneriv"
+  },
+  "chornaradakhroni00kuliuoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakladom O.Kuzmy"
+  },
+  "chornikryla00iats": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : \"Moloda muza\""
+  },
+  "chornohoraneperi00tryl": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Nakl. \"Chornohory\""
+  },
+  "chornomortsivnev00pzr": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Prosʹvita"
+  },
+  "chotyrykazky00franuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : Nakl. Myroslava Sichynskoho"
+  },
+  "chub7": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky1.1": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky1.2": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky2": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky4": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky5": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky6": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "С.-Петербург. Императорское русское Географическое общество"
+  },
+  "chubynsky7.2": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "Петербург. Императорское русское Географическое общество"
+  },
+  "chudoiakykhmaloa00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg?] : [Nakladom Rusʹkoï knyharnï?]"
+  },
+  "chuzhynoiu00oles": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "[Viden : Valʹdhaĭm-Eberle, Tov. akts]"
+  },
+  "chuzhynoiupoezi00oles": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kyïv, Vyd. \"Dniprosoiuza\""
+  },
+  "chuzhyntsiproukr00soiu": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Soi͡uz vyzvolenni͡a Ukraïny"
+  },
+  "chyapostolpetrob00sush": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : [The Ukraina?]"
+  },
+  "chycholovikmaied00fich": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom Rusʹkoï Knyharnï"
+  },
+  "chyevropamaiesko00lieb": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "[Videnʹ] : Naklad i druk partiĭnoï drukarnï"
+  },
+  "chyieteperpanshc00unse": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kyïv : Vydanni͡a \"RUP\"]"
+  },
+  "chymaievidzhytyi00ucra": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, Pa. : Z Drukarni Narodnoï voli"
+  },
+  "chymhoholbuvnash00iare": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Literaturno-naukovy vistnyk"
+  },
+  "chymiepoltychnae00marc": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York City : Nakladom Vyd-va Ukr. drukarnı̈"
+  },
+  "chytankadliaiiro00barv": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. vyd-va shkilʹnykh knyz͡hok"
+  },
+  "chytankadliairok00barv": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. Vyd-va shkilʹnykh kniz͡hok"
+  },
+  "chytankadliashki00popouoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Nakladom ts. k. vyd-va shkilnykh knyzhok"
+  },
+  "chytankaruskadli00unse": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. Fondu krai͡evoho"
+  },
+  "chytanochkyukra00krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "U Kyïvi Vernyhora"
+  },
+  "chytanochkyukra32krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "U Kyïvi Vernyhora"
+  },
+  "cihm_30425": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "L'viv [Ukraine] : Tovarystvo \"Prosvita\""
+  },
+  "cihm_65125": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Rus'ka knyharnia"
+  },
+  "cihm_65455": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakaladom Ukr. robitnychykh viste"
+  },
+  "cihm_65474": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Kanadyiskyi farmer"
+  },
+  "cihm_65581": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ruskoï knyharnï"
+  },
+  "cihm_65583": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnyche slovo"
+  },
+  "cihm_65603": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg] : Ukr. vyd. s-ka v Kanadi"
+  },
+  "cihm_65619": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia [Ukraine] : Halyst'ka nakladnia ; Winnipeg : Ruthenian Book Store"
+  },
+  "cihm_65791": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_65794": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnycha khyharska i vydavnycha spilka"
+  },
+  "cihm_66165": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_66166": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnyche Slovo"
+  },
+  "cihm_66532": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : [s.n.]"
+  },
+  "cihm_66533": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Z drukarni Kanadys 'ko-ukr. vyd s-ky"
+  },
+  "cihm_66620": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_71719": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ukr. robitnychykh vistei"
+  },
+  "cihm_72167": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Prosvita"
+  },
+  "cihm_72241": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg? : s.n.]"
+  },
+  "cihm_72242": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïnska vyd. spilka"
+  },
+  "cihm_72243": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïnska vyd. spilka"
+  },
+  "cihm_72244": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukrans'ka vyd. spilka"
+  },
+  "cihm_72574": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Robochoho naroda"
+  },
+  "cihm_72981": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ukraïns'ka vyd. spilka v Kanadi"
+  },
+  "cihm_73081": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Nakladom Ukr. robitnychkh viste"
+  },
+  "cihm_73936": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_74188": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Robochoho naroda"
+  },
+  "cihm_74263": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Rus'ka knyharnia"
+  },
+  "cihm_74264": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïns'ka vyd, spilka"
+  },
+  "cihm_74265": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Koshtom Ivana Kovaldiuka"
+  },
+  "cihm_74626": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukr. vyd. s-ka"
+  },
+  "cihm_74659": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Kanadis'ky farmer"
+  },
+  "cihm_75297": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ruskoï knyharnï"
+  },
+  "cihm_75760": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Hakladom ProgresyvniiF farmers'koï zbidzdhevoï kompaniï v Vinnïpegu"
+  },
+  "cihm_76405": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76406": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76407": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76412": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76413": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76414": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76415": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76416": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76417": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76419": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76420": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76422": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76423": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76424": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76425": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadys'koho farmera\""
+  },
+  "cihm_76668": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Rus'ka knyharnia"
+  },
+  "cihm_76758": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : [Instytut] \"Prosvita\""
+  },
+  "cihm_77112": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_77113": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_77508": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï khyharnï"
+  },
+  "cihm_77796": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Rus'ka knyharnd8ia"
+  },
+  "cihm_78378": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_78379": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_78845": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ekzek. komitetu U.S.D.P."
+  },
+  "cihm_78872": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakl. Rus'koï knyharnï"
+  },
+  "cihm_79841": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ukraïnskoi knyharnï"
+  },
+  "cihm_79850": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Shevchenkivskoho iuvileinoho komitetu"
+  },
+  "cihm_79898": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïnska vyd. spilka"
+  },
+  "cihm_79900": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïns'ka vyd. spilka"
+  },
+  "cihm_79902": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïnska vyd. spilka"
+  },
+  "cihm_80510": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_80511": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_80512": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_80610": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom I. Hnydy"
+  },
+  "cihm_80628": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom I. Hnydy"
+  },
+  "cihm_80737": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Z Drukarni \"Kanadyiskoho farmera\""
+  },
+  "cihm_80923": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharni"
+  },
+  "cihm_80949": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ruskoï knyharnï"
+  },
+  "cihm_80951": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Rus'ka knyharnia"
+  },
+  "cihm_81053": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ukr. robitnychykh viste"
+  },
+  "cihm_81055": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Robochoho naroda"
+  },
+  "cihm_81058": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Chervoyn prapor"
+  },
+  "cihm_81062": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Z drukarni Robitnychoho slova"
+  },
+  "cihm_81183": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Pros'vita"
+  },
+  "cihm_81184": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_81221": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ruska knyharnia"
+  },
+  "cihm_81636": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nowyj swit"
+  },
+  "cihm_81755": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_81908": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : [s.n.]"
+  },
+  "cihm_82614": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadyskoho farmera"
+  },
+  "cihm_83725": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg] : Dept. of Agriculture"
+  },
+  "cihm_84087": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_84280": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnycha knyhars'ka i vyd. s-ka"
+  },
+  "cihm_84281": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnycha knyhars'ka i vydavnycha spilka"
+  },
+  "cihm_84351": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Kan.-ukrans'ka vyd. spilka"
+  },
+  "cihm_84472": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadyĭsʹkoho farmera"
+  },
+  "cihm_84499": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Robitnychoho slova"
+  },
+  "cihm_84513": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Rus'ka knyharni͡a"
+  },
+  "cihm_84701": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadyĭs'koho farmera"
+  },
+  "cihm_84705": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom I. Hnydy"
+  },
+  "cihm_84738": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Z Drukarni \"Ukrainskoho Holosu\""
+  },
+  "cihm_85244": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharniï"
+  },
+  "cihm_85478": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rusʹkoï knyharni"
+  },
+  "cihm_85513": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg : s.n.]"
+  },
+  "cihm_85516": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadyĭs'koho farmera"
+  },
+  "cihm_85631": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ruskoho bazaru"
+  },
+  "cihm_85782": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Robitnychoho Slova"
+  },
+  "cihm_85783": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Provista"
+  },
+  "cihm_85786": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïns'koï knygarnï"
+  },
+  "cihm_87138": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Robitnychoï knyhars'koï i vyd. spilky"
+  },
+  "cihm_87219": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg? : s.n.]"
+  },
+  "cihm_87220": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ukrainska knyharnia"
+  },
+  "cihm_87676": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Z drukarni Kanadyitsia+"
+  },
+  "cihm_87724": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom i z drukarni Robitnychoï Knyhars'koï i vydavnychoï spilky"
+  },
+  "cihm_87833": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : [Nakl. 2 v druk. Robitnychoho slova]"
+  },
+  "cihm_88339": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Ukrains'kyi holos"
+  },
+  "cihm_88340": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Nakladom Novyn"
+  },
+  "cihm_88341": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : The Ukraina"
+  },
+  "cihm_88342": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Ukraïns'ka Vydavnncha Spilka"
+  },
+  "cihm_88343": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï [Ruska Knyharnia]"
+  },
+  "cihm_88345": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ruskoï Knyharnï [Ruska knyharnia]"
+  },
+  "cihm_88346": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïp[eg] [Winnipeg] : Naklodom Ruskoï knyharnï [Ruska knyharnia]"
+  },
+  "cihm_88347": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Ukraïnsʹka vydavnycha spilka"
+  },
+  "cihm_88348": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Ukraïns'ka Vydavnycha spilka"
+  },
+  "cihm_88349": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Perevodchyka"
+  },
+  "cihm_88505": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_88508": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Knyharni͡a Pasichni͡aka"
+  },
+  "cihm_90390": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Z Narodnoï drukarnï"
+  },
+  "cihm_90437": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnych a knyhars'ka i vyd.s-ka"
+  },
+  "cihm_90589": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Canada Northwest Pub. Co."
+  },
+  "cihm_90638": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom i z drukarni Robitnychoï knyharskoï i vyd. spilky"
+  },
+  "cihm_97005": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Ukraïnsʹko-russkoï hrupy Sots. Rev."
+  },
+  "cihm_97281": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadyĭs'koho farmera"
+  },
+  "cihm_97369": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom \"Ukr. robitnychkh visteĭ"
+  },
+  "cihm_97496": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Winnipeg] : Ukr. vyd. s-ka"
+  },
+  "cihm_97743": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom \"Ukrains'kykh robitnychykh visteĭ\""
+  },
+  "cihm_97804": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ukr. robitny'chykh visteĭ"
+  },
+  "cihm_98266": {
+   "place": "moscow",
+   "field": "publisher",
+   "value": "Moskva [Moscow : s.n.]"
+  },
+  "cihm_98489": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Ribitnychoï knyh. i vyd. s-ky"
+  },
+  "cihm_98494": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukraïns'ka vydavnycha spilka"
+  },
+  "cihm_98665": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Z Drukarni Ukrains'koho Holosu"
+  },
+  "cihm_98899": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_98900": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Rus'hoï knyharnï\""
+  },
+  "cihm_98942": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ukraïns'koho holosy"
+  },
+  "cihm_990342": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom Robitnychoï knyh. i vyd. s-ky"
+  },
+  "cihm_990390": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Z Narodnoï drukarnï"
+  },
+  "cihm_990437": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnych a knyhars'ka i vyd.s-ka"
+  },
+  "cihm_990465": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Kanadys'koho farmera"
+  },
+  "cihm_990589": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Canada Northwest Pub. Co."
+  },
+  "cihm_990638": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom i z drukarni Robitnychoï knyharskoï i vyd. spilky"
+  },
+  "cihm_990977": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montréal : Nowyj swit"
+  },
+  "cihm_991030": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ukrains'ka vydavnycha spilka"
+  },
+  "cihm_991097": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Rus'ka knyharnia\""
+  },
+  "cihm_991109": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Ruskoï knyharni"
+  },
+  "cihm_991213": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ruska knyharnia"
+  },
+  "cihm_991218": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus koï knyharni"
+  },
+  "cihm_991256": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Rus'ka knyharnia"
+  },
+  "cihm_991257": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ukraïns knyharnia"
+  },
+  "cihm_991270": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharni"
+  },
+  "cihm_991335": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Ruska knuharnia"
+  },
+  "cihm_991395": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ruskoï knyharni"
+  },
+  "cihm_991416": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Holovny sklad Prosvita"
+  },
+  "cihm_991481": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom in drykom Zahalnoï knyharni"
+  },
+  "cihm_99153": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Rus'koï knyharnï"
+  },
+  "cihm_991534": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Koshtom Ruskoï drukarni"
+  },
+  "cihm_991573": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg [Winnipeg] : Nakladom Robochoho naroda"
+  },
+  "cihm_991631": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom iA. N. Kreta"
+  },
+  "cihm_991826": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Holovny sklad v Knyharny Novyn"
+  },
+  "cihm_991834": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom A. onkerovoï"
+  },
+  "cihm_991865": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Kanadyiskoho farmera"
+  },
+  "cihm_991892": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïnskoï knyharni"
+  },
+  "cihm_991903": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom i drukom Kanadiis'ko-ukrains'koi vydavnychoi spilky"
+  },
+  "cihm_992168": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Robochoho naroda"
+  },
+  "cihm_992292": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg [Winnipeg] : Nakladom Robochoho naroda"
+  },
+  "cihm_992301": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ruthenian Book Store"
+  },
+  "dabudetvoliatvoi00tsuk": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Cherenkamy i nakl. pechatni͡e Mykhaĭla Bi͡elousa"
+  },
+  "daisertsiuvoliuz00krop": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "V Ni͡u Ĭorku : Nakl. Ukraïnskoï Knyharni im. T. Shevchenka"
+  },
+  "dantonrol00roll": {
+   "place": "berlin",
+   "field": "publisher",
+   "value": "Berlin : Ukraïnska nakladnia Liaptsih"
+  },
+  "darunkyrusalokst00topluoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Svit dytyny"
+  },
+  "darvinizm00ferr": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto Nakl. iz druk. Robitnychoï Knygars'koï i vydavnychoï spilki"
+  },
+  "dasertsiuvoliuza00krop": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N.Y. : Nakladom Ukraïnsʹkoï knyharnï im. T. Shevchenka v Ni͡u Ĭorku"
+  },
+  "davnienovepoezi00franuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakladom ukraïnsko-ruskoï vydavnychoï spilky"
+  },
+  "dedezelmanil00rusn": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakl. M. Bïlousa"
+  },
+  "dekliamatsiisili00kumiuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lvov : Nakl. B.I. Protsyka"
+  },
+  "deliegatsiiadora00kovb": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Vinnipeg, Man.] : [publisher not identified]"
+  },
+  "deliubovtamiboht00tolsuoft": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Z drukarni \"Kanadytsia\""
+  },
+  "demokratychnares00unse": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "[Lʹviv] : R.U.P."
+  },
+  "derk1861": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: Друк. Каткова і Т-ва, 1861"
+  },
+  "derzhavairevoliu00leni": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden': Nakl. hurtka sot͡sialistiv"
+  },
+  "descriptiondesdo00unse": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kiev : A.L. Popoff"
+  },
+  "deutschukrajinis00nm": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomea : Halytzka Nakl"
+  },
+  "deviatbrativides00vovc": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka Vydavnycha spilka"
+  },
+  "deviatbrativides00vovcuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Nakladom ruskoï knyharni im. T. Shevchenka"
+  },
+  "deznaitypravdu00lezh": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom Tovarystva sʹv. Ap. Pavla"
+  },
+  "diadkotarasditoc00poliuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Ditochy teatr"
+  },
+  "diakvov00vovcuoft": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : Svoboda"
+  },
+  "dikariv1891": {
+   "place": "voronezh",
+   "field": "description",
+   "value": "- Воронеж : Типо-литография Губернского правления, 1891"
+  },
+  "dilynebesnihrote00vyshuoft": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] Chervony shliakh"
+  },
+  "dizharmoniiadram00vynnuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "U Kyïvi : [s.n.]"
+  },
+  "dliadomashnohooh00fran": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg, Kanada : Ukraïnska Vydavnycha Spilka"
+  },
+  "dliaotradymonolo01hanu": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lvov : Iz tip. Stavropyhiskoho Instytuta"
+  },
+  "dobrobytiinshiop00fran": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakl. \"Robochogo naroda\""
+  },
+  "dodatok": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "doistorirevoliut00naza": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : [s.n.]"
+  },
+  "dokumentyobiasn00brosgoog": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S. Peterburg : V tip. Ėduarda Prat͡sa"
+  },
+  "dokumnetyukran00kuch": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Vyd. Ukraïnskoho praporu"
+  },
+  "dokysontsezidero00krop": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Ni͡u Ĭork : Koshtom i nakladom drukarni Pavla Petrova"
+  },
+  "doliahalytskohos00kamiuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : Nakladom ukr. knyharni im. T. Shevchenka"
+  },
+  "doliapratsiuiuch00unse": {
+   "place": "chernivtsi",
+   "field": "publisher",
+   "value": "Chernivt͡si : Vyd-vo Ukraïnsʹkoï molodiz͡hy"
+  },
+  "doliaukranyvir00shtouoft": {
+   "place": "philadelphia",
+   "field": "publisher",
+   "value": "Philadelphia, Pa. : Z druk. ruskoho syritskoho domu"
+  },
+  "domashnylkaraboi00unse": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton, Alta : Ukr. vydav. spilka \"Prosʹvita\""
+  },
+  "doosnovukranskoh0000rudn": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : [Ukr. skytaletsʹ]"
+  },
+  "dorohadosvidomos00als": {
+   "place": "cleveland",
+   "field": "publisher",
+   "value": "Cleveland : Robitnyk"
+  },
+  "dorohanoveli00stef": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom Ukr. vydavnychoï spilky"
+  },
+  "dorohovkazdliaru00budk": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : [s.n.]"
+  },
+  "dostonoiestzbirk00lepkuoft": {
+   "place": "wetzlar",
+   "field": "publisher",
+   "value": "Vetsliar : Struia"
+  },
+  "dosvitlaopovidan00franuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Vidrodzhennie"
+  },
+  "dosvitlastsenich00luts": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. \"Russkoho slova\""
+  },
+  "dosvitlastsenich00luts_0": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. \"Russkogo slova\""
+  },
+  "doukranskohoro0030iz": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Robitnyk"
+  },
+  "doukranskykhkhli00soiu": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Z drukarni Mekhitarystiv"
+  },
+  "dovidomostyemigr00reva": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Rusʹke t-vo sʹv. Rafaïla"
+  },
+  "drakonyzhartnaod00biliuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Rusalka"
+  },
+  "dramatychnitvory00push": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. \"Vsesvitnoï Biblïoteky\""
+  },
+  "druhachytankadli00krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Vyd-vo \"Chaka\""
+  },
+  "dubr1917": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Київ : Рідна мова, 1917"
+  },
+  "dubrov1917": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Київ : Друк. Київської друк. спілки, 1917"
+  },
+  "dumapralisu00turiuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Apolon"
+  },
+  "dumyipisni00shevuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : [b. i.]"
+  },
+  "durysvityprykhod00levyuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Nakladom Ukraïnsko-ruskoï Vydavnychoï Spilky"
+  },
+  "dushohubkadramav00trusuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : Nakl. Knyharni im. T. Shevchenka"
+  },
+  "dushohubydramana00toho": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "V Niu orku : Nakl. Ukraïnskoï Knyharnï im. T. Shevchenka"
+  },
+  "dvabratyzbaokbra00grim": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City : Svoboda"
+  },
+  "dvabratyzkazokbr00grim": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Z Internat͡sionalʹnoï drukarnï"
+  },
+  "dvadomykyiodnafi00lotouoft": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City : Svoboda"
+  },
+  "dvadtsiatisoroko01dorouoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Derzh. vyd-vo"
+  },
+  "dvadtsiatisoroko02dorouoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Derzh. vyd-vo"
+  },
+  "dvanatsiatdramav00irch": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom \"Ukraïnsʹkykh robitnychykh vistyĭ\""
+  },
+  "dvavoinykomediav00luts": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Cherenkamy i nakl. M. Bilousa"
+  },
+  "dvavoinykomediia00luts": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Cherenkamy i nakl. pechatni Mykhayla Bilousa"
+  },
+  "dvikazky00chumuoft": {
+   "place": "freistadt",
+   "field": "publisher",
+   "value": "Frashtadt : z druk. \"Soiuza vyzvolennia Ukraïny\""
+  },
+  "dvimohyliopovida00krev": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Kanadyĭsʹkoho Farmera\""
+  },
+  "dviruskinarodnos00kost_0": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Ukraïnsʹka nakladni͡a"
+  },
+  "dvochimritragiko00kovb": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "[Vinnipeg?] : Nakladom panï Dr. A. Ĭonkerovoï"
+  },
+  "dvoiedramatychny00kobz": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Nakladom ukraïnskoï knyharni im. T. Shevchenka"
+  },
+  "dvokhvidrazunove00blas": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : 1-oï Kyïvsʹkoho Druk. Spilky"
+  },
+  "dvonohy00ewal": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Robochoho naroda\""
+  },
+  "dymytryobrazdram00borauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakladom IUlïiana Borachka"
+  },
+  "dytiachiopovidan00kybauoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Druk. 1-oi kyïv. spilky trokhsviat."
+  },
+  "dzhannokssvoboda00brow": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : [s.n.]"
+  },
+  "egodumyipiesni00shevuoft": {
+   "place": "moscow",
+   "field": "publisher",
+   "value": "Moskva : Iz. T-va Sytina"
+  },
+  "einueberblickder00hrus": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Wien : Verlag des Bundes zur Befreiung der Ukraina"
+  },
+  "ekonomichnaheohr00fesh": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : \"Zemli͡a\""
+  },
+  "ekonomichnepoloz00egan": {
+   "place": "prague",
+   "field": "publisher",
+   "value": "Praga Nakl. Ustedni jednoty hospodáských"
+  },
+  "ekonomichnepoloz00egan_0": {
+   "place": "prague",
+   "field": "publisher",
+   "value": "Praha : Nakl. ústřední jednoty hospodářských družstev"
+  },
+  "ekonomichniosnov00rudnuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Vyd. Ukr. praporu"
+  },
+  "ekspropriiatsiia00pere": {
+   "place": "chicago",
+   "field": "publisher",
+   "value": "Chicago : Ukraïna"
+  },
+  "elysavetamucheny00wall": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeh : Nakl. Rusʹkoi knyharni"
+  },
+  "enejida1842": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "Харьковъ: Въ Университетской типографіи, 1842"
+  },
+  "enejida_1842": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Університетська типографія в Харкові"
+  },
+  "eneyida1798": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "Санкт-Петербург: Иждивеніем М. Парпуры, 1798"
+  },
+  "etmol0gi": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Наукове товариство ім. Шевченка у Львові"
+  },
+  "etn1909_02_03": {
+   "place": "moscow",
+   "field": "description",
+   "value": "Москва: типография императорского московского университета, 1910"
+  },
+  "etnoZb30": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnograf_zb_33": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnograf_zb_34": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnograf_zb_35": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnograf_zb_36": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnograf_zb_37-38": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnografichnater00naza": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Tovarystvo imeny Shevchenka"
+  },
+  "etnografichnyizb1519nauk": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Naukove tovarystvo im. SHevchenka"
+  },
+  "etnohr_03-1": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_1": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_10": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_11": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_12": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_13": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_14": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_15": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_16": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_17": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_18": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_19": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_21": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_22": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_24": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_25": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_27": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_28": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_29": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_37-38": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_4": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_5": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_6": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_7": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_8": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohr_9": {
+   "place": "lviv",
+   "field": "creator",
+   "value": "Naukove tovarystvo im. SHevchenka (Lʹviv, Ukraine)"
+  },
+  "etnohrafichnakar00toma": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S.-Peterburgʺ : Tipografīi͡a Imperatorskoĭ akademīi naukʺ"
+  },
+  "etnozbirnyk1853": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "- Санкт-Петербург : В тип. М-ва внутр. дел, 1853"
+  },
+  "etnozbirnyk1858": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "Санкт-Петербург: В Типографии Эдуарда Праца, 1858"
+  },
+  "etykaisotsiializ00levy": {
+   "place": "prague",
+   "field": "publisher",
+   "value": "Praha : Vyd-vo \"Nova Ukraine\""
+  },
+  "farmazonyaboiakt00fedk": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakl. Ruskoï Knyharni"
+  },
+  "favsttragediia01goet": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Viden : Vernyhora"
+  },
+  "favstzah00goetuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Vernyhora"
+  },
+  "fil1882zap": {
+   "place": "voronezh",
+   "field": "publisher",
+   "value": "В типографии В.И. Исаева. Воронеж"
+  },
+  "filmyrevoliutsii00irch": {
+   "place": "berlin",
+   "field": "publisher",
+   "value": "Niı̐uı̐Ł-Iork ; Berlin : Vyd-vo \"Kul£tura\""
+  },
+  "filosofiiashtuky00tain": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Nakladom i z drukarnï \"Robitnychoho Slova\""
+  },
+  "filozofiiasotsii00diet": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N.Y. : Vydannie \"Holosu pravdy\""
+  },
+  "finliandiiatafin00boch": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakladom \"Soi͡uza vyzvolenni͡a Ukraïny\", z drukarni Adolʹfa Holʹt͡shavzena)"
+  },
+  "fl1883zap1": {
+   "place": "voronezh",
+   "field": "description",
+   "value": "Воронеж : Типография В. И. Исаева, 1883"
+  },
+  "folklorpidruchny00gomm": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "V Kolomyï : Vd. nakl. Vydavnychoï spilky ukr. uchntelʹstva"
+  },
+  "fragmentypoezi00holuuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. avtora"
+  },
+  "frankoXVII": {
+   "place": "lviv",
+   "field": "description",
+   "value": "Львів: З друк. Наук. Т-ва імені Шевченка, 1900"
+  },
+  "genovefaopovidan00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg, Man. : Nakladom Rusʹoï Knyharnï"
+  },
+  "geografiia00levy": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Z Narodnoï Drukarnï"
+  },
+  "geteshevchenko00terpuoft": {
+   "place": "uzhhorod",
+   "field": "publisher",
+   "value": "Uzhorod : M. Ciolkan"
+  },
+  "gidrogeologiches00sint": {
+   "place": "odesa",
+   "field": "publisher",
+   "value": "[Odessa]"
+  },
+  "glossy00bach_0": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. red. \"Iskry\""
+  },
+  "gosudarstvennoek00dovn": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kiev]"
+  },
+  "gosudarstvennoek00dovn_0": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kiev]"
+  },
+  "grafmontekristo00duma": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom i drukom Ukraïnsʹkoï vydavnychoï spilky"
+  },
+  "grafmontekristo00duma_1": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom i drukom Ukraïnsʹkoï vydavnychoï spilky"
+  },
+  "grafmontekristo00duma_2": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom i drukom Ukraïnsʹkoï vydavnychoï spilky"
+  },
+  "grinchenko1907": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "- У Київі: \"Просвещение\", 1907"
+  },
+  "gronoliteraturno00poliuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv :"
+  },
+  "gyakorlatikisoro00volo": {
+   "place": "uzhhorod",
+   "field": "publisher",
+   "value": "Uzshorod : Nyomatott az Unio Könyvnyomdai részv.-társ. műintézetében"
+  },
+  "hadamakyz15maliu00shev": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadyĭskoho Farmera\""
+  },
+  "hadamakyzportret00shevuoft": {
+   "place": "wetzlar",
+   "field": "publisher",
+   "value": "Vetsliar : [s.n.]"
+  },
+  "halyatovsky1": {
+   "place": "mogilev",
+   "field": "publisher",
+   "value": "Mogilev: Tipografiya Maksima Voschanki"
+  },
+  "halyatovsky3": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "- Kyiv: Printing house Kievo-Pecherskoy lavryi, 1659"
+  },
+  "halychynanovider00rudnuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Vyd-vo Ukr. praporu"
+  },
+  "halychynavrr191800lozyuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "[Wien] Institut sociologique ukrainien"
+  },
+  "halychynavzhytti00lozyuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden Vyd. Soiuza vyzvolennia Ukraïny"
+  },
+  "halytskaarmiiana00levy": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden'"
+  },
+  "halytskaarmiiana00levy_0": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden'"
+  },
+  "halytskiukrans00kolouoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "[Kolomyia :bHalytska Nakladnia IA. Orenshtaina"
+  },
+  "hamaliia00shevuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : H.E. Smolynsky"
+  },
+  "harkavy1865": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "- Санкт-Петербург : тип. Имп. Акад. наук, 1865"
+  },
+  "hatstsuk1861": {
+   "place": "moscow",
+   "field": "description",
+   "value": "- Москва: В друк. універ., 1861"
+  },
+  "heinaivanaheinak00fedy_0": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Cherenkami i nakl. M. Bi͡elousa"
+  },
+  "hekhtorusynpomoz00shemuoft": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, Pa. : [Ruthenian National Union"
+  },
+  "henaivanahenakup00fedyuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Nakladom vyd-va ukr. drukarni"
+  },
+  "henedyvutesvoien00lvivuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Svitanok"
+  },
+  "herokapitaluacap00sinc": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Kanadyĭsʹkoho Farmera\""
+  },
+  "heroskaukranai00mega": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Ukraïnskoï Knyharnï\""
+  },
+  "heroskaukranaili00mega": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Ukraïnsʹkoï knyharnï\", Z Drukarnï \"Kanadyĭskoho Farmera\""
+  },
+  "hetmanmazepa00budzuoft": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : Z druk. \"Svobody\""
+  },
+  "hetmanpetrosaha00mord": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Ukraïnske vyd-vo v Katerynoslavi"
+  },
+  "hetmanpetrosahad00morduoft": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Ukraïnske vyd-vo v Katerynoslavi"
+  },
+  "hetzakon3hoiunia00unse": {
+   "place": "poltava",
+   "field": "publisher",
+   "value": "Poltava : Gub. typ."
+  },
+  "hipnotyzmisugest00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg, Man. : Nakladom Rusʹkoï Knyharnï"
+  },
+  "historicalevolut00hrus": {
+   "place": "london",
+   "field": "publisher",
+   "value": "London : [Garden City Press]"
+  },
+  "hlasopsnetsilyna00ukra": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Iz Typ. Stavropyhiĭskaho instiïtuta"
+  },
+  "hlytaabopavukdra00krop": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Ni͡u Ĭork : Nakl. Ukraïnsʹkoĭ Knyharnï im. T. Shevchenka"
+  },
+  "hnivnoveli00babiuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Rusalka"
+  },
+  "hoholiukrana00doro": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Literaturno-naukovy vistnyk"
+  },
+  "holodroman00hams": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. Ukraïnsʹso-ruskoĭ \"Vydavnychoï spilky\""
+  },
+  "holodvyn00vynnuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Z druk. A. Holtshavzena u Vidni"
+  },
+  "holosprobudzheno00unse": {
+   "place": "salzwedel",
+   "field": "publisher",
+   "value": "Zalʹt͡svedelʹ : Z drukarni S.V.U."
+  },
+  "holosrobitnytsiv00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Vyd-vo \"Proli͡ekulʹt"
+  },
+  "holovniumovyuspi008800": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Z drukarnï \"Dila\""
+  },
+  "horbokonykkazkap00kova": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : z Internat͡sionalʹnoï Drukarni"
+  },
+  "horilytsiaduryly00horu": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyi͡a : Cherenkamy i nakl. M. Bilousa"
+  },
+  "horytrazskaz00naum": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork: Nakladom Knyhopechatni im. Ivana Naumovycha"
+  },
+  "hostyntsizbirkaf00syne": {
+   "place": "salzwedel",
+   "field": "publisher",
+   "value": "Zalʹt͡svedelʹ : Naklad Ukr. viĭsʹkovoï misiï"
+  },
+  "hrabianka": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Киев : в Университетской тип., 1853"
+  },
+  "hramatikaruskoho00osad": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Vo Lvovie : V pechatni In-ta Stavropigiiskogo"
+  },
+  "hramatykabukvari00krusuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Zemlia"
+  },
+  "hramatykarusko00smal": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Nakladom vlasnym"
+  },
+  "hrikhdramatychna00dudkuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Rusalka"
+  },
+  "hrishnytsiapisli00mpb": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom \"Rusʹkoï Knyharnï\""
+  },
+  "hromnyk1899": {
+   "place": "saint-petersburg",
+   "field": "description",
+   "value": "Санктпетербург : Типография Императорской Академии наук, 1899"
+  },
+  "hryhorisavychsko00skovuoft": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Kharkiv : Vyd. \"Soiuz\""
+  },
+  "humorystychniopo00storuoft": {
+   "place": "freistadt",
+   "field": "publisher",
+   "value": "Frashtadt : Nakl. Vistnyka zhyttia"
+  },
+  "hungaricorutheni00hnat": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Tovarystvo imeny Shevchenka"
+  },
+  "hutorn1883": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "типографія С.В. Кульженко. Київ"
+  },
+  "hutsulyhutsulshc00khot": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City [N.J.] : Z druk. \"Svobody\""
+  },
+  "iakcholovikzisho00budz": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïnsʹkoï Knyharnï"
+  },
+  "iakfarmermozhedi00mers": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Ukr. robitnychykh vistyĭ\""
+  },
+  "iakhalychanvtiah00chak": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Ukr. robitnychykh vistyĭ\""
+  },
+  "iakiieliudynazem00kamiuoft": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : Z druk. \"Svobody\""
+  },
+  "iakirlandiiazdob00hryh": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Ukraïnsʹke vyd-vo"
+  },
+  "iakkrovkruzhytvn00fish": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnycha knyharsʹka i vydavnycha spilka"
+  },
+  "iakliudepravsobi00hrin": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. Ukraïnsʹkoï radykalʹnoï partiï"
+  },
+  "iakliudynavchyly00chak": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : Robitnycha knyharsʹka i vydavnycha spilka"
+  },
+  "iakmoskvanyshchy00budzuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden : Nakl. Soiuza vyzvolennia Ukraïny"
+  },
+  "iakmuzhykkhodyvd00unse": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : \"Svoboda,\""
+  },
+  "iakmykhassynmeln00scrauoft": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton : Ukrainian Book Store"
+  },
+  "iakoavtonomiifed00hrus": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakl. Soi͡uza vyzvolenni͡a Ukraïny"
+  },
+  "iakoprydlytyvahu00unse": {
+   "place": "wetzlar",
+   "field": "publisher",
+   "value": "Vet͡sli͡ar : Vydanni͡e T-va \"Silʹsʹkyĭ hospodar\""
+  },
+  "iakpovstalanasha00krevuoft": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakl. Ukr. robitnychykh visty [sic]"
+  },
+  "iakpovstalanasha00umin": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Ukr. robitnychykh vistyĭ\""
+  },
+  "iakpovstalarelig00cuno": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Znattia to syla ; Berlin : Ukraïnska nakladnia"
+  },
+  "iakpovstavsvitzd00tush": {
+   "place": "montreal",
+   "field": "publisher",
+   "value": "Montreal : Nakladom Iv. Hnydy, Z drukarnï Novyĭ Svit"
+  },
+  "iakpryshlovrosid00dank": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakladom Soi͡uza vyzvolenni͡a Ukraïny"
+  },
+  "iakrozvestynapis00borouoft": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S. Peterburg : lektro-tip. N. IA. Stokovo"
+  },
+  "iakupalatsarskav00koro": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakladom Soi͡uza vyzvolenni͡a Ukraïny"
+  },
+  "iakvybiratykonia00koro": {
+   "place": "rastatt",
+   "field": "publisher",
+   "value": "Rashtat : Nakladom vydavnychoho tovarystva \"Ukraïnsʹkyĭ Rukh\""
+  },
+  "iakzakladatychyt00tsur": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Kanadyĭsʹkoho Farmera\""
+  },
+  "iakzhyvetsiaukra00levy": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakl. \"Soi͡uza vyzvolenni͡a Ukraïny\""
+  },
+  "iakzhyvukrainsky00hrus": {
+   "place": "istanbul",
+   "field": "publisher",
+   "value": "T︠s︡arhorod : Z drukarnï vyzvolenni︠a︡ Ukraïny"
+  },
+  "iakzhyvukransk00kohu": {
+   "place": "chernivtsi",
+   "field": "publisher",
+   "value": "Chernivtsi : Z druk. tov. Ruskoï Rady"
+  },
+  "iakzhyvukranskyn00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadyiskoho farmera\""
+  },
+  "iaremaopovidanie008800": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Z druk. Naukovoho T-va im. Shevchenka"
+  },
+  "iasnizoridramavp00hrin": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Drukarni͡a Naukovoho tovarystva im. Shevchenka"
+  },
+  "idealyhumannosty00masa": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Z druk. Naukovoho t-va im. Shevchenka"
+  },
+  "idealyhumannosty00masa_0": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom Rusʹkoï Knyharnï"
+  },
+  "iedynadiialnatru0000ruso": {
+   "place": "dnipro",
+   "field": "publisher",
+   "value": "Katerynoslav : Ukraïnsʹke vyd-vo v Katerynoslavi"
+  },
+  "iezuitskaprepodo00levy": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Ukraïnska vydavnycha spilka v Kanadi"
+  },
+  "iiizahalnizboryu00ukra": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : [s.n.]"
+  },
+  "iliustrovanaisto00hrus_0": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Ukraïnsʹkoï knyharni\""
+  },
+  "iliustrovanaisto00hrus_1": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom \"Ukraïnsʹkoï knyharni\""
+  },
+  "iliustrovanaisto00hrus_2": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakladom \"Ukraïnsʹkoï knyharni\""
+  },
+  "iliustrovanazbir00unse": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : Z druk. \"Svobody\""
+  },
+  "iliustrovaneukra00pach": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka vydavnycha spilka"
+  },
+  "iliustrovaneukra00pachuoft": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg Ukr. bydavnycha spilka"
+  },
+  "iliustrovannaia00regoog": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹvov : Izd. C.A. Dudy"
+  },
+  "iliustrovanykali00unse_0": {
+   "place": "edmonton",
+   "field": "publisher",
+   "value": "Edmonton : Nakladom i drukom \"Novyn\""
+  },
+  "iliustrovanykali00unse_1": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Kanadiĭsʹko-ukraïnsʹka vydavnycha spilka"
+  },
+  "iliustrovanykali1927unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Kanadiĭsʹko-ukraïnsʹka vydavnycha spilka"
+  },
+  "iliustrovanynaro00unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka vydavnycha spilka v Kanadï"
+  },
+  "iliustrovanynaro1920unse": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka vydavnycha spilka v Kanadï"
+  },
+  "illiustrirovanna00hrusuoft": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S.-Peterburg : Knigoizd-vo T-vo \"Prosvieshchenie\""
+  },
+  "imyvevropiprotes00fran": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Z drukarni Instituta Stavropihiĭsʹkoho"
+  },
+  "imyvievropi00fran": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : [s. n.]"
+  },
+  "inpdf": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "- Харьків : Надруковано в Університетській друкарні, 1838"
+  },
+  "institutkaopovid00vovc": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "V Kolomyï : Halytska nakladnia IAkova Orenshtana"
+  },
+  "instruktsyiadlia00hara": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Z drukarni Ivana Aĭkhelʹbergera"
+  },
+  "internatsionalny00zame": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Vyd. \"Holosu Pravdy\""
+  },
+  "internatsionalny00zameuoft": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N.Y. : Vyd. Holosu pravdy"
+  },
+  "irenaolenskaopov00krusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Ukraïnska knyzhka"
+  },
+  "irodiiadagflober00flau": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. Ukraïnsʹko-rusʹkoï vydavn. spilky"
+  },
+  "istoriatserkovna00balu": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "V Viennî : Typomʺ pp. oo. Mekhytarystovʺ"
+  },
+  "istoriiabibliina00unse": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi͡e : V T͡Si͡esarsko-Korolevskom nakladi͡e shkolnykh knizhok Stavropihiǐskoho in-ta"
+  },
+  "istoriiaborotbyv00drap": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N.Y. : Nakl. Ukraïnskoï knyharni im. T. Shevchenka"
+  },
+  "istoriiaborotbyv00drap_0": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Z druk. Udilovoï"
+  },
+  "istoriiachervono00benh_1": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Nakladom \"Robochoho naroda\""
+  },
+  "istoriiaisystema00losk": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv, Ukraïnske vyd-vo \"Istoriia i pravo\""
+  },
+  "istoriiakulturyv00lipp": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : V-vo Kultura"
+  },
+  "istoriiamoskovsh00blag": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnïpeg : Ukraïnsʹka vydavnycha spilka"
+  },
+  "istoriiaosnovani00bibeuoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Cherenkamy i izdaniem M. Bielousa"
+  },
+  "istoriiaparyzhsk00newy": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York, N. Y. : Nakl. Vyd-va Ukraïnskoï drukarni"
+  },
+  "istoriiapodkarpa00pach": {
+   "place": "uzhhorod",
+   "field": "publisher",
+   "value": "Uzhhorod : Unio"
+  },
+  "istoriiarusskots0101goluuoft": {
+   "place": "moscow",
+   "field": "publisher",
+   "value": "Moskva Typ. E. Lyssner i IU. Roman"
+  },
+  "istoriiarusskots0102goluuoft": {
+   "place": "moscow",
+   "field": "publisher",
+   "value": "Moskva Typ. E. Lyssner i IU. Roman"
+  },
+  "istoriiaslobodsk00baga": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Kharkiv : Soiuz"
+  },
+  "istoriiaukrainy00kryp": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : \"Vernyhora\""
+  },
+  "istoriiaukrans00barv": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Nakl. knyharnï naukovoho tovarystva im. Shevchenka"
+  },
+  "istoriiaukrans00iefruoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Ukr. nakladnia"
+  },
+  "istoriiaukrans01voznuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Prosvita"
+  },
+  "istoriiaukrans02voznuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Prosvita"
+  },
+  "istoriiaukrans03voznuoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Prosvita"
+  },
+  "istoriiaukransko0000terl": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakladom fondu \"Uchitesi͡a, Braty moı̈\""
+  },
+  "istoriiaukransko00tymo": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakladom Ukraïnsʹkoï partiï samostiĭnykiv-sot͡sii͡alistiv"
+  },
+  "istoriiaukranyr00arkagoog": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "[Peterburh : T-vo \"Obshchestvennai︠a︡ Polʹza\"]"
+  },
+  "istoriiaukranyru00arka": {
+   "place": "krakow",
+   "field": "publisher",
+   "value": "Krakiv : Nakladom OlÊ¹hy ArkasovoÃ¯"
+  },
+  "istoriiaukranyru00barv": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : \"Ukraïnsʹka Knyharni͡a\""
+  },
+  "istoriiaukranyru00shkv": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Z drukarnï \"Kanadiisʹkoho Rusyna\""
+  },
+  "istoriiazemli00lunk": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Ukraïnsʹka Vydavnycha Spilka \"Ukraïnsʹkoho Holosu\""
+  },
+  "istorychnipisniu00sich": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakl. ukraïnskoï akademichnoï molodïzhy"
+  },
+  "istorychnipoemy00shevuoft": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "Kolomyia : Nakl. \"Zahalnoï knyhozbirni\""
+  },
+  "istorychnipravau00barvuoft": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Viden' : [B. Barvinsky]"
+  },
+  "istorychniprychy12barv": {
+   "place": "zhovkva",
+   "field": "publisher",
+   "value": "Zhovka : Nakl. avtora"
+  },
+  "istoryiaukrany00kost": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Nakl. Knyharni Naukovoho t-va im. Shevchenka"
+  },
+  "itskosvatkomedii008800": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lvôv : Nakl. V.M. Brody"
+  },
+  "itskosvatkomedii008800_1": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lʹviv : Nakl. V.M. Brody"
+  },
+  "itskosvatkomedii00trem": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton, Pa. : Vyd-vo ukraïnsʹkoï knyharnï"
+  },
+  "iubylemykolyhoho00hrus": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : [s.n.]"
+  },
+  "iuliitsezar00shak": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : Z druk. Naukovoho t-va im. Shevchenka"
+  },
+  "iurkodovbushisto00star": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom Ukraïnsʹkoï Knyharni"
+  },
+  "iuvilenazbirkast00dontuoft": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Vinnipeg : Nakl. Shevchenkivskoho iuvilenoho komitetu"
+  },
+  "ivanfedorovychsh00gogo": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "[Kharkiv] : Knyhosilka"
+  },
+  "ivanfranko00lozy": {
+   "place": "vienna",
+   "field": "publisher",
+   "value": "Videnʹ : Nakl. Soi͡uza vyzvolenni͡a Ukraïny"
+  },
+  "ivanfrankobiogra00iaky": {
+   "place": "philadelphia",
+   "field": "publisher",
+   "value": "Filiadelfiia : Nakladom Prosvitno dramatychnoho tovarystva im. Ivana Franka"
+  },
+  "ivanfrankopoezii00krus": {
+   "place": "kolomyia",
+   "field": "publisher",
+   "value": "V Kolomyï, Halytska Nakl. IAkova Orenshtana"
+  },
+  "ivanhusieretykz100shev": {
+   "place": "winnipeg",
+   "field": "publisher",
+   "value": "Winnipeg : Nakladom \"Kanadyĭskoho Farmera\""
+  },
+  "ivankonovchenkoi008800": {
+   "place": "olyphant",
+   "field": "publisher",
+   "value": "Olyphant, Pa. : Nakladom \"Amerykansʹko-Ukraïnsʹkoï Vydavnychoï Spilky\""
+  },
+  "izistoriirusskag00kres": {
+   "place": "paris",
+   "field": "publisher",
+   "value": "Paris J. Povolozky"
+  },
+  "izkhrystompovosk00krat": {
+   "place": "toronto",
+   "field": "publisher",
+   "value": "Toronto : [s.n.]"
+  },
+  "kevskaiarus01hrus": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S.-Peterburg : B knizhnykh skaldakh N.P. Karbasnikov [i dr.]"
+  },
+  "kievskaiarusvved01hrusuoft": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S.-Peterburg : [Tip. Imperatoskago uchilishcha glukhoniemykh]"
+  },
+  "kulturnonatsiona00hrusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "[Kyïv?] Dniprosoiuz"
+  },
+  "nashapolityka00hrus": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lʹvovi : z druk. Naukovoho T-va im. Shevchenka"
+  },
+  "ocherkistoriiukr00hrus": {
+   "place": "saint-petersburg",
+   "field": "publisher",
+   "value": "S.-Peterburg N.I. Karbasnikov"
+  },
+  "pianytskye_pesny": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Типографія А. Давиденко (Київ)"
+  },
+  "probatkakozatsk00hrus": {
+   "place": "jersey-city",
+   "field": "publisher",
+   "value": "Jersey City, N.J. : Z drukarnï \"Svobody\""
+  },
+  "probatkakozatsko00hrus": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "Niu ork : Nakl. M. Sïchynskoho"
+  },
+  "spivomovkyaboves00rudauoft": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Scranton Nakl. V. Hrishka"
+  },
+  "spivomovkyvybir00rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "Lviv : Nakladom t-va Prosvita"
+  },
+  "sumts1910": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "Харків : Друкарня ”Печатне діло”, 1910"
+  },
+  "sumtsov": {
+   "place": "cherkasy",
+   "field": "publisher",
+   "value": "Друкарня видавничого товариства «Сіяч» (Черкаси)"
+  },
+  "sumtsov0malyunki": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "Харків: Друкарьня \"Печатне Діло\", 1910"
+  },
+  "sumtsov13": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "Харків : Видавництво «Союз» Харківського Кредитового Союзу Кооперативів, 1918"
+  },
+  "sumtsov14": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Киев: тип. А. Давиденко, 1886"
+  },
+  "sumtsov15": {
+   "place": "cherkasy",
+   "field": "description",
+   "value": "Черкаси: Друкарня Видавничого Т-ва \"Сіяч\", 1918"
+  },
+  "sumtsov17": {
+   "place": "kyiv",
+   "field": "description",
+   "value": "Киев: Типография Г.Т. Корчак-Новицкого, 1897"
+  },
+  "sumtsov1918": {
+   "place": "kharkiv",
+   "field": "publisher",
+   "value": "Видавництво «Союз» (Харків)"
+  },
+  "sumtsov21": {
+   "place": "moscow",
+   "field": "description",
+   "value": "- Москва: \"Русская\" типо-литография, 1889"
+  },
+  "sumtsov32": {
+   "place": "kharkiv",
+   "field": "description",
+   "value": "- Харьков: Тип. Губерн. правл., 1896"
+  },
+  "tvoryruda01rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Z druk. Nauk. t-va im. Shevchenka"
+  },
+  "tvoryruda04rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Z druk. Nauk. t-va im. Shevchenka"
+  },
+  "tvorystepanaruda01rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Nakl. tov-va \"Prosvita\""
+  },
+  "tvorystepanaruda02rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Nakl. tov-va \"Prosvita\""
+  },
+  "tvorystepanaruda03rudauoft": {
+   "place": "lviv",
+   "field": "publisher",
+   "value": "U Lvovi : Nakl. tov-va \"Prosvita\""
+  },
+  "veselivirsh00ruda": {
+   "place": "freistadt",
+   "field": "publisher",
+   "value": "Frashtadt : Nakl. Vistnyka zhyttia"
+  },
+  "vilnaukrana00hrus": {
+   "place": "new-york",
+   "field": "publisher",
+   "value": "New York : Ukr. drukarska i vydavnycha spilka"
+  },
+  "vsesvitniaistori01hrus": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Vydannia Dniprovskoho Soiuza Spozhyvchykh Soiuziv Ukraïny (\"Dniprosoiuz\")"
+  },
+  "vsesvitniaistori02hrus": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv : Vydannia Dniprovskoho Soiuza Spozhyvchykh Soiuziv Ukraïny (\"Dniprosoiuz\")"
+  },
+  "zaboronaukrans00voen": {
+   "place": "scranton",
+   "field": "publisher",
+   "value": "Skrenton, Pa. : Vyd-vo Prosvitnoï komisiï Ruskoho narodnoho soiuza"
+  },
+  "zbirnykpamiatyta00hrusuoft": {
+   "place": "kyiv",
+   "field": "publisher",
+   "value": "Kyïv Vyd. Ukraïns'koho naukovoho tovarystva v Kyïvi"
+  }
+ }
+}

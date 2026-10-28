@@ -21,6 +21,7 @@ import { assignEpoch, epochById } from '../core/epochs.ts'
 import { key } from '../core/text.ts'
 import { RUSYN_STATUS } from '../core/rules.ts'
 import { REGIONS, regionOf } from './regions.ts'
+import { fillWitnessRegions } from './witness-region.ts'
 import { ruOfWitness } from '../core/ru-source.ts'
 import type { Author, CorpusMeta, FormCard, Kwic, LemmaCard, LemmaDetail, LexIndex, VesumHit, WitnessMeta, WitnessOut } from '../core/types.ts'
 import { packCore } from '../core/pack.ts'
@@ -152,6 +153,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
 
   // ── 1. admission (B-1.1) ───────────────────────────────────────────────────────────────────────
   const loaded = loadWitnesses()
+  { const fr = fillWitnessRegions(loaded.map(l => l.w)); if (fr.filled) console.log(`regions (LB-10): ${fr.filled} archive.org witnesses got their place of publication from the item metadata (${fr.tokens} tokens; ${JSON.stringify(fr.byField)})`) }   // LB-10: region = place of publication, read from the source's own metadata
   const adm: Loaded[] = [], excluded: ReportData['excluded'] = []
   for (const l of loaded) {
     const a = admit(l.w, authorById[l.w.author])

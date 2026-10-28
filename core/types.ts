@@ -26,6 +26,8 @@ export interface WitnessOut {
   id: string; unit: string; title: string; author: string; url: string
   date: [number, number]; dateCite: Evidence; msDate?: number
   lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; region?: string
+  /** SPEC 63 LB-10: where `region` (the place of publication) was read when the ingester left it empty: the archive.org metadata field and its verbatim value, or a quoted reference work */
+  regionCite?: Evidence
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   /** SPEC 63 HV-5: the school of the work as research/44 gives it (`source` names the row, `confidence` its certainty); absent when no source states it */
   school?: { id: string; source: string; confidence?: string }
