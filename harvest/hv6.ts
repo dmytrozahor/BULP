@@ -11,6 +11,7 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { Harvest, ROOT_DIR, decisionNeeded, type IndexItem } from './lib.ts'
 import { PLACES, REGION_WORDS, lookupCounty, type PlaceRow } from './hv6-places.ts'
+import { HV6_TAGGED, gazVillage, mergeIndex, parseVillageIndex, splitTagged, type VillageIndex } from './hv6b.ts'
 
 export interface Hv6Volume { ia: string; series: 'ЕЗ' | 'МУЕ'; vol: string; year: number }
 const v = (ia: string, vol: string, year: number, series: Hv6Volume['series'] = 'ЕЗ'): Hv6Volume => ({ ia, series, vol, year })
@@ -65,6 +66,17 @@ export function parseFooter(raw: string, volYear: number): Footer | null {
   return { region: row.region, regionIso: row.iso, county: row.name, countyKind: row.kind, village, year: ys[0] ?? null, collector, quote: t.slice(0, 240) }
 }
 
+/** HV-6b: a footer that names only a village («у Керестурі»): the cited gazetteer (data/seed/hv6-villages.json) decides; an ambiguous or unknown village is not placed */
+export function footerByVillage(raw: string, volYear: number, allowed?: Set<string>): Footer | null {
+  const t = flat(raw)
+  const m = new RegExp(`(?:^|[\\s,])(?:в|у)\\s+([${CAP}][\\p{L}'’-]{2,})`, 'u').exec(t)
+  const g = m ? gazVillage(m[1]!) : null
+  // a label that is unique in Wikidata can still be another settlement than the one the editor meant: the region must be one that the SAME volume already places by county footers
+  if (!m || !g || (allowed && !allowed.has(g.region))) return null
+  const ys = [...t.matchAll(/\b(1[89]\d\d)\b/g)].map(x => +x[1]!).filter(y => y >= 1800 && y <= volYear)
+  return { region: g.region, regionIso: g.iso, county: g.admin, countyKind: 'gazetteer', village: m[1]!, year: ys[0] ?? null, collector: null, quote: `${t.slice(0, 160)} ⁞ село → ${g.admin}: Wikidata ${g.qid} ${g.url} (${g.retrieved})` }
+}
+
 // ── OQ gate for an old scan record ────────────────────────────────────────────────────────────────────
 const VOWEL = /[аеєиіїоуюяѣ]/i
 export interface Oq { tokens: number; plausible: number; latin: number; vowelless: number; repeats: number }
@@ -92,7 +104,7 @@ const NOTE_START = /^(Паралел|Пор\.|Порівн|Див\.|Варіян
 const NOTE_REF = /(?:\bстр\.|\bст\.\s*\d|\bт\.\s*[IVXІ]+\b|\bч\.\s*\d|\bЗб\.|Записки|\bЕтн\.\s*Зб|Народ\.\s*пісн|\bстор\.)/u
 const RU_APP = /[ъыэё]|(?:^|\s)(?:что|это|или|который|быть|были|также|только|если|когда)(?:\s|$)/i
 export interface Rec { n: number; title: string; text: string; footer: Footer; page: number | null; line: number; date: number; dateBasis: string }
-export interface SplitStats { footers: number; placed: number; unplaced: number; gated: Record<string, number>; apparatus: number }
+export interface SplitStats { byGazetteer: number; footers: number; placed: number; unplaced: number; gated: Record<string, number>; apparatus: number }
 
 /** paragraphs (blank-line separated) that are the editors' notes, parallels or Polish/German/Russian apparatus */
 function isApparatus(par: string): boolean {
@@ -107,7 +119,7 @@ function isApparatus(par: string): boolean {
 
 export function splitVolume(text: string, vol: { vol: string; year: number }): { records: Rec[]; stats: SplitStats } {
   const lines = text.split('\n').map(l => l.replace(/\s+/g, ' ').trim())
-  const stats: SplitStats = { footers: 0, placed: 0, unplaced: 0, gated: {}, apparatus: 0 }
+  const stats: SplitStats = { byGazetteer: 0, footers: 0, placed: 0, unplaced: 0, gated: {}, apparatus: 0 }
   // printed page number at each line: a stand-alone number that follows the previous page number by 1…4
   const pageAt: (number | null)[] = new Array(lines.length).fill(null)
   let cur: number | null = null
@@ -116,6 +128,9 @@ export function splitVolume(text: string, vol: { vol: string; year: number }): {
     if (m) { const n = +m[1]!; if (cur === null ? n >= 1 && n <= 40 : n > cur && n <= cur + 4) cur = n }
     pageAt[i] = cur
   }
+  // regions the volume itself places by county (≥ 3 footers): the only regions a gazetteer village may resolve to
+  const volRegions = new Set<string>(), cnt: Record<string, number> = {}
+  for (let i = 0; i < lines.length; i++) if (FOOTER_START.test(lines[i]!)) { const f = parseFooter([lines[i], lines[i + 1], lines[i + 2]].filter(Boolean).join(' '), vol.year); if (f && (cnt[f.region] = (cnt[f.region] ?? 0) + 1) >= 3) volRegions.add(f.region) }
   const records: Rec[] = []
   let prevEnd = -1, n = 0
   for (let i = 0; i < lines.length; i++) {
@@ -147,6 +162,7 @@ export function splitVolume(text: string, vol: { vol: string; year: number }): {
   return { records, stats }
 }
 
+
 const LIC = 'PD (видання 1895–1929, НТШ Львів; archive.org OCR, не вичитано; примітки й апарат редакторів не беруться)'
 export const recordItem = (vol: Hv6Volume, r: Rec, editor: string | null, idx: number): IndexItem => ({
   id: `hv6:${vol.ia}:${r.n}`, url: `https://archive.org/details/${vol.ia}`, date: String(r.date), licence: LIC, bytes: Buffer.byteLength(r.text), status: 200,
@@ -162,6 +178,10 @@ export function wholeVolumeIds(): Set<string> {
   try { for (const d of readdirSync(ROOT_DIR)) if (d.startsWith('archive-')) { const p = `${ROOT_DIR}/${d}/index.jsonl`; if (existsSync(p)) for (const l of readFileSync(p, 'utf8').split('\n')) { const m = /"id":"([^"]+)"/.exec(l); if (m) ids.add(m[1]!) } } } catch { /* none */ }
   return ids
 }
+
+type SavedIndex = Record<string, { county: string; line: number; quote: string }[]>
+const dehydrate = (i: VillageIndex): SavedIndex => Object.fromEntries(Object.entries(i).map(([k, v]) => [k, v.map(x => ({ county: x.county.name, line: x.line, quote: x.quote }))]))
+const rehydrate = (s: SavedIndex | VillageIndex): VillageIndex => Object.fromEntries(Object.entries(s ?? {}).map(([k, v]) => [k, v.map(x => ({ county: typeof x.county === 'string' ? PLACES.find(p => p.name === x.county)! : x.county, line: x.line, quote: x.quote }))]))
 
 async function main() {
   decisionNeeded('- DECIDED (HV-6): ' + Object.entries(HV6_DUPES).map(([k, w]) => `${k}: ${w}`).join('; '))
@@ -180,12 +200,34 @@ async function main() {
     const { status, res } = await h.get(`https://archive.org/download/${vol.ia}/${encodeURIComponent(file)}`, { soft5xx: true })
     if (status !== 200) { h.put(`${vol.ia}.none`, '', [{ id: vid, url: `https://archive.org/details/${vol.ia}`, date: null, licence: LIC, bytes: 0, status, title: vol.ia, type: 'volume' }]); continue }
     const buf = Buffer.from(await res.arrayBuffer())
-    const { records, stats } = splitVolume(buf.toString('utf8'), vol)
+    const text = buf.toString('utf8')
+    let { records, stats } = splitVolume(text, vol)
+    if (HV6_TAGGED.has(vol.ia)) {   // HV-6b: songs signed with a village; county from the index of places printed in т. 17 (kept in state.json for т. 18, 19)
+      const st = h.state<{ index: SavedIndex }>({ index: {} })
+      const own = parseVillageIndex(text), idx = mergeIndex(rehydrate(st.index), own)
+      if (Object.keys(own).length) h.saveState({ ...st, index: dehydrate(idx) })
+      const tg = splitTagged(text, idx, vol), base = records.length
+      h.log(`${vol.ia}: village-signed songs: ${tg.stats.tagged} tagged, ${tg.stats.placed} placed in ${tg.stats.villages} villages, unresolved ${tg.stats.unresolved}, ambiguous ${tg.stats.ambiguous}`)
+      records = [...records, ...tg.records.map(r => ({ ...r, n: base + r.n }))]
+    }
     h.log(`${vol.ia} (${vol.series} т. ${vol.vol}, ${vol.year}): ${stats.footers} footers, ${stats.placed} placed records, ${stats.unplaced} unplaced, gated ${JSON.stringify(stats.gated)}, apparatus paragraphs ${stats.apparatus}`)
     const items: IndexItem[] = records.map((r, i) => recordItem(vol, r, editor, i))
     items.push({ id: vid, url: `https://archive.org/details/${vol.ia}`, date: String(vol.year), licence: LIC, bytes: buf.length, status: 200, title: `${vol.series} т. ${vol.vol} (${vol.year})`, type: 'volume', records: records.length, footers: stats.footers, unplaced: stats.unplaced, gated: stats.gated, tokens: records.reduce((a, r) => a + (r.text.match(/[p{L}]+/gu) ?? []).length, 0), supersedes: whole.has(vol.ia) ? vol.ia : null, verified: `archive.org metadata: «${String([].concat(m.title as never)[0] ?? '').slice(0, 80)}», ${m.date}` })
     h.put(vol.ia, JSON.stringify(records.map(r => r.text)), items)
   }
   h.finish()
+}
+
+/** the village a footer names without a county (candidates for the gazetteer build): «у Керестурі» → «Керестурі» */
+export function footerVillages(text: string, volYear: number): string[] {
+  const lines = text.split('\n').map(l => l.replace(/\s+/g, ' ').trim()), out: string[] = []
+  for (let i = 0; i < lines.length; i++) {
+    if (!FOOTER_START.test(lines[i]!)) continue
+    const t = flat([lines[i], lines[i + 1], lines[i + 2]].filter(Boolean).join(' '))
+    if (parseFooter(t, volYear)) continue
+    const m = new RegExp(`(?:^|[\\s,])(?:в|у)\\s+([${CAP}][\\p{L}'’-]{2,})`, 'u').exec(t)
+    if (m) out.push(m[1]!)
+  }
+  return out
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('harvest/hv6.ts')) await main()
