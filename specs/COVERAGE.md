@@ -944,3 +944,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-10 | tests/region.test.ts › LB-10 the old region strings keep their rows |
 | LB-10 | tests/region.test.ts › LB-10 publisher, corporate creator, description imprint and the series table, in that order, each with its verbatim value |
 | LB-10 | tests/region.test.ts › LB-10 the committed table: every row names a known place, a field and a verbatim value; placed items fill the witness region and cite the field |
+| LB-11 | tests/arkushyn.test.ts › LB-10 Аркушин parser › headword, grammar, sense numbers, gloss, volume/page; the illustration and the transcription are not taken |
+| LB-11 | tests/arkushyn.test.ts › LB-10 Аркушин parser › villages by the book numbering; the first number is the village of the illustration |
+| LB-11 | tests/arkushyn.test.ts › LB-10 Аркушин parser › gates: out-of-range and garbled headwords never get in; the Latin binomial tail is cut |
+| LB-11 | tests/arkushyn.test.ts › LB-10 Аркушин parser › © policy: gloss ≤ 200 with «…» on a word boundary; rows carry label зпол., place, no quote field |
+| LB-11 | tests/arkushyn.test.ts › LB-10 Аркушин parser › LB-10 class (a): a row of the dictionary gives «діалектне за словником» with the place; GG source is registered |

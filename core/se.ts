@@ -47,6 +47,7 @@ export const DICT_COVER: DictCover[] = [
   { id: 'biletsky-nosenko', short: 'Білецький-Носенко', title: 'Словник української мови (1840–1842)', edition: [1966, 1966], cover: [1840, 1842], basis: 'period', lang: 'ru', harvested: true, note: 'укладено в 1840-х, надруковано 1966 (вид. Німчука): описує мову 1840-х, а не 1966' },
   { id: 'zakrevsky', short: 'Закревський', title: 'Словарь малороссийских идиомов', edition: [1861, 1861], cover: [1861, 1861], basis: 'own-time', lang: 'ru', harvested: true, note: 'мова середини XIX ст.; мову глос перевірити (?)' },
   { id: 'shevchenko', short: 'Словник мови Шевченка', title: 'Словник мови Шевченка', edition: [1964, 1964], cover: [1837, 1861], basis: 'period', lang: 'uk', quoteDates: true, harvested: true, note: 'мова творів Т. Шевченка; дата цитати = дата твору; межі 1837–1861 ?' },
+  { id: 'arkushyn', short: 'Аркушин (2000)', title: 'Словник західнополіських говірок', edition: [2000, 2000], cover: [1980, 1999], basis: 'own-time', lang: 'uk', harvested: true, note: 'діалектний словник (західнополіські говірки, записи 1980–1999); © — зберігаються лише слово, граматика, місця, глоса ≤ 200 знаків, том/сторінка (LB-11)' },
   { id: 'sum11', short: 'СУМ-11', title: 'Словник української мови в 11 томах', edition: [1970, 1980], cover: [1970, 1980], basis: 'own-time', lang: 'uk', harvested: false, note: 'сучасна літературна мова' },
   { id: 'sum20', short: 'СУМ-20', title: 'Словник української мови (СУМ-20)', edition: [2010, 2026], cover: [2010, 2026], basis: 'own-time', lang: 'uk', harvested: false, note: 'НАН України, Інститут української мови; сучасна літературна мова; видання триває; ліцензія — SPEC 63 GG-7' },
 ]
@@ -70,6 +71,7 @@ export interface SeRow {
   /** GG-7: the headword with its stress mark as the article shows it */ a?: string
   /** GG-7: the labels printed on the sense (розм., заст., діал., перен. …) */ lb?: string[]
   /** OCR quality gate: the dictionary's gloss was garbled and is not kept (1) */ oq?: 1
+  /** Аркушин (LB-11): villages the entry names (the book list verbatim, ≤ 3), their number, and «усі н. пп.» */ v?: string[]; vn?: number; va?: 1
   /** the Russian headword of a ru→uk article in which the lemma is the Ukrainian equivalent: a labelled cross-language note, NEVER the meaning of the Ukrainian word */ ru?: string
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }

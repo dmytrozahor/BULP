@@ -98,7 +98,7 @@ export function main(): Stats {
   const usageFile = readJson<{ lemmas: Record<string, [string, string, string][]> }>(`${PUB}/usage.json`)
   const usage = new Map(Object.entries(usageFile?.lemmas ?? {}).map(([k, v]) => [lk(k), v]))
   const loan = readJson<{ labels: Record<string, [string, string]> }>(`${PUB}/loanlabels.json`)
-  const seFile = readJson<Record<string, { rows: { d: string; n?: number; lb?: string[]; g?: string; u?: string; l?: string }[] }>>(resolve(ROOT, 'data/work/se.json'))
+  const seFile = readJson<Record<string, { rows: { d: string; n?: number; lb?: string[]; g?: string; u?: string; l?: string; v?: string[] }[] }>>(resolve(ROOT, 'data/work/se.json'))
   // witness-region tables from the detail shards
   const byRegion = new Map<string, RegionCount[]>()
   const lexDir = `${PUB}/lex`
@@ -121,7 +121,7 @@ export function main(): Stats {
 
   const entries = new Map<string, LbEntry>()
   const st: Stats = { full: {}, fullTotal: 0, all: {}, allTotal: 0, register: { withLabel: 0, total: 0, bySrc: {} }, type: { total: 0, withWordType: 0 }, sense: { rows: 0, labelled: 0 }, src: {}, alt: ALT.map(a => ({ name: a.name, cover: 0, total: 0 })) }
-  const seRows = (k: string) => (seFile?.[k]?.rows ?? []).filter(r => r.lb?.length).map(r => ({ n: r.n, d: r.d, lb: r.lb!, ...(r.g ? { g: r.g } : {}), ...(r.u ? { u: r.u } : {}) }))
+  const seRows = (k: string) => (seFile?.[k]?.rows ?? []).filter(r => r.lb?.length).map(r => ({ n: r.n, d: r.d, lb: r.lb!, ...(r.g ? { g: r.g } : {}), ...(r.u ? { u: r.u } : {}), ...(r.v ? { v: r.v } : {}) }))
   /** LB-9: the lemma's headword in СУМ-11 / СУМ-20 (one entry per dictionary; restricted = a sense carries a label other than the non-restrictive ones) */
   const sumRows = (k: string) => {
     const by = new Map<string, { d: string; n: number; restricted: boolean; u?: string; l?: string }>()

@@ -15,7 +15,7 @@
  *  LB-4 TYPE: part of speech + morphological class + word type (власна назва / абревіатура / запозичення / церковнослов'янізм / архаїзм / …) where a source says so
  *  Surzhyk is a property of a FORM (MM-9), never of a lemma: the block says so instead of a value.
  */
-import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
+import { ARKUSHYN_LABELS, DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
 
 // ── thresholds (LB-1; every one is printed on the methods page) ───────────────────────────────────────
 export const TH = {
@@ -250,7 +250,7 @@ export { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, tableById }
 
 // ── LB-8/LB-9: СУМ and Wiktionary labels ──────────────────────────────────────────────────────────────────
 /** СУМ dictionary id of a parsed row (SeRow.d) → its cited label table */
-const SUM_TABLES = { sum11: SUM11_LABELS, sum20: SUM20_LABELS } as const
+const SUM_TABLES = { sum11: SUM11_LABELS, sum20: SUM20_LABELS, arkushyn: ARKUSHYN_LABELS } as const
 /**
  * labels of a СУМ sense that do not restrict the word to a register, a region or a sphere: a figurative sense, and the grammatical / derivational notes
  * (only imperfective / perfective / plural / singular, adverbial use, diminutive, augmentative, collective, possessive). Every other label (розм., прост., заст., рідко., діал., зах.,
@@ -274,11 +274,11 @@ export function wiktRegionHit(src: string, detail: string, lemma?: string): Dict
   return undefined
 }
 /** a hit from a label printed on a СУМ-11 / СУМ-20 sense («діал.» → dialectal, «зах.» → area), or undefined (not a regional label, or not a СУМ row) */
-export function sumLabelHit(d: string, lb: string, gloss?: string, url?: string): DictHit | undefined {
+export function sumLabelHit(d: string, lb: string, gloss?: string, url?: string, place?: string): DictHit | undefined {
   const t = SUM_TABLES[d as keyof typeof SUM_TABLES]; if (!t) return undefined
   const row = extraRow(t, lb.trim().toLowerCase()); if (!row) return undefined
   const q = `${row.abbr} ${gloss ?? ''}`.trim().slice(0, 200)
-  return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
+  return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list, ...(place ? { place } : {}) } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
 }
 
 // ── assembling one lemma's entry (used by pipelines/build-labels.ts and the tests) ──────────────────────
@@ -288,7 +288,7 @@ export interface AssembleIn {
   usage: [string, string, string][]
   /** VESUM tag → number of the lemma's paradigm forms carrying it */ tagCount?: Record<string, number>
   nForms?: number
-  se?: { n?: number; d: string; lb: string[]; g?: string; u?: string }[]
+  se?: { n?: number; d: string; lb: string[]; g?: string; u?: string; v?: string[] }[]
   /** LB-9: the lemma's headword in СУМ-11 / СУМ-20, one entry per dictionary: [dictionary id, sense rows, restricted by a label that is not in SUM_NONRESTRICTIVE, link?, volume/page?] */
   sum?: { d: string; n: number; restricted: boolean; u?: string; l?: string }[]
   /** the lemma, for the article links of Wiktionary hits */ lemma?: string
@@ -312,7 +312,7 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   const usage = i.usage.filter(u => u[1] !== 'r')
   const plain: [string, string][] = []
   for (const [id, src, detail] of usage) if (DIALECT_REG.has(id)) { const h = wiktRegionHit(src, detail, i.lemma); if (h) dict.push(h); else plain.push([src, detail]) }   // LB-8: a Wiktionary label that names an area is an area hit; «dialectal» / «regional» name none
-  const sumHit = (r: { d: string; g?: string; u?: string }, lb: string) => sumLabelHit(r.d, lb, r.g, r.u)
+  const sumHit = (r: { d: string; g?: string; u?: string; v?: string[] }, lb: string) => sumLabelHit(r.d, lb, r.g, r.u, r.v?.[0])
   for (const r of i.se ?? []) for (const lb of r.lb) {
     const h = sumHit(r, lb)
     if (h) { if (!dict.some(x => x.t === h.t && x.a === h.a)) dict.push(h) } else if (SUM_LABEL[lb.trim()] === 'dial') plain.push(['s', `${r.d}\t${lb}`])

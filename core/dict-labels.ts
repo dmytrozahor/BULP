@@ -258,7 +258,14 @@ export const WIKTUK_REGION: DTable = {
     R('Лемківські вирази', 'Категорія:Лемківські вирази', 'area', { area: 'lemko' }),
   ],
 }
-export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION]
+/** LB-11: Аркушин Г., «Словник західнополіських говірок» (Луцьк: Вежа, 2000), preface «Структура словникової статті» / «Реєстр словника»: a differential dialect dictionary, every article is a dialect word recorded in the villages of its list. */
+export const ARKUSHYN_LABELS: DTable = {
+  id: 'arkushyn-labels', dicts: [], short: 'Аркушин (2000)', source: 'ARKUSHYN', list: 'https://archive.org/details/slzhdplhv (т. 1, «Реєстр словника», «Структура словникової статті», «Список населених пунктів»)', attach: 'sense',
+  rows: [
+    R('зпол.', 'Словник західнополіських говірок — «диференційного типу: у ньому вміщені слова, відсутні в сучасній українській літературній мові»; записи зроблені у понад півтисячі населених пунктів (Волинь, Рівненщина, Берестейщина, Піншина, південне Підляшшя, Холмщина)', 'area', { area: 'polissia' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS]
 /** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
 export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))
