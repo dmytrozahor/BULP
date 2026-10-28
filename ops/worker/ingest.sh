@@ -35,6 +35,9 @@ runcmd() {
 # SPEC 63 HV-6: the НТШ volumes of harvest/hv6.ts are ingested per record (with the place of recording); the whole-volume archive-ukr witnesses of the same archive.org ids are then dropped as superseded.
 # The marker of archive-ukr carries the number of such volumes, so a rerun happens when the hv6 harvester has finished more of them.
 hv6sig() { grep '"type":"volume"' data/raw/harvest/hv6/index.jsonl 2>/dev/null | grep -c '"status":200'; }
+# SPEC 63 UB-1: owner PDF «Ad fontes» (Медведик 2015, modern scholarly book) -> user-books vocab-only parts (text layer, pdftotext); a new/changed PDF or script drops the user-books marker so the incremental ingest reads the delta
+ADF="${BOOKS:-$HOME/work/books}/Ad_Fontes (1).pdf"
+[ -f "$ADF" ] && runcmd userbook-adfontes "$(cksum < "$ADF") $(cksum < harvest/user-books.ts)" bash -c 'npx tsx harvest/user-books.ts "$1" && rm -f "$2"' _ "$ADF" "$D/user-books"
 for s in wikisource-uk hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
 run hv6
 run archive-ukr --hv6-volumes "$(hv6sig)"
