@@ -94,7 +94,7 @@ describe('CP-5 the full word card and the form page lose nothing', () => {
   it('CP-5 /w mounts the derivation chain and the dialect block of the chosen spelling; /f mounts the lemma blocks and the lemma stress', () => {
     const w = rd('src/views/WordView.vue'), f = rd('src/views/FormView.vue')
     for (const c of ['<DerivationSteps', '<DialectBlock', 'id="h-chain"', 'id="h-dia"']) expect(w, c).toContain(c)
-    for (const c of ['<LemmaBlocks', '<StressForms', '<PlastSenses']) expect(f, c).toContain(c)
+    for (const c of ['<LemmaBlocks', '<FormStress', '<PlastSenses']) expect(f, c).toContain(c)
     expect(w.match(/Panel [^>]*id="h-der"/g) ?? []).toHaveLength(0)   // h-der belongs to DerivativesBlock: no duplicate DOM id
   })
 })

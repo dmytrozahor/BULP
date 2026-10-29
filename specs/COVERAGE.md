@@ -1147,3 +1147,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-12 | tests/old-dicts.test.ts › SE-12 the typed 1798 and 1818 glossaries of uk.wikisource.org › SE-12 Павловський 1818: table rows with highlighted spans; a variant is its own headword, an ending «-ая» is not |
 | SE-12 | tests/old-dicts.test.ts › SE-12 the typed 1798 and 1818 glossaries of uk.wikisource.org › SE-12 registered: coverage record (lang ru, uk→ru), dx bits, the parse is idempotent and a failed API call only warns |
 | SE-12 | tests/old-dicts.test.ts › SE-12 wiring › SE-12 build:data fetches and parses the typed lists and the Wikisource glossaries before build.ts; each input has a SOURCES.txt with sha256 and licence reasoning |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › FormView mounts FormStress and the lemma’s loan adaptation |

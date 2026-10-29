@@ -28,7 +28,7 @@ import DerivationSteps from '../components/DerivationSteps.vue'
 import LemmaBlocks from '../components/LemmaBlocks.vue'
 import PlastSenses from '../components/PlastSenses.vue'
 import SenseEpochs from '../components/SenseEpochs.vue'
-import StressForms from '../components/StressForms.vue'
+import FormStress from '../components/FormStress.vue'
 import Dots from '../components/Dots.vue'
 import EpochParadigm from '../components/EpochParadigm.vue'
 import Kwic from '../components/Kwic.vue'
@@ -122,7 +122,8 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
       <p v-for="c in featChips" :key="c.rule" class="hl-line sans small" data-testid="form-feature"><span class="badge" :title="c.cite.quote">{{ c.feature }}</span> {{ c.text }} <span class="muted">· {{ c.rule }} · <a :href="c.cite.source" target="_blank" rel="noopener">джерело правила ↗</a></span></p>
       <p v-if="Object.keys(contactClaims).length" class="hl-line sans small" data-testid="form-contact"><span class="badge">контактне / суржик</span> <ClaimSet :claims="contactClaims" /></p>
-      <p v-if="full" class="hl-line sans small"><span class="muted">наголос леми: </span><StressForms :variants="full.stress" /></p>   <!-- SPEC 63 CP-2: the lemma's stress on the form page -->
+      <FormStress :form="pick.raw" :lemma="pick.lemma" :lemma-stress="full?.stress" />   <!-- SPEC 63 CP-2 / CP-10.5: stress of the spelling (GG-14), else the lemma's, else the honest none -->
+      <LoanAdaptBlock v-if="pick.lemma.toLowerCase() !== pick.raw.toLowerCase()" :word="pick.lemma" />   <!-- CP-10.5: loan adaptation of the lemma when the spelling is another word-form -->
       <p v-if="matches.length > 1" class="small sans muted">Те саме написання в інших лемах:
         <template v-for="m in matches.filter(x => x.lemma !== pick!.lemma)" :key="m.lemma"><RouterLink :to="{ path: `/f/${m.raw}`, query: { lemma: m.lemma } }">{{ m.lemma }}</RouterLink>{{ ' ' }}</template></p>
       <p v-if="err" class="small sans unk" role="alert">Не вдалося завантажити деталі: {{ err }}</p>
