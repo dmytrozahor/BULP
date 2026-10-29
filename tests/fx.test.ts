@@ -10,6 +10,7 @@ import { chooseLemma, linkOptions, preferCommon, ONE_LETTER_PREP, posLabel, type
 import { rankFirst, selectForms, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
+import { unpackCore } from '../core/pack.ts'
 import { hasData, readCard, readFull } from './lexdata.ts'
 import { uvStatus, uvShard, UV_CONFIRM_MIN_W, type UvGroup } from '../core/uv.ts'
 import { witnessPoints, showWitnessGraph } from '../src/lib/witnessPoints.ts'
@@ -401,7 +402,9 @@ describe('MM-8 «даль перша фіксація з невичитаног�
     const p = fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)); if (!existsSync(p) || !hasData()) return
     const flagged = new Set((JSON.parse(readFileSync(p, 'utf8')) as { witnesses: { id: string; oq?: unknown }[] }).witnesses.filter(w => w.oq).map(w => w.id))
     if (!flagged.size) return   // data built before OQ
-    for (const c of readFull()) if (c.first.value !== 'unknown') expect(flagged.has(c.first.value.witness), c.lemma).toBe(false)
+    const bad: string[] = []   // first lives in core: no shard read, and one expect (a per-card expect over the full build timed out)
+    for (const c of unpackCore(JSON.parse(readFileSync(fileURLToPath(new URL('../public/data/lexicon.json', import.meta.url)), 'utf8')))) if (c.first.value !== 'unknown' && flagged.has(c.first.value.witness)) bad.push(c.lemma)
+    expect(bad.slice(0, 20)).toEqual([])
   })
 })
 

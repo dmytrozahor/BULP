@@ -302,7 +302,9 @@ describe.skipIf(!hasData())('P-1.1 every claim in the built lexicon passes claim
   it('byRegion codes exist in corpus.regions and N matches', () => {
     const corpus = JSON.parse(readFileSync('public/data/corpus.json', 'utf8'))
     const N = new Map<string, number>(corpus.regions.map((r: { code: string; N: number }) => [r.code, r.N]))
-    for (const c of cards) for (const r of c.stats.byRegion ?? []) { expect(N.get(r.code), r.code).toBe(r.N); expect(r.f).toBeLessThanOrEqual(c.stats.f) }
+    const bad: string[] = []   // one expect at the end: a per-region expect over every card of the full build took > 60 s
+    for (const c of cards) for (const r of c.stats.byRegion ?? []) { if (N.get(r.code) !== r.N) bad.push(c.lemma + ' ' + r.code + ' N ' + r.N + ' != ' + N.get(r.code)); if (!(r.f <= c.stats.f)) bad.push(c.lemma + ' ' + r.code + ' f ' + r.f + ' > ' + c.stats.f) }
+    expect(bad.slice(0, 20)).toEqual([])
   })
 })
 

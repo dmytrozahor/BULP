@@ -252,11 +252,13 @@ function writeLm() {
     fresh('lm/loanlabels'); let n = 0; parts.forEach((p, b) => { if (Object.keys(p.labels).length) { out(`lm/loanlabels/${b}.json`, { ...meta, ...p }); n++ } }); log.push(`loanlabels ${n}`)
   }
   const H = rd<Obj>('heteronyms.json'); if (H) log.push(`heteronyms ${splitMap('heteronyms', H, k => k, s => s['forms'] as Obj, (m, p) => ({ ...m, forms: p }))}`)   // keys are already heteronymKey()s
+  // PF-2: the card shard keeps only what the panel and the KWIC link read (lemmas, spellings, f, nW, dates, score, id): the witness / family lists, components and method are on the phrase page (phr/) and made the «і» shard 45 KB gzip
+  const slimPhraseme = (c: unknown[]) => { const x = c as unknown as Record<string, unknown>; return Object.fromEntries(['lemmas', 'spellings', 'f', 'nW', 'dates', 'score', 'id'].filter(k => x[k] !== undefined).map(k => [k, x[k]])) }
   const P = rd<{ candidates: { lemmas: string[] }[] } & Obj>('phrases.json'); if (P) {
     const parts = Array.from({ length: LM_BUCKETS }, () => [] as unknown[][]), seen = Array.from({ length: LM_BUCKETS }, () => new Set<number>())
     P.candidates.forEach((c, i) => { for (const l of c.lemmas) { const b = lmBucket(l.replace(/^~/, '').toLowerCase()); if (!seen[b]!.has(i)) { seen[b]!.add(i); parts[b]!.push(c as unknown as unknown[]) } } })
     const meta = Object.fromEntries(Object.entries(P).filter(([k]) => !['candidates', 'formulas', 'frames', 'attested', 'attestedIds', 'dict'].includes(k)))
-    fresh('lm/phrases'); let n = 0; parts.forEach((p, b) => { if (p.length) { out(`lm/phrases/${b}.json`, { ...meta, candidates: p }); n++ } }); log.push(`phrases ${n}`)
+    fresh('lm/phrases'); let n = 0; parts.forEach((p, b) => { if (p.length) { out(`lm/phrases/${b}.json`, { ...meta, candidates: p.map(slimPhraseme) }); n++ } }); log.push(`phrases ${n}`)
   }
   {   // SPEC 63 CP-9: data/work/thinpar/<bucket>.json (pipelines/build-thin-par.ts, not committed) → lm/par/<bucket>.json, the VESUM paradigm of the lemmas without a full card
     const files = thinParFiles('.')
