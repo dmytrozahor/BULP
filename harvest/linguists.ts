@@ -79,12 +79,12 @@ export function pickTextFile(files: { name: string; size?: string | number }[]):
   return c[0]?.name ?? null
 }
 
-/** the text download goes through curl (node's fetch cannot connect to the archive.org item servers dnNNN.*.archive.org from the harvester box; same as hv6.ts); pacing 3 s, 403/429 stop the script */
+/** the text download goes through curl (node fetch cannot connect to the archive.org item servers dnNNN.*.archive.org from the harvester box; same as hv6.ts; curl -4 because IPv6 to dnNNN.eu.archive.org hangs, tested 2026-10-29); pacing 3 s, 403/429 stop the script */
 async function curlGet(h: Harvest, url: string): Promise<{ status: number; buf: Buffer }> {
   await sleep(3000)
   const tmp = `${tmpdir()}/linguists-${process.pid}.dl`
   try {
-    const code = execFileSync('curl', ['-sL', '--max-time', '600', '--retry', '3', '--retry-delay', '20', '-A', LINGUISTS_UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
+    const code = execFileSync('curl', ['-4', '-sL', '--max-time', '600', '--retry', '3', '--retry-delay', '20', '-A', LINGUISTS_UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
     const status = Number(code)
     if (status === 403 || status === 429) h.stop(`HTTP ${status} for ${url}`)
     return { status, buf: status === 200 ? readFileSync(tmp) : Buffer.alloc(0) }
