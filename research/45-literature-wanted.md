@@ -1,6 +1,6 @@
 # 45. Literature wanted / Список потрібної літератури
 
-Updated / Оновлено: 2026-10-23 (version 4). Regenerated every 3 h by the orchestrator (SPEC 63 LW-1) / перегенерується оркестратором кожні 3 год (SPEC 63 LW-1).
+Updated / Оновлено: 2026-10-29 (version 5). Regenerated every 3 h by the orchestrator (SPEC 63 LW-1) / перегенерується оркестратором кожні 3 год (SPEC 63 LW-1).
 
 English first, then Ukrainian (as in README). Every claim comes from a file in this repository or from a page I opened; «?» marks anything I could not confirm; nothing is invented. «Not found online» only means «not found by me».
 
@@ -8,7 +8,18 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 
 # English
 
-## Changes since last update (2026-10-23, version 4)
+## Changes since last update (2026-10-29, version 5)
+
+- **Labels (SPEC 63 LB-10..LB-15; commits 8d23e002, a323b3d1, 58c5df77, da1f4656; analysis/labels-coverage.md, measured 2026-10-29 on live data without a new build):** the «недостатньо даних» bucket is gone as a mass class. Of 477,245 entries only **517 (0.11%) are «невизначено»** (15 of them attested in the corpus). The 20.7% figure of version 4 is out of date, but the **live site still shows it until the next build publishes**. The remaining 517 come from r2u dictionaries whose prefaces state no lexical base: Пластові словники 140 (a sociolect, research/33: no dialect or region), Ізюмов 110 (the preface lists the works used and the orthography only), Закревський 1861 63, Голоскевич 13 (the preface speaks of spelling only); the rest are mixes with them and 53 + 53 entries without an identified preface. A book would help only with Закревський (entry 32).
+- **New owner-needed item (entry 32):** Закревський, 1861 «Малороссійскій словарь» (title as given by the project; in the corpus it is the word list of «Старосветский бандуриста», кн. 3). His own preface is not available as a scan or typed text on archive.org, Wikisource, litopys or chtyvo (searched, specs/63 LB-15); without it the 63 entries cannot get a class. **Ask the owner for a scan that includes the preface.** The edition to scan is not identified (?).
+- **Re-check of the weak point.** With classes assigned, coverage by class is no longer the problem; the **evidence grade** is. In the ten-class table (labels-coverage.md, LB-15): «діалектне за словником» 8,168 entries (1.7%), «регіонально марковане за корпусом» 8,144 (1.7%), «загальновживане» 3,863 (0.8%); 423,178 (88.7%) are «літературна норма за словником», of which 75,249 are graded weak (the dictionary only declares a norm); 7,483 are «за регіональною базою словника» (weak). Real dialect evidence is a few percent of all entries, and **regional dialect dictionaries remain the only source of the cited «діалектне за словником» labels** (class a). The dialect-dictionary Top 10 stays; the reason is reworded (evidence grade, not 20.7%).
+- **Arkushyn is in (LB-10/LB-11):** Аркушин, «Словник західнополіських говірок» was parsed from archive.org `slzhdplhv` (8,113 headwords, entry 28a; harvested 2026-10-28). Entry 28a is now marked **harvested** and leaves the Top 10 (it stays in the A0 table as done). The class-(a) share coming from this source alone was not measured here (?).
+- **Harvests on the harvester box (3.70.112.140, line counts of `data/raw/harvest/*/index.jsonl`, read 2026-10-29):** `hv6` (НТШ «Етнографічний збірник», per-record witnesses with the place of recording, SPEC 63 HV-6) **314 records**; `archive-hv5-gaps` **83 records**. No new wanted entry follows; they are online, not owner books.
+- **Owner books:** none new since version 4 (the last is «Ad fontes», noted in the version 4 section below). Nothing is moved to section C.
+- **Corpus numbers** (version 4: build 202610222130-861b7ef, N = 49.18M; 13th c. 38.6k, 14th 20.1k) were not re-measured in this version (?); the 13th and 14th c. stay the thinnest, so entry 29 stays in the Top 10.
+- Open owner questions unchanged: **Q-SE1** and the СУМ permission letter (research/47).
+
+## Changes in version 4 (2026-10-23)
 
 - **Supplied by the owner, no wanted entry matched (research/44 and 45 searched):** Медведик Ю., «Ad fontes: з історії української музики XVII – початку XX ст.» (Львів: ЛНУ ім. Івана Франка, 2015, 618 pp., ISBN 978-617-10-0027-8). A modern scholarly collection (© 2015), so ingested as vocabulary only (`user-books`, SPEC 63 UB-1), about 146k tokens dated 2015; it adds nothing to the 13th-17th c. No `ru` flag.
 - **Supplied and ingested (already in section C and entry 21):** «Українські грамоти XV ст.» (ed. В. М. Русанівський, Київ: Наукова думка, **1965**; 62 charters) and «Волинські грамоти XVI ст.» (ed. В. Б. Задорожний, А. М. Матвієнко, Київ: Наукова думка, **1995**, not 1987; 125 acts). Both are marked supplied everywhere; the year 1987 is removed from entry 21 and from the Top 10. Consistency check of the charter agent's earlier edits (RF-11): the figures agree (15th c. 137k → 158.9k; 16th c. 225k → 299.6k).
@@ -47,18 +58,20 @@ English first, then Ukrainian (as in README). Every claim comes from a file in t
 - Regions (analysis/regions.md): Запоріжжя, Херсонщина, Таврія, Донеччина, Луганщина have 0 tokens; the 11 historical territories (Берестейщина … Курщина) have 0 witnesses; Київ has 400k, Галичина 156k, Слобожанщина 100k. specs/GAPS.md adds: Hetmanate chancery, Мазепа and Орлик absent.
 - Genre: the modern bulk is newspaper OCR; proofread book text of 1800–1950 is rare.
 
-**Top 10 now (re-ranked 2026-10-23, version 4; reason: dialect labels cover 20.7% of lemmas, class (a) «діалектне за словником» comes only from regional dictionaries):**
+**Top 10 now (re-ranked 2026-10-29, version 5; reason: label classes are now assigned for 99.9% of entries, but dialect evidence is thin (class a 1.7% of entries) and regional dialect dictionaries are still its only source; Arkushyn is harvested and drops out, the Закревський preface scan comes in):**
 
 1. Чабаненко (ed.), «Словник говірок Нижньої Наддніпрянщини», 4 vols (Запоріжжя: Комунар, 1992 or 1993 ?): the South-East (Запоріжжя, Херсонщина, Таврія have 0 tokens); headwords ? (entry 23).
 2. Онишкевич, «Словник бойківських говірок», ч. 1 (Київ 1984; ч. 2 1985 ?): Boyko area; headwords ? (entry 24).
 3. Лисенко (ed.), «Словник поліських говорів» (Київ 1974 ?): Polissia; not found in any search, title and year unconfirmed (entry 25).
-4. Сабадош, «Словник закарпатської говірки села Сокирниця» (Ужгород 2008; 2nd ed. 2021): Transcarpathia (Хустський район); over 22.2k dialect words in the 2021 ed. (entry 26).
+4. Сабадош, «Словник закарпатської говірки села Сокирниця» (Ужгород 2008; 2nd ed. 2021): Transcarpathia; over 22.2k dialect words in the 2021 ed. (entry 26).
 5. «Гуцульські говірки: короткий словник» (Львів: Інститут українознавства, 1997, 232 pp., ed. Я. Закревська): Hutsul area; headwords ? (entry 27).
-6. «Словник буковинських говірок» (Чернівці: Рута, 2005, 688 pp., ed. Н. Гуйванюк; also the chrestomathy «Буковинські говірки», Рута 2006, 383 pp.): Bukovyna; headwords ? (entry 28).
-7. Аркушин, «Словник західнополіських говірок», 2 vols (Луцьк 2000): Western Polissia/Volyn; about 13,000 words; a scan exists on archive.org (`slzhdplhv`), so harvest first (entry 28a below).
-8. «Словник говірок Середньої Наддніпрянщини»: Middle Dnipro region; the edition, year and editor are not identified (?) (entry 30).
-9. Ганудель, «Лемківські говірки»: Lemko area; title, year, publisher not found (?) (entry 31).
-10. 13th-c. sources (entry 29; edition to be identified, ?): the 13th c. has 38.6k tokens.
+6. «Словник буковинських говірок» (Чернівці: Рута, 2005, 688 pp., ed. Н. Гуйванюк; also «Буковинські говірки», Рута 2006, 383 pp.): Bukovyna; headwords ? (entry 28).
+7. «Словник говірок Середньої Наддніпрянщини»: Middle Dnipro region; edition, year and editor not identified (?) (entry 30).
+8. Ганудель, «Лемківські говірки»: Lemko area; title, year, publisher not found (?) (entry 31).
+9. 13th-c. sources (entry 29; edition to be identified, ?): the 13th c. has 38.6k tokens (build 202610222130-861b7ef).
+10. Закревський, 1861 «Малороссійскій словарь» (title as given by the project; edition ?) with his own preface: owner scan wanted; it unlocks the class of 63 entries (entry 32).
+
+Dropped from the Top 10: Аркушин (harvested, entry 28a).
 
 Below them, unchanged (not dialect-related): clean text of 14th-c. charters № 3 and № 84 (entry 21; transcription task); РИБ т. 7, СПб. 1882 «Апокрисис» (entry 3); Транквіліон, «Євангеліє учительне», 1619 (entry 1); Калліст, Євє 1616 (entry 2); Копистенський c. 1620, better scan (entry 4); hetman universals (entry 19); «Архів Коша» (entry 17); Квітка т. 2 (entry 20). Supplied and removed from the list: «Українські грамоти XV ст.» (1965) and «Волинські грамоти XVI ст.» (1995).
 
@@ -71,7 +84,7 @@ Priority rule: (1) ПМ and lexis-rich works named by research/44; (2) epochs an
 
 ## A0. Top of the owner-needed list: regional dialect dictionaries (SPEC 63 LB / GG-8)
 
-Why: they are the only source of the cited «діалектне за словником» labels (class a, 5.4% of lemmas now). Headword counts are from search summaries where given, otherwise «?». Format: scan or text; headword plus a short gloss only (same © policy as SE).
+Why: they are the only source of the cited «діалектне за словником» labels (class a: 8,168 entries, 1.7% of all, 2026-10-29). Headword counts are from search summaries where given, otherwise «?». Format: scan or text; headword plus a short gloss only (same © policy as SE).
 
 | # | Dictionary (title, year) | Region | Est. headwords | Verified from | Entry |
 |---|---|---|---|---|---|
@@ -85,7 +98,7 @@ Why: they are the only source of the cited «діалектне за словн�
 | 8 | «Словник говірок Середньої Наддніпрянщини» | Middle Dnipro | ? | no record found: editor, year ? | 30 |
 | 9 | Ганудель, «Лемківські говірки» | Lemko | ? | nothing found (?) | 31 |
 
-## A. Wanted from the owner (31 entries; entries 23–28, 30, 31 are the dialect dictionaries of A0)
+## A. Wanted from the owner (32 entries; entries 23–28, 30, 31 are the dialect dictionaries of A0; entry 32 is the Закревський preface)
 
 | # | Work (author, year, edition wanted) | Why it matters / unblocks | Where it may be found | Status |
 |---|---|---|---|---|
@@ -117,10 +130,11 @@ Why: they are the only source of the cited «діалектне за словн�
 | 26 | Сабадош, «Словник закарпатської говірки села Сокирниця» (2008; 2nd ed. 2021, over 22.2 thousand dialect words per a search summary, unopened). Village Сокирниця (Хустський район) is confirmed by UzhNU papers. **(A0 #4)** | GG-8, Transcarpathia; the largest postwar dialect dictionary of its kind | not found as a PDF; dspace.uzhnu.edu.ua (UzhNU repository, robots.txt not read) is where to ask | wanted |
 | 27 | **(A0 #5)** «Гуцульські говірки: короткий словник», відп. ред. Я. Закревська, Львів: Інститут українознавства НАН України, 1997, 232 pp. (title, year and pages agree in two bibliographies; the earlier «2019?» guess is dropped). Related, not the same: Астаф'єва–Воронич, «Словник гуцульських говірок Річки та Яворова» (2014) | GG-8, Hutsul area (research/40) | no full text found | wanted |
 | 28 | **(A0 #6)** «Словник буковинських говірок», за заг. ред. Н. В. Гуйванюк (Чернівці: Рута, 2005, 688 pp.; confirmed by a bibliography; the Буковинські говірки materials: хрестоматія, Рута 2006, 383 pp., and the earlier six issues of «Матеріали до словника буковинських говірок», 1971–1979, А–К) | GG-8, Bukovyna | no full text found | wanted |
-| 28a | **(A0 #7)** Аркушин Г. Л., «Словник західнополіських говірок», 2 vols (Луцьк: Вежа, 2000; т. 1 А–Н 354 pp., т. 2 О–Я 456 pp.; about 13,000 words) | GG-8, Western Polissia/Volyn | archive.org `slzhdplhv` (from a search result, not opened by me); harvest first, ask the owner only if the scan fails | harvest (to verify), else wanted **Harvested 2026-10-28 (LB-11, spec 63): archive.org slzhdplhv parsed, 8 113 headwords.** |
+| 28a | **(A0 #7)** Аркушин Г. Л., «Словник західнополіських говірок», 2 vols (Луцьк: Вежа, 2000; т. 1 А–Н 354 pp., т. 2 О–Я 456 pp.; about 13,000 words) | GG-8, Western Polissia/Volyn | archive.org `slzhdplhv` (from a search result, not opened by me); harvest first, ask the owner only if the scan fails | **harvested** 2026-10-28 (LB-10/LB-11, specs/63): archive.org `slzhdplhv` parsed, 8,113 headwords; no owner action |
 | 29 | 13th-c. Ruthenian texts other than the Hypatian codex (the Галицько-Волинський літопис is already in via `hypatian`). Candidates and editions: **not identified (?)**; I name no edition here | The 13th c. has 38.6k tokens (centurySizes, build 202610221132-482eb8e), thinner than the 15th–17th | not searched yet | wanted (edition to be identified) |
 | 30 | **(A0 #8)** «Словник говірок Середньої Наддніпрянщини» (editor, year, publisher: not identified, ?) | GG-8, Middle Dnipro; no dictionary of this name turned up in a search | not found | wanted (edition to be identified) |
 | 31 | **(A0 #9)** Ганудель, «Лемківські говірки» (title, year: nothing found, ?) | GG-8, Lemko area. Related, not the same: П. Пиртей, «Словник лемківської говірки. Матеріали для словника» (a chtyvo PDF was in search results, unopened) | not found | wanted (edition to be identified) |
+| 32 | Закревський, «Малороссійскій словарь» (1861; title as given by the project; in the corpus it comes through r2u / «Старосветский бандуриста», кн. 3). A scan **with the author's preface**; the edition is not identified (?) | SPEC 63 LB-15: 63 entries have Закревський as their only source and stay «невизначено» because the preface (his statement of lexical base) is not online; Грінченко's description of the list is not the author's statement | not found as a scan or typed text on archive.org, Wikisource, litopys, chtyvo (specs/63 LB-15); the dictionary text itself is in the corpus through `bandurista3` (OCR, H12) without the preface | wanted (owner scan with preface) |
 
 ## B. We'll harvest (online, no owner action; 16 entries)
 
@@ -161,7 +175,18 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 
 # Українською
 
-## Зміни з останнього оновлення (2026-10-23, версія 4)
+## Зміни з останнього оновлення (2026-10-29, версія 5)
+
+- **Мітки (SPEC 63 LB-10..LB-15; коміти 8d23e002, a323b3d1, 58c5df77, da1f4656; analysis/labels-coverage.md, виміряно 2026-10-29 на живих даних без нової збірки):** маси «недостатньо даних» більше немає. З 477 245 статей лише **517 (0,11%) «невизначено»** (15 із них засвідчені в корпусі). Цифра 20,7% у версії 4 застаріла, але **жива збірка досі її показує, доки не опублікується наступна**. Решта 517 — зі словників r2u, передмови яких не називають лексичної бази: Пластові словники 140 (соціолект, research/33: ні діалекту, ні регіону), Ізюмов 110 (передмова лише перелічує використані праці й правопис), Закревський 1861 63, Голоскевич 13 (передмова лише про правопис); решта — суміші з ними та 53 + 53 статті без визначеної передмови. Книга допомогла б лише із Закревським (запис 32).
+- **Новий запис для власника (32):** Закревський, 1861 «Малороссійскій словарь» (назва, як у проєкті; у корпусі це список слів у «Старосветском бандуристе», кн. 3). Його власної передмови немає ні скану, ні набраного тексту на archive.org, Вікіджерелах, litopys, chtyvo (шукано, specs/63 LB-15); без неї 63 статті не можуть отримати клас. **Просимо в власника скан разом із передмовою.** Видання не визначено (?).
+- **Перевірка вузького місця.** Коли класи призначено, проблема вже не в покритті класами, а в **ступені доказу**. У таблиці з десяти класів (labels-coverage.md, LB-15): «діалектне за словником» 8 168 статей (1,7%), «регіонально марковане за корпусом» 8 144 (1,7%), «загальновживане» 3 863 (0,8%); 423 178 (88,7%) — «літературна норма за словником», з них 75 249 зі слабким ступенем (словник лише заявляє норму); 7 483 — «за регіональною базою словника» (слабкий). Справжній діалектний доказ — кілька відсотків статей, а **регіональні діалектні словники лишаються єдиним джерелом міток «діалектне за словником»** (клас а). Топ-10 діалектних словників лишається; причину переформульовано (ступінь доказу, а не 20,7%).
+- **Аркушин уже в корпусі (LB-10/LB-11):** «Словник західнополіських говірок» розібрано з archive.org `slzhdplhv` (8 113 заголовних слів, запис 28a; зібрано 2026-10-28). Запис 28a позначено **зібраним**, він виходить із Топ-10 (у таблиці A0 лишається як виконаний). Частку класу (а) лише з цього джерела окремо не вимірював (?).
+- **Збір на машині збирача (3.70.112.140, кількість рядків `data/raw/harvest/*/index.jsonl`, 2026-10-29):** `hv6` (НТШ «Етнографічний збірник», записи з місцем запису, SPEC 63 HV-6) **314 записів**; `archive-hv5-gaps` **83 записи**. Нових записів у списку з цього не випливає: це онлайн, не книги власника.
+- **Книги власника:** нових після версії 4 немає (остання — «Ad fontes», відзначена нижче у версії 4). До розділу В нічого не переносилось.
+- **Цифри корпусу** (версія 4: збірка 202610222130-861b7ef, N = 49,18 млн; XIII ст. 38,6 тис., XIV 20,1 тис.) у цій версії не перевимірював (?); XIII і XIV ст. лишаються найтоншими, тож запис 29 лишається в Топ-10.
+- Питання власнику без змін: **Q-SE1** і лист-дозвіл на СУМ (research/47).
+
+## Зміни у версії 4 (2026-10-23)
 
 - **Подано й введено (уже в розділі В і записі 21):** «Українські грамоти XV ст.» (ред. В. М. Русанівський, Київ: Наукова думка, **1965**; 62 грамоти) і «Волинські грамоти XVI ст.» (упорядники В. Б. Задорожний, А. М. Матвієнко, Київ: Наукова думка, **1995**, а не 1987; 125 актів). Скрізь позначено «подано»; рік 1987 прибрано із запису 21 і з Топ-10. Перевірка правок агента грамот (RF-11): цифри збігаються (XV ст. 137 → 158,9 тис.; XVI ст. 225 → 299,6 тис.).
 - **Стан корпусу (збірка 202610222130-861b7ef):** N = 49,18 млн токенів; 5 806 свідків; 515 697 статей. За століттями: XIII 38,6 тис.; XIV 20,1 тис.; XV 158,9 тис.; XVI 299,6 тис.; XVII 640 тис. Найтонші досі XIII і XIV ст.
@@ -186,7 +211,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 
 **Оновлення 2026-10-22 (RF-11): «Українські грамоти XV ст.» (Київ 1965, Русанівський) і «Волинські грамоти XVI ст.» (Київ 1995, Задорожний, Матвієнко) подано власником і введено.**
 
-**Топ-10 (2026-10-23, версія 4; причина: діалектні мітки охоплюють 20,7% лем, клас (а) «діалектне за словником» дають лише регіональні словники):** 1) Чабаненко, «Словник говірок Нижньої Наддніпрянщини», 4 т. (Запоріжжя, Комунар, 1992 або 1993 ?): Південний Схід; 2) Онишкевич, «Словник бойківських говірок», ч. 1 (Київ 1984): Бойківщина; 3) Лисенко, «Словник поліських говорів» (1974 ?, запису не знайдено): Полісся; 4) Сабадош, «Словник закарпатської говірки села Сокирниця» (Ужгород 2008; 2-ге вид. 2021, понад 22,2 тис. слів): Закарпаття; 5) «Гуцульські говірки: короткий словник» (Львів 1997, 232 с., ред. Я. Закревська): Гуцульщина; 6) «Словник буковинських говірок» (Чернівці, Рута, 2005, 688 с., ред. Н. Гуйванюк) і «Буковинські говірки» (Рута 2006): Буковина; 7) Аркушин, «Словник західнополіських говірок», 2 т. (Луцьк 2000, ≈13 000 слів; скан на archive.org `slzhdplhv`, спершу зібрати); 8) «Словник говірок Середньої Наддніпрянщини» (видання не визначено ?); 9) Ганудель, «Лемківські говірки» (нічого не знайдено ?); 10) джерела XIII ст. (запис 29). Нижче без змін: чистий текст грамот XIV ст. № 3 і № 84; РИБ т. 7 «Апокрисис»; Транквіліон 1619; Калліст 1616; Копистенський бл. 1620, кращий скан; гетьманські універсали; «Архів Коша»; Квітка, т. 2. Подані й зняті зі списку: «Українські грамоти XV ст.» (1965), «Волинські грамоти XVI ст.» (1995).
+**Топ-10 (2026-10-29, версія 5; причина: класи міток тепер призначено для 99,9% статей, але діалектних доказів мало (клас а — 1,7% статей), і регіональні діалектні словники лишаються їхнім єдиним джерелом; Аркушина зібрано, він вибуває, а скан передмови Закревського входить):** 1) Чабаненко, «Словник говірок Нижньої Наддніпрянщини», 4 т. (Запоріжжя, Комунар, 1992 або 1993 ?): Південний Схід; 2) Онишкевич, «Словник бойківських говірок», ч. 1 (Київ 1984): Бойківщина; 3) Лисенко, «Словник поліських говорів» (1974 ?, запису не знайдено): Полісся; 4) Сабадош, «Словник закарпатської говірки села Сокирниця» (Ужгород 2008; 2-ге вид. 2021, понад 22,2 тис. слів): Закарпаття; 5) «Гуцульські говірки: короткий словник» (Львів 1997, 232 с., ред. Я. Закревська): Гуцульщина; 6) «Словник буковинських говірок» (Чернівці, Рута, 2005, 688 с., ред. Н. Гуйванюк) і «Буковинські говірки» (Рута 2006): Буковина; 7) «Словник говірок Середньої Наддніпрянщини» (видання не визначено ?); 8) Ганудель, «Лемківські говірки» (нічого не знайдено ?); 9) джерела XIII ст. (запис 29; видання не визначено ?); 10) Закревський, 1861 «Малороссійскій словарь» (назва, як у проєкті; видання ?) разом із власною передмовою: скан від власника, розблоковує клас для 63 статей (запис 32). Нижче без змін: чистий текст грамот XIV ст. № 3 і № 84; РИБ т. 7 «Апокрисис»; Транквіліон 1619; Калліст 1616; Копистенський бл. 1620, кращий скан; гетьманські універсали; «Архів Коша»; Квітка, т. 2. Зняті з Топ-10: Аркушин (зібрано, запис 28a). Подані й зняті зі списку: «Українські грамоти XV ст.» (1965), «Волинські грамоти XVI ст.» (1995).
 
 ## Зміни з 2026-10-21 (перша версія)
 
@@ -210,7 +235,7 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 - **Q-SE1** (SPEC 63 SE-11): OCR трьох словників під © розібрано, але зберігаємо лише заголовне слово, глосу ≤ 200 знаків, сигли й дати цитат (СУМ XVI – 1-ї пол. XVII ст.; «Матеріали до словника XV–XVIII ст.»; Словник мови Шевченка). Чи можна зберігати більше (повні дефініції, текст цитат)? Правовласники: НАН, інститути, упорядники (?). До вашого підтвердження більше нічого не зберігається.
 - **Лист-дозвіл на СУМ** (research/47): СУМ-11 і СУМ-20 подано як скани; лист правовласнику щодо використання понад заголовні слова ще відкритий.
 
-## А. Потрібно від власника (31 запис; нумерація як в англійській таблиці; записи 23–28, 30, 31 — діалектні словники, угорі списку, див. таблицю A0 англійською)
+## А. Потрібно від власника (32 записи; нумерація як в англійській таблиці; записи 23–28, 30, 31 — діалектні словники, угорі списку, див. таблицю A0 англійською)
 
 Якщо не сказано інакше: статус «потрібно», «не знайдено онлайн».
 
@@ -237,16 +262,17 @@ Matched by title against the folder listing of 2026-10-21: Зерцало бог
 21. «Пам'ятки української мови»: грамоти XIV, XV ст., Волинські грамоти XVI ст., Приватні листи XVIII ст., Київ 1965, 1974, 1995 (рік 1987 був припущенням; «Приватні листи XVIII ст.»: рік ?) (CX-6). **ПОДАНО 2026-10-21 (лише XIV ст.):** «Грамоти XIV ст.», упорядкування, вступна стаття, коментарі, словники-покажчики М. М. Пещак; відп. ред. В. М. Русанівський; АН УРСР, Інститут мовознавства ім. О. О. Потебні; Київ: Наукова думка, 1974; 84 грамоти. Ліцензія: тексти XIV ст. — суспільне надбання; апарат видання 1974 р. (вступ, коментарі, бібліографія, різночитання, покажчики) — © Наукова думка, виключений повністю. Київ, УРСР: не `ru`. XV ст., Волинські грамоти XVI ст. та пізніші томи й надалі потрібні. **Стан 2026-10-22 (specs/63 RF-8):** транскрипція цього видання на izbornyk.org.ua (82 з 84 грамот, 19 020 токенів; немає № 3 і № 84) досі НЕ входила до корпусу: файли були неподані до репозиторію, а автор `pum14` не мав запису верифікації, тож збірка їх відкидала. Тепер файли в `data/seed/pum14/`, запис автора `pum14`, завантаження `pipelines/ingest-pum.ts` через `ops/worker/ingest.sh`, кожна грамота датована власним рядком дати; XIV ст.: 2 102 → 20 083 токени. OCR 1974 р. для № 3 і № 84 не використано. XV ст., Волинські грамоти XVI ст. та пізніші томи й надалі потрібні.
 22. Манчук, «Жиб'ївські новелі» (Брустури 2024, ISBN 9786178326630): гуцульська говірка, потрібна легальна копія.
 29. Тексти XIII ст., крім Іпатіївського кодексу (Галицько-Волинський літопис уже в корпусі через `hypatian`): кандидатів і видань не визначено (?), жодного видання не називаю. XIII ст. має 38,6 тис. токенів.
-23–28, 28a, 30, 31. **НАЙВАЖЛИВІШЕ.** Регіональні діалектні словники (SPEC 63 LB / GG-8): єдине джерело міток «діалектне за словником» (клас а, зараз 5,4% лем). Опрацьовувати як інші © словники: заголовне слово + коротка глоса. Назви й роки звірено з бібліографічними посиланнями (не з каталожним записом); «?» там, де не підтверджено.
+23–28, 28a, 30, 31. **НАЙВАЖЛИВІШЕ.** Регіональні діалектні словники (SPEC 63 LB / GG-8): єдине джерело міток «діалектне за словником» (клас а, 8 168 статей, 1,7%, 2026-10-29). Опрацьовувати як інші © словники: заголовне слово + коротка глоса. Назви й роки звірено з бібліографічними посиланнями (не з каталожним записом); «?» там, де не підтверджено.
     - 23. Чабаненко (ред.), «Словник говірок Нижньої Наддніпрянщини», т. 1–4, Запоріжжя: Комунар, 1992 (? за одним джерелом 1993): Нижня Наддніпрянщина (Запоріжжя, Херсонщина, Таврія); заголовних слів ?
     - 24. Онишкевич М. Й., «Словник бойківських говірок», ч. 1, Київ 1984 (ч. 2, 1985 ?): Бойківщина; слів ?
     - 25. Лисенко, «Словник поліських говорів» (1974 ?): Полісся; запису не знайдено, назва й рік не підтверджені (?).
     - 26. Сабадош І., «Словник закарпатської говірки села Сокирниця Хустського району», Ужгород 2008; 2-ге вид. 2021, понад 22 200 діалектних слів: Закарпаття.
     - 27. «Гуцульські говірки: короткий словник», відп. ред. Я. Закревська, Львів: Інститут українознавства НАН України, 1997, 232 с.: Гуцульщина; слів ?
     - 28. «Словник буковинських говірок», за заг. ред. Н. Гуйванюк, Чернівці: Рута, 2005, 688 с.; також «Буковинські говірки», хрестоматія, Рута 2006, 383 с.: Буковина; слів ?
-    - 28a. Аркушин Г. Л., «Словник західнополіських говірок», 2 т., Луцьк: Вежа, 2000, ≈13 000 слів: Західне Полісся, Волинь; скан на archive.org `slzhdplhv` (з результату пошуку, не відкривав), тож спершу зібрати самим. **Harvested 2026-10-28 (LB-11, spec 63): archive.org slzhdplhv parsed, 8 113 headwords.**
+    - 28a. Аркушин Г. Л., «Словник західнополіських говірок», 2 т., Луцьк: Вежа, 2000, ≈13 000 слів: Західне Полісся, Волинь; скан на archive.org `slzhdplhv` (з результату пошуку, не відкривав), **Зібрано 2026-10-28 (LB-10/LB-11, specs/63): archive.org `slzhdplhv` розібрано, 8 113 заголовних слів; дій власника не треба.**
     - 30. «Словник говірок Середньої Наддніпрянщини»: Середня Наддніпрянщина; редактор, рік, видавець не визначені (?).
     - 31. Ганудель, «Лемківські говірки»: Лемківщина; назву, рік нічого не підтверджує (?). Суміжне, не те саме: П. Пиртей, «Словник лемківської говірки».
+    - 32. Закревський, 1861 «Малороссійскій словарь» (назва, як у проєкті; у корпусі через r2u / «Старосветский бандуриста», кн. 3): скан **разом із передмовою автора**; видання не визначено (?). Передмови немає на archive.org, Вікіджерелах, litopys, chtyvo (шукано, specs/63 LB-15); без неї 63 статті лишаються «невизначено».
 
 ## Б. Зберемо самі (онлайн; 15 записів)
 
