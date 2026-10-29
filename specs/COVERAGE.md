@@ -1122,3 +1122,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | PS-8 | tests/persons.test.ts › PS-8 context rescue |
 | PS-8 | tests/persons.test.ts › PS-8 surname detection |
 | PS-8 | tests/persons.test.ts › PS-8 the client only renders |
+| SRC-5 | tests/linguists.test.ts › SRC-5 every work is a curated archive.org id with author, print year, death year (or an explicit unknown) and a source of the death year
+| SRC-5 | tests/linguists.test.ts › SRC-5 the index line carries genre «лінгвістична праця», author, year, edition, the ia file and the explicit ru flag
+| SRC-5 | tests/linguists.test.ts › SRC-5 the text file is resolved from the item metadata (the largest *_djvu.txt), not guessed as <id>_djvu.txt
+| SRC-5 | tests/linguists.test.ts › SRC-5 the explicit ru flag wins in ruOfWitness; the user agent has no e-mail address
