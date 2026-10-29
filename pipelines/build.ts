@@ -30,6 +30,7 @@ import { AUTHORS, authorById } from './authors.ts'
 import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
 import { writeDim } from './build-dim.ts'
 import { attachDictModern } from './build-orvdict.ts'
+import { writeXref } from './build-xref.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
 import { withGal } from '../core/gal-folds.ts'
 import type { Candidate } from '../core/phonology.ts'
@@ -751,6 +752,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   { const u = writeUsage(lemTags, ROOT, PUB, generated, auto.kaikki, auto.usage); writeAutoReport(ROOT, auto, cards.map(c => c.lemma), u, generated); lap(`usage.json: ${u.lemmas} lemmas with a usage label (${u.vesum} VESUM, ${u.wikt} uk.wiktionary, ${u.kaikki} en.wiktionary/kaikki)`) }   // UL-1
   { const s = writeSenses(ROOT, PUB, cards.map(c => c.lemma)); lap(`senses.json (uk.wiktionary, BL-9): ${s.lemmas} of ${s.looked} looked-up lemmas have senses, ${s.senses} senses, ${s.withStress} with a stress`) }   // BL-9
   { writeJsonAtomic(resolve(ROOT, 'data/work/se.json'), JSON.stringify(Object.fromEntries(se.entries))); const t = se.stats; lap(`SE: ${t.lemmas} lemmas with sense rows (${t.rows} rows, ${t.groups} senses, ${t.aligned} aligned across dictionaries, ${t.transitions} transitions, ${t.typed} typed by a source, ${t.withHistory} with a historical dictionary row, ${t.kwicAssigned} corpus contexts assigned by evidence); rows per dictionary: ${Object.entries(t.byDict).map(([d, n]) => d + ' ' + n).join(', ')}`) }   // SE-1…SE-4: data/work/se.json → lm/se/ (build-parts)
+  { const x = writeXref(ROOT); lap(`xr.json (GG-18): ${x.pointers} dictionary cross-references on ${x.heads} headwords; per dictionary: ${Object.entries(x.perDict).map(([d, n]) => d + ' ' + n).join(', ') || 'none'}`) }   // GG-18: data/work/xr.json -> lm/xr/ (build-parts)
   { const d = await writeDim(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`dim.json (MM-23): ${d.derivatives} derivatives of ${d.bases} bases (${d.sum} links from СУМ, ${d.wikt} from en.wiktionary)`) }
   { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1; ruhead.json MM-36: ${r.ruHeads ?? 0} Russian headwords): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1

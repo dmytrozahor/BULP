@@ -13,6 +13,7 @@
  * Copyright (SE-9): for a © dictionary `keepQuotes` is false: the row carries the headword, the sense number, a gloss ≤ 200 characters, the quotation dates and the sigla, no quotation text.
  */
 import { epochsOf, type SeRow } from './se.ts'
+import { pointerOf, type Ptr } from './xref.ts'
 
 export type ParseKind = 'timchenko' | 'sum16' | 'materials' | 'shevchenko' | 'bn' | 'zakrevsky'
 export interface ParseSpec { kind: ParseKind; dict: string; /** keep ≤ 120 characters of the first quotation of a sense (PD dictionaries only) */ keepQuotes: boolean; /** minimum OCR score of an article */ minScore: number; lang: 'uk' | 'ru' }
@@ -199,7 +200,7 @@ export function parseArticle(spec: ParseSpec, a: RawArticle, siglaYears: Map<str
   return { head: variants[0]!, variants, ...(pos2 ? { pos: pos2 } : {}), senses: out.slice(0, 8), score }
 }
 
-export interface ParseStats { pages: number; pagesSkipped: number; candidates: number; crossRefs: number; passed: number; skippedScore: number; skippedHead: number; skippedNoSense: number; entries: number; senses: number; dated: number; rows: number; passRate: number }
+export interface ParseStats { pointers?: number; pages: number; pagesSkipped: number; candidates: number; crossRefs: number; passed: number; skippedScore: number; skippedHead: number; skippedNoSense: number; entries: number; senses: number; dated: number; rows: number; passRate: number }
 const XREF = /^[.\s]*(?:[а-яіїє]{1,7}\.\s*)*(?:[Дд]ив\.|См\.|См\b|Смотри)/
 /** SE-11: one row per epoch bucket of the dated quotations of a sense (a sense quoted in the XV and the XVIII century is two rows, never one row spanning the epochs between) */
 export function bucketDates(dates: [number, number][]): [number, number][] {
@@ -214,8 +215,13 @@ export function bucketDates(dates: [number, number][]): [number, number][] {
  * one dictionary text → rows by headword spelling (lower case). Pages (form feed, when the OCR has them) below 0.5 are skipped as a whole. Cross-references («Див. X») are counted and left out of the pass rate:
  * passRate = passed / (candidates − crossRefs). `rows` counts the emitted (headword, row) pairs.
  */
-export function parseDictionary(spec: ParseSpec, text: string, siglaYears: Map<string, number> = new Map()): { rows: [string, SeRow][]; stats: ParseStats } {
-  const rows: [string, SeRow][] = [], st: ParseStats = { pages: 0, pagesSkipped: 0, candidates: 0, crossRefs: 0, passed: 0, skippedScore: 0, skippedHead: 0, skippedNoSense: 0, entries: 0, senses: 0, dated: 0, rows: 0, passRate: 0 }
+export function parseDictionary(spec: ParseSpec, text: string, siglaYears: Map<string, number> = new Map()): { rows: [string, SeRow][]; stats: ParseStats; ptrs: Ptr[] } {
+  const ptrs: Ptr[] = []
+  const addPtr = (variants: string[], body: string): void => {   // GG-18: «Див. X» / «Зменш. від X» is a pointer (headword → target), not a sense
+    const p = pointerOf(body.replace(/^\(\d+\)\.?\s*/, '')); if (!p) return
+    for (const v of variants.map(x => x.toLowerCase().replace(/[\d¹²³]+$/, '')).filter(headwordOk)) if (v !== p.t) ptrs.push({ h: v, d: spec.dict, ...p })
+  }
+  const rows: [string, SeRow][] = [], st: ParseStats = { pointers: 0, pages: 0, pagesSkipped: 0, candidates: 0, crossRefs: 0, passed: 0, skippedScore: 0, skippedHead: 0, skippedNoSense: 0, entries: 0, senses: 0, dated: 0, rows: 0, passRate: 0 }
   for (const page of text.split('\f')) {
     if (page.trim().length < 40) continue
     st.pages++
@@ -224,12 +230,13 @@ export function parseDictionary(spec: ParseSpec, text: string, siglaYears: Map<s
     for (const a of arts) {
       st.candidates++
       if (!a.variants.some(v => headwordOk(v.toLowerCase()))) { st.skippedHead++; continue }
-      if (XREF.test(a.body) && a.body.length < 90) { st.crossRefs++; continue }
+      if (XREF.test(a.body) && a.body.length < 90) { st.crossRefs++; addPtr(a.variants, a.body); continue }
       if (ocrScore(a.body) < spec.minScore) { st.skippedScore++; continue }
       const e = parseArticle(spec, a, siglaYears)
-      if (e === 'xref') { st.crossRefs++; continue }
+      if (e === 'xref') { st.crossRefs++; addPtr(a.variants, a.body); continue }
       if (!e) { st.skippedNoSense++; continue }
       st.passed++; st.entries++
+      for (const s of e.senses) addPtr(e.variants, s.gloss)
       for (const s of e.senses) {
         st.senses++
         const base: SeRow = { d: spec.dict, g: s.gloss, ...(e.pos ? { p: e.pos } : {}), n: s.n || 1, ...(s.sigla.length ? { s: s.sigla.join('; ') } : {}), l: e.head, ...(s.quote ? { q: s.quote } : {}) }
@@ -241,5 +248,6 @@ export function parseDictionary(spec: ParseSpec, text: string, siglaYears: Map<s
   }
   const denom = st.candidates - st.crossRefs
   st.passRate = denom > 0 ? Math.round((st.passed / denom) * 1000) / 1000 : 0
-  return { rows, stats: st }
+  st.pointers = ptrs.length
+  return { rows, stats: st, ptrs }
 }

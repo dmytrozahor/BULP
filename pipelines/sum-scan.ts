@@ -12,20 +12,32 @@ import { homedir } from 'node:os'
 import { basename, resolve } from 'node:path'
 import { parseSum11 } from '../core/sum11-parse.ts'
 import { parseSum20 } from '../core/sum20-parse.ts'
-import { passRate, type SumStats } from '../core/sum-article.ts'
+import { passRate, type SumPtrIn, type SumStats } from '../core/sum-article.ts'
+import { dedupePtrs, type Ptr } from '../core/xref.ts'
 import { SUM_DICTS, type SumArticleIn, type SumDict } from '../core/sum-import.ts'
 import { runSumImport } from './sum-import.ts'
 import { writeJsonAtomic } from './robust.ts'
 
 
 /** bump when a parser changes: finished volumes are parsed again */
-const VER = 3
+const VER = 4   // 4: GG-18 pointers (tNN.ptrs.json)
 export function textOf(dict: SumDict, file: string): string {
   const out = dict === 'sum11' ? execFileSync('djvutxt', [file], { maxBuffer: 1 << 30 }) : execFileSync('pdftotext', ['-enc', 'UTF-8', file, '-'], { maxBuffer: 1 << 30 })
   const t = out.toString('utf8')
   // a scan without a text layer: the page-by-page OCR made by the worker (~/work/ocr-sum/<name>.txt, pages joined by a form feed; never committed)
   const ocr = resolve(process.env.OCR_SUM ?? resolve(homedir(), 'work/ocr-sum'), basename(file).replace(/\.[^.]+$/, '') + '.txt')
   return t.length < 50_000 && existsSync(ocr) ? readFileSync(ocr, 'utf8') : t
+}
+
+/** GG-18: the pointers of every parsed volume -> data/work/xref/<dict>.json (headword, target, relation, dictionary, volume/page: no dictionary text) */
+export function writeXref(dict: SumDict, outDir: string, xrefDir = resolve(outDir, '..', 'xref')): number {
+  const all: Ptr[] = []
+  for (const f of readdirSync(outDir).filter(x => /^t\d\d\.ptrs\.json$/.test(x)).sort()) {
+    try { for (const p of JSON.parse(readFileSync(resolve(outDir, f), 'utf8')) as SumPtrIn[]) { const { vol, page, ...c } = p; all.push({ ...c, d: dict, l: `т.${vol}${page !== undefined ? ` с.${page}` : ''}` }) } } catch { /* torn: the next run redoes it */ }
+  }
+  const ps = dedupePtrs(all); mkdirSync(xrefDir, { recursive: true })
+  writeJsonAtomic(resolve(xrefDir, `${dict}.json`), JSON.stringify({ id: dict, dict, ptrs: ps }))
+  return ps.length
 }
 
 export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only?: number): { vols: Record<string, { stats: SumStats; passRate: number }>; articles: number } {
@@ -42,6 +54,7 @@ export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only
     const t0 = Date.now(), r = (dict === 'sum11' ? parseSum11 : parseSum20)(textOf(dict, src), vol)
     const lines = (r.articles as SumArticleIn[]).map(a => JSON.stringify(a)).join('\n')
     writeJsonAtomic(jl, lines ? lines + '\n' : '')
+    writeJsonAtomic(resolve(outDir, `t${m[1]}.ptrs.json`), JSON.stringify(r.ptrs))   // before the stats file: a volume is done only when both exist
     writeJsonAtomic(sf, JSON.stringify({ srcSize: size, ver: VER, stats: r.stats, passRate: passRate(r.stats) }))
     vols[m[1]!] = { stats: r.stats, passRate: passRate(r.stats) }
     console.log(`t${m[1]}: ${r.stats.pages} pages, ${r.stats.entries} entries, ${r.stats.senses} senses, pass rate ${passRate(r.stats)} (${Math.round((Date.now() - t0) / 1000)} s)`)
@@ -49,6 +62,7 @@ export function runSumScan(dict: SumDict, booksDir: string, outDir: string, only
   const files = readdirSync(outDir).filter(f => /^t\d\d\.jsonl$/.test(f)).sort()
   writeJsonAtomic(resolve(outDir, 'all.jsonl'), files.map(f => readFileSync(resolve(outDir, f), 'utf8')).join(''))
   const articles = files.reduce((n, f) => n + readFileSync(resolve(outDir, f), 'utf8').split('\n').filter(Boolean).length, 0)
+  writeXref(dict, outDir)
   writeJsonAtomic(resolve(outDir, 'summary.json'), JSON.stringify({ dict, articles, vols }, null, 1))
   return { vols, articles }
 }

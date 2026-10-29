@@ -4,7 +4,7 @@
  * («Вага, и, ж. 1. …») at a line start, the later ones in CAPITALS («ПЕРЕТРИМУВАННЯ, я, с.»): a capitalized headword is taken only at a line start AND only with a grammar block right
  * after it (inflections + POS or «а, е.»), so quotation lines that begin with a capital word do not qualify. © policy: core/sum-article.ts.
  */
-import { GRAM_STRICT, HEAD_CAPS, articlesOf, joinLines, newStats, pageHead, type Cand, type SumStats } from './sum-article.ts'
+import { GRAM_STRICT, HEAD_CAPS, articlesOf, joinLines, newStats, pageHead, type Cand, type SumStats, type SumPtrIn } from './sum-article.ts'
 import type { SumArticleIn } from './sum-import.ts'
 
 export { SUM_LABELS as SUM11_LABELS, senseOf as senseOf11 } from './sum-article.ts'
@@ -14,8 +14,8 @@ const LINE11 = /^[А-ЯІЇЄҐ][а-яіїєґ'’\-́]{1,40}[¹²³⁴]?,\s/u
 export type Sum11Stats = SumStats
 
 /** one volume's text (pages split by a form feed) → articles in the import format; `firstPage` numbers the first page when no page of the volume has a readable running head */
-export function parseSum11(text: string, vol: number, firstPage?: number, minScore = 0.7): { articles: SumArticleIn[]; stats: SumStats } {
-  const st = newStats(), articles: SumArticleIn[] = []
+export function parseSum11(text: string, vol: number, firstPage?: number, minScore = 0.7): { articles: SumArticleIn[]; stats: SumStats; ptrs: SumPtrIn[] } {
+  const st = newStats(), articles: SumArticleIn[] = [], ptrs: SumPtrIn[] = []
   let last: number | undefined
   text.split('\f').forEach((raw, pi) => {
     if (raw.trim().length < 60) { st.pagesNoText++; return }
@@ -29,7 +29,7 @@ export function parseSum11(text: string, vol: number, firstPage?: number, minSco
     const low: Cand[] = [...t.matchAll(HEAD11)].map(m => ({ head: m[1]!, gram: m[2]!, start: m.index! - before(m.index!), end: m.index! + m[0].length - before(m.index! + m[0].length) }))
     const caps: Cand[] = [...clean.matchAll(HEAD_CAPS)].map(m => ({ head: m[1]!, gram: m[2]!, start: m.index!, end: m.index! + m[0].length }))
     const cands = [...low, ...caps].sort((a, b) => a.start - b.start)
-    articles.push(...articlesOf(clean, cands, ph, vol, page, st, minScore))
+    articles.push(...articlesOf(clean, cands, ph, vol, page, st, minScore, ptrs))
   })
-  return { articles, stats: st }
+  return { articles, stats: st, ptrs }
 }

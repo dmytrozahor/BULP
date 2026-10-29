@@ -1022,6 +1022,18 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-9 | tests/card-parity.test.ts › CP-9 every thin-card <h1> goes through ThinTitle: modern for /lw, historical (not respelled) for /ar /orv /name /uv and the unlinked spelling |
 | CP-9 | tests/card-parity.test.ts › CP-9 the spec carries the CP-9 item and the card-parity analysis no longer lists the two items as open |
 | GG-9 | tests/goroh-quality.test.ts › GG-9 Горох quality comparison › the sample is 50 distinct lemmas: 40 from the frequency list, 5 dialect, 5 historical, seed recorded |
+| GG-18 | tests/xref.test.ts › GG-18 pointerOf: the pointer forms of the dictionaries › «Див. X», «Дивись також X», «См. X», «Те саме, що X»: kind and target; the stress mark and the homonym digit are dropped |
+| GG-18 | tests/xref.test.ts › GG-18 pointerOf: the pointer forms of the dictionaries › «Док. до X», «Недок. до X» carry the aspect of the head; «Однокр.», «Зменш.», «Пестл.» are relations; an unknown abbreviation or a phrase target is no pointer |
+| GG-18 | tests/xref.test.ts › GG-18 pointerOf: the pointer forms of the dictionaries › the wording is the dictionary pointer; an aspect pair gives one pointer each way from the grammar marks |
+| GG-18 | tests/xref.test.ts › GG-18 the parsers keep the pointers they used to drop › СУМ-20: «СЛИНУТИ див. ЛИНУТИ» is not an entry (no sense) but a pointer with volume and page; «Док. до» stays a sense AND is a pointer; a pair states the aspect |
+| GG-18 | tests/xref.test.ts › GG-18 the parsers keep the pointers they used to drop › СУМ-11 (capitalised headwords at a line start) too |
+| GG-18 | tests/xref.test.ts › GG-18 the parsers keep the pointers they used to drop › OCR dictionaries (parseDictionary): the pointer list is returned with the dictionary id and counted |
+| GG-18 | tests/xref.test.ts › GG-18 the sidecar and the ORV fallback (MM-28 «слинути») › group(): dedupes, drops self-pointers, ranks СУМ first; loadPointers reads se-parsed .ptrs and data/work/xref |
+| GG-18 | tests/xref.test.ts › GG-18 the sidecar and the ORV fallback (MM-28 «слинути») › an ORV card whose derived form is only a pointer gets dictModern with `ptr` and no gloss; a form with a row keeps the row |
+| GG-18 | tests/xref.test.ts › GG-18 the card: «за посиланням словника», the target labelled as the target › shows the pointer with dictionary and volume/page, links the target, shows the aspect, and says the data below is the target data |
+| GG-18 | tests/xref.test.ts › GG-18 the card: «за посиланням словника», the target labelled as the target › no pointers: nothing is rendered |
+| GG-18 | tests/xref.test.ts › GG-18 the card: «за посиланням словника», the target labelled as the target › lazy: the Огляд tab and the ORV card load the component asynchronously (the first load of a card does not grow); every thin card kind has the Огляд |
+| GG-18 | tests/xref.test.ts › GG-18 sum-scan writes the pointer sidecar of a dictionary (volume/page locator, deduped, next to the parsed dir) › writeXref: tNN.ptrs.json -> xref/<dict>.json with d and the printed locator |
 | GG-10 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-11 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-12 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |

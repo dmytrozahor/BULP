@@ -5,6 +5,7 @@
  */
 import { GLOSS_MAX, glossOk, ocrScore } from './se-parse.ts'
 import { clip, type SumArticleIn } from './sum-import.ts'
+import { pairPointers, pointerOf, type PtrCore } from './xref.ts'
 
 /** usage labels as printed in СУМ-11 / СУМ-20 (closed on purpose: an unknown abbreviation stays in the gloss) */
 export const SUM_LABELS = ['розм', 'заст', 'діал', 'перен', 'спец', 'рідко', 'книжн', 'поет', 'ірон', 'жарт', 'зневажл', 'пестл', 'вульг', 'уроч', 'фольк', 'проф', 'техн', 'мед', 'бот', 'зоол', 'військ', 'юр', 'церк', 'пошир', 'неол', 'арх', 'присл', 'фам', 'лайл', 'евф', 'зменш', 'збільш', 'збірн', 'полігр', 'мат', 'фіз', 'хім', 'геол', 'мор', 'грам', 'лінгв', 'філос', 'муз', 'анат', 'буд', 'ав', 'пейор', 'ласк', 'шутл', 'канц', 'публ', 'тех', 'іст', 'рел', 'біол', 'комп', 'екон', 'спорт', 'театр', 'кіно', 'вет', 'зах', 'с. г', 'нар.-поет', 'текст', 'ек', 'присв', 'тільки недок', 'тільки док', 'тільки мн', 'тільки одн'] as const
@@ -18,7 +19,7 @@ export const noteless = (b: string): string => b.replace(/^[\s,;.\\]+/u, '').rep
 const ABBR = /(?<![\p{L}])(?:ст|т|ін|д|п|рр|ч|ж|с|мн|одн|напр|див|знач|ім|вищ|акт|пас|мин|теп|док|недок|уч|зокр|півн|півд|сх|зх|нар|поет|прикм|присл|гол|досл|діал|заст|розм|спец|перен|проф|техн|мед|г|ек|біол|зах|текст|присв|перех|неперех|безос)\.?(?![\p{L}])/gu
 const scoreOf = (x: string): number => ocrScore(x.replace(/\([^)]{0,40}\)/g, ' ').replace(/\d+/g, ' ').replace(ABBR, ' '))
 const glossGood = (g: string): boolean => !/[А-ЯІЇЄҐ]{4,}/.test(g) && glossOk(g) || (scoreOf(g) >= 0.8 && (g.match(/(?:^|\s)[А-ЯІЇЄ]{4,}(?=\s|$)/g) ?? []).length < 2)
-const XREF = /^[.\s,]*(?:[а-яіїє]{1,7}\.\s*)*див\./u
+const XREF = /^[.\s,]*(?:[а-яіїє]{1,7}\.\s*)*[Дд]ив\./u
 
 /** one grammar block right after a headword: inflections, then POS («ж.», «недок.», «присл.») or an adjective ending «а, е.» */
 export const GRAM_SRC = String.raw`((?:\s?\*|\s?\(\s*[А-ЯІЇЄҐ'’\-]{2,40}\s*\))*\s?(?:[,;\\]\s*(?:[А-ЯІЇЄҐ'’\-]{2,40}|~?[а-яіїєґё'’\-]{0,16}~?\.?(?:\s[а-яіїєґё'’\-~]{1,10}\.?){0,2})|\s+і\s+[А-ЯІЇЄҐ'’\-]{2,40}){0,7}?[,;]?\s*(?:(?:ч|ж|с|мн|недок|док|присл|прийм|спол|част|виг|займ|числ|ім|предик|вставн|незм|присудк|сл)(?=[.,;\s])(?!\.?\s+[а-яіїєґ'’\-]{2,}[,;])\.?(?:\s*і\s*(?:ч|ж|с)\.?)?|(?:а|я),\s*(?:е|є|ё)(?=[.,;\s])\.?|(?:${LAB})\.)(?:,\s*(?:перех|пер\s?ех|неперех|непер\s?ех|безос|зворот)\.)?)`
@@ -98,21 +99,35 @@ export const HEAD_CAPS = new RegExp(String.raw`(?<![\p{L}'’\-])([А-ЯІЇЄҐ
 /** the printed variants after a headword («ВАГОВОЗ, ВАГОВІЗ, воза, ч.»): extra headwords of the same article */
 const variantsOf = (gram: string): string[] => gram.match(/[А-ЯІЇЄҐ][А-ЯІЇЄҐ'’\-]{2,}/g) ?? []
 export interface Cand { head: string; gram: string; start: number; end: number }
-export interface SumStats { pages: number; pagesNoText: number; candidates: number; crossRefs: number; badHead: number; outOfRange: number; badBody: number; noSense: number; entries: number; senses: number; clippedGloss: number }
-export const newStats = (): SumStats => ({ ...(process.env.SUMDBG ? { drops: [] as string[] } : {}), pages: 0, pagesNoText: 0, candidates: 0, crossRefs: 0, badHead: 0, outOfRange: 0, badBody: 0, noSense: 0, entries: 0, senses: 0, clippedGloss: 0 })
+/** GG-18: a cross-reference of the page (`h` headword, lower case; the volume and page are those of the article) */
+export interface SumPtrIn extends PtrCore { h: string; vol: number; page?: number }
+export interface SumStats { pointers?: number; pages: number; pagesNoText: number; candidates: number; crossRefs: number; badHead: number; outOfRange: number; badBody: number; noSense: number; entries: number; senses: number; clippedGloss: number }
+export const newStats = (): SumStats => ({ pointers: 0, ...(process.env.SUMDBG ? { drops: [] as string[] } : {}), pages: 0, pagesNoText: 0, candidates: 0, crossRefs: 0, badHead: 0, outOfRange: 0, badBody: 0, noSense: 0, entries: 0, senses: 0, clippedGloss: 0 })
 /** pass rate of the candidates that look like articles: entries / (candidates − cross-references) */
 export const passRate = (s: SumStats): number => { const d = s.candidates - s.crossRefs; return d > 0 ? Math.round((s.entries / d) * 1000) / 1000 : 0 }
 
 /** the articles of one page text: candidates → (pair headwords share one body) → validated entries. `minScore` = share of plausible words of the article body */
-export function articlesOf(text: string, cands: Cand[], ph: PageHead, vol: number, page: number | undefined, st: SumStats, minScore: number): SumArticleIn[] {
+export function articlesOf(text: string, cands: Cand[], ph: PageHead, vol: number, page: number | undefined, st: SumStats, minScore: number, ptrs?: SumPtrIn[]): SumArticleIn[] {
   const out: SumArticleIn[] = []
+  const hd = (h: string): string => h.replace(/[́¹²³⁴\d ]/g, '').replace(/[’ʼ]/g, "'").toLowerCase()
+  const addPtr = (h: string, p: PtrCore): void => { if (ptrs && headOk(h) && p.t !== h) { ptrs.push({ h, ...p, vol, ...(page !== undefined ? { page } : {}) }); st.pointers = (st.pointers ?? 0) + 1 } }
   let pending: Cand[] = []
   cands.forEach((c, i) => {
     st.candidates++
     const body = text.slice(c.end, cands[i + 1]?.start ?? text.length).trim()
     if (body.replace(/[\s,.;]/g, '').length < 3) { pending.push(c); return }   // «ВИКЛЮЧАТИ, аю, недок. ВИКЛЮЧИТИ, чу, док. …»: the pair shares the next body
     const group = [...pending, c]; pending = []
-    if (XREF.test(body) && body.length < 120) { st.crossRefs += group.length; return }
+    if (XREF.test(body) && body.length < 120) {
+      st.crossRefs += group.length
+      const p = pointerOf(body); if (p) for (const g of group) addPtr(hd(g.head), p)
+      return
+    }
+    // GG-18: «Те саме, що X», «Док. до X», «Зменш. до X» stay senses AND are recorded as pointers; a pair article states the aspect relation by its grammar marks
+    if (ptrs) {
+      const nb = noteless(body), seen = new Set<string>()
+      for (const t of [nb, ...splitNumbered(nb).map(x => x.text)]) { const p = pointerOf(t.replace(/^[\s,;.\\]+/, '')); if (p && !seen.has(p.t + p.r)) { seen.add(p.t + p.r); for (const g of group) addPtr(hd(g.head), p) } }
+      for (const x of pairPointers(group.map(g => ({ head: g.head, gram: g.gram })))) addPtr(x.h, x.p)
+    }
     if (scoreOf(body.slice(0, 600)) < minScore) { st.badBody += group.length; (st as { drops?: string[] }).drops?.push(`badBody ${c.head} :: ${body.slice(0, 90)}`); return }
     const senses = splitNumbered(noteless(body)).map(p => ({ n: p.n, ...senseOf(p.text) })).filter(s => /^[\p{L}«"(]/u.test(s.gloss) && (s.gloss.length >= 6 || s.gloss.includes(' ')) && glossGood(s.gloss)).slice(0, 12)
     if (!senses.length) { st.noSense += group.length; (st as { drops?: string[] }).drops?.push(`noSense ${c.head} :: ${body.slice(0, 90)}`); return }

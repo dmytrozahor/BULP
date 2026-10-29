@@ -4,7 +4,7 @@ import { MODEL_NOTE, posShown } from '../../core/torot.ts'
  * SPEC 63 PV-3 /name/:id and PV-5 /orv/:id — in-site card of a TOROT lemma that has no (VESUM-linked) modern lemma: a proper name (POS Ne) or an ORV-only lemma.
  * Everything shown is TOROT's own annotation (lemma, part-of-speech, morphology, citation-part); gloss and person/place type are «unknown» unless a cited source gives them.
  */
-import { computed, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 import type { Kwic } from '../../core/types.ts'
 import type { NameCard, OrvCard } from '../../core/torot.ts'
 import { torotCard } from '../lib/torotData.ts'
@@ -26,6 +26,7 @@ watch(card, async c => { const n = ++seq; const k = c ? await kwicFromRefs(c.evi
 const wits = computed(() => witnessCounts(card.value?.evidence ?? []))
 const modern = computed(() => asName.value?.modern || undefined)
 const asName = computed(() => (props.kind === 'name' ? (card.value as NameCard | undefined) : undefined))
+const XrefLine = defineAsyncComponent(() => import('../components/XrefLine.vue'))   // GG-18
 const DICT_UK: Record<string, string> = { sum11: 'СУМ-11', sum20: 'СУМ-20' }
 const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | undefined) : undefined))
 </script>
@@ -45,7 +46,8 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
       <template v-else> · сучасна форма: невідомо</template></p>
     <p v-if="asOrv" class="sans small">Чому без сучасного зв’язку: {{ asOrv.reason }} · значення (TOROT): невідомо — у XML немає глоси.</p>
     <p v-if="asOrv?.dictModern" class="sans small" data-testid="dict-modern">Сучасний відповідник за словником: <RouterLink :to="wordTo(asOrv.dictModern.form)"><strong>{{ asOrv.dictModern.form }}</strong></RouterLink>
-      <span class="muted"> · {{ DICT_UK[asOrv.dictModern.dict] ?? asOrv.dictModern.dict }}<template v-if="asOrv.dictModern.loc"> · {{ asOrv.dictModern.loc }}</template> · «{{ asOrv.dictModern.q }}» · форма виведена за правилами, слово є заголовком словника (не VESUM)</span></p>
+      <span class="muted"> · {{ DICT_UK[asOrv.dictModern.dict] ?? asOrv.dictModern.dict }}<template v-if="asOrv.dictModern.loc"> · {{ asOrv.dictModern.loc }}</template> <template v-if="asOrv.dictModern.q"> · «{{ asOrv.dictModern.q }}»</template> · форма виведена за правилами, слово є заголовком словника (не VESUM)</span></p>
+    <XrefLine v-if="asOrv?.dictModern" kind="orv" :word="asOrv.dictModern.form" :rows="asOrv.dictModern.ptr ? [{ ...asOrv.dictModern.ptr, d: asOrv.dictModern.dict, l: asOrv.dictModern.loc }] : undefined" />   <!-- SPEC 63 GG-18 -->
     <h2>Написання</h2>
     <p class="sans"><span v-for="f in card.forms" :key="f.raw" class="chip">{{ f.raw }} ×{{ f.f }}</span></p>
     <h2>{{ asName?.basis ? 'Свідчення (місце в тексті)' : card.model ? 'Свідчення (автоматична розмітка Stanza)' : 'Свідчення (TOROT, citation-part)' }}</h2>

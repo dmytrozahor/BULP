@@ -66,6 +66,10 @@ export const lmUrl = (name: LmName, k: string) => `./data/lm/${name}/${lmBucket(
 export const SE_BUCKETS = 4096
 export const seBucket = (k: string) => bucketOf(k, SE_BUCKETS)
 export const seUrl = (k: string) => `./data/lm/se/${seBucket(k)}.json`
+/** SPEC 63 GG-18: the dictionary cross-reference sidecar lm/xr/<b>.json (key lk(headword) -> pointers), lazy like lm/se */
+export const XR_BUCKETS = 1024
+export const xrBucket = (k: string) => bucketOf(k, XR_BUCKETS)
+export const xrUrl = (k: string) => `./data/lm/xr/${xrBucket(k)}.json`
 
 export const WIT_BUCKETS = 64
 export const witBucket = (id: string) => bucketOf(id, WIT_BUCKETS)

@@ -4,7 +4,7 @@
  * the default tab. Four sections, all expanded at once, each a COMPACT use of the block that lives in the other tabs (no second implementation): the region map with the
  * dialect chips, the best 1–2 KWIC lines, the sense timeline summary and the paradigm table. A section without data is one line, never an empty block.
  */
-import { computed } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import type { Kwic as KwicLine, LemmaCard, StressVariant } from '../../core/types.ts'
 import { useData } from '../composables/useData.ts'
 import { pickExamples, regionLine } from '../lib/overview.ts'
@@ -17,6 +17,7 @@ import LabelLine from './LabelLine.vue'
 import Kwic from './Kwic.vue'
 import SenseEpochs from './SenseEpochs.vue'
 import Paradigm from './Paradigm.vue'
+const XrefLine = defineAsyncComponent(() => import('./XrefLine.vue'))   // GG-18: lazy, keeps the first load of a card unchanged
 // MM-27: an absent Boolean prop is `false` in Vue (boolean casting): every thin card (ORV, name, light, dictionary) read «наголос: завантаження…» for ever; undefined = nothing is loading
 const props = withDefaults(defineProps<{
   lemma?: string; spelling: string; kwic: KwicLine[]; byRegion?: LemmaCard['stats']['byRegion']
@@ -68,6 +69,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
     <section class="ov-sec" data-testid="ov-senses" aria-labelledby="ov-h-se">
       <h3 id="ov-h-se" class="small sans">Значення за епохами</h3>
       <SenseEpochs :word="lemma ?? spelling" :kind="seKind ?? 'full'" compact />
+      <XrefLine :word="lemma ?? spelling" :kind="seKind ?? 'full'" />   <!-- SPEC 63 GG-18 «за посиланням словника: див. X», the target's data labelled as the target's -->
       <p class="small sans"><button type="button" class="chip small" @click="openPanel('h-sn')">усі значення у «Значення» →</button></p>
     </section>
     <section class="ov-sec" data-testid="ov-paradigm" aria-labelledby="ov-h-par">

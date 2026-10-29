@@ -12,6 +12,7 @@ import { gunzipSync } from 'node:zlib'
 import { PARSE_SPECS, parseDictionary, siglaDates, type ParseKind, type ParseStats } from '../core/se-parse.ts'
 import { atOf, epochsOf, SE_EPOCH_IDS, type SeRow } from '../core/se.ts'
 import { writeJsonAtomic } from './robust.ts'
+import type { Ptr } from '../core/xref.ts'
 
 /** archive.org id of the harvest → parser kind (ISUJa is the second scan of Тимченко, kept for OCR comparison, not parsed twice) */
 export const PARSE_IDS: Record<string, ParseKind> = {
@@ -19,7 +20,7 @@ export const PARSE_IDS: Record<string, ParseKind> = {
   '1_20230624_20230624': 'shevchenko', '2_20230624_202306': 'shevchenko',
 }
 interface IndexLine { id: string; file?: string; bytes?: number; status?: number }
-export interface Parsed { id: string; dict: string; kind: ParseKind; srcBytes: number; stats: ParseStats; rows: [string, SeRow][] }
+export interface Parsed { id: string; dict: string; kind: ParseKind; srcBytes: number; stats: ParseStats; rows: [string, SeRow][]; /** GG-18: cross-reference entries (headword → target), absent in files made before it */ ptrs?: Ptr[] }
 
 export function readPayloads(harvestDir: string): Map<string, string> {
   const idx = resolve(harvestDir, 'index.jsonl'), out = new Map<string, string>()
@@ -39,10 +40,10 @@ export function parseAll(harvestDir: string, outDir: string): { parsed: Parsed[]
   const parsed: Parsed[] = [], reused: string[] = []
   for (const [id, text] of readPayloads(harvestDir)) {
     const kind = PARSE_IDS[id]!, spec = PARSE_SPECS[kind], file = resolve(outDir, id.replace(/[^\w.-]/g, '_') + '.json'), srcBytes = Buffer.byteLength(text)
-    if (existsSync(file)) { try { const j = JSON.parse(readFileSync(file, 'utf8')) as Parsed; if (j.srcBytes === srcBytes) { parsed.push(j); reused.push(id); continue } } catch { /* torn: reparse */ } }
+    if (existsSync(file)) { try { const j = JSON.parse(readFileSync(file, 'utf8')) as Parsed; if (j.srcBytes === srcBytes && j.ptrs) { parsed.push(j); reused.push(id); continue } } catch { /* torn: reparse */ } }
     const siglaYears = kind === 'timchenko' || kind === 'materials' ? siglaDates(text) : new Map<string, number>()
     const r = parseDictionary(spec, text, siglaYears)
-    const p: Parsed = { id, dict: spec.dict, kind, srcBytes, stats: r.stats, rows: r.rows }
+    const p: Parsed = { id, dict: spec.dict, kind, srcBytes, stats: r.stats, rows: r.rows, ptrs: r.ptrs }
     writeJsonAtomic(file, JSON.stringify(p)); parsed.push(p)
   }
   return { parsed, reused }
@@ -50,8 +51,8 @@ export function parseAll(harvestDir: string, outDir: string): { parsed: Parsed[]
 
 /** the markdown report: per-dictionary pass rate, and the rows per Shevelov epoch (dated by a quotation vs. only by the coverage period) */
 export function report(parsed: Parsed[], reused: string[] = []): string {
-  const head = '| item | dictionary | candidates | cross-refs | passed | skipped (OCR score) | skipped (headword) | skipped (no sense) | pass rate | rows | dated |\n|---|---|---|---|---|---|---|---|---|---|---|'
-  const lines = parsed.map(p => `| ${p.id} | ${p.dict} | ${p.stats.candidates} | ${p.stats.crossRefs} | ${p.stats.passed} | ${p.stats.skippedScore} | ${p.stats.skippedHead} | ${p.stats.skippedNoSense} | ${(p.stats.passRate * 100).toFixed(1)} % | ${p.stats.rows} | ${p.stats.dated} |`)
+  const head = '| item | dictionary | candidates | cross-refs | pointers kept (GG-18) | passed | skipped (OCR score) | skipped (headword) | skipped (no sense) | pass rate | rows | dated |\n|---|---|---|---|---|---|---|---|---|---|---|---|'
+  const lines = parsed.map(p => `| ${p.id} | ${p.dict} | ${p.stats.candidates} | ${p.stats.crossRefs} | ${p.stats.pointers ?? p.ptrs?.length ?? 0} | ${p.stats.passed} | ${p.stats.skippedScore} | ${p.stats.skippedHead} | ${p.stats.skippedNoSense} | ${(p.stats.passRate * 100).toFixed(1)} % | ${p.stats.rows} | ${p.stats.dated} |`)
   const ep: Record<string, { dated: number; period: number }> = Object.fromEntries(SE_EPOCH_IDS.map(e => [e, { dated: 0, period: 0 }]))
   for (const p of parsed) for (const [, r] of p.rows) { const pl = epochsOf(atOf(r)); for (const id of pl.ids) ep[id]![r.e ? 'dated' : 'period']++ }
   const epLines = SE_EPOCH_IDS.map(e => `| ${e} | ${ep[e]!.dated} | ${ep[e]!.period} |`)

@@ -53,7 +53,7 @@ export interface NameCard extends CardBase {
   basis?: 'capitalisation'
 }
 /** MM-28: the rule-derived modern form is a headword of a held dictionary (СУМ-11 / СУМ-20 …): dictionary id, locator (т. / с.), gloss ≤ 200 characters */
-export interface DictModern { form: string; dict: string; loc: string; q: string }
+export interface DictModern { form: string; dict: string; loc: string; q: string; /** GG-18: the form is a headword of the dictionary only as a pointer (СЛИНУТИ: див. ЛИНУТИ); `q` is then empty and the target is the dictionary's, not this word's */ ptr?: { k: 'see' | 'same' | 'rel'; t: string; r?: string; a?: 'док' | 'недок' } }
 export interface OrvCard extends CardBase { gloss: 'unknown'; reason: string; dictModern?: DictModern }
 export interface TorotFile { generated: string; source: string; names: NameCard[]; orv: OrvCard[] }
 
