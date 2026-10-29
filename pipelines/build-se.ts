@@ -11,7 +11,7 @@ import { resolve } from 'node:path'
 import { createInterface } from 'node:readline'
 import { lk } from '../core/cv.ts'
 import { glossClean, isXrefGloss } from '../core/se-parse.ts'
-import { buildEntry, dictOfWitness, rowOfLine, typeLabels, type SeEntry, type SeKwicIn, type SeRow } from '../core/se.ts'
+import { buildEntry, dictOfWitness, isTypedDict, rowOfLine, typeLabels, type SeEntry, type SeKwicIn, type SeRow } from '../core/se.ts'
 import { collectSenses } from './build-extras.ts'
 
 export interface SeDictIn { w: { id: string; tokens: { raw: string; loc: string }[]; witnessType?: string; date: [number, number] } }
@@ -94,7 +94,8 @@ export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (h
     for (const [head, row] of j.rows) {
       let k = lk(head), r = row
       if (r.g && isXrefGloss(r.g)) { xref[r.d] = (xref[r.d] ?? 0) + 1; continue }   // «Див. Цапе. …» is a cross-reference, not a sense
-      if (r.g && !glossClean(r.g)) { const { q: _q, t: _t, ...rest } = r; r = { ...rest, g: '', oq: 1 }; blanked[r.d] = (blanked[r.d] ?? 0) + 1 }   // a garbled gloss is never shown; the dated row stays
+      if (r.g && !isTypedDict(r.d) && !glossClean(r.g)) {   // typed / proofread sources (DictCover.typed) are not OCR: the gate does not apply
+        const { q: _q, t: _t, ...rest } = r; r = { ...rest, g: '', oq: 1 }; blanked[r.d] = (blanked[r.d] ?? 0) + 1 }   // a garbled gloss is never shown; the dated row stays
       if (!wanted(k)) { const a = alt(head).map(lk).find(wanted); if (!a) continue; k = a; r = { ...row, m: 'd' as const }; derived++ }
       const list = into.get(k) ?? into.set(k, []).get(k)!
       if (list.filter(x => x.d === r.d).length < PER_PARSED) { list.push(r); n++ }

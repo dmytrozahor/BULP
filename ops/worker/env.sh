@@ -18,3 +18,6 @@ mkdir -p "$BULP_LOGS/runs" "$BULP_LOGS/done" 2>/dev/null
 # SPEC 63 GG-7: СУМ-11 / СУМ-20 are in copyright. 0 = headword, POS, stress, sense numbers, labels, volume/page, link and a gloss of at most 200 characters; 1 only with WRITTEN permission of the rights holder
 export FULL_SENSES_SUM11="${FULL_SENSES_SUM11:-0}"
 export FULL_SENSES_SUM20="${FULL_SENSES_SUM20:-0}"
+# GG-18: signature of a СУМ dictionary's parser input (scan sizes + OCR text sizes + parser code); shared by ingest.sh and reparse.sh so both keep ONE done-marker $BULP_LOGS/done/<dict>
+export BOOKS="${BOOKS:-$HOME/work/books}"
+sumsig() { { find "$BOOKS/$1" -maxdepth 1 -name "$1_t*" ! -name '*.up' -printf '%f=%s '; find "$HOME/work/ocr-sum" -maxdepth 1 -name "$1_t*.txt" -printf '%f=%s '; cat core/sum-article.ts core/$1-parse.ts core/xref.ts pipelines/sum-scan.ts pipelines/sum-import.ts core/sum-import.ts | cksum; } 2>/dev/null; }

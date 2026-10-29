@@ -114,4 +114,14 @@ describe('GG-18 sum-scan writes the pointer sidecar of a dictionary (volume/page
     expect(writeXref('sum11', out)).toBe(1)
     expect(JSON.parse(readFileSync(join(root, 'xref/sum11.json'), 'utf8')).ptrs).toEqual([{ h: 'слинути', k: 'see', t: 'линути', d: 'sum11', l: 'т.9 с.301' }])
   })
+  it('end to end: sum-scan sidecar (xref/sum11.json) -> build-xref writeXref -> data/work/xr.json holds слинути -> линути; an unparsed state (no sidecar, VER-3 files without ptrs) yields none', async () => {
+    const { writeXref } = await import('../pipelines/sum-scan.ts'), { writeXref: buildXr } = await import('../pipelines/build-xref.ts')
+    const root = mkdtempSync(join(tmpdir(), 'xe-')); mkdirSync(join(root, 'data/work/sum11-parsed'), { recursive: true }); mkdirSync(join(root, 'data/work/se-parsed'), { recursive: true })
+    writeFileSync(join(root, 'data/work/se-parsed/zyz.json'), JSON.stringify({ rows: [] }))   // an old parse without `ptrs`
+    expect(buildXr(root)).toMatchObject({ heads: 0, pointers: 0 })
+    writeFileSync(join(root, 'data/work/sum11-parsed/t09.ptrs.json'), JSON.stringify([{ h: 'слинути', k: 'see', t: 'линути', vol: 9, page: 301 }]))
+    writeXref('sum11', join(root, 'data/work/sum11-parsed'))
+    expect(buildXr(root)).toMatchObject({ heads: 1, pointers: 1, perDict: { sum11: 1 } })
+    expect(JSON.parse(readFileSync(join(root, 'data/work/xr.json'), 'utf8'))['слинути']).toEqual([{ k: 'see', t: 'линути', d: 'sum11', l: 'т.9 с.301' }])
+  })
 })

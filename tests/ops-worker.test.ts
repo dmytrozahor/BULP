@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest'
 import { spawnSync } from 'node:child_process'
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, readdirSync, chmodSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join, resolve } from 'node:path'
+import { dirname, join, resolve } from 'node:path'
 
 const posix = (p: string) => p.replace(/\\/g, '/')
 const W = posix(resolve('ops/worker'))
@@ -117,6 +117,23 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
     expect(calls.filter(c => c.includes('build:data')).length).toBe(1)   // build was not redone
     expect(calls.filter(c => c.includes('vitest')).length).toBe(2)
     expect(calls.some(c => c.includes('data-cdn'))).toBe(false)           // --no-publish never uploads
+  })
+  it('GG-18 the reparse step reruns sum-scan / parse-se-dicts that build:data does not run: only when the signature changed, never when the scans are absent', () => {
+    const b = box(), bin = stubs(b), env = { PATH: `${bin}:${process.env['PATH']}`, BOOKS: `${b.home}/books`, SE_HARVEST: 'data/raw/harvest/se-dicts' }
+    for (const f of ['core/sum-article.ts', 'core/sum11-parse.ts', 'core/xref.ts', 'pipelines/sum-scan.ts', 'pipelines/sum-import.ts', 'core/sum-import.ts']) { mkdirSync(dirname(`${b.repo}/${f}`), { recursive: true }); writeFileSync(`${b.repo}/${f}`, 'x') }
+    mkdirSync(`${b.home}/books/sum11`, { recursive: true }); writeFileSync(`${b.home}/books/sum11/sum11_t01.djvu`, 'abc')
+    mkdirSync(`${b.repo}/data/raw/harvest/se-dicts`, { recursive: true }); writeFileSync(`${b.repo}/data/raw/harvest/se-dicts/index.jsonl`, '')
+    const calls = () => (existsSync(`${b.home}/calls.log`) ? readFileSync(`${b.home}/calls.log`, 'utf8') : '')
+    expect(b.sh(`bash ${W}/reparse.sh`, env).rc).toBe(0)
+    expect(calls()).toContain('sum-scan.ts sum11'); expect(calls()).not.toContain('sum-scan.ts sum20'); expect(calls()).toContain('parse-se-dicts.ts')
+    const scans = () => calls().split(String.fromCharCode(10)).filter(c => c.includes('sum-scan.ts')).length
+    const n = scans()
+    b.sh(`bash ${W}/reparse.sh`, env); expect(scans()).toBe(n)   // marker holds: not rerun
+    writeFileSync(`${b.repo}/pipelines/sum-scan.ts`, 'VER 5')   // a parser change (VER bump) changes the signature
+    b.sh(`bash ${W}/reparse.sh`, env); expect(scans()).toBe(n + 1)
+    // a failing parser fails the step and leaves no marker
+    writeFileSync(`${b.repo}/pipelines/sum-scan.ts`, 'VER 6'); expect(b.sh(`bash ${W}/reparse.sh`, { ...env, STUB_FAIL: 'sum-scan' }).rc).not.toBe(0)
+    expect(readFileSync(`${W}/chain.sh`, 'utf8')).toContain('STEPS=(ff reparse build ')
   })
   it('RS-3 publish mode: the upload starts a fresh build id (--new); the commit refuses a pointer that is not the last completed upload', () => {
     const b = box(), bin = stubs(b), env = { PATH: `${bin}:${process.env['PATH']}` }

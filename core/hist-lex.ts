@@ -11,7 +11,7 @@
  * documented in this sense.
  */
 import { headwordOk, ocrScore, wordish } from './se-parse.ts'
-import type { SeRow } from './se.ts'
+import { isTypedDict, type SeRow } from './se.ts'
 
 export interface HistLexSpec { id: string; dict: string; year: number; short: string; minScore: number }
 export const HIST_LEX_SPECS: Record<string, HistLexSpec> = {
@@ -66,7 +66,7 @@ export function parsePages(pages: { page: number; text: string }[], spec: HistLe
       if (head.includes(' ') || head.length < MIN_WORD || !headwordOk(head)) { st.skippedHead++; continue }
       const items = glossItems(c.gloss), good = items.filter(x => !x.includes(' ') ? wordish(lexForm(x)) : x.split(' ').every(y => wordish(lexForm(y))))
       if (!good.length) { st.skippedGloss++; continue }
-      if (ocrScore(c.gloss) < spec.minScore) { st.skippedScore++; continue }
+      if (!isTypedDict(spec.dict) && ocrScore(c.gloss) < spec.minScore) { st.skippedScore++; continue }
       let glosses = [...new Set(good.map(lexForm))]
       if (verify) {   // second gate: a gloss word must be a known word of the language (VESUM through the folds); an unknown headword needs two such glosses
         const ok = glosses.filter(g => !g.includes(' ') && g.length >= MIN_WORD && verify(g))

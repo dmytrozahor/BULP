@@ -6,7 +6,8 @@ The harvester box (`3.70.112.140`) is a separate instance: nothing here looks at
 | script | job |
 |---|---|
 | `env.sh` | the ONE shared environment, sourced by every script: `NODE_OPTIONS` (48 GB heap, `BULP_HEAP_MB` overrides), `UV_BIN`, `TESSDATA_PREFIX`, `BULP_REPO` (`~/BULP`), `BULP_LOGS` (`~/logs`) |
-| `chain.sh` | build and publish: `ff, build, unlinked, vitest, vuetsc, vitebuild, budget, upload, commit, rebase, push` |
+| `chain.sh` | build and publish: `ff, reparse, build, unlinked, vitest, vuetsc, vitebuild, budget, upload, commit, rebase, push` |
+| `reparse.sh` | chain step before the build: reruns the parsers that are not part of `build:data` (sum-scan СУМ-11/20, parse-se-dicts) when their code or inputs changed |
 | `ingest.sh` | harvested sources into the corpus; a failed source fails the run (named, non-zero) |
 | `post.sh` | after ingest: build, unlinked, tests, budget (no publishing); resumable through `~/logs/done/*` |
 | `idle-stop.sh` | cron every 5 min: stops the instance when nothing is left to do (below) |

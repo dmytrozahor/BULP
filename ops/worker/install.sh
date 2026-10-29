@@ -4,7 +4,7 @@
 here=$(dirname "$(readlink -f "$0")"); . "$here/env.sh"
 mode=${1:-all}
 if [ "$mode" != --cron-only ]; then
-  for f in env.sh notify.sh chain.sh post.sh ingest.sh idle-stop.sh import-status.sh worker-status.sh rs2-warm.sh install.sh; do
+  for f in env.sh notify.sh chain.sh post.sh ingest.sh reparse.sh idle-stop.sh import-status.sh worker-status.sh rs2-warm.sh install.sh; do
     t=$HOME/$f
     if [ -L "$t" ]; then ln -sfn "$here/$f" "$t"
     else [ -e "$t" ] && mv "$t" "$t.bak-$(date +%Y%m%d%H%M%S)"; ln -s "$here/$f" "$t"; fi

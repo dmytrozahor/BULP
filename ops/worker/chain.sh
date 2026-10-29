@@ -1,7 +1,7 @@
 #!/bin/bash
 # chain.sh -- ONE generic, resumable build-and-publish chain (replaces chain8/9/10, cdn-tail, cdn2).
 #
-#   ff -> build -> unlinked -> vitest -> vuetsc -> vitebuild -> budget -> upload -> commit -> rebase -> push
+#   ff -> reparse -> build -> unlinked -> vitest -> vuetsc -> vitebuild -> budget -> upload -> commit -> rebase -> push
 #
 #   bash chain.sh                      new run (run id = UTC timestamp), publishes
 #   bash chain.sh --no-publish         same, but stops after `budget`: nothing uploaded, committed or pushed (verification run)
@@ -15,7 +15,7 @@
 # Stops at the first failing step: status says FAILED + tails, notify.sh tells the owner, exit code = the step's. $BULP_LOGS/chain.status mirrors the latest status.
 # Keeps public/data, data/work and data/raw: ff never cleans; if local generated changes block the fast-forward they are stashed and restored.
 # The upload step starts a FRESH build id on its first attempt in a run (--new) and RESUMES the in-progress upload on retries (data/work/cdn-upload.json).
-STEPS=(ff build unlinked vitest vuetsc vitebuild budget upload commit rebase push)
+STEPS=(ff reparse build unlinked vitest vuetsc vitebuild budget upload commit rebase push)
 PUBLISH_STEPS=" upload commit rebase push "
 here=$(dirname "$(readlink -f "$0")"); . "$here/env.sh"
 publish=1; from=; run=
@@ -55,6 +55,8 @@ st_ff() {
   local ref; ref=$(git stash list | sed -n "s/^\(stash@{[0-9]*}\): .*chain-$run\$/\1/p" | head -1)
   [ -z "$ref" ] || git stash pop -q "$ref" || { echo "stash pop conflicted; the changes stay in the stash 'chain-$run'"; return 1; }
 }
+# GG-18 fix: parsers outside build:data (СУМ scans, OCR dictionaries) are rerun when their code/inputs changed (reparse.sh; a no-op when nothing changed)
+st_reparse() { bash "$here/reparse.sh"; }
 st_build() { if [ -n "$BULP_FULL" ]; then npm run build:data -- --no-cache; else npm run build:data; fi; }
 st_unlinked() { [ -z "$BULP_FULL" ] || rm -rf data/work/unlinked-cache; npm run data:unlinked; }
 st_vitest() { npx vitest run --maxWorkers="${VITEST_WORKERS:-16}"; }
@@ -73,8 +75,8 @@ st_commit() {
 st_rebase() { git pull --rebase --autostash origin mvp; }
 st_push() { git push origin HEAD:mvp; }
 
-export -f pointer_id st_ff st_build st_unlinked st_vitest st_vuetsc st_vitebuild st_budget st_upload st_commit st_rebase st_push
-export run publish BULP_REPO BULP_LOGS BULP_FULL
+export -f pointer_id st_ff st_reparse st_build st_unlinked st_vitest st_vuetsc st_vitebuild st_budget st_upload st_commit st_rebase st_push
+export here run publish BULP_REPO BULP_LOGS BULP_FULL
 t_start=$(date +%s)
 for s in "${STEPS[@]}"; do
   [ $publish = 0 ] && [[ "$PUBLISH_STEPS" == *" $s "* ]] && { log "skip $s (--no-publish)"; continue; }

@@ -8,6 +8,7 @@ import { PARSE_SPECS, bucketDates, centuryLabels, glossClean, glossOk, headwordO
 import { atOf, epochsOf } from '../core/se.ts'
 import { parseAll, report } from '../pipelines/parse-se-dicts.ts'
 import { parsedRows } from '../pipelines/build-se.ts'
+import { isTypedDict } from '../core/se.ts'
 
 // Тимченко 1930, зошит 1 (tymch1930), OCR of p. ~60
 const TIM = `АВРЕА, рою. (лат. ашгва--золота). Блиск.
@@ -147,6 +148,17 @@ describe('SE-11 pipeline: resumable, atomic, attaches only to existing cards', (
     const into = new Map()
     const r = parsedRows(root, k => k === 'авреоля' || k === 'встаньливий', h => (h === 'встанливъ' ? ['встаньливий'] : []), into)
     expect(r.files).toBe(2); expect(into.get('авреоля')![0].d).toBe('timchenko'); expect(into.get('встаньливий')!.every((x: { m?: string }) => x.m === 'd')).toBe(true); expect(into.has('авреа')).toBe(false); expect(r.derived).toBe(2)
+  })
+  it('SE-11 OQ gate exempts typed / proofread sources (DictCover.typed, not an id list): Лексис glosses survive, a real OCR dictionary with the same text is still blanked', () => {
+    const g = 'ц.-сл. «аданай» = пан', bad = 'ц.-сл. «абїє» ѿ ѣ ъ ᲂ'
+    expect(glossClean(g) && glossClean(bad)).toBe(false)   // the OCR gate would reject at least the old-orthography gloss
+    for (const id of ['zyzanii-lexis', 'glossary1282', 'glossary1431', 'lexis-prosto', 'synonima', 'kotliarevsky1798', 'pavlovsky1818']) expect(isTypedDict(id), id).toBe(true)
+    for (const id of ['berynda', 'timchenko', 'sum16', 'sum11', 'sum20', 'zakrevsky', 'biletsky-nosenko', 'shevchenko', 'timchenko-materials']) expect(isTypedDict(id), id).toBe(false)
+    const root = mkdtempSync(resolve(tmpdir(), 'se-typed-')); mkdirSync(resolve(root, 'data/work/se-parsed'), { recursive: true })
+    const rows = [['пан', { d: 'zyzanii-lexis', g: bad, e: [1596, 1596] }], ['пан', { d: 'synonima', g: bad, e: [1650, 1700] }], ['пан', { d: 'berynda', g: bad, e: [1627, 1627] }]]
+    writeFileSync(resolve(root, 'data/work/se-parsed/t.json'), JSON.stringify({ rows }))
+    const into = new Map(), r = parsedRows(root, k => k === 'пан', () => [], into)
+    expect(r.blanked).toEqual({ berynda: 1 }); expect(into.get('пан')!.map((x: { d: string; g: string }) => [x.d, x.g === bad])).toEqual([['zyzanii-lexis', true], ['synonima', true], ['berynda', false]])
   })
   it('SE-11 OQ gate on the cached parsed rows: garbled glosses are blanked (the dated row stays), cross-references dropped', () => {
     const root = mkdtempSync(resolve(tmpdir(), 'se-oq-')); mkdirSync(resolve(root, 'data/work/se-parsed'), { recursive: true })
