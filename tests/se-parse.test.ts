@@ -163,3 +163,17 @@ describe('SE-11 pipeline: resumable, atomic, attaches only to existing cards', (
   })
 })
 const readdirTmp = (d: string) => readdirSync(d).sort()
+
+describe('SPEC 63 SRC-3: the Лексис rows are part of build:data', () => {
+  it('build:data fetches and parses the historical lexica before build.ts reads se-parsed', () => {
+    const b = JSON.parse(readFileSync('package.json', 'utf8')).scripts['build:data'] as string
+    expect(b).toMatch(/^tsx pipelines\/fetch-hist-lex\.ts && tsx pipelines\/parse-hist-lex\.ts && tsx pipelines\/build\.ts/)
+    expect(JSON.parse(readFileSync('package.json', 'utf8')).scripts['data:hist-lex']).toContain('parse-hist-lex.ts')
+    expect(readFileSync('data/raw/hist-lex-ocr/SOURCES.txt', 'utf8')).toContain('zyz99.htm')
+  })
+  it('a present zyz99.htm is kept, never refetched', async () => {
+    const { fetchZyz } = await import('../pipelines/fetch-hist-lex.ts')
+    const d = mkdtempSync(resolve(tmpdir(), 'zyz-')), f = resolve(d, 'z.htm'); writeFileSync(f, 'x')
+    expect(await fetchZyz(f)).toBe('kept')
+  })
+})

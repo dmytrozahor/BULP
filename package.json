@@ -9,7 +9,7 @@
     "build": "vue-tsc --noEmit && vite build",
     "test": "vitest run",
     "preview": "vite preview",
-    "build:data": "tsx pipelines/build.ts && tsx pipelines/build-thin-par.ts && tsx pipelines/build-parts.ts && tsx pipelines/build-labels.ts",
+    "build:data": "tsx pipelines/fetch-hist-lex.ts && tsx pipelines/parse-hist-lex.ts && tsx pipelines/build.ts && tsx pipelines/build-thin-par.ts && tsx pipelines/build-parts.ts && tsx pipelines/build-labels.ts",
     "cache:report": "tsx pipelines/stage-cache.ts report",
     "cache:gc": "tsx pipelines/stage-cache.ts gc",
     "cache:clear": "tsx pipelines/stage-cache.ts clear",
@@ -33,7 +33,8 @@
     "ingest:kvitka": "tsx pipelines/ingest-kvitka.ts",
     "ingest:pum": "tsx pipelines/ingest-pum.ts",
     "harvest:launch": "powershell -NoProfile -File harvest/launch.ps1",
-    "harvest:status": "powershell -NoProfile -File harvest/status.ps1"
+    "harvest:status": "powershell -NoProfile -File harvest/status.ps1",
+    "data:hist-lex": "tsx pipelines/fetch-hist-lex.ts && tsx pipelines/parse-hist-lex.ts"
   },
   "dependencies": {
     "leaflet": "^1.9.4",

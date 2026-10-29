@@ -1,0 +1,5 @@
+Historical lexica for «Значення за епохами» (SPEC 63 SRC-3). Input is NOT committed except this note; `npm run build:data` runs pipelines/fetch-hist-lex.ts then pipelines/parse-hist-lex.ts.
+Format: file | size bytes | sha256 | url
+
+zyzanii1596/zyz99.htm | 123806 | 920422c2d31f6235df4ea05de5a3d24d6eb4c8d2ccc1c1faef2c0c31be87819b | http://litopys.org.ua/zyzlex/zyz99.htm (Л. Зизаній, Лексис 1596, text proofread and typed by В. В. Німчук, К.: Наукова думка 1964; windows-1251; fetched 2026-10-29, robots.txt disallows only /dos /mac /koi). The 1596 text is public domain; the 1964 transcription is an edition, so the page is fetched, not redistributed, and the editorial apparatus is not copied.
+berynda1627/page_NNNN.txt | 244 pages | - | Tesseract OCR of Беринда, Лексіконъ 1627 (archive.org scan), produced on the worker in ~/work/ocr/berynda1627 and synced by hand; absent pages are skipped.
