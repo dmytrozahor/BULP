@@ -973,3 +973,13 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-27 | tests/fx.test.ts › MM-27 «слинути»: «наголос: завантаження…» never stays for ever on a thin card › the cause is fixed where the prop is forwarded: OverviewTab declares stressLoaded with withDefaults (an absent Boolean prop is false in Vue) |
 | MM-28 | tests/fx.test.ts › MM-28 «слинути точно є відповідник.png»: an ORV-only card whose derived form is a dictionary headword gets «сучасний відповідник за словником» › the first derived candidate with a row wins; СУМ-11 before СУМ-20; locator and gloss ≤ 200; wiktionary rows are not a dictionary counterpart |
 | MM-28 | tests/fx.test.ts › MM-28 «слинути точно є відповідник.png»: an ORV-only card whose derived form is a dictionary headword gets «сучасний відповідник за словником» › the card shows it (TorotCardView) and the build attaches it before torot.json is written |
+| SRC-1 | tests/src28.test.ts › SRC-28 part 1: «Ой, хто, хто Николая любить» (нотний пісенник 1690-х) › SRC-28 wiring: 1690-ті from the owner note (P), region Львів/Галичина, manuscript type, shelfmark «?» (never invented), photos credited to the owner |
+| SRC-1 | tests/src28.test.ts › SRC-28 the committed diplomatic transcription: [?] / [...] marks are cut, the readable words become tokens with the page locator |
+| SRC-1 | tests/src28.test.ts › SRC-28 the ingester yields the witness |
+| SRC-2 | tests/src28.test.ts › SRC-28 wiring: dated 1616 by research/44 r22, region outside Ukraine (Вільно), school Віленська, witness type OCR (OQ gate applies), not ru |
+| SRC-2 | tests/src28.test.ts › SRC-28 the ingester reads page_NNNN.txt files of the OCR directory (OWNER_OCR_DIR), and skips the unit when there are none |
+| SRC-3 | tests/src28.test.ts › SRC-28 article parser: Headword: gloss items; continuation lines join; the gate rejects noise and short debris |
+| SRC-3 | tests/src28.test.ts › SRC-28 rows: (a) the gloss word sense dated by the print year, (b) the CS headword with its equivalents; dictionary registered with its coverage |
+| SRC-3 | tests/src28.test.ts › SRC-28 dx-hist-load: only the headword files give dictionary headwords; the gloss-keyed rows (modern words) are skipped |
+| SRC-4 | tests/src28.test.ts › SRC-28 every feature has verbatim quotes with a locator, a dialect group and the print year; the Galician/Belarusian attribution is marked contested |
+| SRC-4 | tests/src28.test.ts › SRC-28 biography cited from research/44 (Львів → Берестя → Вільно); uncited candidates are hypotheses with the reason |

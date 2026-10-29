@@ -4,7 +4,8 @@
  * its evidence is the collection's own title and a line of the song naming its milieu (Zaporozhian host under Doroshenko) — both verbatim from the cached page.
  * All other songs are metadata (core/songs.ts), never texts. The witness date is the date of the PRINT (1834), not of the song: the earlier 1713 Galician record is second-hand [P] (research/17).
  */
-import { Q } from '../core/evidence.ts'
+import { P, Q } from '../core/evidence.ts'
+import { SOURCES } from '../core/sources.ts'
 import type { Unit } from './manifest.ts'
 import type { Author } from './authors.ts'
 
@@ -36,7 +37,21 @@ export const DUMA_RENDER = `https://uk.wikisource.org/w/index.php?title=${encode
 const DUMA_PAGE = 'https://uk.wikisource.org/wiki/' + encodeURIComponent(DUMA_TITLE.replace(/ /g, '_'))
 export const DUMA_DATE_CITE = Q('OHL', 'http://litopys.org.ua/coss3/ohl19.htm', 'Загалом вважалося, що «Дума» була написана коло 1698 р.')
 
+/**
+ * SRC-28: «Ой, хто, хто Николая любить» — a kant to St Nicholas from the oldest preserved Ukrainian NOTATED songbook, a manuscript of the 1690s kept in Lviv (the owner's note; the owner's two photos of the
+ * page with the notation and of the page numbered «9»). The manuscript's name and shelfmark were NOT found in citable sources (searched 2026-10-28: Стефаника ЛННБ, RISM, uk.wikipedia, scholarship on early
+ * Ukrainian notated kants): shelfmark «?», nothing invented. The text is transcribed diplomatically from the photos (pipelines/src-owner-song_mykolay_1690s.tsv, [?] = uncertain), not proofread.
+ */
+if (!SOURCES['OWNER']) SOURCES['OWNER'] = { title: 'Повідомлення власника корпусу (фото рукопису, примітка про датування й зберігання), 2026-10-28', license: 'фото власника; текст XVII ст. — суспільне надбання' }
+export const SONG_MYKOLAY_DATE = P('OWNER', 'повідомлення власника, 2026-10-28', 'найдавніший збережений український нотований пісенник — рукопис 1690-х рр., зберігається у Львові', 'наукового опису рукопису (назва, шифр) за відкритими джерелами не знайдено')
+
 export const UNITS_SONGS: Unit[] = [
+  {
+    id: 'song_mykolay_1690s', title: 'Ой, хто, хто Николая любить (кант, нотний пісенник 1690-х, Львів)', author: 'folk_lviv_songbook', kind: 'owner-text', urls: ['https://claude.ai/owner-photo/song_mykolay_1690s'],
+    date: [1690, 1699], dateCite: SONG_MYKOLAY_DATE, lang: 'ruthenian', region: 'Львів (Галичина)', witnessType: 'ms_copy',
+    edition: 'рукопис (нотний пісенник) 1690-х рр., Львів; шифр: ?; назва рукопису не встановлена; мелодія записана знаменною/квадратною нотацією (нотоносець, 5 ліній, ромбічні ноти; текст під нотами); діпломатична транскрипція з двох фото власника (стор. з нотами і стор. «9»), не вичитана',
+    license: 'суспільне надбання (текст XVII ст.); фото — власник корпусу',
+  },
   {
     id: 'song_duma_mazepy', title: 'Дума гетьмана Мазепи «Всі покою щире прагнуть…» (копія Кочубея, у виданні Бантыша-Каменского 1859)', author: 'mazepa', kind: 'wikisource', urls: [DUMA_RENDER],
     date: [1698, 1698], dateCite: DUMA_DATE_CITE, msDate: 1708,
@@ -57,6 +72,11 @@ export const UNITS_SONGS: Unit[] = [
 ]
 
 export const AUTHORS_SONGS: Author[] = [
+  {
+    id: 'folk_lviv_songbook', name: 'Анонімний запис (нотний пісенник 1690-х, Львів)', life: '1690-ті', label: 'institutional', status: 'provisional', confidence: 'implicit', region: 'Львів (Галичина)',
+    evidence: [SONG_MYKOLAY_DATE],
+    note: 'інституційний автор «народна пісня/кант (регіон)»: автор не названий; місце зберігання (Львів) і датування — за повідомленням власника, без наукового опису; провізорний',
+  },
   {
     id: 'mazepa', name: 'Іван Мазепа (традиційна атрибуція «Думи»)', life: '1639–1709', label: 'ukrainian', status: 'vetted', confidence: 'implicit', region: 'Гетьманщина (Батурин)',
     evidence: [Q('WS', DUMA_PAGE, 'Жалься, Боже, Украины, Що не вкупѣ маеть сыны!')],

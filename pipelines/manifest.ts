@@ -17,9 +17,10 @@ import { UNITS_R2U } from './nw-r2u.ts'
 import { UNITS_17 } from './nw-izb17.ts'
 import { UNITS_TERMLIST } from './nw-termlist.ts'
 import { UNITS_TRANSLIT } from './nw-translit.ts'
+import { UNITS_OWNER } from './nw-owner.ts'
 import type { DialectStatement, WitnessMedia } from '../core/types.ts'
 
-export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist' | 'translit'
+export type Kind = 'torot' | 'izbornyk' | 'izbornyk-page' | 'wikisource' | 'vira' | 'dict' | 'r2u' | 'ia-ocr' | 'termlist' | 'translit' | 'owner-text'
 export type Lang = 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'
 export type WitnessType = 'autograph' | 'ms_copy' | 'first_ed' | 'later_ed' | 'scholarly_ed' | 'dictionary' | 'liturgical-transliteration' | 'ocr'
 
@@ -32,6 +33,7 @@ export interface Unit {
   date: [number, number]; dateCite: Evidence; datePerPage?: boolean
   msDate?: number; lang: Lang; region?: string; witnessType: WitnessType; edition: string; orth?: string; license?: string
   oldI?: boolean                         // N06: Old Rus' і = и (pre-1400 texts)
+  /** SRC-28: the school of the work as research/44 gives it */ school?: { id: string; source: string; confidence?: string }
   media?: WitnessMedia                   // NW-7: a song's video (YouTube id), carried to WitnessOut.media
 }
 
@@ -106,6 +108,7 @@ export const MANIFEST: Unit[] = [
   ...UNITS_R2U,
   ...UNITS_17,
   ...UNITS_TERMLIST,   // CX-6
+  ...UNITS_OWNER,      // SRC-28
   ...UNITS_TRANSLIT,   // CX-6
 ]
 

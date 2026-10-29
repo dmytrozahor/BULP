@@ -12,6 +12,7 @@ import { AUTHORS_14B } from './nw-izb14b.ts'
 import { AUTHORS_18A } from './nw-izb18a.ts'
 import { AUTHORS_18B } from './nw-izb18b.ts'
 import { AUTHORS_SONGS } from './nw-songs.ts'
+import { AUTHORS_OWNER } from './nw-owner.ts'
 import { AUTHORS_SOPHIA } from './nw-sophia.ts'
 import { AUTHORS_DICT } from './nw-dict.ts'
 import { AUTHORS_R2U } from './nw-r2u.ts'
@@ -93,6 +94,7 @@ export const AUTHORS: Author[] = [
   ...AUTHORS_18A,
   ...AUTHORS_18B,
   ...AUTHORS_SONGS,
+  ...AUTHORS_OWNER,
   ...AUTHORS_SOPHIA,
   ...AUTHORS_DICT,
   ...AUTHORS_R2U,
