@@ -897,6 +897,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | OV-13 | tests/ov13.test.ts › OV-13 a word without і is untouched, an і of another origin (и < ы, R11) is untouched |
 | OV-13 | tests/ov13.test.ts › OV-13 attested beats the rule and is labelled; Аркушин label has volume and page |
 | OV-13 | tests/ov13.test.ts › OV-13 the IPA of the dialect view reads the standard form with its origins |
+| OV-14 | tests/ov14.test.ts › OV-14 MDN: віз → воз, кістка → костка, поріг → порог, радість → радость (origin о from the paradigm) |
+| OV-14 | tests/ov14.test.ts › OV-14 MDN negative: other words with і < о keep і (the source says «непослідовно», only named words); і of another origin is untouched |
+| OV-14 | tests/ov14.test.ts › OV-14 MDN unknown origin: standard form stays, the note is shown on the card, a non-listed word has no note |
+| OV-14 | tests/ov14.test.ts › OV-14 MDN is labelled as a rule, the cite is verbatim and says «непослідовно»; the IPA reads the respelling |
+| OV-14 | tests/ov14.test.ts › OV-14 VOL: стіл has і < о → no respelling, the cited statement (ЕУМ um178) is attached |
+| OV-14 | tests/ov14.test.ts › OV-14 VOL negative: no origin, і of another origin, a word without і, another dialect, and quiet (no noteOrigin): no statement |
+| OV-14 | tests/ov14.test.ts › OV-14 POD: ніс / стіл — і with a hard preceding consonant (ЕУМ um180); я after a soft consonant is kept (з’ат’) |
+| OV-14 | tests/ov14.test.ts › OV-14 POD IPA: the consonant before і < о is hard ([nis], not [nʲis]); another origin keeps the soft consonant |
+| OV-14 | tests/ov14.test.ts › OV-14 every cite is a valid evidence claim (non-empty locator and quote) |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › СУМ glosses: «Зменш.-пестл. до тонкий» → dim-aff, «Пестл.», «Збільш.», «Підсил.», «Зменш.» and the spelled-out forms; a gloss that merely contains «до» is not a link |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › en.wiktionary lines: «diminutive of …», «endearing diminutive of …», «augmentative of …», accents removed |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › addDim stores the link under the derivative (with quote and locator) and the derivative under the base, once |

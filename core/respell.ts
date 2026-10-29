@@ -15,8 +15,9 @@ import { stripStress, unifyApostrophe } from './text.ts'
 import type { Evidence } from './evidence.ts'
 import type { Origin, Origins } from './origin.ts'
 import { NORTH_RULES } from './respell-north.ts'
+import { SW_RULES, STANDARD_RULES } from './respell-sw.ts'
 
-export type Need = 'verb' | 'neuter' | 'stress' | 'origin'
+export type Need = 'verb' | 'neuter' | 'stress' | 'origin' | 'origin-word'
 export interface RespellCtx {
   /** part of speech / gender of the word (from the card's VESUM tags); unknown = undefined */
   pos?: 'verb' | 'noun' | 'adj' | 'other'; gender?: 'm' | 'f' | 'n'
@@ -31,6 +32,8 @@ export interface SpellRule {
   /** dialect codes that implement it → the detector feature (core/rules.ts) that carries the cite, default the rule id */
   codes: Record<string, string>
   needs?: Need
+  /** with needs 'origin-word': the lemma pattern the rule is about (the words a source names); other words are not touched and not noted */
+  when?: RegExp
   /** edits on the CURRENT string; `st` = stressed vowel indices of the current string (only with needs 'stress') */
   edits: (w: string, st: Set<number>, org: (i: number) => Origin | null, code: string) => Edit[]
   /** a cite of its own (verbatim ЕУМ quote) per dialect code, for a reflex that core/rules.ts has no detector row for */
@@ -45,6 +48,7 @@ const VOWELS = 'аеиіоуяюєїы'
 const DEVOICE: Record<string, string> = { б: 'п', д: 'т', г: 'х', ґ: 'к', ж: 'ш', з: 'с' }
 
 export const SPELL_RULES: SpellRule[] = [
+  ...SW_RULES,   // first: MDN о kept (порог) must precede the ukanye rule, which reads the stressed і that is not there any more
   // neuter nouns lose the long soft consonant: NDN / SYAN -є (житє, знанє, бажанє), POD / VOL -я (житя, зіля)
   { id: 'SW-NO-LENGTH', codes: { NDN: 'SW-NO-LENGTH', SYAN: 'SW-NO-LENGTH' }, needs: 'neuter', example: ['бажання', 'бажанє'],
     edits: all(/([нтлдзс])\1я$/, m => m[1] + 'є') },
@@ -105,6 +109,8 @@ export interface FiredSpell { rule: string; detector: string; code: string; grou
 export interface Respelled {
   code: string; input: string; text: string; segs: Seg[]; fired: FiredSpell[]
   skipped: { rule: string; why: string }[]
+  /** OV-14: cited «no respelling» statements of the dialect (the standard sound is the dialect's own), for the letters whose origin the card knows */
+  standard: { rule: string; text: string; cite: Evidence }[]
   /** stressed vowel indices of `text` (when the input had positions) */
   positions?: number[]
 }
@@ -124,6 +130,10 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     if (r.needs === 'origin') {
       if (!stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }
       if ([...lower].some((c, i) => c === 'і' && stressOrig.has(i)) && !ctx.origins?.some(Boolean)) { skipped.push({ rule: r.id, why: NO_ORIGIN }); continue }
+    }
+    if (r.needs === 'origin-word') {
+      if (!r.when?.test(lower)) continue
+      if (!ctx.origins?.some(Boolean)) { skipped.push({ rule: r.id, why: NO_ORIGIN }); continue }
     }
     if (r.needs === 'stress' && !stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }
     const cite = spellCite(r, code); if (!cite) continue
@@ -185,7 +195,9 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     else if (segs.length && !segs[segs.length - 1]!.rule) segs[segs.length - 1]!.text += c.t
     else segs.push({ text: c.t })
   }
-  return { code, input, text, segs, fired, skipped, positions }
+  const orgAt = (i: number): Origin | null => ctx.origins?.[i] ?? null
+  const standard = STANDARD_RULES.filter(r => r.code === code && r.applies(lower, orgAt)).map(r => ({ rule: r.id, text: r.text, cite: r.cite }))
+  return { code, input, text, segs, fired, skipped, standard, positions }
 }
 /** a dialect leaves the word unchanged → shown as is, no mark */
 /** the note shown when a rule needs the origin of і and the card has none (SPEC 63 OV-13) */

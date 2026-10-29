@@ -35,6 +35,7 @@ const dname = computed(() => DIALECTS[dialect.value] ?? '')
     <button v-if="historical && !orig" type="button" class="sp-rawbtn" :aria-pressed="showRaw" :title="showRaw ? 'показати сучасним правописом' : `оригінал: ${raw}`" @click.stop.prevent="showRaw = !showRaw">{{ showRaw ? 'сучасне' : 'оригінал' }}</button>
     <template v-if="!quiet && s.attested && !showRaw"><span class="badge sp-att sp-attested" :title="s.attested.ev ? `«${s.attested.ev.quote}» (${s.attested.ev.locator})` : s.attested.src">{{ s.attested.src }}</span></template>
     <span v-if="!quiet && s.note && !showRaw" class="muted small sp-note">{{ s.note }}</span>
+    <span v-for="x in (!quiet && !showRaw ? s.standard : undefined)" :key="x.rule" class="muted small sp-note sp-std" :title="`«${x.cite.quote}» (${x.cite.source}, ${x.cite.locator})`">{{ x.text }}, джерело: ЕУМ ({{ x.rule }})</span>
     <template v-if="!quiet && s.generated && !showRaw">
       <span v-if="attest && attest.status !== 'generated'" class="badge sp-att" :class="'sp-' + attest.status" :title="attest.label + ' · ' + dname">{{ attest.label }}
         <template v-for="x in attest.witnesses.slice(0, 2)" :key="x.w"> · <RouterLink :to="witnessTo(x.w)">{{ x.title }}</RouterLink></template></span>

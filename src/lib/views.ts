@@ -44,6 +44,8 @@ export interface Shown {
   attested?: AttestedForm
   /** OV-13: a rule needed the origin of і and the card has none */
   note?: string
+  /** OV-14: cited «the dialect has the standard sound» statements (VOL, POD), only when the card asked for notes (the header) */
+  standard?: Respelled['standard']
 }
 interface Layer { s: number; e: number; text: string; from?: string; rule?: string; unsure?: boolean }
 
@@ -79,7 +81,7 @@ export function show(word: string, d: string, o: OrthId, ctx: ViewCtx = {}): Sho
     if (d1) { const f = dr!.fired.find(x => x.rule === d1.rule); push({ text: t1.slice(a, b), kind: 'dialect', from: d1.from, rule: f?.detector ?? d1.rule, ev: f?.cite }); continue }
     push({ text: t1.slice(a, b), kind: 'plain' })
   }
-  return { word, dialect: d, orth: o, text: pieces.map(p => p.text).join(''), pieces, respelled: dr, ortho: or, generated: !!dr, ...(note ? { note } : {}) }
+  return { word, dialect: d, orth: o, text: pieces.map(p => p.text).join(''), pieces, respelled: dr, ortho: or, generated: !!dr, ...(note ? { note } : {}), ...(ctx.noteOrigin && rs?.standard.length ? { standard: rs.standard } : {}) }
 }
 
 /** IPA of the word: the dialect only (the orthography never enters). The stress positions follow the respelling. */
