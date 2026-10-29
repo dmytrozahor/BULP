@@ -29,7 +29,7 @@ import PhrasePanel from './PhrasePanel.vue'
 import StressForms from './StressForms.vue'
 import { cvStressVariants } from '../../core/cv.ts'
 import type { TabId } from '../lib/cardTabs.ts'
-const props = defineProps<{ /** card kind (SE panel id of the labels block) */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu' | 'form'; lemma?: string; spelling: string; labels?: boolean; /** SPEC 63 CP-6: dictionary stress of the card word (CvExtra.s from the build) */ stress?: number[]; /** SPEC 63 OV-10: render only the blocks of this card tab (none = all blocks, as before) */ tab?: TabId }>()
+const props = withDefaults(defineProps<{ /** card kind (SE panel id of the labels block) */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu' | 'form'; lemma?: string; spelling: string; labels?: boolean; /** SPEC 63 CP-6: dictionary stress of the card word (CvExtra.s from the build) */ stress?: number[]; /** SPEC 63 OV-10: render only the blocks of this card tab (none = all blocks, as before) */ tab?: TabId }>(), { labels: true })   // CP-10.2: an absent Boolean prop is cast to false by Vue, which hid the loan, stress and badge lines on every thin card
 const w = computed(() => props.lemma ?? props.spelling)
 const variants = computed(() => cvStressVariants(props.lemma ?? props.spelling, props.stress))
 const senses = computed(() => sensesOf(w.value))
