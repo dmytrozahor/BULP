@@ -64,6 +64,11 @@ export const CORRESPONDENCES: Correspondence[] = [
   { old: ['лигінь', 'лиґінь'], modern: 'легінь', cls: 'noun', kind: 'variant', variants: ['лигінь', 'лиґінь'], url: 'https://archive.org/details/etnohr_19',
     quote: 'Ішов лиґінь до дівчини',
     note: 'Корпус: Етноґрафічний збірник. Т. 19. Коломийки. Том III (1907, OCR), s. 7239; також т. 33 (1912, демонологія). Словникового рядка немає; тотожність з легінь за контекстом (юнак іде до дівчини)' },
+  // MM-26 (owner file «ніколи не никола.png»): «николы» (Острозька епіграма 1581, Stanza lemma «никола» PROPN) is the adverb ніколи «never», not the name Никола. A lower-case token with exactly this
+  // spelling links to the adverb whatever the model says (the variant row is applied before any lemma route, MM-2); -ы for -и is the R11 spelling.
+  { old: ['николи', 'николы'], modern: 'ніколи', cls: 'adv', kind: 'variant', variants: ['николи', 'николы'], url: 'https://en.wiktionary.org/wiki/ніколи',
+    quote: 'Inherited from Old Ruthenian николи (nikoli, “never”), from Old East Slavic николи',
+    note: 'Вікісловник (uk ніколи, adv): староукр. николи < др. николи < псл. *nikoli; николы — те саме слово з ы замість и (R11)' },
   // MM-21 (owner remark ««ню» прив'язалося лише до французького слова, але є й діалектне слово»): «ню» is also the accusative of вона after a preposition (Огоновський 1889, scan p. 40, note to §68:
   // «межи приименникъ и склоненый падежь вказуючого заименника: зъ нимъ, въ нѣмъ, къ нему, въ ню; при нѣй, коло него, до неи, за ними»). Only a Желехівка-orthography witness (the Galician print) takes the
   // pronoun; a text without that orthography keeps the French loan ню «nude». The preposition context is not visible to the linker; the edition orthography is the (cited) prior.

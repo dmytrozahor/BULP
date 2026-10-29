@@ -10,7 +10,7 @@ import { DIALECTS } from '../../core/rules.ts'
 import { dialect, ipaOf } from '../lib/views.ts'
 import StressForms from './StressForms.vue'
 import Spell from './Spell.vue'
-const props = defineProps<{ word: string; /** stress variants of a word card */ stress?: StressVariant[]; /** dictionary stress positions of a thin card */ positions?: number[]; loaded?: boolean }>()
+const props = withDefaults(defineProps<{ word: string; /** stress variants of a word card */ stress?: StressVariant[]; /** dictionary stress positions of a thin card */ positions?: number[]; loaded?: boolean }>(), { loaded: undefined })   // MM-27: absent ≠ false (Vue boolean casting)
 const variants = computed(() => props.stress ?? [])
 const pos = computed<number[] | undefined>(() => (variants.value[0]?.positions as number[] | undefined) ?? props.positions)
 const base = computed(() => variants.value[0]?.form ?? props.word)

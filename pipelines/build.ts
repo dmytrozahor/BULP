@@ -29,6 +29,7 @@ import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
 import { writeDim } from './build-dim.ts'
+import { attachDictModern } from './build-orvdict.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
 import { withGal } from '../core/gal-folds.ts'
 import type { Candidate } from '../core/phonology.ts'
@@ -728,6 +729,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   cvLater()
   lap(`lexicon.json core ${(budget.bytes / 1048576).toFixed(2)} MB (${fmtBreakdown(budget.fields)}),${budget.shards} shards (max ${(budget.shardMax / 1024).toFixed(0)} KB, median ${(budget.shardMedian / 1024).toFixed(0)} KB)`)
   lap(`texts: ${(writeTexts(adm.map(a => a.w), PUB, torot.refs) / 1048576).toFixed(1)} MB (shipped on the data branch, B-5f)`)
+  { const n = attachDictModern(ROOT, torot.file.orv, l => derive(l, true).candidates.map(c => c.form)); lap(`ORV cards with a dictionary counterpart (MM-28): ${n} of ${torot.file.orv.length}`) }
   writeJsonAtomic(resolve(PUB, 'torot.json'), JSON.stringify(torot.file)); writeJsonAtomic(resolve(PUB, 'light.json'), JSON.stringify(light.file)); torotReport(torot.stats, rd<{ linked: Record<string, number> }>(resolve(ANALYSIS, 'torot-baseline.json')).linked, ANALYSIS,
     [['arch', 'PV-7 Архангельське Євангеліє 1092'], ['o18_26', 'PV-6 Прокопович «Владимир» 1705']].flatMap(([id, what]) => { const x = adm.findIndex(a => a.w.id === id); return x < 0 ? [] : [{ id: id!, what: what!, n: adm[x]!.w.tokens.length, linked: wLinked.get(id!) ?? 0 }] }))
   writeJsonAtomic(resolve(PUB, 'corpus.json'), JSON.stringify(corpus)); writeJsonAtomic(resolve(PUB, 'lexindex.json'), lexIdxJson)

@@ -223,7 +223,7 @@ describe('MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows 
 
 describe('FX-2 correspondences', () => {
   it('every row has a verbatim ЕСУМ quote and a goroh URL', () => {
-    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.some(v => v === 'лигінь' || v === 'ню') ? /^https:\/\// : /^https:\/\/goroh\.pp\.ua\//) }
+    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.some(v => v === 'лигінь' || v === 'ню' || v === 'николи') ? /^https:\/\// : /^https:\/\/goroh\.pp\.ua\//) }
     expect(correspondenceFor('азъ')!.modern).toBe('я'); expect(correspondenceFor('есмь')).toBeUndefined()   // no fetched quote → no row
   })
   it('азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я', () => {
@@ -871,5 +871,48 @@ describe('MM-25 the annotator: «Отношеніє» is no longer «unknown» w
     const known = { ...data, search: { map: new Map([['отношеніє', [{ lemma: 'x', form: 'отношеніє', via: 'form' }]]]), keys: [] } } as unknown as AnnotateData
     expect(annotate('отношеніє', known)[0]!.ruClass).toBeUndefined()
     expect(annotate('Отношеніє', { ...data, ru: undefined } as unknown as AnnotateData)[0]!.ruClass).toBeUndefined()
+  })
+})
+
+// ───────────────────────── MM-26 … MM-28 (owner screenshots 2026-10-28) ─────────────────────────
+import { bucketOf as torotBucket } from '../core/torot.ts'
+import { dictCounterparts } from '../pipelines/build-orvdict.ts'
+import { renderToString } from 'vue/server-renderer'
+import { createSSRApp, h } from 'vue'
+import OvPronunciation from '../src/components/OvPronunciation.vue'
+
+describe('MM-26 «ніколи не никола.png»: «николы» (Острозька епіграма 1581) is the adverb ніколи, never the name Никола', () => {
+  const e26 = E({ ніколи: [H('ніколи', 'adv')], никола: [H('Никола', 'noun:anim:m:v_naz:prop:fname')] })
+  it('a lower-case «николы» / «николи» links to ніколи whatever the model lemma / POS says (variant row, MM-2 order); a capitalised «Никола» is not touched', () => {
+    for (const o of [{ stanza: 'никола', gate: 'U:PROPN' }, { stanza: 'никола', gate: 'U:NOUN' }, {}]) { const c = linkE(e26, T({ raw: 'николы', lang: 'ruthenian', oldI: false, ...o }))!; expect(c.lemma, JSON.stringify(o)).toBe('ніколи'); expect(c.cls).toBe('adv') }
+    expect(variantFor('николи')!.quote).toContain('Old Ruthenian николи'); expect(linkE(e26, T({ raw: 'Никола', lang: 'ruthenian', oldI: false }))?.lemma).not.toBe('ніколи')
+  })
+  it('the name card: a MODEL (Stanza) PROPN on a lower-case token is no name; a capitalised one is; TOROT gold Ne stays a name in lower case (manuscripts)', () => {
+    const t = { lemma: 'никола', morph: 'PROPN Case=Nom', raw: 'николы' }
+    expect(torotBucket(t, true, true)).toBe('linked'); expect(torotBucket(t, false, true)).toBe('orv'); expect(torotBucket({ ...t, raw: 'Николы' }, true, true)).toBe('name')
+    expect(torotBucket({ lemma: 'ярославъ', morph: 'Ne', raw: 'ярославъ' }, true, false)).toBe('name'); expect(torotBucket(t, true)).toBe('name')
+  })
+})
+
+describe('MM-27 «слинути»: «наголос: завантаження…» never stays for ever on a thin card', () => {
+  const html = async (props: Record<string, unknown>) => renderToString(createSSRApp({ render: () => h(OvPronunciation, { word: 'слынути', ...props }) }))
+  it('no stress data and no `loaded` prop (ORV, name, light, dictionary cards) → «наголос не встановлено»; only an explicit loaded=false says «завантаження»', async () => {
+    const a = await html({}); expect(a).toContain('наголос не встановлено'); expect(a).not.toContain('завантаження')
+    expect(await html({ loaded: true })).toContain('наголос не встановлено'); expect(await html({ loaded: false })).toContain('завантаження')
+  })
+  it('the cause is fixed where the prop is forwarded: OverviewTab declares stressLoaded with withDefaults (an absent Boolean prop is false in Vue)', () => {
+    expect(readFileSync('src/components/OverviewTab.vue', 'utf8')).toMatch(/withDefaults\(defineProps/); expect(readFileSync('src/components/OverviewTab.vue', 'utf8')).toContain('stressLoaded: undefined')
+  })
+})
+
+describe('MM-28 «слинути точно є відповідник.png»: an ORV-only card whose derived form is a dictionary headword gets «сучасний відповідник за словником»', () => {
+  const rows = new Map([['слинути', [{ d: 'sum20', g: 'Те саме, що славитися', l: 'т.9 с.100' }, { d: 'sum11', g: 'заст. Славитися', l: 'т.9 с.301' }, { d: 'wikt', g: 'x' }]], ['слович', [{ d: 'sum11', g: 'y' }]]])
+  it('the first derived candidate with a row wins; СУМ-11 before СУМ-20; locator and gloss ≤ 200; wiktionary rows are not a dictionary counterpart', () => {
+    const d = dictCounterparts(['слинути', 'слович'], rows as never)!; expect(d).toEqual({ form: 'слинути', dict: 'sum11', loc: 'т.9 с.301', q: 'заст. Славитися' })
+    expect(dictCounterparts(['слович'], new Map([['слович', [{ d: 'wikt', g: 'x' }]]]) as never)).toBeUndefined(); expect(dictCounterparts(['нема'], rows as never)).toBeUndefined()
+    expect(dictCounterparts(['слинути'], new Map([['слинути', [{ d: 'sum11', g: 'я'.repeat(300) }]]]) as never)!.q.length).toBe(200)
+  })
+  it('the card shows it (TorotCardView) and the build attaches it before torot.json is written', () => {
+    expect(readFileSync('src/views/TorotCardView.vue', 'utf8')).toContain('data-testid="dict-modern"'); expect(readFileSync('pipelines/build.ts', 'utf8')).toContain('attachDictModern(ROOT, torot.file.orv')
   })
 })

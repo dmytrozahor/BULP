@@ -24,8 +24,11 @@ export const torotId = (lemma: string) => lemma.normalize('NFC').toLowerCase()
 
 export type Bucket = 'linked' | 'name' | 'orv' | 'none'
 /** PV-3/PV-5: a proper name is a name (even when VESUM also links it); a lemma that did not link is ORV-only; no TOROT lemma → none. */
-export const bucketOf = (t: { lemma?: string; morph?: string }, linked: boolean): Bucket =>
-  !t.lemma ? (linked ? 'linked' : 'none') : isName(t.morph) ? 'name' : linked ? 'linked' : 'orv'
+/** MM-26: a MODEL (Stanza) PROPN on a lower-case token is no proper name (Острозька епіграма 1581: «николы» = ніколи, not Никола); the model's name tag counts only for a capitalised token.
+ *  TOROT gold Ne tags are kept as they are (OES manuscripts write names in lower case). */
+const lowerInitial = (raw?: string) => !!raw && raw[0] === raw[0]!.toLowerCase() && raw[0] !== raw[0]!.toUpperCase()
+export const bucketOf = (t: { lemma?: string; morph?: string; raw?: string }, linked: boolean, model = false): Bucket =>
+  !t.lemma ? (linked ? 'linked' : 'none') : isName(t.morph) && !(model && lowerInitial(t.raw)) ? 'name' : linked ? 'linked' : 'orv'
 
 /** MM-5: how a card's lemma / POS / morphology are labelled. Stanza ORV output (card.model, a token gate key `U:…`) is a model prediction, never TOROT gold. */
 export const MODEL_NOTE = 'автоматична розмітка (Stanza), не перевірено'
@@ -49,7 +52,9 @@ export interface NameCard extends CardBase {
   /** SPEC 63 MU-3: no TOROT annotation; the card rests on capitalisation alone (capNames in build-torot.ts) */
   basis?: 'capitalisation'
 }
-export interface OrvCard extends CardBase { gloss: 'unknown'; reason: string }
+/** MM-28: the rule-derived modern form is a headword of a held dictionary (СУМ-11 / СУМ-20 …): dictionary id, locator (т. / с.), gloss ≤ 200 characters */
+export interface DictModern { form: string; dict: string; loc: string; q: string }
+export interface OrvCard extends CardBase { gloss: 'unknown'; reason: string; dictModern?: DictModern }
 export interface TorotFile { generated: string; source: string; names: NameCard[]; orv: OrvCard[] }
 
 export class TorotScan {

@@ -23,7 +23,7 @@ export function scanTorot(ins: TorotIn[], generated: string): { file: TorotFile;
     const st: TorotWitnessStat = { id: w.id, title: w.title + (model ? " [Stanza ORV, модель]" : ""), n: w.tokens.length, withLemma: 0, linked: 0, names: 0, orv: 0, none: 0, topOrv: [], reasons: {} }
     const r: string[] = [], per = new Map<string, { n: number; reason: string; ex: string }>()
     w.tokens.forEach((t, ti) => {
-      const linked = ids[ti]! >= 0, b: Bucket = bucketOf(t, linked)
+      const linked = ids[ti]! >= 0, b: Bucket = bucketOf(t, linked, !!model)
       if (t.lemma) st.withLemma++
       st[b === 'linked' ? 'linked' : b === 'name' ? 'names' : b === 'orv' ? 'orv' : 'none']++
       const reason = b === 'orv' ? reasonOf(ti) : undefined

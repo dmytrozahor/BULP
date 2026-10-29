@@ -17,7 +17,8 @@ import LabelLine from './LabelLine.vue'
 import Kwic from './Kwic.vue'
 import SenseEpochs from './SenseEpochs.vue'
 import Paradigm from './Paradigm.vue'
-const props = defineProps<{
+// MM-27: an absent Boolean prop is `false` in Vue (boolean casting): every thin card (ORV, name, light, dictionary) read «наголос: завантаження…» for ever; undefined = nothing is loading
+const props = withDefaults(defineProps<{
   lemma?: string; spelling: string; kwic: KwicLine[]; byRegion?: LemmaCard['stats']['byRegion']
   /** DOM id of the full map panel in «Поширення» (h-map / f-reg / t-reg) */
   mapPanel: string; seKind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu'
@@ -29,7 +30,7 @@ const props = defineProps<{
   /** the dialect block is keyed by the spelling of a form page; the word card passes the lemma */
   dialectSpelling?: string
   /** DOM id of the Labels panel of the card kind (h-lab / t-lab) */ labelsPanel?: string
-}>()
+}>(), { stressLoaded: undefined })
 const { corpus, witnessById } = useData()
 const regs = computed(() => regionLine(props.byRegion, corpus.value?.regions))
 const hasRegions = computed(() => regs.value.length > 0)

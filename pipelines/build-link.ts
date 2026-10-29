@@ -176,7 +176,9 @@ function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
   const vr = vr0 && (!vr0.orth || (t.orth && vr0.orth.includes(t.orth))) ? vr0 : undefined   // MM-21: a variant row may be restricted to witnesses of an orthography (ню = вона only in Желехівка texts)
   if (vr) {
     const mk = key(vr.modern), own: Candidate = { form: k1, trace: [], branches: 0 }
-    const opts = gatedBy(t, (env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && vesumClass(h.tags) === vr.cls && !/:prop\b/.test(':' + h.tags))
+    // MM-26 / MM-5: a cited variant row is not vetoed by a MODEL part of speech (gate key U:…, Stanza); a TOROT gold tag still gates
+    const gateV = (os: Option[]) => (t.gate?.startsWith('U:') ? os : gatedBy(t, os))
+    const opts = gateV((env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && vesumClass(h.tags) === vr.cls && !/:prop\b/.test(':' + h.tags))
       .map(h => ({ ...toOption(mk, h, { form: mk, trace: [], branches: 0 }, own, false), corr: { row: vr, old: k1 } })))
     if (opts.length) return { route: t.lang === 'uk' ? 'direct' : 'token', opts }
   }

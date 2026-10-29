@@ -25,6 +25,7 @@ watch(card, async c => { const n = ++seq; const k = c ? await kwicFromRefs(c.evi
 const wits = computed(() => witnessCounts(card.value?.evidence ?? []))
 const modern = computed(() => asName.value?.modern || undefined)
 const asName = computed(() => (props.kind === 'name' ? (card.value as NameCard | undefined) : undefined))
+const DICT_UK: Record<string, string> = { sum11: 'СУМ-11', sum20: 'СУМ-20' }
 const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | undefined) : undefined))
 </script>
 
@@ -42,6 +43,8 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
       <template v-if="asName.modern"> · сучасна форма (VESUM): <RouterLink :to="wordTo(asName.modern)">{{ asName.modern }}</RouterLink></template>
       <template v-else> · сучасна форма: невідомо</template></p>
     <p v-if="asOrv" class="sans small">Чому без сучасного зв’язку: {{ asOrv.reason }} · значення (TOROT): невідомо — у XML немає глоси.</p>
+    <p v-if="asOrv?.dictModern" class="sans small" data-testid="dict-modern">Сучасний відповідник за словником: <RouterLink :to="wordTo(asOrv.dictModern.form)"><strong>{{ asOrv.dictModern.form }}</strong></RouterLink>
+      <span class="muted"> · {{ DICT_UK[asOrv.dictModern.dict] ?? asOrv.dictModern.dict }}<template v-if="asOrv.dictModern.loc"> · {{ asOrv.dictModern.loc }}</template> · «{{ asOrv.dictModern.q }}» · форма виведена за правилами, слово є заголовком словника (не VESUM)</span></p>
     <h2>Написання</h2>
     <p class="sans"><span v-for="f in card.forms" :key="f.raw" class="chip">{{ f.raw }} ×{{ f.f }}</span></p>
     <h2>{{ asName?.basis ? 'Свідчення (місце в тексті)' : card.model ? 'Свідчення (автоматична розмітка Stanza)' : 'Свідчення (TOROT, citation-part)' }}</h2>
