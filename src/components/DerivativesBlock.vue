@@ -22,7 +22,7 @@ const link = (form: string) => (byLemma.value.has(form) ? `/w/${encodeURICompone
 </script>
 
 <template>
-  <component :is="panel ? Panel : 'section'" v-if="!on || attested.length || suggested.length"
+  <component :is="panel ? Panel : 'section'" v-if="panel || attested.length || suggested.length"
     v-bind="panel ? { id: 'h-der', title: 'Похідні · Derivatives', open: false, 'onUpdate:open': (v: boolean) => { if (v) on = true }, summary: summary, info: 'префіксальні · метод: деривація; ✓ — засвідчено, пропозиції — реконструкція (P-1.7)' } : { class: 'card', 'aria-label': 'Похідні' }">
     <h2 v-if="!panel"><span>Похідні</span><span class="small">префіксальні · метод: деривація</span></h2>
     <ul v-if="attested.length" class="sans" style="list-style:none;padding:0;margin:0">
