@@ -104,7 +104,7 @@ async function main() {
     if (!file) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, 404, '')]); continue }
     const r = await curlGet(h, `https://archive.org/download/${encodeURIComponent(w.ia)}/${encodeURIComponent(file)}`)
     if (r.status !== 200) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, r.status, file)]); continue }
-    const buf = Buffer.from(await r.res.arrayBuffer())
+    const buf = r.buf
     h.put(`linguists_${w.ia}`, buf, [item(w, `https://archive.org/details/${w.ia}`, buf.length, 200, file)])
   }
   h.finish()
