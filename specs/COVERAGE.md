@@ -1021,3 +1021,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-9 | tests/card-parity.test.ts › CP-9 ThinTitle: a modern title goes through Spell (switches act), a historical one is plain and says why |
 | CP-9 | tests/card-parity.test.ts › CP-9 every thin-card <h1> goes through ThinTitle: modern for /lw, historical (not respelled) for /ar /orv /name /uv and the unlinked spelling |
 | CP-9 | tests/card-parity.test.ts › CP-9 the spec carries the CP-9 item and the card-parity analysis no longer lists the two items as open |
+| GG-9 | tests/goroh-quality.test.ts › GG-9 Горох quality comparison › the sample is 50 distinct lemmas: 40 from the frequency list, 5 dialect, 5 historical, seed recorded |
+| GG-10 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-11 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-12 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-13 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-14 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-15 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-16 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-17 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
