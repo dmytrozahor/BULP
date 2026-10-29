@@ -144,7 +144,12 @@ const LETTER = "\\p{Script=Cyrillic}\\p{M}ⷠ-ⷿ'’ʼ"
 const MARK = 'ÿüôê'
 const LET1 = `(?:[${LETTER}]|[${MARK}](?=[${LETTER}])|(?<=[${LETTER}])[${MARK}])+`
 const WORD = new RegExp(`${LET1}(?:-${LET1})*`, 'gu')
-export interface Token { raw: string; index: number }
-export const tokenize = (text: string): Token[] => [...text.matchAll(WORD)].map(m => ({ raw: m[0].replace(/^[^\p{Script=Cyrillic}]+|[^\p{Script=Cyrillic}\p{M}]+$/gu, ''), index: m.index! })).filter(t => t.raw)
+/** `lead`: MM-43, the apostrophe-like character (' ’ ʼ ` ‘) written directly before the word (’го, ’дем): the raw token drops it, the flag keeps the fact; interior apostrophes (м'ясо, п'ять) stay in raw */
+export interface Token { raw: string; index: number; lead?: string }
+const LEAD = /['’ʼ`‘]/
+export const tokenize = (text: string): Token[] => [...text.matchAll(WORD)].map(m => {
+  const lead = LEAD.test(m[0][0]!) ? m[0][0] : LEAD.test(text[m.index! - 1] ?? '') ? text[m.index! - 1] : undefined
+  return { raw: m[0].replace(/^[^\p{Script=Cyrillic}]+|[^\p{Script=Cyrillic}\p{M}]+$/gu, ''), index: m.index!, ...(lead ? { lead } : {}) }
+}).filter(t => t.raw)
 /** A token with a Latin letter left after decoding is dropped (SPEC 10 M-2.1). */
 export const hasUnmapped = (s: string) => /[A-Za-z]/.test(s)

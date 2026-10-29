@@ -7,7 +7,7 @@ import { computed } from 'vue'
 import { featureChips } from '../../core/feature-chips.ts'
 import type { AnnotatedToken } from '../lib/annotate.ts'
 import EvidencePopover from './EvidencePopover.vue'
-const props = defineProps<{ t: Pick<AnnotatedToken, 'features' | 'pairs' | 'variant' | 'ruClass' | 'copula'>; year?: number }>()
+const props = defineProps<{ t: Pick<AnnotatedToken, 'features' | 'pairs' | 'variant' | 'ruClass' | 'copula' | 'short'>; year?: number }>()
 const wl = (l: string) => '/w/' + encodeURIComponent(l)
 const ctx = computed(() => ({ year: props.year }))
 const feats = computed(() => featureChips(props.t.features ?? [], ctx.value))
@@ -15,7 +15,7 @@ const pairs = computed(() => (props.t.pairs ?? []).map(p => ({ p, chip: featureC
 </script>
 
 <template>
-  <div v-if="feats.length || pairs.length || t.variant || t.ruClass || t.copula" class="small" style="margin-top:.35rem" data-testid="rule-chips">
+  <div v-if="feats.length || pairs.length || t.variant || t.ruClass || t.copula || t.short" class="small" style="margin-top:.35rem" data-testid="rule-chips">
     <div v-for="c in feats" :key="c.rule" data-testid="feature-chip"><span class="badge">{{ c.feature }}</span> {{ c.text }} <span class="muted">({{ c.rule }})</span><EvidencePopover :evidence="[c.cite]" heading="Правило" /></div>
     <div v-for="{ p, chip } in pairs" :key="p.rule + p.direction" data-testid="feature-pair">
       <span class="badge" :data-direction="p.direction">{{ chip?.feature ?? p.rule }}</span>
@@ -30,6 +30,14 @@ const pairs = computed(() => (props.t.pairs ?? []).map(p => ({ p, chip: featureC
       <span class="muted"> · {{ t.copula.chip.text }}</span>
       <span v-for="c in t.copula.cues" :key="c" class="muted"> · {{ c }}</span>
       <EvidencePopover :evidence="[t.copula.evidence]" heading="Правило MM-38" />
+    </div>
+    <div v-if="t.short" data-testid="short-reading">
+      <span class="badge" :data-qualifier="t.short.chip.qualifier" :title="t.short.chip.cite.note">{{ t.short.chip.feature }}</span>
+      <template v-if="t.short.verdict === 'ambiguous'"> <strong>неоднозначно:</strong> </template>
+      <template v-for="(r, i) in t.short.readings" :key="r.lemma"><template v-if="i"> / </template><RouterLink :to="wl(r.lemma)"><strong>{{ r.lemma }}</strong></RouterLink><span v-if="r.via" class="muted"> (через «{{ r.via }}»)</span><span v-if="r.note" class="muted"> ({{ r.note }})</span><span v-if="r.default" class="muted"> — основне читання</span></template>
+      <span class="muted"> · {{ t.short.chip.text }}</span>
+      <span v-for="c in t.short.cues" :key="c" class="muted"> · {{ c }}</span>
+      <EvidencePopover :evidence="[t.short.evidence]" :heading="t.short.kind === 'reduction' ? 'Правило MM-43' : 'Правило MM-42'" />
     </div>
     <div v-if="t.ruClass" data-testid="ru-class">
       <span class="badge" :title="'тип форми визначено за роком тексту і регіоном; мітка належить формі, не лемі'">{{ t.ruClass.label }}</span>

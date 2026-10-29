@@ -9,12 +9,12 @@
  */
 import { D, P, type Evidence } from './evidence.ts'
 
-export type VClassName = 'prep' | 'pron' | 'adv' | 'conj' | 'part' | 'noun'
+export type VClassName = 'prep' | 'pron' | 'adv' | 'conj' | 'part' | 'noun' | 'predic' | 'noninfl'
 /** role of a member in its family (the label is what the card prints) */
-export type VRole = 'alt' | 'euphonic' | 'expanded' | 'rare' | 'prothetic' | 'dialect' | 'arch' | 'sense'
+export type VRole = 'alt' | 'euphonic' | 'expanded' | 'rare' | 'prothetic' | 'dialect' | 'arch' | 'sense' | 'reduced'
 export const ROLE_UK: Record<VRole, string> = {
   alt: 'варіантна форма', euphonic: 'чергування у / в (милозвучність)', expanded: 'розширена форма', rare: 'рідкісна форма', prothetic: 'форма з протетичним у- / в-',
-  dialect: 'діалектна форма', arch: 'архаїчна форма', sense: 'інше значення того самого написання',
+  dialect: 'діалектна форма', arch: 'архаїчна форма', sense: 'інше значення того самого написання', reduced: 'розмовна редукція (мовця)',
 }
 export interface VCite { source: string; url: string; quote: string; note: string }
 export interface VMember {
@@ -37,6 +37,16 @@ const W = (word: string, quote: string, note: string): VCite => ({ source: 'Ві
 const ALT_V = 'Alternative forms: вві, ві, во, ув, уві (rare)'
 
 export const VARIANT_FAMILIES: VFamily[] = [
+  // MM-43 (owner remark 2026-10-29: «ну коли редукцію робить мовець»): the speaker's own colloquial reduction, recorded in direct speech / dialect and folk texts. Corpus counts (BULP data/work shards, 2026-10-29):
+  // шо 799 tokens in 10 witnesses (ez26_shekerik 724, cheremshyna1940 51), ше 93 in 6 (ez26_shekerik 71), шоб 7 in 2 (kobzar1876 5, rusalka1837 2), тра 7 in 6. Sources are cited only where en.wiktionary has the line.
+  { id: 'VF-SHCHO', mm: 'MM-43', head: 'що', cls: ['pron', 'conj'], title: 'що ~ шо (розмовна редукція)', members: [
+    { form: 'шо', role: 'reduced', cite: W('шо', 'Conversational form of що (ščo). [colloquial, dialectal] alternative form of що', 'en.wiktionary, стаття «шо» (Ukrainian, pron, tags colloquial / dialectal; діалектної групи стаття не називає — групу не заявлено)') },
+  ] },
+  { id: 'VF-SHCHOB', mm: 'MM-43', head: 'щоб', cls: ['conj'], title: 'щоб ~ шоб (розмовна редукція)', members: [
+    { form: 'шоб', role: 'reduced', cite: W('шоб', '(colloquial) alternative form of щоб (ščob)', 'en.wiktionary, стаття «шоб» (Ukrainian, conj, tags alt-of / colloquial)') },
+  ] },
+  { id: 'VF-SHCHE', mm: 'MM-43', head: 'ще', cls: ['adv', 'part'], title: 'ще ~ ше (розмовна редукція)', members: [ { form: 'ше', role: 'reduced' } ] },
+  { id: 'VF-TREBA', mm: 'MM-43', head: 'треба', cls: ['predic', 'noninfl', 'adv'], title: 'треба ~ тра, тре (розмовна редукція)', members: [ { form: 'тра', role: 'reduced' } ] },
   { id: 'VF-MIZH', mm: 'MM-30', head: 'між', cls: ['prep'], title: 'між ~ межи, меж, міжи, мендзи', members: [
     { form: 'межи', role: 'alt', cite: W('межи', 'alternative form of між', 'en.wiktionary, стаття «межи» (Ukrainian, preposition, псл. *meďu); стаття «між»: Alternative forms: меж, межи́. Огоновський 1889 (скан p. 40, примітка до § 68) вживає «межи» в тексті як звичайне прийменник') },
     { form: 'меж', role: 'alt', ambiguous: true, cite: W('між', 'Alternative forms: меж, межи́', 'en.wiktionary, стаття «між». Але меж — також родовий множини від межа, тому читання ВЕСУМ «межа» не скасовується') },

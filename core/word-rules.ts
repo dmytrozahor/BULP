@@ -15,6 +15,7 @@ import { toDatStem, toOvati, toUvati, splitHyphenParticle, DAT_OVI_FOLD, VERB_OV
 import { classifyRu, type RuClass, type RuCtx, type RuLookups } from './ru-contact.ts'
 import type { Evidence } from './evidence.ts'
 import { copulaReading, copulaKeys, type CopulaCtx, type CopulaReading } from './copula-ikavism.ts'
+import { shortReading, shortKeys, type ShortCtx, type ShortReading } from './short-forms.ts'
 
 export interface VariantHit {
   family: VFamily; member: VMember
@@ -36,7 +37,7 @@ export function variantHit(k: string): VariantHit | undefined {
   return sp && t && t.family.tails ? hit(t.family, t.member, sp.particle) : undefined
 }
 /** extra search keys: the head of the family (a peer such as в keeps only itself) */
-export const variantKeys = (k: string): string[] => { const h = variantHit(k); return [...(h && !h.member.peer ? [key(h.head)] : []), ...copulaKeys(k)] }
+export const variantKeys = (k: string): string[] => { const h = variantHit(k); return [...(h && !h.member.peer ? [key(h.head)] : []), ...copulaKeys(k), ...shortKeys(k)] }
 /** the family a card lemma belongs to, with the other members, for the card line */
 export { familyOfLemma } from './variant-families.ts'
 
@@ -78,12 +79,12 @@ export interface RuleLook {
   /** the spelling is known to the lexicon / VESUM */ known: (k: string) => boolean
   /** MM-25: Russian headwords of the r2u ru→uk dictionaries (index sidecar `ru`); absent = no Russianism is detected */ ru?: Pick<RuLookups, 'ruHead' | 'isDialect'>
 }
-export interface WordRules { variant?: VariantHit; pairs: FeaturePair[]; ruClass?: RuClass; /** MM-38: the Galician-ikavism copula reading of їсть, beside (never instead of) їсти */ copula?: CopulaReading }
-export function wordRules(raw: string, look: RuleLook, ctx: RuCtx & CopulaCtx = {}): WordRules {
+export interface WordRules { variant?: VariantHit; pairs: FeaturePair[]; ruClass?: RuClass; /** MM-38: the Galician-ikavism copula reading of їсть, beside (never instead of) їсти */ copula?: CopulaReading; /** MM-42 / MM-43: the short-form reading (го = його, тре = треба, шо = що …) with its chip; branching where the short form is also a word */ short?: ShortReading }
+export function wordRules(raw: string, look: RuleLook, ctx: RuCtx & CopulaCtx & ShortCtx = {}): WordRules {
   const k = key(raw)
   if (!k) return { pairs: [] }
   const variant = variantHit(k)
   const pairs = featurePairs(k, look.known)
   const ruClass = look.ru && !look.known(k) ? classifyRu(raw, ctx, { ...look.ru, isUkrainian: look.known }) : undefined
-  return { variant, pairs, ruClass, copula: copulaReading(k, ctx) }
+  return { variant, pairs, ruClass, copula: copulaReading(k, ctx), short: shortReading(raw, ctx) }
 }

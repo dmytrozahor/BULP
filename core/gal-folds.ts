@@ -5,7 +5,7 @@
  *
  *  ORTH-ADJ-IISH    скорійше, новійший, найсьвятійшою → скоріше, новіший, найсвятішою
  *  ORTH-VERB-OVATI  шановати, купова́ти, малёвати → шанувати, купувати   (-ова- ~ -ува-; two hypotheses about WHY are recorded in specs/63, only the cited one is stated here)
- *  ORTH-PART-HYPH   прийми-ж, було-б, ходи-но → the host word + a particle (the hyphen is the older / Galician way to attach it)
+ *  ORTH-PART-HYPH   прийми-ж, було-б, ходи-но → the host word + a particle (the hyphen is the older / Galician way to attach it); MM-42: also «видів-го» (го = його, the particle is the pronoun clitic)
  *  ORTH-ZAK-*, ORTH-RDC  MM-40 / MM-41 (core/zak-folds.ts): ÿ ü ӱ ô in a Cyrillic word, сердце → серце
  *  ORTH-DAT-OVI     міст-ові, містові → міст (MM-29): the dative in -ові/-еві/-єві joined to the unchanged stem, with or without a hyphen
  */
@@ -40,13 +40,15 @@ export const VERB_OVATI_FOLD: Fold = {
 }
 
 /** closed list of particles that older Galician print joins to the host word with a hyphen */
-export const HYPH_PARTICLES = ['ж', 'же', 'жь', 'б', 'би', 'бо', 'но', 'то', 'таки'] as const
+export const HYPH_PARTICLES = ['ж', 'же', 'жь', 'б', 'би', 'бо', 'но', 'то', 'таки', 'го'] as const
 const HYPH = new RegExp(`^(.{2,}?)-(${HYPH_PARTICLES.join('|')})$`)
 /** MM-33: after a member of a family with `tails` (тілько-що) the particle «що» is a tail as well */
 const HYPH_SCHO = /^(.{2,}?)-(що)$/
 /** host + particle of «прийми-ж»; undefined when the token has no such tail (будь-хто, де-не-де are not split: VESUM decides first, the build only splits what it cannot link whole) */
 export const splitHyphenParticle = (w: string): { host: string; particle: string } | undefined => {
   const l = w.toLowerCase(), m = HYPH.exec(l)
+  // MM-42: «видів-го», «дай-го» — the enclitic го = його (core/short-forms.ts); interjections (го-го, ого-го, гей-го) are no host + clitic
+  if (m && m[2] === 'го' && /^(го|ого|ге|гей|ой|ех|ах|ха|ну|тю)$/.test(m[1]!)) return undefined
   if (m) return { host: m[1]!, particle: m[2]! }
   const s = HYPH_SCHO.exec(l), f = s && familyMember(s[1]!)
   return s && f && f.family.tails && !f.member.peer ? { host: s[1]!, particle: s[2]! } : undefined

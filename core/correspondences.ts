@@ -7,7 +7,7 @@
 import { D, P, type Evidence } from './evidence.ts'
 import { VARIANT_FAMILIES } from './variant-families.ts'
 
-export type Cls = 'pron' | 'noun' | 'adv' | 'prep' | 'conj' | 'part'
+export type Cls = 'pron' | 'noun' | 'adv' | 'prep' | 'conj' | 'part' | 'predic' | 'noninfl'
 export interface Correspondence {
   /** old lemmas (TOROT lemma or Stanza lemma, lower case, before sound derivation) */
   old: string[]
@@ -83,6 +83,11 @@ export const CORRESPONDENCES: Correspondence[] = [
   { old: [], modern: 'вона', cls: 'pron', kind: 'variant', variants: ['ню'], orth: ['желехівка'], url: 'https://uk.wikipedia.org/wiki/Огоновський_Омелян',
     quote: 'межи приименникъ и склоненый падежь вказуючого заименника (пень /5), якъ: зъ (съ) нимъ, въ нѣмъ, къ нему, въ ню; при нѣй, коло него, до неи, за ними',
     note: 'Огоновський, Граматика руської мови (1889), скан p. 40 (OCR, помилки збережено): «въ ню» поряд з «при нѣй, до неи» — знахідний відмінок займенника вона після прийменника' },
+  // MM-42 (owner remark «"го" в старих українських пам'ятках це може бути єго»): «го» = його / єго, the short (enclitic) form of він (Р. / З. одн.). NO dictionary / grammar line was found in the repo (Огоновський,
+  // Смаль-Стоцький = OCR on the worker only; uk.wiktionary «го» not in the dumps), so the row is uncited («джерела не знайдено») and claims no dialect. Like ню it is limited to the Галицька-друк orthography
+  // (желехівка); the client (core/short-forms.ts) additionally reads «го» next to verbs / clitic hosts in old, Galician and dialect texts as a BRANCHING reading beside the interjection, and the hyphen «-го» in any text.
+  { old: [], modern: 'він', cls: 'pron', kind: 'variant', variants: ['го'], orth: ['желехівка'], yields: true, uncited: true, mm: 'MM-42', url: '', quote: "\"го\" в старих українських пам'ятках це може бути єго",
+    note: 'зауваження власника; корпус: Русалка Днѣстровая (1837) «Мати го не пускає», Шекерик-Доників (1910) «би го имили»; джерела не знайдено, діалектну групу не заявлено; будівельне зв’язування лише для друку желехівкою, решта — розгалужене читання клієнта (вигук «го!» не поглинається карткою він)' },
   // MM-8b (owner file «даль перша фіксація з невичитаного OCR і злиті прислівники далі дале.png»): the old spellings дале / далѣ are the ADVERB далі, not forms of the noun даль. Wiktionary's etymology
   // of the adverb: Old Ruthenian далѣ, Old East Slavic дале. A lemma-less token with exactly one of these spellings links to the adverb (modern тексти 'далі' stay ambiguous: no POS evidence).
   { old: ['дале', 'далѣ', 'далї'], modern: 'далі', cls: 'adv', kind: 'cognate', url: 'https://en.wiktionary.org/wiki/далі#Ukrainian',

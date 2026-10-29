@@ -25,6 +25,7 @@ import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
 import type { RuClass, RuLookups } from '../../core/ru-contact.ts'
 import { featurePairs, variantHit, wordRules, type FeaturePair, type VariantHit } from '../../core/word-rules.ts'
 import { COPULA_FORMS, COPULA_RULE, type CopulaReading } from '../../core/copula-ikavism.ts'
+import { isShortCandidate, type ShortReading } from '../../core/short-forms.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
 export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup; /** MM-25: Russian headwords of the r2u ru→uk dictionaries (optional; without it no Russianism is detected) */ ru?: Pick<RuLookups, 'ruHead' | 'isDialect'> }
@@ -42,6 +43,7 @@ export interface AnnotatedToken {
   variant?: VariantHit                               // MM-30..34: the spelling belongs to a variant family (межи / мендзи → між, увесь → весь, тілько-що → тільки, уві → у, како → як); the source or «джерела не знайдено»
   pairs?: FeaturePair[]                              // MM-29 / MM-35: the cited feature that links this spelling with a counterpart, both directions (керовати ↔ керувати, міст-ові → міст)
   features?: string[]                                // MM-16: ids of the cited feature rules (core/feature-chips.ts) that link this spelling (сь before a labial, -ійш-, hyphenated particle …)
+  short?: ShortReading                               // MM-42 / MM-43: the short-form reading (го = його, тре = треба, шо = що …): the chip «енклітична форма займенника» / «розмовна редукція (мовця)» and, where the short form is also a word, both readings
   copula?: CopulaReading                             // MM-38: «їсть» may be the copula єсть (Galician ikavism є → ї): both readings, verdict eat / copula / ambiguous; never a silent choice
   contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
@@ -89,7 +91,7 @@ function galLink(k: string, data: AnnotateData) {
 export const knownKeyOf = (data: AnnotateData) => (kk: string) => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0
 
 /** MM-38: witness context of the text (orth, regions) that gates the Galician-ikavism reading of їсть */
-export interface AnnotateCtx { orth?: string; witnessRegion?: string; authorRegion?: string }
+export interface AnnotateCtx { orth?: string; witnessRegion?: string; authorRegion?: string; /** MM-43: the witness is a folk record / a character's speech (qualifier of the reduction chip) */ genre?: 'folklore' | 'speech' }
 export function annotate(text: string, data: AnnotateData, year?: number, wctx: AnnotateCtx = {}): AnnotatedToken[] {
   const out: AnnotatedToken[] = []
   let from = 0
@@ -106,12 +108,22 @@ export function annotate(text: string, data: AnnotateData, year?: number, wctx: 
       .sort((a, b) => VIA_ORDER.indexOf(a.via) - VIA_ORDER.indexOf(b.via))
     const base = { raw: t.raw, start, end: from, key: k, provenance: 'attested' as const }
     const variant = variantHit(k), pairs = featurePairs(k, knownKey)   // MM-29..36: the SAME shared rule functions as the search keys and «Аналіз слова» (core/word-rules.ts)
-    const extra: { variant?: VariantHit; pairs?: FeaturePair[]; copula?: CopulaReading } = { ...(variant ? { variant } : {}), ...(pairs.length ? { pairs } : {}) }
+    const extra: { variant?: VariantHit; pairs?: FeaturePair[]; copula?: CopulaReading; short?: ShortReading } = { ...(variant ? { variant } : {}), ...(pairs.length ? { pairs } : {}) }
     const hit = hits[0], card = hit && data.cards.get(hit.lemma)
     // MM-38: the SAME shared rule function (wordRules) as search and «Аналіз слова»; the neighbours are the cues, the witness orth / region the gate
     const copula = COPULA_FORMS[k] ? wordRules(t.raw, { known: knownKey }, { ...wctx, prev: toks[ti - 1] && key(toks[ti - 1]!.raw), next: toks[ti + 1] && key(toks[ti + 1]!.raw),
       sentStart: ti === 0 || /[.!?…]\s*$/.test(text.slice(0, start)), tagsOf: kk => hitsOf(data, kk).map(h => h.tags) }).copula : undefined
     if (copula) extra.copula = copula
+    // MM-42 / MM-43: the SAME shared rule function (wordRules → core/short-forms.ts); the neighbours, the characters around the token and the apostrophe flag are the cues
+    const short = isShortCandidate(k) ? wordRules(t.raw, { known: knownKey }, { ...wctx, year, raw: t.raw, lead: !!t.lead, before: text.slice(Math.max(0, start - 3), start), after: text.slice(from, from + 3),
+      prev: toks[ti - 1] && key(toks[ti - 1]!.raw), next: toks[ti + 1] && key(toks[ti + 1]!.raw), sentStart: ti === 0 || /[.!?…]s*$/.test(text.slice(0, start)), tagsOf: kk => hitsOf(data, kk).map(h => h.tags) }).short : undefined
+    if (short) extra.short = short
+    // 'full' verdicts that name another lemma: го = його (not for the hyphenated «видів-го»: its host links), тре + infinitive = треба; шо / ше / шоб / тра are linked by their variant family below
+    const scard = short?.verdict === 'full' && (short.kind === 'elision' || (short.kind === 'enclitic' && !k.includes('-')) || short.form === 'тре') ? data.cards.get(short.fullLemma) : undefined
+    if (short && scard) {
+      const cl = claimsOf(scard)
+      out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: short.full, trace: [{ rule: short.rule, from: k, to: short.full }] }, status: 'attested', lemma: scard.lemma, card: scard, via: 'form', claims: cl, hints: [], mark: strongest(cl), epoch: shevEpochOf(scard), features: [short.rule] }); continue
+    }
     const bcard = copula?.verdict === 'copula' ? data.cards.get('бути') : undefined
     if (copula && bcard) {
       const cl = claimsOf(bcard)

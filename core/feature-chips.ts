@@ -12,7 +12,8 @@ import type { Evidence } from './evidence.ts'
 import { foldById } from './orthography.ts'
 import { ZHEL_FOLDS } from './zhel-folds.ts'
 
-export type FeatureQualifier = 'galician' | 'edition' | 'older' | 'neutral'
+/** MM-43 adds the speaker qualifiers: 'author' (the author's / record's region), 'speaker' (a character's speech), 'folklore' (a folk record) */
+export type FeatureQualifier = 'galician' | 'edition' | 'older' | 'neutral' | 'author' | 'speaker' | 'folklore'
 export interface FeatureCtx { orth?: string; edition?: string; authorRegion?: string; witnessRegion?: string; year?: number; /** sub-area of the witness (e.g. a Transcarpathian говірка) when the witness metadata gives one; never guessed */ area?: string }
 /** `dialect`: the dialect group the rule's own source names, for the dialect switch (OV agent). Absent when no source states one: the Желехівка statements are ORTHOGRAPHIC (how the edition writes), and no quote in the repo says which dialect group a spelling reflects (no cite, no link). */
 export interface FeatureChip { rule: string; feature: string; label: string; qualifier: FeatureQualifier; text: string; cite: Evidence; dialect?: { group: string; source: string } }
@@ -46,7 +47,7 @@ const FEATURES: Record<string, Feature> = {
     edition: p => `давніша форма (правопис видання${p ? ' ' + p : ''}), не діалект автора`, older: 'давніша форма' },
   'ORTH-DAT-OVI': { feature: 'давальний відмінок на -ові на незміненій основі (західна форма)', label: 'міст-ові, містові замість мостові (без чергування о / і)', galician: 'західна форма (галицька)', neutral: 'західна форма давального відмінка на -ові, не діалектна ознака автора',
     edition: p => `західна форма (правопис видання${p ? ' ' + p : ''}), не діалект автора` },
-  'ORTH-PART-HYPH': { feature: 'частка через дефіс', label: 'ж, б, бо, но, то через дефіс (прийми-ж, було-б)', galician: 'давній / галицький правопис частки', neutral: 'давній / галицький правопис частки через дефіс',
+  'ORTH-PART-HYPH': { feature: 'частка через дефіс', label: 'ж, б, бо, но, то, го через дефіс (прийми-ж, було-б, видів-го)', galician: 'давній / галицький правопис частки', neutral: 'давній / галицький правопис частки через дефіс',
     edition: p => `давній / галицький правопис частки (правопис видання${p ? ' ' + p : ''}), не діалект автора`, older: 'давній правопис частки' },
   'ORTH-ZHEL-JE-OBL': { feature: 'відмінкове -єм замість -ям (бажанєм)', label: '-нєм / -тєм замість -нням / -ттям',
     galician: 'галицьке написання -є (Желехівка)', edition: p => `написання -є за правописом видання${p ? ' ' + p : ''} (Желехівка), не діалект автора` },

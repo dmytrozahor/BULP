@@ -115,8 +115,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
       <p class="small muted sans">Кандидат — лише гіпотеза за правилами Шевельова; він стає зв’язком лише після збігу з формою ВЕСУМ (SPEC 10 M-3.2).</p>
     </section>
 
-    <section v-if="wr && (wr.variant || wr.pairs.length || wr.ruClass || wr.copula)" class="card" data-testid="word-rules"><h2><span>Варіанти та ознаки</span><span class="small">одні й ті самі правила в аннотаторі, пошуку й тут</span></h2>
-      <WordRuleChips :t="{ variant: wr.variant, pairs: wr.pairs, ruClass: wr.ruClass, copula: wr.copula }" :year="y" />
+    <section v-if="wr && (wr.variant || wr.pairs.length || wr.ruClass || wr.copula || wr.short)" class="card" data-testid="word-rules"><h2><span>Варіанти та ознаки</span><span class="small">одні й ті самі правила в аннотаторі, пошуку й тут</span></h2>
+      <WordRuleChips :t="{ variant: wr.variant, pairs: wr.pairs, ruClass: wr.ruClass, copula: wr.copula, short: wr.short }" :year="y" />
     </section>
 
     <DeicticStructure :word="word" />
