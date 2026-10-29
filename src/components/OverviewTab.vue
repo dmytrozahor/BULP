@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<{
   dialectSpelling?: string
   /** DOM id of the Labels panel of the card kind (h-lab / t-lab) */ labelsPanel?: string
 }>(), { stressLoaded: undefined })
-const { corpus, witnessById } = useData()
+const { corpus, witnessById, byLemma } = useData()
 const regs = computed(() => regionLine(props.byRegion, corpus.value?.regions))
 const hasRegions = computed(() => regs.value.length > 0)
 const examples = computed(() => pickExamples(props.kwic, w => !!(witnessById.value.get(w) as { oq?: unknown } | undefined)?.oq))
@@ -43,7 +43,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
   <div class="ov" data-testid="overview">
     <section class="ov-sec ov-pron-sec" data-testid="ov-pronunciation" aria-labelledby="ov-h-pr">
       <h3 id="ov-h-pr" class="small sans">Вимова</h3>
-      <OvPronunciation :word="pronWord ?? lemma ?? spelling" :stress="stress" :positions="stressPositions" :loaded="stressLoaded" />
+      <OvPronunciation :word="pronWord ?? lemma ?? spelling" :stress="stress" :positions="stressPositions" :loaded="stressLoaded" :historical="seKind === 'orv' || seKind === 'arch' || seKind === 'mu'" />
     </section>
     <section class="ov-sec ov-origin" data-testid="ov-origin" aria-labelledby="ov-h-or">
       <h3 id="ov-h-or" class="small sans">Походження</h3>
@@ -57,7 +57,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
         <div class="ov-map" @click="onMap"><RegionMap :by="byRegion" compact /></div>
         <p class="small sans"><button type="button" class="chip small" @click="openPanel(mapPanel)">усі регіони й повна карта у «Поширення» →</button></p>
       </template>
-      <p v-else class="small sans muted" data-testid="ov-noregion">регіон пам’яток невідомий</p>
+      <p v-else class="small sans muted" data-testid="ov-noregion">регіон пам’яток невідомий (немає даних; перевірено: регіони пам’яток, у яких це слово засвідчене)</p>
       <p v-if="hasRegions" class="small sans" data-testid="ov-attested"><span class="muted">засвідчено в: </span>{{ regs.map(r => `${r.name} (${r.f})`).join(', ') }}
         <span class="muted"> — регіон пам’ятки, а не діалектна мітка (FD-2).</span></p>
       <DialectBlock :spelling="dialectSpelling ?? spelling" :lemma="lemma" :regions="regionsForDialect" compact />
@@ -71,13 +71,13 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
     <section class="ov-sec" data-testid="ov-paradigm" aria-labelledby="ov-h-par">
       <h3 id="ov-h-par" class="small sans">Словозміна</h3>
       <Paradigm v-if="paradigm?.length || paradigmKind === 'uninflected'" :paradigm="paradigm ?? []" :kind="paradigmKind" />
-      <p v-else class="small sans muted">парадигми немає в джерелах цієї картки</p>
+      <p v-else class="small sans muted" data-testid="ov-paradigm-none">немає даних (перевірено: у даних цієї картки парадигми ВЕСУМ немає<template v-if="lemma && byLemma.has(lemma)">; повна парадигма — на <RouterLink :to="'/w/' + encodeURIComponent(lemma)">картці леми</RouterLink></template><template v-else>; леми з парадигмою в лексиконі не знайдено</template>)</p>
       <p v-if="paradigm?.length" class="small sans"><button type="button" class="chip small" @click="openPanel('h-par')">з епохами у «Форми» →</button></p>
     </section>
     <section class="ov-sec" data-testid="ov-example" aria-labelledby="ov-h-ex">
       <h3 id="ov-h-ex" class="small sans">Приклад</h3>
       <Kwic v-if="examples.length" :lines="examples" :lemma="lemma" :limit="2" />
-      <p v-else class="small sans muted">{{ dictOnly ? 'немає засвідчень у корпусі' : 'прикладів немає' }}</p>
+      <p v-else class="small sans muted">{{ dictOnly ? 'немає засвідчень у корпусі' : 'прикладів немає (немає даних; перевірено: рядки KWIC у пам’ятках цієї картки)' }}</p>
     </section>
   </div>
 </template>

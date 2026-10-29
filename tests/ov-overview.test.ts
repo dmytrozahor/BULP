@@ -45,7 +45,7 @@ describe('OV-11 «Огляд» is the default first tab with four sections', () 
   })
   it('OV-11 a section without data is one line, not a big empty block', async () => {
     const html = await render(OverviewTab, { spelling: 'невідомеслово', kwic: [], mapPanel: 't-reg', dictOnly: true })
-    expect(html).toContain('регіон пам’яток невідомий'); expect(html).not.toContain('class="ov-map"'); expect(html).toContain('немає засвідчень у корпусі'); expect(html).toContain('парадигми немає в джерелах цієї картки')
+    expect(html).toContain('регіон пам’яток невідомий'); expect(html).not.toContain('class="ov-map"'); expect(html).toContain('немає засвідчень у корпусі'); expect(html).toContain('немає даних (перевірено: у даних цієї картки парадигми ВЕСУМ немає')
     const thin = await render(ThinCard, { lemma: 'невідомеслово', spelling: 'невідомеслово', kwic: [], dictOnly: true, f: 0 }); expect(thin).toContain('data-testid="overview"'); expect(thin).toContain('data-testid="stat-sidebar"')
   })
   it('OV-11 the example is the earliest line plus a later one from another witness, not from an OCR witness when a clean one exists', () => {

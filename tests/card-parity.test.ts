@@ -127,3 +127,33 @@ describe('CP-6 stress of the thin cards from the build (fixture, no full build)'
     expect(withS - base).toBeLessThan(10); expect(withS).toBeLessThan(90)
   })
 })
+
+describe('CP-8 every card kind renders every card feature (owner 2026-10-29)', () => {
+  const kinds = Object.keys(KINDS) as (keyof typeof KINDS)[], blocks = Object.keys(BLOCKS) as (keyof typeof BLOCKS)[]
+  it('CP-8 the matrix has a decided cell for every kind × block: no MISSING (undefined) cell, nothing waits for a build', () => {
+    for (const k of kinds) for (const b of blocks) expect(['shown', 'empty', 'na'], `${k} × ${b}`).toContain(MATRIX[k][b])
+    expect(blocks).toEqual(expect.arrayContaining(['overview', 'pronunciation', 'origin', 'paradigm', 'regions', 'ruFlag', 'featureChips', 'variantFamily', 'contactForm', 'switches']))
+  })
+  it('CP-8 the phrase page is the only kind with na cells in the card-wide features (a multi-word quotation, no single lemma)', () => {
+    for (const k of kinds.filter(x => x !== 'phrase')) for (const b of ['overview', 'pronunciation', 'origin', 'paradigm', 'regions', 'ruFlag', 'featureChips', 'variantFamily', 'contactForm', 'switches'] as const) expect(MATRIX[k][b], `${k} × ${b}`).not.toBe('na')
+  })
+  it('CP-8 the RF flag reaches every cited line: Kwic -> SourceCite -> RuBadge, WitnessPanel -> RuBadge', () => {
+    expect(rd('src/components/Kwic.vue')).toContain('<SourceCite'); expect(rd('src/components/SourceCite.vue')).toContain('<RuBadge'); expect(rd('src/components/WitnessPanel.vue')).toContain('<RuBadge')
+  })
+  for (const [name, seKind, dictOnly] of [['full/light', undefined, false], ['dictionary-only', undefined, true], ['archaic', 'arch', false], ['orv/name', 'orv', false], ['uv/unlinked (mu)', 'mu', false]] as const) {
+    it(`CP-8 the thin card (${name}) renders every section with real data or the honest «немає даних (перевірено: …)» line`, async () => {
+      const html = await render(ThinCard, { lemma: 'невідомеслово', spelling: 'невідомеслово', kwic: [], dictOnly, f: 0, seKind })
+      for (const id of ['ov-pronunciation', 'ov-origin', 'ov-regions', 'ov-senses', 'ov-paradigm', 'ov-example']) expect(html, id).toContain(`data-testid="${id}"`)
+      for (const id of ['t-lab', 't-ipa', 't-sn', 'cp-rules', 't-sr', 't-st', 't-reg', 't-kw', 't-dia']) expect(html, id).toContain(`id="${id}"`)
+      expect(html).toMatch(/data-testid="ov-spelling(-none)?"/); expect(html).toContain('немає даних (перевірено: правила ознак MM-16')
+      expect(html).toContain('data-testid="ov-paradigm-none"'); expect(html).toContain('немає даних (перевірено: у даних цієї картки парадигми ВЕСУМ немає')
+      if (seKind) expect(html).toContain('data-testid="ov-spelling-none"')
+    })
+  }
+  it('CP-8 the matrix is written to analysis/card-parity.md (every kind and every block) and the spec carries the CP-8 item', () => {
+    const md = rd('analysis/card-parity.md')
+    for (const k of kinds) expect(md, k).toContain(`\`${k}\``)
+    for (const b of blocks) expect(md, b).toContain(`\`${b}\``)
+    expect(spec).toContain('**CP-8** (implemented')
+  })
+})

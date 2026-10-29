@@ -76,6 +76,7 @@ import IkavismChain from '../components/IkavismChain.vue'
 import DerivativesBlock from '../components/DerivativesBlock.vue'
 import DimLine from '../components/DimLine.vue'
 import VariantFamilyLine from '../components/VariantFamilyLine.vue'
+import CardRules from '../components/CardRules.vue'
 import WitnessBlock from '../components/WitnessBlock.vue'
 import DialectBlock from '../components/DialectBlock.vue'
 import DerivationSteps from '../components/DerivationSteps.vue'
@@ -279,6 +280,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
           <IpaRow :variants="full?.stress ?? []" :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
           <IkavismChain :lemma="card.lemma" :paradigm="card.paradigm.map(p => p.form)" :old="card.forms.map(f => f.raw)" />
         </Panel>
+        <CardRules :lemma="card.lemma" skip-features />   <!-- CP-8 -->
         <DerivativesBlock panel :lemma="card.lemma" />
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->

@@ -1,0 +1,78 @@
+# Card parity matrix (SPEC 63 CP-8)
+
+Owner requirement 2026-10-21/29: «all features of ours should be implemented on each word card». Source of truth: `src/lib/cardParity.ts` (the table below is generated from it; `tests/card-parity.test.ts` walks every cell against the component sources and SSR-renders the thin card for every kind).
+
+Cell values: **shown** = the section renders with the data the kind has; **honest-empty** = the section always renders and, without data, prints «немає даних (перевірено: …)» (or the older «немає засвідчень у корпусі» for a dictionary-only card); **n/a** = the data cannot exist for the kind (reason below); **MISSING** = silently absent (none left).
+
+## Card kinds
+
+- `word` — /w/:lemma
+- `form` — /f/:form
+- `light` — /lw/:lemma (corpus)
+- `dict` — /lw/:lemma (dictionary-only, DO)
+- `uv` — /uv/:id
+- `att` — /uv/:id (attested-only, CV-4)
+- `unlinked` — /f/:form (unlinked)
+- `archaic` — /ar/:id
+- `name` — /name/:id
+- `orv` — /orv/:id
+- `phrase` — /p/:id
+
+## Matrix (rows = features, columns = kinds)
+
+| feature (`block`) | `word` | `form` | `light` | `dict` | `uv` | `att` | `unlinked` | `archaic` | `name` | `orv` | `phrase` |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Usage / register / loan chips (`chips`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Приклад / KWIC (`kwic`) | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | shown |
+| Пам’ятки (`witnesses`) | honest-empty | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Словозміна за епохами (`epochs`) | shown | shown | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
+| Виведення (`derivation`) | honest-empty | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Діалект (FD / DV, клас) (`dialect`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Карта (`map`) | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Статистика (sidebar) (`stats`) | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Наголос (`stress`) | shown | shown | honest-empty | honest-empty | n/a | n/a | n/a | n/a | n/a | n/a | n/a |
+| Походження / етимологія / відповідники (`etymology`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Значення (`senses`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Фразеологія (`phrasemes`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Адаптація запозичення (`loan`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Похідні (`derivatives`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| IPA (`ipa`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Мітки LB (клас діалекту + ступінь доказу) (`labels`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Значення за епохами (SE) (`senseTimeline`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Вкладка «Огляд» (`overview`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Вимова (stress + IPA) в Огляді (`pronunciation`) | shown | shown | shown | shown | shown | shown | shown | shown | shown | shown | n/a |
+| Перша фіксація / Походження (`origin`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Словозміна (таблиця) (`paradigm`) | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Регіони (ipm), sidebar (`regions`) | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Російське джерело (RF) (`ruFlag`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | shown |
+| Feature chips MM-16 (`featureChips`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Родина варіантів MM-29..36 (`variantFamily`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Тип контактної форми MM-36 (`contactForm`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Перемикачі правопису / говору (OV) (`switches`) | shown | shown | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+
+## Counts
+
+All 297 cells: {"shown":120,"empty":138,"na":39}. MISSING (silently absent): **0**.
+
+## Before / after the CP-8 pass (the ten card-wide features added to the matrix)
+
+Before (read from the code at origin/mvp da1f4656): 25 MISSING cells of the 110 new cells.
+
+- Feature chips MM-16: only `word` (lemma header) and `form` (form page) printed them; the eight thin kinds (`light`, `dict`, `uv`, `att`, `unlinked`, `archaic`, `name`, `orv`) had none: 8 MISSING.
+- Contact form-type MM-36 (and the pair / variant rules of MM-29..35): printed only by the annotator and «Аналіз слова»; `word` and the eight thin kinds had nothing (the form page prints its contact claims): 9 MISSING.
+- Orthography switch (OV): the thin cards printed the word as a plain string; the orthography switch had no visible effect there (the dialect switch only showed in Огляд › Вимова when a dialect was chosen): 8 MISSING.
+- Not counted as missing but not honest enough: the Огляд lines «регіон пам’яток невідомий», «прикладів немає», «парадигми немає в джерелах цієї картки» did not say what was checked.
+
+After: 0 MISSING. Fixes: new `CardRules.vue` (panel «Ознаки й варіанти», id `cp-rules`: MM-16 chips via `featureMarks`, MM-29..35 pairs and variant family and MM-36 contact class via `wordRules`; the same functions as the annotator) mounted by `LemmaBlocks` (all thin kinds and the form page) and by `WordView`; `OvPronunciation` prints «Написання» through `Spell` (both switches) on every card, and for a historical spelling (ORV / archaic / Middle Ukrainian / unlinked) the line «немає даних (перевірено: …)»; `OverviewTab` paradigm, regions and example lines name what was checked.
+
+## n/a reasons
+
+- `phrase` (/p/:id): a multi-word quotation, not a lemma; the single-lemma cards' features are replaced by the PH-1..PH-3 fields with sources; the orthography / dialect switches do not respell quotations. Only the RF flag (Kwic -> SourceCite) applies and is shown.
+- `epochs` on the thin kinds: no VESUM paradigm with dated forms; `stress` on `uv`, `att`, `unlinked`, `archaic`, `name`, `orv`: no dictionary knows the word.
+
+## What stays open
+
+- Archaic / ORV / uv / unlinked cards have no VESUM paradigm in their data; Огляд says so and links the lemma card when one exists (a paradigm for a thin card needs a build item that emits the VESUM forms per thin lemma).
+- The heading `<h1>` of the thin cards is not wrapped in `Spell`; the switches act in Огляд › Вимова › Написання (ORV / archaic spellings are historical and are not respelled).
+- The feature chips on thin cards carry no witness qualifier (galician / edition / older): the card spans several witnesses, so the qualifier is `neutral`.
+- Not verified against live CDN data in this pass: components were SSR-rendered with vitest (unknown lemma, empty data); the dev server was not driven.

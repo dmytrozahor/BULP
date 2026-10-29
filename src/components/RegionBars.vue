@@ -14,5 +14,5 @@ const max = computed(() => Math.max(1e-9, ...rows.value.map(r => r.ipm)))
   <ul v-if="rows.length" class="regbars small sans" data-testid="region-bars" aria-label="Розподіл за регіонами пам’яток (ipm на N слів регіону)">
     <li v-for="r in rows" :key="r.code" :title="`${r.name}: f = ${r.f}, N = ${fmtNum(r.N)}, ${fmtNum(r.ipm, 1)} ipm`"><span class="rb-n">{{ r.name }}</span><span class="rb-bar"><i :style="{ width: (r.ipm / max) * 100 + '%' }" /></span><span class="rb-v">{{ fmtNum(r.ipm, 1) }}</span></li>
   </ul>
-  <p v-else class="small sans muted">регіон пам’яток невідомий</p>
+  <p v-else class="small sans muted">регіон пам’яток невідомий (немає даних; перевірено: регіони пам’яток, у яких це слово засвідчене)</p>
 </template>

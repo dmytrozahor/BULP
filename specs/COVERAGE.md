@@ -1003,3 +1003,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-35 | tests/variants.test.ts › MM-35 керовати ↔ керувати in «Аналіз слова»: the -ова- ~ -ува- feature, BOTH directions, one cited rule (ORTH-VERB-OVATI, Огоновський 1889 § 38) |
 | MM-36 | tests/variants.test.ts › MM-36 MM-25 wiring: the r2u Russian-headword index feeds the app; отношеніє gets a form-type class; search, «Аналіз слова» and the annotator share the function |
 | MM-29 | tests/variants.test.ts › MM-29..MM-36 the table is consistent |
+| CP-8 | tests/card-parity.test.ts › CP-8 the matrix has a decided cell for every kind × block: no MISSING (undefined) cell, nothing waits for a build |
+| CP-8 | tests/card-parity.test.ts › CP-8 the phrase page is the only kind with na cells in the card-wide features |
+| CP-8 | tests/card-parity.test.ts › CP-8 the RF flag reaches every cited line: Kwic -> SourceCite -> RuBadge, WitnessPanel -> RuBadge |
+| CP-8 | tests/card-parity.test.ts › CP-8 the thin card ( |
+| CP-8 | tests/card-parity.test.ts › CP-8 the matrix is written to analysis/card-parity.md (every kind and every block) and the spec carries the CP-8 item |

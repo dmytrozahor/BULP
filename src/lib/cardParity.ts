@@ -25,22 +25,33 @@ export const BLOCKS = {
   derivatives: ['DerivativesBlock', 'DimLine'],              // похідні (DV-3)
   ipa: ['IpaRow'],
   labels: ['LabelsBlock'],                       // SPEC 63 LB-5 «Мітки»: діалект (4 класи) · регістр · тип · значення, кожне з методом і доказами
-  senseTimeline: ['SenseEpochs'],                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
+  senseTimeline: ['SenseEpochs'],
+  // CP-8 (owner 2026-10-29): the rest of the card features, so that the matrix covers every feature of the card, not only the lemma-keyed panels
+  overview: ['<OverviewTab'],                     // OV-11 «Огляд»: the default tab
+  pronunciation: ['OvPronunciation'],             // OV-14 «Вимова»: stress + IPA in Огляд
+  origin: ['data-testid="ov-origin"'],           // OV-13 «Походження»: first attestation or the honest line
+  paradigm: ['<Paradigm'],                        // «Словозміна»: the VESUM table (Огляд, Форми) or the honest line
+  regions: ['RegionBars'],                        // «За регіонами»: ipm per region (sidebar)
+  ruFlag: ['RuBadge', 'SourceCite', '<Kwic', 'WitnessPanel'], // RF «рос. видання / джерело» on every cited line
+  featureChips: ['CardRules', 'lemma-feature', 'form-feature'],  // MM-16 cited feature chips of the spelling
+  variantFamily: ['VariantFamilyLine'],           // MM-29..35 variant family line
+  contactForm: ['CardRules', 'contactClaims'],    // MM-36 contact form-type (суржик / язичіє / ЦС-книжна), a label of a FORM (MM-9)
+  switches: ['<Spell'],                           // OV orthography + dialect switches (ViewBar is global, the card must obey them)                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
 } as const
 export type BlockId = keyof typeof BLOCKS
 /** the source files whose concatenation a card kind mounts (views and the shared components they reuse) */
 export const KINDS = {
-  word: ['src/views/WordView.vue', 'src/components/WitnessBlock.vue'],
-  form: ['src/views/FormView.vue', 'src/components/LemmaBlocks.vue'],
-  light: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
-  dict: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
-  uv: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
+  word: ['src/views/WordView.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  form: ['src/views/FormView.vue', 'src/components/LemmaBlocks.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  light: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  dict: ['src/views/LightWordView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  uv: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
   /** CV-4: a promoted unlinked group (≥ 2 vetted witnesses, no dictionary): the same view as `uv`, with the «засвідчене слово, немає в словниках» status */
-  att: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
-  unlinked: ['src/components/UnlinkedSpelling.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue'],
-  archaic: ['src/views/ArchaicView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
-  name: ['src/views/TorotCardView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
-  orv: ['src/views/TorotCardView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue'],
+  att: ['src/views/UnverifiedView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  unlinked: ['src/components/UnlinkedSpelling.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  archaic: ['src/views/ArchaicView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  name: ['src/views/TorotCardView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
+  orv: ['src/views/TorotCardView.vue', 'src/components/ThinCard.vue', 'src/components/LemmaBlocks.vue', 'src/components/WitnessBlock.vue', 'src/components/OverviewTab.vue', 'src/components/OvPronunciation.vue'],
   phrase: ['src/views/PhraseView.vue'],
 } as const
 export type KindId = keyof typeof KINDS
@@ -52,18 +63,22 @@ const row = (c: Partial<Record<BlockId, Cell>>, base: Cell = 'empty'): Record<Bl
 const thin = { labels: 'shown', chips: 'shown', loan: 'shown', ipa: 'shown', derivatives: 'shown', senses: 'empty', etymology: 'empty', phrasemes: 'empty', kwic: 'empty', witnesses: 'empty', derivation: 'shown', dialect: 'shown', map: 'empty', stats: 'empty', epochs: 'na', stress: 'na' } as const
 /** SE sense timeline: shown on every kind but the phrase page (SenseEpochs, collapsed until opened; empty state «немає даних про значення») */
 const se = { senseTimeline: 'shown' } as const
+/** CP-8: the card-wide features. Overview / pronunciation / switches / contact type are mounted by every kind; the rest are data-dependent (empty state with the «немає даних (перевірено: …)» line) */
+const cp8 = { overview: 'shown', pronunciation: 'shown', origin: 'empty', paradigm: 'empty', regions: 'empty', ruFlag: 'empty', featureChips: 'empty', variantFamily: 'empty', contactForm: 'empty', switches: 'shown' } as const
+/** historical spellings (ORV / archaic / Middle Ukrainian / unlinked text spelling): the switches respell modern words only, the card says so */
+const hist = { switches: 'empty' } as const
 export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
-  word: row({ ...se, labels: 'shown', chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
-  form: row({ ...thin, ...se, kwic: 'shown', witnesses: 'shown', epochs: 'shown', derivation: 'shown', map: 'shown', stats: 'shown', stress: 'shown' }),
-  light: row({ ...thin, ...se, stress: 'empty', witnesses: 'empty' }),
-  dict: row({ ...thin, ...se, stress: 'empty' }),
-  uv: row({ ...thin, ...se }),
-  att: row({ ...thin, ...se }),
-  unlinked: row({ ...thin, ...se }),
-  archaic: row({ ...thin, ...se }),
-  name: row({ ...thin, ...se }),
-  orv: row({ ...thin, ...se }),
-  phrase: row({ labels: 'na', chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na' }),
+  word: row({ ...cp8, paradigm: 'shown', regions: 'shown', ...se, labels: 'shown', chips: 'shown', kwic: 'shown', witnesses: 'empty', epochs: 'shown', derivation: 'empty', dialect: 'shown', map: 'shown', stats: 'shown', stress: 'shown', etymology: 'empty', senses: 'empty', phrasemes: 'empty', loan: 'shown', derivatives: 'shown', ipa: 'shown' }),
+  form: row({ ...cp8, paradigm: 'shown', regions: 'shown', ...thin, ...se, kwic: 'shown', witnesses: 'shown', epochs: 'shown', derivation: 'shown', map: 'shown', stats: 'shown', stress: 'shown' }),
+  light: row({ ...cp8, ...thin, ...se, stress: 'empty', witnesses: 'empty' }),
+  dict: row({ ...cp8, ...thin, ...se, stress: 'empty' }),
+  uv: row({ ...cp8, ...hist, ...thin, ...se }),
+  att: row({ ...cp8, ...hist, ...thin, ...se }),
+  unlinked: row({ ...cp8, ...hist, ...thin, ...se }),
+  archaic: row({ ...cp8, ...hist, ...thin, ...se }),
+  name: row({ ...cp8, ...hist, ...thin, ...se }),
+  orv: row({ ...cp8, ...hist, ...thin, ...se }),
+  phrase: row({ labels: 'na', chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na', overview: 'na', pronunciation: 'na', origin: 'na', paradigm: 'na', regions: 'na', ruFlag: 'shown', featureChips: 'na', variantFamily: 'na', contactForm: 'na', switches: 'na' }),
 }
 /** why a cell is `na` (shown next to the matrix in specs/63 CP-1) */
 export const NA: Partial<Record<KindId, string>> = {
