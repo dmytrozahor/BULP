@@ -43,6 +43,6 @@ describe('CP-10.5 FormStress', () => {
   })
   it('CP-10.9 the text reader resolves tokens through settled() (the prefix shards load lazily), not a synchronous computed', () => {
     const v = readFileSync('src/views/TextsView.vue', 'utf8')
-    expect(v).toContain('await settled(() => rowsOf('); expect(v).not.toMatch(/const rows = computed(/)
+    expect(v).toContain("await settled(() => rowsOf("); expect(v).not.toContain("const rows = computed(")
   })
 })
