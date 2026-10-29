@@ -40,6 +40,7 @@ ADF="${BOOKS:-$HOME/work/books}/Ad_Fontes (1).pdf"
 [ -f "$ADF" ] && runcmd userbook-adfontes "$(cksum < "$ADF") $(cksum < harvest/user-books.ts)" bash -c 'npx tsx harvest/user-books.ts "$1" && rm -f "$2"' _ "$ADF" "$D/user-books"
 for s in wikisource-uk hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
 run hv6
+run linguists
 run archive-ukr --hv6-volumes "$(hv6sig)"
 run wikipedia-uk --wiki-stride "$BULP_WIKI_STRIDE"
 run hplt --limit "$BULP_HPLT_LIMIT"

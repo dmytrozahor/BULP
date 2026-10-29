@@ -711,7 +711,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   const generated = new Date().toISOString()
   const metas: WitnessMeta[] = adm.map(({ w, nlp }, i) => {
     const { tokens: _t, dropped, ...rest } = w
-    const ru = ruOfWitness({ id: w.id, title: w.title, edition: w.edition, url: w.url })   // SPEC 63 RU-2
+    const ru = ruOfWitness({ id: w.id, title: w.title, edition: w.edition, url: w.url, ...(w.ru ? { ru: w.ru } : {}) })   // SPEC 63 RU-2
     return { ...rest, ...(ru ? { ru } : {}), ...(oq.get(w.id) && oqFlag(oq.get(w.id)!) ? { oq: oqFlag(oq.get(w.id)!) } : {}), n: w.tokens.length, linked: wLinked.get(w.id) ?? 0, dropped, epochShev: meta[i]!.sh, epochWl: meta[i]!.wl, ...(nlp?.outOfDomain ? { outOfDomain: true } : {}) }
   })
   const topUnresolved = [...unres].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 200).map(([form, f]) => ({ form, f }))

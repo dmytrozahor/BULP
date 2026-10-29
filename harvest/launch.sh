@@ -33,6 +33,7 @@ JOBS=(
   "archive-ayuzr|node|harvest/archive.ts archive-ayuzr"
   "archive-hv5-authors|node|harvest/archive.ts archive-hv5-authors"
   "hv5-orig|node|harvest/hv5-orig.ts"
+  "linguists|node|harvest/linguists.ts"
   "hv6|node|harvest/hv6.ts"
   "hplt|uv|run --with pyarrow python -I harvest/hplt.py 1 299"
 )

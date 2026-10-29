@@ -28,6 +28,8 @@ export interface WitnessOut {
   lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; region?: string
   /** SPEC 63 LB-10: where `region` (the place of publication) was read when the ingester left it empty: the archive.org metadata field and its verbatim value, or a quoted reference work */
   regionCite?: Evidence
+  /** SPEC 63 SRC-5: the kind of work when it is a linguistic work («лінгвістична праця», research/48); absent = not classified */ genre?: string
+  /** SPEC 63 SRC-5 / RF: explicit Russian-source flag set by the harvester (research/46); build uses it before the place / institution rules */ ru?: import('./ru-source.ts').RuFlag
   witnessType: string; edition: string; orth?: string; oldI?: boolean; license?: string
   /** SPEC 63 HV-5: the school of the work as research/44 gives it (`source` names the row, `confidence` its certainty); absent when no source states it */
   school?: { id: string; source: string; confidence?: string }

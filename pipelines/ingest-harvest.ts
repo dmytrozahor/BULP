@@ -183,6 +183,27 @@ function runArchive(ctx: Ctx, src: string): Sum {
   return s
 }
 
+/** SPEC 63 SRC-5 (harvest/linguists.ts, research/48): archive.org OCR of linguistic works of historical Ukrainian linguists. Date = print year of the item; place, author, genre «лінгвістична праця» and the explicit Russian-source flag come from the index line. */
+function runLinguists(ctx: Ctx, src = 'linguists'): Sum {
+  const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
+  for (const it of readIndex(src)) {
+    if (ctx.limit && s.items >= ctx.limit) break
+    if (it.status !== 200 || !it.file) continue
+    s.items++
+    const ia = String(it.iaItem ?? it.id.split(':')[1] ?? it.id)
+    if (ctx.manifestIa.has(ia)) { bump(s, 'already-in-manifest'); continue }
+    if (ctx.inc.unchanged(src, it.id, itemSig(it))) { bump(s, 'unchanged'); continue }
+    const buf = readItem(src, it.file); if (!buf) continue
+    const authorId = authorFor(it.author, src, it.url, `автор на титулі / в метаданих archive.org: ${it.author}`, it.region)
+    const w = witnessFrom(src, it, `hv_ling_${slug(ia)}`, buf.toString('utf8'), { lang: 'uk', witnessType: String(it.witnessType ?? 'linguistic_work'), edition: String(it.edition ?? 'OCR archive.org, не вичитано'), authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}` })
+    if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    if (it.genre) w.genre = String(it.genre)
+    if (it.ru && typeof it.ru === 'object') w.ru = it.ru as NonNullable<WitnessOut['ru']>
+    commit(ctx, s, src, it.id, itemSig(it), w)
+  }
+  return s
+}
+
 /** HV-5: litopys.org.ua / izbornyk.org.ua pages (raw windows-1251 html). Only the primary text paragraphs (K1, K2, K4, V1…, Dia) are read — the editors' Prym matter never is. */
 function runLitopys(ctx: Ctx, src = 'hv5'): Sum {
   const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
@@ -374,6 +395,7 @@ export async function main(argv: string[]) {
   for (const a of ARCHIVE) if (want(a)) sums.push(inc(a, () => runArchive(ctx, a)))
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
   if (want('hv5')) sums.push(inc('hv5', () => runLitopys(ctx)))
+  if (want('linguists')) sums.push(inc('linguists', () => runLinguists(ctx)))
   if (want('hv5-orig')) sums.push(inc('hv5-orig', () => runOrig(ctx)))
   if (want('hv6')) sums.push(inc('hv6', () => runHv6(ctx)))
   // vocabulary sources are one aggregate each: unchanged index + parameters + existing output = not read at all
