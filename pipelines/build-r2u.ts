@@ -12,6 +12,8 @@ import { key } from '../core/text.ts'
 import { fold } from '../core/orthography.ts'
 import { R2U_DICTS, r2uDictById } from './r2u.ts'
 import { tokenRaw, type RowsFile } from './ingest-r2u.ts'
+import { buildRuHeadEntries, type RuHeadFile } from '../core/ru-head.ts'
+import { writeJsonAtomic } from './robust.ts'
 
 export interface R2uFile {
   format: 1; generated: string; lookups: number
@@ -41,11 +43,17 @@ export function buildR2u(rows: RowsFile, lemmas: string[], generated: string): R
   }
 }
 
+/** SPEC 63 MM-36: public/data/ruhead.json (→ lm/ru/<bucket>.json): the ru→uk rows filed under the folded Russian headword, for the client classifier of Russian-looking forms (core/ru-contact.ts) */
+export function buildRuHead(f: R2uFile): RuHeadFile {
+  return { format: 1, generated: f.generated, entries: buildRuHeadEntries(f.rows, new Map(f.dicts.map(d => [d.id, { short: d.short, dir: d.dir }]))) }
+}
+
 /** build.ts hook: reads data/work/r2u-rows.json (written by the r2u ingester); nothing to do before the first lookups exist. */
-export function writeR2u(root: string, pub: string, generated: string, lemmas: string[]): { rows: number; lookups: number; lemmasWith: number } {
+export function writeR2u(root: string, pub: string, generated: string, lemmas: string[]): { rows: number; lookups: number; lemmasWith: number; ruHeads?: number } {
   const p = resolve(root, 'data/work/r2u-rows.json')
   if (!existsSync(p)) return { rows: 0, lookups: 0, lemmasWith: 0 }
   const f = buildR2u(JSON.parse(readFileSync(p, 'utf8')) as RowsFile, lemmas, generated)
   writeFileSync(resolve(pub, 'r2u.json'), JSON.stringify(f))
-  return { rows: f.rows.length, lookups: f.lookups, lemmasWith: Object.keys(f.by).length }
+  const rh = buildRuHead(f); writeJsonAtomic(resolve(pub, 'ruhead.json'), JSON.stringify(rh))   // MM-36
+  return { rows: f.rows.length, lookups: f.lookups, lemmasWith: Object.keys(f.by).length, ruHeads: Object.keys(rh.entries).length }
 }

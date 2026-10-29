@@ -22,7 +22,8 @@ import { fold } from '../../core/orthography.ts'
 import { foldById } from '../../core/orthography.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, withGal } from '../../core/gal-folds.ts'
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
-import { classifyRu, type RuClass, type RuLookups } from '../../core/ru-contact.ts'
+import type { RuClass, RuLookups } from '../../core/ru-contact.ts'
+import { featurePairs, variantHit, wordRules, type FeaturePair, type VariantHit } from '../../core/word-rules.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
 export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup; /** MM-25: Russian headwords of the r2u ru→uk dictionaries (optional; without it no Russianism is detected) */ ru?: Pick<RuLookups, 'ruHead' | 'isDialect'> }
@@ -37,6 +38,8 @@ export interface AnnotatedToken {
   vesum?: VesumHit[]; lt?: [string, string]          // lexindex data that triggered the rules (D-evidence context)
   numeral?: Numeral                                  // BL-4/N11: a Cyrillic numeral (value, not a word; same object on every token of the run)
   ruClass?: RuClass                                  // MM-25: a Russian headword of the r2u dictionaries that is no Ukrainian lemma: type by year (суржик / ЦС-книжна / язичіє), counterparts from the same article
+  variant?: VariantHit                               // MM-30..34: the spelling belongs to a variant family (межи / мендзи → між, увесь → весь, тілько-що → тільки, уві → у, како → як); the source or «джерела не знайдено»
+  pairs?: FeaturePair[]                              // MM-29 / MM-35: the cited feature that links this spelling with a counterpart, both directions (керовати ↔ керувати, міст-ові → міст)
   features?: string[]                                // MM-16: ids of the cited feature rules (core/feature-chips.ts) that link this spelling (сь before a labial, -ійш-, hyphenated particle …)
   contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
@@ -80,10 +83,14 @@ function galLink(k: string, data: AnnotateData) {
   return undefined
 }
 
+/** the lexicon lookup of the shared rule functions: a card form / paradigm form, or a VESUM / LT index entry */
+export const knownKeyOf = (data: AnnotateData) => (kk: string) => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0
+
 export function annotate(text: string, data: AnnotateData, year?: number): AnnotatedToken[] {
   const out: AnnotatedToken[] = []
   let from = 0
   const nums = findNumerals(text)
+  const knownKey = knownKeyOf(data)
   for (const t of tokenize(text)) {
     const at = text.indexOf(t.raw, from); const start = at < 0 ? t.index : at
     from = start + t.raw.length
@@ -93,17 +100,22 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
     const hits = [...(data.search.map.get(k) ?? []), ...(k !== kn ? data.search.map.get(kn) ?? [] : [])]
       .sort((a, b) => VIA_ORDER.indexOf(a.via) - VIA_ORDER.indexOf(b.via))
     const base = { raw: t.raw, start, end: from, key: k, provenance: 'attested' as const }
+    const variant = variantHit(k), pairs = featurePairs(k, knownKey)   // MM-29..36: the SAME shared rule functions as the search keys and «Аналіз слова» (core/word-rules.ts)
+    const extra = { ...(variant ? { variant } : {}), ...(pairs.length ? { pairs } : {}) }
     const hit = hits[0], card = hit && data.cards.get(hit.lemma)
     if (hit && card) {
       const form = card.forms.find(f => [f.raw, f.norm, f.modern].some(x => key(x) === k || key(x) === kn))
       const claims = claimsOf(card, form)
-      out.push({ ...base, status: 'attested', lemma: card.lemma, card, form, via: hit.via, claims, hints: form?.hints.map(h => ({ rule: h, label: '' })) ?? [],
+      out.push({ ...base, ...extra, status: 'attested', lemma: card.lemma, card, form, via: hit.via, claims, hints: form?.hints.map(h => ({ rule: h, label: '' })) ?? [],
         mark: strongest(claims), epoch: shevEpochOf(card) })
       continue
     }
     // MM-16 / MM-20: the SAME cited candidates the build tries (Желехівка folds, core/gal-folds.ts, the hyphenated-particle split) for a spelling the lexicon lacks; a hypothesis ('derived'), never a corpus link
     const gal = hit ? undefined : galLink(k, data)
-    if (gal) { out.push({ ...base, provenance: 'derived', derivedFrom: { form: gal.c.form, trace: foldSteps(k, gal.c.trace) }, status: 'attested', lemma: gal.card.lemma, card: gal.card, via: gal.via, claims: claimsOf(gal.card), hints: [], mark: strongest(claimsOf(gal.card)), epoch: shevEpochOf(gal.card), features: gal.c.trace.filter(id => FEATURE_RULE_IDS.includes(id)) }); continue }
+    if (gal) { out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: gal.c.form, trace: foldSteps(k, gal.c.trace) }, status: 'attested', lemma: gal.card.lemma, card: gal.card, via: gal.via, claims: claimsOf(gal.card), hints: [], mark: strongest(claimsOf(gal.card)), epoch: shevEpochOf(gal.card), features: gal.c.trace.filter(id => FEATURE_RULE_IDS.includes(id)) }); continue }
+    // MM-30..34: a member of a variant family (межи, мендзи, увесь, тілько-що, уві) that the lexicon lacks links to the head of the family: a hypothesis, labelled with the member's own source
+    const vh = !hit && variant && !variant.member.peer ? (data.search.map.get(key(variant.head)) ?? [])[0] : undefined, vcard = vh && data.cards.get(vh.lemma)
+    if (variant && vh && vcard) { const cl = claimsOf(vcard); out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: variant.head, trace: [{ rule: variant.family.id, from: k, to: variant.head }] }, status: 'attested', lemma: vcard.lemma, card: vcard, via: vh.via, claims: cl, hints: [], mark: strongest(cl), epoch: shevEpochOf(vcard) }); continue }
     // SPEC 30 D-4.1: an old-script spelling that is not in the lexicon but derives (core/phonology) to a lexicon form is linked as 'derived' (a hypothesis)
     const a = runDetectors(t.raw, data, year)
     const has = Object.keys(a.claims).length > 0
@@ -116,9 +128,9 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
         via: via.h!.via, claims, hints: [], mark: strongest(claims), epoch: shevEpochOf(dcard) })
       continue
     }
-    const ruClass = data.ru && !a.known ? classifyRu(t.raw, { year }, { ...data.ru, isUkrainian: kk => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0 }) : undefined   // MM-25
+    const ruClass = data.ru && !a.known ? wordRules(t.raw, { known: knownKey, ru: data.ru }, { year }).ruClass : undefined   // MM-25 / MM-36: the shared rule function
     const contact = contactCorr(t.raw, f => hitsOf(data, f))   // MM-9: the SAME rule as MOR-ICHESK (core/rules.ts), so chip and counterpart agree
-    out.push({ ...base, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}), ...(ruClass ? { ruClass } : {}) })
+    out.push({ ...base, ...extra, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}), ...(ruClass ? { ruClass } : {}) })
   }
   return out
 }

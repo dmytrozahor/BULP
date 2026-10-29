@@ -17,6 +17,7 @@ import LoanAdaptBlock from './LoanAdaptBlock.vue'
 import IpaRow from './IpaRow.vue'
 import DerivativesBlock from './DerivativesBlock.vue'
 import DimLine from './DimLine.vue'
+import VariantFamilyLine from './VariantFamilyLine.vue'
 import DialectVariants from './DialectVariants.vue'
 import DeicticStructure from './DeicticStructure.vue'
 import HeteronymReadings from './HeteronymReadings.vue'
@@ -48,6 +49,7 @@ const on = (t: TabId) => !props.tab || props.tab === t
       <IpaRow :variants="variants" :lemma="w" />
     </Panel>
     <DimLine v-if="on('forms')" :lemma="w" />
+    <VariantFamilyLine v-if="on('forms')" :lemma="w" />
     <DerivativesBlock v-if="on('forms')" panel :lemma="w" />
     <DialectVariants v-if="on('spread')" :lemma="w" />
     <DeicticStructure v-if="on('forms')" :word="spelling" />

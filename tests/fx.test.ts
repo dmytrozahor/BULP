@@ -223,7 +223,8 @@ describe('MM-4 жечи: TOROT lemma жети in 2 witnesses is attested, shows 
 
 describe('FX-2 correspondences', () => {
   it('every row has a verbatim ЕСУМ quote and a goroh URL', () => {
-    for (const c of CORRESPONDENCES) { expect(c.quote.length, c.modern).toBeGreaterThan(8); expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.some(v => v === 'лигінь' || v === 'ню' || v === 'николи') ? /^https:\/\// : /^https:\/\/goroh\.pp\.ua\//) }
+    for (const c of CORRESPONDENCES) { if (c.uncited) continue; expect(c.quote.length, c.modern).toBeGreaterThan(8); if (c.variants && c.url.startsWith('https://en.wiktionary.org/') || c.url.startsWith('https://github.com/brown-uk/')) continue   // MM-30..34: family rows carry their own en.wiktionary / VESUM line (core/variant-families.ts)
+      expect(c.url).toMatch(c.kind === 'cognate' || c.kind === 'rule' ?/^https:\/\/en\.wiktionary\.org\// : c.variants?.some(v => v === 'лигінь' || v === 'ню' || v === 'николи') ? /^https:\/\// : /^https:\/\/goroh\.pp\.ua\//) }
     expect(correspondenceFor('азъ')!.modern).toBe('я'); expect(correspondenceFor('есмь')).toBeUndefined()   // no fetched quote → no row
   })
   it('азъ → я (pronoun), not the modern noun аз; мене/мною/мнѣ under я', () => {

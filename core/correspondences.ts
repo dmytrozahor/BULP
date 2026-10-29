@@ -5,13 +5,15 @@
  * The correspondence only names the modern LEMMA; the token is still linked through VESUM (M-3.2) and must pass the POS gate (core/pos-gate.ts), `pron` here.
  */
 import { D, type Evidence } from './evidence.ts'
+import { VARIANT_FAMILIES } from './variant-families.ts'
 
+export type Cls = 'pron' | 'noun' | 'adv' | 'prep' | 'conj' | 'part'
 export interface Correspondence {
   /** old lemmas (TOROT lemma or Stanza lemma, lower case, before sound derivation) */
   old: string[]
   modern: string
   /** VESUM POS class the modern lemma must have (core/pos-gate.ts VClass) */
-  cls: 'pron' | 'noun' | 'adv'
+  cls: Cls | Cls[]
   /** 'etymology' = ЕСУМ quote (default); 'cognate' = no sound rule is cited, the link rests on VESUM + attested cognates, and is labelled so;
    *  'variant' (MM-2) = the regular rule `rule` gives a listed variant spelling (`variants`) of the modern lemma, which stays the standard form;
    *  'rule' (MM-2) = the regular rule `rule` gives the modern lemma itself, the row only carries the cited line */
@@ -23,6 +25,10 @@ export interface Correspondence {
   orth?: string[]
   /** modern variant spellings of `modern` (lower case, dictionary-cited): the lemma-less token with exactly this spelling links to `modern` */
   variants?: string[]
+  /** MM-30..34: the variant row applies only when the spelling has no non-archaic VESUM reading of its own (тілько is a VESUM arch lemma, меж a form of межа) */
+  yields?: boolean
+  /** MM-30..34: no source was found for this identification (the owner named it); the evidence says so */
+  uncited?: boolean
   url: string
   quote: string
   note: string
@@ -82,12 +88,25 @@ export const CORRESPONDENCES: Correspondence[] = [
     note: 'Вікісловник (uk далі, adv): «further, onwards, forth»; дале / далѣ — давньоруська і староруська форма цього прислівника, а не словоформа іменника даль' },
 ]
 
+/** does the VESUM class of an analysis fit the row? */
+export const clsOk = (c: Pick<Correspondence, 'cls'>, vc: string): boolean => (Array.isArray(c.cls) ? (c.cls as string[]).includes(vc) : c.cls === vc)
+
+// MM-30..MM-34: the variant families (core/variant-families.ts) are rows too: one variant row per member (the member's own cite). «како» is an OLD-lemma row (kind 'cs'), so that a modern
+// vocative «како» of кака is not touched while an orv witness (TOROT lemma / un-lemmatised token) goes to як; the POS gate (core/pos-gate.ts) keeps Df / Dq / Du / C- tokens off the noun
+for (const f of VARIANT_FAMILIES) for (const m of f.members) {
+  if (m.peer) continue
+  const base = { modern: f.head, cls: f.cls as Cls[], url: m.cite?.url ?? '', quote: m.cite?.quote ?? '', note: m.cite?.note ?? 'джерела не знайдено (зауваження власника)' }
+  if (m.role === 'sense') CORRESPONDENCES.push({ old: [m.form], kind: 'cs', ...base, uncited: true, quote: 'яко: alternative form of як (Adverb, Conjunction)', url: 'https://en.wiktionary.org/wiki/яко#Ukrainian',
+    note: 'як / яко — прислівник і сполучник «як» (ЦС / староукраїнське): джерела, що прямо ототожнює «како» з «як», не знайдено (en.wiktionary має лише яко = як): ототожнення — зауваження власника проєкту. Іменник кака (кличний кака → како) лишається читанням ВЕСУМ для тексту без позначки частини мови' })
+  else CORRESPONDENCES.push({ old: [], kind: 'variant', variants: [m.form], yields: true, ...base, ...(m.cite ? {} : { uncited: true }) })
+}
+
 const byOld = new Map<string, Correspondence>()
 for (const c of CORRESPONDENCES) for (const o of c.old) byOld.set(o, c)
 /** The correspondence for an old lemma (case-insensitive), if the table has a cited row for it. */
 export const correspondenceFor = (oldLemma: string | undefined): Correspondence | undefined => (oldLemma ? byOld.get(oldLemma.normalize('NFC').toLowerCase()) : undefined)
 /** MM-2: modern variant spelling (хомік, хомик) → the row whose standard lemma it varies */
 export const variantFor = (form: string): Correspondence | undefined => CORRESPONDENCES.find(c => c.variants?.includes(form))
-const label = (c: Correspondence) => c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'cs' ? 'ЕСУМ (ЦС-відповідність)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
+const label = (c: Correspondence) => c.uncited ? 'зауваження власника (джерела не знайдено)' : c.url.includes('brown-uk') ? 'ВЕСУМ' : c.url.includes('en.wiktionary') && c.kind === 'variant' ? 'Вікісловник (en)' : c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'cs' ? 'ЕСУМ (ЦС-відповідність)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
 export const corrEvidence = (c: Correspondence, oldLemma: string): Evidence => D(label(c), c.url, c.quote,
   `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cs' ? ' [ЦС-відповідність, без звукового правила]' : c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; ' + (c.variants ?? []).join(' / ') + " — варіанти, стандартна форма " + c.modern : ''}]` : ''}`)

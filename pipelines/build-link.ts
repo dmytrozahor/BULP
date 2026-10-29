@@ -13,7 +13,7 @@ import { foldById } from '../core/orthography.ts'
 import { key } from '../core/text.ts'
 import type { TraceStep, VesumHit } from '../core/types.ts'
 import { compatible, vesumClass, type VClass } from '../core/pos-gate.ts'
-import { correspondenceFor, variantFor, type Correspondence } from '../core/correspondences.ts'
+import { clsOk, correspondenceFor, variantFor, type Correspondence } from '../core/correspondences.ts'
 import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
@@ -173,12 +173,14 @@ function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
   const k1 = key(t.raw)
   // MM-2: a lower-case token spelled exactly like a dictionary-cited variant (хомик, хомік) links to the standard card (хом'як), never to the surname «Хомік»
   const vr0 = t.raw && t.raw === t.raw.toLowerCase() ? variantFor(k1) : undefined
-  const vr = vr0 && (!vr0.orth || (t.orth && vr0.orth.includes(t.orth))) ? vr0 : undefined   // MM-21: a variant row may be restricted to witnesses of an orthography (ню = вона only in Желехівка texts)
+  // MM-30..34 `yields`: a family variant (тілько, меж, увесь) gives way to a non-archaic VESUM reading of the spelling itself (меж = gen. pl. of межа stays межа); an arch / alt / bad VESUM lemma does not
+  const ownModern = vr0?.yields && (env.hits.get(k1) ?? []).some(h => !/(^|:)(arch|alt|bad|subst|slang)(:|$)/.test(h.tags))
+  const vr = vr0 && !ownModern && (!vr0.orth || (t.orth && vr0.orth.includes(t.orth))) ? vr0 : undefined   // MM-21: a variant row may be restricted to witnesses of an orthography (ню = вона only in Желехівка texts)
   if (vr) {
     const mk = key(vr.modern), own: Candidate = { form: k1, trace: [], branches: 0 }
     // MM-26 / MM-5: a cited variant row is not vetoed by a MODEL part of speech (gate key U:…, Stanza); a TOROT gold tag still gates
     const gateV = (os: Option[]) => (t.gate?.startsWith('U:') ? os : gatedBy(t, os))
-    const opts = gateV((env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && vesumClass(h.tags) === vr.cls && !/:prop\b/.test(':' + h.tags))
+    const opts = gateV((env.hits.get(mk) ?? []).filter(h => isHead(h, mk) && clsOk(vr, vesumClass(h.tags)) && !/:prop\b/.test(':' + h.tags))
       .map(h => ({ ...toOption(mk, h, { form: mk, trace: [], branches: 0 }, own, false), corr: { row: vr, old: k1 } })))
     if (opts.length) return { route: t.lang === 'uk' ? 'direct' : 'token', opts }
   }
@@ -200,7 +202,7 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
     const corr = row ? { row, old: lemma } : undefined
     const via = (l: string, c0?: typeof corr): Option[] => env.derive(l, c0 ? false : t.oldI).candidates.flatMap(c => {
       const k = key(c.form)
-      return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || (vesumClass(h.tags) === c0.row.cls && !/:prop\b/.test(':' + h.tags)))).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
+      return (env.hits.get(k) ?? []).filter(h => isHead(h, k) && (!c0 || (clsOk(c0.row, vesumClass(h.tags)) && !/:prop\b/.test(':' + h.tags)))).map(h => { const o = ownFor(key(h.lemma), raw, env.hits); return { ...toOption(k, h, c, o.own, o.ok), ...(c0 ? { corr: c0 } : {}) } })
     })
     // MM-5: a cited correspondence is not vetoed by a MODEL part of speech (gate key U:… = Stanza UPOS, P-1.7): VESUM and the cited row decide, the model tag never overrides them
     const viaCorr = corr ? (t.gate?.startsWith('U:') ? via(corr.row.modern, corr) : gated(via(corr.row.modern, corr))) : []

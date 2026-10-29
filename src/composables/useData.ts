@@ -14,6 +14,7 @@ import type { BootFile } from '../../core/parts.ts'
 import type { SearchIndex } from '../lib/search.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
 import { dataUrl } from '../lib/dataUrl.ts'
+import { ruLookups } from '../lib/ruIndex.ts'
 import { cardMapView, ixAttest, ixHitMap, ixLexIndex, ixParadigm, witnessOf } from '../lib/parts.ts'
 
 export const toCards = unpackCore   // tests / fixtures: a packed core (format 3/4), a packed format 2 or a plain LemmaCard[] (fixture: detail embedded)
@@ -79,7 +80,7 @@ export function fullOf(c: CoreCard | LemmaCard | undefined): LemmaCard | undefin
 
 const witnessById = computed(() => ({ get: (id: string): WitnessMeta | undefined => witnessOf(id), has: (id: string) => !!witnessOf(id) }))
 /** Everything the pure annotator/analyser needs: shard-backed lookups, nothing in memory */
-const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: cardMapView, lexindex: ixLexIndex, paradigmMap: ixParadigm }))
+const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: cardMapView, lexindex: ixLexIndex, paradigmMap: ixParadigm, ru: ruLookups }))   // MM-36: the Russian-headword index (lm/ru) feeds the shared classifier
 const corpus = computed<BootCorpus | undefined>(() => (fullCorpus.value && state.corpus ? { ...state.corpus, ...fullCorpus.value, full: true } : state.corpus))
 
 export interface AuthorInfo { id: string; name: string; label?: Author['label']; status?: Author['status']; evidence: Author['evidence']; life?: string; known: boolean }

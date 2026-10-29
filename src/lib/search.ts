@@ -4,7 +4,8 @@
  * Old letters ѣ ъ ы ѧ are indexed as written AND via stage-N normalisation, so the user may type either.
  */
 import type { CoreCard } from '../../core/types.ts'
-import { withGal, splitHyphenParticle } from '../../core/gal-folds.ts'
+import { withGal, splitHyphenParticle, toOvati } from '../../core/gal-folds.ts'
+import { variantKeys } from '../../core/word-rules.ts'
 import { fold } from '../../core/orthography.ts'
 import { key, normalizeOld } from '../../core/text.ts'
 
@@ -39,7 +40,11 @@ export const queryKeys = (q: string) => {
   // MM-16/18/19/20: the SAME cited candidates the build tries (core/gal-folds.ts, Желехівка folds, the hyphenated-particle host) are also query variants, so «скорійше», «шановати», «сьпівати», «прийми-ж»
   // find скоріше / шанувати / співати / прийняти without waiting for the next data build; they come after the typed key
   const sp = splitHyphenParticle(t)
-  const extra = t.length > 2 ? [...withGal(fold(t, 'желехівка')).map(c => key(c.form)), ...(sp ? [sp.host] : [])] : []
+  // MM-29..36: the family head of a variant (межи, мендзи, увесь, тілько-що, уві → між, весь, тільки, у) and the older counterpart of an -ува- verb (керувати → керовати) are query variants too: the SAME
+  // shared rule functions as the annotator and «Аналіз слова» (core/word-rules.ts)
+  const rev = toOvati(t)
+  const extra = t.length > 2 ? [...withGal(fold(t, 'желехівка')).map(c => key(c.form)), ...(sp ? [sp.host] : []), ...(rev !== t ? [rev] : [])] : []
+  extra.push(...variantKeys(t), ...(sp ? variantKeys(sp.host) : []))
   return [...new Set([...base, ...extra])].filter(Boolean)
 }
 

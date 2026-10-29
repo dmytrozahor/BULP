@@ -6,10 +6,12 @@
  *  ORTH-ADJ-IISH    скорійше, новійший, найсьвятійшою → скоріше, новіший, найсвятішою
  *  ORTH-VERB-OVATI  шановати, купова́ти, малёвати → шанувати, купувати   (-ова- ~ -ува-; two hypotheses about WHY are recorded in specs/63, only the cited one is stated here)
  *  ORTH-PART-HYPH   прийми-ж, було-б, ходи-но → the host word + a particle (the hyphen is the older / Galician way to attach it)
+ *  ORTH-DAT-OVI     міст-ові, містові → міст (MM-29): the dative in -ові/-еві/-єві joined to the unchanged stem, with or without a hyphen
  */
 import { Q } from './evidence.ts'
 import type { Fold } from './orthography.ts'
 import type { Candidate } from './phonology.ts'
+import { familyMember } from './variant-families.ts'
 
 const SS14 = 'Смаль-Стоцький, Граматика руської мови (1914), скан p. 44 (друк. с. 40), §§ 62–63 «Степенованє прикметників»'
 const OG89 = 'Огоновський, Граматика руської мови (1889), скан p. 31–32 (§ 38), p. 39'
@@ -38,8 +40,15 @@ export const VERB_OVATI_FOLD: Fold = {
 /** closed list of particles that older Galician print joins to the host word with a hyphen */
 export const HYPH_PARTICLES = ['ж', 'же', 'жь', 'б', 'би', 'бо', 'но', 'то', 'таки'] as const
 const HYPH = new RegExp(`^(.{2,}?)-(${HYPH_PARTICLES.join('|')})$`)
+/** MM-33: after a member of a family with `tails` (тілько-що) the particle «що» is a tail as well */
+const HYPH_SCHO = /^(.{2,}?)-(що)$/
 /** host + particle of «прийми-ж»; undefined when the token has no such tail (будь-хто, де-не-де are not split: VESUM decides first, the build only splits what it cannot link whole) */
-export const splitHyphenParticle = (w: string): { host: string; particle: string } | undefined => { const m = HYPH.exec(w.toLowerCase()); return m ? { host: m[1]!, particle: m[2]! } : undefined }
+export const splitHyphenParticle = (w: string): { host: string; particle: string } | undefined => {
+  const l = w.toLowerCase(), m = HYPH.exec(l)
+  if (m) return { host: m[1]!, particle: m[2]! }
+  const s = HYPH_SCHO.exec(l), f = s && familyMember(s[1]!)
+  return s && f && f.family.tails && !f.member.peer ? { host: s[1]!, particle: s[2]! } : undefined
+}
 export const PART_HYPH_FOLD: Fold = {
   id: 'ORTH-PART-HYPH', era: [], branch: true,
   cite: Q('SMALST', SS92, 'Пишемо завсїди окремо: би, же, но, ся, то, пр.: я робив би; брат же відповів; ходи но сюда; … Противно пишемо разом слова зложені з: -б, -будь, -небудь, -де, -ж, -крат, -сь, пр. ділалаб, хвалилиб, колиб; хтож, щож',
@@ -47,8 +56,19 @@ export const PART_HYPH_FOLD: Fold = {
   apply: w => splitHyphenParticle(w)?.host ?? w,
 }
 
-export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD]
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD]
+/** -ува-ти family → -ова-ти family: the REVERSE direction of ORTH-VERB-OVATI (керувати → керовати), used by «Аналіз слова», the annotator and the search keys to show the older / Galician counterpart; never a build candidate */
+const UVATI = /^(.{2,}?)ува(ти|в|ла|ло|ли|ний|ння|вши)$/
+export const toOvati = (w: string): string => { const m = UVATI.exec(w); return m ? m[1]! + 'ова' + m[2]! : w }
+
+/** MM-29: dative sg. in -ові / -еві / -єві attached to the unchanged stem (міст-ові, містові): the stem is the candidate. VESUM decides (мостові is the standard dative of міст and is a VESUM form, so it never reaches this branch) */
+const DAT = /^(.{3,}?)-?(ові|еві|єві)$/
+export const toDatStem = (w: string): string => { const m = DAT.exec(w); return m ? m[1]! : w }
+const WPL_DAT = Q('WUK', 'uk.wikipedia «Західнополіський говір» (W-WPL), «Наддністрянський говір» (W-NDN); research/04 SW-DAT-OVY', 'Поширеність закінчення -ови, -еви в давальному відмінку однини іменників чоловічого роду (си́нови, брáтови, дýбови, конéви …)',
+  'Вікіпедія називає західні говори (західнополіський, наддністрянський) носіями давального на -ови / -еви. Стандартне закінчення -ові, -еві, -єві (Правопис 2019 § 83, research/02). Закінчення -ові на незміненій основі (містові: без чергування о / і) окремою цитатою у сховищі не підтверджено; дефіс у «міст-ові» — друкарське з’єднання (джерела про дефіс у відмінковому закінченні не знайдено)')
+export const DAT_OVI_FOLD: Fold = { id: 'ORTH-DAT-OVI', era: [], branch: true, cite: WPL_DAT, apply: toDatStem }
+
+export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD]
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD]
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
 export function withGal<T extends Candidate[]>(cands: T): Candidate[] {

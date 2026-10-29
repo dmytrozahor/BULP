@@ -989,3 +989,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SRC-3 | tests/src28.test.ts › SRC-28 the proofread Лексис (Німчук 1964, litopys zyz99.htm): typed articles parse into head and gloss rows, ѣ / я / accents / titlo parentheses normalised |
 | SRC-4 | tests/src28.test.ts › SRC-28 every feature has verbatim quotes with a locator, a dialect group and the print year; the Galician/Belarusian attribution is marked contested |
 | SRC-4 | tests/src28.test.ts › SRC-28 biography cited from research/44 (Львів → Берестя → Вільно); uncited candidates are hypotheses with the reason |
+| MM-29 | tests/variants.test.ts › MM-29 міст-ові / містові: the Western dative -ові on the unchanged stem links to міст and carries a «західна форма» feature chip |
+| MM-30 | tests/variants.test.ts › MM-30 між ~ межи, меж, міжи, мендзи: one family; the cited members carry their line, the others say «джерела не знайдено» |
+| MM-31 | tests/variants.test.ts › MM-31 ві / уві / вві / у / в: the prothetic / alternating preposition family records which variant it is |
+| MM-32 | tests/variants.test.ts › MM-32 увесь / ввесь / весь (and the forms усе, уся, усі … of the same pattern) |
+| MM-33 | tests/variants.test.ts › MM-33 тілько / тилько → тільки (and тілько-що): a family with a cited dialect feature of the head |
+| MM-34 | tests/variants.test.ts › MM-34 како: the sense «як / яко» beside кака, and the POS gate keeps adverb / conjunction tokens off the noun |
+| MM-35 | tests/variants.test.ts › MM-35 керовати ↔ керувати in «Аналіз слова»: the -ова- ~ -ува- feature, BOTH directions, one cited rule (ORTH-VERB-OVATI, Огоновський 1889 § 38) |
+| MM-36 | tests/variants.test.ts › MM-36 MM-25 wiring: the r2u Russian-headword index feeds the app; отношеніє gets a form-type class; search, «Аналіз слова» and the annotator share the function |
+| MM-29 | tests/variants.test.ts › MM-29..MM-36 the table is consistent |

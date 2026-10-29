@@ -1,0 +1,41 @@
+<script setup lang="ts">
+/**
+ * MM-29..36: what the shared rule functions (core/word-rules.ts) found for one annotated token: the cited feature chips of its spelling (`features`), the feature PAIRS in both directions
+ * (керовати ↔ керувати, міст-ові → міст) and the variant family (межи → між, увесь → весь, како → як). Contact labels are not drawn here (form level, MM-9).
+ */
+import { computed } from 'vue'
+import { featureChips } from '../../core/feature-chips.ts'
+import type { AnnotatedToken } from '../lib/annotate.ts'
+import EvidencePopover from './EvidencePopover.vue'
+const props = defineProps<{ t: Pick<AnnotatedToken, 'features' | 'pairs' | 'variant' | 'ruClass'>; year?: number }>()
+const wl = (l: string) => '/w/' + encodeURIComponent(l)
+const ctx = computed(() => ({ year: props.year }))
+const feats = computed(() => featureChips(props.t.features ?? [], ctx.value))
+const pairs = computed(() => (props.t.pairs ?? []).map(p => ({ p, chip: featureChips([p.rule], ctx.value)[0] })))
+</script>
+
+<template>
+  <div v-if="feats.length || pairs.length || t.variant || t.ruClass" class="small" style="margin-top:.35rem" data-testid="rule-chips">
+    <div v-for="c in feats" :key="c.rule" data-testid="feature-chip"><span class="badge">{{ c.feature }}</span> {{ c.text }} <span class="muted">({{ c.rule }})</span><EvidencePopover :evidence="[c.cite]" heading="Правило" /></div>
+    <div v-for="{ p, chip } in pairs" :key="p.rule + p.direction" data-testid="feature-pair">
+      <span class="badge" :data-direction="p.direction">{{ chip?.feature ?? p.rule }}</span>
+      {{ p.text }}
+      <RouterLink v-if="p.known" :to="wl(p.to)"><strong>{{ p.to }}</strong></RouterLink>
+      <span v-if="chip" class="muted"> · {{ chip.text }}</span><EvidencePopover :evidence="[p.cite]" heading="Правило" />
+    </div>
+    <div v-if="t.ruClass" data-testid="ru-class">
+      <span class="badge" :title="'тип форми визначено за роком тексту і регіоном; мітка належить формі, не лемі'">{{ t.ruClass.label }}</span>
+      <template v-if="t.ruClass.standard.length"> літературні відповідники (r2u): <template v-for="(s, i) in t.ruClass.standard" :key="s.lemma"><template v-if="i">, </template><RouterLink :to="wl(s.lemma)"><strong>{{ s.lemma }}</strong></RouterLink></template></template>
+      · <span class="muted">російський варіант:</span> {{ t.ruClass.ruVariant }}
+      <template v-if="t.ruClass.possible.length > 1"> · <span class="muted">можливо також: {{ t.ruClass.possible.slice(1).join(', ') }} (без року тексту тип не визначити)</span></template>
+      <EvidencePopover :evidence="t.ruClass.evidence" heading="Докази: російське слово в r2u" />
+    </div>
+    <div v-if="t.variant" data-testid="variant-note">
+      <span class="badge">{{ t.variant.roleUk }}</span> до <RouterLink :to="wl(t.variant.head)"><strong>{{ t.variant.head }}</strong></RouterLink><template v-if="t.variant.tail"> + «{{ t.variant.tail }}»</template>
+      <span v-if="t.variant.sense" class="muted"> · інше значення цього написання поряд із звичайним читанням (прислівник / сполучник, ЦС / староукраїнське)</span>
+      <span v-if="t.variant.member.ambiguous && !t.variant.sense" class="muted"> · це написання є й звичайною формою іншого слова; читання ВЕСУМ не скасовується</span>
+      <span v-if="t.variant.uncited" class="unk"> · джерела не знайдено</span>
+      <EvidencePopover :evidence="[t.variant.evidence]" heading="Джерело варіанта" />
+    </div>
+  </div>
+</template>

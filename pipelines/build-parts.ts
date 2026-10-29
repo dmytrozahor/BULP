@@ -202,6 +202,7 @@ function splitMap(name: LmName, src: Obj, bucketKey: (k: string) => string, pick
 function writeLm() {
   const log: string[] = []
   const E = rd<Obj>('etymology.json'); if (E) log.push(`etymology ${splitMap('etymology', E, k => k, s => s['entries'] as Obj, (m, p) => ({ ...m, entries: p }))}`)
+  const RU = rd<Obj>('ruhead.json'); if (RU) log.push(`ru ${splitMap('ru', RU, k => k, s => s['entries'] as Obj, (m, p) => ({ ...m, entries: p }))}`)   // MM-36: Russian-headword index of the r2u ru→uk dictionaries
   const D = rd<Obj>('dim.json'); if (D) log.push(`dim ${splitMap('dim', D, k => k, s => s['entries'] as Obj, (m, p) => ({ ...m, entries: p }))}`)   // MM-23
   const C = rd<Obj>('cognates.json'); if (C) log.push(`cognates ${splitMap('cognates', C, k => k, s => s['entries'] as Obj, (m, p) => ({ ...m, entries: p }))}`)
   const S = rd<Obj>('senses.json'); if (S) {   // senses is a bare map lemma → Sense[]
