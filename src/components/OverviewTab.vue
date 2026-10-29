@@ -17,6 +17,8 @@ import LabelLine from './LabelLine.vue'
 import Kwic from './Kwic.vue'
 import SenseEpochs from './SenseEpochs.vue'
 import Paradigm from './Paradigm.vue'
+const SynAntBlock = defineAsyncComponent(() => import('./SynAntBlock.vue'))   // GG-12: lazy, outside the first load
+const PhraseologyBlock = defineAsyncComponent(() => import('./PhraseologyBlock.vue'))   // GG-13: lazy
 const XrefLine = defineAsyncComponent(() => import('./XrefLine.vue'))   // GG-18: lazy, keeps the first load of a card unchanged
 // MM-27: an absent Boolean prop is `false` in Vue (boolean casting): every thin card (ORV, name, light, dictionary) read «наголос: завантаження…» for ever; undefined = nothing is loading
 const props = withDefaults(defineProps<{
@@ -86,6 +88,14 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
       <p v-else-if="paradigmLoaded === false" class="small sans muted" data-testid="ov-paradigm-loading">парадигма ВЕСУМ: завантаження…</p>
       <p v-else class="small sans muted" data-testid="ov-paradigm-none">немає даних (перевірено: у даних цієї картки парадигми ВЕСУМ немає<template v-if="paradigmLoaded">; ВЕСУМ не має леми «{{ paradigmWord ?? lemma ?? spelling }}»</template><template v-if="lemma && byLemma.has(lemma)">; повна парадигма — на <RouterLink :to="'/w/' + encodeURIComponent(lemma)">картці леми</RouterLink></template><template v-else>; леми з парадигмою в лексиконі не знайдено</template>)</p>
       <p v-if="paradigm?.length" class="small sans"><button type="button" class="chip small" @click="openPanel('h-par')">з епохами у «Форми» →</button></p>
+    </section>
+    <section class="ov-sec" data-testid="ov-synant" aria-labelledby="ov-h-sa">
+      <h3 id="ov-h-sa" class="small sans">Синоніми й антоніми</h3>
+      <SynAntBlock :word="lemma ?? spelling" :kind="seKind ?? 'full'" />   <!-- SPEC 63 GG-12: uk/en Вікісловник, CC BY-SA, джерело й значення на кожному зв’язку -->
+    </section>
+    <section class="ov-sec" data-testid="ov-phraseology" aria-labelledby="ov-h-fr">
+      <h3 id="ov-h-fr" class="small sans">Фразеологія</h3>
+      <PhraseologyBlock :word="lemma ?? spelling" :kind="seKind ?? 'full'" />   <!-- SPEC 63 GG-13: усталені словосполучення, фразеологізми, прислів’я Вікісловника -->
     </section>
     <section class="ov-sec" data-testid="ov-example" aria-labelledby="ov-h-ex">
       <h3 id="ov-h-ex" class="small sans">Приклад</h3>

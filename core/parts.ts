@@ -70,6 +70,13 @@ export const seUrl = (k: string) => `./data/lm/se/${seBucket(k)}.json`
 export const XR_BUCKETS = 1024
 export const xrBucket = (k: string) => bucketOf(k, XR_BUCKETS)
 export const xrUrl = (k: string) => `./data/lm/xr/${xrBucket(k)}.json`
+/** SPEC 63 GG-12 / GG-13: synonym-antonym rows lm/syn/<b>.json and Wiktionary phraseology rows lm/phr/<b>.json (key lk(headword)), lazy like lm/xr: fetched only by the components that show them, never in the first load */
+export const SYN_BUCKETS = 1024
+export const synBucket = (k: string) => bucketOf(k, SYN_BUCKETS)
+export const synUrl = (k: string) => `./data/lm/syn/${synBucket(k)}.json`
+export const PHR_BUCKETS = 512
+export const phrBucket = (k: string) => bucketOf(k, PHR_BUCKETS)
+export const phrUrl = (k: string) => `./data/lm/phr/${phrBucket(k)}.json`
 
 export const WIT_BUCKETS = 64
 export const witBucket = (id: string) => bucketOf(id, WIT_BUCKETS)

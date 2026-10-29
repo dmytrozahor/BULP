@@ -36,6 +36,9 @@ export const BLOCKS = {
   featureChips: ['CardRules', 'lemma-feature', 'form-feature'],  // MM-16 cited feature chips of the spelling
   variantFamily: ['VariantFamilyLine'],           // MM-29..35 variant family line
   contactForm: ['CardRules', 'contactClaims'],    // MM-36 contact form-type (суржик / язичіє / ЦС-книжна), a label of a FORM (MM-9)
+  // GG-12 / GG-13 (2026-10-29): open-source relations and Wiktionary phraseology, lazy components mounted by the Огляд tab of every kind
+  synonyms: ['SynAntBlock'],                      // GG-12 «Синоніми й антоніми»: uk/en Вікісловник, джерело й значення на кожному зв’язку
+  wiktPhraseology: ['PhraseologyBlock'],          // GG-13 «Фразеологія» (Вікісловник): усталені словосполучення, фразеологізми, прислів’я
   switches: ['<Spell'],                           // OV orthography + dialect switches (ViewBar is global, the card must obey them)                 // SE «Значення за епохами» (SPEC 63 SE-5/SE-6): the sense timeline over the epochs
 } as const
 export type BlockId = keyof typeof BLOCKS
@@ -78,7 +81,7 @@ export const MATRIX: Record<KindId, Record<BlockId, Cell>> = {
   archaic: row({ ...cp8, ...hist, ...thin, ...se }),
   name: row({ ...cp8, ...hist, ...thin, ...se }),
   orv: row({ ...cp8, ...hist, ...thin, ...se }),
-  phrase: row({ labels: 'na', chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na', overview: 'na', pronunciation: 'na', origin: 'na', paradigm: 'na', regions: 'na', ruFlag: 'shown', featureChips: 'na', variantFamily: 'na', contactForm: 'na', switches: 'na' }),
+  phrase: row({ labels: 'na', chips: 'na', kwic: 'shown', witnesses: 'na', epochs: 'na', derivation: 'na', dialect: 'na', map: 'na', stats: 'na', stress: 'na', etymology: 'na', senses: 'na', phrasemes: 'na', loan: 'na', derivatives: 'na', ipa: 'na', senseTimeline: 'na', overview: 'na', pronunciation: 'na', origin: 'na', paradigm: 'na', regions: 'na', ruFlag: 'shown', featureChips: 'na', variantFamily: 'na', contactForm: 'na', switches: 'na', synonyms: 'na', wiktPhraseology: 'na' }),
 }
 /** why a cell is `na` (shown next to the matrix in specs/63 CP-1) */
 export const NA: Partial<Record<KindId, string>> = {

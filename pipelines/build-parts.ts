@@ -17,7 +17,7 @@ import { cardMap } from '../core/cv.ts'
 import { DIALECTS } from '../core/rules.ts'
 import { archId, type ArchEntry } from '../core/archaic.ts'
 import { featureOf } from '../core/form-class.ts'
-import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, seBucket, xrBucket, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
+import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, seBucket, xrBucket, synBucket, phrBucket, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 import { vocabTotals } from './vocab-n.ts'
 import { VOCAB_V } from '../core/vocab-view.ts'
@@ -230,6 +230,16 @@ function writeLm() {
       fresh('lm/xr'); let worst = 0
       for (const [b, p] of parts) { worst = Math.max(worst, gz(p)); out(`lm/xr/${b}.json`, p) }
       log.push(`xr ${parts.size} (worst ${(worst / 1024).toFixed(1)} KB gz)`)
+    }
+  }
+  for (const [name, env, bucket] of [['syn', 'SYN_FILE', synBucket], ['phr', 'PHR_FILE', phrBucket]] as const) {   // SPEC 63 GG-12 / GG-13: data/work/{syn,phr}.json (pipelines/build-synphr.ts, not committed) -> lm/{syn,phr}/<bucket>.json, keyed by lk(headword)
+    const fp = process.env[env] ?? `data/work/${name}.json`
+    if (existsSync(fp)) {
+      const M = JSON.parse(readFileSync(fp, 'utf8')) as Obj, parts = new Map<number, Obj>()
+      for (const [k, v] of Object.entries(M)) { const b = bucket(k); (parts.get(b) ?? parts.set(b, {}).get(b)!)[k] = v }
+      fresh(`lm/${name}`); let worst = 0
+      for (const [b, p] of parts) { worst = Math.max(worst, gz(p)); out(`lm/${name}/${b}.json`, p) }
+      log.push(`${name} ${parts.size} (worst ${(worst / 1024).toFixed(1)} KB gz)`)
     }
   }
   const U = rd<Obj>('usage.json'); if (U) log.push(`usage ${splitMap('usage', U, k => k, s => s['lemmas'] as Obj, (m, p) => ({ ...m, lemmas: p }))}`)

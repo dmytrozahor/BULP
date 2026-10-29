@@ -1,0 +1,6 @@
+uk.wiktionary official dump (Wikimedia Foundation; page texts CC BY-SA 4.0 / GFDL, authors on the pages). SPEC 63 GG-12 / GG-13.
+Not scraped: a single download of the official dump file, read by `bzip2 -dc` as a stream (pipelines/build-synphr.ts). The raw file is not committed (data/raw is ignored).
+Format: file | size bytes | md5 (from ukwiktionary-latest-md5sums.txt, verified 2026-10-29) | url
+
+ukwiktionary-20261001-pages-articles.xml.bz2 | 16594047 | f071ed549b2ab9b08422ac1619ef25ac | https://dumps.wikimedia.org/ukwiktionary/latest/ukwiktionary-latest-pages-articles.xml.bz2 (downloaded 2026-10-29 with an identified User-Agent that names the project repository only)
+The en.wiktionary side of GG-12 / GG-13 is the pinned kaikki.org Ukrainian dump listed in ../kaikki/SOURCES.txt (uk.jsonl, CC BY-SA 4.0).

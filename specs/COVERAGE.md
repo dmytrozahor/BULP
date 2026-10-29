@@ -1046,8 +1046,34 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-18 | tests/xref.test.ts › GG-18 sum-scan writes the pointer sidecar of a dictionary (volume/page locator, deduped, next to the parsed dir) › writeXref: tNN.ptrs.json -> xref/<dict>.json with d and the printed locator |
 | GG-10 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-11 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
-| GG-12 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
-| GG-13 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-12 | tests/synphr.test.ts › GG-12 uk.wiktionary: which part of a page is Ukrainian › the explicit «= {{-uk-}} =» block ends at the next language heading; the «{{=uk=}}» marker and a leading part with Ukrainian markers also count; a foreign page and a foreign part do not |
+| GG-12 | tests/synphr.test.ts › GG-12 parseUkPage: relations with the sense they are attached to › each target keeps its relation, the item number of the list (= the sense number) and the gloss of that sense; stress, links and the examples template are cleaned |
+| GG-12 | tests/synphr.test.ts › GG-12 parseUkPage: relations with the sense they are attached to › qualifiers are those the page prints (урочист., рідк., під час пологів); an empty item «—» gives nothing; the other-language section is not read |
+| GG-12 | tests/synphr.test.ts › GG-12 parseUkPage: relations with the sense they are attached to › a leading-part page: items, antonyms, Russian-letter and non-Ukrainian junk targets are rejected; a target equal to the headword is dropped; nothing is mirrored onto the target |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 kaikki (en.wiktionary) entries › entry-level and sense-level relations: the sense gloss goes with the row, tags are kept, a target equal to the headword or in Latin script is dropped |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 kaikki (en.wiktionary) entries › only multi-word headwords of pos phrase / proverb / prep_phrase are phrasemes; they are filed under their content words too |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the build step › xmlPages yields main-namespace non-redirect pages with entities decoded |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the build step › combine: a target is linked only when VESUM or a card knows it (multi-word targets are unlinked), the counts are measured, groups are connected components of the synonym relation |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the build step › writeSynPhr: dump + kaikki → syn.json / phr.json / stats; atomic writes, the stage cache is reused on a rerun, and a torn cache is rebuilt (RS-1) |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the build step › the sidecars are sharded like the other lm/ sidecars (build-parts writes lm/syn and lm/phr from the work files) and the main build runs the step |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the cards › Синоніми й антоніми: relations grouped by sense with edition badges, linked and unlinked targets, qualifiers, source pages and licence |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the cards › no relations: the honest «немає даних (перевірено: …)» line names both editions and the fields read |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the cards › Фразеологія: units grouped by kind, variants and gloss as given, edition badge, the licence, and the note that this is the Wiktionary list (not attested / candidate) |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 the cards › lazy and on every card kind: the Огляд tab loads both components as async chunks (the first load of a card does not grow); no view imports them statically; the parity matrix lists both blocks |
+| GG-12 | tests/synphr.test.ts › GG-12 / GG-13 every row passes the evidence validator (source, locator and quote non-empty) › synClaim / phrClaim build claims with the page URL as locator and the page statement as quote, for uk and en rows alike |
+| GG-13 | tests/synphr.test.ts › GG-13 uk.wiktionary phraseology › «Усталені … фразеологізми» and «Прислів’я та приказки» rows: the unit, its variants, the gloss; the empty bullet is skipped; kinds stay apart |
+| GG-13 | tests/synphr.test.ts › GG-13 uk.wiktionary phraseology › phraseLine handles variants and the « - » gloss separator, and refuses a line without Cyrillic |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 kaikki (en.wiktionary) entries › entry-level and sense-level relations: the sense gloss goes with the row, tags are kept, a target equal to the headword or in Latin script is dropped |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 kaikki (en.wiktionary) entries › only multi-word headwords of pos phrase / proverb / prep_phrase are phrasemes; they are filed under their content words too |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the build step › xmlPages yields main-namespace non-redirect pages with entities decoded |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the build step › combine: a target is linked only when VESUM or a card knows it (multi-word targets are unlinked), the counts are measured, groups are connected components of the synonym relation |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the build step › writeSynPhr: dump + kaikki → syn.json / phr.json / stats; atomic writes, the stage cache is reused on a rerun, and a torn cache is rebuilt (RS-1) |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the build step › the sidecars are sharded like the other lm/ sidecars (build-parts writes lm/syn and lm/phr from the work files) and the main build runs the step |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the cards › Синоніми й антоніми: relations grouped by sense with edition badges, linked and unlinked targets, qualifiers, source pages and licence |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the cards › no relations: the honest «немає даних (перевірено: …)» line names both editions and the fields read |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the cards › Фразеологія: units grouped by kind, variants and gloss as given, edition badge, the licence, and the note that this is the Wiktionary list (not attested / candidate) |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 the cards › lazy and on every card kind: the Огляд tab loads both components as async chunks (the first load of a card does not grow); no view imports them statically; the parity matrix lists both blocks |
+| GG-13 | tests/synphr.test.ts › GG-12 / GG-13 every row passes the evidence validator (source, locator and quote non-empty) › synClaim / phrClaim build claims with the page URL as locator and the page statement as quote, for uk and en rows alike |
 | GG-14 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-15 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-16 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |

@@ -52,7 +52,7 @@ export const SOURCES: Record<string, Source> = {
   OSM:    { title: 'OpenStreetMap — плитки мапи', url: 'https://www.openstreetmap.org/copyright', license: 'ODbL (© учасники OpenStreetMap)' },
   KAIKKI: { title: 'Wiktextract / kaikki.org — Ukrainian (витяг з англійського Вікісловника; цитувати: Tatu Ylönen)', url: 'https://kaikki.org/dictionary/Ukrainian/', license: 'CC BY-SA 4.0' },
   OPENCORPORA: { title: 'pymorphy3-dicts-ru (OpenCorpora) — російський морфологічний словник; перевірка «слово відоме російській» (nlp/russian_check.py)', url: 'https://github.com/no-plagiarism/pymorphy3-dicts', license: 'CC BY-SA 3.0' },
-  WIKTUK: { title: 'Вікісловник (uk.wiktionary): шаблони позначок і категорії, зібрані через API', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
+  WIKTUK: { title: 'Вікісловник (uk.wiktionary): шаблони позначок і категорії, зібрані через API; GG-12/13: офіційний дамп dumps.wikimedia.org (розділи синонімів, антонімів, фразеології)', url: 'https://uk.wiktionary.org', license: 'CC BY-SA 4.0' },
   YT:     { title: 'YouTube (відео лише як вбудований програвач; аудіо не зберігається)', url: 'https://www.youtube.com' },
   WIKISPIV: { title: 'WikiSpiv (wikispiv.com) — пісенний вікі-довідник', url: 'https://wikispiv.com' },
   MAKSYM1834: { title: 'Максимович М. Украинскія народныя пѣсни. Москва, 1834 (Вікіджерела)', url: 'https://uk.wikisource.org', license: 'PD' },

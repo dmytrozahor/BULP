@@ -19,6 +19,8 @@ export const BLOCK_TAB: Record<string, TabId> = {
   stress: 'forms', etymology: 'history', senses: 'meanings', phrasemes: 'meanings', loan: 'history', derivatives: 'forms', ipa: 'forms', senseTimeline: 'meanings', labels: 'meanings',
   // CP-8
   overview: 'overview', pronunciation: 'overview', origin: 'overview', switches: 'overview', paradigm: 'forms', featureChips: 'forms', variantFamily: 'forms', contactForm: 'forms', regions: 'spread', ruFlag: 'sources',
+  // GG-12 / GG-13: both sections are in the Огляд tab
+  synonyms: 'overview', wiktPhraseology: 'overview',
 }
 /** panel DOM id (without the h-/t-/f- prefix where the panel exists on several kinds) -> tab: used to open the right tab for an #anchor */
 /** panels of the always-visible statistics sidebar (SPEC 63 OV-12): in no tab */

@@ -49,10 +49,12 @@ Cell values: **shown** = the section renders with the data the kind has; **hones
 | Родина варіантів MM-29..36 (`variantFamily`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
 | Тип контактної форми MM-36 (`contactForm`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
 | Перемикачі правопису / говору (OV) (`switches`) | shown | shown | shown | shown | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Синоніми й антоніми, uk/en Вікісловник (GG-12) (`synonyms`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
+| Фразеологія Вікісловника (GG-13) (`wiktPhraseology`) | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | honest-empty | n/a |
 
 ## Counts
 
-All 297 cells: {"shown":120,"empty":138,"na":39}. MISSING (silently absent): **0**.
+All 319 cells: {"shown":120,"empty":158,"na":41}. MISSING (silently absent): **0**.
 
 ## Before / after the CP-8 pass (the ten card-wide features added to the matrix)
 
@@ -64,6 +66,10 @@ Before (read from the code at origin/mvp da1f4656): 25 MISSING cells of the 110 
 - Not counted as missing but not honest enough: the Огляд lines «регіон пам’яток невідомий», «прикладів немає», «парадигми немає в джерелах цієї картки» did not say what was checked.
 
 After: 0 MISSING. Fixes: new `CardRules.vue` (panel «Ознаки й варіанти», id `cp-rules`: MM-16 chips via `featureMarks`, MM-29..35 pairs and variant family and MM-36 contact class via `wordRules`; the same functions as the annotator) mounted by `LemmaBlocks` (all thin kinds and the form page) and by `WordView`; `OvPronunciation` prints «Написання» through `Spell` (both switches) on every card, and for a historical spelling (ORV / archaic / Middle Ukrainian / unlinked) the line «немає даних (перевірено: …)»; `OverviewTab` paradigm, regions and example lines name what was checked.
+
+## GG-12 / GG-13 pass (2026-10-29): two new blocks
+
+Before: no card kind showed synonyms, antonyms or a Wiktionary phraseology list (the `phrasemes` block is the corpus panel of attested/candidate phrasemes, a different thing). After: 0 MISSING. `synonyms` («Синоніми й антоніми», `SynAntBlock`) and `wiktPhraseology` («Фразеологія», `PhraseologyBlock`) are mounted by the Огляд tab (`OverviewTab.vue`), so every kind that has the Огляд shows them: `honest-empty` on all ten lemma-bearing kinds (the line «немає даних (перевірено: …)» names the sources read), `n/a` on the `phrase` page (a multi-word quotation, no headword). Both components are `defineAsyncComponent` chunks and read their own sidecar shards (`lm/syn`, `lm/phr`), so the first load of a card does not grow. The matrix in `src/lib/cardParity.ts` was extended by the two blocks; the cell counts above include them.
 
 ## n/a reasons
 
