@@ -30,7 +30,7 @@ import RuBadge from '../components/RuBadge.vue'
 import { RU_TIP, ruOfWitness } from '../../core/ru-source.ts'
 import ClaimSet from '../components/ClaimSet.vue'
 import FormLegend from '../components/FormLegend.vue'
-import EpochParadigm from '../components/EpochParadigm.vue'
+const EpochParadigm = defineAsyncComponent(() => import('../components/EpochParadigm.vue'))   // PF-2: rendered after the epoch paradigms arrive
 import Collocations from '../components/Collocations.vue'
 import PhrasePanel from '../components/PhrasePanel.vue'
 import Dots from '../components/Dots.vue'
@@ -53,7 +53,7 @@ import { openPanel } from '../lib/cardTabs.ts'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
 import StressForms from '../components/StressForms.vue'
 import RegionMap from '../components/RegionMap.vue'
-import BankChip from '../components/BankChip.vue'
+const BankChip = defineAsyncComponent(() => import('../components/BankChip.vue'))   // PF-2: a small chip inside the labels panel
 import PlaceBlock from '../components/PlaceBlock.vue'
 import UsageChips from '../components/UsageChips.vue'
 import LabelsBlock from '../components/LabelsBlock.vue'   // SPEC 63 LB-5
@@ -75,13 +75,13 @@ import { sensesOf, sensesSummary } from '../lib/sensesData.ts'
 import LoanChip from '../components/LoanChip.vue'
 import IpaRow from '../components/IpaRow.vue'
 import IkavismChain from '../components/IkavismChain.vue'
-import DerivativesBlock from '../components/DerivativesBlock.vue'
+const DerivativesBlock = defineAsyncComponent(() => import('../components/DerivativesBlock.vue'))   // PF-2: the derivation block loads when the card shows it, not in the deep-link critical path
 import DimLine from '../components/DimLine.vue'
 import VariantFamilyLine from '../components/VariantFamilyLine.vue'
 import CardRules from '../components/CardRules.vue'
-import WitnessBlock from '../components/WitnessBlock.vue'
+const WitnessBlock = defineAsyncComponent(() => import('../components/WitnessBlock.vue'))   // PF-2: rendered only once the detail shard is in (v-if=full); its chunk (WitnessPanel + graph) is off the deep-link critical path
 import DialectBlock from '../components/DialectBlock.vue'
-import DerivationSteps from '../components/DerivationSteps.vue'
+const DerivationSteps = defineAsyncComponent(() => import('../components/DerivationSteps.vue'))   // PF-2: lives in the closed «Виведення» panel (mounted on first open)
 import { formsWitnesses } from '../lib/refKwic.ts'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
