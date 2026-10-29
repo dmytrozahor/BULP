@@ -1,5 +1,5 @@
 # ukr-lexicon — Phase 1: annotated statistical analysis
-Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **49 177 589**.
+Generated 2026-10-29T18:40:38.515Z by `pipelines/build.ts` (SPEC 20). Every number below carries its denominator; every method carries its citation (SPEC 00 P-1.6). **Denominator convention:** N = all word tokens of the admitted witnesses (linked + unresolved) = **49 237 909**.
 
 ## 1. Corpus
 
@@ -2392,6 +2392,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_207065 | hv_григоріи_квітка_основ_яненко | uk | 1874 | shev.modern (high) | wl.new | 48 | 5 | 92 |
 | hv_ws_207982 | hv_павлин_свєнціцькии | uk | 1874 | shev.modern (high) | wl.new | 121 | 99 | 141 |
 | hv_ws_352174 | hv_микола_троцькии | uk | 1874 | shev.modern (high) | wl.new | 5 266 | 141 | 1253 |
+| hv_ez_etnohr_6_178 | hv_гнатюк_володимир | uk | 1875 | shev.modern (high) | wl.new | 84 | 0 | 0 |
+| hv_ez_etnohr_6_199 | hv_гнатюк_володимир | uk | 1875 | shev.modern (high) | wl.new | 105 | 1 | 0 |
 | hv_ia_dragomanov2 | hv_драгоманов_михаи_ло_петрович | uk | 1875 | shev.modern (high) | wl.new | 32 793 | 3776 | 1624 |
 | hv_ws_110531 | hv_сергіи_подолинськии | uk | 1875 | shev.modern (high) | wl.new | 1 815 | 19 | 1774 |
 | hv_ws_40671 | hv_микола_ковалевськии | uk | 1875 | shev.modern (high) | wl.new | 12 963 | 106 | 5442 |
@@ -2401,6 +2403,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_569010 | hv_сидір_воробкевич | uk | 1876 | shev.modern (high) | wl.new | 4 249 | 29 | 27 |
 | hv_ws_66704 | hv_михаи_ло_драгоманов | uk | 1876 | shev.modern (high) | wl.new | 7 593 | 47 | 2360 |
 | kobzar1876 | shevchenko | uk | 1876 | shev.modern (high) | wl.new | 88 813 | 0 | 4887 |
+| hv_ez_etnohr_6_226 | hv_гнатюк_володимир | uk | 1877 | shev.modern (high) | wl.new | 101 | 0 | 0 |
+| hv_ez_etnohr_6_53 | hv_гнатюк_володимир | uk | 1877 | shev.modern (high) | wl.new | 142 | 0 | 0 |
 | hv_ia_anton0vych | hv_антонович_в | uk | 1877 | shev.modern (high) | wl.new | 2 907 | 36421 | 14162 |
 | hv_ia_chubynsky1_2 | hv_чубинськии_павло_платонович_1839_1884 | uk | 1877 | shev.modern (high) | wl.new | 31 288 | 1818 | 49457 |
 | hv_ia_chubynsky4 | hv_чубинськии_павло_платонович_1839_1884 | uk | 1877 | shev.modern (high) | wl.new | 54 102 | 11128 | 124887 |
@@ -2411,6 +2415,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_borovykovskyj1879 | hv_боровиковськии_олександр_львович_1844_1905 | uk | 1879 | shev.modern (high) | wl.new | 1 710 | 82 | 9476 |
 | hv_ws_125889 | hv_іван_нечуи_левицькии | uk | 1879 | shev.modern (high) | wl.new | 62 | 15 | 0 |
 | nechuy1879 | nechuy | uk | 1879 | shev.modern (high) | wl.new | 51 427 | 0 | 0 |
+| hv_ez_etnohr_6_223 | hv_гнатюк_володимир | uk | 1880 | shev.modern (high) | wl.new | 47 | 0 | 0 |
+| hv_ez_etnohr_6_34 | hv_ів_франко | uk | 1880 | shev.modern (high) | wl.new | 56 | 0 | 0 |
 | hv_ia_00003699 | hv_лисенко_микола_віталіи_ович_шевченко_тарас_григо | uk | 1880 | shev.modern (high) | wl.new | 4 568 | 486 | 0 |
 | hv_ia_istoriiarusskots0101goluuoft | hv_golubinski_evgeni_evstigneevich_1834_1912 | uk | 1880 | shev.modern (high) | wl.new | 222 921 | 11963 | 106045 |
 | hv_ia_istoriiarusskots0102goluuoft | hv_golubinski_evgeni_evstigneevich_1834_1912 | uk | 1880 | shev.modern (high) | wl.new | 215 101 | 12343 | 105378 |
@@ -2420,6 +2426,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_fil1882zap | hv_archive-ukr | uk | 1882 | shev.modern (high) | wl.new | 2 656 | 421 | 29973 |
 | hv_ws_208456 | hv_пантелеи_мон_куліш | uk | 1882 | shev.modern (high) | wl.new | 186 | 39 | 40 |
 | kulish1882 | kulish | uk | 1882 | shev.modern (high) | wl.new | 18 720 | 0 | 352 |
+| hv_ez_etnohr_6_277 | hv_гнатюк_володимир | uk | 1883 | shev.modern (high) | wl.new | 2 001 | 47 | 0 |
+| hv_ez_etnohr_6_62 | hv_гнатюк_володимир | uk | 1883 | shev.modern (high) | wl.new | 143 | 0 | 0 |
 | hv_ia_fl1883zap1 | hv_сырку_п_а | uk | 1883 | shev.modern (high) | wl.new | 1 091 | 58 | 2130 |
 | hv_ia_hutorn1883 | hv_хуторнии_т | uk | 1883 | shev.modern (high) | wl.new | 19 319 | 684 | 225 |
 | hv_ws_214419 | hv_wikisource-uk | uk | 1883 | shev.modern (high) | wl.new | 71 | 18 | 0 |
@@ -2431,6 +2439,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_133885 | hv_іван_франко | uk | 1884 | shev.modern (high) | wl.new | 44 | 15 | 15 |
 | hv_ws_320082 | hv_микола_гоголь | uk | 1885 | shev.modern (high) | wl.new | 125 | 8 | 39 |
 | hv_ws_38313 | hv_x | uk | 1885 | shev.modern (high) | wl.new | 75 | 4 | 49 |
+| hv_ez_etnohr_6_229 | hv_гнатюк_володимир | uk | 1886 | shev.modern (high) | wl.new | 97 | 2 | 0 |
+| hv_ez_etnohr_6_299 | hv_терлецькии | uk | 1886 | shev.modern (high) | wl.new | 828 | 9 | 0 |
 | hv_ia_pianytskye_pesny | hv_сумцов_микола_федорович_1854_1922 | uk | 1886 | shev.modern (high) | wl.new | 1 236 | 602 | 6172 |
 | hv_ia_sumtsov14 | hv_сумцов_микола_федорович_1854_1922 | uk | 1886 | shev.modern (high) | wl.new | 10 327 | 988 | 51250 |
 | hv_ws_130501 | hv_wikisource-uk | uk | 1886 | shev.modern (high) | wl.new | 105 | 57 | 724 |
@@ -2444,18 +2454,29 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_sumtsov12 | hv_сумцов_микола_федорович_1854_1922 | uk | 1888 | shev.modern (high) | wl.new | 3 477 | 490 | 44694 |
 | hv_ws_210372 | hv_наталія_кобринська | uk | 1888 | shev.modern (high) | wl.new | 3 564 | 60 | 324 |
 | hv_ws_571419 | hv_wikisource-uk | uk | 1888 | shev.modern (high) | wl.new | 17 924 | 357 | 0 |
+| hv_ez_etnohr_6_271 | hv_гнатюк_володимир | uk | 1889 | shev.modern (high) | wl.new | 80 | 0 | 0 |
+| hv_ez_etnohr_6_46 | hv_гнатюк_володимир | uk | 1889 | shev.modern (high) | wl.new | 49 | 0 | 0 |
 | hv_ia_sumtsov21 | hv_сумцов_микола_федорович_1854_1922 | uk | 1889 | shev.modern (high) | wl.new | 401 | 61 | 5690 |
 | hv_ws_213678 | hv_михаи_ло_драгоманов | uk | 1889 | shev.modern (high) | wl.new | 234 | 55 | 0 |
 | hv_ws_37508 | hv_тарас_шевченко | uk | 1889 | shev.modern (high) | wl.new | 924 | 28 | 1435 |
 | hv_ws_390139 | hv_володимир_саміи_ленко | uk | 1889 | shev.modern (high) | wl.new | 1 354 | 9 | 0 |
+| hv_ez_etnohr_4_2 | hv_гнатюк_володимир | uk | 1890 | shev.modern (high) | wl.new | 47 | 0 | 0 |
+| hv_ez_etnohr_4_3 | hv_гнатюк_володимир | uk | 1890 | shev.modern (high) | wl.new | 191 | 6 | 0 |
+| hv_ez_etnohr_6_280 | hv_гнатюк_володимир | uk | 1890 | shev.modern (high) | wl.new | 104 | 0 | 0 |
+| hv_ez_etnohr_6_60 | hv_гнатюк_володимир | uk | 1890 | shev.modern (high) | wl.new | 65 | 2 | 0 |
 | hv_ia_1890il | hv_барвінськии_о_г | uk | 1890 | shev.modern (high) | wl.new | 55 619 | 1318 | 445 |
 | hv_ia_istoriiabibliina00unse | hv_archive-ukr | uk | 1890 | shev.modern (high) | wl.new | 66 771 | 2874 | 183 |
+| hv_ez_etnohr_6_235 | hv_гнатюк_володимир | uk | 1891 | shev.modern (high) | wl.new | 53 | 0 | 0 |
 | hv_ia_dik1891 | hv_дикарів_митрофан_олексіи_ович | uk | 1891 | shev.modern (high) | wl.new | 3 795 | 279 | 10380 |
 | hv_ia_dikariv1891 | hv_дикарів_митрофан_олексіи_ович | uk | 1891 | shev.modern (high) | wl.new | 35 465 | 3355 | 69240 |
 | hv_ws_203861 | hv_чарлз_дікенс | uk | 1891 | shev.modern (high) | wl.new | 73 | 11 | 535 |
 | hv_ws_208273 | hv_wikisource-uk | uk | 1891 | shev.modern (high) | wl.new | 65 | 21 | 0 |
 | hv_ws_30370 | hv_олександр_колесса | uk | 1891 | shev.modern (high) | wl.new | 1 921 | 13 | 0 |
 | hv_ws_47156 | hv_микола_костомаров | uk | 1891 | shev.modern (high) | wl.new | 483 | 604 | 3492 |
+| hv_ez_etnohr_6_250 | hv_гнатюк_володимир | uk | 1892 | shev.modern (high) | wl.new | 142 | 0 | 0 |
+| hv_ez_etnohr_6_264 | hv_гнатюк_володимир | uk | 1892 | shev.modern (high) | wl.new | 180 | 1 | 0 |
+| hv_ez_etnohr_6_267 | hv_гнатюк_володимир | uk | 1892 | shev.modern (high) | wl.new | 905 | 6 | 0 |
+| hv_ez_etnohr_6_269 | hv_гнатюк_володимир | uk | 1892 | shev.modern (high) | wl.new | 207 | 0 | 0 |
 | hv_ws_110386 | hv_генріх_геи_не | uk | 1892 | shev.modern (high) | wl.new | 166 | 12 | 0 |
 | hv_ws_189853 | hv_леся_украі_нка | uk | 1892 | shev.modern (high) | wl.new | 277 | 101 | 0 |
 | hv_ws_192093 | hv_омелян_попович | uk | 1892 | shev.modern (high) | wl.new | 2 710 | 114 | 143 |
@@ -2476,6 +2497,8 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_30452 | hv_іван_франко | uk | 1893 | shev.modern (high) | wl.new | 237 | 5 | 55 |
 | hv_ws_49729 | hv_микола_іванишев | uk | 1893 | shev.modern (high) | wl.new | 4 596 | 74 | 282 |
 | hv_ws_52991 | hv_михаи_ло_драгоманов | uk | 1893 | shev.modern (high) | wl.new | 4 079 | 181 | 168 |
+| hv_ez_etnohr_6_111 | hv_гнатюк_володимир | uk | 1894 | shev.modern (high) | wl.new | 73 | 2 | 0 |
+| hv_ez_etnohr_6_76 | hv_гнатюк_володимир | uk | 1894 | shev.modern (high) | wl.new | 273 | 5 | 0 |
 | hv_ia_barskoestarostv00hrusgoog | hv_mykhai_lo_hrushevsʹkyi | uk | 1894 | shev.modern (high) | wl.new | 9 916 | 5417 | 101912 |
 | hv_ia_daily_prayers_greek_catholic1894 | hv_ukrainian_greek_catholic_church | uk | 1894 | shev.modern (high) | wl.new | 1 201 | 87 | 0 |
 | hv_ia_gidrogeologiches00sint | hv_sint_sov_ivan_teodorovich | uk | 1894 | shev.modern (high) | wl.new | 40 090 | 5326 | 4462 |
@@ -2488,6 +2511,33 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_28623 | hv_wikisource-uk | uk | 1894 | shev.modern (high) | wl.new | 614 | 2 | 87 |
 | hv_ws_356359 | hv_михаи_ло_павлик | uk | 1894 | shev.modern (high) | wl.new | 6 962 | 230 | 1041 |
 | hv_ws_6678 | hv_михаи_ло_старицькии | uk | 1894 | shev.modern (high) | wl.new | 24 275 | 26 | 0 |
+| hv_ez_etnohr_6_101 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 319 | 3 | 0 |
+| hv_ez_etnohr_6_109 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 51 | 0 | 0 |
+| hv_ez_etnohr_6_110 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 63 | 0 | 0 |
+| hv_ez_etnohr_6_119 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 106 | 0 | 0 |
+| hv_ez_etnohr_6_133 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 217 | 2 | 0 |
+| hv_ez_etnohr_6_15 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 107 | 0 | 0 |
+| hv_ez_etnohr_6_159 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 88 | 0 | 0 |
+| hv_ez_etnohr_6_201 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 90 | 0 | 0 |
+| hv_ez_etnohr_6_225 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 90 | 0 | 0 |
+| hv_ez_etnohr_6_228 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 56 | 1 | 0 |
+| hv_ez_etnohr_6_246 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 141 | 0 | 0 |
+| hv_ez_etnohr_6_257 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 1 341 | 7 | 0 |
+| hv_ez_etnohr_6_26 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 44 | 0 | 0 |
+| hv_ez_etnohr_6_268 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 246 | 4 | 0 |
+| hv_ez_etnohr_6_27 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 57 | 1 | 0 |
+| hv_ez_etnohr_6_273 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 199 | 0 | 0 |
+| hv_ez_etnohr_6_28 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 78 | 0 | 0 |
+| hv_ez_etnohr_6_61 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 49 | 1 | 0 |
+| hv_ez_etnohr_6_63 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 137 | 0 | 0 |
+| hv_ez_etnohr_6_71 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 109 | 1 | 0 |
+| hv_ez_etnohr_6_72 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 262 | 0 | 0 |
+| hv_ez_etnohr_6_73 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 125 | 0 | 0 |
+| hv_ez_etnohr_6_77 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 64 | 0 | 0 |
+| hv_ez_etnohr_6_87 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 44 | 0 | 0 |
+| hv_ez_etnohr_6_90 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 115 | 0 | 0 |
+| hv_ez_etnohr_6_91 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 49 | 0 | 0 |
+| hv_ez_etnohr_6_99 | hv_гнатюк_володимир | uk | 1895 | shev.modern (high) | wl.new | 155 | 0 | 0 |
 | hv_ia_1895_t_4 | hv_archive-ukr | uk | 1895 | shev.modern (high) | wl.new | 194 209 | 4332 | 681 |
 | hv_ia_cihm_30425 | hv_oles_kiv_iosyf_1860_1903 | uk | 1895 | shev.modern (high) | wl.new | 8 490 | 1952 | 113 |
 | hv_ia_etnografichnyizb1519nauk | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine_e | uk | 1895 | shev.modern (high) | wl.new | 101 976 | 2418 | 0 |
@@ -2501,6 +2551,12 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_45741 | hv_тарас_шевченко | uk | 1895 | shev.modern (high) | wl.new | 47 158 | 777 | 11454 |
 | hv_ws_46798 | hv_тарас_шевченко | uk | 1895 | shev.modern (high) | wl.new | 30 486 | 95 | 1774 |
 | hv_ws_547252 | hv_ганна_барвінок | uk | 1895 | shev.modern (high) | wl.new | 6 146 | 6 | 0 |
+| hv_ez_etnohr_03_1_1 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 2 998 | 67 | 0 |
+| hv_ez_etnohr_03_1_2 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 1 230 | 5 | 0 |
+| hv_ez_etnohr_4_1 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 149 | 3 | 0 |
+| hv_ez_etnohr_6_164 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 99 | 0 | 0 |
+| hv_ez_etnohr_6_288 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 806 | 20 | 0 |
+| hv_ez_etnohr_6_59 | hv_гнатюк_володимир | uk | 1896 | shev.modern (high) | wl.new | 80 | 0 | 0 |
 | hv_ia_1896_t_5 | hv_archive-ukr | uk | 1896 | shev.modern (high) | wl.new | 197 662 | 4301 | 824 |
 | hv_ia_31761086786126 | hv_kot_si_ubynsʹkyi_mykhai_lo_1864_1913 | uk | 1896 | shev.modern (high) | wl.new | 15 169 | 176 | 0 |
 | hv_ia_imyvevropiprotes00fran | hv_franko_ivan_1856_1916 | uk | 1896 | shev.modern (high) | wl.new | 3 969 | 80 | 0 |
@@ -2509,10 +2565,204 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ia_sumtsov8 | hv_сумцов_микола_федорович_1854_1922 | uk | 1896 | shev.modern (high) | wl.new | 306 | 44 | 3557 |
 | hv_ws_341622 | hv_ольга_кобилянська | uk | 1896 | shev.modern (high) | wl.new | 124 | 26 | 0 |
 | hv_ws_433468 | hv_wikisource-uk | uk | 1896 | shev.modern (high) | wl.new | 286 | 12 | 0 |
+| hv_ez_etnohr_6_1 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 73 | 1 | 0 |
+| hv_ez_etnohr_6_10 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 301 | 0 | 0 |
+| hv_ez_etnohr_6_100 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 147 | 0 | 0 |
+| hv_ez_etnohr_6_102 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 158 | 0 | 0 |
+| hv_ez_etnohr_6_104 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 60 | 0 | 0 |
+| hv_ez_etnohr_6_105 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 55 | 0 | 0 |
+| hv_ez_etnohr_6_106 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 63 | 1 | 0 |
+| hv_ez_etnohr_6_107 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 82 | 1 | 0 |
+| hv_ez_etnohr_6_108 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 90 | 1 | 0 |
+| hv_ez_etnohr_6_11 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 73 | 0 | 0 |
+| hv_ez_etnohr_6_112 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 62 | 1 | 0 |
+| hv_ez_etnohr_6_113 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 199 | 1 | 0 |
+| hv_ez_etnohr_6_114 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 181 | 1 | 0 |
+| hv_ez_etnohr_6_115 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 88 | 3 | 0 |
+| hv_ez_etnohr_6_116 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 90 | 0 | 0 |
+| hv_ez_etnohr_6_118 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 65 | 1 | 0 |
+| hv_ez_etnohr_6_12 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 111 | 0 | 0 |
+| hv_ez_etnohr_6_120 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 92 | 1 | 0 |
+| hv_ez_etnohr_6_122 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 168 | 1 | 0 |
+| hv_ez_etnohr_6_125 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 242 | 0 | 0 |
+| hv_ez_etnohr_6_126 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 395 | 3 | 0 |
+| hv_ez_etnohr_6_127 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 54 | 0 | 0 |
+| hv_ez_etnohr_6_128 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 146 | 0 | 0 |
+| hv_ez_etnohr_6_129 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 169 | 1 | 0 |
+| hv_ez_etnohr_6_13 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 76 | 0 | 0 |
+| hv_ez_etnohr_6_130 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 138 | 0 | 0 |
+| hv_ez_etnohr_6_131 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 154 | 1 | 0 |
+| hv_ez_etnohr_6_132 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 196 | 0 | 0 |
+| hv_ez_etnohr_6_134 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 135 | 2 | 0 |
+| hv_ez_etnohr_6_135 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 72 | 1 | 0 |
+| hv_ez_etnohr_6_136 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 113 | 0 | 0 |
+| hv_ez_etnohr_6_138 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 72 | 1 | 0 |
+| hv_ez_etnohr_6_139 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 95 | 1 | 0 |
+| hv_ez_etnohr_6_14 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 84 | 0 | 0 |
+| hv_ez_etnohr_6_140 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 175 | 0 | 0 |
+| hv_ez_etnohr_6_144 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 95 | 0 | 0 |
+| hv_ez_etnohr_6_145 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 466 | 1 | 0 |
+| hv_ez_etnohr_6_146 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 490 | 3 | 0 |
+| hv_ez_etnohr_6_149 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 226 | 2 | 0 |
+| hv_ez_etnohr_6_150 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 670 | 3 | 0 |
+| hv_ez_etnohr_6_151 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 326 | 1 | 0 |
+| hv_ez_etnohr_6_152 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 550 | 3 | 0 |
+| hv_ez_etnohr_6_153 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 90 | 1 | 0 |
+| hv_ez_etnohr_6_154 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 325 | 0 | 0 |
+| hv_ez_etnohr_6_155 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 596 | 2 | 0 |
+| hv_ez_etnohr_6_156 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 131 | 0 | 0 |
+| hv_ez_etnohr_6_157 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 152 | 0 | 0 |
+| hv_ez_etnohr_6_158 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 171 | 0 | 0 |
+| hv_ez_etnohr_6_16 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 135 | 0 | 0 |
+| hv_ez_etnohr_6_160 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 124 | 0 | 0 |
+| hv_ez_etnohr_6_161 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 120 | 1 | 0 |
+| hv_ez_etnohr_6_162 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 202 | 3 | 0 |
+| hv_ez_etnohr_6_165 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 42 | 0 | 0 |
+| hv_ez_etnohr_6_167 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 137 | 0 | 0 |
+| hv_ez_etnohr_6_168 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 215 | 0 | 0 |
+| hv_ez_etnohr_6_169 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 524 | 3 | 0 |
+| hv_ez_etnohr_6_17 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 89 | 0 | 0 |
+| hv_ez_etnohr_6_170 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 216 | 0 | 0 |
+| hv_ez_etnohr_6_171 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 309 | 0 | 0 |
+| hv_ez_etnohr_6_172 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 504 | 1 | 0 |
+| hv_ez_etnohr_6_173 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 374 | 2 | 0 |
+| hv_ez_etnohr_6_174 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 239 | 0 | 0 |
+| hv_ez_etnohr_6_179 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 44 | 0 | 0 |
+| hv_ez_etnohr_6_18 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 62 | 1 | 0 |
+| hv_ez_etnohr_6_180 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 133 | 1 | 0 |
+| hv_ez_etnohr_6_181 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 97 | 0 | 0 |
+| hv_ez_etnohr_6_182 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 143 | 0 | 0 |
+| hv_ez_etnohr_6_183 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 78 | 0 | 0 |
+| hv_ez_etnohr_6_185 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 173 | 0 | 0 |
+| hv_ez_etnohr_6_186 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 44 | 0 | 0 |
+| hv_ez_etnohr_6_187 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 47 | 0 | 0 |
+| hv_ez_etnohr_6_189 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 124 | 0 | 0 |
+| hv_ez_etnohr_6_19 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 65 | 1 | 0 |
+| hv_ez_etnohr_6_191 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 42 | 0 | 0 |
+| hv_ez_etnohr_6_195 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 49 | 1 | 0 |
+| hv_ez_etnohr_6_196 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 80 | 1 | 0 |
+| hv_ez_etnohr_6_197 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 82 | 1 | 0 |
+| hv_ez_etnohr_6_198 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 77 | 0 | 0 |
+| hv_ez_etnohr_6_2 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 70 | 0 | 0 |
+| hv_ez_etnohr_6_20 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 134 | 0 | 0 |
+| hv_ez_etnohr_6_200 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 64 | 0 | 0 |
+| hv_ez_etnohr_6_202 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 126 | 0 | 0 |
+| hv_ez_etnohr_6_203 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 81 | 0 | 0 |
+| hv_ez_etnohr_6_204 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 116 | 3 | 0 |
+| hv_ez_etnohr_6_205 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 265 | 4 | 0 |
+| hv_ez_etnohr_6_209 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 86 | 0 | 0 |
+| hv_ez_etnohr_6_21 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 70 | 2 | 0 |
+| hv_ez_etnohr_6_210 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 105 | 0 | 0 |
+| hv_ez_etnohr_6_211 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 60 | 0 | 0 |
+| hv_ez_etnohr_6_213 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 59 | 0 | 0 |
+| hv_ez_etnohr_6_215 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 50 | 0 | 0 |
+| hv_ez_etnohr_6_216 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 118 | 1 | 0 |
+| hv_ez_etnohr_6_217 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 63 | 1 | 0 |
+| hv_ez_etnohr_6_218 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 45 | 0 | 0 |
+| hv_ez_etnohr_6_219 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 146 | 2 | 0 |
+| hv_ez_etnohr_6_22 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 49 | 0 | 0 |
+| hv_ez_etnohr_6_221 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 174 | 0 | 0 |
+| hv_ez_etnohr_6_222 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 77 | 0 | 0 |
+| hv_ez_etnohr_6_224 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 153 | 3 | 0 |
+| hv_ez_etnohr_6_227 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 184 | 2 | 0 |
+| hv_ez_etnohr_6_23 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 55 | 0 | 0 |
+| hv_ez_etnohr_6_230 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 59 | 0 | 0 |
+| hv_ez_etnohr_6_231 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 79 | 0 | 0 |
+| hv_ez_etnohr_6_233 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 261 | 0 | 0 |
+| hv_ez_etnohr_6_236 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 64 | 0 | 0 |
+| hv_ez_etnohr_6_239 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 90 | 0 | 0 |
+| hv_ez_etnohr_6_24 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 49 | 0 | 0 |
+| hv_ez_etnohr_6_240 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 70 | 0 | 0 |
+| hv_ez_etnohr_6_241 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 118 | 1 | 0 |
+| hv_ez_etnohr_6_243 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 133 | 3 | 0 |
+| hv_ez_etnohr_6_245 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 78 | 1 | 0 |
+| hv_ez_etnohr_6_247 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 510 | 1 | 0 |
+| hv_ez_etnohr_6_25 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 94 | 3 | 0 |
+| hv_ez_etnohr_6_251 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 94 | 0 | 0 |
+| hv_ez_etnohr_6_254 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 78 | 0 | 0 |
+| hv_ez_etnohr_6_255 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 80 | 1 | 0 |
+| hv_ez_etnohr_6_256 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 158 | 0 | 0 |
+| hv_ez_etnohr_6_258 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 225 | 1 | 0 |
+| hv_ez_etnohr_6_259 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 341 | 0 | 0 |
+| hv_ez_etnohr_6_260 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 165 | 0 | 0 |
+| hv_ez_etnohr_6_261 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 162 | 0 | 0 |
+| hv_ez_etnohr_6_262 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 166 | 1 | 0 |
+| hv_ez_etnohr_6_263 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 140 | 0 | 0 |
+| hv_ez_etnohr_6_265 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 43 | 0 | 0 |
+| hv_ez_etnohr_6_266 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 119 | 1 | 0 |
+| hv_ez_etnohr_6_272 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 69 | 2 | 0 |
+| hv_ez_etnohr_6_275 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 473 | 5 | 0 |
+| hv_ez_etnohr_6_276 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 137 | 1 | 0 |
+| hv_ez_etnohr_6_281 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 47 | 0 | 0 |
+| hv_ez_etnohr_6_282 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 43 | 0 | 0 |
+| hv_ez_etnohr_6_284 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 105 | 1 | 0 |
+| hv_ez_etnohr_6_285 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 209 | 1 | 0 |
+| hv_ez_etnohr_6_29 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 91 | 0 | 0 |
+| hv_ez_etnohr_6_291 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 1 036 | 4 | 0 |
+| hv_ez_etnohr_6_293 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 174 | 1 | 0 |
+| hv_ez_etnohr_6_294 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 106 | 1 | 0 |
+| hv_ez_etnohr_6_295 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 62 | 0 | 0 |
+| hv_ez_etnohr_6_297 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 210 | 1 | 0 |
+| hv_ez_etnohr_6_30 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 137 | 0 | 0 |
+| hv_ez_etnohr_6_300 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 636 | 1 | 0 |
+| hv_ez_etnohr_6_31 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 78 | 0 | 0 |
+| hv_ez_etnohr_6_33 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 323 | 2 | 0 |
+| hv_ez_etnohr_6_4 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 72 | 0 | 0 |
+| hv_ez_etnohr_6_43 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 56 | 0 | 0 |
+| hv_ez_etnohr_6_48 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 50 | 0 | 0 |
+| hv_ez_etnohr_6_5 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 67 | 0 | 0 |
+| hv_ez_etnohr_6_50 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 48 | 0 | 0 |
+| hv_ez_etnohr_6_51 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 53 | 0 | 0 |
+| hv_ez_etnohr_6_52 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 55 | 0 | 0 |
+| hv_ez_etnohr_6_54 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 68 | 0 | 0 |
+| hv_ez_etnohr_6_55 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 53 | 1 | 0 |
+| hv_ez_etnohr_6_56 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 95 | 0 | 0 |
+| hv_ez_etnohr_6_57 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 198 | 0 | 0 |
+| hv_ez_etnohr_6_58 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 122 | 0 | 0 |
+| hv_ez_etnohr_6_6 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 50 | 0 | 0 |
+| hv_ez_etnohr_6_64 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 110 | 0 | 0 |
+| hv_ez_etnohr_6_65 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 189 | 0 | 0 |
+| hv_ez_etnohr_6_66 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 197 | 3 | 0 |
+| hv_ez_etnohr_6_67 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 253 | 2 | 0 |
+| hv_ez_etnohr_6_68 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 171 | 0 | 0 |
+| hv_ez_etnohr_6_7 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 124 | 0 | 0 |
+| hv_ez_etnohr_6_70 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 288 | 0 | 0 |
+| hv_ez_etnohr_6_75 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 198 | 0 | 0 |
+| hv_ez_etnohr_6_78 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 94 | 0 | 0 |
+| hv_ez_etnohr_6_79 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 176 | 1 | 0 |
+| hv_ez_etnohr_6_8 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 69 | 1 | 0 |
+| hv_ez_etnohr_6_80 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 170 | 2 | 0 |
+| hv_ez_etnohr_6_81 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 237 | 0 | 0 |
+| hv_ez_etnohr_6_82 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 166 | 1 | 0 |
+| hv_ez_etnohr_6_83 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 45 | 0 | 0 |
+| hv_ez_etnohr_6_84 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 121 | 3 | 0 |
+| hv_ez_etnohr_6_85 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 54 | 0 | 0 |
+| hv_ez_etnohr_6_86 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 60 | 1 | 0 |
+| hv_ez_etnohr_6_88 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 163 | 1 | 0 |
+| hv_ez_etnohr_6_89 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 148 | 1 | 0 |
+| hv_ez_etnohr_6_9 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 335 | 1 | 0 |
+| hv_ez_etnohr_6_92 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 57 | 1 | 0 |
+| hv_ez_etnohr_6_93 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 46 | 1 | 0 |
+| hv_ez_etnohr_6_94 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 130 | 1 | 0 |
+| hv_ez_etnohr_6_95 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 47 | 1 | 0 |
+| hv_ez_etnohr_6_96 | hv_гнатюк_володимир | uk | 1897 | shev.modern (high) | wl.new | 47 | 1 | 0 |
 | hv_ia_etnohr_03_1 | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine | uk | 1897 | shev.modern (high) | wl.new | 94 981 | 3084 | 239 |
 | hv_ia_spivannykxviii | hv_грушевськии_михаи_ло_сергіи_ович_1866_1934 | uk | 1897 | shev.modern (high) | wl.new | 22 601 | 1565 | 144 |
 | hv_ia_sumtsov17 | hv_сумцов_микола_федорович_1854_1922 | uk | 1897 | shev.modern (high) | wl.new | 1 675 | 672 | 22865 |
 | hv_ws_125046 | hv_wikisource-uk | uk | 1897 | shev.modern (high) | wl.new | 771 | 48 | 0 |
+| hv_ez_etnohr_5_1 | hv_франко_і | uk | 1898 | shev.modern (high) | wl.new | 888 | 25 | 0 |
+| hv_ez_etnohr_5_2 | hv_франко_і | uk | 1898 | shev.modern (high) | wl.new | 81 | 1 | 0 |
+| hv_ez_etnohr_6_103 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 52 | 1 | 0 |
+| hv_ez_etnohr_6_117 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 55 | 0 | 0 |
+| hv_ez_etnohr_6_123 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 92 | 0 | 0 |
+| hv_ez_etnohr_6_137 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 43 | 1 | 0 |
+| hv_ez_etnohr_6_270 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 396 | 6 | 0 |
+| hv_ez_etnohr_6_3 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 47 | 0 | 0 |
+| hv_ez_etnohr_6_32 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 58 | 1 | 0 |
+| hv_ez_etnohr_6_69 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 160 | 1 | 0 |
+| hv_ez_etnohr_6_74 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 330 | 1 | 0 |
+| hv_ez_etnohr_6_97 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 120 | 0 | 0 |
+| hv_ez_etnohr_6_98 | hv_гнатюк_володимир | uk | 1898 | shev.modern (high) | wl.new | 72 | 2 | 0 |
 | hv_ia_argonavtykomedii00tsehuoft | hv_tsehlynsky_hryhori_1853_1912 | uk | 1898 | shev.modern (high) | wl.new | 11 048 | 265 | 20 |
 | hv_ia_etnohr_4 | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine | uk | 1898 | shev.modern (high) | wl.new | 97 809 | 4197 | 100 |
 | hv_ia_etnohr_5 | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine | uk | 1898 | shev.modern (high) | wl.new | 82 830 | 5859 | 10 |
@@ -2520,6 +2770,64 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_55582 | hv_яків_шульгин | uk | 1898 | shev.modern (high) | wl.new | 877 | 54 | 278 |
 | hv_ws_598538 | hv_іван_франко | uk | 1898 | shev.modern (high) | wl.new | 3 459 | 87 | 541 |
 | r2u_umanets | dict_umanets | uk | 1893–1898 | shev.modern (high) | wl.new | 51 894 | 0 | 0 |
+| hv_ez_etnohr_6_121 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 169 | 0 | 0 |
+| hv_ez_etnohr_6_124 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 235 | 2 | 0 |
+| hv_ez_etnohr_6_141 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 124 | 0 | 0 |
+| hv_ez_etnohr_6_142 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 92 | 0 | 0 |
+| hv_ez_etnohr_6_143 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 97 | 0 | 0 |
+| hv_ez_etnohr_6_147 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 77 | 0 | 0 |
+| hv_ez_etnohr_6_148 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 97 | 0 | 0 |
+| hv_ez_etnohr_6_163 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 87 | 0 | 0 |
+| hv_ez_etnohr_6_166 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 413 | 1 | 0 |
+| hv_ez_etnohr_6_175 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 81 | 0 | 0 |
+| hv_ez_etnohr_6_176 | hv_ів_франко | uk | 1899 | shev.modern (high) | wl.new | 43 | 0 | 0 |
+| hv_ez_etnohr_6_177 | hv_ів_франко | uk | 1899 | shev.modern (high) | wl.new | 45 | 1 | 0 |
+| hv_ez_etnohr_6_184 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 81 | 1 | 0 |
+| hv_ez_etnohr_6_188 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 93 | 1 | 0 |
+| hv_ez_etnohr_6_190 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 143 | 0 | 0 |
+| hv_ez_etnohr_6_192 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 166 | 0 | 0 |
+| hv_ez_etnohr_6_193 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 53 | 1 | 0 |
+| hv_ez_etnohr_6_194 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 235 | 0 | 0 |
+| hv_ez_etnohr_6_206 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 53 | 0 | 0 |
+| hv_ez_etnohr_6_207 | hv_і_франко | uk | 1899 | shev.modern (high) | wl.new | 78 | 0 | 0 |
+| hv_ez_etnohr_6_208 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 84 | 1 | 0 |
+| hv_ez_etnohr_6_212 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 44 | 1 | 0 |
+| hv_ez_etnohr_6_214 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 147 | 0 | 0 |
+| hv_ez_etnohr_6_220 | hv_гв_франко | uk | 1899 | shev.modern (high) | wl.new | 66 | 1 | 0 |
+| hv_ez_etnohr_6_232 | hv_дарія_глібовицьна | uk | 1899 | shev.modern (high) | wl.new | 833 | 5 | 0 |
+| hv_ez_etnohr_6_234 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 2 544 | 13 | 0 |
+| hv_ez_etnohr_6_237 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 44 | 1 | 0 |
+| hv_ez_etnohr_6_238 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 90 | 1 | 0 |
+| hv_ez_etnohr_6_242 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 43 | 0 | 0 |
+| hv_ez_etnohr_6_244 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 73 | 0 | 0 |
+| hv_ez_etnohr_6_248 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 178 | 0 | 0 |
+| hv_ez_etnohr_6_249 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 464 | 6 | 0 |
+| hv_ez_etnohr_6_252 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 81 | 0 | 0 |
+| hv_ez_etnohr_6_253 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 173 | 1 | 0 |
+| hv_ez_etnohr_6_274 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 156 | 0 | 0 |
+| hv_ez_etnohr_6_278 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 46 | 1 | 0 |
+| hv_ez_etnohr_6_279 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 112 | 1 | 0 |
+| hv_ez_etnohr_6_283 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 120 | 4 | 0 |
+| hv_ez_etnohr_6_286 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 844 | 5 | 0 |
+| hv_ez_etnohr_6_287 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 388 | 3 | 0 |
+| hv_ez_etnohr_6_289 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 346 | 3 | 0 |
+| hv_ez_etnohr_6_290 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 1 215 | 3 | 0 |
+| hv_ez_etnohr_6_292 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 683 | 3 | 0 |
+| hv_ez_etnohr_6_296 | hv_ів_франко | uk | 1899 | shev.modern (high) | wl.new | 60 | 1 | 0 |
+| hv_ez_etnohr_6_298 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 1 836 | 7 | 0 |
+| hv_ez_etnohr_6_301 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 170 | 3 | 0 |
+| hv_ez_etnohr_6_35 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 119 | 0 | 0 |
+| hv_ez_etnohr_6_36 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 91 | 0 | 0 |
+| hv_ez_etnohr_6_37 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 112 | 0 | 0 |
+| hv_ez_etnohr_6_38 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 66 | 0 | 0 |
+| hv_ez_etnohr_6_39 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 107 | 1 | 0 |
+| hv_ez_etnohr_6_40 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 96 | 0 | 0 |
+| hv_ez_etnohr_6_41 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 128 | 1 | 0 |
+| hv_ez_etnohr_6_42 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 48 | 0 | 0 |
+| hv_ez_etnohr_6_44 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 107 | 1 | 0 |
+| hv_ez_etnohr_6_45 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 143 | 4 | 0 |
+| hv_ez_etnohr_6_47 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 58 | 0 | 0 |
+| hv_ez_etnohr_6_49 | hv_гнатюк_володимир | uk | 1899 | shev.modern (high) | wl.new | 136 | 0 | 0 |
 | hv_ia_etmol0gi | hv_archive-ukr | uk | 1899 | shev.modern (high) | wl.new | 80 818 | 3568 | 33 |
 | hv_ia_etnohr_6 | hv_naukove_tovarystvo_im_shevchenka_lʹviv_ukraine | uk | 1899 | shev.modern (high) | wl.new | 139 744 | 4677 | 60 |
 | hv_ia_etnohr_7 | hv_роздольськии_о_і | uk | 1899 | shev.modern (high) | wl.new | 80 876 | 1567 | 59 |
@@ -5812,25 +6120,25 @@ Generated 2026-10-22T21:10:08.655Z by `pipelines/build.ts` (SPEC 20). Every numb
 | hv_ws_564963 | hv_wikisource-uk | uk | 2026 | shev.modern (high) | wl.new | 506 | 33 | 0 |
 | hv_ws_586001 | hv_wikisource-uk | uk | 2026 | shev.modern (high) | wl.new | 347 | 29 | 0 |
 
-Admitted witnesses: 5806; N = 49 177 589. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
+Admitted witnesses: 6114; N = 49 237 909. Witnesses with a Shevchenko poem each are separate rows (each dated from the «Датується …» line of the 2003 edition).
 
 **Tokens per epoch** (a witness is counted once, in the epoch containing the midpoint of its composition range; research/09 §4 keeps both schemes apart):
 
-| epoch | name | scheme | N | share of N=49 177 589 |
+| epoch | name | scheme | N | share of N=49 237 909 |
 |---|---|---|---|---|
 | shev.proto | протоукраїнська доба | shev | 7 214 | 0.0% |
 | shev.old | давньоукраїнська доба | shev | 268 011 | 0.5% |
 | shev.early_middle | ранньосередньоукраїнська доба | shev | 239 790 | 0.5% |
 | shev.middle | середньоукраїнська доба | shev | 985 881 | 2.0% |
 | shev.late_middle | пізньосередньоукраїнська доба | shev | 559 369 | 1.1% |
-| shev.modern | новітня доба | shev | 47 117 324 | 95.8% |
+| shev.modern | новітня доба | shev | 47 177 644 | 95.8% |
 | wl.rus | давньоруська (княжа доба) | wl | 268 927 | 0.5% |
 | wl.ruthenian | староукраїнська літературна мова («руська», «проста») | wl | 1 556 131 | 3.2% |
 | wl.ruthenian.chancery | ділова староукраїнська | wl | 186 806 | 0.4% |
-| wl.new | нова українська літературна мова | wl | 47 352 531 | 96.3% |
+| wl.new | нова українська літературна мова | wl | 47 412 851 | 96.3% |
 | wl.contemporary | сучасна українська літературна мова | wl | 1 136 268 | 2.3% |
 
-**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 82 722 · 12 ст.: 144 127 · 13 ст.: 38 617 · 14 ст.: 20 083 · 15 ст.: 158 870 · 16 ст.: 299 631 · 17 ст.: 639 914 · 18 ст.: 493 223 · 19 ст.: 4 780 271 · 20 ст.: 41 584 371 · 21 ст.: 935 760
+**Tokens per century slice** (midpoint of the witness date range): 11 ст.: 82 722 · 12 ст.: 144 127 · 13 ст.: 38 617 · 14 ст.: 20 083 · 15 ст.: 158 870 · 16 ст.: 299 631 · 17 ст.: 639 914 · 18 ст.: 493 223 · 19 ст.: 4 840 591 · 20 ст.: 41 584 371 · 21 ст.: 935 760
 
 ### Exclusions (B-1.1)
 
@@ -6051,7 +6359,7 @@ Admitted witnesses: 5806; N = 49 177 589. Witnesses with a Shevchenko poem each 
 | lyst18_99 | pum18 | 235 | автор «pum18» не має запису верифікації (P-2.2) |
 | shevchenko_121 | shevchenko | 4519 | текст написано російською мовою, не українською (лексикон українських форм) — «Поэма Кого, рыдая, призову я Делить тоску, печаль мою В чужом краю, кому, тоскуя…» (http://izbornyk.org.ua/shevchenko/shev121.htm) |
 | shevchenko_123 | shevchenko | 2335 | текст написано російською мовою, не українською (лексикон українських форм) — «На память 9-го ноября 1843 года княжне Варваре Николаевне Репниной ПОСВЯЩЕНИЕ Ду…» (http://izbornyk.org.ua/shevchenko/shev123.htm) |
-Authors with a vetting record but **no admitted witness** (135): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); mazepa (vetted; атрибуція традиційна: Кочубей на допиті (квітень 1708) переказав, що архімандрит); sakovych (vetted; ректор київських братських шкіл; раніше пропущений (P-2.1, лише «віру нашу святу); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе); hv_аркадіи_зекцер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_роберт_бернз (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аркадіи_аверченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дмитро_ростовськии_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_без_автора (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_пісні (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федькович_осип_юріи_адальбертович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аполлон_маи_ков (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_лермонтов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_вільгельм_мюллер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_казки (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мазепа (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_данило_череватськии_кандидат_технічних_наук_заві (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_романов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_петренко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федір_достоєвськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_народна_пісня (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_приходько (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євгенія_ярошинська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гази_ii_ґераи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_крилов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_квливидзе (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_бекір_чобан_заде (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_толстои (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_шолом_алеи_хем (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_едвард_желіговськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_жарко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_р_гамзатов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_я_полонськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_грицько_кохнівченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_рада_безпеки_оон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_о_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_хильмі_кримчак (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_хмелецькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_борис_оречкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_алкеи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_румі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_ii (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олена_пчілка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_чмир (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олекса_бобикевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_цвєтаєва (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_анонімнии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_коростовець (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_цицерон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_артур_конан_дои_л (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дональд_туск (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_запорозькии_писар_саміи_ло_зорка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_подревськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_генрік_ібсен (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_е_фуско (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_юзеф_богдан_залеськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_апухтін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євген_чикаленко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_синод_пцу (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_г_галіна_1870_1942 (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_т_юхтія_та_ч_ванька (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мирович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_усеі_н_шаміль_тохтаргази (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_христина_алчевська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_л_меи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_осман_акчокракли (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_і_бунін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_джон_кеннеді (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нськии_народ (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іоаникіи_галятовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_софроніи_почаськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_петро_попович_гученськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_історичніі_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_леонтіи_мамонич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_зизаніи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_віталіи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гавриі_л_дорофієвич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_памво_беринда (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микита_мелешко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_андріи_із_cлуцька_мужиловськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_павло_домжив_люткович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_митура (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_ян_казимир_пашкевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_степан_беринда (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_тарасіи_земка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_давид_андрієвич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_спиридон_соболь (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_памво_беринда_тарасіи_земка_та_інші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_епітафіі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дескриптивні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_геральдичні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_панегіричні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_сатиричні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_андріи_скульськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_и_оаникіи_волкович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_седовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_афанасіи_филипович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_бутович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_и_оаникіи_галятовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_лазар_баранович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іоанн_армашенко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_варлаам_ясинськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_симеон_ставницькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_величковськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_димитріи_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_историчніє_вѣрши (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_феодосіи_софонович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
+Authors with a vetting record but **no admitted witness** (137): kochubei (excluded; Рѣчь + Доношеніе (Бантыш-Каменский, Источники малороссийской истории, ч. 2, М., ); drahomanov (vetted); anon_i14_11 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_11.htm) немає самоідент); anon_i14_12 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_12.htm) немає самоідент); anon_i14_25 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_25.htm) немає самоідент); zhoravnytsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_26.htm) немає самоідент); anon_i14_28 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_28.htm) немає самоідент); anon_i14_30 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_30.htm) немає самоідент); anon_i14_31 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_31.htm) немає самоідент); anon_i14_33 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_33.htm) немає самоідент); anon_i14_34 (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_34.htm) немає самоідент); zyzanii_l (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_35.htm) немає самоідент); nalyvaiko (excluded; у тексті сторінки (http://izbornyk.org.ua/old14_16/old14_37.htm) немає самоідент); bachynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_04.htm) немає самоідентифі); padalsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_10.htm) немає самоідентифі); levytsky_o (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_11.htm) немає самоідентифі); hryhorii (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_12.htm) немає самоідентифі); pashkovsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_13.htm) немає самоідентифі); kastevych (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_14.htm) немає самоідентифі); semerzhynsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_15.htm) немає самоідентифі); vasyl_p (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_16.htm) немає самоідентифі); holovatyi (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_18.htm) немає самоідентифі); anon_o18_21 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_21.htm) немає самоідентифі); anon_o18_22 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_22.htm) немає самоідентифі); dovhalevsky (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_28.htm) немає самоідентифі); anon_o18_36 (excluded; у тексті сторінки (http://izbornyk.org.ua/old18/old18_36.htm) немає самоідентифі); folk_lviv_songbook (provisional; інституційний автор «народна пісня/кант (регіон)»: автор не названий; місце збер); mazepa (vetted; атрибуція традиційна: Кочубей на допиті (квітень 1708) переказав, що архімандрит); vilno_brotherhood_press (vetted; інституційний автор: друкарня Віленського Свято-Духівського братства (Євє біля В); sakovych (vetted; ректор київських братських шкіл; раніше пропущений (P-2.1, лише «віру нашу святу); anon_i17_17 (excluded; московська орієнтація текстів, автор не говорить як «ми, Русь/Україна»; русь/Рос); anon_i17_16 (excluded; «від народу малоросійського» — лише редакторська/збірникова рубрика над збірним ); baranovych (excluded; польськомовний оригінал; сторінка — сучасний переклад В. Крекотня (old17.htm, пе); hv_аркадіи_зекцер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_роберт_бернз (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аркадіи_аверченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дмитро_ростовськии_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_без_автора (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_пісні (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федькович_осип_юріи_адальбертович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_аполлон_маи_ков (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_лермонтов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_вільгельм_мюллер (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нські_народні_казки (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мазепа (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_данило_череватськии_кандидат_технічних_наук_заві (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_романов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_михаи_ло_петренко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_федір_достоєвськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_народна_пісня (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_приходько (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євгенія_ярошинська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гази_ii_ґераи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_крилов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_квливидзе (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_бекір_чобан_заде (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_толстои (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_шолом_алеи_хем (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_едвард_желіговськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_жарко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_р_гамзатов (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_я_полонськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_грицько_кохнівченко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_рада_безпеки_оон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_о_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_пушкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_хильмі_кримчак (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_хмелецькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_борис_оречкін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_алкеи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_румі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_ii (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олена_пчілка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микола_чмир (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олекса_бобикевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_м_цвєтаєва (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_анонімнии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_коростовець (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_цицерон (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_артур_конан_дои_л (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дональд_туск (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_запорозькии_писар_саміи_ло_зорка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_к_подревськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_генрік_ібсен (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_е_фуско (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_юзеф_богдан_залеськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олексіи_апухтін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_євген_чикаленко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_синод_пцу (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_г_галіна_1870_1942 (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_т_юхтія_та_ч_ванька (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_мирович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_усеі_н_шаміль_тохтаргази (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_христина_алчевська (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_л_меи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_осман_акчокракли (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_і_бунін (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_джон_кеннеді (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_украі_нськии_народ (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іоаникіи_галятовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_софроніи_почаськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_петро_попович_гученськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_історичніі_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_леонтіи_мамонич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_стефан_зизаніи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_віталіи (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_гавриі_л_дорофієвич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_памво_беринда (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_микита_мелешко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_андріи_із_cлуцька_мужиловськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_павло_домжив_люткович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_олександр_митура (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_ян_казимир_пашкевич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_степан_беринда (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_тарасіи_земка (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_давид_андрієвич (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_спиридон_соболь (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_памво_беринда_тарасіи_земка_та_інші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_епітафіі (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_дескриптивні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_геральдичні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_панегіричні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_сатиричні_вірші (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_андріи_скульськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_и_оаникіи_волкович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_яків_седовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_афанасіи_филипович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_григоріи_бутович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_и_оаникіи_галятовськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_лазар_баранович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іоанн_армашенко (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_варлаам_ясинськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_симеон_ставницькии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_іван_величковськии (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_димитріи_туптало (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_историчніє_вѣрши (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі); hv_феодосіи_софонович (provisional; HV-3: автор взято з заголовка джерела (index.jsonl харвестера); P-2 самоідентифі). Only vetted/provisional authors can produce provenance (P-2.2); `kyiv_chron_12` has no author evidence of its own and is admitted only through the self-reference found in the witness (authorEvidence, B-1.1).
 
 ## 2. Linking coverage (B-2)
 
@@ -6077,13 +6385,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-286 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-291 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-292 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
-| ilarion | 6 807 | 0 | 3026 | 477 | 0 | 3304 | 51.5% |
+| ilarion | 6 807 | 0 | 2931 | 603 | 0 | 3273 | 51.9% |
 | ostromir | 193 | 114 | 0 | 13 | 0 | 66 | 65.8% |
 | sophia-147 | 14 | 0 | 6 | 6 | 0 | 2 | 85.7% |
 | sophia-67 | 11 | 0 | 4 | 1 | 0 | 6 | 45.5% |
 | sophia-90 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
-| arch | 59 953 | 0 | 24988 | 7887 | 0 | 27078 | 54.8% |
-| hv_ia_arch1092 | 14 837 | 0 | 0 | 0 | 8202 | 6635 | 55.3% |
+| arch | 59 953 | 0 | 25073 | 7890 | 0 | 26990 | 55.0% |
+| hv_ia_arch1092 | 14 837 | 0 | 0 | 0 | 8204 | 6633 | 55.3% |
 | sophia-85 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-879 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | kiev-mis | 352 | 217 | 0 | 11 | 0 | 124 | 64.8% |
@@ -6119,8 +6427,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4249 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-88 | 59 | 0 | 24 | 5 | 0 | 30 | 49.2% |
 | sophia-96 | 10 | 0 | 3 | 1 | 0 | 6 | 40.0% |
-| monomakh | 4 585 | 0 | 2114 | 627 | 0 | 1844 | 59.8% |
-| pvl_lav | 55 088 | 31393 | 0 | 4859 | 0 | 18836 | 65.8% |
+| monomakh | 4 585 | 0 | 2097 | 671 | 0 | 1817 | 60.4% |
+| pvl_lav | 55 088 | 31039 | 0 | 5073 | 0 | 18976 | 65.6% |
 | sophia-1256 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1257 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1259 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
@@ -6212,7 +6520,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2571 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-2577 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2590 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
-| sophia-2641 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-2641 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-2680 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2685 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
 | sophia-2709 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -6256,7 +6564,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3435 | 9 | 0 | 4 | 1 | 0 | 4 | 55.6% |
 | sophia-3780 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-3786 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-4075 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-4075 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-1832 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-2139 | 27 | 0 | 8 | 4 | 0 | 15 | 44.4% |
 | sophia-2437 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
@@ -6284,7 +6592,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-991 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-992 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-993 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| kievchr | 79 458 | 0 | 31827 | 9046 | 0 | 38585 | 51.4% |
+| kievchr | 79 458 | 0 | 31929 | 9046 | 0 | 38483 | 51.6% |
 | sophia-103 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
 | sophia-1037 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-105 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
@@ -6300,7 +6608,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1178 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-1179 | 10 | 0 | 7 | 0 | 0 | 3 | 70.0% |
 | sophia-1191 | 7 | 0 | 2 | 2 | 0 | 3 | 57.1% |
-| sophia-1197 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
+| sophia-1197 | 4 | 0 | 0 | 1 | 0 | 3 | 25.0% |
 | sophia-1228 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1275 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1285 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
@@ -6380,7 +6688,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3325 | 5 | 0 | 1 | 0 | 0 | 4 | 20.0% |
 | sophia-3341 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3351 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
-| sophia-3358 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
+| sophia-3358 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
 | sophia-3374 | 12 | 0 | 3 | 1 | 0 | 8 | 33.3% |
 | sophia-3394 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3405 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -6439,7 +6747,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-94 | 13 | 0 | 5 | 0 | 0 | 8 | 38.5% |
 | sophia-956 | 7 | 0 | 4 | 1 | 0 | 2 | 71.4% |
 | sophia-963 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| spi | 2 778 | 1578 | 0 | 216 | 0 | 984 | 64.6% |
+| spi | 2 778 | 1576 | 0 | 219 | 0 | 983 | 64.6% |
 | sophia-825 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-947 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-952 | 10 | 0 | 0 | 1 | 0 | 9 | 10.0% |
@@ -6659,7 +6967,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-1074 | 17 | 0 | 7 | 2 | 0 | 8 | 52.9% |
 | sophia-148 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-155 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| gvl | 37 568 | 0 | 14616 | 4616 | 0 | 18336 | 51.2% |
+| gvl | 37 568 | 0 | 14658 | 4609 | 0 | 18301 | 51.3% |
 | sophia-397 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | sophia-881 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-990 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
@@ -7059,7 +7367,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | dsu14_1_1400 | 259 | 0 | 16 | 16 | 0 | 227 | 12.4% |
 | dsu14_2_1400 | 274 | 0 | 21 | 10 | 0 | 243 | 11.3% |
 | gr14_76 | 143 | 0 | 0 | 104 | 0 | 39 | 72.7% |
-| i14_04 | 2 239 | 0 | 846 | 353 | 0 | 1040 | 53.6% |
+| i14_04 | 2 239 | 0 | 828 | 384 | 0 | 1027 | 54.1% |
 | gr15_1 | 206 | 0 | 0 | 86 | 0 | 120 | 41.7% |
 | gr15_33 | 360 | 0 | 0 | 209 | 0 | 151 | 58.1% |
 | gr14_69 | 82 | 0 | 0 | 59 | 0 | 23 | 72.0% |
@@ -7072,10 +7380,10 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | dsu14_1_1410 | 146 | 0 | 7 | 6 | 0 | 133 | 8.9% |
 | dsu14_2_1410 | 122 | 0 | 2 | 3 | 0 | 117 | 4.1% |
 | gr14_50 | 61 | 0 | 0 | 47 | 0 | 14 | 77.0% |
-| hv_ia_hypatian_codex | 124 557 | 0 | 0 | 0 | 57190 | 67367 | 45.9% |
+| hv_ia_hypatian_codex | 124 557 | 0 | 0 | 0 | 57191 | 67366 | 45.9% |
 | gr15_29 | 158 | 0 | 0 | 94 | 0 | 64 | 59.5% |
 | gr15_30 | 162 | 0 | 0 | 100 | 0 | 62 | 61.7% |
-| gr15_34 | 303 | 0 | 0 | 171 | 0 | 132 | 56.4% |
+| gr15_34 | 303 | 0 | 0 | 172 | 0 | 131 | 56.8% |
 | gr15_35 | 225 | 0 | 0 | 153 | 0 | 72 | 68.0% |
 | gr15_36 | 80 | 0 | 0 | 42 | 0 | 38 | 52.5% |
 | sophia-110 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
@@ -7172,7 +7480,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-395 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-398 | 4 | 0 | 2 | 2 | 0 | 0 | 100.0% |
 | sophia-406 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
-| dsu14_1_nd | 2 175 | 0 | 114 | 89 | 0 | 1972 | 9.3% |
+| dsu14_1_nd | 2 175 | 0 | 117 | 89 | 0 | 1969 | 9.5% |
 | dsu14_2_nd | 2 386 | 0 | 116 | 56 | 0 | 2214 | 7.2% |
 | sophia-1021 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1030 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
@@ -7328,7 +7636,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-596 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-617 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
 | gv16_1 | 209 | 0 | 0 | 121 | 0 | 88 | 57.9% |
-| i14_07 | 896 | 0 | 347 | 198 | 0 | 351 | 60.8% |
+| i14_07 | 896 | 0 | 341 | 205 | 0 | 350 | 60.9% |
 | sophia-321 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-322 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | gv16_2 | 342 | 0 | 0 | 193 | 0 | 149 | 56.4% |
@@ -7360,7 +7668,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | gv16_28 | 585 | 0 | 0 | 355 | 0 | 230 | 60.7% |
 | gv16_29 | 311 | 0 | 0 | 164 | 0 | 147 | 52.7% |
 | gv16_30 | 683 | 0 | 0 | 401 | 0 | 282 | 58.7% |
-| i14_10 | 1 243 | 0 | 473 | 253 | 0 | 517 | 58.4% |
+| i14_10 | 1 243 | 0 | 472 | 254 | 0 | 517 | 58.4% |
 | gv16_31 | 224 | 0 | 0 | 126 | 0 | 98 | 56.3% |
 | gv16_32 | 554 | 0 | 0 | 317 | 0 | 237 | 57.2% |
 | gv16_33 | 1 370 | 0 | 0 | 828 | 0 | 542 | 60.4% |
@@ -7382,7 +7690,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | gv16_49 | 549 | 0 | 0 | 335 | 0 | 214 | 61.0% |
 | gv16_50 | 369 | 0 | 0 | 242 | 0 | 127 | 65.6% |
 | gv16_51 | 581 | 0 | 0 | 343 | 0 | 238 | 59.0% |
-| i14_06 | 3 558 | 0 | 1403 | 747 | 0 | 1408 | 60.4% |
+| i14_06 | 3 558 | 0 | 1403 | 752 | 0 | 1403 | 60.6% |
 | gv16_52 | 437 | 0 | 0 | 242 | 0 | 195 | 55.4% |
 | gv16_53 | 748 | 0 | 0 | 446 | 0 | 302 | 59.6% |
 | gv16_54 | 851 | 0 | 0 | 515 | 0 | 336 | 60.5% |
@@ -7456,40 +7764,40 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | gv16_122 | 1 224 | 0 | 0 | 688 | 0 | 536 | 56.2% |
 | gv16_123 | 605 | 0 | 0 | 361 | 0 | 244 | 59.7% |
 | gv16_124 | 486 | 0 | 0 | 253 | 0 | 233 | 52.1% |
-| i14_09 | 7 151 | 0 | 2318 | 2028 | 0 | 2805 | 60.8% |
+| i14_09 | 7 151 | 0 | 2291 | 2056 | 0 | 2804 | 60.8% |
 | sophia-1476 | 7 | 0 | 2 | 1 | 0 | 4 | 42.9% |
 | i14_13 | 109 | 0 | 37 | 24 | 0 | 48 | 56.0% |
 | gv16_125 | 1 123 | 0 | 0 | 719 | 0 | 404 | 64.0% |
-| hv_lit_old14_16_old14_12 | 786 | 0 | 0 | 544 | 0 | 242 | 69.2% |
-| i14_27 | 733 | 0 | 273 | 163 | 0 | 297 | 59.5% |
-| rib19_poslanie_latyn | 5 783 | 0 | 0 | 3511 | 0 | 2272 | 60.7% |
-| i14_14 | 12 813 | 0 | 4921 | 2911 | 0 | 4981 | 61.1% |
-| i14_15 | 4 594 | 0 | 1566 | 913 | 0 | 2115 | 54.0% |
+| hv_lit_old14_16_old14_12 | 786 | 0 | 0 | 547 | 0 | 239 | 69.6% |
+| i14_27 | 733 | 0 | 261 | 177 | 0 | 295 | 59.8% |
+| rib19_poslanie_latyn | 5 783 | 0 | 0 | 3514 | 0 | 2269 | 60.8% |
+| i14_14 | 12 813 | 0 | 4846 | 3007 | 0 | 4960 | 61.3% |
+| i14_15 | 4 594 | 0 | 1514 | 969 | 0 | 2111 | 54.0% |
 | sophia-341 | 2 | 0 | 1 | 1 | 0 | 0 | 100.0% |
 | hv_lit_old14_16_old14_33 | 1 907 | 0 | 0 | 1292 | 0 | 615 | 67.8% |
 | hv_lit_old14_16_old14_34 | 64 | 0 | 0 | 41 | 0 | 23 | 64.1% |
-| hv_lit_ukrpoetry_anto31 | 267 | 0 | 0 | 172 | 0 | 95 | 64.4% |
-| i14_29 | 816 | 0 | 228 | 228 | 0 | 360 | 55.9% |
+| hv_lit_ukrpoetry_anto31 | 267 | 0 | 0 | 173 | 0 | 94 | 64.8% |
+| i14_29 | 816 | 0 | 226 | 230 | 0 | 360 | 55.9% |
 | sophia-461 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | hv_ia_gramat0slovenska | 19 381 | 0 | 0 | 0 | 11153 | 8228 | 57.5% |
 | hv_lit_old14_16_old14_35 | 150 | 0 | 0 | 98 | 0 | 52 | 65.3% |
 | hv_ws_40554 | 67 | 0 | 0 | 0 | 55 | 12 | 82.1% |
 | hv_ws_68448 | 2 002 | 0 | 0 | 0 | 178 | 1824 | 8.9% |
-| i14_16 | 1 525 | 0 | 576 | 362 | 0 | 587 | 61.5% |
+| i14_16 | 1 525 | 0 | 566 | 373 | 0 | 586 | 61.6% |
 | rib19_ekthesis | 9 960 | 0 | 0 | 3367 | 0 | 6593 | 33.8% |
-| i14_18 | 6 037 | 0 | 1976 | 1700 | 0 | 2361 | 60.9% |
-| i14_36 | 86 | 0 | 28 | 5 | 0 | 53 | 38.4% |
-| rib19_istoria_florent | 9 722 | 0 | 0 | 5277 | 0 | 4445 | 54.3% |
-| rib19_otpis_klyryka | 13 228 | 0 | 0 | 7028 | 0 | 6200 | 53.1% |
+| i14_18 | 6 037 | 0 | 1953 | 1724 | 0 | 2360 | 60.9% |
+| i14_36 | 86 | 0 | 27 | 6 | 0 | 53 | 38.4% |
+| rib19_istoria_florent | 9 722 | 0 | 0 | 5289 | 0 | 4433 | 54.4% |
+| rib19_otpis_klyryka | 13 228 | 0 | 0 | 7043 | 0 | 6185 | 53.2% |
 | rib19_potij_lyst | 11 980 | 0 | 0 | 5910 | 0 | 6070 | 49.3% |
-| i14_17 | 12 564 | 0 | 4491 | 3219 | 0 | 4854 | 61.4% |
-| i14_21 | 6 119 | 0 | 2272 | 2232 | 0 | 1615 | 73.6% |
+| i14_17 | 12 564 | 0 | 4406 | 3337 | 0 | 4821 | 61.6% |
+| i14_21 | 6 119 | 0 | 2270 | 2234 | 0 | 1615 | 73.6% |
 | rib19_antirrhisis | 44 420 | 0 | 0 | 29169 | 0 | 15251 | 65.7% |
 | rib19_potij_otpovid | 17 207 | 0 | 0 | 8480 | 0 | 8727 | 49.3% |
 | sophia-296 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
 | sophia-302 | 14 | 0 | 2 | 5 | 0 | 7 | 50.0% |
 | sophia-894 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| i14_05b | 4 412 | 0 | 1599 | 1336 | 0 | 1477 | 66.5% |
+| i14_05b | 4 412 | 0 | 1588 | 1352 | 0 | 1472 | 66.6% |
 | sophia-1047 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-107 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-1097 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
@@ -7600,7 +7908,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4253 | 2 | 0 | 0 | 2 | 0 | 0 | 100.0% |
 | sophia-4297 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4298 | 3 | 0 | 0 | 1 | 0 | 2 | 33.3% |
-| sophia-4299 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
+| sophia-4299 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-4306 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-4319 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
 | sophia-4360 | 4 | 0 | 3 | 1 | 0 | 0 | 100.0% |
@@ -7621,7 +7929,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-806 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-82 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
 | sophia-83 | 6 | 0 | 2 | 3 | 0 | 1 | 83.3% |
-| vyshensky | 25 620 | 0 | 10110 | 4327 | 0 | 11183 | 56.4% |
+| vyshensky | 25 620 | 0 | 9919 | 4544 | 0 | 11157 | 56.5% |
 | sophia-173 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | i14_38 | 61 | 0 | 32 | 9 | 0 | 20 | 67.2% |
 | sophia-2980 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
@@ -7629,11 +7937,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-4023 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-2982 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | hv_lit_old14_16_old14_37 | 1 036 | 0 | 0 | 756 | 0 | 280 | 73.0% |
-| i17_01 | 15 746 | 0 | 5609 | 5369 | 0 | 4768 | 69.7% |
+| i17_01 | 15 746 | 0 | 5483 | 5506 | 0 | 4757 | 69.8% |
 | sophia-3342 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-3346 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
-| i14_39 | 436 | 0 | 150 | 109 | 0 | 177 | 59.4% |
-| i14_20 | 3 230 | 0 | 1121 | 700 | 0 | 1409 | 56.4% |
+| i14_39 | 436 | 0 | 148 | 112 | 0 | 176 | 59.6% |
+| i14_20 | 3 230 | 0 | 1097 | 724 | 0 | 1409 | 56.4% |
 | i14_40 | 38 | 0 | 23 | 4 | 0 | 11 | 71.1% |
 | sophia-1294 | 4 | 0 | 1 | 2 | 0 | 1 | 75.0% |
 | sophia-3143 | 3 | 0 | 0 | 2 | 0 | 1 | 66.7% |
@@ -7645,16 +7953,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-2215 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
 | sophia-1938 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2229 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
-| hv_ia_g1619s | 47 905 | 0 | 0 | 0 | 21709 | 26196 | 45.3% |
+| hv_ia_g1619s | 47 905 | 0 | 0 | 0 | 21711 | 26194 | 45.3% |
 | sophia-4053 | 5 | 0 | 1 | 1 | 0 | 3 | 40.0% |
 | sophia-1003 | 4 | 0 | 1 | 1 | 0 | 2 | 50.0% |
 | sophia-437 | 2 | 0 | 0 | 1 | 0 | 1 | 50.0% |
-| i17_03 | 5 289 | 0 | 1786 | 1776 | 0 | 1727 | 67.3% |
-| kopystensky_kniga_viry | 115 796 | 0 | 0 | 58181 | 0 | 57615 | 50.2% |
+| i17_03 | 5 289 | 0 | 1762 | 1803 | 0 | 1724 | 67.4% |
+| kopystensky_kniga_viry | 115 796 | 0 | 0 | 58185 | 0 | 57611 | 50.2% |
 | sophia-2183 | 4 | 0 | 2 | 1 | 0 | 1 | 75.0% |
-| hv_lit_ukrpoetry_anto37 | 2 348 | 0 | 0 | 1616 | 0 | 732 | 68.8% |
+| hv_lit_ukrpoetry_anto37 | 2 348 | 0 | 0 | 1618 | 0 | 730 | 68.9% |
 | hv_ws_44720 | 164 | 0 | 0 | 0 | 157 | 7 | 95.7% |
-| rib4_palinodia | 181 973 | 0 | 0 | 112740 | 0 | 69233 | 62.0% |
+| rib4_palinodia | 181 973 | 0 | 0 | 112766 | 0 | 69207 | 62.0% |
 | sophia-3619 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-4034 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
 | sophia-3863 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -7666,14 +7974,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-865 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-870 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3973 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
-| hv_lit_ukrpoetry_anto58 | 1 802 | 0 | 0 | 1249 | 0 | 553 | 69.3% |
+| hv_lit_ukrpoetry_anto58 | 1 802 | 0 | 0 | 1251 | 0 | 551 | 69.4% |
 | sophia-2132 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-3647 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3648 | 1 | 0 | 1 | 0 | 0 | 0 | 100.0% |
 | sophia-3857 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | sophia-1245 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| psalt1643 | 28 834 | 0 | 0 | 18388 | 0 | 10446 | 63.8% |
-| hv_lit_ukrpoetry_anto53 | 4 896 | 0 | 0 | 3611 | 0 | 1285 | 73.8% |
+| psalt1643 | 28 834 | 0 | 0 | 18521 | 0 | 10313 | 64.2% |
+| hv_lit_ukrpoetry_anto53 | 4 896 | 0 | 0 | 3613 | 0 | 1283 | 73.8% |
 | sophia-446 | 11 | 0 | 4 | 2 | 0 | 5 | 54.5% |
 | hv_ws_514045 | 57 | 0 | 0 | 0 | 56 | 1 | 98.2% |
 | sophia-182 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
@@ -7693,22 +8001,22 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-180 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-2019 | 6 | 0 | 2 | 0 | 0 | 4 | 33.3% |
 | sophia-3902 | 6 | 0 | 2 | 2 | 0 | 2 | 66.7% |
-| hv_ia_halyatovsky3 | 117 752 | 0 | 0 | 0 | 65445 | 52307 | 55.6% |
+| hv_ia_halyatovsky3 | 117 752 | 0 | 0 | 0 | 65446 | 52306 | 55.6% |
 | sophia-283 | 7 | 0 | 1 | 1 | 0 | 5 | 28.6% |
-| hv_lit_ukrpoetry_anto48 | 1 187 | 0 | 0 | 842 | 0 | 345 | 70.9% |
+| hv_lit_ukrpoetry_anto48 | 1 187 | 0 | 0 | 845 | 0 | 342 | 71.2% |
 | sophia-129 | 11 | 0 | 1 | 4 | 0 | 6 | 45.5% |
 | sophia-725 | 6 | 0 | 3 | 0 | 0 | 3 | 50.0% |
 | sophia-2713 | 4 | 0 | 0 | 2 | 0 | 2 | 50.0% |
 | sophia-128 | 9 | 0 | 2 | 1 | 0 | 6 | 33.3% |
 | sophia-2017 | 8 | 0 | 0 | 2 | 0 | 6 | 25.0% |
 | hv_lit_ukrpoetry_anto67 | 346 | 0 | 0 | 248 | 0 | 98 | 71.7% |
-| i17_29 | 4 046 | 0 | 1575 | 1281 | 0 | 1190 | 70.6% |
+| i17_29 | 4 046 | 0 | 1569 | 1288 | 0 | 1189 | 70.6% |
 | sophia-2806 | 3 | 0 | 0 | 0 | 0 | 3 | 0.0% |
 | sophia-163 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-208 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | hv_ia_halyatovsky2 | 13 169 | 0 | 0 | 0 | 5137 | 8032 | 39.0% |
 | sophia-4066 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
-| i17_06 | 2 149 | 0 | 812 | 653 | 0 | 684 | 68.2% |
+| i17_06 | 2 149 | 0 | 789 | 676 | 0 | 684 | 68.2% |
 | sophia-135 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
 | sophia-384 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | sophia-44 | 10 | 0 | 4 | 1 | 0 | 5 | 50.0% |
@@ -7756,7 +8064,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-334 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-338 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-339 | 4 | 0 | 3 | 0 | 0 | 1 | 75.0% |
-| i17_20 | 3 305 | 0 | 1048 | 992 | 0 | 1265 | 61.7% |
+| i17_20 | 3 305 | 0 | 1026 | 1016 | 0 | 1263 | 61.8% |
 | sophia-1383 | 3 | 0 | 1 | 0 | 0 | 2 | 33.3% |
 | hv_ws_42920 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
 | hv_ws_42921 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
@@ -7768,9 +8076,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_42927 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
 | hv_ws_42928 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
 | hv_ws_42929 | 41 | 0 | 0 | 0 | 41 | 0 | 100.0% |
-| hv_ia_halyatovsky1 | 32 452 | 0 | 0 | 0 | 16897 | 15555 | 52.1% |
-| i14_32 | 6 164 | 0 | 2985 | 1227 | 0 | 1952 | 68.3% |
-| i17_28 | 3 450 | 0 | 1421 | 1133 | 0 | 896 | 74.0% |
+| hv_ia_halyatovsky1 | 32 452 | 0 | 0 | 0 | 16898 | 15554 | 52.1% |
+| i14_32 | 6 164 | 0 | 2945 | 1275 | 0 | 1944 | 68.5% |
+| i17_28 | 3 450 | 0 | 1414 | 1140 | 0 | 896 | 74.0% |
 | sophia-902 | 5 | 0 | 2 | 1 | 0 | 2 | 60.0% |
 | sophia-1014 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-1038 | 4 | 0 | 1 | 0 | 0 | 3 | 25.0% |
@@ -8046,7 +8354,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-3698 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-3699 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-370 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| sophia-371 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
+| sophia-371 | 1 | 0 | 0 | 1 | 0 | 0 | 100.0% |
 | sophia-3719 | 3 | 0 | 1 | 1 | 0 | 1 | 66.7% |
 | sophia-3720 | 3 | 0 | 2 | 0 | 0 | 1 | 66.7% |
 | sophia-3732 | 3 | 0 | 2 | 1 | 0 | 0 | 100.0% |
@@ -8231,45 +8539,45 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | sophia-968 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-971 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
 | sophia-997 | 2 | 0 | 1 | 0 | 0 | 1 | 50.0% |
-| samovydets | 37 974 | 0 | 12963 | 8472 | 0 | 16539 | 56.4% |
-| o18_26 | 9 404 | 0 | 0 | 0 | 6487 | 2917 | 69.0% |
-| i17_24 | 3 902 | 0 | 1496 | 1186 | 0 | 1220 | 68.7% |
+| samovydets | 37 974 | 0 | 12921 | 8518 | 0 | 16535 | 56.5% |
+| o18_26 | 9 404 | 0 | 0 | 0 | 6488 | 2916 | 69.0% |
+| i17_24 | 3 902 | 0 | 1487 | 1195 | 0 | 1220 | 68.7% |
 | pripovisti | 9 180 | 0 | 2704 | 2256 | 0 | 4220 | 54.0% |
 | hv_ia_constitution1710 | 4 109 | 0 | 0 | 0 | 1914 | 2195 | 46.6% |
-| hv_orig_hrabianka_1853 | 76 200 | 0 | 0 | 43820 | 0 | 32380 | 57.5% |
+| hv_orig_hrabianka_1853 | 76 200 | 0 | 0 | 43847 | 0 | 32353 | 57.5% |
 | o18_37 | 11 821 | 0 | 0 | 0 | 8910 | 2911 | 75.4% |
 | o18_01 | 1 269 | 0 | 0 | 0 | 896 | 373 | 70.6% |
 | sophia-56 | 1 | 0 | 0 | 0 | 0 | 1 | 0.0% |
-| hv_lit_ukrpoetry_anto80 | 1 047 | 0 | 0 | 867 | 0 | 180 | 82.8% |
-| hv_orig_velychko_t1_1848 | 108 157 | 0 | 0 | 58948 | 0 | 49209 | 54.5% |
-| hv_orig_velychko_t2_1851 | 126 772 | 0 | 0 | 68853 | 0 | 57919 | 54.3% |
+| hv_lit_ukrpoetry_anto80 | 1 047 | 0 | 0 | 868 | 0 | 179 | 82.9% |
+| hv_orig_velychko_t1_1848 | 108 157 | 0 | 0 | 58979 | 0 | 49178 | 54.5% |
+| hv_orig_velychko_t2_1851 | 126 772 | 0 | 0 | 68887 | 0 | 57885 | 54.3% |
 | o18_33 | 17 416 | 0 | 0 | 0 | 14231 | 3185 | 81.7% |
 | o18_27 | 4 257 | 0 | 0 | 0 | 3066 | 1191 | 72.0% |
 | sophia-69 | 4 | 0 | 0 | 0 | 0 | 4 | 0.0% |
 | hv_ws_46468 | 1 290 | 0 | 0 | 0 | 566 | 724 | 43.9% |
-| o18_29 | 3 645 | 0 | 0 | 0 | 2598 | 1047 | 71.3% |
+| o18_29 | 3 645 | 0 | 0 | 0 | 2599 | 1046 | 71.3% |
 | hv_ws_46491 | 2 335 | 0 | 0 | 0 | 1494 | 841 | 64.0% |
 | o18_35 | 4 175 | 0 | 0 | 0 | 3223 | 952 | 77.2% |
 | hv_ws_28406 | 198 | 0 | 0 | 0 | 191 | 7 | 96.5% |
 | hv_ws_40562 | 92 | 0 | 0 | 0 | 65 | 27 | 70.7% |
-| hv_lit_skovoroda_skov108 | 751 | 0 | 0 | 443 | 0 | 308 | 59.0% |
+| hv_lit_skovoroda_skov108 | 751 | 0 | 0 | 450 | 0 | 301 | 59.9% |
 | o18_30 | 4 875 | 0 | 0 | 0 | 4285 | 590 | 87.9% |
-| hv_lit_skovoroda_skov109 | 3 016 | 0 | 0 | 1930 | 0 | 1086 | 64.0% |
-| hv_lit_skovoroda_skov105 | 2 569 | 0 | 0 | 1550 | 0 | 1019 | 60.3% |
-| hv_lit_skovoroda_skov116 | 3 210 | 0 | 0 | 1912 | 0 | 1298 | 59.6% |
-| hv_lit_skovoroda_skov201 | 3 117 | 0 | 0 | 1754 | 0 | 1363 | 56.3% |
-| hv_ia_chulkov1780 | 5 391 | 0 | 0 | 0 | 2520 | 2871 | 46.7% |
+| hv_lit_skovoroda_skov109 | 3 016 | 0 | 0 | 1960 | 0 | 1056 | 65.0% |
+| hv_lit_skovoroda_skov105 | 2 569 | 0 | 0 | 1555 | 0 | 1014 | 60.5% |
+| hv_lit_skovoroda_skov116 | 3 210 | 0 | 0 | 1924 | 0 | 1286 | 59.9% |
+| hv_lit_skovoroda_skov201 | 3 117 | 0 | 0 | 1758 | 0 | 1359 | 56.4% |
+| hv_ia_chulkov1780 | 5 391 | 0 | 0 | 0 | 2537 | 2854 | 47.1% |
 | hv_ws_40927 | 45 | 0 | 0 | 0 | 39 | 6 | 86.7% |
 | hv_ws_40928 | 49 | 0 | 0 | 0 | 44 | 5 | 89.8% |
 | o18_17 | 2 504 | 0 | 0 | 0 | 1989 | 515 | 79.4% |
-| hv_lit_skovoroda_skov103 | 4 073 | 0 | 0 | 2655 | 0 | 1418 | 65.2% |
+| hv_lit_skovoroda_skov103 | 4 073 | 0 | 0 | 2663 | 0 | 1410 | 65.4% |
 | hv_ws_40947 | 49 | 0 | 0 | 0 | 43 | 6 | 87.8% |
 | hv_ws_40948 | 41 | 0 | 0 | 0 | 40 | 1 | 97.6% |
-| hv_lit_skovoroda_skov206 | 1 980 | 0 | 0 | 1165 | 0 | 815 | 58.8% |
+| hv_lit_skovoroda_skov206 | 1 980 | 0 | 0 | 1180 | 0 | 800 | 59.6% |
 | sophia-132 | 2 | 0 | 0 | 0 | 0 | 2 | 0.0% |
-| eneida1798 | 12 638 | 0 | 0 | 0 | 10310 | 2328 | 81.6% |
-| hv_ia_enejida_1798 | 17 094 | 0 | 0 | 0 | 8991 | 8103 | 52.6% |
-| hv_ia_eneyida1798 | 16 991 | 0 | 0 | 0 | 9100 | 7891 | 53.6% |
+| eneida1798 | 12 638 | 0 | 0 | 0 | 10348 | 2290 | 81.9% |
+| hv_ia_enejida_1798 | 17 094 | 0 | 0 | 0 | 9006 | 8088 | 52.7% |
+| hv_ia_eneyida1798 | 16 991 | 0 | 0 | 0 | 9117 | 7874 | 53.7% |
 | hv_ws_23660 | 81 | 0 | 0 | 0 | 47 | 34 | 58.0% |
 | o18_20 | 6 848 | 0 | 0 | 0 | 6081 | 767 | 88.8% |
 | o18_23 | 13 694 | 0 | 0 | 0 | 12163 | 1531 | 88.8% |
@@ -8279,31 +8587,31 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_historieopanntri00unse | 2 027 | 0 | 0 | 0 | 1552 | 475 | 76.6% |
 | sophia-351 | 9 | 0 | 0 | 0 | 6 | 3 | 66.7% |
 | hv_ws_519672 | 192 | 0 | 0 | 0 | 179 | 13 | 93.2% |
-| hv_ia_1806pr1 | 17 177 | 0 | 0 | 0 | 8249 | 8928 | 48.0% |
-| eneida1808 | 12 397 | 0 | 0 | 0 | 10126 | 2271 | 81.7% |
-| hv_ia_eneyida1809 | 11 482 | 0 | 0 | 0 | 5462 | 6020 | 47.6% |
-| hv_ia_burlesk4 | 2 134 | 0 | 0 | 0 | 1016 | 1118 | 47.6% |
-| hv_ia_1815_1 | 14 156 | 0 | 0 | 0 | 6965 | 7191 | 49.2% |
-| hv_ia_1815_2 | 15 291 | 0 | 0 | 0 | 7656 | 7635 | 50.1% |
-| hv_ia_hrammatyka1818 | 6 584 | 0 | 0 | 0 | 2284 | 4300 | 34.7% |
+| hv_ia_1806pr1 | 17 177 | 0 | 0 | 0 | 8265 | 8912 | 48.1% |
+| eneida1808 | 12 397 | 0 | 0 | 0 | 10164 | 2233 | 82.0% |
+| hv_ia_eneyida1809 | 11 482 | 0 | 0 | 0 | 5465 | 6017 | 47.6% |
+| hv_ia_burlesk4 | 2 134 | 0 | 0 | 0 | 1019 | 1115 | 47.8% |
+| hv_ia_1815_1 | 14 156 | 0 | 0 | 0 | 6972 | 7184 | 49.3% |
+| hv_ia_1815_2 | 15 291 | 0 | 0 | 0 | 7671 | 7620 | 50.2% |
+| hv_ia_hrammatyka1818 | 6 584 | 0 | 0 | 0 | 2286 | 4298 | 34.7% |
 | hv_ws_37663 | 108 | 0 | 0 | 0 | 77 | 31 | 71.3% |
 | hv_ws_40481 | 476 | 0 | 0 | 0 | 445 | 31 | 93.5% |
-| hv_ia_1822_17_1 | 14 899 | 0 | 0 | 0 | 5527 | 9372 | 37.1% |
+| hv_ia_1822_17_1 | 14 899 | 0 | 0 | 0 | 5540 | 9359 | 37.2% |
 | hv_ia_bantysh1822 | 4 223 | 0 | 0 | 0 | 1442 | 2781 | 34.1% |
 | hv_ia_hrammatyka1822 | 740 | 0 | 0 | 0 | 252 | 488 | 34.1% |
 | hv_ws_41318 | 1 222 | 0 | 0 | 0 | 1115 | 107 | 91.2% |
-| hv_ia_1823_24_11 | 14 697 | 0 | 0 | 0 | 4721 | 9976 | 32.1% |
-| hv_ia_bl1825_14_26 | 7 904 | 0 | 0 | 0 | 2441 | 5463 | 30.9% |
+| hv_ia_1823_24_11 | 14 697 | 0 | 0 | 0 | 4734 | 9963 | 32.2% |
+| hv_ia_bl1825_14_26 | 7 904 | 0 | 0 | 0 | 2464 | 5440 | 31.2% |
 | o18_19 | 191 | 0 | 0 | 0 | 181 | 10 | 94.8% |
 | hv_ws_2945 | 524 | 0 | 0 | 0 | 509 | 15 | 97.1% |
-| kvitka_suplika | 763 | 0 | 0 | 0 | 370 | 393 | 48.5% |
-| hv_ws_38010 | 1 095 | 0 | 0 | 0 | 651 | 444 | 59.5% |
-| hv_ws_527895 | 719 | 0 | 0 | 0 | 465 | 254 | 64.7% |
-| kvitka_dobre_roby | 11 745 | 0 | 0 | 0 | 4548 | 7197 | 38.7% |
-| kvitka_konotopska_vidma | 25 817 | 0 | 0 | 0 | 10260 | 15557 | 39.7% |
-| kvitka_marusia | 28 468 | 0 | 0 | 0 | 11692 | 16776 | 41.1% |
-| kvitka_mertvetsky_velykden | 7 464 | 0 | 0 | 0 | 3036 | 4428 | 40.7% |
-| kvitka_saldatsky_patret | 6 620 | 0 | 0 | 0 | 2628 | 3992 | 39.7% |
+| kvitka_suplika | 763 | 0 | 0 | 0 | 371 | 392 | 48.6% |
+| hv_ws_38010 | 1 095 | 0 | 0 | 0 | 656 | 439 | 59.9% |
+| hv_ws_527895 | 719 | 0 | 0 | 0 | 467 | 252 | 65.0% |
+| kvitka_dobre_roby | 11 745 | 0 | 0 | 0 | 4569 | 7176 | 38.9% |
+| kvitka_konotopska_vidma | 25 817 | 0 | 0 | 0 | 10314 | 15503 | 40.0% |
+| kvitka_marusia | 28 468 | 0 | 0 | 0 | 11764 | 16704 | 41.3% |
+| kvitka_mertvetsky_velykden | 7 464 | 0 | 0 | 0 | 3058 | 4406 | 41.0% |
+| kvitka_saldatsky_patret | 6 620 | 0 | 0 | 0 | 2651 | 3969 | 40.0% |
 | song_baida | 191 | 0 | 0 | 0 | 176 | 15 | 92.1% |
 | song_yikhav | 87 | 0 | 0 | 0 | 77 | 10 | 88.5% |
 | song_zasvystaly | 125 | 0 | 0 | 0 | 110 | 15 | 88.0% |
@@ -8312,9 +8620,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_51058 | 91 | 0 | 0 | 0 | 60 | 31 | 65.9% |
 | hv_ws_185802 | 72 | 0 | 0 | 0 | 49 | 23 | 68.1% |
 | hv_ws_6339 | 107 | 0 | 0 | 0 | 81 | 26 | 75.7% |
-| rusalka1837 | 15 700 | 0 | 0 | 0 | 11738 | 3962 | 74.8% |
+| rusalka1837 | 15 700 | 0 | 0 | 0 | 11748 | 3952 | 74.8% |
 | shevchenko_103 | 849 | 0 | 0 | 0 | 840 | 9 | 98.9% |
-| hv_ia_inpdf | 12 819 | 0 | 0 | 0 | 7090 | 5729 | 55.3% |
+| hv_ia_inpdf | 12 819 | 0 | 0 | 0 | 7094 | 5725 | 55.3% |
 | shevchenko_104 | 83 | 0 | 0 | 0 | 83 | 0 | 100.0% |
 | shevchenko_105 | 180 | 0 | 0 | 0 | 180 | 0 | 100.0% |
 | shevchenko_106 | 145 | 0 | 0 | 0 | 144 | 1 | 99.3% |
@@ -8325,23 +8633,23 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | shevchenko_113 | 368 | 0 | 0 | 0 | 367 | 1 | 99.7% |
 | shevchenko_114 | 219 | 0 | 0 | 0 | 212 | 7 | 96.8% |
 | hv_ws_36873 | 41 | 0 | 0 | 0 | 39 | 2 | 95.1% |
-| kobzar1840 | 5 202 | 0 | 0 | 0 | 4344 | 858 | 83.5% |
+| kobzar1840 | 5 202 | 0 | 0 | 0 | 4398 | 804 | 84.5% |
 | shevchenko_115 | 67 | 0 | 0 | 0 | 66 | 1 | 98.5% |
 | shevchenko_116 | 109 | 0 | 0 | 0 | 109 | 0 | 100.0% |
 | hv_ia_dumy1841 | 2 128 | 0 | 0 | 0 | 1032 | 1096 | 48.5% |
-| hv_ia_galicli1841 | 19 957 | 0 | 0 | 0 | 15846 | 4111 | 79.4% |
+| hv_ia_galicli1841 | 19 957 | 0 | 0 | 0 | 15859 | 4098 | 79.5% |
 | hv_ws_21068 | 55 | 0 | 0 | 0 | 41 | 14 | 74.5% |
 | shevchenko_118 | 77 | 0 | 0 | 0 | 76 | 1 | 98.7% |
 | shevchenko_119 | 1 595 | 0 | 0 | 0 | 1583 | 12 | 99.2% |
 | shevchenko_120 | 673 | 0 | 0 | 0 | 664 | 9 | 98.7% |
-| hv_ia_enejida_1842 | 45 051 | 0 | 0 | 0 | 22053 | 22998 | 49.0% |
-| hv_ia_enejida1842 | 45 119 | 0 | 0 | 0 | 22084 | 23035 | 48.9% |
+| hv_ia_enejida_1842 | 45 051 | 0 | 0 | 0 | 22065 | 22986 | 49.0% |
+| hv_ia_enejida1842 | 45 119 | 0 | 0 | 0 | 22100 | 23019 | 49.0% |
 | shevchenko_122 | 716 | 0 | 0 | 0 | 689 | 27 | 96.2% |
 | molodyk1843_chuzhbynsky | 145 | 0 | 0 | 0 | 114 | 31 | 78.6% |
 | molodyk1843_mohyla | 229 | 0 | 0 | 0 | 174 | 55 | 76.0% |
-| molodyk1843_shevchenko | 149 | 0 | 0 | 0 | 131 | 18 | 87.9% |
+| molodyk1843_shevchenko | 149 | 0 | 0 | 0 | 132 | 17 | 88.6% |
 | shevchenko_124 | 169 | 0 | 0 | 0 | 165 | 4 | 97.6% |
-| hv_ws_110289 | 367 | 0 | 0 | 0 | 211 | 156 | 57.5% |
+| hv_ws_110289 | 367 | 0 | 0 | 0 | 212 | 155 | 57.8% |
 | hv_ws_215785 | 59 | 0 | 0 | 0 | 39 | 20 | 66.1% |
 | shevchenko_125 | 307 | 0 | 0 | 0 | 298 | 9 | 97.1% |
 | shevchenko_126 | 848 | 0 | 0 | 0 | 833 | 15 | 98.2% |
@@ -8365,151 +8673,172 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | shevchenko_144 | 127 | 0 | 0 | 0 | 127 | 0 | 100.0% |
 | shevchenko_145 | 340 | 0 | 0 | 0 | 329 | 11 | 96.8% |
 | shevchenko_146 | 83 | 0 | 0 | 0 | 80 | 3 | 96.4% |
-| hv_orig_istoria_rusov_1846 | 110 249 | 0 | 0 | 57763 | 0 | 52486 | 52.4% |
+| hv_orig_istoria_rusov_1846 | 110 249 | 0 | 0 | 57767 | 0 | 52482 | 52.4% |
 | shevchenko_147 | 17 | 0 | 0 | 0 | 17 | 0 | 100.0% |
 | shevchenko_148 | 306 | 0 | 0 | 0 | 296 | 10 | 96.7% |
 | shevchenko_149 | 215 | 0 | 0 | 0 | 211 | 4 | 98.1% |
 | hv_ws_104286 | 81 | 0 | 0 | 0 | 58 | 23 | 71.6% |
 | shevchenko_150 | 2 320 | 0 | 0 | 0 | 2291 | 29 | 98.8% |
 | hv_ws_52544 | 587 | 0 | 0 | 0 | 552 | 35 | 94.0% |
-| hv_ia_31761077492965 | 14 334 | 0 | 0 | 0 | 13617 | 717 | 95.0% |
+| hv_ia_31761077492965 | 14 334 | 0 | 0 | 0 | 13621 | 713 | 95.0% |
 | hv_ws_104335 | 198 | 0 | 0 | 0 | 123 | 75 | 62.1% |
-| hv_ia_istoriatserkovna00balu | 129 345 | 0 | 0 | 0 | 47951 | 81394 | 37.1% |
+| hv_ia_istoriatserkovna00balu | 129 345 | 0 | 0 | 0 | 47987 | 81358 | 37.1% |
 | hv_ws_30257 | 158 | 0 | 0 | 0 | 142 | 16 | 89.9% |
 | hv_ia_bor1852 | 7 389 | 0 | 0 | 0 | 5198 | 2191 | 70.3% |
 | hv_ws_40533 | 59 | 0 | 0 | 0 | 53 | 6 | 89.8% |
-| hv_ia_etnozbirnyk1853 | 6 165 | 0 | 0 | 0 | 2182 | 3983 | 35.4% |
-| hv_ia_hrabianka | 5 445 | 0 | 0 | 0 | 2141 | 3304 | 39.3% |
+| hv_ia_etnozbirnyk1853 | 6 165 | 0 | 0 | 0 | 2186 | 3979 | 35.5% |
+| hv_ia_hrabianka | 5 445 | 0 | 0 | 0 | 2143 | 3302 | 39.4% |
 | hv_ws_37424 | 148 | 0 | 0 | 0 | 87 | 61 | 58.8% |
 | hv_ws_517228 | 150 | 0 | 0 | 0 | 141 | 9 | 94.0% |
 | hv_ws_5684 | 30 | 0 | 0 | 0 | 25 | 5 | 83.3% |
-| hv_ia_hatstsuk1857 | 34 732 | 0 | 0 | 0 | 21055 | 13677 | 60.6% |
-| hv_ia_etnozbirnyk1858 | 5 321 | 0 | 0 | 0 | 1922 | 3399 | 36.1% |
-| hv_ia_imi1858 | 25 832 | 0 | 0 | 0 | 8221 | 17611 | 31.8% |
+| hv_ia_hatstsuk1857 | 34 732 | 0 | 0 | 0 | 21056 | 13676 | 60.6% |
+| hv_ia_etnozbirnyk1858 | 5 321 | 0 | 0 | 0 | 1923 | 3398 | 36.1% |
+| hv_ia_imi1858 | 25 832 | 0 | 0 | 0 | 8224 | 17608 | 31.8% |
 | hv_ws_209211 | 53 | 0 | 0 | 0 | 50 | 3 | 94.3% |
-| hv_ia_bantueshkam2 | 18 235 | 0 | 0 | 0 | 7290 | 10945 | 40.0% |
+| hv_ia_bantueshkam2 | 18 235 | 0 | 0 | 0 | 7293 | 10942 | 40.0% |
 | hv_ia_bp1859 | 2 602 | 0 | 0 | 0 | 1227 | 1375 | 47.2% |
-| hv_ia_imi1859 | 21 205 | 0 | 0 | 0 | 7083 | 14122 | 33.4% |
+| hv_ia_imi1859 | 21 205 | 0 | 0 | 0 | 7088 | 14117 | 33.4% |
 | hv_ws_9520 | 64 | 0 | 0 | 0 | 37 | 27 | 57.8% |
-| hv_ia_121860 | 10 174 | 0 | 0 | 0 | 3424 | 6750 | 33.7% |
-| hv_ia_bandurista_1 | 11 991 | 0 | 0 | 0 | 6930 | 5061 | 57.8% |
-| hv_ia_bandurista_2 | 35 703 | 0 | 0 | 0 | 21429 | 14274 | 60.0% |
-| hv_ia_bandurista2 | 50 144 | 0 | 0 | 0 | 24816 | 25328 | 49.5% |
+| hv_ia_121860 | 10 174 | 0 | 0 | 0 | 3447 | 6727 | 33.9% |
+| hv_ia_bandurista_1 | 11 991 | 0 | 0 | 0 | 6932 | 5059 | 57.8% |
+| hv_ia_bandurista_2 | 35 703 | 0 | 0 | 0 | 21432 | 14271 | 60.0% |
+| hv_ia_bandurista2 | 50 144 | 0 | 0 | 0 | 24828 | 25316 | 49.5% |
 | hv_ia_basenotaknazwane00unse | 738 | 0 | 0 | 0 | 553 | 185 | 74.9% |
 | hv_ia_golovatskyj1860 | 1 176 | 0 | 0 | 0 | 458 | 718 | 38.9% |
-| hv_ws_110393 | 1 026 | 0 | 0 | 0 | 875 | 151 | 85.3% |
-| hv_ws_110394 | 479 | 0 | 0 | 0 | 422 | 57 | 88.1% |
-| hv_ws_110404 | 422 | 0 | 0 | 0 | 331 | 91 | 78.4% |
+| hv_ws_110393 | 1 026 | 0 | 0 | 0 | 888 | 138 | 86.5% |
+| hv_ws_110394 | 479 | 0 | 0 | 0 | 426 | 53 | 88.9% |
+| hv_ws_110404 | 422 | 0 | 0 | 0 | 335 | 87 | 79.4% |
 | hv_ws_36971 | 143 | 0 | 0 | 0 | 98 | 45 | 68.5% |
-| hv_ws_38030 | 235 | 0 | 0 | 0 | 203 | 32 | 86.4% |
-| hv_ia_1861derk | 2 111 | 0 | 0 | 0 | 1213 | 898 | 57.5% |
-| hv_ia_bandurista3 | 69 851 | 0 | 0 | 0 | 34138 | 35713 | 48.9% |
-| hv_ia_derk1861 | 2 078 | 0 | 0 | 0 | 1289 | 789 | 62.0% |
-| hv_ia_dviruskinarodnos00kost_0 | 20 125 | 0 | 0 | 0 | 18745 | 1380 | 93.1% |
+| hv_ws_38030 | 235 | 0 | 0 | 0 | 205 | 30 | 87.2% |
+| hv_ia_1861derk | 2 111 | 0 | 0 | 0 | 1224 | 887 | 58.0% |
+| hv_ia_bandurista3 | 69 851 | 0 | 0 | 0 | 34143 | 35708 | 48.9% |
+| hv_ia_derk1861 | 2 078 | 0 | 0 | 0 | 1305 | 773 | 62.8% |
+| hv_ia_dviruskinarodnos00kost_0 | 20 125 | 0 | 0 | 0 | 18748 | 1377 | 93.2% |
 | hv_ia_genovefarjanepow00unse | 1 242 | 0 | 0 | 0 | 884 | 358 | 71.2% |
-| hv_ia_hatstsuk1861 | 10 540 | 0 | 0 | 0 | 6147 | 4393 | 58.3% |
+| hv_ia_hatstsuk1861 | 10 540 | 0 | 0 | 0 | 6149 | 4391 | 58.3% |
 | hv_ws_136029 | 45 | 0 | 0 | 0 | 43 | 2 | 95.6% |
 | hv_ws_213317 | 167 | 0 | 0 | 0 | 129 | 38 | 77.2% |
 | hv_ws_24164 | 740 | 0 | 0 | 0 | 436 | 304 | 58.9% |
 | hv_ws_24173 | 241 | 0 | 0 | 0 | 137 | 104 | 56.8% |
 | hv_ws_39305 | 57 | 0 | 0 | 0 | 47 | 10 | 82.5% |
-| hv_ws_42055 | 883 | 0 | 0 | 0 | 769 | 114 | 87.1% |
-| hv_ws_66137 | 100 | 0 | 0 | 0 | 89 | 11 | 89.0% |
+| hv_ws_42055 | 883 | 0 | 0 | 0 | 771 | 112 | 87.3% |
+| hv_ws_66137 | 100 | 0 | 0 | 0 | 90 | 10 | 90.0% |
 | hv_ws_9075 | 4 536 | 0 | 0 | 0 | 4460 | 76 | 98.3% |
-| kulish1862 | 5 961 | 0 | 0 | 0 | 4144 | 1817 | 69.5% |
+| kulish1862 | 5 961 | 0 | 0 | 0 | 4183 | 1778 | 70.2% |
 | hv_ia_aruzr_3_1 | 16 918 | 0 | 0 | 0 | 6485 | 10433 | 38.3% |
 | hv_ws_17763 | 223 | 0 | 0 | 0 | 222 | 1 | 99.6% |
 | hv_ws_210777 | 206 | 0 | 0 | 0 | 191 | 15 | 92.7% |
-| hv_ia_hramatikaruskoho00osad | 86 882 | 0 | 0 | 0 | 35156 | 51726 | 40.5% |
+| hv_ia_hramatikaruskoho00osad | 86 882 | 0 | 0 | 0 | 35166 | 51716 | 40.5% |
 | hv_ws_180111 | 178 | 0 | 0 | 0 | 140 | 38 | 78.7% |
 | hv_ws_40959 | 211 | 0 | 0 | 0 | 190 | 21 | 90.0% |
 | hv_ia_dokumentyobiasn00brosgoog | 6 960 | 0 | 0 | 0 | 3041 | 3919 | 43.7% |
 | hv_ia_harkavy1865 | 932 | 0 | 0 | 0 | 281 | 651 | 30.2% |
-| hv_ws_8837 | 16 836 | 0 | 0 | 0 | 16652 | 184 | 98.9% |
-| hv_ws_36955 | 218 | 0 | 0 | 0 | 196 | 22 | 89.9% |
-| hv_ws_41547 | 289 | 0 | 0 | 0 | 219 | 70 | 75.8% |
+| hv_ws_8837 | 16 836 | 0 | 0 | 0 | 16653 | 183 | 98.9% |
+| hv_ws_36955 | 218 | 0 | 0 | 0 | 199 | 19 | 91.3% |
+| hv_ws_41547 | 289 | 0 | 0 | 0 | 221 | 68 | 76.5% |
 | hv_ws_38473 | 95 | 0 | 0 | 0 | 90 | 5 | 94.7% |
-| hv_ia_aruzr_3_2 | 10 868 | 0 | 0 | 0 | 4091 | 6777 | 37.6% |
-| hv_ia_auzr_6 | 13 092 | 0 | 0 | 0 | 5163 | 7929 | 39.4% |
+| hv_ia_aruzr_3_2 | 10 868 | 0 | 0 | 0 | 4092 | 6776 | 37.7% |
+| hv_ia_auzr_6 | 13 092 | 0 | 0 | 0 | 5164 | 7928 | 39.4% |
 | hv_ws_210858 | 32 | 0 | 0 | 0 | 23 | 9 | 71.9% |
 | hv_ws_24210 | 2 870 | 0 | 0 | 0 | 1800 | 1070 | 62.7% |
-| hv_ws_37353 | 49 | 0 | 0 | 0 | 45 | 4 | 91.8% |
+| hv_ws_37353 | 49 | 0 | 0 | 0 | 46 | 3 | 93.9% |
 | hv_ws_39504 | 1 820 | 0 | 0 | 0 | 1492 | 328 | 82.0% |
-| hv_ia_chub7 | 65 007 | 0 | 0 | 0 | 34044 | 30963 | 52.4% |
-| hv_ia_chubynsky1_1 | 6 448 | 0 | 0 | 0 | 2908 | 3540 | 45.1% |
+| hv_ia_chub7 | 65 007 | 0 | 0 | 0 | 34054 | 30953 | 52.4% |
+| hv_ia_chubynsky1_1 | 6 448 | 0 | 0 | 0 | 2913 | 3535 | 45.2% |
 | hv_ia_chubynsky6 | 7 039 | 0 | 0 | 0 | 2367 | 4672 | 33.6% |
 | hv_ws_213179 | 62 | 0 | 0 | 0 | 39 | 23 | 62.9% |
 | hv_ws_19884 | 150 | 0 | 0 | 0 | 117 | 33 | 78.0% |
-| hv_ia_chubynsky5 | 116 391 | 0 | 0 | 0 | 89034 | 27357 | 76.5% |
-| hv_ia_dragomanov | 66 682 | 0 | 0 | 0 | 40115 | 26567 | 60.2% |
+| hv_ia_chubynsky5 | 116 391 | 0 | 0 | 0 | 89057 | 27334 | 76.5% |
+| hv_ia_dragomanov | 66 682 | 0 | 0 | 0 | 40131 | 26551 | 60.2% |
 | hv_ws_206675 | 48 | 0 | 0 | 0 | 41 | 7 | 85.4% |
 | hv_ws_207065 | 48 | 0 | 0 | 0 | 45 | 3 | 93.8% |
 | hv_ws_207982 | 121 | 0 | 0 | 0 | 86 | 35 | 71.1% |
 | hv_ws_352174 | 5 266 | 0 | 0 | 0 | 4811 | 455 | 91.4% |
-| hv_ia_dragomanov2 | 32 793 | 0 | 0 | 0 | 21893 | 10900 | 66.8% |
+| hv_ez_etnohr_6_178 | 84 | 0 | 0 | 0 | 73 | 11 | 86.9% |
+| hv_ez_etnohr_6_199 | 105 | 0 | 0 | 0 | 83 | 22 | 79.0% |
+| hv_ia_dragomanov2 | 32 793 | 0 | 0 | 0 | 21904 | 10889 | 66.8% |
 | hv_ws_110531 | 1 815 | 0 | 0 | 0 | 1701 | 114 | 93.7% |
 | hv_ws_40671 | 12 963 | 0 | 0 | 0 | 10716 | 2247 | 82.7% |
 | hv_ia_ch6t1 | 13 681 | 0 | 0 | 0 | 6700 | 6981 | 49.0% |
 | hv_ws_10760 | 57 | 0 | 0 | 0 | 55 | 2 | 96.5% |
 | hv_ws_220953 | 131 | 0 | 0 | 0 | 109 | 22 | 83.2% |
-| hv_ws_569010 | 4 249 | 0 | 0 | 0 | 3796 | 453 | 89.3% |
-| hv_ws_66704 | 7 593 | 0 | 0 | 0 | 7204 | 389 | 94.9% |
-| kobzar1876 | 88 813 | 0 | 0 | 0 | 83755 | 5058 | 94.3% |
+| hv_ws_569010 | 4 249 | 0 | 0 | 0 | 3798 | 451 | 89.4% |
+| hv_ws_66704 | 7 593 | 0 | 0 | 0 | 7205 | 388 | 94.9% |
+| kobzar1876 | 88 813 | 0 | 0 | 0 | 83759 | 5054 | 94.3% |
+| hv_ez_etnohr_6_226 | 101 | 0 | 0 | 0 | 94 | 7 | 93.1% |
+| hv_ez_etnohr_6_53 | 142 | 0 | 0 | 0 | 124 | 18 | 87.3% |
 | hv_ia_anton0vych | 2 907 | 0 | 0 | 0 | 1302 | 1605 | 44.8% |
-| hv_ia_chubynsky1_2 | 31 288 | 0 | 0 | 0 | 10247 | 21041 | 32.8% |
-| hv_ia_chubynsky4 | 54 102 | 0 | 0 | 0 | 36494 | 17608 | 67.5% |
+| hv_ia_chubynsky1_2 | 31 288 | 0 | 0 | 0 | 10249 | 21039 | 32.8% |
+| hv_ia_chubynsky4 | 54 102 | 0 | 0 | 0 | 36504 | 17598 | 67.5% |
 | hv_ia_chubynsky7_2 | 181 | 0 | 0 | 0 | 0 | 181 | 0.0% |
-| hv_ia_izistoriisredne00dashgoog | 56 990 | 0 | 0 | 0 | 17541 | 39449 | 30.8% |
-| hv_ws_110676 | 13 468 | 0 | 0 | 0 | 12034 | 1434 | 89.4% |
-| hv_ia_chubynsky2 | 25 380 | 0 | 0 | 0 | 15262 | 10118 | 60.1% |
-| hv_ia_borovykovskyj1879 | 1 710 | 0 | 0 | 0 | 905 | 805 | 52.9% |
+| hv_ia_izistoriisredne00dashgoog | 56 990 | 0 | 0 | 0 | 17549 | 39441 | 30.8% |
+| hv_ws_110676 | 13 468 | 0 | 0 | 0 | 12037 | 1431 | 89.4% |
+| hv_ia_chubynsky2 | 25 380 | 0 | 0 | 0 | 15318 | 10062 | 60.4% |
+| hv_ia_borovykovskyj1879 | 1 710 | 0 | 0 | 0 | 908 | 802 | 53.1% |
 | hv_ws_125889 | 62 | 0 | 0 | 0 | 54 | 8 | 87.1% |
-| nechuy1879 | 51 427 | 0 | 0 | 0 | 47963 | 3464 | 93.3% |
+| nechuy1879 | 51 427 | 0 | 0 | 0 | 47964 | 3463 | 93.3% |
+| hv_ez_etnohr_6_223 | 47 | 0 | 0 | 0 | 35 | 12 | 74.5% |
+| hv_ez_etnohr_6_34 | 56 | 0 | 0 | 0 | 45 | 11 | 80.4% |
 | hv_ia_00003699 | 4 568 | 0 | 0 | 0 | 2907 | 1661 | 63.6% |
-| hv_ia_istoriiarusskots0101goluuoft | 222 921 | 0 | 0 | 0 | 69966 | 152955 | 31.4% |
-| hv_ia_istoriiarusskots0102goluuoft | 215 101 | 0 | 0 | 0 | 65495 | 149606 | 30.4% |
+| hv_ia_istoriiarusskots0101goluuoft | 222 921 | 0 | 0 | 0 | 69997 | 152924 | 31.4% |
+| hv_ia_istoriiarusskots0102goluuoft | 215 101 | 0 | 0 | 0 | 65509 | 149592 | 30.5% |
 | hv_ws_51179 | 313 | 0 | 0 | 0 | 246 | 67 | 78.6% |
-| hv_ia_sumtsov7 | 7 326 | 0 | 0 | 0 | 2454 | 4872 | 33.5% |
+| hv_ia_sumtsov7 | 7 326 | 0 | 0 | 0 | 2455 | 4871 | 33.5% |
 | hv_ia_dragom2 | 7 761 | 0 | 0 | 0 | 5892 | 1869 | 75.9% |
 | hv_ia_fil1882zap | 2 656 | 0 | 0 | 0 | 988 | 1668 | 37.2% |
-| hv_ws_208456 | 186 | 0 | 0 | 0 | 145 | 41 | 78.0% |
-| kulish1882 | 18 720 | 0 | 0 | 0 | 15619 | 3101 | 83.4% |
+| hv_ws_208456 | 186 | 0 | 0 | 0 | 147 | 39 | 79.0% |
+| kulish1882 | 18 720 | 0 | 0 | 0 | 15697 | 3023 | 83.9% |
+| hv_ez_etnohr_6_277 | 2 001 | 0 | 0 | 0 | 1810 | 191 | 90.5% |
+| hv_ez_etnohr_6_62 | 143 | 0 | 0 | 0 | 129 | 14 | 90.2% |
 | hv_ia_fl1883zap1 | 1 091 | 0 | 0 | 0 | 314 | 777 | 28.8% |
-| hv_ia_hutorn1883 | 19 319 | 0 | 0 | 0 | 11294 | 8025 | 58.5% |
+| hv_ia_hutorn1883 | 19 319 | 0 | 0 | 0 | 11332 | 7987 | 58.7% |
 | hv_ws_214419 | 71 | 0 | 0 | 0 | 58 | 13 | 81.7% |
 | hv_ws_598539 | 1 108 | 0 | 0 | 0 | 849 | 259 | 76.6% |
-| boa1884 | 26 196 | 0 | 0 | 0 | 21157 | 5039 | 80.8% |
-| hv_ia_1884_2 | 11 326 | 0 | 0 | 0 | 4071 | 7255 | 35.9% |
-| hv_ia_1884narysy | 22 817 | 0 | 0 | 0 | 10707 | 12110 | 46.9% |
-| hv_ia_boaconstrictorpo00fran | 27 753 | 0 | 0 | 0 | 14320 | 13433 | 51.6% |
+| boa1884 | 26 196 | 0 | 0 | 0 | 21161 | 5035 | 80.8% |
+| hv_ia_1884_2 | 11 326 | 0 | 0 | 0 | 4075 | 7251 | 36.0% |
+| hv_ia_1884narysy | 22 817 | 0 | 0 | 0 | 10740 | 12077 | 47.1% |
+| hv_ia_boaconstrictorpo00fran | 27 753 | 0 | 0 | 0 | 14322 | 13431 | 51.6% |
 | hv_ws_133885 | 44 | 0 | 0 | 0 | 42 | 2 | 95.5% |
 | hv_ws_320082 | 125 | 0 | 0 | 0 | 124 | 1 | 99.2% |
 | hv_ws_38313 | 75 | 0 | 0 | 0 | 62 | 13 | 82.7% |
-| hv_ia_pianytskye_pesny | 1 236 | 0 | 0 | 0 | 636 | 600 | 51.5% |
+| hv_ez_etnohr_6_229 | 97 | 0 | 0 | 0 | 77 | 20 | 79.4% |
+| hv_ez_etnohr_6_299 | 828 | 0 | 0 | 0 | 743 | 85 | 89.7% |
+| hv_ia_pianytskye_pesny | 1 236 | 0 | 0 | 0 | 638 | 598 | 51.6% |
 | hv_ia_sumtsov14 | 10 327 | 0 | 0 | 0 | 6031 | 4296 | 58.4% |
 | hv_ws_130501 | 105 | 0 | 0 | 0 | 78 | 27 | 74.3% |
 | hv_ws_56244 | 71 | 0 | 0 | 0 | 57 | 14 | 80.3% |
 | r2u_zheleh | 6 859 | 0 | 0 | 0 | 0 | 6859 | 0.0% |
-| hv_ia_arhuzr_1_7 | 80 527 | 0 | 0 | 0 | 24527 | 56000 | 30.5% |
+| hv_ia_arhuzr_1_7 | 80 527 | 0 | 0 | 0 | 24530 | 55997 | 30.5% |
 | hv_ws_40422 | 43 | 0 | 0 | 0 | 43 | 0 | 100.0% |
 | hv_ws_41101 | 35 | 0 | 0 | 0 | 35 | 0 | 100.0% |
 | hv_ws_42020 | 46 | 0 | 0 | 0 | 44 | 2 | 95.7% |
 | hv_ws_42023 | 55 | 0 | 0 | 0 | 51 | 4 | 92.7% |
-| hv_ia_sumtsov12 | 3 477 | 0 | 0 | 0 | 1388 | 2089 | 39.9% |
+| hv_ia_sumtsov12 | 3 477 | 0 | 0 | 0 | 1390 | 2087 | 40.0% |
 | hv_ws_210372 | 3 564 | 0 | 0 | 0 | 3050 | 514 | 85.6% |
 | hv_ws_571419 | 17 924 | 0 | 0 | 0 | 17744 | 180 | 99.0% |
+| hv_ez_etnohr_6_271 | 80 | 0 | 0 | 0 | 71 | 9 | 88.8% |
+| hv_ez_etnohr_6_46 | 49 | 0 | 0 | 0 | 34 | 15 | 69.4% |
 | hv_ia_sumtsov21 | 401 | 0 | 0 | 0 | 168 | 233 | 41.9% |
 | hv_ws_213678 | 234 | 0 | 0 | 0 | 194 | 40 | 82.9% |
 | hv_ws_37508 | 924 | 0 | 0 | 0 | 565 | 359 | 61.1% |
 | hv_ws_390139 | 1 354 | 0 | 0 | 0 | 1296 | 58 | 95.7% |
-| hv_ia_1890il | 55 619 | 0 | 0 | 0 | 25439 | 30180 | 45.7% |
-| hv_ia_istoriiabibliina00unse | 66 771 | 0 | 0 | 0 | 26970 | 39801 | 40.4% |
+| hv_ez_etnohr_4_2 | 47 | 0 | 0 | 0 | 29 | 18 | 61.7% |
+| hv_ez_etnohr_4_3 | 191 | 0 | 0 | 0 | 99 | 92 | 51.8% |
+| hv_ez_etnohr_6_280 | 104 | 0 | 0 | 0 | 81 | 23 | 77.9% |
+| hv_ez_etnohr_6_60 | 65 | 0 | 0 | 0 | 49 | 16 | 75.4% |
+| hv_ia_1890il | 55 619 | 0 | 0 | 0 | 25440 | 30179 | 45.7% |
+| hv_ia_istoriiabibliina00unse | 66 771 | 0 | 0 | 0 | 26974 | 39797 | 40.4% |
+| hv_ez_etnohr_6_235 | 53 | 0 | 0 | 0 | 45 | 8 | 84.9% |
 | hv_ia_dik1891 | 3 795 | 0 | 0 | 0 | 2367 | 1428 | 62.4% |
-| hv_ia_dikariv1891 | 35 465 | 0 | 0 | 0 | 13751 | 21714 | 38.8% |
+| hv_ia_dikariv1891 | 35 465 | 0 | 0 | 0 | 13752 | 21713 | 38.8% |
 | hv_ws_203861 | 73 | 0 | 0 | 0 | 67 | 6 | 91.8% |
 | hv_ws_208273 | 65 | 0 | 0 | 0 | 63 | 2 | 96.9% |
 | hv_ws_30370 | 1 921 | 0 | 0 | 0 | 1642 | 279 | 85.5% |
 | hv_ws_47156 | 483 | 0 | 0 | 0 | 260 | 223 | 53.8% |
+| hv_ez_etnohr_6_250 | 142 | 0 | 0 | 0 | 123 | 19 | 86.6% |
+| hv_ez_etnohr_6_264 | 180 | 0 | 0 | 0 | 138 | 42 | 76.7% |
+| hv_ez_etnohr_6_267 | 905 | 0 | 0 | 0 | 721 | 184 | 79.7% |
+| hv_ez_etnohr_6_269 | 207 | 0 | 0 | 0 | 138 | 69 | 66.7% |
 | hv_ws_110386 | 166 | 0 | 0 | 0 | 155 | 11 | 93.4% |
 | hv_ws_189853 | 277 | 0 | 0 | 0 | 258 | 19 | 93.1% |
 | hv_ws_192093 | 2 710 | 0 | 0 | 0 | 2058 | 652 | 75.9% |
@@ -8520,33 +8849,62 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_30451 | 511 | 0 | 0 | 0 | 499 | 12 | 97.7% |
 | hv_ws_354539 | 3 085 | 0 | 0 | 0 | 2711 | 374 | 87.9% |
 | hv_ws_48874 | 44 | 0 | 0 | 0 | 43 | 1 | 97.7% |
-| lesya1892 | 13 544 | 0 | 0 | 0 | 12977 | 567 | 95.8% |
-| chaichenko1893 | 31 972 | 0 | 0 | 0 | 30825 | 1147 | 96.4% |
-| franko1893 | 36 521 | 0 | 0 | 0 | 33750 | 2771 | 92.4% |
+| lesya1892 | 13 544 | 0 | 0 | 0 | 12978 | 566 | 95.8% |
+| chaichenko1893 | 31 972 | 0 | 0 | 0 | 30923 | 1049 | 96.7% |
+| franko1893 | 36 521 | 0 | 0 | 0 | 33751 | 2770 | 92.4% |
 | hv_ia_iuzhnaiarusprie00markgoog | 1 034 | 0 | 0 | 0 | 272 | 762 | 26.3% |
 | hv_ws_161090 | 1 586 | 0 | 0 | 0 | 1421 | 165 | 89.6% |
 | hv_ws_209976 | 324 | 0 | 0 | 0 | 244 | 80 | 75.3% |
-| hv_ws_283567 | 1 274 | 0 | 0 | 0 | 970 | 304 | 76.1% |
+| hv_ws_283567 | 1 274 | 0 | 0 | 0 | 971 | 303 | 76.2% |
 | hv_ws_30452 | 237 | 0 | 0 | 0 | 228 | 9 | 96.2% |
 | hv_ws_49729 | 4 596 | 0 | 0 | 0 | 3962 | 634 | 86.2% |
 | hv_ws_52991 | 4 079 | 0 | 0 | 0 | 3629 | 450 | 89.0% |
+| hv_ez_etnohr_6_111 | 73 | 0 | 0 | 0 | 57 | 16 | 78.1% |
+| hv_ez_etnohr_6_76 | 273 | 0 | 0 | 0 | 222 | 51 | 81.3% |
 | hv_ia_barskoestarostv00hrusgoog | 9 916 | 0 | 0 | 0 | 4434 | 5482 | 44.7% |
 | hv_ia_daily_prayers_greek_catholic1894 | 1 201 | 0 | 0 | 0 | 957 | 244 | 79.7% |
 | hv_ia_gidrogeologiches00sint | 40 090 | 0 | 0 | 0 | 15114 | 24976 | 37.7% |
-| hv_ia_hlasopsnetsilyna00ukra | 34 414 | 0 | 0 | 0 | 19689 | 14725 | 57.2% |
+| hv_ia_hlasopsnetsilyna00ukra | 34 414 | 0 | 0 | 0 | 19690 | 14724 | 57.2% |
 | hv_ws_176260 | 2 738 | 0 | 0 | 0 | 2174 | 564 | 79.4% |
 | hv_ws_210094 | 79 | 0 | 0 | 0 | 66 | 13 | 83.5% |
 | hv_ws_210098 | 74 | 0 | 0 | 0 | 67 | 7 | 90.5% |
 | hv_ws_24309 | 11 528 | 0 | 0 | 0 | 9652 | 1876 | 83.7% |
 | hv_ws_26591 | 1 500 | 0 | 0 | 0 | 1446 | 54 | 96.4% |
 | hv_ws_28623 | 614 | 0 | 0 | 0 | 593 | 21 | 96.6% |
-| hv_ws_356359 | 6 962 | 0 | 0 | 0 | 5888 | 1074 | 84.6% |
+| hv_ws_356359 | 6 962 | 0 | 0 | 0 | 5893 | 1069 | 84.6% |
 | hv_ws_6678 | 24 275 | 0 | 0 | 0 | 23806 | 469 | 98.1% |
-| hv_ia_1895_t_4 | 194 209 | 0 | 0 | 0 | 161738 | 32471 | 83.3% |
+| hv_ez_etnohr_6_101 | 319 | 0 | 0 | 0 | 210 | 109 | 65.8% |
+| hv_ez_etnohr_6_109 | 51 | 0 | 0 | 0 | 35 | 16 | 68.6% |
+| hv_ez_etnohr_6_110 | 63 | 0 | 0 | 0 | 47 | 16 | 74.6% |
+| hv_ez_etnohr_6_119 | 106 | 0 | 0 | 0 | 76 | 30 | 71.7% |
+| hv_ez_etnohr_6_133 | 217 | 0 | 0 | 0 | 169 | 48 | 77.9% |
+| hv_ez_etnohr_6_15 | 107 | 0 | 0 | 0 | 88 | 19 | 82.2% |
+| hv_ez_etnohr_6_159 | 88 | 0 | 0 | 0 | 57 | 31 | 64.8% |
+| hv_ez_etnohr_6_201 | 90 | 0 | 0 | 0 | 62 | 28 | 68.9% |
+| hv_ez_etnohr_6_225 | 90 | 0 | 0 | 0 | 65 | 25 | 72.2% |
+| hv_ez_etnohr_6_228 | 56 | 0 | 0 | 0 | 37 | 19 | 66.1% |
+| hv_ez_etnohr_6_246 | 141 | 0 | 0 | 0 | 107 | 34 | 75.9% |
+| hv_ez_etnohr_6_257 | 1 341 | 0 | 0 | 0 | 958 | 383 | 71.4% |
+| hv_ez_etnohr_6_26 | 44 | 0 | 0 | 0 | 34 | 10 | 77.3% |
+| hv_ez_etnohr_6_268 | 246 | 0 | 0 | 0 | 164 | 82 | 66.7% |
+| hv_ez_etnohr_6_27 | 57 | 0 | 0 | 0 | 43 | 14 | 75.4% |
+| hv_ez_etnohr_6_273 | 199 | 0 | 0 | 0 | 151 | 48 | 75.9% |
+| hv_ez_etnohr_6_28 | 78 | 0 | 0 | 0 | 56 | 22 | 71.8% |
+| hv_ez_etnohr_6_61 | 49 | 0 | 0 | 0 | 34 | 15 | 69.4% |
+| hv_ez_etnohr_6_63 | 137 | 0 | 0 | 0 | 82 | 55 | 59.9% |
+| hv_ez_etnohr_6_71 | 109 | 0 | 0 | 0 | 90 | 19 | 82.6% |
+| hv_ez_etnohr_6_72 | 262 | 0 | 0 | 0 | 195 | 67 | 74.4% |
+| hv_ez_etnohr_6_73 | 125 | 0 | 0 | 0 | 96 | 29 | 76.8% |
+| hv_ez_etnohr_6_77 | 64 | 0 | 0 | 0 | 51 | 13 | 79.7% |
+| hv_ez_etnohr_6_87 | 44 | 0 | 0 | 0 | 34 | 10 | 77.3% |
+| hv_ez_etnohr_6_90 | 115 | 0 | 0 | 0 | 80 | 35 | 69.6% |
+| hv_ez_etnohr_6_91 | 49 | 0 | 0 | 0 | 40 | 9 | 81.6% |
+| hv_ez_etnohr_6_99 | 155 | 0 | 0 | 0 | 111 | 44 | 71.6% |
+| hv_ia_1895_t_4 | 194 209 | 0 | 0 | 0 | 161749 | 32460 | 83.3% |
 | hv_ia_cihm_30425 | 8 490 | 0 | 0 | 0 | 4541 | 3949 | 53.5% |
-| hv_ia_etnografichnyizb1519nauk | 101 976 | 0 | 0 | 0 | 59040 | 42936 | 57.9% |
-| hv_ia_etnohr_1 | 78 210 | 0 | 0 | 0 | 56406 | 21804 | 72.1% |
-| hv_ia_hrinchenko8 | 9 459 | 0 | 0 | 0 | 5046 | 4413 | 53.3% |
+| hv_ia_etnografichnyizb1519nauk | 101 976 | 0 | 0 | 0 | 59042 | 42934 | 57.9% |
+| hv_ia_etnohr_1 | 78 210 | 0 | 0 | 0 | 56410 | 21800 | 72.1% |
+| hv_ia_hrinchenko8 | 9 459 | 0 | 0 | 0 | 5087 | 4372 | 53.8% |
 | hv_ia_sumtsov18 | 910 | 0 | 0 | 0 | 264 | 646 | 29.0% |
 | hv_ia_tvoryruda01rudauoft | 21 495 | 0 | 0 | 0 | 18608 | 2887 | 86.6% |
 | hv_ia_tvoryruda04rudauoft | 31 200 | 0 | 0 | 0 | 25326 | 5874 | 81.2% |
@@ -8555,29 +8913,287 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_45741 | 47 158 | 0 | 0 | 0 | 40159 | 6999 | 85.2% |
 | hv_ws_46798 | 30 486 | 0 | 0 | 0 | 26738 | 3748 | 87.7% |
 | hv_ws_547252 | 6 146 | 0 | 0 | 0 | 5449 | 697 | 88.7% |
-| hv_ia_1896_t_5 | 197 662 | 0 | 0 | 0 | 164852 | 32810 | 83.4% |
-| hv_ia_31761086786126 | 15 169 | 0 | 0 | 0 | 13180 | 1989 | 86.9% |
+| hv_ez_etnohr_03_1_1 | 2 998 | 0 | 0 | 0 | 1662 | 1336 | 55.4% |
+| hv_ez_etnohr_03_1_2 | 1 230 | 0 | 0 | 0 | 708 | 522 | 57.6% |
+| hv_ez_etnohr_4_1 | 149 | 0 | 0 | 0 | 85 | 64 | 57.0% |
+| hv_ez_etnohr_6_164 | 99 | 0 | 0 | 0 | 74 | 25 | 74.7% |
+| hv_ez_etnohr_6_288 | 806 | 0 | 0 | 0 | 528 | 278 | 65.5% |
+| hv_ez_etnohr_6_59 | 80 | 0 | 0 | 0 | 61 | 19 | 76.3% |
+| hv_ia_1896_t_5 | 197 662 | 0 | 0 | 0 | 164860 | 32802 | 83.4% |
+| hv_ia_31761086786126 | 15 169 | 0 | 0 | 0 | 13181 | 1988 | 86.9% |
 | hv_ia_imyvevropiprotes00fran | 3 969 | 0 | 0 | 0 | 3341 | 628 | 84.2% |
 | hv_ia_imyvievropi00fran | 3 967 | 0 | 0 | 0 | 3736 | 231 | 94.2% |
 | hv_ia_sumtsov32 | 835 | 0 | 0 | 0 | 399 | 436 | 47.8% |
 | hv_ia_sumtsov8 | 306 | 0 | 0 | 0 | 96 | 210 | 31.4% |
 | hv_ws_341622 | 124 | 0 | 0 | 0 | 113 | 11 | 91.1% |
 | hv_ws_433468 | 286 | 0 | 0 | 0 | 210 | 76 | 73.4% |
-| hv_ia_etnohr_03_1 | 94 981 | 0 | 0 | 0 | 54526 | 40455 | 57.4% |
-| hv_ia_spivannykxviii | 22 601 | 0 | 0 | 0 | 13457 | 9144 | 59.5% |
+| hv_ez_etnohr_6_1 | 73 | 0 | 0 | 0 | 64 | 9 | 87.7% |
+| hv_ez_etnohr_6_10 | 301 | 0 | 0 | 0 | 223 | 78 | 74.1% |
+| hv_ez_etnohr_6_100 | 147 | 0 | 0 | 0 | 101 | 46 | 68.7% |
+| hv_ez_etnohr_6_102 | 158 | 0 | 0 | 0 | 109 | 49 | 69.0% |
+| hv_ez_etnohr_6_104 | 60 | 0 | 0 | 0 | 52 | 8 | 86.7% |
+| hv_ez_etnohr_6_105 | 55 | 0 | 0 | 0 | 38 | 17 | 69.1% |
+| hv_ez_etnohr_6_106 | 63 | 0 | 0 | 0 | 44 | 19 | 69.8% |
+| hv_ez_etnohr_6_107 | 82 | 0 | 0 | 0 | 51 | 31 | 62.2% |
+| hv_ez_etnohr_6_108 | 90 | 0 | 0 | 0 | 67 | 23 | 74.4% |
+| hv_ez_etnohr_6_11 | 73 | 0 | 0 | 0 | 50 | 23 | 68.5% |
+| hv_ez_etnohr_6_112 | 62 | 0 | 0 | 0 | 35 | 27 | 56.5% |
+| hv_ez_etnohr_6_113 | 199 | 0 | 0 | 0 | 136 | 63 | 68.3% |
+| hv_ez_etnohr_6_114 | 181 | 0 | 0 | 0 | 138 | 43 | 76.2% |
+| hv_ez_etnohr_6_115 | 88 | 0 | 0 | 0 | 82 | 6 | 93.2% |
+| hv_ez_etnohr_6_116 | 90 | 0 | 0 | 0 | 68 | 22 | 75.6% |
+| hv_ez_etnohr_6_118 | 65 | 0 | 0 | 0 | 52 | 13 | 80.0% |
+| hv_ez_etnohr_6_12 | 111 | 0 | 0 | 0 | 78 | 33 | 70.3% |
+| hv_ez_etnohr_6_120 | 92 | 0 | 0 | 0 | 68 | 24 | 73.9% |
+| hv_ez_etnohr_6_122 | 168 | 0 | 0 | 0 | 131 | 37 | 78.0% |
+| hv_ez_etnohr_6_125 | 242 | 0 | 0 | 0 | 182 | 60 | 75.2% |
+| hv_ez_etnohr_6_126 | 395 | 0 | 0 | 0 | 288 | 107 | 72.9% |
+| hv_ez_etnohr_6_127 | 54 | 0 | 0 | 0 | 43 | 11 | 79.6% |
+| hv_ez_etnohr_6_128 | 146 | 0 | 0 | 0 | 112 | 34 | 76.7% |
+| hv_ez_etnohr_6_129 | 169 | 0 | 0 | 0 | 127 | 42 | 75.1% |
+| hv_ez_etnohr_6_13 | 76 | 0 | 0 | 0 | 64 | 12 | 84.2% |
+| hv_ez_etnohr_6_130 | 138 | 0 | 0 | 0 | 101 | 37 | 73.2% |
+| hv_ez_etnohr_6_131 | 154 | 0 | 0 | 0 | 116 | 38 | 75.3% |
+| hv_ez_etnohr_6_132 | 196 | 0 | 0 | 0 | 158 | 38 | 80.6% |
+| hv_ez_etnohr_6_134 | 135 | 0 | 0 | 0 | 101 | 34 | 74.8% |
+| hv_ez_etnohr_6_135 | 72 | 0 | 0 | 0 | 54 | 18 | 75.0% |
+| hv_ez_etnohr_6_136 | 113 | 0 | 0 | 0 | 94 | 19 | 83.2% |
+| hv_ez_etnohr_6_138 | 72 | 0 | 0 | 0 | 51 | 21 | 70.8% |
+| hv_ez_etnohr_6_139 | 95 | 0 | 0 | 0 | 63 | 32 | 66.3% |
+| hv_ez_etnohr_6_14 | 84 | 0 | 0 | 0 | 74 | 10 | 88.1% |
+| hv_ez_etnohr_6_140 | 175 | 0 | 0 | 0 | 121 | 54 | 69.1% |
+| hv_ez_etnohr_6_144 | 95 | 0 | 0 | 0 | 68 | 27 | 71.6% |
+| hv_ez_etnohr_6_145 | 466 | 0 | 0 | 0 | 341 | 125 | 73.2% |
+| hv_ez_etnohr_6_146 | 490 | 0 | 0 | 0 | 358 | 132 | 73.1% |
+| hv_ez_etnohr_6_149 | 226 | 0 | 0 | 0 | 159 | 67 | 70.4% |
+| hv_ez_etnohr_6_150 | 670 | 0 | 0 | 0 | 488 | 182 | 72.8% |
+| hv_ez_etnohr_6_151 | 326 | 0 | 0 | 0 | 238 | 88 | 73.0% |
+| hv_ez_etnohr_6_152 | 550 | 0 | 0 | 0 | 373 | 177 | 67.8% |
+| hv_ez_etnohr_6_153 | 90 | 0 | 0 | 0 | 69 | 21 | 76.7% |
+| hv_ez_etnohr_6_154 | 325 | 0 | 0 | 0 | 244 | 81 | 75.1% |
+| hv_ez_etnohr_6_155 | 596 | 0 | 0 | 0 | 406 | 190 | 68.1% |
+| hv_ez_etnohr_6_156 | 131 | 0 | 0 | 0 | 93 | 38 | 71.0% |
+| hv_ez_etnohr_6_157 | 152 | 0 | 0 | 0 | 98 | 54 | 64.5% |
+| hv_ez_etnohr_6_158 | 171 | 0 | 0 | 0 | 125 | 46 | 73.1% |
+| hv_ez_etnohr_6_16 | 135 | 0 | 0 | 0 | 113 | 22 | 83.7% |
+| hv_ez_etnohr_6_160 | 124 | 0 | 0 | 0 | 98 | 26 | 79.0% |
+| hv_ez_etnohr_6_161 | 120 | 0 | 0 | 0 | 89 | 31 | 74.2% |
+| hv_ez_etnohr_6_162 | 202 | 0 | 0 | 0 | 139 | 63 | 68.8% |
+| hv_ez_etnohr_6_165 | 42 | 0 | 0 | 0 | 28 | 14 | 66.7% |
+| hv_ez_etnohr_6_167 | 137 | 0 | 0 | 0 | 104 | 33 | 75.9% |
+| hv_ez_etnohr_6_168 | 215 | 0 | 0 | 0 | 154 | 61 | 71.6% |
+| hv_ez_etnohr_6_169 | 524 | 0 | 0 | 0 | 383 | 141 | 73.1% |
+| hv_ez_etnohr_6_17 | 89 | 0 | 0 | 0 | 67 | 22 | 75.3% |
+| hv_ez_etnohr_6_170 | 216 | 0 | 0 | 0 | 155 | 61 | 71.8% |
+| hv_ez_etnohr_6_171 | 309 | 0 | 0 | 0 | 218 | 91 | 70.6% |
+| hv_ez_etnohr_6_172 | 504 | 0 | 0 | 0 | 334 | 170 | 66.3% |
+| hv_ez_etnohr_6_173 | 374 | 0 | 0 | 0 | 275 | 99 | 73.5% |
+| hv_ez_etnohr_6_174 | 239 | 0 | 0 | 0 | 197 | 42 | 82.4% |
+| hv_ez_etnohr_6_179 | 44 | 0 | 0 | 0 | 33 | 11 | 75.0% |
+| hv_ez_etnohr_6_18 | 62 | 0 | 0 | 0 | 51 | 11 | 82.3% |
+| hv_ez_etnohr_6_180 | 133 | 0 | 0 | 0 | 90 | 43 | 67.7% |
+| hv_ez_etnohr_6_181 | 97 | 0 | 0 | 0 | 66 | 31 | 68.0% |
+| hv_ez_etnohr_6_182 | 143 | 0 | 0 | 0 | 99 | 44 | 69.2% |
+| hv_ez_etnohr_6_183 | 78 | 0 | 0 | 0 | 50 | 28 | 64.1% |
+| hv_ez_etnohr_6_185 | 173 | 0 | 0 | 0 | 143 | 30 | 82.7% |
+| hv_ez_etnohr_6_186 | 44 | 0 | 0 | 0 | 31 | 13 | 70.5% |
+| hv_ez_etnohr_6_187 | 47 | 0 | 0 | 0 | 41 | 6 | 87.2% |
+| hv_ez_etnohr_6_189 | 124 | 0 | 0 | 0 | 86 | 38 | 69.4% |
+| hv_ez_etnohr_6_19 | 65 | 0 | 0 | 0 | 42 | 23 | 64.6% |
+| hv_ez_etnohr_6_191 | 42 | 0 | 0 | 0 | 32 | 10 | 76.2% |
+| hv_ez_etnohr_6_195 | 49 | 0 | 0 | 0 | 37 | 12 | 75.5% |
+| hv_ez_etnohr_6_196 | 80 | 0 | 0 | 0 | 50 | 30 | 62.5% |
+| hv_ez_etnohr_6_197 | 82 | 0 | 0 | 0 | 54 | 28 | 65.9% |
+| hv_ez_etnohr_6_198 | 77 | 0 | 0 | 0 | 62 | 15 | 80.5% |
+| hv_ez_etnohr_6_2 | 70 | 0 | 0 | 0 | 61 | 9 | 87.1% |
+| hv_ez_etnohr_6_20 | 134 | 0 | 0 | 0 | 110 | 24 | 82.1% |
+| hv_ez_etnohr_6_200 | 64 | 0 | 0 | 0 | 40 | 24 | 62.5% |
+| hv_ez_etnohr_6_202 | 126 | 0 | 0 | 0 | 84 | 42 | 66.7% |
+| hv_ez_etnohr_6_203 | 81 | 0 | 0 | 0 | 52 | 29 | 64.2% |
+| hv_ez_etnohr_6_204 | 116 | 0 | 0 | 0 | 87 | 29 | 75.0% |
+| hv_ez_etnohr_6_205 | 265 | 0 | 0 | 0 | 179 | 86 | 67.5% |
+| hv_ez_etnohr_6_209 | 86 | 0 | 0 | 0 | 69 | 17 | 80.2% |
+| hv_ez_etnohr_6_21 | 70 | 0 | 0 | 0 | 53 | 17 | 75.7% |
+| hv_ez_etnohr_6_210 | 105 | 0 | 0 | 0 | 78 | 27 | 74.3% |
+| hv_ez_etnohr_6_211 | 60 | 0 | 0 | 0 | 48 | 12 | 80.0% |
+| hv_ez_etnohr_6_213 | 59 | 0 | 0 | 0 | 42 | 17 | 71.2% |
+| hv_ez_etnohr_6_215 | 50 | 0 | 0 | 0 | 40 | 10 | 80.0% |
+| hv_ez_etnohr_6_216 | 118 | 0 | 0 | 0 | 82 | 36 | 69.5% |
+| hv_ez_etnohr_6_217 | 63 | 0 | 0 | 0 | 45 | 18 | 71.4% |
+| hv_ez_etnohr_6_218 | 45 | 0 | 0 | 0 | 25 | 20 | 55.6% |
+| hv_ez_etnohr_6_219 | 146 | 0 | 0 | 0 | 109 | 37 | 74.7% |
+| hv_ez_etnohr_6_22 | 49 | 0 | 0 | 0 | 39 | 10 | 79.6% |
+| hv_ez_etnohr_6_221 | 174 | 0 | 0 | 0 | 109 | 65 | 62.6% |
+| hv_ez_etnohr_6_222 | 77 | 0 | 0 | 0 | 50 | 27 | 64.9% |
+| hv_ez_etnohr_6_224 | 153 | 0 | 0 | 0 | 110 | 43 | 71.9% |
+| hv_ez_etnohr_6_227 | 184 | 0 | 0 | 0 | 144 | 40 | 78.3% |
+| hv_ez_etnohr_6_23 | 55 | 0 | 0 | 0 | 32 | 23 | 58.2% |
+| hv_ez_etnohr_6_230 | 59 | 0 | 0 | 0 | 36 | 23 | 61.0% |
+| hv_ez_etnohr_6_231 | 79 | 0 | 0 | 0 | 52 | 27 | 65.8% |
+| hv_ez_etnohr_6_233 | 261 | 0 | 0 | 0 | 179 | 82 | 68.6% |
+| hv_ez_etnohr_6_236 | 64 | 0 | 0 | 0 | 48 | 16 | 75.0% |
+| hv_ez_etnohr_6_239 | 90 | 0 | 0 | 0 | 74 | 16 | 82.2% |
+| hv_ez_etnohr_6_24 | 49 | 0 | 0 | 0 | 37 | 12 | 75.5% |
+| hv_ez_etnohr_6_240 | 70 | 0 | 0 | 0 | 48 | 22 | 68.6% |
+| hv_ez_etnohr_6_241 | 118 | 0 | 0 | 0 | 88 | 30 | 74.6% |
+| hv_ez_etnohr_6_243 | 133 | 0 | 0 | 0 | 106 | 27 | 79.7% |
+| hv_ez_etnohr_6_245 | 78 | 0 | 0 | 0 | 55 | 23 | 70.5% |
+| hv_ez_etnohr_6_247 | 510 | 0 | 0 | 0 | 348 | 162 | 68.2% |
+| hv_ez_etnohr_6_25 | 94 | 0 | 0 | 0 | 73 | 21 | 77.7% |
+| hv_ez_etnohr_6_251 | 94 | 0 | 0 | 0 | 71 | 23 | 75.5% |
+| hv_ez_etnohr_6_254 | 78 | 0 | 0 | 0 | 52 | 26 | 66.7% |
+| hv_ez_etnohr_6_255 | 80 | 0 | 0 | 0 | 59 | 21 | 73.8% |
+| hv_ez_etnohr_6_256 | 158 | 0 | 0 | 0 | 107 | 51 | 67.7% |
+| hv_ez_etnohr_6_258 | 225 | 0 | 0 | 0 | 151 | 74 | 67.1% |
+| hv_ez_etnohr_6_259 | 341 | 0 | 0 | 0 | 237 | 104 | 69.5% |
+| hv_ez_etnohr_6_260 | 165 | 0 | 0 | 0 | 130 | 35 | 78.8% |
+| hv_ez_etnohr_6_261 | 162 | 0 | 0 | 0 | 104 | 58 | 64.2% |
+| hv_ez_etnohr_6_262 | 166 | 0 | 0 | 0 | 114 | 52 | 68.7% |
+| hv_ez_etnohr_6_263 | 140 | 0 | 0 | 0 | 96 | 44 | 68.6% |
+| hv_ez_etnohr_6_265 | 43 | 0 | 0 | 0 | 34 | 9 | 79.1% |
+| hv_ez_etnohr_6_266 | 119 | 0 | 0 | 0 | 81 | 38 | 68.1% |
+| hv_ez_etnohr_6_272 | 69 | 0 | 0 | 0 | 35 | 34 | 50.7% |
+| hv_ez_etnohr_6_275 | 473 | 0 | 0 | 0 | 319 | 154 | 67.4% |
+| hv_ez_etnohr_6_276 | 137 | 0 | 0 | 0 | 96 | 41 | 70.1% |
+| hv_ez_etnohr_6_281 | 47 | 0 | 0 | 0 | 32 | 15 | 68.1% |
+| hv_ez_etnohr_6_282 | 43 | 0 | 0 | 0 | 28 | 15 | 65.1% |
+| hv_ez_etnohr_6_284 | 105 | 0 | 0 | 0 | 77 | 28 | 73.3% |
+| hv_ez_etnohr_6_285 | 209 | 0 | 0 | 0 | 149 | 60 | 71.3% |
+| hv_ez_etnohr_6_29 | 91 | 0 | 0 | 0 | 63 | 28 | 69.2% |
+| hv_ez_etnohr_6_291 | 1 036 | 0 | 0 | 0 | 719 | 317 | 69.4% |
+| hv_ez_etnohr_6_293 | 174 | 0 | 0 | 0 | 132 | 42 | 75.9% |
+| hv_ez_etnohr_6_294 | 106 | 0 | 0 | 0 | 73 | 33 | 68.9% |
+| hv_ez_etnohr_6_295 | 62 | 0 | 0 | 0 | 48 | 14 | 77.4% |
+| hv_ez_etnohr_6_297 | 210 | 0 | 0 | 0 | 151 | 59 | 71.9% |
+| hv_ez_etnohr_6_30 | 137 | 0 | 0 | 0 | 108 | 29 | 78.8% |
+| hv_ez_etnohr_6_300 | 636 | 0 | 0 | 0 | 492 | 144 | 77.4% |
+| hv_ez_etnohr_6_31 | 78 | 0 | 0 | 0 | 52 | 26 | 66.7% |
+| hv_ez_etnohr_6_33 | 323 | 0 | 0 | 0 | 213 | 110 | 65.9% |
+| hv_ez_etnohr_6_4 | 72 | 0 | 0 | 0 | 52 | 20 | 72.2% |
+| hv_ez_etnohr_6_43 | 56 | 0 | 0 | 0 | 48 | 8 | 85.7% |
+| hv_ez_etnohr_6_48 | 50 | 0 | 0 | 0 | 35 | 15 | 70.0% |
+| hv_ez_etnohr_6_5 | 67 | 0 | 0 | 0 | 54 | 13 | 80.6% |
+| hv_ez_etnohr_6_50 | 48 | 0 | 0 | 0 | 38 | 10 | 79.2% |
+| hv_ez_etnohr_6_51 | 53 | 0 | 0 | 0 | 40 | 13 | 75.5% |
+| hv_ez_etnohr_6_52 | 55 | 0 | 0 | 0 | 34 | 21 | 61.8% |
+| hv_ez_etnohr_6_54 | 68 | 0 | 0 | 0 | 57 | 11 | 83.8% |
+| hv_ez_etnohr_6_55 | 53 | 0 | 0 | 0 | 38 | 15 | 71.7% |
+| hv_ez_etnohr_6_56 | 95 | 0 | 0 | 0 | 71 | 24 | 74.7% |
+| hv_ez_etnohr_6_57 | 198 | 0 | 0 | 0 | 149 | 49 | 75.3% |
+| hv_ez_etnohr_6_58 | 122 | 0 | 0 | 0 | 90 | 32 | 73.8% |
+| hv_ez_etnohr_6_6 | 50 | 0 | 0 | 0 | 43 | 7 | 86.0% |
+| hv_ez_etnohr_6_64 | 110 | 0 | 0 | 0 | 80 | 30 | 72.7% |
+| hv_ez_etnohr_6_65 | 189 | 0 | 0 | 0 | 125 | 64 | 66.1% |
+| hv_ez_etnohr_6_66 | 197 | 0 | 0 | 0 | 136 | 61 | 69.0% |
+| hv_ez_etnohr_6_67 | 253 | 0 | 0 | 0 | 163 | 90 | 64.4% |
+| hv_ez_etnohr_6_68 | 171 | 0 | 0 | 0 | 123 | 48 | 71.9% |
+| hv_ez_etnohr_6_7 | 124 | 0 | 0 | 0 | 94 | 30 | 75.8% |
+| hv_ez_etnohr_6_70 | 288 | 0 | 0 | 0 | 199 | 89 | 69.1% |
+| hv_ez_etnohr_6_75 | 198 | 0 | 0 | 0 | 144 | 54 | 72.7% |
+| hv_ez_etnohr_6_78 | 94 | 0 | 0 | 0 | 68 | 26 | 72.3% |
+| hv_ez_etnohr_6_79 | 176 | 0 | 0 | 0 | 130 | 46 | 73.9% |
+| hv_ez_etnohr_6_8 | 69 | 0 | 0 | 0 | 48 | 21 | 69.6% |
+| hv_ez_etnohr_6_80 | 170 | 0 | 0 | 0 | 120 | 50 | 70.6% |
+| hv_ez_etnohr_6_81 | 237 | 0 | 0 | 0 | 144 | 93 | 60.8% |
+| hv_ez_etnohr_6_82 | 166 | 0 | 0 | 0 | 111 | 55 | 66.9% |
+| hv_ez_etnohr_6_83 | 45 | 0 | 0 | 0 | 38 | 7 | 84.4% |
+| hv_ez_etnohr_6_84 | 121 | 0 | 0 | 0 | 92 | 29 | 76.0% |
+| hv_ez_etnohr_6_85 | 54 | 0 | 0 | 0 | 41 | 13 | 75.9% |
+| hv_ez_etnohr_6_86 | 60 | 0 | 0 | 0 | 52 | 8 | 86.7% |
+| hv_ez_etnohr_6_88 | 163 | 0 | 0 | 0 | 123 | 40 | 75.5% |
+| hv_ez_etnohr_6_89 | 148 | 0 | 0 | 0 | 116 | 32 | 78.4% |
+| hv_ez_etnohr_6_9 | 335 | 0 | 0 | 0 | 244 | 91 | 72.8% |
+| hv_ez_etnohr_6_92 | 57 | 0 | 0 | 0 | 41 | 16 | 71.9% |
+| hv_ez_etnohr_6_93 | 46 | 0 | 0 | 0 | 31 | 15 | 67.4% |
+| hv_ez_etnohr_6_94 | 130 | 0 | 0 | 0 | 88 | 42 | 67.7% |
+| hv_ez_etnohr_6_95 | 47 | 0 | 0 | 0 | 31 | 16 | 66.0% |
+| hv_ez_etnohr_6_96 | 47 | 0 | 0 | 0 | 33 | 14 | 70.2% |
+| hv_ia_etnohr_03_1 | 94 981 | 0 | 0 | 0 | 54529 | 40452 | 57.4% |
+| hv_ia_spivannykxviii | 22 601 | 0 | 0 | 0 | 13468 | 9133 | 59.6% |
 | hv_ia_sumtsov17 | 1 675 | 0 | 0 | 0 | 580 | 1095 | 34.6% |
 | hv_ws_125046 | 771 | 0 | 0 | 0 | 584 | 187 | 75.7% |
-| hv_ia_argonavtykomedii00tsehuoft | 11 048 | 0 | 0 | 0 | 9019 | 2029 | 81.6% |
-| hv_ia_etnohr_4 | 97 809 | 0 | 0 | 0 | 55851 | 41958 | 57.1% |
+| hv_ez_etnohr_5_1 | 888 | 0 | 0 | 0 | 769 | 119 | 86.6% |
+| hv_ez_etnohr_5_2 | 81 | 0 | 0 | 0 | 66 | 15 | 81.5% |
+| hv_ez_etnohr_6_103 | 52 | 0 | 0 | 0 | 36 | 16 | 69.2% |
+| hv_ez_etnohr_6_117 | 55 | 0 | 0 | 0 | 38 | 17 | 69.1% |
+| hv_ez_etnohr_6_123 | 92 | 0 | 0 | 0 | 74 | 18 | 80.4% |
+| hv_ez_etnohr_6_137 | 43 | 0 | 0 | 0 | 28 | 15 | 65.1% |
+| hv_ez_etnohr_6_270 | 396 | 0 | 0 | 0 | 226 | 170 | 57.1% |
+| hv_ez_etnohr_6_3 | 47 | 0 | 0 | 0 | 38 | 9 | 80.9% |
+| hv_ez_etnohr_6_32 | 58 | 0 | 0 | 0 | 44 | 14 | 75.9% |
+| hv_ez_etnohr_6_69 | 160 | 0 | 0 | 0 | 125 | 35 | 78.1% |
+| hv_ez_etnohr_6_74 | 330 | 0 | 0 | 0 | 241 | 89 | 73.0% |
+| hv_ez_etnohr_6_97 | 120 | 0 | 0 | 0 | 87 | 33 | 72.5% |
+| hv_ez_etnohr_6_98 | 72 | 0 | 0 | 0 | 48 | 24 | 66.7% |
+| hv_ia_argonavtykomedii00tsehuoft | 11 048 | 0 | 0 | 0 | 9020 | 2028 | 81.6% |
+| hv_ia_etnohr_4 | 97 809 | 0 | 0 | 0 | 55871 | 41938 | 57.1% |
 | hv_ia_etnohr_5 | 82 830 | 0 | 0 | 0 | 65103 | 17727 | 78.6% |
 | hv_ws_4980 | 55 | 0 | 0 | 0 | 52 | 3 | 94.5% |
 | hv_ws_55582 | 877 | 0 | 0 | 0 | 731 | 146 | 83.4% |
 | hv_ws_598538 | 3 459 | 0 | 0 | 0 | 3116 | 343 | 90.1% |
 | r2u_umanets | 51 894 | 0 | 0 | 0 | 0 | 51894 | 0.0% |
-| hv_ia_etmol0gi | 80 818 | 0 | 0 | 0 | 65847 | 14971 | 81.5% |
-| hv_ia_etnohr_6 | 139 744 | 0 | 0 | 0 | 105890 | 33854 | 75.8% |
-| hv_ia_etnohr_7 | 80 876 | 0 | 0 | 0 | 47748 | 33128 | 59.0% |
-| hv_ia_hromnyk1899 | 15 337 | 0 | 0 | 0 | 6698 | 8639 | 43.7% |
+| hv_ez_etnohr_6_121 | 169 | 0 | 0 | 0 | 125 | 44 | 74.0% |
+| hv_ez_etnohr_6_124 | 235 | 0 | 0 | 0 | 176 | 59 | 74.9% |
+| hv_ez_etnohr_6_141 | 124 | 0 | 0 | 0 | 92 | 32 | 74.2% |
+| hv_ez_etnohr_6_142 | 92 | 0 | 0 | 0 | 67 | 25 | 72.8% |
+| hv_ez_etnohr_6_143 | 97 | 0 | 0 | 0 | 74 | 23 | 76.3% |
+| hv_ez_etnohr_6_147 | 77 | 0 | 0 | 0 | 52 | 25 | 67.5% |
+| hv_ez_etnohr_6_148 | 97 | 0 | 0 | 0 | 71 | 26 | 73.2% |
+| hv_ez_etnohr_6_163 | 87 | 0 | 0 | 0 | 67 | 20 | 77.0% |
+| hv_ez_etnohr_6_166 | 413 | 0 | 0 | 0 | 308 | 105 | 74.6% |
+| hv_ez_etnohr_6_175 | 81 | 0 | 0 | 0 | 51 | 30 | 63.0% |
+| hv_ez_etnohr_6_176 | 43 | 0 | 0 | 0 | 40 | 3 | 93.0% |
+| hv_ez_etnohr_6_177 | 45 | 0 | 0 | 0 | 41 | 4 | 91.1% |
+| hv_ez_etnohr_6_184 | 81 | 0 | 0 | 0 | 65 | 16 | 80.2% |
+| hv_ez_etnohr_6_188 | 93 | 0 | 0 | 0 | 57 | 36 | 61.3% |
+| hv_ez_etnohr_6_190 | 143 | 0 | 0 | 0 | 98 | 45 | 68.5% |
+| hv_ez_etnohr_6_192 | 166 | 0 | 0 | 0 | 107 | 59 | 64.5% |
+| hv_ez_etnohr_6_193 | 53 | 0 | 0 | 0 | 40 | 13 | 75.5% |
+| hv_ez_etnohr_6_194 | 235 | 0 | 0 | 0 | 192 | 43 | 81.7% |
+| hv_ez_etnohr_6_206 | 53 | 0 | 0 | 0 | 43 | 10 | 81.1% |
+| hv_ez_etnohr_6_207 | 78 | 0 | 0 | 0 | 69 | 9 | 88.5% |
+| hv_ez_etnohr_6_208 | 84 | 0 | 0 | 0 | 66 | 18 | 78.6% |
+| hv_ez_etnohr_6_212 | 44 | 0 | 0 | 0 | 28 | 16 | 63.6% |
+| hv_ez_etnohr_6_214 | 147 | 0 | 0 | 0 | 127 | 20 | 86.4% |
+| hv_ez_etnohr_6_220 | 66 | 0 | 0 | 0 | 54 | 12 | 81.8% |
+| hv_ez_etnohr_6_232 | 833 | 0 | 0 | 0 | 710 | 123 | 85.2% |
+| hv_ez_etnohr_6_234 | 2 544 | 0 | 0 | 0 | 1900 | 644 | 74.7% |
+| hv_ez_etnohr_6_237 | 44 | 0 | 0 | 0 | 32 | 12 | 72.7% |
+| hv_ez_etnohr_6_238 | 90 | 0 | 0 | 0 | 70 | 20 | 77.8% |
+| hv_ez_etnohr_6_242 | 43 | 0 | 0 | 0 | 35 | 8 | 81.4% |
+| hv_ez_etnohr_6_244 | 73 | 0 | 0 | 0 | 56 | 17 | 76.7% |
+| hv_ez_etnohr_6_248 | 178 | 0 | 0 | 0 | 123 | 55 | 69.1% |
+| hv_ez_etnohr_6_249 | 464 | 0 | 0 | 0 | 351 | 113 | 75.6% |
+| hv_ez_etnohr_6_252 | 81 | 0 | 0 | 0 | 61 | 20 | 75.3% |
+| hv_ez_etnohr_6_253 | 173 | 0 | 0 | 0 | 133 | 40 | 76.9% |
+| hv_ez_etnohr_6_274 | 156 | 0 | 0 | 0 | 138 | 18 | 88.5% |
+| hv_ez_etnohr_6_278 | 46 | 0 | 0 | 0 | 36 | 10 | 78.3% |
+| hv_ez_etnohr_6_279 | 112 | 0 | 0 | 0 | 79 | 33 | 70.5% |
+| hv_ez_etnohr_6_283 | 120 | 0 | 0 | 0 | 84 | 36 | 70.0% |
+| hv_ez_etnohr_6_286 | 844 | 0 | 0 | 0 | 674 | 170 | 79.9% |
+| hv_ez_etnohr_6_287 | 388 | 0 | 0 | 0 | 322 | 66 | 83.0% |
+| hv_ez_etnohr_6_289 | 346 | 0 | 0 | 0 | 239 | 107 | 69.1% |
+| hv_ez_etnohr_6_290 | 1 215 | 0 | 0 | 0 | 928 | 287 | 76.4% |
+| hv_ez_etnohr_6_292 | 683 | 0 | 0 | 0 | 513 | 170 | 75.1% |
+| hv_ez_etnohr_6_296 | 60 | 0 | 0 | 0 | 51 | 9 | 85.0% |
+| hv_ez_etnohr_6_298 | 1 836 | 0 | 0 | 0 | 1406 | 430 | 76.6% |
+| hv_ez_etnohr_6_301 | 170 | 0 | 0 | 0 | 140 | 30 | 82.4% |
+| hv_ez_etnohr_6_35 | 119 | 0 | 0 | 0 | 87 | 32 | 73.1% |
+| hv_ez_etnohr_6_36 | 91 | 0 | 0 | 0 | 71 | 20 | 78.0% |
+| hv_ez_etnohr_6_37 | 112 | 0 | 0 | 0 | 90 | 22 | 80.4% |
+| hv_ez_etnohr_6_38 | 66 | 0 | 0 | 0 | 49 | 17 | 74.2% |
+| hv_ez_etnohr_6_39 | 107 | 0 | 0 | 0 | 80 | 27 | 74.8% |
+| hv_ez_etnohr_6_40 | 96 | 0 | 0 | 0 | 69 | 27 | 71.9% |
+| hv_ez_etnohr_6_41 | 128 | 0 | 0 | 0 | 87 | 41 | 68.0% |
+| hv_ez_etnohr_6_42 | 48 | 0 | 0 | 0 | 33 | 15 | 68.8% |
+| hv_ez_etnohr_6_44 | 107 | 0 | 0 | 0 | 77 | 30 | 72.0% |
+| hv_ez_etnohr_6_45 | 143 | 0 | 0 | 0 | 111 | 32 | 77.6% |
+| hv_ez_etnohr_6_47 | 58 | 0 | 0 | 0 | 41 | 17 | 70.7% |
+| hv_ez_etnohr_6_49 | 136 | 0 | 0 | 0 | 106 | 30 | 77.9% |
+| hv_ia_etmol0gi | 80 818 | 0 | 0 | 0 | 65852 | 14966 | 81.5% |
+| hv_ia_etnohr_6 | 139 744 | 0 | 0 | 0 | 105894 | 33850 | 75.8% |
+| hv_ia_etnohr_7 | 80 876 | 0 | 0 | 0 | 47750 | 33126 | 59.0% |
+| hv_ia_hromnyk1899 | 15 337 | 0 | 0 | 0 | 6714 | 8623 | 43.8% |
 | hv_ia_hungaricorutheni00hnat | 4 451 | 0 | 0 | 0 | 3063 | 1388 | 68.8% |
 | hv_ws_102434 | 93 | 0 | 0 | 0 | 76 | 17 | 81.7% |
 | hv_ws_127303 | 218 | 0 | 0 | 0 | 188 | 30 | 86.2% |
@@ -8594,57 +9210,57 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_991892 | 12 813 | 0 | 0 | 0 | 10128 | 2685 | 79.0% |
 | hv_ia_descriptiondesdo00unse | 20 420 | 0 | 0 | 0 | 6451 | 13969 | 31.6% |
 | hv_ia_etnografichnyzb00komigoog | 13 905 | 0 | 0 | 0 | 9461 | 4444 | 68.0% |
-| hv_ia_etnohr_8 | 76 332 | 0 | 0 | 0 | 41927 | 34405 | 54.9% |
-| hv_ia_etnohr_9 | 86 396 | 0 | 0 | 0 | 50408 | 35988 | 58.3% |
-| hv_ia_frankoxvii | 50 796 | 0 | 0 | 0 | 29874 | 20922 | 58.8% |
+| hv_ia_etnohr_8 | 76 332 | 0 | 0 | 0 | 41931 | 34401 | 54.9% |
+| hv_ia_etnohr_9 | 86 396 | 0 | 0 | 0 | 50413 | 35983 | 58.4% |
+| hv_ia_frankoxvii | 50 796 | 0 | 0 | 0 | 29882 | 20914 | 58.8% |
 | hv_ia_halytskiukrans00kolouoft | 12 100 | 0 | 0 | 0 | 10597 | 1503 | 87.6% |
 | hv_ia_holodroman00hams | 47 916 | 0 | 0 | 0 | 43865 | 4051 | 91.5% |
 | hv_ia_iaremaopovidanie008800 | 9 991 | 0 | 0 | 0 | 9148 | 843 | 91.6% |
-| hv_ia_iuliitsezar00shak | 24 965 | 0 | 0 | 0 | 21522 | 3443 | 86.2% |
-| hv_ia_iz_ust_naroda | 14 998 | 0 | 0 | 0 | 7744 | 7254 | 51.6% |
+| hv_ia_iuliitsezar00shak | 24 965 | 0 | 0 | 0 | 21523 | 3442 | 86.2% |
+| hv_ia_iz_ust_naroda | 14 998 | 0 | 0 | 0 | 7750 | 7248 | 51.7% |
 | hv_ws_396846 | 3 490 | 0 | 0 | 0 | 2884 | 606 | 82.6% |
 | hv_ia_antoniiikleopatr00shak | 32 303 | 0 | 0 | 0 | 27660 | 4643 | 85.6% |
 | hv_ia_antoniikleopatra00shakuoft | 33 040 | 0 | 0 | 0 | 26995 | 6045 | 81.7% |
 | hv_ia_chyieteperpanshc00unse | 7 913 | 0 | 0 | 0 | 7416 | 497 | 93.7% |
-| hv_ia_etnohr_10 | 79 366 | 0 | 0 | 0 | 55313 | 24053 | 69.7% |
-| hv_ia_etnohr_11 | 69 445 | 0 | 0 | 0 | 44436 | 25009 | 64.0% |
-| hv_ia_gosudarstvennoek00dovn | 229 415 | 0 | 0 | 0 | 72651 | 156764 | 31.7% |
-| hv_ia_gosudarstvennoek00dovn_0 | 228 845 | 0 | 0 | 0 | 76657 | 152188 | 33.5% |
-| hv_ia_izv1901 | 85 053 | 0 | 0 | 0 | 31700 | 53353 | 37.3% |
+| hv_ia_etnohr_10 | 79 366 | 0 | 0 | 0 | 55314 | 24052 | 69.7% |
+| hv_ia_etnohr_11 | 69 445 | 0 | 0 | 0 | 44437 | 25008 | 64.0% |
+| hv_ia_gosudarstvennoek00dovn | 229 415 | 0 | 0 | 0 | 72655 | 156760 | 31.7% |
+| hv_ia_gosudarstvennoek00dovn_0 | 228 845 | 0 | 0 | 0 | 76661 | 152184 | 33.5% |
+| hv_ia_izv1901 | 85 053 | 0 | 0 | 0 | 31712 | 53341 | 37.3% |
 | hv_ws_134893 | 886 | 0 | 0 | 0 | 773 | 113 | 87.2% |
 | hv_ws_195311 | 82 | 0 | 0 | 0 | 70 | 12 | 85.4% |
 | hv_ws_202852 | 2 650 | 0 | 0 | 0 | 2371 | 279 | 89.5% |
 | hv_ws_215555 | 9 702 | 0 | 0 | 0 | 8357 | 1345 | 86.1% |
 | hv_ws_39551 | 206 | 0 | 0 | 0 | 160 | 46 | 77.7% |
-| hv_ws_539704 | 7 992 | 0 | 0 | 0 | 6769 | 1223 | 84.7% |
+| hv_ws_539704 | 7 992 | 0 | 0 | 0 | 6770 | 1222 | 84.7% |
 | hv_ws_552949 | 9 987 | 0 | 0 | 0 | 8432 | 1555 | 84.4% |
 | hv_ws_553073 | 10 121 | 0 | 0 | 0 | 8684 | 1437 | 85.8% |
 | hv_ws_553437 | 2 269 | 0 | 0 | 0 | 2042 | 227 | 90.0% |
 | hv_ws_604091 | 4 291 | 0 | 0 | 0 | 3825 | 466 | 89.1% |
 | franko1902 | 25 278 | 0 | 0 | 0 | 23704 | 1574 | 93.8% |
 | hv_ia_31761086786118 | 35 956 | 0 | 0 | 0 | 32531 | 3425 | 90.5% |
-| hv_ia_bpysaniafed03fedkuoft | 80 456 | 0 | 0 | 0 | 62530 | 17926 | 77.7% |
-| hv_ia_etnogr11 | 16 878 | 0 | 0 | 0 | 8922 | 7956 | 52.9% |
-| hv_ia_etnohr_12 | 61 359 | 0 | 0 | 0 | 40001 | 21358 | 65.2% |
-| hv_ia_etnohr_13 | 117 909 | 0 | 0 | 0 | 76893 | 41016 | 65.2% |
-| hv_ia_idealyhumannosty00masa | 14 707 | 0 | 0 | 0 | 12644 | 2063 | 86.0% |
+| hv_ia_bpysaniafed03fedkuoft | 80 456 | 0 | 0 | 0 | 62535 | 17921 | 77.7% |
+| hv_ia_etnogr11 | 16 878 | 0 | 0 | 0 | 8925 | 7953 | 52.9% |
+| hv_ia_etnohr_12 | 61 359 | 0 | 0 | 0 | 40003 | 21356 | 65.2% |
+| hv_ia_etnohr_13 | 117 909 | 0 | 0 | 0 | 76895 | 41014 | 65.2% |
+| hv_ia_idealyhumannosty00masa | 14 707 | 0 | 0 | 0 | 12645 | 2062 | 86.0% |
 | hv_ia_irodiiadagflober00flau | 11 594 | 0 | 0 | 0 | 10045 | 1549 | 86.6% |
 | hv_ws_112879 | 722 | 0 | 0 | 0 | 552 | 170 | 76.5% |
 | hv_ws_128957 | 443 | 0 | 0 | 0 | 374 | 69 | 84.4% |
 | hv_ws_129353 | 502 | 0 | 0 | 0 | 409 | 93 | 81.5% |
 | hv_ws_131760 | 9 598 | 0 | 0 | 0 | 7973 | 1625 | 83.1% |
-| hv_ws_197863 | 26 688 | 0 | 0 | 0 | 20964 | 5724 | 78.6% |
+| hv_ws_197863 | 26 688 | 0 | 0 | 0 | 20965 | 5723 | 78.6% |
 | hv_ws_216080 | 126 | 0 | 0 | 0 | 115 | 11 | 91.3% |
 | hv_ws_69250 | 332 | 0 | 0 | 0 | 252 | 80 | 75.9% |
 | hv_ws_69342 | 591 | 0 | 0 | 0 | 462 | 129 | 78.2% |
-| franko1903 | 28 878 | 0 | 0 | 0 | 27352 | 1526 | 94.7% |
-| hv_ia_akafistk00kolo | 4 309 | 0 | 0 | 0 | 1390 | 2919 | 32.3% |
+| franko1903 | 28 878 | 0 | 0 | 0 | 27353 | 1525 | 94.7% |
+| hv_ia_akafistk00kolo | 4 309 | 0 | 0 | 0 | 1395 | 2914 | 32.4% |
 | hv_ia_akordyantologii00frangoog | 45 549 | 0 | 0 | 0 | 40402 | 5147 | 88.7% |
 | hv_ia_akordyantologiia00franuoft | 45 565 | 0 | 0 | 0 | 41228 | 4337 | 90.5% |
 | hv_ia_bezmaskyistoriia00liunuoft | 1 309 | 0 | 0 | 0 | 1058 | 251 | 80.8% |
 | hv_ia_bukvar00unse | 7 422 | 0 | 0 | 0 | 5205 | 2217 | 70.1% |
 | hv_ia_doliapratsiuiuch00unse | 4 302 | 0 | 0 | 0 | 3918 | 384 | 91.1% |
-| hv_ia_dubovelystiealm00hringoog | 68 837 | 0 | 0 | 0 | 39642 | 29195 | 57.6% |
+| hv_ia_dubovelystiealm00hringoog | 68 837 | 0 | 0 | 0 | 39668 | 29169 | 57.6% |
 | hv_ia_institutkaopovid00vovc | 12 859 | 0 | 0 | 0 | 11487 | 1372 | 89.3% |
 | hv_ws_129682 | 541 | 0 | 0 | 0 | 404 | 137 | 74.7% |
 | hv_ws_132002 | 4 787 | 0 | 0 | 0 | 3797 | 990 | 79.3% |
@@ -8652,13 +9268,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_565372 | 88 | 0 | 0 | 0 | 78 | 10 | 88.6% |
 | hv_ws_69733 | 558 | 0 | 0 | 0 | 427 | 131 | 76.5% |
 | hv_ia_barvinskyj | 7 734 | 0 | 0 | 0 | 5972 | 1762 | 77.2% |
-| hv_ia_canadianfarmer_19040317_19190124 | 1 273 037 | 0 | 0 | 0 | 845506 | 427531 | 66.4% |
+| hv_ia_canadianfarmer_19040317_19190124 | 1 273 037 | 0 | 0 | 0 | 845627 | 427410 | 66.4% |
 | hv_ia_cihm_81058 | 4 151 | 0 | 0 | 0 | 3037 | 1114 | 73.2% |
-| hv_ia_etnohr_14 | 153 146 | 0 | 0 | 0 | 132578 | 20568 | 86.6% |
-| hv_ia_etnohr_15 | 104 046 | 0 | 0 | 0 | 64854 | 39192 | 62.3% |
+| hv_ia_etnohr_14 | 153 146 | 0 | 0 | 0 | 132581 | 20565 | 86.6% |
+| hv_ia_etnohr_15 | 104 046 | 0 | 0 | 0 | 64856 | 39190 | 62.3% |
 | hv_ia_glossy00bach_0 | 29 479 | 0 | 0 | 0 | 24007 | 5472 | 81.4% |
 | hv_ia_istoriiaborotbyv00drap_0 | 89 119 | 0 | 0 | 0 | 78001 | 11118 | 87.5% |
-| hv_ia_istoriiaosnovani00bibeuoft | 9 633 | 0 | 0 | 0 | 3757 | 5876 | 39.0% |
+| hv_ia_istoriiaosnovani00bibeuoft | 9 633 | 0 | 0 | 0 | 3760 | 5873 | 39.0% |
 | hv_ia_ocherkistoriukr00hrusgoog | 7 918 | 0 | 0 | 0 | 2350 | 5568 | 29.7% |
 | hv_ia_ukrist1904 | 2 514 | 0 | 0 | 0 | 2133 | 381 | 84.8% |
 | hv_ws_21286 | 78 | 0 | 0 | 0 | 64 | 14 | 82.1% |
@@ -8667,20 +9283,20 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_518314 | 98 | 0 | 0 | 0 | 78 | 20 | 79.6% |
 | hv_ws_547713 | 10 725 | 0 | 0 | 0 | 8924 | 1801 | 83.2% |
 | franko1905 | 7 656 | 0 | 0 | 0 | 7263 | 393 | 94.9% |
-| hv_ia_canadianmorning_19050715_19131231 | 1 370 550 | 0 | 0 | 0 | 905181 | 465369 | 66.0% |
-| hv_ia_canadianorthodox_19270000 | 6 930 | 0 | 0 | 0 | 3536 | 3394 | 51.0% |
+| hv_ia_canadianmorning_19050715_19131231 | 1 370 550 | 0 | 0 | 0 | 905310 | 465240 | 66.1% |
+| hv_ia_canadianorthodox_19270000 | 6 930 | 0 | 0 | 0 | 3537 | 3393 | 51.0% |
 | hv_ia_chary_na_ukraini | 12 515 | 0 | 0 | 0 | 10680 | 1835 | 85.3% |
 | hv_ia_charynaukrani00antouoft | 12 784 | 0 | 0 | 0 | 10476 | 2308 | 81.9% |
-| hv_ia_chytankaruskadli00unse | 84 310 | 0 | 0 | 0 | 53907 | 30403 | 63.9% |
+| hv_ia_chytankaruskadli00unse | 84 310 | 0 | 0 | 0 | 53912 | 30398 | 63.9% |
 | hv_ia_cihm_90589 | 10 651 | 0 | 0 | 0 | 7398 | 3253 | 69.5% |
-| hv_ia_cihm_990589 | 35 913 | 0 | 0 | 0 | 24548 | 11365 | 68.4% |
+| hv_ia_cihm_990589 | 35 913 | 0 | 0 | 0 | 24549 | 11364 | 68.4% |
 | hv_ia_demokratychnares00unse | 11 277 | 0 | 0 | 0 | 10024 | 1253 | 88.9% |
-| hv_ia_dramyikomedii00tobigoog | 58 337 | 0 | 0 | 0 | 31407 | 26930 | 53.8% |
-| hv_ia_etnohr_16 | 153 281 | 0 | 0 | 0 | 121197 | 32084 | 79.1% |
-| hv_ia_etnohr_17 | 76 786 | 0 | 0 | 0 | 61258 | 15528 | 79.8% |
+| hv_ia_dramyikomedii00tobigoog | 58 337 | 0 | 0 | 0 | 31450 | 26887 | 53.9% |
+| hv_ia_etnohr_16 | 153 281 | 0 | 0 | 0 | 121199 | 32082 | 79.1% |
+| hv_ia_etnohr_17 | 76 786 | 0 | 0 | 0 | 61262 | 15524 | 79.8% |
 | hv_ia_iakliudepravsobi00hrin | 6 900 | 0 | 0 | 0 | 6483 | 417 | 94.0% |
-| hv_ia_iliustrovannaia00regoog | 128 749 | 0 | 0 | 0 | 49486 | 79263 | 38.4% |
-| hv_ia_sumtsov2 | 4 211 | 0 | 0 | 0 | 1501 | 2710 | 35.6% |
+| hv_ia_iliustrovannaia00regoog | 128 749 | 0 | 0 | 0 | 49514 | 79235 | 38.5% |
+| hv_ia_sumtsov2 | 4 211 | 0 | 0 | 0 | 1507 | 2704 | 35.8% |
 | hv_ws_192585 | 647 | 0 | 0 | 0 | 495 | 152 | 76.5% |
 | hv_ws_205076 | 676 | 0 | 0 | 0 | 501 | 175 | 74.1% |
 | hv_ws_238810 | 273 | 0 | 0 | 0 | 182 | 91 | 66.7% |
@@ -8694,13 +9310,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_69386 | 410 | 0 | 0 | 0 | 341 | 69 | 83.2% |
 | komarova1905 | 7 374 | 0 | 0 | 0 | 5824 | 1550 | 79.0% |
 | franko1906 | 31 416 | 0 | 0 | 0 | 29703 | 1713 | 94.5% |
-| hv_ia_31761083002873 | 7 492 | 0 | 0 | 0 | 2281 | 5211 | 30.4% |
+| hv_ia_31761083002873 | 7 492 | 0 | 0 | 0 | 2282 | 5210 | 30.5% |
 | hv_ia_31761084433580 | 21 938 | 0 | 0 | 0 | 20059 | 1879 | 91.4% |
 | hv_ia_avtobiohrafiia008800 | 5 645 | 0 | 0 | 0 | 4750 | 895 | 84.1% |
-| hv_ia_canadianfarmer_19060104_19091220 | 1 493 759 | 0 | 0 | 0 | 922679 | 571080 | 61.8% |
-| hv_ia_cihm_98266 | 5 808 | 0 | 0 | 0 | 1903 | 3905 | 32.8% |
-| hv_ia_dekliamatsiisili00kumiuoft | 3 071 | 0 | 0 | 0 | 1287 | 1784 | 41.9% |
-| hv_ia_etnohr_18 | 81 472 | 0 | 0 | 0 | 67344 | 14128 | 82.7% |
+| hv_ia_canadianfarmer_19060104_19091220 | 1 493 759 | 0 | 0 | 0 | 922801 | 570958 | 61.8% |
+| hv_ia_cihm_98266 | 5 808 | 0 | 0 | 0 | 1905 | 3903 | 32.8% |
+| hv_ia_dekliamatsiisili00kumiuoft | 3 071 | 0 | 0 | 0 | 1288 | 1783 | 41.9% |
+| hv_ia_etnohr_18 | 81 472 | 0 | 0 | 0 | 67346 | 14126 | 82.7% |
 | hv_ia_etnohr_21 | 44 078 | 0 | 0 | 0 | 29515 | 14563 | 67.0% |
 | hv_ws_179643 | 1 740 | 0 | 0 | 0 | 1631 | 109 | 93.7% |
 | hv_ws_201669 | 2 211 | 0 | 0 | 0 | 1799 | 412 | 81.4% |
@@ -8713,31 +9329,31 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_508878 | 5 011 | 0 | 0 | 0 | 4093 | 918 | 81.7% |
 | hv_ws_543528 | 13 895 | 0 | 0 | 0 | 13367 | 528 | 96.2% |
 | hv_ws_67896 | 294 | 0 | 0 | 0 | 214 | 80 | 72.8% |
-| pyven1906 | 19 211 | 0 | 0 | 0 | 15707 | 3504 | 81.8% |
-| hv_ia_arkhyv1907 | 72 325 | 0 | 0 | 0 | 32612 | 39713 | 45.1% |
+| pyven1906 | 19 211 | 0 | 0 | 0 | 15855 | 3356 | 82.5% |
+| hv_ia_arkhyv1907 | 72 325 | 0 | 0 | 0 | 32620 | 39705 | 45.1% |
 | hv_ia_cihm_84513 | 42 910 | 0 | 0 | 0 | 38308 | 4602 | 89.3% |
-| hv_ia_dizharmoniiadram00vynnuoft | 21 077 | 0 | 0 | 0 | 17170 | 3907 | 81.5% |
-| hv_ia_dodatok | 91 950 | 0 | 0 | 0 | 30936 | 61014 | 33.6% |
-| hv_ia_etnohr_19 | 68 360 | 0 | 0 | 0 | 57104 | 11256 | 83.5% |
+| hv_ia_dizharmoniiadram00vynnuoft | 21 077 | 0 | 0 | 0 | 17172 | 3905 | 81.5% |
+| hv_ia_dodatok | 91 950 | 0 | 0 | 0 | 30946 | 61004 | 33.7% |
+| hv_ia_etnohr_19 | 68 360 | 0 | 0 | 0 | 57106 | 11254 | 83.5% |
 | hv_ia_gram1907 | 8 006 | 0 | 0 | 0 | 7330 | 676 | 91.6% |
-| hv_ia_grinchenko1907 | 14 313 | 0 | 0 | 0 | 4250 | 10063 | 29.7% |
+| hv_ia_grinchenko1907 | 14 313 | 0 | 0 | 0 | 4253 | 10060 | 29.7% |
 | hv_ia_izpolskoukrains00hrusgoog | 2 043 | 0 | 0 | 0 | 664 | 1379 | 32.5% |
 | hv_ws_133754 | 70 | 0 | 0 | 0 | 65 | 5 | 92.9% |
-| hv_ws_183382 | 17 701 | 0 | 0 | 0 | 14493 | 3208 | 81.9% |
+| hv_ws_183382 | 17 701 | 0 | 0 | 0 | 14494 | 3207 | 81.9% |
 | hv_ws_20249 | 872 | 0 | 0 | 0 | 860 | 12 | 98.6% |
 | hv_ws_25787 | 115 | 0 | 0 | 0 | 92 | 23 | 80.0% |
-| hv_ws_31430 | 1 330 | 0 | 0 | 0 | 1229 | 101 | 92.4% |
+| hv_ws_31430 | 1 330 | 0 | 0 | 0 | 1230 | 100 | 92.5% |
 | hv_ws_323115 | 3 830 | 0 | 0 | 0 | 3626 | 204 | 94.7% |
 | hv_ws_451928 | 16 669 | 0 | 0 | 0 | 15862 | 807 | 95.2% |
 | hv_ws_68098 | 61 | 0 | 0 | 0 | 60 | 1 | 98.4% |
 | hrinchenko1908 | 6 527 | 0 | 0 | 0 | 5718 | 809 | 87.6% |
 | hv_ia_beryychytai008800 | 24 346 | 0 | 0 | 0 | 14746 | 9600 | 60.6% |
-| hv_ia_bukovynskirussko00rusnuoft | 10 217 | 0 | 0 | 0 | 6481 | 3736 | 63.4% |
+| hv_ia_bukovynskirussko00rusnuoft | 10 217 | 0 | 0 | 0 | 6495 | 3722 | 63.6% |
 | hv_ia_dovidomostyemigr00reva | 3 673 | 0 | 0 | 0 | 3002 | 671 | 81.7% |
 | hv_ia_etnohr_22 | 42 938 | 0 | 0 | 0 | 26608 | 16330 | 62.0% |
-| hv_ia_etnohr_24 | 118 783 | 0 | 0 | 0 | 91780 | 27003 | 77.3% |
+| hv_ia_etnohr_24 | 118 783 | 0 | 0 | 0 | 91783 | 27000 | 77.3% |
 | hv_ia_iakrozvestynapis00borouoft | 7 371 | 0 | 0 | 0 | 6016 | 1355 | 81.6% |
-| hv_ia_istoriiaukranyr00arkagoog | 121 956 | 0 | 0 | 0 | 113256 | 8700 | 92.9% |
+| hv_ia_istoriiaukranyr00arkagoog | 121 956 | 0 | 0 | 0 | 113269 | 8687 | 92.9% |
 | hv_ia_istorychnipisniu00sich | 5 304 | 0 | 0 | 0 | 4586 | 718 | 86.5% |
 | hv_ia_istorychniprychy12barv | 52 390 | 0 | 0 | 0 | 36812 | 15578 | 70.3% |
 | hv_ws_104117 | 169 | 0 | 0 | 0 | 127 | 42 | 75.1% |
@@ -8749,35 +9365,35 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_454124 | 5 762 | 0 | 0 | 0 | 5195 | 567 | 90.2% |
 | hv_ws_505650 | 234 | 0 | 0 | 0 | 192 | 42 | 82.1% |
 | hv_ws_511725 | 16 997 | 0 | 0 | 0 | 15760 | 1237 | 92.7% |
-| hv_ws_519706 | 36 719 | 0 | 0 | 0 | 30300 | 6419 | 82.5% |
+| hv_ws_519706 | 36 719 | 0 | 0 | 0 | 30301 | 6418 | 82.5% |
 | hv_ws_522743 | 270 | 0 | 0 | 0 | 239 | 31 | 88.5% |
 | hv_ws_598537 | 1 587 | 0 | 0 | 0 | 1415 | 172 | 89.2% |
 | hv_ws_600401 | 6 218 | 0 | 0 | 0 | 5766 | 452 | 92.7% |
 | hv_ia_31761086786100 | 28 200 | 0 | 0 | 0 | 25234 | 2966 | 89.5% |
 | hv_ia_advokatskiiporad00roze | 1 630 | 0 | 0 | 0 | 878 | 752 | 53.9% |
-| hv_ia_ch8t3 | 63 422 | 0 | 0 | 0 | 30039 | 33383 | 47.4% |
+| hv_ia_ch8t3 | 63 422 | 0 | 0 | 0 | 30040 | 33382 | 47.4% |
 | hv_ia_chornikryla00iats | 25 917 | 0 | 0 | 0 | 22188 | 3729 | 85.6% |
-| hv_ia_dubrov1909 | 64 928 | 0 | 0 | 0 | 27631 | 37297 | 42.6% |
-| hv_ia_dubrovskiy1909 | 65 293 | 0 | 0 | 0 | 28003 | 37290 | 42.9% |
-| hv_ia_etn1909_02_03 | 1 525 | 0 | 0 | 0 | 634 | 891 | 41.6% |
-| hv_ia_etnohr_25 | 106 898 | 0 | 0 | 0 | 59547 | 47351 | 55.7% |
+| hv_ia_dubrov1909 | 64 928 | 0 | 0 | 0 | 27633 | 37295 | 42.6% |
+| hv_ia_dubrovskiy1909 | 65 293 | 0 | 0 | 0 | 28006 | 37287 | 42.9% |
+| hv_ia_etn1909_02_03 | 1 525 | 0 | 0 | 0 | 635 | 890 | 41.6% |
+| hv_ia_etnohr_25 | 106 898 | 0 | 0 | 0 | 59566 | 47332 | 55.7% |
 | hv_ia_etnohr_27 | 98 450 | 0 | 0 | 0 | 80952 | 17498 | 82.2% |
 | hv_ia_fragmentypoezi00holuuoft | 2 470 | 0 | 0 | 0 | 2144 | 326 | 86.8% |
 | hv_ia_hnatiuk1909 | 2 087 | 0 | 0 | 0 | 1444 | 643 | 69.2% |
 | hv_ia_hoholiukrana00doro | 11 926 | 0 | 0 | 0 | 10831 | 1095 | 90.8% |
-| hv_ia_horilytsiaduryly00horu | 565 | 0 | 0 | 0 | 335 | 230 | 59.3% |
+| hv_ia_horilytsiaduryly00horu | 565 | 0 | 0 | 0 | 336 | 229 | 59.5% |
 | hv_ia_iubylemykolyhoho00hrus | 1 774 | 0 | 0 | 0 | 1220 | 554 | 68.8% |
-| hv_ia_ivanfrankopoezii00krus | 49 591 | 0 | 0 | 0 | 42046 | 7545 | 84.8% |
+| hv_ia_ivanfrankopoezii00krus | 49 591 | 0 | 0 | 0 | 42058 | 7533 | 84.8% |
 | hv_ws_123778 | 5 044 | 0 | 0 | 0 | 4484 | 560 | 88.9% |
 | hv_ws_26619 | 723 | 0 | 0 | 0 | 549 | 174 | 75.9% |
-| hv_ws_31440 | 1 562 | 0 | 0 | 0 | 1487 | 75 | 95.2% |
+| hv_ws_31440 | 1 562 | 0 | 0 | 0 | 1488 | 74 | 95.3% |
 | hv_ws_384963 | 97 | 0 | 0 | 0 | 97 | 0 | 100.0% |
 | hv_ws_415566 | 2 088 | 0 | 0 | 0 | 2025 | 63 | 97.0% |
-| hv_ws_453093 | 7 150 | 0 | 0 | 0 | 6113 | 1037 | 85.5% |
+| hv_ws_453093 | 7 150 | 0 | 0 | 0 | 6115 | 1035 | 85.5% |
 | hv_ws_597157 | 4 706 | 0 | 0 | 0 | 4460 | 246 | 94.8% |
 | hv_ws_600253 | 7 954 | 0 | 0 | 0 | 7506 | 448 | 94.4% |
 | r2u_hrinch09 | 6 481 | 0 | 0 | 0 | 0 | 6481 | 0.0% |
-| ez26_shekerik | 51 782 | 0 | 0 | 0 | 37925 | 13857 | 73.2% |
+| ez26_shekerik | 51 782 | 0 | 0 | 0 | 37927 | 13855 | 73.2% |
 | hv_ia_12tsvitnia190800lozy | 4 494 | 0 | 0 | 0 | 3959 | 535 | 88.1% |
 | hv_ia_arendarvklopotik00bili | 11 943 | 0 | 0 | 0 | 10644 | 1299 | 89.1% |
 | hv_ia_arendarvklopotik00bili_1 | 11 729 | 0 | 0 | 0 | 10419 | 1310 | 88.8% |
@@ -8785,55 +9401,55 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_arkhyv1910 | 53 502 | 0 | 0 | 0 | 21044 | 32458 | 39.3% |
 | hv_ia_bakyliub00lafo | 11 581 | 0 | 0 | 0 | 9918 | 1663 | 85.6% |
 | hv_ia_blakytnatroianda00ukra | 18 812 | 0 | 0 | 0 | 17744 | 1068 | 94.3% |
-| hv_ia_canadianfarmer_19100501_19121202 | 1 084 842 | 0 | 0 | 0 | 670841 | 414001 | 61.8% |
+| hv_ia_canadianfarmer_19100501_19121202 | 1 084 842 | 0 | 0 | 0 | 670928 | 413914 | 61.8% |
 | hv_ia_chsliv | 89 986 | 0 | 0 | 0 | 65092 | 24894 | 72.3% |
 | hv_ia_chudoiakykhmaloa00unse | 1 236 | 0 | 0 | 0 | 1057 | 179 | 85.5% |
 | hv_ia_chycholovikmaied00fich | 5 370 | 0 | 0 | 0 | 4520 | 850 | 84.2% |
-| hv_ia_cihm_65581 | 28 782 | 0 | 0 | 0 | 12603 | 16179 | 43.8% |
+| hv_ia_cihm_65581 | 28 782 | 0 | 0 | 0 | 12605 | 16177 | 43.8% |
 | hv_ia_cihm_75297 | 14 838 | 0 | 0 | 0 | 12478 | 2360 | 84.1% |
 | hv_ia_cihm_77112 | 3 570 | 0 | 0 | 0 | 2675 | 895 | 74.9% |
-| hv_ia_cihm_991631 | 12 730 | 0 | 0 | 0 | 9759 | 2971 | 76.7% |
+| hv_ia_cihm_991631 | 12 730 | 0 | 0 | 0 | 9761 | 2969 | 76.7% |
 | hv_ia_danyliv1910 | 261 | 0 | 0 | 0 | 132 | 129 | 50.6% |
-| hv_ia_dedezelmanil00rusn | 2 144 | 0 | 0 | 0 | 1150 | 994 | 53.6% |
-| hv_ia_dliaotradymonolo01hanu | 11 993 | 0 | 0 | 0 | 6412 | 5581 | 53.5% |
-| hv_ia_domashnylkaraboi00unse | 26 012 | 0 | 0 | 0 | 21853 | 4159 | 84.0% |
+| hv_ia_dedezelmanil00rusn | 2 144 | 0 | 0 | 0 | 1151 | 993 | 53.7% |
+| hv_ia_dliaotradymonolo01hanu | 11 993 | 0 | 0 | 0 | 6413 | 5580 | 53.5% |
+| hv_ia_domashnylkaraboi00unse | 26 012 | 0 | 0 | 0 | 21855 | 4157 | 84.0% |
 | hv_ia_etnohr_28 | 126 001 | 0 | 0 | 0 | 90182 | 35819 | 71.6% |
-| hv_ia_etnohr_29 | 225 152 | 0 | 0 | 0 | 123151 | 102001 | 54.7% |
-| hv_ia_etnohrafichnakar00toma | 26 049 | 0 | 0 | 0 | 18940 | 7109 | 72.7% |
+| hv_ia_etnohr_29 | 225 152 | 0 | 0 | 0 | 123178 | 101974 | 54.7% |
+| hv_ia_etnohrafichnakar00toma | 26 049 | 0 | 0 | 0 | 18944 | 7105 | 72.7% |
 | hv_ia_farmazonyaboiakt00fedk | 15 266 | 0 | 0 | 0 | 13216 | 2050 | 86.6% |
 | hv_ia_folklorpidruchny00gomm | 30 328 | 0 | 0 | 0 | 24317 | 6011 | 80.2% |
 | hv_ia_horbokonykkazkap00kova | 10 784 | 0 | 0 | 0 | 10117 | 667 | 93.8% |
 | hv_ia_iakzhyvukransk00kohu | 12 045 | 0 | 0 | 0 | 10483 | 1562 | 87.0% |
-| hv_ia_iurkodovbushisto00star | 17 986 | 0 | 0 | 0 | 16593 | 1393 | 92.3% |
-| hv_ia_sumts1910 | 5 622 | 0 | 0 | 0 | 4092 | 1530 | 72.8% |
-| hv_ia_sumtsov0malyunki | 48 290 | 0 | 0 | 0 | 36364 | 11926 | 75.3% |
-| hv_ia_sumtsov10 | 48 290 | 0 | 0 | 0 | 36364 | 11926 | 75.3% |
+| hv_ia_iurkodovbushisto00star | 17 986 | 0 | 0 | 0 | 16594 | 1392 | 92.3% |
+| hv_ia_sumts1910 | 5 622 | 0 | 0 | 0 | 4093 | 1529 | 72.8% |
+| hv_ia_sumtsov0malyunki | 48 290 | 0 | 0 | 0 | 36366 | 11924 | 75.3% |
+| hv_ia_sumtsov10 | 48 290 | 0 | 0 | 0 | 36366 | 11924 | 75.3% |
 | hv_ia_sumtsov22 | 12 363 | 0 | 0 | 0 | 9297 | 3066 | 75.2% |
 | hv_ws_108493 | 12 867 | 0 | 0 | 0 | 10690 | 2177 | 83.1% |
 | hv_ws_179868 | 3 786 | 0 | 0 | 0 | 3592 | 194 | 94.9% |
 | hv_ws_45246 | 3 419 | 0 | 0 | 0 | 2846 | 573 | 83.2% |
 | hv_ws_592473 | 2 096 | 0 | 0 | 0 | 1796 | 300 | 85.7% |
-| hv_ia_00005058 | 68 915 | 0 | 0 | 0 | 62880 | 6035 | 91.2% |
-| hv_ia_31761090251661 | 96 730 | 0 | 0 | 0 | 84847 | 11883 | 87.7% |
+| hv_ia_00005058 | 68 915 | 0 | 0 | 0 | 63236 | 5679 | 91.8% |
+| hv_ia_31761090251661 | 96 730 | 0 | 0 | 0 | 84850 | 11880 | 87.7% |
 | hv_ia_arabskikazky00oles | 17 477 | 0 | 0 | 0 | 16106 | 1371 | 92.2% |
-| hv_ia_arkhyv1911 | 78 128 | 0 | 0 | 0 | 34737 | 43391 | 44.5% |
-| hv_ia_arkhyv7 | 48 437 | 0 | 0 | 0 | 22375 | 26062 | 46.2% |
+| hv_ia_arkhyv1911 | 78 128 | 0 | 0 | 0 | 34741 | 43387 | 44.5% |
+| hv_ia_arkhyv7 | 48 437 | 0 | 0 | 0 | 22377 | 26060 | 46.2% |
 | hv_ia_batkosumnaistory00unse | 4 153 | 0 | 0 | 0 | 3634 | 519 | 87.5% |
 | hv_ia_cihm_81055 | 7 400 | 0 | 0 | 0 | 5454 | 1946 | 73.7% |
 | hv_ia_cihm_991109 | 14 277 | 0 | 0 | 0 | 11054 | 3223 | 77.4% |
 | hv_ia_cihm_991534 | 4 325 | 0 | 0 | 0 | 3560 | 765 | 82.3% |
-| hv_ia_dabudetvoliatvoi00tsuk | 6 513 | 0 | 0 | 0 | 3632 | 2881 | 55.8% |
-| hv_ia_davnienovepoezi00franuoft | 42 927 | 0 | 0 | 0 | 35656 | 7271 | 83.1% |
+| hv_ia_dabudetvoliatvoi00tsuk | 6 513 | 0 | 0 | 0 | 3640 | 2873 | 55.9% |
+| hv_ia_davnienovepoezi00franuoft | 42 927 | 0 | 0 | 0 | 35659 | 7268 | 83.1% |
 | hv_ia_debiutopovidanni00kots | 48 021 | 0 | 0 | 0 | 44951 | 3070 | 93.6% |
 | hv_ia_durysvityprykhod00levyuoft | 6 971 | 0 | 0 | 0 | 6142 | 829 | 88.1% |
 | hv_ia_dvokhvidrazunove00blas | 1 802 | 0 | 0 | 0 | 1556 | 246 | 86.3% |
 | hv_ia_etnografichnater00naza | 19 166 | 0 | 0 | 0 | 15031 | 4135 | 78.4% |
-| hv_ia_etnozb30 | 154 861 | 0 | 0 | 0 | 76795 | 78066 | 49.6% |
+| hv_ia_etnozb30 | 154 861 | 0 | 0 | 0 | 76839 | 78022 | 49.6% |
 | hv_ia_hrishnytsiapisli00mpb | 3 021 | 0 | 0 | 0 | 2157 | 864 | 71.4% |
 | hv_ia_instruktsyiadlia00hara | 6 972 | 0 | 0 | 0 | 5812 | 1160 | 83.4% |
 | hv_ia_kevskaiarus01hrus | 9 116 | 0 | 0 | 0 | 3036 | 6080 | 33.3% |
 | hv_ia_kievskaiarusvved01hrusuoft | 12 265 | 0 | 0 | 0 | 3867 | 8398 | 31.5% |
-| hv_ia_nashapolityka00hrus | 26 939 | 0 | 0 | 0 | 23228 | 3711 | 86.2% |
+| hv_ia_nashapolityka00hrus | 26 939 | 0 | 0 | 0 | 23233 | 3706 | 86.2% |
 | hv_ia_ocherkistoriiukr00hrus | 4 080 | 0 | 0 | 0 | 1435 | 2645 | 35.2% |
 | hv_ws_130656 | 1 021 | 0 | 0 | 0 | 896 | 125 | 87.8% |
 | hv_ws_19991 | 16 882 | 0 | 0 | 0 | 15505 | 1377 | 91.8% |
@@ -8843,52 +9459,52 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_41614 | 485 | 0 | 0 | 0 | 398 | 87 | 82.1% |
 | hv_ws_567763 | 3 385 | 0 | 0 | 0 | 3218 | 167 | 95.1% |
 | hv_ws_600541 | 4 217 | 0 | 0 | 0 | 3547 | 670 | 84.1% |
-| hv_ia_arkas1912 | 143 206 | 0 | 0 | 0 | 133251 | 9955 | 93.0% |
-| hv_ia_arkhyv8 | 59 462 | 0 | 0 | 0 | 18757 | 40705 | 31.5% |
+| hv_ia_arkas1912 | 143 206 | 0 | 0 | 0 | 133266 | 9940 | 93.1% |
+| hv_ia_arkhyv8 | 59 462 | 0 | 0 | 0 | 18763 | 40699 | 31.6% |
 | hv_ia_biostor_144520 | 4 464 | 0 | 0 | 0 | 1350 | 3114 | 30.2% |
 | hv_ia_canadian_19120715 | 5 524 | 0 | 0 | 0 | 3745 | 1779 | 67.8% |
 | hv_ia_cholovikshchored00timmuoft | 7 489 | 0 | 0 | 0 | 4071 | 3418 | 54.4% |
 | hv_ia_cholovikshchored00tymm | 7 726 | 0 | 0 | 0 | 4194 | 3532 | 54.3% |
 | hv_ia_chomupopynezheni00unse | 5 925 | 0 | 0 | 0 | 4684 | 1241 | 79.1% |
 | hv_ia_cihm_85631 | 5 415 | 0 | 0 | 0 | 4227 | 1188 | 78.1% |
-| hv_ia_deznaitypravdu00lezh | 43 161 | 0 | 0 | 0 | 37435 | 5726 | 86.7% |
-| hv_ia_dosvitlastsenich00luts | 6 778 | 0 | 0 | 0 | 3603 | 3175 | 53.2% |
-| hv_ia_dosvitlastsenich00luts_0 | 6 021 | 0 | 0 | 0 | 3614 | 2407 | 60.0% |
+| hv_ia_deznaitypravdu00lezh | 43 161 | 0 | 0 | 0 | 37436 | 5725 | 86.7% |
+| hv_ia_dosvitlastsenich00luts | 6 778 | 0 | 0 | 0 | 3604 | 3174 | 53.2% |
+| hv_ia_dosvitlastsenich00luts_0 | 6 021 | 0 | 0 | 0 | 3615 | 2406 | 60.0% |
 | hv_ia_etnograf_zb_33 | 111 254 | 0 | 0 | 0 | 84442 | 26812 | 75.9% |
-| hv_ia_etnograf_zb_34 | 120 131 | 0 | 0 | 0 | 89489 | 30642 | 74.5% |
-| hv_ia_heinaivanaheinak00fedy_0 | 3 007 | 0 | 0 | 0 | 1811 | 1196 | 60.2% |
+| hv_ia_etnograf_zb_34 | 120 131 | 0 | 0 | 0 | 89494 | 30637 | 74.5% |
+| hv_ia_heinaivanaheinak00fedy_0 | 3 007 | 0 | 0 | 0 | 1812 | 1195 | 60.3% |
 | hv_ia_hetzakon3hoiunia00unse | 8 788 | 0 | 0 | 0 | 5867 | 2921 | 66.8% |
 | hv_ia_illiustrirovanna00hrusuoft | 14 182 | 0 | 0 | 0 | 6213 | 7969 | 43.8% |
-| hv_ia_istoriiaukranyru00arka | 142 957 | 0 | 0 | 0 | 136250 | 6707 | 95.3% |
-| hv_ia_tvorystepanaruda01rudauoft | 62 515 | 0 | 0 | 0 | 52282 | 10233 | 83.6% |
-| hv_ia_tvorystepanaruda02rudauoft | 60 530 | 0 | 0 | 0 | 50901 | 9629 | 84.1% |
-| hv_ia_tvorystepanaruda03rudauoft | 107 023 | 0 | 0 | 0 | 88979 | 18044 | 83.1% |
+| hv_ia_istoriiaukranyru00arka | 142 957 | 0 | 0 | 0 | 136264 | 6693 | 95.3% |
+| hv_ia_tvorystepanaruda01rudauoft | 62 515 | 0 | 0 | 0 | 52283 | 10232 | 83.6% |
+| hv_ia_tvorystepanaruda02rudauoft | 60 530 | 0 | 0 | 0 | 50902 | 9628 | 84.1% |
+| hv_ia_tvorystepanaruda03rudauoft | 107 023 | 0 | 0 | 0 | 88983 | 18040 | 83.1% |
 | hv_ws_102117 | 304 | 0 | 0 | 0 | 273 | 31 | 89.8% |
 | hv_ws_135867 | 2 424 | 0 | 0 | 0 | 2103 | 321 | 86.8% |
 | hv_ws_192524 | 116 | 0 | 0 | 0 | 111 | 5 | 95.7% |
 | hv_ws_192525 | 166 | 0 | 0 | 0 | 158 | 8 | 95.2% |
-| hv_ws_298289 | 3 092 | 0 | 0 | 0 | 2833 | 259 | 91.6% |
+| hv_ws_298289 | 3 092 | 0 | 0 | 0 | 2836 | 256 | 91.7% |
 | hv_ws_411722 | 7 194 | 0 | 0 | 0 | 6905 | 289 | 96.0% |
 | hv_ws_480712 | 6 319 | 0 | 0 | 0 | 5417 | 902 | 85.7% |
-| hv_ws_5383 | 14 450 | 0 | 0 | 0 | 12485 | 1965 | 86.4% |
-| hv_ws_565353 | 8 677 | 0 | 0 | 0 | 8281 | 396 | 95.4% |
+| hv_ws_5383 | 14 450 | 0 | 0 | 0 | 12491 | 1959 | 86.4% |
+| hv_ws_565353 | 8 677 | 0 | 0 | 0 | 8282 | 395 | 95.4% |
 | hv_ws_566306 | 1 838 | 0 | 0 | 0 | 1801 | 37 | 98.0% |
 | hv_ws_569540 | 5 566 | 0 | 0 | 0 | 5459 | 107 | 98.1% |
 | hv_ws_9043 | 543 | 0 | 0 | 0 | 431 | 112 | 79.4% |
-| yavornytsky1912 | 4 020 | 0 | 0 | 0 | 3732 | 288 | 92.8% |
+| yavornytsky1912 | 4 020 | 0 | 0 | 0 | 3740 | 280 | 93.0% |
 | hv_ia_amulietf00meye | 20 832 | 0 | 0 | 0 | 18223 | 2609 | 87.5% |
 | hv_ia_canada_19130902 | 9 339 | 0 | 0 | 0 | 5259 | 4080 | 56.3% |
-| hv_ia_canada_19130909 | 12 555 | 0 | 0 | 0 | 7618 | 4937 | 60.7% |
+| hv_ia_canada_19130909 | 12 555 | 0 | 0 | 0 | 7621 | 4934 | 60.7% |
 | hv_ia_canada_19130916 | 10 221 | 0 | 0 | 0 | 6006 | 4215 | 58.8% |
 | hv_ia_canada_19130923 | 12 950 | 0 | 0 | 0 | 7847 | 5103 | 60.6% |
 | hv_ia_canada_19130930 | 10 790 | 0 | 0 | 0 | 6269 | 4521 | 58.1% |
 | hv_ia_canada_19131007 | 9 277 | 0 | 0 | 0 | 5093 | 4184 | 54.9% |
-| hv_ia_canada_19131014 | 9 189 | 0 | 0 | 0 | 5475 | 3714 | 59.6% |
+| hv_ia_canada_19131014 | 9 189 | 0 | 0 | 0 | 5476 | 3713 | 59.6% |
 | hv_ia_canada_19131021 | 5 517 | 0 | 0 | 0 | 3093 | 2424 | 56.1% |
 | hv_ia_canada_19131028 | 9 254 | 0 | 0 | 0 | 5220 | 4034 | 56.4% |
 | hv_ia_canada_19131104 | 11 466 | 0 | 0 | 0 | 6815 | 4651 | 59.4% |
 | hv_ia_canada_19131111 | 9 927 | 0 | 0 | 0 | 5694 | 4233 | 57.4% |
-| hv_ia_canada_19131118 | 11 136 | 0 | 0 | 0 | 6352 | 4784 | 57.0% |
+| hv_ia_canada_19131118 | 11 136 | 0 | 0 | 0 | 6354 | 4782 | 57.1% |
 | hv_ia_canada_19131125 | 10 240 | 0 | 0 | 0 | 5752 | 4488 | 56.2% |
 | hv_ia_canada_19131202 | 1 819 | 0 | 0 | 0 | 1001 | 818 | 55.0% |
 | hv_ia_canada_19131209 | 2 760 | 0 | 0 | 0 | 1633 | 1127 | 59.2% |
@@ -8897,34 +9513,34 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_canada_19131229 | 2 551 | 0 | 0 | 0 | 1449 | 1102 | 56.8% |
 | hv_ia_canadian_19130401 | 5 833 | 0 | 0 | 0 | 4045 | 1788 | 69.3% |
 | hv_ia_canadian_19130412 | 5 696 | 0 | 0 | 0 | 4097 | 1599 | 71.9% |
-| hv_ia_canadian_19130501 | 10 511 | 0 | 0 | 0 | 7465 | 3046 | 71.0% |
+| hv_ia_canadian_19130501 | 10 511 | 0 | 0 | 0 | 7466 | 3045 | 71.0% |
 | hv_ia_canadian_19130801 | 3 993 | 0 | 0 | 0 | 2735 | 1258 | 68.5% |
-| hv_ia_canadian_19130913 | 12 196 | 0 | 0 | 0 | 8788 | 3408 | 72.1% |
+| hv_ia_canadian_19130913 | 12 196 | 0 | 0 | 0 | 8790 | 3406 | 72.1% |
 | hv_ia_canadian_19131015 | 12 578 | 0 | 0 | 0 | 9109 | 3469 | 72.4% |
-| hv_ia_canadian_19131215 | 10 292 | 0 | 0 | 0 | 7166 | 3126 | 69.6% |
+| hv_ia_canadian_19131215 | 10 292 | 0 | 0 | 0 | 7167 | 3125 | 69.6% |
 | hv_ia_canadiannews_19131200 | 4 542 | 0 | 0 | 0 | 3065 | 1477 | 67.5% |
 | hv_ia_chervonykobzarzb00unse | 3 900 | 0 | 0 | 0 | 3389 | 511 | 86.9% |
-| hv_ia_chervonykobzarzb00unse_0 | 43 454 | 0 | 0 | 0 | 37996 | 5458 | 87.4% |
-| hv_ia_chytankadliashki00popouoft | 46 859 | 0 | 0 | 0 | 35330 | 11529 | 75.4% |
+| hv_ia_chervonykobzarzb00unse_0 | 43 454 | 0 | 0 | 0 | 37997 | 5457 | 87.4% |
+| hv_ia_chytankadliashki00popouoft | 46 859 | 0 | 0 | 0 | 35331 | 11528 | 75.4% |
 | hv_ia_cihm_81221 | 37 612 | 0 | 0 | 0 | 31479 | 6133 | 83.7% |
-| hv_ia_cihm_991481 | 2 421 | 0 | 0 | 0 | 1798 | 623 | 74.3% |
+| hv_ia_cihm_991481 | 2 421 | 0 | 0 | 0 | 1800 | 621 | 74.3% |
 | hv_ia_dorohovkazdliaru00budk | 1 892 | 0 | 0 | 0 | 1643 | 249 | 86.8% |
 | hv_ia_dosvitlaopovidan00franuoft | 7 483 | 0 | 0 | 0 | 6475 | 1008 | 86.5% |
-| hv_ia_dvavoinykomediav00luts | 3 835 | 0 | 0 | 0 | 2131 | 1704 | 55.6% |
-| hv_ia_dvavoinykomediia00luts | 3 630 | 0 | 0 | 0 | 2306 | 1324 | 63.5% |
-| hv_ia_incenseburner_19131201 | 7 340 | 0 | 0 | 0 | 5890 | 1450 | 80.2% |
+| hv_ia_dvavoinykomediav00luts | 3 835 | 0 | 0 | 0 | 2136 | 1699 | 55.7% |
+| hv_ia_dvavoinykomediia00luts | 3 630 | 0 | 0 | 0 | 2310 | 1320 | 63.6% |
+| hv_ia_incenseburner_19131201 | 7 340 | 0 | 0 | 0 | 5891 | 1449 | 80.3% |
 | hv_ws_109655 | 2 551 | 0 | 0 | 0 | 2530 | 21 | 99.2% |
 | hv_ws_110406 | 700 | 0 | 0 | 0 | 607 | 93 | 86.7% |
 | hv_ws_110407 | 2 903 | 0 | 0 | 0 | 2533 | 370 | 87.3% |
 | hv_ws_191719 | 7 323 | 0 | 0 | 0 | 6534 | 789 | 89.2% |
-| hv_ws_20477 | 2 053 | 0 | 0 | 0 | 1724 | 329 | 84.0% |
+| hv_ws_20477 | 2 053 | 0 | 0 | 0 | 1726 | 327 | 84.1% |
 | hv_ws_26452 | 1 042 | 0 | 0 | 0 | 965 | 77 | 92.6% |
 | hv_ws_26466 | 1 225 | 0 | 0 | 0 | 1155 | 70 | 94.3% |
 | hv_ws_40564 | 8 315 | 0 | 0 | 0 | 7700 | 615 | 92.6% |
 | hv_ws_423054 | 136 | 0 | 0 | 0 | 128 | 8 | 94.1% |
 | hv_ws_484073 | 8 984 | 0 | 0 | 0 | 8106 | 878 | 90.2% |
 | hv_ws_492792 | 6 670 | 0 | 0 | 0 | 6460 | 210 | 96.9% |
-| hv_ws_518312 | 619 | 0 | 0 | 0 | 508 | 111 | 82.1% |
+| hv_ws_518312 | 619 | 0 | 0 | 0 | 509 | 110 | 82.2% |
 | hv_ws_567618 | 354 | 0 | 0 | 0 | 333 | 21 | 94.1% |
 | hv_ws_598658 | 1 010 | 0 | 0 | 0 | 900 | 110 | 89.1% |
 | hv_ia_abukasymovikapts00fran | 11 163 | 0 | 0 | 0 | 10004 | 1159 | 89.6% |
@@ -8932,57 +9548,57 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_akordylirychnap00nepr | 1 743 | 0 | 0 | 0 | 1640 | 103 | 94.1% |
 | hv_ia_aktova1914 | 3 767 | 0 | 0 | 0 | 2097 | 1670 | 55.7% |
 | hv_ia_amaliunhaabodoch00unse | 13 974 | 0 | 0 | 0 | 11720 | 2254 | 83.9% |
-| hv_ia_auzr_3_4 | 131 602 | 0 | 0 | 0 | 50103 | 81499 | 38.1% |
+| hv_ia_auzr_3_4 | 131 602 | 0 | 0 | 0 | 50105 | 81497 | 38.1% |
 | hv_ia_bludnysynobrazzz00luts | 9 801 | 0 | 0 | 0 | 8743 | 1058 | 89.2% |
-| hv_ia_canada_19140104 | 10 425 | 0 | 0 | 0 | 6740 | 3685 | 64.7% |
-| hv_ia_canada_19140106 | 6 110 | 0 | 0 | 0 | 3460 | 2650 | 56.6% |
+| hv_ia_canada_19140104 | 10 425 | 0 | 0 | 0 | 6741 | 3684 | 64.7% |
+| hv_ia_canada_19140106 | 6 110 | 0 | 0 | 0 | 3461 | 2649 | 56.6% |
 | hv_ia_canada_19140127 | 4 119 | 0 | 0 | 0 | 2505 | 1614 | 60.8% |
 | hv_ia_canada_19140203 | 9 538 | 0 | 0 | 0 | 5672 | 3866 | 59.5% |
 | hv_ia_canada_19140210 | 4 424 | 0 | 0 | 0 | 2675 | 1749 | 60.5% |
 | hv_ia_canada_19140224 | 8 525 | 0 | 0 | 0 | 5169 | 3356 | 60.6% |
-| hv_ia_canada_19140312 | 9 375 | 0 | 0 | 0 | 5814 | 3561 | 62.0% |
-| hv_ia_canada_19140316 | 8 377 | 0 | 0 | 0 | 5366 | 3011 | 64.1% |
-| hv_ia_canada_19140317 | 14 716 | 0 | 0 | 0 | 10102 | 4614 | 68.6% |
+| hv_ia_canada_19140312 | 9 375 | 0 | 0 | 0 | 5816 | 3559 | 62.0% |
+| hv_ia_canada_19140316 | 8 377 | 0 | 0 | 0 | 5367 | 3010 | 64.1% |
+| hv_ia_canada_19140317 | 14 716 | 0 | 0 | 0 | 10104 | 4612 | 68.7% |
 | hv_ia_canada_19140324 | 7 154 | 0 | 0 | 0 | 4672 | 2482 | 65.3% |
 | hv_ia_canada_19140331 | 6 049 | 0 | 0 | 0 | 3800 | 2249 | 62.8% |
 | hv_ia_canada_19140407 | 9 029 | 0 | 0 | 0 | 6016 | 3013 | 66.6% |
 | hv_ia_canada_19140414 | 10 600 | 0 | 0 | 0 | 7120 | 3480 | 67.2% |
-| hv_ia_canada_19140421 | 7 073 | 0 | 0 | 0 | 4643 | 2430 | 65.6% |
+| hv_ia_canada_19140421 | 7 073 | 0 | 0 | 0 | 4644 | 2429 | 65.7% |
 | hv_ia_canada_19140428 | 12 229 | 0 | 0 | 0 | 8263 | 3966 | 67.6% |
 | hv_ia_canada_19140505 | 8 793 | 0 | 0 | 0 | 5853 | 2940 | 66.6% |
 | hv_ia_canada_19140512 | 9 896 | 0 | 0 | 0 | 6493 | 3403 | 65.6% |
 | hv_ia_canada_19140519 | 6 531 | 0 | 0 | 0 | 4164 | 2367 | 63.8% |
 | hv_ia_canada_19140526 | 5 748 | 0 | 0 | 0 | 3753 | 1995 | 65.3% |
 | hv_ia_canada_19140602 | 5 274 | 0 | 0 | 0 | 3562 | 1712 | 67.5% |
-| hv_ia_canada_19140609 | 8 099 | 0 | 0 | 0 | 5360 | 2739 | 66.2% |
-| hv_ia_canada_19140623 | 14 718 | 0 | 0 | 0 | 10238 | 4480 | 69.6% |
+| hv_ia_canada_19140609 | 8 099 | 0 | 0 | 0 | 5362 | 2737 | 66.2% |
+| hv_ia_canada_19140623 | 14 718 | 0 | 0 | 0 | 10239 | 4479 | 69.6% |
 | hv_ia_canada_19140630 | 11 267 | 0 | 0 | 0 | 7534 | 3733 | 66.9% |
-| hv_ia_canada_19140707 | 6 195 | 0 | 0 | 0 | 4045 | 2150 | 65.3% |
+| hv_ia_canada_19140707 | 6 195 | 0 | 0 | 0 | 4046 | 2149 | 65.3% |
 | hv_ia_canada_19140714 | 13 043 | 0 | 0 | 0 | 8973 | 4070 | 68.8% |
 | hv_ia_canada_19140721 | 7 738 | 0 | 0 | 0 | 5188 | 2550 | 67.0% |
-| hv_ia_canada_19140728 | 6 435 | 0 | 0 | 0 | 4405 | 2030 | 68.5% |
-| hv_ia_canada_19140804 | 7 286 | 0 | 0 | 0 | 4655 | 2631 | 63.9% |
-| hv_ia_canada_19140811 | 2 560 | 0 | 0 | 0 | 1710 | 850 | 66.8% |
-| hv_ia_canada_19140818 | 5 407 | 0 | 0 | 0 | 3673 | 1734 | 67.9% |
+| hv_ia_canada_19140728 | 6 435 | 0 | 0 | 0 | 4406 | 2029 | 68.5% |
+| hv_ia_canada_19140804 | 7 286 | 0 | 0 | 0 | 4656 | 2630 | 63.9% |
+| hv_ia_canada_19140811 | 2 560 | 0 | 0 | 0 | 1711 | 849 | 66.8% |
+| hv_ia_canada_19140818 | 5 407 | 0 | 0 | 0 | 3674 | 1733 | 67.9% |
 | hv_ia_canada_19140825 | 3 816 | 0 | 0 | 0 | 2405 | 1411 | 63.0% |
 | hv_ia_canada_19140901 | 6 971 | 0 | 0 | 0 | 4450 | 2521 | 63.8% |
 | hv_ia_canada_19140908 | 5 997 | 0 | 0 | 0 | 3897 | 2100 | 65.0% |
 | hv_ia_canada_19140917 | 3 278 | 0 | 0 | 0 | 2116 | 1162 | 64.6% |
-| hv_ia_canada_19140924 | 6 743 | 0 | 0 | 0 | 4217 | 2526 | 62.5% |
-| hv_ia_canada_19141001 | 8 307 | 0 | 0 | 0 | 5459 | 2848 | 65.7% |
-| hv_ia_canada_19141008 | 8 116 | 0 | 0 | 0 | 5168 | 2948 | 63.7% |
+| hv_ia_canada_19140924 | 6 743 | 0 | 0 | 0 | 4218 | 2525 | 62.6% |
+| hv_ia_canada_19141001 | 8 307 | 0 | 0 | 0 | 5460 | 2847 | 65.7% |
+| hv_ia_canada_19141008 | 8 116 | 0 | 0 | 0 | 5169 | 2947 | 63.7% |
 | hv_ia_canada_19141015 | 4 235 | 0 | 0 | 0 | 2621 | 1614 | 61.9% |
 | hv_ia_canada_19141022 | 4 537 | 0 | 0 | 0 | 2842 | 1695 | 62.6% |
 | hv_ia_canada_19141029 | 7 364 | 0 | 0 | 0 | 4821 | 2543 | 65.5% |
 | hv_ia_canada_19141105 | 7 225 | 0 | 0 | 0 | 4707 | 2518 | 65.1% |
 | hv_ia_canada_19141112 | 6 596 | 0 | 0 | 0 | 4289 | 2307 | 65.0% |
-| hv_ia_canada_19141119 | 7 026 | 0 | 0 | 0 | 4580 | 2446 | 65.2% |
+| hv_ia_canada_19141119 | 7 026 | 0 | 0 | 0 | 4581 | 2445 | 65.2% |
 | hv_ia_canada_19141126 | 9 493 | 0 | 0 | 0 | 6379 | 3114 | 67.2% |
 | hv_ia_canada_19141203 | 9 214 | 0 | 0 | 0 | 6078 | 3136 | 66.0% |
 | hv_ia_canada_19141210 | 7 030 | 0 | 0 | 0 | 4678 | 2352 | 66.5% |
 | hv_ia_canada_19141217 | 9 457 | 0 | 0 | 0 | 6558 | 2899 | 69.3% |
-| hv_ia_canada_19141224 | 8 873 | 0 | 0 | 0 | 5942 | 2931 | 67.0% |
-| hv_ia_canadian_19140228 | 11 249 | 0 | 0 | 0 | 7874 | 3375 | 70.0% |
+| hv_ia_canada_19141224 | 8 873 | 0 | 0 | 0 | 5943 | 2930 | 67.0% |
+| hv_ia_canadian_19140228 | 11 249 | 0 | 0 | 0 | 7875 | 3374 | 70.0% |
 | hv_ia_canadian_19140415 | 11 297 | 0 | 0 | 0 | 8041 | 3256 | 71.2% |
 | hv_ia_canadian_19140515 | 11 941 | 0 | 0 | 0 | 8837 | 3104 | 74.0% |
 | hv_ia_canadian_19140601 | 11 959 | 0 | 0 | 0 | 8913 | 3046 | 74.5% |
@@ -8991,23 +9607,23 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_canadian_19140715 | 11 172 | 0 | 0 | 0 | 8455 | 2717 | 75.7% |
 | hv_ia_canadian_19140801 | 12 082 | 0 | 0 | 0 | 8821 | 3261 | 73.0% |
 | hv_ia_canadian_19140815 | 13 183 | 0 | 0 | 0 | 9692 | 3491 | 73.5% |
-| hv_ia_canadian_19140901 | 12 705 | 0 | 0 | 0 | 9101 | 3604 | 71.6% |
-| hv_ia_canadian_19140915 | 12 977 | 0 | 0 | 0 | 9602 | 3375 | 74.0% |
-| hv_ia_canadian_19141031 | 11 912 | 0 | 0 | 0 | 8637 | 3275 | 72.5% |
-| hv_ia_canadian_19141101 | 11 824 | 0 | 0 | 0 | 8444 | 3380 | 71.4% |
-| hv_ia_canadian_19141114 | 12 421 | 0 | 0 | 0 | 8430 | 3991 | 67.9% |
+| hv_ia_canadian_19140901 | 12 705 | 0 | 0 | 0 | 9102 | 3603 | 71.6% |
+| hv_ia_canadian_19140915 | 12 977 | 0 | 0 | 0 | 9603 | 3374 | 74.0% |
+| hv_ia_canadian_19141031 | 11 912 | 0 | 0 | 0 | 8638 | 3274 | 72.5% |
+| hv_ia_canadian_19141101 | 11 824 | 0 | 0 | 0 | 8445 | 3379 | 71.4% |
+| hv_ia_canadian_19141114 | 12 421 | 0 | 0 | 0 | 8432 | 3989 | 67.9% |
 | hv_ia_canadiannews_19140100 | 3 230 | 0 | 0 | 0 | 2368 | 862 | 73.3% |
 | hv_ia_canadiannews_19140300 | 8 380 | 0 | 0 | 0 | 6091 | 2289 | 72.7% |
-| hv_ia_canadiannews_19140401 | 8 221 | 0 | 0 | 0 | 6360 | 1861 | 77.4% |
+| hv_ia_canadiannews_19140401 | 8 221 | 0 | 0 | 0 | 6362 | 1859 | 77.4% |
 | hv_ia_canadiannews_19140415 | 9 486 | 0 | 0 | 0 | 7232 | 2254 | 76.2% |
 | hv_ia_canadiannews_19140429 | 9 322 | 0 | 0 | 0 | 6338 | 2984 | 68.0% |
 | hv_ia_canadiannews_19140513 | 13 466 | 0 | 0 | 0 | 10378 | 3088 | 77.1% |
 | hv_ia_canadiannews_19140520 | 7 033 | 0 | 0 | 0 | 5151 | 1882 | 73.2% |
 | hv_ia_canadiannews_19140527 | 7 598 | 0 | 0 | 0 | 5724 | 1874 | 75.3% |
-| hv_ia_canadiannews_19140603 | 9 434 | 0 | 0 | 0 | 6441 | 2993 | 68.3% |
+| hv_ia_canadiannews_19140603 | 9 434 | 0 | 0 | 0 | 6443 | 2991 | 68.3% |
 | hv_ia_canadiannews_19140617 | 8 680 | 0 | 0 | 0 | 5263 | 3417 | 60.6% |
 | hv_ia_canadiannews_19140624 | 9 695 | 0 | 0 | 0 | 5755 | 3940 | 59.4% |
-| hv_ia_canadiannews_19140701 | 8 734 | 0 | 0 | 0 | 5211 | 3523 | 59.7% |
+| hv_ia_canadiannews_19140701 | 8 734 | 0 | 0 | 0 | 5212 | 3522 | 59.7% |
 | hv_ia_canadiannews_19140715 | 6 584 | 0 | 0 | 0 | 3683 | 2901 | 55.9% |
 | hv_ia_canadiannews_19140722 | 6 160 | 0 | 0 | 0 | 3186 | 2974 | 51.7% |
 | hv_ia_canadiannews_19140730 | 5 469 | 0 | 0 | 0 | 3139 | 2330 | 57.4% |
@@ -9017,49 +9633,49 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_canadiannews_19140826 | 4 143 | 0 | 0 | 0 | 2048 | 2095 | 49.4% |
 | hv_ia_canadiannews_19140902 | 7 226 | 0 | 0 | 0 | 4334 | 2892 | 60.0% |
 | hv_ia_canadiannews_19140909 | 8 724 | 0 | 0 | 0 | 5785 | 2939 | 66.3% |
-| hv_ia_canadiannews_19140914 | 8 133 | 0 | 0 | 0 | 4778 | 3355 | 58.7% |
+| hv_ia_canadiannews_19140914 | 8 133 | 0 | 0 | 0 | 4779 | 3354 | 58.8% |
 | hv_ia_canadiannews_19140923 | 7 948 | 0 | 0 | 0 | 4561 | 3387 | 57.4% |
 | hv_ia_canadiannews_19140930 | 5 519 | 0 | 0 | 0 | 3088 | 2431 | 56.0% |
-| hv_ia_canadiannews_19141007 | 6 169 | 0 | 0 | 0 | 3626 | 2543 | 58.8% |
-| hv_ia_canadiannews_19141010 | 6 319 | 0 | 0 | 0 | 3657 | 2662 | 57.9% |
+| hv_ia_canadiannews_19141007 | 6 169 | 0 | 0 | 0 | 3627 | 2542 | 58.8% |
+| hv_ia_canadiannews_19141010 | 6 319 | 0 | 0 | 0 | 3659 | 2660 | 57.9% |
 | hv_ia_canadiannews_19141021 | 3 250 | 0 | 0 | 0 | 1776 | 1474 | 54.6% |
-| hv_ia_canadiannews_19141028 | 5 052 | 0 | 0 | 0 | 2781 | 2271 | 55.0% |
+| hv_ia_canadiannews_19141028 | 5 052 | 0 | 0 | 0 | 2782 | 2270 | 55.1% |
 | hv_ia_canadiannews_19141104 | 7 099 | 0 | 0 | 0 | 4320 | 2779 | 60.9% |
 | hv_ia_canadiannews_19141111 | 4 148 | 0 | 0 | 0 | 2613 | 1535 | 63.0% |
 | hv_ia_canadiannews_19141118 | 3 286 | 0 | 0 | 0 | 1654 | 1632 | 50.3% |
 | hv_ia_canadiannews_19141125 | 5 201 | 0 | 0 | 0 | 2968 | 2233 | 57.1% |
-| hv_ia_canadiannews_19141202 | 7 363 | 0 | 0 | 0 | 4143 | 3220 | 56.3% |
+| hv_ia_canadiannews_19141202 | 7 363 | 0 | 0 | 0 | 4144 | 3219 | 56.3% |
 | hv_ia_canadiannews_19141209 | 5 054 | 0 | 0 | 0 | 3434 | 1620 | 67.9% |
 | hv_ia_canadiannews_19141216 | 1 836 | 0 | 0 | 0 | 1017 | 819 | 55.4% |
-| hv_ia_canadiannews_19141223 | 6 443 | 0 | 0 | 0 | 4019 | 2424 | 62.4% |
+| hv_ia_canadiannews_19141223 | 6 443 | 0 | 0 | 0 | 4020 | 2423 | 62.4% |
 | hv_ia_canadiannews_19141230 | 6 407 | 0 | 0 | 0 | 4804 | 1603 | 75.0% |
-| hv_ia_cihm_66533 | 8 873 | 0 | 0 | 0 | 7414 | 1459 | 83.6% |
+| hv_ia_cihm_66533 | 8 873 | 0 | 0 | 0 | 7415 | 1458 | 83.6% |
 | hv_ia_cihm_74263 | 10 971 | 0 | 0 | 0 | 9359 | 1612 | 85.3% |
 | hv_ia_cihm_77508 | 17 768 | 0 | 0 | 0 | 15127 | 2641 | 85.1% |
-| hv_ia_cihm_79850 | 10 999 | 0 | 0 | 0 | 9300 | 1699 | 84.6% |
+| hv_ia_cihm_79850 | 10 999 | 0 | 0 | 0 | 9301 | 1698 | 84.6% |
 | hv_ia_cihm_80610 | 6 376 | 0 | 0 | 0 | 4871 | 1505 | 76.4% |
 | hv_ia_cihm_80628 | 5 953 | 0 | 0 | 0 | 4813 | 1140 | 80.8% |
-| hv_ia_cihm_80923 | 45 501 | 0 | 0 | 0 | 25711 | 19790 | 56.5% |
+| hv_ia_cihm_80923 | 45 501 | 0 | 0 | 0 | 25713 | 19788 | 56.5% |
 | hv_ia_cihm_80951 | 7 584 | 0 | 0 | 0 | 6359 | 1225 | 83.8% |
 | hv_ia_cihm_81183 | 4 215 | 0 | 0 | 0 | 2909 | 1306 | 69.0% |
 | hv_ia_cihm_85513 | 20 317 | 0 | 0 | 0 | 17501 | 2816 | 86.1% |
-| hv_ia_cihm_991270 | 33 315 | 0 | 0 | 0 | 27125 | 6190 | 81.4% |
-| hv_ia_cihm_992301 | 151 561 | 0 | 0 | 0 | 77762 | 73799 | 51.3% |
+| hv_ia_cihm_991270 | 33 315 | 0 | 0 | 0 | 27126 | 6189 | 81.4% |
+| hv_ia_cihm_992301 | 151 561 | 0 | 0 | 0 | 77767 | 73794 | 51.3% |
 | hv_ia_dvabratyzbaokbra00grim | 8 775 | 0 | 0 | 0 | 5305 | 3470 | 60.5% |
-| hv_ia_dymytryobrazdram00borauoft | 9 546 | 0 | 0 | 0 | 7839 | 1707 | 82.1% |
+| hv_ia_dymytryobrazdram00borauoft | 9 546 | 0 | 0 | 0 | 7841 | 1705 | 82.1% |
 | hv_ia_dytiachiopovidan00kybauoft | 11 697 | 0 | 0 | 0 | 11271 | 426 | 96.4% |
-| hv_ia_egodumyipiesni00shevuoft | 44 366 | 0 | 0 | 0 | 37663 | 6703 | 84.9% |
+| hv_ia_egodumyipiesni00shevuoft | 44 366 | 0 | 0 | 0 | 37677 | 6689 | 84.9% |
 | hv_ia_einueberblickder00hrus | 64 | 0 | 0 | 0 | 0 | 64 | 0.0% |
 | hv_ia_elysavetamucheny00wall | 33 049 | 0 | 0 | 0 | 27779 | 5270 | 84.1% |
-| hv_ia_etnograf_zb_35 | 80 252 | 0 | 0 | 0 | 60303 | 19949 | 75.1% |
-| hv_ia_etnograf_zb_36 | 99 056 | 0 | 0 | 0 | 74946 | 24110 | 75.7% |
+| hv_ia_etnograf_zb_35 | 80 252 | 0 | 0 | 0 | 60308 | 19944 | 75.1% |
+| hv_ia_etnograf_zb_36 | 99 056 | 0 | 0 | 0 | 74950 | 24106 | 75.7% |
 | hv_ia_hekhtorusynpomoz00shemuoft | 1 461 | 0 | 0 | 0 | 1200 | 261 | 82.1% |
-| hv_ia_hramatykarusko00smal | 60 343 | 0 | 0 | 0 | 41228 | 19115 | 68.3% |
+| hv_ia_hramatykarusko00smal | 60 343 | 0 | 0 | 0 | 41229 | 19114 | 68.3% |
 | hv_ia_iezuitskaprepodo00levy | 13 707 | 0 | 0 | 0 | 11791 | 1916 | 86.0% |
 | hv_ia_incenseburner_19140101 | 3 751 | 0 | 0 | 0 | 2853 | 898 | 76.1% |
-| hv_ia_incenseburner_19140301 | 9 635 | 0 | 0 | 0 | 7551 | 2084 | 78.4% |
-| hv_ia_incenseburner_19140315 | 8 867 | 0 | 0 | 0 | 7241 | 1626 | 81.7% |
-| hv_ia_incenseburner_19140401 | 9 413 | 0 | 0 | 0 | 7593 | 1820 | 80.7% |
+| hv_ia_incenseburner_19140301 | 9 635 | 0 | 0 | 0 | 7553 | 2082 | 78.4% |
+| hv_ia_incenseburner_19140315 | 8 867 | 0 | 0 | 0 | 7242 | 1625 | 81.7% |
+| hv_ia_incenseburner_19140401 | 9 413 | 0 | 0 | 0 | 7594 | 1819 | 80.7% |
 | hv_ia_incenseburner_19140415 | 1 339 | 0 | 0 | 0 | 1054 | 285 | 78.7% |
 | hv_ia_incenseburner_19140615 | 7 290 | 0 | 0 | 0 | 5623 | 1667 | 77.1% |
 | hv_ia_iuvilenazbirkast00dontuoft | 10 974 | 0 | 0 | 0 | 9753 | 1221 | 88.9% |
@@ -9078,37 +9694,37 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_amerykanetsvesel00rusm_0 | 6 814 | 0 | 0 | 0 | 5951 | 863 | 87.3% |
 | hv_ia_asyriiskyitsaras00tols | 5 737 | 0 | 0 | 0 | 5199 | 538 | 90.6% |
 | hv_ia_asyriskytsarasar00tols | 6 014 | 0 | 0 | 0 | 5394 | 620 | 89.7% |
-| hv_ia_canadian_19150301 | 10 499 | 0 | 0 | 0 | 8477 | 2022 | 80.7% |
+| hv_ia_canadian_19150301 | 10 499 | 0 | 0 | 0 | 8479 | 2020 | 80.8% |
 | hv_ia_canadian_19150715 | 10 720 | 0 | 0 | 0 | 9042 | 1678 | 84.3% |
 | hv_ia_canadian_19150814 | 13 205 | 0 | 0 | 0 | 10946 | 2259 | 82.9% |
 | hv_ia_canadian_19150901 | 8 967 | 0 | 0 | 0 | 7531 | 1436 | 84.0% |
-| hv_ia_canadian_19151001 | 10 038 | 0 | 0 | 0 | 8481 | 1557 | 84.5% |
-| hv_ia_canadian_19151030 | 12 006 | 0 | 0 | 0 | 9910 | 2096 | 82.5% |
-| hv_ia_canadianfarmer_19150101_19171228 | 1 868 268 | 0 | 0 | 0 | 1236072 | 632196 | 66.2% |
+| hv_ia_canadian_19151001 | 10 038 | 0 | 0 | 0 | 8482 | 1556 | 84.5% |
+| hv_ia_canadian_19151030 | 12 006 | 0 | 0 | 0 | 9911 | 2095 | 82.6% |
+| hv_ia_canadianfarmer_19150101_19171228 | 1 868 268 | 0 | 0 | 0 | 1236159 | 632109 | 66.2% |
 | hv_ia_canadiannews_19150222 | 10 141 | 0 | 0 | 0 | 7049 | 3092 | 69.5% |
 | hv_ia_chervonakalynazb00unse | 5 230 | 0 | 0 | 0 | 4616 | 614 | 88.3% |
 | hv_ia_chomupozychalyvi00shch | 7 240 | 0 | 0 | 0 | 6711 | 529 | 92.7% |
 | hv_ia_chyevropamaiesko00lieb | 20 442 | 0 | 0 | 0 | 17533 | 2909 | 85.8% |
 | hv_ia_cihm_66620 | 6 859 | 0 | 0 | 0 | 5416 | 1443 | 79.0% |
-| hv_ia_cihm_78378 | 8 339 | 0 | 0 | 0 | 7034 | 1305 | 84.4% |
+| hv_ia_cihm_78378 | 8 339 | 0 | 0 | 0 | 7035 | 1304 | 84.4% |
 | hv_ia_cihm_78379 | 6 348 | 0 | 0 | 0 | 5323 | 1025 | 83.9% |
 | hv_ia_cihm_88340 | 25 551 | 0 | 0 | 0 | 23131 | 2420 | 90.5% |
-| hv_ia_cihm_97496 | 20 311 | 0 | 0 | 0 | 17513 | 2798 | 86.2% |
+| hv_ia_cihm_97496 | 20 311 | 0 | 0 | 0 | 17514 | 2797 | 86.2% |
 | hv_ia_cihm_98899 | 26 169 | 0 | 0 | 0 | 23617 | 2552 | 90.2% |
 | hv_ia_cihm_98900 | 21 548 | 0 | 0 | 0 | 19399 | 2149 | 90.0% |
-| hv_ia_cihm_991097 | 9 756 | 0 | 0 | 0 | 8135 | 1621 | 83.4% |
-| hv_ia_cihm_991395 | 6 450 | 0 | 0 | 0 | 5175 | 1275 | 80.2% |
+| hv_ia_cihm_991097 | 9 756 | 0 | 0 | 0 | 8136 | 1620 | 83.4% |
+| hv_ia_cihm_991395 | 6 450 | 0 | 0 | 0 | 5176 | 1274 | 80.2% |
 | hv_ia_dvadomykyiodnafi00lotouoft | 4 996 | 0 | 0 | 0 | 4197 | 799 | 84.0% |
 | hv_ia_historicalevolut00hrus | 647 | 0 | 0 | 0 | 401 | 246 | 62.0% |
 | hv_ia_iakzhyvetsiaukra00levy | 8 818 | 0 | 0 | 0 | 7713 | 1105 | 87.5% |
-| hv_ia_iakzhyvukrainsky00hrus | 47 896 | 0 | 0 | 0 | 44902 | 2994 | 93.7% |
+| hv_ia_iakzhyvukrainsky00hrus | 47 896 | 0 | 0 | 0 | 44903 | 2993 | 93.8% |
 | hv_ia_iliustrovanazbir00unse | 11 114 | 0 | 0 | 0 | 9936 | 1178 | 89.4% |
 | hv_ia_iliustrovanykali00unse_0 | 45 208 | 0 | 0 | 0 | 36387 | 8821 | 80.5% |
-| hv_ia_iliustrovanynaro00unse | 54 303 | 0 | 0 | 0 | 45617 | 8686 | 84.0% |
+| hv_ia_iliustrovanynaro00unse | 54 303 | 0 | 0 | 0 | 45618 | 8685 | 84.0% |
 | hv_ia_iliustrovanynaro1920unse | 67 244 | 0 | 0 | 0 | 57712 | 9532 | 85.8% |
 | hv_ia_itskosvatkomedii00trem | 4 889 | 0 | 0 | 0 | 4226 | 663 | 86.4% |
 | hv_ia_ukrainesclaimtof0000edwi | 20 | 0 | 0 | 0 | 0 | 20 | 0.0% |
-| hv_ia_zbirnykpamiatyta00hrusuoft | 65 423 | 0 | 0 | 0 | 37302 | 28121 | 57.0% |
+| hv_ia_zbirnykpamiatyta00hrusuoft | 65 423 | 0 | 0 | 0 | 37314 | 28109 | 57.0% |
 | hv_ws_108123 | 10 690 | 0 | 0 | 0 | 9156 | 1534 | 85.7% |
 | hv_ws_110128 | 470 | 0 | 0 | 0 | 430 | 40 | 91.5% |
 | hv_ws_134633 | 2 529 | 0 | 0 | 0 | 2281 | 248 | 90.2% |
@@ -9124,25 +9740,25 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_26580 | 147 | 0 | 0 | 0 | 145 | 2 | 98.6% |
 | hv_ws_267513 | 2 054 | 0 | 0 | 0 | 1619 | 435 | 78.8% |
 | hv_ws_438683 | 136 | 0 | 0 | 0 | 124 | 12 | 91.2% |
-| hv_ws_455282 | 11 567 | 0 | 0 | 0 | 10722 | 845 | 92.7% |
+| hv_ws_455282 | 11 567 | 0 | 0 | 0 | 10724 | 843 | 92.7% |
 | hv_ws_518315 | 2 973 | 0 | 0 | 0 | 2584 | 389 | 86.9% |
 | hv_ws_527702 | 2 480 | 0 | 0 | 0 | 2171 | 309 | 87.5% |
 | hv_ws_538302 | 10 831 | 0 | 0 | 0 | 8815 | 2016 | 81.4% |
 | hv_ws_552960 | 5 016 | 0 | 0 | 0 | 4364 | 652 | 87.0% |
-| hv_ia_beresteiskauniia00liko | 92 816 | 0 | 0 | 0 | 77559 | 15257 | 83.6% |
+| hv_ia_beresteiskauniia00liko | 92 816 | 0 | 0 | 0 | 77560 | 15256 | 83.6% |
 | hv_ia_biloruskevidrodz00bogd | 8 372 | 0 | 0 | 0 | 7063 | 1309 | 84.4% |
 | hv_ia_biloruskevidrodz00bohd | 8 385 | 0 | 0 | 0 | 7037 | 1348 | 83.9% |
-| hv_ia_borbasvitiv00well_0 | 26 717 | 0 | 0 | 0 | 23171 | 3546 | 86.7% |
+| hv_ia_borbasvitiv00well_0 | 26 717 | 0 | 0 | 0 | 23172 | 3545 | 86.7% |
 | hv_ia_bukvardliadtyy00dojauoft | 4 370 | 0 | 0 | 0 | 3045 | 1325 | 69.7% |
 | hv_ia_canadian_19160308 | 8 747 | 0 | 0 | 0 | 7174 | 1573 | 82.0% |
-| hv_ia_canadian_19160315 | 9 194 | 0 | 0 | 0 | 7600 | 1594 | 82.7% |
+| hv_ia_canadian_19160315 | 9 194 | 0 | 0 | 0 | 7601 | 1593 | 82.7% |
 | hv_ia_canadian_19160322 | 18 364 | 0 | 0 | 0 | 15429 | 2935 | 84.0% |
 | hv_ia_canadian_19160517 | 10 999 | 0 | 0 | 0 | 9194 | 1805 | 83.6% |
 | hv_ia_canadian_19160531 | 11 454 | 0 | 0 | 0 | 9475 | 1979 | 82.7% |
-| hv_ia_canadian_19160607 | 10 848 | 0 | 0 | 0 | 8987 | 1861 | 82.8% |
-| hv_ia_canadian_19160614 | 11 077 | 0 | 0 | 0 | 9202 | 1875 | 83.1% |
+| hv_ia_canadian_19160607 | 10 848 | 0 | 0 | 0 | 8988 | 1860 | 82.9% |
+| hv_ia_canadian_19160614 | 11 077 | 0 | 0 | 0 | 9203 | 1874 | 83.1% |
 | hv_ia_canadian_19160628 | 10 639 | 0 | 0 | 0 | 8840 | 1799 | 83.1% |
-| hv_ia_canadian_19160705 | 10 589 | 0 | 0 | 0 | 8870 | 1719 | 83.8% |
+| hv_ia_canadian_19160705 | 10 589 | 0 | 0 | 0 | 8871 | 1718 | 83.8% |
 | hv_ia_canadian_19160726 | 11 056 | 0 | 0 | 0 | 9343 | 1713 | 84.5% |
 | hv_ia_canadian_19160802 | 10 435 | 0 | 0 | 0 | 8755 | 1680 | 83.9% |
 | hv_ia_canadian_19160809 | 10 150 | 0 | 0 | 0 | 8580 | 1570 | 84.5% |
@@ -9156,7 +9772,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_canadian_19161118 | 9 550 | 0 | 0 | 0 | 7819 | 1731 | 81.9% |
 | hv_ia_canadian_19161129 | 9 232 | 0 | 0 | 0 | 7266 | 1966 | 78.7% |
 | hv_ia_chekaienasvelyka00lepkuoft | 5 618 | 0 | 0 | 0 | 4872 | 746 | 86.7% |
-| hv_ia_chomumykhochemus00leve | 18 936 | 0 | 0 | 0 | 16221 | 2715 | 85.7% |
+| hv_ia_chomumykhochemus00leve | 18 936 | 0 | 0 | 0 | 16222 | 2714 | 85.7% |
 | hv_ia_chymaievidzhytyi00ucra | 5 911 | 0 | 0 | 0 | 4705 | 1206 | 79.6% |
 | hv_ia_cihm_74626 | 10 976 | 0 | 0 | 0 | 9750 | 1226 | 88.8% |
 | hv_ia_cihm_81636 | 5 423 | 0 | 0 | 0 | 4548 | 875 | 83.9% |
@@ -9171,16 +9787,16 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_diakvov00vovcuoft | 14 934 | 0 | 0 | 0 | 13389 | 1545 | 89.7% |
 | hv_ia_dvikazky00chumuoft | 3 535 | 0 | 0 | 0 | 3092 | 443 | 87.5% |
 | hv_ia_ekspropriiatsiia00pere | 18 935 | 0 | 0 | 0 | 16728 | 2207 | 88.3% |
-| hv_ia_etnograf_zb_37_38 | 239 887 | 0 | 0 | 0 | 185457 | 54430 | 77.3% |
-| hv_ia_etnohr_37_38 | 239 895 | 0 | 0 | 0 | 185446 | 54449 | 77.3% |
+| hv_ia_etnograf_zb_37_38 | 239 887 | 0 | 0 | 0 | 185460 | 54427 | 77.3% |
+| hv_ia_etnohr_37_38 | 239 895 | 0 | 0 | 0 | 185449 | 54446 | 77.3% |
 | hv_ia_finliandiiatafin00boch | 27 218 | 0 | 0 | 0 | 23374 | 3844 | 85.9% |
 | hv_ia_halychynavzhytti00lozyuoft | 591 | 0 | 0 | 0 | 515 | 76 | 87.1% |
-| hv_ia_hetmanmazepa00budzuoft | 13 210 | 0 | 0 | 0 | 11421 | 1789 | 86.5% |
+| hv_ia_hetmanmazepa00budzuoft | 13 210 | 0 | 0 | 0 | 11422 | 1788 | 86.5% |
 | hv_ia_holosprobudzheno00unse | 3 230 | 0 | 0 | 0 | 2785 | 445 | 86.2% |
 | hv_ia_iakiieliudynazem00kamiuoft | 17 877 | 0 | 0 | 0 | 15049 | 2828 | 84.2% |
-| hv_ia_iakmuzhykkhodyvd00unse | 9 972 | 0 | 0 | 0 | 8834 | 1138 | 88.6% |
+| hv_ia_iakmuzhykkhodyvd00unse | 9 972 | 0 | 0 | 0 | 8836 | 1136 | 88.6% |
 | hv_ia_iakoprydlytyvahu00unse | 4 470 | 0 | 0 | 0 | 2665 | 1805 | 59.6% |
-| hv_ia_ukr1916 | 18 970 | 0 | 0 | 0 | 7274 | 11696 | 38.3% |
+| hv_ia_ukr1916 | 18 970 | 0 | 0 | 0 | 7275 | 11695 | 38.4% |
 | hv_ia_zaboronaukrans00voen | 14 987 | 0 | 0 | 0 | 12564 | 2423 | 83.8% |
 | hv_ws_206739 | 203 | 0 | 0 | 0 | 163 | 40 | 80.3% |
 | hv_ws_213081 | 130 | 0 | 0 | 0 | 114 | 16 | 87.7% |
@@ -9197,8 +9813,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_alfrescovirshova00karmuoft | 5 297 | 0 | 0 | 0 | 4459 | 838 | 84.2% |
 | hv_ia_borbasvitiv00well | 40 120 | 0 | 0 | 0 | 34936 | 5184 | 87.1% |
 | hv_ia_borotbaosontse00unse | 2 236 | 0 | 0 | 0 | 1949 | 287 | 87.2% |
-| hv_ia_canadian_19170214 | 11 008 | 0 | 0 | 0 | 9164 | 1844 | 83.2% |
-| hv_ia_canadian_19170620 | 10 256 | 0 | 0 | 0 | 8446 | 1810 | 82.4% |
+| hv_ia_canadian_19170214 | 11 008 | 0 | 0 | 0 | 9165 | 1843 | 83.3% |
+| hv_ia_canadian_19170620 | 10 256 | 0 | 0 | 0 | 8447 | 1809 | 82.4% |
 | hv_ia_canadian_19170704 | 8 608 | 0 | 0 | 0 | 7286 | 1322 | 84.6% |
 | hv_ia_chuzhyntsiproukr00soiu | 5 241 | 0 | 0 | 0 | 4519 | 722 | 86.2% |
 | hv_ia_chyapostolpetrob00sush | 4 103 | 0 | 0 | 0 | 3495 | 608 | 85.2% |
@@ -9215,8 +9831,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_79898 | 18 511 | 0 | 0 | 0 | 16601 | 1910 | 89.7% |
 | hv_ia_cihm_79900 | 17 671 | 0 | 0 | 0 | 15741 | 1930 | 89.1% |
 | hv_ia_cihm_79902 | 11 358 | 0 | 0 | 0 | 9651 | 1707 | 85.0% |
-| hv_ia_cihm_84472 | 10 287 | 0 | 0 | 0 | 9473 | 814 | 92.1% |
-| hv_ia_cihm_85516 | 8 801 | 0 | 0 | 0 | 7906 | 895 | 89.8% |
+| hv_ia_cihm_84472 | 10 287 | 0 | 0 | 0 | 9474 | 813 | 92.1% |
+| hv_ia_cihm_85516 | 8 801 | 0 | 0 | 0 | 7911 | 890 | 89.9% |
 | hv_ia_cihm_85782 | 23 291 | 0 | 0 | 0 | 20283 | 3008 | 87.1% |
 | hv_ia_cihm_87833 | 4 283 | 0 | 0 | 0 | 3052 | 1231 | 71.3% |
 | hv_ia_cihm_88342 | 13 062 | 0 | 0 | 0 | 11566 | 1496 | 88.5% |
@@ -9229,15 +9845,15 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_992292 | 7 737 | 0 | 0 | 0 | 6233 | 1504 | 80.6% |
 | hv_ia_dobrobytiinshiop00fran | 5 201 | 0 | 0 | 0 | 4582 | 619 | 88.1% |
 | hv_ia_doliahalytskohos00kamiuoft | 1 401 | 0 | 0 | 0 | 1254 | 147 | 89.5% |
-| hv_ia_doliaukranyvir00shtouoft | 15 340 | 0 | 0 | 0 | 13258 | 2082 | 86.4% |
+| hv_ia_doliaukranyvir00shtouoft | 15 340 | 0 | 0 | 0 | 13259 | 2081 | 86.4% |
 | hv_ia_dorohadosvidomos00als | 4 010 | 0 | 0 | 0 | 3453 | 557 | 86.1% |
 | hv_ia_dorohanoveli00stef | 18 987 | 0 | 0 | 0 | 17128 | 1859 | 90.2% |
 | hv_ia_dramatychnitvory00push | 38 476 | 0 | 0 | 0 | 34510 | 3966 | 89.7% |
-| hv_ia_dubr1917 | 98 543 | 0 | 0 | 0 | 45564 | 52979 | 46.2% |
-| hv_ia_dubrov1917 | 56 706 | 0 | 0 | 0 | 30448 | 26258 | 53.7% |
+| hv_ia_dubr1917 | 98 543 | 0 | 0 | 0 | 45567 | 52976 | 46.2% |
+| hv_ia_dubrov1917 | 56 706 | 0 | 0 | 0 | 30461 | 26245 | 53.7% |
 | hv_ia_dvonohy00ewal | 16 578 | 0 | 0 | 0 | 14495 | 2083 | 87.4% |
 | hv_ia_filosofiiashtuky00tain | 23 684 | 0 | 0 | 0 | 20329 | 3355 | 85.8% |
-| hv_ia_gramiv | 40 181 | 0 | 0 | 0 | 28695 | 11486 | 71.4% |
+| hv_ia_gramiv | 40 181 | 0 | 0 | 0 | 28696 | 11485 | 71.4% |
 | hv_ia_hamaliia00shevuoft | 1 049 | 0 | 0 | 0 | 908 | 141 | 86.6% |
 | hv_ia_holovniumovyuspi008800 | 16 295 | 0 | 0 | 0 | 14079 | 2216 | 86.4% |
 | hv_ia_iakmoskvanyshchy00budzuoft | 12 057 | 0 | 0 | 0 | 10815 | 1242 | 89.7% |
@@ -9251,7 +9867,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_iliustrovaneukra00pachuoft | 20 681 | 0 | 0 | 0 | 17792 | 2889 | 86.0% |
 | hv_ia_istoriiachervono00benh_1 | 7 559 | 0 | 0 | 0 | 6280 | 1279 | 83.1% |
 | hv_ia_istoriiamoskovsh00blag | 26 487 | 0 | 0 | 0 | 23874 | 2613 | 90.1% |
-| hv_ia_ivanfranko00lozy | 17 097 | 0 | 0 | 0 | 15135 | 1962 | 88.5% |
+| hv_ia_ivanfranko00lozy | 17 097 | 0 | 0 | 0 | 15138 | 1959 | 88.5% |
 | hv_ia_sumtsov | 6 425 | 0 | 0 | 0 | 5276 | 1149 | 82.1% |
 | hv_ws_104794 | 9 332 | 0 | 0 | 0 | 8337 | 995 | 89.3% |
 | hv_ws_110285 | 5 659 | 0 | 0 | 0 | 5315 | 344 | 93.9% |
@@ -9281,58 +9897,58 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_396472 | 6 547 | 0 | 0 | 0 | 5631 | 916 | 86.0% |
 | hv_ws_415994 | 2 703 | 0 | 0 | 0 | 2363 | 340 | 87.4% |
 | hv_ws_417771 | 1 367 | 0 | 0 | 0 | 1117 | 250 | 81.7% |
-| hv_ws_442820 | 5 139 | 0 | 0 | 0 | 4991 | 148 | 97.1% |
+| hv_ws_442820 | 5 139 | 0 | 0 | 0 | 4992 | 147 | 97.1% |
 | hv_ws_479514 | 13 800 | 0 | 0 | 0 | 11373 | 2427 | 82.4% |
 | hv_ws_493146 | 6 084 | 0 | 0 | 0 | 5904 | 180 | 97.0% |
 | hv_ws_532564 | 6 370 | 0 | 0 | 0 | 5548 | 822 | 87.1% |
-| hv_ws_536290 | 16 084 | 0 | 0 | 0 | 13856 | 2228 | 86.1% |
+| hv_ws_536290 | 16 084 | 0 | 0 | 0 | 13859 | 2225 | 86.2% |
 | hv_ws_536292 | 3 133 | 0 | 0 | 0 | 2991 | 142 | 95.5% |
 | hv_ws_538136 | 808 | 0 | 0 | 0 | 650 | 158 | 80.4% |
 | hv_ws_553343 | 3 396 | 0 | 0 | 0 | 3246 | 150 | 95.6% |
 | hv_ws_559544 | 122 | 0 | 0 | 0 | 98 | 24 | 80.3% |
 | hv_ws_560480 | 8 216 | 0 | 0 | 0 | 7955 | 261 | 96.8% |
 | hv_ws_56333 | 10 885 | 0 | 0 | 0 | 9685 | 1200 | 89.0% |
-| hv_ws_565232 | 9 039 | 0 | 0 | 0 | 8470 | 569 | 93.7% |
+| hv_ws_565232 | 9 039 | 0 | 0 | 0 | 8471 | 568 | 93.7% |
 | hv_ws_566354 | 3 890 | 0 | 0 | 0 | 3826 | 64 | 98.4% |
-| hv_ws_567609 | 1 580 | 0 | 0 | 0 | 955 | 625 | 60.4% |
+| hv_ws_567609 | 1 580 | 0 | 0 | 0 | 956 | 624 | 60.5% |
 | hv_ws_573407 | 120 | 0 | 0 | 0 | 115 | 5 | 95.8% |
-| hv_ws_592405 | 2 492 | 0 | 0 | 0 | 2348 | 144 | 94.2% |
-| hv_ws_598005 | 14 694 | 0 | 0 | 0 | 14459 | 235 | 98.4% |
+| hv_ws_592405 | 2 492 | 0 | 0 | 0 | 2349 | 143 | 94.3% |
+| hv_ws_598005 | 14 694 | 0 | 0 | 0 | 14460 | 234 | 98.4% |
 | hv_ws_598677 | 5 133 | 0 | 0 | 0 | 4511 | 622 | 87.9% |
 | hv_ws_7686 | 42 | 0 | 0 | 0 | 40 | 2 | 95.2% |
-| hv_ws_7775 | 4 587 | 0 | 0 | 0 | 4266 | 321 | 93.0% |
+| hv_ws_7775 | 4 587 | 0 | 0 | 0 | 4269 | 318 | 93.1% |
 | stefanyk1917_dlg | 1 621 | 0 | 0 | 0 | 1519 | 102 | 93.7% |
 | stefanyk1917_nar | 1 675 | 0 | 0 | 0 | 1590 | 85 | 94.9% |
-| bahaliy1918 | 64 013 | 0 | 0 | 0 | 57046 | 6967 | 89.1% |
-| hv_ia_bagaliy1 | 109 322 | 0 | 0 | 0 | 94583 | 14739 | 86.5% |
+| bahaliy1918 | 64 013 | 0 | 0 | 0 | 57055 | 6958 | 89.1% |
+| hv_ia_bagaliy1 | 109 322 | 0 | 0 | 0 | 94592 | 14730 | 86.5% |
 | hv_ia_baky00lafo | 13 794 | 0 | 0 | 0 | 12430 | 1364 | 90.1% |
-| hv_ia_biblneopovidan00franuoft | 20 142 | 0 | 0 | 0 | 16604 | 3538 | 82.4% |
+| hv_ia_biblneopovidan00franuoft | 20 142 | 0 | 0 | 0 | 16605 | 3537 | 82.4% |
 | hv_ia_blyskavytssusp00iats | 28 395 | 0 | 0 | 0 | 24220 | 4175 | 85.3% |
-| hv_ia_boiaryniadramaty008800 | 12 360 | 0 | 0 | 0 | 11776 | 584 | 95.3% |
+| hv_ia_boiaryniadramaty008800 | 12 360 | 0 | 0 | 0 | 11777 | 583 | 95.3% |
 | hv_ia_bukvar1918 | 3 498 | 0 | 0 | 0 | 3280 | 218 | 93.8% |
 | hv_ia_canadian_19180515 | 9 879 | 0 | 0 | 0 | 8245 | 1634 | 83.5% |
 | hv_ia_canadian_19180529 | 9 818 | 0 | 0 | 0 | 7874 | 1944 | 80.2% |
-| hv_ia_canadian_19180626 | 9 613 | 0 | 0 | 0 | 7751 | 1862 | 80.6% |
+| hv_ia_canadian_19180626 | 9 613 | 0 | 0 | 0 | 7752 | 1861 | 80.6% |
 | hv_ia_canadian_19180724 | 10 251 | 0 | 0 | 0 | 8320 | 1931 | 81.2% |
-| hv_ia_canadianfarmer_19180104_19200305 | 1 547 095 | 0 | 0 | 0 | 1037706 | 509389 | 67.1% |
-| hv_ia_canadianmorning_19180501_19230227_19481029 | 2 882 450 | 0 | 0 | 0 | 2166752 | 715698 | 75.2% |
-| hv_ia_chernyhivkabuval00kost | 57 053 | 0 | 0 | 0 | 51846 | 5207 | 90.9% |
-| hv_ia_chernyhivkabuval00kost_0 | 57 403 | 0 | 0 | 0 | 51285 | 6118 | 89.3% |
+| hv_ia_canadianfarmer_19180104_19200305 | 1 547 095 | 0 | 0 | 0 | 1037787 | 509308 | 67.1% |
+| hv_ia_canadianmorning_19180501_19230227_19481029 | 2 882 450 | 0 | 0 | 0 | 2166882 | 715568 | 75.2% |
+| hv_ia_chernyhivkabuval00kost | 57 053 | 0 | 0 | 0 | 51850 | 5203 | 90.9% |
+| hv_ia_chernyhivkabuval00kost_0 | 57 403 | 0 | 0 | 0 | 51289 | 6114 | 89.3% |
 | hv_ia_chernytsiamarian00shev | 1 550 | 0 | 0 | 0 | 1435 | 115 | 92.6% |
 | hv_ia_chornomortsivnev00pzr | 16 921 | 0 | 0 | 0 | 15114 | 1807 | 89.3% |
 | hv_ia_chotyrykazky00franuoft | 7 355 | 0 | 0 | 0 | 6786 | 569 | 92.3% |
-| hv_ia_chuzhykhsliv | 55 642 | 0 | 0 | 0 | 42798 | 12844 | 76.9% |
+| hv_ia_chuzhykhsliv | 55 642 | 0 | 0 | 0 | 42799 | 12843 | 76.9% |
 | hv_ia_cihm_65791 | 13 989 | 0 | 0 | 0 | 11664 | 2325 | 83.4% |
 | hv_ia_cihm_65794 | 4 347 | 0 | 0 | 0 | 3681 | 666 | 84.7% |
-| hv_ia_cihm_66166 | 13 277 | 0 | 0 | 0 | 10364 | 2913 | 78.1% |
+| hv_ia_cihm_66166 | 13 277 | 0 | 0 | 0 | 10365 | 2912 | 78.1% |
 | hv_ia_cihm_72167 | 113 561 | 0 | 0 | 0 | 103798 | 9763 | 91.4% |
 | hv_ia_cihm_72981 | 29 780 | 0 | 0 | 0 | 22118 | 7662 | 74.3% |
-| hv_ia_cihm_74265 | 17 423 | 0 | 0 | 0 | 14284 | 3139 | 82.0% |
-| hv_ia_cihm_74659 | 152 944 | 0 | 0 | 0 | 133458 | 19486 | 87.3% |
-| hv_ia_cihm_76668 | 43 106 | 0 | 0 | 0 | 18382 | 24724 | 42.6% |
+| hv_ia_cihm_74265 | 17 423 | 0 | 0 | 0 | 14285 | 3138 | 82.0% |
+| hv_ia_cihm_74659 | 152 944 | 0 | 0 | 0 | 133462 | 19482 | 87.3% |
+| hv_ia_cihm_76668 | 43 106 | 0 | 0 | 0 | 18384 | 24722 | 42.6% |
 | hv_ia_cihm_76758 | 51 177 | 0 | 0 | 0 | 46438 | 4739 | 90.7% |
 | hv_ia_cihm_77113 | 5 830 | 0 | 0 | 0 | 4379 | 1451 | 75.1% |
-| hv_ia_cihm_78845 | 8 519 | 0 | 0 | 0 | 7182 | 1337 | 84.3% |
+| hv_ia_cihm_78845 | 8 519 | 0 | 0 | 0 | 7183 | 1336 | 84.3% |
 | hv_ia_cihm_81062 | 14 822 | 0 | 0 | 0 | 12129 | 2693 | 81.8% |
 | hv_ia_cihm_81184 | 7 770 | 0 | 0 | 0 | 6771 | 999 | 87.1% |
 | hv_ia_cihm_82614 | 6 988 | 0 | 0 | 0 | 5751 | 1237 | 82.3% |
@@ -9340,58 +9956,58 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_84281 | 9 682 | 0 | 0 | 0 | 7919 | 1763 | 81.8% |
 | hv_ia_cihm_84351 | 21 152 | 0 | 0 | 0 | 18512 | 2640 | 87.5% |
 | hv_ia_cihm_84499 | 8 352 | 0 | 0 | 0 | 7106 | 1246 | 85.1% |
-| hv_ia_cihm_84701 | 7 600 | 0 | 0 | 0 | 6338 | 1262 | 83.4% |
+| hv_ia_cihm_84701 | 7 600 | 0 | 0 | 0 | 6339 | 1261 | 83.4% |
 | hv_ia_cihm_84705 | 10 576 | 0 | 0 | 0 | 9275 | 1301 | 87.7% |
-| hv_ia_cihm_88346 | 18 331 | 0 | 0 | 0 | 15816 | 2515 | 86.3% |
+| hv_ia_cihm_88346 | 18 331 | 0 | 0 | 0 | 15817 | 2514 | 86.3% |
 | hv_ia_cihm_97281 | 31 928 | 0 | 0 | 0 | 27322 | 4606 | 85.6% |
 | hv_ia_cihm_990465 | 9 895 | 0 | 0 | 0 | 6896 | 2999 | 69.7% |
 | hv_ia_cihm_991256 | 13 723 | 0 | 0 | 0 | 10373 | 3350 | 75.6% |
 | hv_ia_cihm_991573 | 11 565 | 0 | 0 | 0 | 10403 | 1162 | 90.0% |
 | hv_ia_cihm_991826 | 4 612 | 0 | 0 | 0 | 3788 | 824 | 82.1% |
-| hv_ia_cihm_991834 | 21 172 | 0 | 0 | 0 | 18655 | 2517 | 88.1% |
-| hv_ia_cihm_991865 | 26 068 | 0 | 0 | 0 | 22011 | 4057 | 84.4% |
+| hv_ia_cihm_991834 | 21 172 | 0 | 0 | 0 | 18656 | 2516 | 88.1% |
+| hv_ia_cihm_991865 | 26 068 | 0 | 0 | 0 | 22013 | 4055 | 84.4% |
 | hv_ia_daisertsiuvoliuz00krop | 15 259 | 0 | 0 | 0 | 14116 | 1143 | 92.5% |
 | hv_ia_dasertsiuvoliuza00krop | 15 167 | 0 | 0 | 0 | 13853 | 1314 | 91.3% |
 | hv_ia_deutschukrajinis00nm | 18 693 | 0 | 0 | 0 | 16448 | 2245 | 88.0% |
 | hv_ia_dumyipisni00shevuoft | 8 332 | 0 | 0 | 0 | 7984 | 348 | 95.8% |
 | hv_ia_dushohubkadramav00trusuoft | 10 944 | 0 | 0 | 0 | 9920 | 1024 | 90.6% |
-| hv_ia_dvimohyliopovida00krev | 9 964 | 0 | 0 | 0 | 8703 | 1261 | 87.3% |
+| hv_ia_dvimohyliopovida00krev | 9 964 | 0 | 0 | 0 | 8704 | 1260 | 87.4% |
 | hv_ia_dvochimritragiko00kovb | 20 140 | 0 | 0 | 0 | 18366 | 1774 | 91.2% |
 | hv_ia_dvoiedramatychny00kobz | 2 244 | 0 | 0 | 0 | 1939 | 305 | 86.4% |
-| hv_ia_gramv | 40 602 | 0 | 0 | 0 | 34421 | 6181 | 84.8% |
+| hv_ia_gramv | 40 602 | 0 | 0 | 0 | 34423 | 6179 | 84.8% |
 | hv_ia_hadamakyz15maliu00shev | 11 719 | 0 | 0 | 0 | 10848 | 871 | 92.6% |
-| hv_ia_herokapitaluacap00sinc | 18 944 | 0 | 0 | 0 | 16886 | 2058 | 89.1% |
+| hv_ia_herokapitaluacap00sinc | 18 944 | 0 | 0 | 0 | 16890 | 2054 | 89.2% |
 | hv_ia_hipnotyzmisugest00unse | 10 265 | 0 | 0 | 0 | 8549 | 1716 | 83.3% |
 | hv_ia_humorystychniopo00storuoft | 5 303 | 0 | 0 | 0 | 3743 | 1560 | 70.6% |
 | hv_ia_iakkrovkruzhytvn00fish | 7 087 | 0 | 0 | 0 | 6177 | 910 | 87.2% |
 | hv_ia_iakliudynavchyly00chak | 4 280 | 0 | 0 | 0 | 3758 | 522 | 87.8% |
 | hv_ia_iakpovstavsvitzd00tush | 10 497 | 0 | 0 | 0 | 9263 | 1234 | 88.2% |
-| hv_ia_iakzakladatychyt00tsur | 7 489 | 0 | 0 | 0 | 6559 | 930 | 87.6% |
+| hv_ia_iakzakladatychyt00tsur | 7 489 | 0 | 0 | 0 | 6560 | 929 | 87.6% |
 | hv_ia_idealyhumannosty00masa_0 | 14 871 | 0 | 0 | 0 | 12810 | 2061 | 86.1% |
-| hv_ia_iliustrovanaisto00hrus_1 | 167 291 | 0 | 0 | 0 | 149202 | 18089 | 89.2% |
-| hv_ia_iliustrovanaisto00hrus_2 | 166 437 | 0 | 0 | 0 | 150942 | 15495 | 90.7% |
+| hv_ia_iliustrovanaisto00hrus_1 | 167 291 | 0 | 0 | 0 | 149203 | 18088 | 89.2% |
+| hv_ia_iliustrovanaisto00hrus_2 | 166 437 | 0 | 0 | 0 | 150944 | 15493 | 90.7% |
 | hv_ia_incenseburner_19180101 | 7 762 | 0 | 0 | 0 | 6411 | 1351 | 82.6% |
 | hv_ia_incenseburner_19180115 | 8 744 | 0 | 0 | 0 | 7011 | 1733 | 80.2% |
 | hv_ia_incenseburner_19180210 | 12 863 | 0 | 0 | 0 | 10255 | 2608 | 79.7% |
 | hv_ia_incenseburner_19180401 | 13 320 | 0 | 0 | 0 | 10474 | 2846 | 78.6% |
-| hv_ia_incenseburner_19180501 | 13 438 | 0 | 0 | 0 | 10751 | 2687 | 80.0% |
-| hv_ia_istoriiaslobodsk00baga | 107 909 | 0 | 0 | 0 | 94482 | 13427 | 87.6% |
-| hv_ia_istoriiaukranyru00shkv | 3 326 | 0 | 0 | 0 | 2983 | 343 | 89.7% |
+| hv_ia_incenseburner_19180501 | 13 438 | 0 | 0 | 0 | 10752 | 2686 | 80.0% |
+| hv_ia_istoriiaslobodsk00baga | 107 909 | 0 | 0 | 0 | 94490 | 13419 | 87.6% |
+| hv_ia_istoriiaukranyru00shkv | 3 326 | 0 | 0 | 0 | 2984 | 342 | 89.7% |
 | hv_ia_istorychnipravau00barvuoft | 3 512 | 0 | 0 | 0 | 2642 | 870 | 75.2% |
-| hv_ia_istoryiaukrany00kost | 151 577 | 0 | 0 | 0 | 131381 | 20196 | 86.7% |
-| hv_ia_ivanfrankobiogra00iaky | 8 139 | 0 | 0 | 0 | 7336 | 803 | 90.1% |
+| hv_ia_istoryiaukrany00kost | 151 577 | 0 | 0 | 0 | 131384 | 20193 | 86.7% |
+| hv_ia_ivanfrankobiogra00iaky | 8 139 | 0 | 0 | 0 | 7337 | 802 | 90.1% |
 | hv_ia_ivanhusieretykz100shev | 1 720 | 0 | 0 | 0 | 1516 | 204 | 88.1% |
 | hv_ia_probatkakozatsko00hrus | 18 860 | 0 | 0 | 0 | 17225 | 1635 | 91.3% |
 | hv_ia_sumtsov13 | 9 860 | 0 | 0 | 0 | 8098 | 1762 | 82.1% |
 | hv_ia_sumtsov15 | 4 189 | 0 | 0 | 0 | 3556 | 633 | 84.9% |
-| hv_ia_sumtsov1918 | 32 749 | 0 | 0 | 0 | 28560 | 4189 | 87.2% |
+| hv_ia_sumtsov1918 | 32 749 | 0 | 0 | 0 | 28563 | 4186 | 87.2% |
 | hv_ia_veselivirsh00ruda | 3 059 | 0 | 0 | 0 | 2620 | 439 | 85.6% |
 | hv_ia_vilnaukrana00hrus | 5 364 | 0 | 0 | 0 | 4652 | 712 | 86.7% |
 | hv_ws_104267 | 235 | 0 | 0 | 0 | 201 | 34 | 85.5% |
 | hv_ws_104580 | 6 010 | 0 | 0 | 0 | 5308 | 702 | 88.3% |
 | hv_ws_105257 | 215 | 0 | 0 | 0 | 186 | 29 | 86.5% |
 | hv_ws_112857 | 3 233 | 0 | 0 | 0 | 2751 | 482 | 85.1% |
-| hv_ws_162091 | 6 000 | 0 | 0 | 0 | 5437 | 563 | 90.6% |
+| hv_ws_162091 | 6 000 | 0 | 0 | 0 | 5438 | 562 | 90.6% |
 | hv_ws_176935 | 1 554 | 0 | 0 | 0 | 1377 | 177 | 88.6% |
 | hv_ws_178548 | 744 | 0 | 0 | 0 | 697 | 47 | 93.7% |
 | hv_ws_188966 | 4 612 | 0 | 0 | 0 | 4279 | 333 | 92.8% |
@@ -9405,29 +10021,29 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_246410 | 2 559 | 0 | 0 | 0 | 2192 | 367 | 85.7% |
 | hv_ws_267685 | 136 | 0 | 0 | 0 | 118 | 18 | 86.8% |
 | hv_ws_28989 | 52 | 0 | 0 | 0 | 50 | 2 | 96.2% |
-| hv_ws_304176 | 7 993 | 0 | 0 | 0 | 7287 | 706 | 91.2% |
+| hv_ws_304176 | 7 993 | 0 | 0 | 0 | 7288 | 705 | 91.2% |
 | hv_ws_30920 | 997 | 0 | 0 | 0 | 815 | 182 | 81.7% |
-| hv_ws_31789 | 5 911 | 0 | 0 | 0 | 5443 | 468 | 92.1% |
+| hv_ws_31789 | 5 911 | 0 | 0 | 0 | 5447 | 464 | 92.2% |
 | hv_ws_32428 | 179 | 0 | 0 | 0 | 153 | 26 | 85.5% |
 | hv_ws_32437 | 828 | 0 | 0 | 0 | 731 | 97 | 88.3% |
 | hv_ws_32446 | 753 | 0 | 0 | 0 | 722 | 31 | 95.9% |
 | hv_ws_354314 | 5 486 | 0 | 0 | 0 | 5121 | 365 | 93.3% |
 | hv_ws_356353 | 3 952 | 0 | 0 | 0 | 3608 | 344 | 91.3% |
 | hv_ws_356355 | 8 448 | 0 | 0 | 0 | 7389 | 1059 | 87.5% |
-| hv_ws_358375 | 3 362 | 0 | 0 | 0 | 3163 | 199 | 94.1% |
+| hv_ws_358375 | 3 362 | 0 | 0 | 0 | 3164 | 198 | 94.1% |
 | hv_ws_362742 | 67 | 0 | 0 | 0 | 62 | 5 | 92.5% |
 | hv_ws_36917 | 2 549 | 0 | 0 | 0 | 2120 | 429 | 83.2% |
 | hv_ws_388119 | 21 674 | 0 | 0 | 0 | 20478 | 1196 | 94.5% |
 | hv_ws_39589 | 259 | 0 | 0 | 0 | 251 | 8 | 96.9% |
 | hv_ws_416871 | 464 | 0 | 0 | 0 | 417 | 47 | 89.9% |
 | hv_ws_417688 | 7 039 | 0 | 0 | 0 | 6794 | 245 | 96.5% |
-| hv_ws_419834 | 7 992 | 0 | 0 | 0 | 6888 | 1104 | 86.2% |
+| hv_ws_419834 | 7 992 | 0 | 0 | 0 | 6889 | 1103 | 86.2% |
 | hv_ws_42629 | 23 254 | 0 | 0 | 0 | 22883 | 371 | 98.4% |
 | hv_ws_43277 | 2 249 | 0 | 0 | 0 | 2101 | 148 | 93.4% |
 | hv_ws_491740 | 9 919 | 0 | 0 | 0 | 8591 | 1328 | 86.6% |
 | hv_ws_49430 | 51 | 0 | 0 | 0 | 48 | 3 | 94.1% |
 | hv_ws_495125 | 2 343 | 0 | 0 | 0 | 2273 | 70 | 97.0% |
-| hv_ws_49581 | 4 025 | 0 | 0 | 0 | 3908 | 117 | 97.1% |
+| hv_ws_49581 | 4 025 | 0 | 0 | 0 | 3909 | 116 | 97.1% |
 | hv_ws_522953 | 317 | 0 | 0 | 0 | 296 | 21 | 93.4% |
 | hv_ws_559553 | 411 | 0 | 0 | 0 | 392 | 19 | 95.4% |
 | hv_ws_566028 | 1 184 | 0 | 0 | 0 | 1107 | 77 | 93.5% |
@@ -9435,33 +10051,33 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_568888 | 2 721 | 0 | 0 | 0 | 2522 | 199 | 92.7% |
 | hv_ws_599038 | 13 456 | 0 | 0 | 0 | 12377 | 1079 | 92.0% |
 | hv_ws_601119 | 3 212 | 0 | 0 | 0 | 2993 | 219 | 93.2% |
-| hv_ws_605553 | 3 779 | 0 | 0 | 0 | 3631 | 148 | 96.1% |
+| hv_ws_605553 | 3 779 | 0 | 0 | 0 | 3634 | 145 | 96.2% |
 | hv_ws_65050 | 338 | 0 | 0 | 0 | 335 | 3 | 99.1% |
 | hv_ws_65066 | 141 | 0 | 0 | 0 | 136 | 5 | 96.5% |
 | hv_ws_65067 | 739 | 0 | 0 | 0 | 730 | 9 | 98.8% |
 | hv_ws_69513 | 243 | 0 | 0 | 0 | 233 | 10 | 95.9% |
 | hv_ws_9263 | 556 | 0 | 0 | 0 | 546 | 10 | 98.2% |
-| sumtsov_slobozhane1918 | 44 945 | 0 | 0 | 0 | 39667 | 5278 | 88.3% |
+| sumtsov_slobozhane1918 | 44 945 | 0 | 0 | 0 | 39669 | 5276 | 88.3% |
 | sumtsov1918 | 3 690 | 0 | 0 | 0 | 3219 | 471 | 87.2% |
 | hv_ia_arytmetychniprav00chep | 7 243 | 0 | 0 | 0 | 6657 | 586 | 91.9% |
 | hv_ia_batkivshchynaiyn00fran | 17 733 | 0 | 0 | 0 | 16153 | 1580 | 91.1% |
 | hv_ia_biliamashyny00vynnuoft | 7 278 | 0 | 0 | 0 | 6628 | 650 | 91.1% |
-| hv_ia_bortsizapravduis00kash | 37 360 | 0 | 0 | 0 | 34597 | 2763 | 92.6% |
-| hv_ia_canadian_19190416 | 10 712 | 0 | 0 | 0 | 7539 | 3173 | 70.4% |
+| hv_ia_bortsizapravduis00kash | 37 360 | 0 | 0 | 0 | 34602 | 2758 | 92.6% |
+| hv_ia_canadian_19190416 | 10 712 | 0 | 0 | 0 | 7541 | 3171 | 70.4% |
 | hv_ia_canadian_19190702 | 10 038 | 0 | 0 | 0 | 8483 | 1555 | 84.5% |
-| hv_ia_canadian_19190807 | 10 013 | 0 | 0 | 0 | 8000 | 2013 | 79.9% |
-| hv_ia_canadian_19190818 | 10 197 | 0 | 0 | 0 | 7994 | 2203 | 78.4% |
-| hv_ia_canadian_19190903 | 10 219 | 0 | 0 | 0 | 8256 | 1963 | 80.8% |
+| hv_ia_canadian_19190807 | 10 013 | 0 | 0 | 0 | 8001 | 2012 | 79.9% |
+| hv_ia_canadian_19190818 | 10 197 | 0 | 0 | 0 | 7996 | 2201 | 78.4% |
+| hv_ia_canadian_19190903 | 10 219 | 0 | 0 | 0 | 8258 | 1961 | 80.8% |
 | hv_ia_canadian_19190910 | 9 888 | 0 | 0 | 0 | 7677 | 2211 | 77.6% |
 | hv_ia_canadian_19190917 | 9 289 | 0 | 0 | 0 | 7316 | 1973 | 78.8% |
 | hv_ia_canadian_19191001 | 6 772 | 0 | 0 | 0 | 5141 | 1631 | 75.9% |
 | hv_ia_chuzhynoiupoezi00oles | 6 078 | 0 | 0 | 0 | 5742 | 336 | 94.5% |
 | hv_ia_chymiepoltychnae00marc | 10 708 | 0 | 0 | 0 | 9290 | 1418 | 86.8% |
-| hv_ia_cihm_65125 | 127 004 | 0 | 0 | 0 | 109989 | 17015 | 86.6% |
+| hv_ia_cihm_65125 | 127 004 | 0 | 0 | 0 | 109991 | 17013 | 86.6% |
 | hv_ia_cihm_65603 | 15 560 | 0 | 0 | 0 | 12369 | 3191 | 79.5% |
 | hv_ia_cihm_65619 | 15 600 | 0 | 0 | 0 | 13073 | 2527 | 83.8% |
 | hv_ia_cihm_71719 | 6 192 | 0 | 0 | 0 | 4944 | 1248 | 79.8% |
-| hv_ia_cihm_73936 | 25 700 | 0 | 0 | 0 | 21364 | 4336 | 83.1% |
+| hv_ia_cihm_73936 | 25 700 | 0 | 0 | 0 | 21365 | 4335 | 83.1% |
 | hv_ia_cihm_76405 | 3 249 | 0 | 0 | 0 | 2772 | 477 | 85.3% |
 | hv_ia_cihm_76406 | 2 192 | 0 | 0 | 0 | 1438 | 754 | 65.6% |
 | hv_ia_cihm_76407 | 2 128 | 0 | 0 | 0 | 1589 | 539 | 74.7% |
@@ -9477,52 +10093,52 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_76423 | 2 629 | 0 | 0 | 0 | 2189 | 440 | 83.3% |
 | hv_ia_cihm_76424 | 1 910 | 0 | 0 | 0 | 1422 | 488 | 74.5% |
 | hv_ia_cihm_76425 | 1 698 | 0 | 0 | 0 | 1317 | 381 | 77.6% |
-| hv_ia_cihm_76864 | 16 531 | 0 | 0 | 0 | 14397 | 2134 | 87.1% |
-| hv_ia_cihm_77796 | 57 636 | 0 | 0 | 0 | 31012 | 26624 | 53.8% |
-| hv_ia_cihm_78872 | 36 817 | 0 | 0 | 0 | 33857 | 2960 | 92.0% |
+| hv_ia_cihm_76864 | 16 531 | 0 | 0 | 0 | 14398 | 2133 | 87.1% |
+| hv_ia_cihm_77796 | 57 636 | 0 | 0 | 0 | 31017 | 26619 | 53.8% |
+| hv_ia_cihm_78872 | 36 817 | 0 | 0 | 0 | 33858 | 2959 | 92.0% |
 | hv_ia_cihm_79841 | 22 427 | 0 | 0 | 0 | 13594 | 8833 | 60.6% |
 | hv_ia_cihm_80510 | 6 887 | 0 | 0 | 0 | 5793 | 1094 | 84.1% |
 | hv_ia_cihm_80511 | 6 845 | 0 | 0 | 0 | 5713 | 1132 | 83.5% |
 | hv_ia_cihm_80512 | 7 046 | 0 | 0 | 0 | 6028 | 1018 | 85.6% |
 | hv_ia_cihm_80737 | 6 752 | 0 | 0 | 0 | 5300 | 1452 | 78.5% |
 | hv_ia_cihm_80949 | 2 336 | 0 | 0 | 0 | 1542 | 794 | 66.0% |
-| hv_ia_cihm_81755 | 21 178 | 0 | 0 | 0 | 18110 | 3068 | 85.5% |
-| hv_ia_cihm_84087 | 70 270 | 0 | 0 | 0 | 62730 | 7540 | 89.3% |
-| hv_ia_cihm_84792 | 154 409 | 0 | 0 | 0 | 130037 | 24372 | 84.2% |
-| hv_ia_cihm_85244 | 54 452 | 0 | 0 | 0 | 49518 | 4934 | 90.9% |
-| hv_ia_cihm_85478 | 20 878 | 0 | 0 | 0 | 18185 | 2693 | 87.1% |
-| hv_ia_cihm_87724 | 32 516 | 0 | 0 | 0 | 27757 | 4759 | 85.4% |
+| hv_ia_cihm_81755 | 21 178 | 0 | 0 | 0 | 18111 | 3067 | 85.5% |
+| hv_ia_cihm_84087 | 70 270 | 0 | 0 | 0 | 62732 | 7538 | 89.3% |
+| hv_ia_cihm_84792 | 154 409 | 0 | 0 | 0 | 130077 | 24332 | 84.2% |
+| hv_ia_cihm_85244 | 54 452 | 0 | 0 | 0 | 49519 | 4933 | 90.9% |
+| hv_ia_cihm_85478 | 20 878 | 0 | 0 | 0 | 18186 | 2692 | 87.1% |
+| hv_ia_cihm_87724 | 32 516 | 0 | 0 | 0 | 27760 | 4756 | 85.4% |
 | hv_ia_cihm_88341 | 10 216 | 0 | 0 | 0 | 8696 | 1520 | 85.1% |
 | hv_ia_cihm_88343 | 22 952 | 0 | 0 | 0 | 20390 | 2562 | 88.8% |
 | hv_ia_cihm_88345 | 5 783 | 0 | 0 | 0 | 3928 | 1855 | 67.9% |
-| hv_ia_cihm_88349 | 27 930 | 0 | 0 | 0 | 22195 | 5735 | 79.5% |
+| hv_ia_cihm_88349 | 27 930 | 0 | 0 | 0 | 22196 | 5734 | 79.5% |
 | hv_ia_cihm_88508 | 15 055 | 0 | 0 | 0 | 13306 | 1749 | 88.4% |
 | hv_ia_cihm_90390 | 2 499 | 0 | 0 | 0 | 1159 | 1340 | 46.4% |
-| hv_ia_cihm_90437 | 18 677 | 0 | 0 | 0 | 9280 | 9397 | 49.7% |
+| hv_ia_cihm_90437 | 18 677 | 0 | 0 | 0 | 9281 | 9396 | 49.7% |
 | hv_ia_cihm_990390 | 23 586 | 0 | 0 | 0 | 18321 | 5265 | 77.7% |
-| hv_ia_cihm_990437 | 7 785 | 0 | 0 | 0 | 6409 | 1376 | 82.3% |
-| hv_ia_cihm_991213 | 21 165 | 0 | 0 | 0 | 17786 | 3379 | 84.0% |
+| hv_ia_cihm_990437 | 7 785 | 0 | 0 | 0 | 6410 | 1375 | 82.3% |
+| hv_ia_cihm_991213 | 21 165 | 0 | 0 | 0 | 17787 | 3378 | 84.0% |
 | hv_ia_cihm_991335 | 29 412 | 0 | 0 | 0 | 23443 | 5969 | 79.7% |
 | hv_ia_cihm_991416 | 5 757 | 0 | 0 | 0 | 4723 | 1034 | 82.0% |
 | hv_ia_cihm_99153 | 14 064 | 0 | 0 | 0 | 11713 | 2351 | 83.3% |
-| hv_ia_darvinizm00ferr | 32 053 | 0 | 0 | 0 | 27259 | 4794 | 85.0% |
+| hv_ia_darvinizm00ferr | 32 053 | 0 | 0 | 0 | 27261 | 4792 | 85.0% |
 | hv_ia_doukranskohoro0030iz | 3 212 | 0 | 0 | 0 | 2886 | 326 | 89.9% |
 | hv_ia_dushohubydramana00toho | 12 337 | 0 | 0 | 0 | 11168 | 1169 | 90.5% |
 | hv_ia_favsttragediia01goet | 36 205 | 0 | 0 | 0 | 30283 | 5922 | 83.6% |
 | hv_ia_favstzah00goetuoft | 36 486 | 0 | 0 | 0 | 30277 | 6209 | 83.0% |
 | hv_ia_filozofiiasotsii00diet | 69 128 | 0 | 0 | 0 | 61445 | 7683 | 88.9% |
 | hv_ia_genovefaopovidan00unse | 21 952 | 0 | 0 | 0 | 20051 | 1901 | 91.3% |
-| hv_ia_geografiia00levy | 24 129 | 0 | 0 | 0 | 19844 | 4285 | 82.2% |
+| hv_ia_geografiia00levy | 24 129 | 0 | 0 | 0 | 19845 | 4284 | 82.2% |
 | hv_ia_holodvyn00vynnuoft | 2 836 | 0 | 0 | 0 | 2423 | 413 | 85.4% |
-| hv_ia_horytrazskaz00naum | 8 502 | 0 | 0 | 0 | 2897 | 5605 | 34.1% |
+| hv_ia_horytrazskaz00naum | 8 502 | 0 | 0 | 0 | 2898 | 5604 | 34.1% |
 | hv_ia_hostyntsizbirkaf00syne | 16 872 | 0 | 0 | 0 | 16003 | 869 | 94.8% |
-| hv_ia_hram1919 | 152 782 | 0 | 0 | 0 | 129662 | 23120 | 84.9% |
-| hv_ia_hramatykaukran00simouoft | 154 465 | 0 | 0 | 0 | 128713 | 25752 | 83.3% |
+| hv_ia_hram1919 | 152 782 | 0 | 0 | 0 | 129701 | 23081 | 84.9% |
+| hv_ia_hramatykaukran00simouoft | 154 465 | 0 | 0 | 0 | 128750 | 25715 | 83.4% |
 | hv_ia_istoriiaborotbyv00drap | 89 416 | 0 | 0 | 0 | 77843 | 11573 | 87.1% |
 | hv_ia_istoriiaparyzhsk00newy | 5 895 | 0 | 0 | 0 | 4642 | 1253 | 78.7% |
-| hv_ia_istoriiaukrainy00kryp | 26 002 | 0 | 0 | 0 | 24870 | 1132 | 95.6% |
-| hv_ia_istoriiaukrans00iefruoft | 129 663 | 0 | 0 | 0 | 108901 | 20762 | 84.0% |
-| hv_ia_kulturnonatsiona00hrusuoft | 52 230 | 0 | 0 | 0 | 45107 | 7123 | 86.4% |
+| hv_ia_istoriiaukrainy00kryp | 26 002 | 0 | 0 | 0 | 24871 | 1131 | 95.7% |
+| hv_ia_istoriiaukrans00iefruoft | 129 663 | 0 | 0 | 0 | 108904 | 20759 | 84.0% |
+| hv_ia_kulturnonatsiona00hrusuoft | 52 230 | 0 | 0 | 0 | 45109 | 7121 | 86.4% |
 | hv_ia_probatkakozatsk00hrus | 19 303 | 0 | 0 | 0 | 17663 | 1640 | 91.5% |
 | hv_ia_probatkakozatsk00hrusgoog | 19 731 | 0 | 0 | 0 | 18014 | 1717 | 91.3% |
 | hv_ws_105297 | 569 | 0 | 0 | 0 | 545 | 24 | 95.8% |
@@ -9546,7 +10162,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_321428 | 229 | 0 | 0 | 0 | 218 | 11 | 95.2% |
 | hv_ws_34960 | 218 | 0 | 0 | 0 | 215 | 3 | 98.6% |
 | hv_ws_3565 | 312 | 0 | 0 | 0 | 257 | 55 | 82.4% |
-| hv_ws_37816 | 8 525 | 0 | 0 | 0 | 8377 | 148 | 98.3% |
+| hv_ws_37816 | 8 525 | 0 | 0 | 0 | 8378 | 147 | 98.3% |
 | hv_ws_379613 | 544 | 0 | 0 | 0 | 527 | 17 | 96.9% |
 | hv_ws_417211 | 92 | 0 | 0 | 0 | 89 | 3 | 96.7% |
 | hv_ws_43259 | 5 159 | 0 | 0 | 0 | 4786 | 373 | 92.8% |
@@ -9560,31 +10176,31 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_573880 | 240 | 0 | 0 | 0 | 232 | 8 | 96.7% |
 | hv_ws_61603 | 283 | 0 | 0 | 0 | 265 | 18 | 93.6% |
 | hv_ws_70851 | 691 | 0 | 0 | 0 | 586 | 105 | 84.8% |
-| hv_ia_1920barv | 25 812 | 0 | 0 | 0 | 23632 | 2180 | 91.6% |
-| hv_ia_arkhyv13 | 157 397 | 0 | 0 | 0 | 58338 | 99059 | 37.1% |
+| hv_ia_1920barv | 25 812 | 0 | 0 | 0 | 23633 | 2179 | 91.6% |
+| hv_ia_arkhyv13 | 157 397 | 0 | 0 | 0 | 58341 | 99056 | 37.1% |
 | hv_ia_artystka00krusuoft | 13 767 | 0 | 0 | 0 | 12086 | 1681 | 87.8% |
 | hv_ia_artystpovist00shevuoft | 59 003 | 0 | 0 | 0 | 55873 | 3130 | 94.7% |
-| hv_ia_barvinskiy1921 | 258 937 | 0 | 0 | 0 | 210603 | 48334 | 81.3% |
-| hv_ia_besidyprotykatyl00cice | 27 809 | 0 | 0 | 0 | 23156 | 4653 | 83.3% |
+| hv_ia_barvinskiy1921 | 258 937 | 0 | 0 | 0 | 210612 | 48325 | 81.3% |
+| hv_ia_besidyprotykatyl00cice | 27 809 | 0 | 0 | 0 | 23165 | 4644 | 83.3% |
 | hv_ia_bilshezasoromyvs00rudyuoft | 3 485 | 0 | 0 | 0 | 3019 | 466 | 86.6% |
 | hv_ia_blyskavytssuspil00iats | 29 574 | 0 | 0 | 0 | 26475 | 3099 | 89.5% |
 | hv_ia_bohy00inge | 11 535 | 0 | 0 | 0 | 10168 | 1367 | 88.1% |
-| hv_ia_boiaryniadrama00ukra | 9 429 | 0 | 0 | 0 | 8836 | 593 | 93.7% |
-| hv_ia_borbaukranskoh00doly | 69 798 | 0 | 0 | 0 | 59660 | 10138 | 85.5% |
+| hv_ia_boiaryniadrama00ukra | 9 429 | 0 | 0 | 0 | 8837 | 592 | 93.7% |
+| hv_ia_borbaukranskoh00doly | 69 798 | 0 | 0 | 0 | 59661 | 10137 | 85.5% |
 | hv_ia_boritesiapoboret00ukra | 18 020 | 0 | 0 | 0 | 15760 | 2260 | 87.5% |
-| hv_ia_boritesiapoboret1101ukra | 231 197 | 0 | 0 | 0 | 206192 | 25005 | 89.2% |
+| hv_ia_boritesiapoboret1101ukra | 231 197 | 0 | 0 | 0 | 206195 | 25002 | 89.2% |
 | hv_ia_borotbazaistnova00desm | 3 458 | 0 | 0 | 0 | 2957 | 501 | 85.5% |
 | hv_ia_bratymouhliopovi00kipluoft | 38 985 | 0 | 0 | 0 | 37440 | 1545 | 96.0% |
-| hv_ia_budennykhlib00krusuoft | 48 678 | 0 | 0 | 0 | 45260 | 3418 | 93.0% |
+| hv_ia_budennykhlib00krusuoft | 48 678 | 0 | 0 | 0 | 45264 | 3414 | 93.0% |
 | hv_ia_burlakachabandra00karp | 16 284 | 0 | 0 | 0 | 15308 | 976 | 94.0% |
-| hv_ia_cherhovizavdanni00leni | 16 978 | 0 | 0 | 0 | 15443 | 1535 | 91.0% |
+| hv_ia_cherhovizavdanni00leni | 16 978 | 0 | 0 | 0 | 15444 | 1534 | 91.0% |
 | hv_ia_chervonemarevo00poli | 42 951 | 0 | 0 | 0 | 36608 | 6343 | 85.2% |
-| hv_ia_chmelykromandlia00koro | 155 487 | 0 | 0 | 0 | 146033 | 9454 | 93.9% |
+| hv_ia_chmelykromandlia00koro | 155 487 | 0 | 0 | 0 | 146047 | 9440 | 93.9% |
 | hv_ia_chytankadliaiiro00barv | 89 023 | 0 | 0 | 0 | 72266 | 16757 | 81.2% |
 | hv_ia_chytanochkyukra00krusuoft | 1 401 | 0 | 0 | 0 | 1139 | 262 | 81.3% |
 | hv_ia_chytanochkyukra32krusuoft | 1 211 | 0 | 0 | 0 | 1128 | 83 | 93.1% |
 | hv_ia_cihm_65455 | 9 548 | 0 | 0 | 0 | 8191 | 1357 | 85.8% |
-| hv_ia_cihm_65474 | 75 371 | 0 | 0 | 0 | 62139 | 13232 | 82.4% |
+| hv_ia_cihm_65474 | 75 371 | 0 | 0 | 0 | 62142 | 13229 | 82.4% |
 | hv_ia_cihm_73081 | 10 825 | 0 | 0 | 0 | 9171 | 1654 | 84.7% |
 | hv_ia_cihm_74264 | 40 281 | 0 | 0 | 0 | 35917 | 4364 | 89.2% |
 | hv_ia_cihm_81053 | 2 910 | 0 | 0 | 0 | 2423 | 487 | 83.3% |
@@ -9597,18 +10213,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_cihm_87219 | 8 081 | 0 | 0 | 0 | 6936 | 1145 | 85.8% |
 | hv_ia_cihm_87220 | 23 305 | 0 | 0 | 0 | 21890 | 1415 | 93.9% |
 | hv_ia_cihm_88505 | 34 449 | 0 | 0 | 0 | 30203 | 4246 | 87.7% |
-| hv_ia_cihm_90638 | 25 176 | 0 | 0 | 0 | 10416 | 14760 | 41.4% |
+| hv_ia_cihm_90638 | 25 176 | 0 | 0 | 0 | 10424 | 14752 | 41.4% |
 | hv_ia_cihm_97369 | 4 528 | 0 | 0 | 0 | 3868 | 660 | 85.4% |
 | hv_ia_cihm_97743 | 12 438 | 0 | 0 | 0 | 11000 | 1438 | 88.4% |
 | hv_ia_cihm_97804 | 12 649 | 0 | 0 | 0 | 10837 | 1812 | 85.7% |
 | hv_ia_cihm_98489 | 5 011 | 0 | 0 | 0 | 4210 | 801 | 84.0% |
 | hv_ia_cihm_990342 | 5 446 | 0 | 0 | 0 | 4445 | 1001 | 81.6% |
 | hv_ia_cihm_990638 | 3 226 | 0 | 0 | 0 | 2704 | 522 | 83.8% |
-| hv_ia_cihm_991218 | 72 127 | 0 | 0 | 0 | 59792 | 12335 | 82.9% |
+| hv_ia_cihm_991218 | 72 127 | 0 | 0 | 0 | 59794 | 12333 | 82.9% |
 | hv_ia_cihm_991257 | 17 960 | 0 | 0 | 0 | 16015 | 1945 | 89.2% |
 | hv_ia_dantonrol00roll | 21 742 | 0 | 0 | 0 | 19690 | 2052 | 90.6% |
 | hv_ia_deliubovtamiboht00tolsuoft | 10 385 | 0 | 0 | 0 | 9333 | 1052 | 89.9% |
-| hv_ia_derzhavairevoliu00leni | 31 495 | 0 | 0 | 0 | 28126 | 3369 | 89.3% |
+| hv_ia_derzhavairevoliu00leni | 31 495 | 0 | 0 | 0 | 28127 | 3368 | 89.3% |
 | hv_ia_deviatbrativides00vovcuoft | 13 767 | 0 | 0 | 0 | 12642 | 1125 | 91.8% |
 | hv_ia_dliadomashnohooh00fran | 46 883 | 0 | 0 | 0 | 42448 | 4435 | 90.5% |
 | hv_ia_dostonoiestzbirk00lepkuoft | 3 336 | 0 | 0 | 0 | 3151 | 185 | 94.5% |
@@ -9621,29 +10237,29 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ia_field_19200200 | 8 097 | 0 | 0 | 0 | 7174 | 923 | 88.6% |
 | hv_ia_field_19200300 | 8 486 | 0 | 0 | 0 | 7601 | 885 | 89.6% |
 | hv_ia_gronoliteraturno00poliuoft | 29 937 | 0 | 0 | 0 | 24218 | 5719 | 80.9% |
-| hv_ia_gyakorlatikisoro00volo | 26 189 | 0 | 0 | 0 | 14989 | 11200 | 57.2% |
-| hv_ia_hadamakyzportret00shevuoft | 12 488 | 0 | 0 | 0 | 11760 | 728 | 94.2% |
+| hv_ia_gyakorlatikisoro00volo | 26 189 | 0 | 0 | 0 | 14997 | 11192 | 57.3% |
+| hv_ia_hadamakyzportret00shevuoft | 12 488 | 0 | 0 | 0 | 11761 | 727 | 94.2% |
 | hv_ia_henaivanahenakup00fedyuoft | 2 430 | 0 | 0 | 0 | 2156 | 274 | 88.7% |
 | hv_ia_heroskaukranai00mega | 5 807 | 0 | 0 | 0 | 4745 | 1062 | 81.7% |
 | hv_ia_heroskaukranaili00mega | 6 126 | 0 | 0 | 0 | 5175 | 951 | 84.5% |
 | hv_ia_hlytaabopavukdra00krop | 14 276 | 0 | 0 | 0 | 13108 | 1168 | 91.8% |
 | hv_ia_hrikhdramanatryd00vynn | 19 442 | 0 | 0 | 0 | 16777 | 2665 | 86.3% |
-| hv_ia_hryhorisavychsko00skovuoft | 41 542 | 0 | 0 | 0 | 36543 | 4999 | 88.0% |
-| hv_ia_hutsulyhutsulshc00khot | 7 288 | 0 | 0 | 0 | 6705 | 583 | 92.0% |
+| hv_ia_hryhorisavychsko00skovuoft | 41 542 | 0 | 0 | 0 | 36545 | 4997 | 88.0% |
+| hv_ia_hutsulyhutsulshc00khot | 7 288 | 0 | 0 | 0 | 6706 | 582 | 92.0% |
 | hv_ia_iakfarmermozhedi00mers | 6 810 | 0 | 0 | 0 | 5936 | 874 | 87.2% |
 | hv_ia_iakpovstalanasha00krevuoft | 16 797 | 0 | 0 | 0 | 14857 | 1940 | 88.5% |
 | hv_ia_iakpovstalanasha00umin | 17 286 | 0 | 0 | 0 | 15319 | 1967 | 88.6% |
-| hv_ia_iedynanedilymaso00levy | 3 159 | 0 | 0 | 0 | 2752 | 407 | 87.1% |
-| hv_ia_iliustrovanaisto00hrus_0 | 178 737 | 0 | 0 | 0 | 159875 | 18862 | 89.4% |
-| hv_ia_inteligentsiiaip00shap | 5 893 | 0 | 0 | 0 | 5232 | 661 | 88.8% |
+| hv_ia_iedynanedilymaso00levy | 3 159 | 0 | 0 | 0 | 2753 | 406 | 87.1% |
+| hv_ia_iliustrovanaisto00hrus_0 | 178 737 | 0 | 0 | 0 | 159877 | 18860 | 89.4% |
+| hv_ia_inteligentsiiaip00shap | 5 893 | 0 | 0 | 0 | 5233 | 660 | 88.8% |
 | hv_ia_istoriiapodkarpa00pach | 25 791 | 0 | 0 | 0 | 11482 | 14309 | 44.5% |
-| hv_ia_istoriiaukrans00barv | 256 280 | 0 | 0 | 0 | 201627 | 54653 | 78.7% |
-| hv_ia_istoriiaukrans01voznuoft | 101 067 | 0 | 0 | 0 | 84694 | 16373 | 83.8% |
-| hv_ia_istoriiaukrans02voznuoft | 123 716 | 0 | 0 | 0 | 104005 | 19711 | 84.1% |
-| hv_ia_istoriiaukrans03voznuoft | 192 479 | 0 | 0 | 0 | 166835 | 25644 | 86.7% |
-| hv_ia_istoriiaukransko00tymo | 10 014 | 0 | 0 | 0 | 8965 | 1049 | 89.5% |
-| hv_ia_istoriiaukranyru00barv | 25 992 | 0 | 0 | 0 | 23280 | 2712 | 89.6% |
-| hv_ia_ivanlevytskynech00iefr | 45 034 | 0 | 0 | 0 | 40595 | 4439 | 90.1% |
+| hv_ia_istoriiaukrans00barv | 256 280 | 0 | 0 | 0 | 201637 | 54643 | 78.7% |
+| hv_ia_istoriiaukrans01voznuoft | 101 067 | 0 | 0 | 0 | 84700 | 16367 | 83.8% |
+| hv_ia_istoriiaukrans02voznuoft | 123 716 | 0 | 0 | 0 | 104009 | 19707 | 84.1% |
+| hv_ia_istoriiaukrans03voznuoft | 192 479 | 0 | 0 | 0 | 166868 | 25611 | 86.7% |
+| hv_ia_istoriiaukransko00tymo | 10 014 | 0 | 0 | 0 | 8966 | 1048 | 89.5% |
+| hv_ia_istoriiaukranyru00barv | 25 992 | 0 | 0 | 0 | 23281 | 2711 | 89.6% |
+| hv_ia_ivanlevytskynech00iefr | 45 034 | 0 | 0 | 0 | 40597 | 4437 | 90.1% |
 | hv_ia_spivomovkyaboves00rudauoft | 13 774 | 0 | 0 | 0 | 11996 | 1778 | 87.1% |
 | hv_ia_vsesvitniaistori01hrus | 52 824 | 0 | 0 | 0 | 45476 | 7348 | 86.1% |
 | hv_ia_vsesvitniaistori02hrus | 93 315 | 0 | 0 | 0 | 80506 | 12809 | 86.3% |
@@ -9662,7 +10278,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_206541 | 90 | 0 | 0 | 0 | 81 | 9 | 90.0% |
 | hv_ws_209656 | 248 | 0 | 0 | 0 | 226 | 22 | 91.1% |
 | hv_ws_2172 | 2 858 | 0 | 0 | 0 | 2755 | 103 | 96.4% |
-| hv_ws_22303 | 199 | 0 | 0 | 0 | 173 | 26 | 86.9% |
+| hv_ws_22303 | 199 | 0 | 0 | 0 | 174 | 25 | 87.4% |
 | hv_ws_238213 | 5 942 | 0 | 0 | 0 | 4726 | 1216 | 79.5% |
 | hv_ws_238831 | 1 087 | 0 | 0 | 0 | 980 | 107 | 90.2% |
 | hv_ws_24076 | 325 | 0 | 0 | 0 | 274 | 51 | 84.3% |
@@ -9674,13 +10290,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_321492 | 5 586 | 0 | 0 | 0 | 5117 | 469 | 91.6% |
 | hv_ws_352227 | 8 508 | 0 | 0 | 0 | 8224 | 284 | 96.7% |
 | hv_ws_352881 | 75 | 0 | 0 | 0 | 73 | 2 | 97.3% |
-| hv_ws_356356 | 5 475 | 0 | 0 | 0 | 5204 | 271 | 95.1% |
+| hv_ws_356356 | 5 475 | 0 | 0 | 0 | 5205 | 270 | 95.1% |
 | hv_ws_356360 | 7 219 | 0 | 0 | 0 | 6625 | 594 | 91.8% |
-| hv_ws_35810 | 3 573 | 0 | 0 | 0 | 3428 | 145 | 95.9% |
+| hv_ws_35810 | 3 573 | 0 | 0 | 0 | 3438 | 135 | 96.2% |
 | hv_ws_381775 | 7 072 | 0 | 0 | 0 | 6891 | 181 | 97.4% |
 | hv_ws_38368 | 20 | 0 | 0 | 0 | 13 | 7 | 65.0% |
 | hv_ws_398195 | 186 | 0 | 0 | 0 | 173 | 13 | 93.0% |
-| hv_ws_40418 | 8 863 | 0 | 0 | 0 | 8370 | 493 | 94.4% |
+| hv_ws_40418 | 8 863 | 0 | 0 | 0 | 8372 | 491 | 94.5% |
 | hv_ws_415213 | 58 | 0 | 0 | 0 | 52 | 6 | 89.7% |
 | hv_ws_41924 | 291 | 0 | 0 | 0 | 259 | 32 | 89.0% |
 | hv_ws_41928 | 177 | 0 | 0 | 0 | 160 | 17 | 90.4% |
@@ -9703,36 +10319,36 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_524005 | 136 | 0 | 0 | 0 | 113 | 23 | 83.1% |
 | hv_ws_567595 | 2 926 | 0 | 0 | 0 | 2821 | 105 | 96.4% |
 | hv_ws_61377 | 139 | 0 | 0 | 0 | 123 | 16 | 88.5% |
-| hv_ia_arkhyv15 | 48 713 | 0 | 0 | 0 | 25402 | 23311 | 52.1% |
+| hv_ia_arkhyv15 | 48 713 | 0 | 0 | 0 | 25406 | 23307 | 52.2% |
 | hv_ia_bohdanivsynokist00shch | 18 741 | 0 | 0 | 0 | 16927 | 1814 | 90.3% |
-| hv_ia_bohyzhazhdutkrov00fran | 55 039 | 0 | 0 | 0 | 47518 | 7521 | 86.3% |
+| hv_ia_bohyzhazhdutkrov00fran | 55 039 | 0 | 0 | 0 | 47519 | 7520 | 86.3% |
 | hv_ia_canadianlife_19211202 | 4 827 | 0 | 0 | 0 | 1999 | 2828 | 41.4% |
-| hv_ia_cardinalwolseytw0000mcre | 63 585 | 0 | 0 | 0 | 20369 | 43216 | 32.0% |
+| hv_ia_cardinalwolseytw0000mcre | 63 585 | 0 | 0 | 0 | 20381 | 43204 | 32.1% |
 | hv_ia_cat10928163 | 3 016 | 0 | 0 | 0 | 2737 | 279 | 90.7% |
 | hv_ia_chervonashapochk00vilsuoft | 6 319 | 0 | 0 | 0 | 5582 | 737 | 88.3% |
 | hv_ia_chervonemarevona00poliuoft | 43 208 | 0 | 0 | 0 | 40768 | 2440 | 94.4% |
-| hv_ia_chornohoraneperi00tryl | 27 093 | 0 | 0 | 0 | 21523 | 5570 | 79.4% |
+| hv_ia_chornohoraneperi00tryl | 27 093 | 0 | 0 | 0 | 21524 | 5569 | 79.4% |
 | hv_ia_chrestna_doroga1921 | 2 601 | 0 | 0 | 0 | 2448 | 153 | 94.1% |
 | hv_ia_chytankadliairok00barv | 75 206 | 0 | 0 | 0 | 55417 | 19789 | 73.7% |
 | hv_ia_diadkotarasditoc00poliuoft | 3 184 | 0 | 0 | 0 | 2765 | 419 | 86.8% |
 | hv_ia_dokumnetyukran00kuch | 4 486 | 0 | 0 | 0 | 3696 | 790 | 82.4% |
 | hv_ia_dokysontsezidero00krop | 18 627 | 0 | 0 | 0 | 15539 | 3088 | 83.4% |
-| hv_ia_dykyivynohradnar00horo | 21 499 | 0 | 0 | 0 | 19677 | 1822 | 91.5% |
+| hv_ia_dykyivynohradnar00horo | 21 499 | 0 | 0 | 0 | 19678 | 1821 | 91.5% |
 | hv_ia_ekonomichniosnov00rudnuoft | 4 824 | 0 | 0 | 0 | 4329 | 495 | 89.7% |
 | hv_ia_halychynanovider00rudnuoft | 5 231 | 0 | 0 | 0 | 4820 | 411 | 92.1% |
 | hv_ia_halytskaarmiiana00levy | 35 437 | 0 | 0 | 0 | 30728 | 4709 | 86.7% |
-| hv_ia_halytskaarmiiana00levy_0 | 36 022 | 0 | 0 | 0 | 31516 | 4506 | 87.5% |
+| hv_ia_halytskaarmiiana00levy_0 | 36 022 | 0 | 0 | 0 | 31518 | 4504 | 87.5% |
 | hv_ia_iakcholovikzisho00budz | 24 805 | 0 | 0 | 0 | 22416 | 2389 | 90.4% |
 | hv_ia_iakhalychanvtiah00chak | 6 237 | 0 | 0 | 0 | 5475 | 762 | 87.8% |
-| hv_ia_iliustrovanaisto00hrus | 180 138 | 0 | 0 | 0 | 160633 | 19505 | 89.2% |
+| hv_ia_iliustrovanaisto00hrus | 180 138 | 0 | 0 | 0 | 160634 | 19504 | 89.2% |
 | hv_ia_internatsionalny00zame | 14 359 | 0 | 0 | 0 | 8257 | 6102 | 57.5% |
 | hv_ia_internatsionalny00zameuoft | 13 761 | 0 | 0 | 0 | 7973 | 5788 | 57.9% |
-| hv_ia_irenaolenskaopov00krusuoft | 45 934 | 0 | 0 | 0 | 42399 | 3535 | 92.3% |
-| hv_ia_istor1_2 | 258 937 | 0 | 0 | 0 | 210603 | 48334 | 81.3% |
-| hv_ia_istoriiaisystema00losk | 36 694 | 0 | 0 | 0 | 28216 | 8478 | 76.9% |
-| hv_ia_istoriiazemli00lunk | 15 423 | 0 | 0 | 0 | 13756 | 1667 | 89.2% |
+| hv_ia_irenaolenskaopov00krusuoft | 45 934 | 0 | 0 | 0 | 42400 | 3534 | 92.3% |
+| hv_ia_istor1_2 | 258 937 | 0 | 0 | 0 | 210612 | 48325 | 81.3% |
+| hv_ia_istoriiaisystema00losk | 36 694 | 0 | 0 | 0 | 28219 | 8475 | 76.9% |
+| hv_ia_istoriiazemli00lunk | 15 423 | 0 | 0 | 0 | 13758 | 1665 | 89.2% |
 | hv_ia_istorychnipoemy00shevuoft | 27 928 | 0 | 0 | 0 | 24098 | 3830 | 86.3% |
-| hv_ia_izistoriirusskag00kres | 34 827 | 0 | 0 | 0 | 10852 | 23975 | 31.2% |
+| hv_ia_izistoriirusskag00kres | 34 827 | 0 | 0 | 0 | 10866 | 23961 | 31.2% |
 | hv_ia_spivomovkyvybir00rudauoft | 4 192 | 0 | 0 | 0 | 3536 | 656 | 84.4% |
 | hv_ws_104095 | 4 834 | 0 | 0 | 0 | 4450 | 384 | 92.1% |
 | hv_ws_107907 | 944 | 0 | 0 | 0 | 869 | 75 | 92.1% |
@@ -9756,70 +10372,70 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_326723 | 2 743 | 0 | 0 | 0 | 2614 | 129 | 95.3% |
 | hv_ws_326883 | 3 458 | 0 | 0 | 0 | 3206 | 252 | 92.7% |
 | hv_ws_327158 | 5 628 | 0 | 0 | 0 | 5346 | 282 | 95.0% |
-| hv_ws_352742 | 3 836 | 0 | 0 | 0 | 3673 | 163 | 95.8% |
+| hv_ws_352742 | 3 836 | 0 | 0 | 0 | 3674 | 162 | 95.8% |
 | hv_ws_35636 | 3 512 | 0 | 0 | 0 | 3374 | 138 | 96.1% |
 | hv_ws_386633 | 122 | 0 | 0 | 0 | 107 | 15 | 87.7% |
-| hv_ws_39091 | 543 | 0 | 0 | 0 | 501 | 42 | 92.3% |
+| hv_ws_39091 | 543 | 0 | 0 | 0 | 502 | 41 | 92.4% |
 | hv_ws_415604 | 173 | 0 | 0 | 0 | 168 | 5 | 97.1% |
 | hv_ws_424371 | 10 257 | 0 | 0 | 0 | 8983 | 1274 | 87.6% |
 | hv_ws_479236 | 175 | 0 | 0 | 0 | 172 | 3 | 98.3% |
 | hv_ws_497926 | 3 358 | 0 | 0 | 0 | 3185 | 173 | 94.8% |
 | hv_ws_498447 | 3 631 | 0 | 0 | 0 | 3448 | 183 | 95.0% |
-| hv_ws_509223 | 4 593 | 0 | 0 | 0 | 4215 | 378 | 91.8% |
+| hv_ws_509223 | 4 593 | 0 | 0 | 0 | 4216 | 377 | 91.8% |
 | hv_ws_510203 | 203 | 0 | 0 | 0 | 170 | 33 | 83.7% |
 | hv_ws_514655 | 2 084 | 0 | 0 | 0 | 2017 | 67 | 96.8% |
 | hv_ws_54279 | 4 389 | 0 | 0 | 0 | 4209 | 180 | 95.9% |
 | hv_ws_551758 | 4 642 | 0 | 0 | 0 | 4449 | 193 | 95.8% |
-| hv_ws_556756 | 11 906 | 0 | 0 | 0 | 11580 | 326 | 97.3% |
+| hv_ws_556756 | 11 906 | 0 | 0 | 0 | 11582 | 324 | 97.3% |
 | hv_ws_558786 | 145 | 0 | 0 | 0 | 140 | 5 | 96.6% |
-| hv_ws_559673 | 17 630 | 0 | 0 | 0 | 16002 | 1628 | 90.8% |
+| hv_ws_559673 | 17 630 | 0 | 0 | 0 | 16003 | 1627 | 90.8% |
 | hv_ws_567657 | 212 | 0 | 0 | 0 | 197 | 15 | 92.9% |
 | hv_ws_568714 | 3 425 | 0 | 0 | 0 | 3125 | 300 | 91.2% |
 | hv_ws_571387 | 2 687 | 0 | 0 | 0 | 2562 | 125 | 95.3% |
-| hv_ws_573361 | 7 273 | 0 | 0 | 0 | 6941 | 332 | 95.4% |
+| hv_ws_573361 | 7 273 | 0 | 0 | 0 | 6942 | 331 | 95.4% |
 | hv_ws_579567 | 4 166 | 0 | 0 | 0 | 3770 | 396 | 90.5% |
 | hv_ws_599251 | 4 773 | 0 | 0 | 0 | 4513 | 260 | 94.6% |
 | hv_ws_9049 | 134 | 0 | 0 | 0 | 122 | 12 | 91.0% |
-| hv_ia_2spivanyky | 17 009 | 0 | 0 | 0 | 11608 | 5401 | 68.2% |
+| hv_ia_2spivanyky | 17 009 | 0 | 0 | 0 | 11623 | 5386 | 68.3% |
 | hv_ia_beztalannadraman00tobi | 13 532 | 0 | 0 | 0 | 12579 | 953 | 93.0% |
-| hv_ia_boryslavsmiietsi00franuoft | 78 843 | 0 | 0 | 0 | 75203 | 3640 | 95.4% |
+| hv_ia_boryslavsmiietsi00franuoft | 78 843 | 0 | 0 | 0 | 75204 | 3639 | 95.4% |
 | hv_ia_boviinaviinoiuzb00sofr | 14 030 | 0 | 0 | 0 | 12855 | 1175 | 91.6% |
 | hv_ia_bulotamokhomporo00kalyuoft | 10 039 | 0 | 0 | 0 | 8947 | 1092 | 89.1% |
 | hv_ia_buntarsynrevoliu00irchuoft | 12 925 | 0 | 0 | 0 | 11755 | 1170 | 90.9% |
-| hv_ia_canadianlife_19220616 | 4 631 | 0 | 0 | 0 | 1929 | 2702 | 41.7% |
-| hv_ia_canadianlife_19221020 | 4 049 | 0 | 0 | 0 | 1709 | 2340 | 42.2% |
+| hv_ia_canadianlife_19220616 | 4 631 | 0 | 0 | 0 | 1930 | 2701 | 41.7% |
+| hv_ia_canadianlife_19221020 | 4 049 | 0 | 0 | 0 | 1710 | 2339 | 42.2% |
 | hv_ia_chekhov_medvid | 4 006 | 0 | 0 | 0 | 3716 | 290 | 92.8% |
-| hv_ia_chernihivkabuval00kost | 55 627 | 0 | 0 | 0 | 52705 | 2922 | 94.7% |
-| hv_ia_chervonazoriauto00bogduoft | 44 243 | 0 | 0 | 0 | 39581 | 4662 | 89.5% |
-| hv_ia_chornaradakhroni00kuliuoft | 53 000 | 0 | 0 | 0 | 45943 | 7057 | 86.7% |
+| hv_ia_chernihivkabuval00kost | 55 627 | 0 | 0 | 0 | 52711 | 2916 | 94.8% |
+| hv_ia_chervonazoriauto00bogduoft | 44 243 | 0 | 0 | 0 | 39582 | 4661 | 89.5% |
+| hv_ia_chornaradakhroni00kuliuoft | 53 000 | 0 | 0 | 0 | 45946 | 7054 | 86.7% |
 | hv_ia_chymhoholbuvnash00iare | 3 311 | 0 | 0 | 0 | 2669 | 642 | 80.6% |
 | hv_ia_darunkyrusalokst00topluoft | 4 093 | 0 | 0 | 0 | 3250 | 843 | 79.4% |
 | hv_ia_deliegatsiiadora00kovb | 5 171 | 0 | 0 | 0 | 4742 | 429 | 91.7% |
 | hv_ia_drakonyzhartnaod00biliuoft | 2 992 | 0 | 0 | 0 | 2333 | 659 | 78.0% |
 | hv_ia_druhachytankadli00krusuoft | 21 884 | 0 | 0 | 0 | 19680 | 2204 | 89.9% |
-| hv_ia_dumapralisu00turiuoft | 43 170 | 0 | 0 | 0 | 39541 | 3629 | 91.6% |
-| hv_ia_dvadtsiatisoroko01dorouoft | 43 550 | 0 | 0 | 0 | 32127 | 11423 | 73.8% |
-| hv_ia_dvadtsiatisoroko02dorouoft | 70 824 | 0 | 0 | 0 | 58681 | 12143 | 82.9% |
-| hv_ia_ekonomichnaheohr00fesh | 44 315 | 0 | 0 | 0 | 41483 | 2832 | 93.6% |
+| hv_ia_dumapralisu00turiuoft | 43 170 | 0 | 0 | 0 | 39542 | 3628 | 91.6% |
+| hv_ia_dvadtsiatisoroko01dorouoft | 43 550 | 0 | 0 | 0 | 32129 | 11421 | 73.8% |
+| hv_ia_dvadtsiatisoroko02dorouoft | 70 824 | 0 | 0 | 0 | 58682 | 12142 | 82.9% |
+| hv_ia_ekonomichnaheohr00fesh | 44 315 | 0 | 0 | 0 | 41490 | 2825 | 93.6% |
 | hv_ia_ekonomichnepoloz00egan | 12 589 | 0 | 0 | 0 | 7125 | 5464 | 56.6% |
 | hv_ia_ekonomichnepoloz00egan_0 | 13 159 | 0 | 0 | 0 | 7466 | 5693 | 56.7% |
 | hv_ia_etykaisotsiializ00levy | 15 292 | 0 | 0 | 0 | 13570 | 1722 | 88.7% |
 | hv_ia_geteshevchenko00terpuoft | 6 320 | 0 | 0 | 0 | 6083 | 237 | 96.3% |
 | hv_ia_golodnaukraini201402petr | 59 483 | 0 | 0 | 0 | 52428 | 7055 | 88.1% |
-| hv_ia_halychynavrr191800lozyuoft | 94 740 | 0 | 0 | 0 | 77734 | 17006 | 82.0% |
+| hv_ia_halychynavrr191800lozyuoft | 94 740 | 0 | 0 | 0 | 77741 | 16999 | 82.1% |
 | hv_ia_henedyvutesvoien00lvivuoft | 1 644 | 0 | 0 | 0 | 1523 | 121 | 92.6% |
-| hv_ia_hetmanpetrosaha00mord | 28 634 | 0 | 0 | 0 | 26942 | 1692 | 94.1% |
-| hv_ia_hetmanpetrosahad00morduoft | 28 605 | 0 | 0 | 0 | 26980 | 1625 | 94.3% |
-| hv_ia_hnivnoveli00babiuoft | 41 024 | 0 | 0 | 0 | 38615 | 2409 | 94.1% |
+| hv_ia_hetmanpetrosaha00mord | 28 634 | 0 | 0 | 0 | 26947 | 1687 | 94.1% |
+| hv_ia_hetmanpetrosahad00morduoft | 28 605 | 0 | 0 | 0 | 26984 | 1621 | 94.3% |
+| hv_ia_hnivnoveli00babiuoft | 41 024 | 0 | 0 | 0 | 38616 | 2408 | 94.1% |
 | hv_ia_hramatykabukvari00krusuoft | 7 272 | 0 | 0 | 0 | 6465 | 807 | 88.9% |
 | hv_ia_hrikhdramatychna00dudkuoft | 2 389 | 0 | 0 | 0 | 2188 | 201 | 91.6% |
 | hv_ia_iakpovstalarelig00cuno | 47 428 | 0 | 0 | 0 | 42520 | 4908 | 89.7% |
-| hv_ia_iasnizoridramavp00hrin | 14 015 | 0 | 0 | 0 | 13277 | 738 | 94.7% |
+| hv_ia_iasnizoridramavp00hrin | 14 015 | 0 | 0 | 0 | 13278 | 737 | 94.7% |
 | hv_ia_iiizahalnizboryu00ukra | 9 974 | 0 | 0 | 0 | 8364 | 1610 | 83.9% |
-| hv_ia_istoriiakulturyv00lipp | 175 319 | 0 | 0 | 0 | 163192 | 12127 | 93.1% |
-| hv_ia_itskosvatkomedii008800 | 5 770 | 0 | 0 | 0 | 3358 | 2412 | 58.2% |
-| hv_ia_itskosvatkomedii008800_1 | 5 627 | 0 | 0 | 0 | 3579 | 2048 | 63.6% |
-| hv_ia_ivanfedorovychsh00gogo | 8 141 | 0 | 0 | 0 | 7759 | 382 | 95.3% |
+| hv_ia_istoriiakulturyv00lipp | 175 319 | 0 | 0 | 0 | 163196 | 12123 | 93.1% |
+| hv_ia_itskosvatkomedii008800 | 5 770 | 0 | 0 | 0 | 3360 | 2410 | 58.2% |
+| hv_ia_itskosvatkomedii008800_1 | 5 627 | 0 | 0 | 0 | 3581 | 2046 | 63.6% |
+| hv_ia_ivanfedorovychsh00gogo | 8 141 | 0 | 0 | 0 | 7760 | 381 | 95.3% |
 | hv_ws_110275 | 2 706 | 0 | 0 | 0 | 2558 | 148 | 94.5% |
 | hv_ws_123042 | 67 | 0 | 0 | 0 | 59 | 8 | 88.1% |
 | hv_ws_129645 | 384 | 0 | 0 | 0 | 360 | 24 | 93.8% |
@@ -9827,15 +10443,15 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_178376 | 135 | 0 | 0 | 0 | 130 | 5 | 96.3% |
 | hv_ws_182691 | 660 | 0 | 0 | 0 | 570 | 90 | 86.4% |
 | hv_ws_187340 | 190 | 0 | 0 | 0 | 177 | 13 | 93.2% |
-| hv_ws_195100 | 9 388 | 0 | 0 | 0 | 8688 | 700 | 92.5% |
+| hv_ws_195100 | 9 388 | 0 | 0 | 0 | 8689 | 699 | 92.6% |
 | hv_ws_195361 | 123 | 0 | 0 | 0 | 121 | 2 | 98.4% |
 | hv_ws_206542 | 90 | 0 | 0 | 0 | 82 | 8 | 91.1% |
-| hv_ws_211669 | 16 906 | 0 | 0 | 0 | 15808 | 1098 | 93.5% |
+| hv_ws_211669 | 16 906 | 0 | 0 | 0 | 15809 | 1097 | 93.5% |
 | hv_ws_211856 | 155 | 0 | 0 | 0 | 150 | 5 | 96.8% |
 | hv_ws_230338 | 976 | 0 | 0 | 0 | 914 | 62 | 93.6% |
 | hv_ws_24697 | 129 | 0 | 0 | 0 | 116 | 13 | 89.9% |
 | hv_ws_270812 | 177 | 0 | 0 | 0 | 166 | 11 | 93.8% |
-| hv_ws_285723 | 3 542 | 0 | 0 | 0 | 3130 | 412 | 88.4% |
+| hv_ws_285723 | 3 542 | 0 | 0 | 0 | 3131 | 411 | 88.4% |
 | hv_ws_347379 | 211 | 0 | 0 | 0 | 190 | 21 | 90.0% |
 | hv_ws_349560 | 22 078 | 0 | 0 | 0 | 21133 | 945 | 95.7% |
 | hv_ws_352902 | 7 148 | 0 | 0 | 0 | 6493 | 655 | 90.8% |
@@ -9851,50 +10467,50 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_514876 | 102 | 0 | 0 | 0 | 87 | 15 | 85.3% |
 | hv_ws_520976 | 4 343 | 0 | 0 | 0 | 4230 | 113 | 97.4% |
 | hv_ws_5309 | 329 | 0 | 0 | 0 | 314 | 15 | 95.4% |
-| hv_ws_533959 | 16 003 | 0 | 0 | 0 | 15378 | 625 | 96.1% |
+| hv_ws_533959 | 16 003 | 0 | 0 | 0 | 15379 | 624 | 96.1% |
 | hv_ws_546086 | 1 800 | 0 | 0 | 0 | 1705 | 95 | 94.7% |
 | hv_ws_547190 | 117 | 0 | 0 | 0 | 112 | 5 | 95.7% |
 | hv_ws_557142 | 9 904 | 0 | 0 | 0 | 9499 | 405 | 95.9% |
 | hv_ws_572894 | 35 461 | 0 | 0 | 0 | 34228 | 1233 | 96.5% |
 | hv_ws_7517 | 147 | 0 | 0 | 0 | 142 | 5 | 96.6% |
-| hv_hrushevsky_t1 | 132 958 | 0 | 0 | 0 | 127249 | 5709 | 95.7% |
-| hv_hrushevsky_t2 | 88 606 | 0 | 0 | 0 | 81114 | 7492 | 91.5% |
-| hv_hrushevsky_t3 | 103 925 | 0 | 0 | 0 | 96919 | 7006 | 93.3% |
-| hv_ia_31761082956129 | 24 866 | 0 | 0 | 0 | 23418 | 1448 | 94.2% |
+| hv_hrushevsky_t1 | 132 958 | 0 | 0 | 0 | 127253 | 5705 | 95.7% |
+| hv_hrushevsky_t2 | 88 606 | 0 | 0 | 0 | 81119 | 7487 | 91.6% |
+| hv_hrushevsky_t3 | 103 925 | 0 | 0 | 0 | 96927 | 6998 | 93.3% |
+| hv_ia_31761082956129 | 24 866 | 0 | 0 | 0 | 23420 | 1446 | 94.2% |
 | hv_ia_canadianlife_19230228 | 3 711 | 0 | 0 | 0 | 1502 | 2209 | 40.5% |
-| hv_ia_canadianlife_19230331 | 3 488 | 0 | 0 | 0 | 1325 | 2163 | 38.0% |
+| hv_ia_canadianlife_19230331 | 3 488 | 0 | 0 | 0 | 1326 | 2162 | 38.0% |
 | hv_ia_canadianlife_19230428 | 4 033 | 0 | 0 | 0 | 1557 | 2476 | 38.6% |
-| hv_ia_canadianlife_19230531 | 4 348 | 0 | 0 | 0 | 1744 | 2604 | 40.1% |
-| hv_ia_canadianlife_19230825 | 6 380 | 0 | 0 | 0 | 2827 | 3553 | 44.3% |
-| hv_ia_canadianlife_19231226 | 6 202 | 0 | 0 | 0 | 2894 | 3308 | 46.7% |
+| hv_ia_canadianlife_19230531 | 4 348 | 0 | 0 | 0 | 1745 | 2603 | 40.1% |
+| hv_ia_canadianlife_19230825 | 6 380 | 0 | 0 | 0 | 2828 | 3552 | 44.3% |
+| hv_ia_canadianlife_19231226 | 6 202 | 0 | 0 | 0 | 2897 | 3305 | 46.7% |
 | hv_ia_cat10737692 | 12 580 | 0 | 0 | 0 | 5437 | 7143 | 43.2% |
-| hv_ia_chervonyishliak1923unse_0 | 211 153 | 0 | 0 | 0 | 191658 | 19495 | 90.8% |
-| hv_ia_chervonyishliak1923unse_1 | 97 206 | 0 | 0 | 0 | 88508 | 8698 | 91.1% |
-| hv_ia_chervonyishliak1923unse_2 | 213 646 | 0 | 0 | 0 | 194608 | 19038 | 91.1% |
-| hv_ia_chervonyishliakh1923unse | 216 398 | 0 | 0 | 0 | 200709 | 15689 | 92.7% |
-| hv_ia_chervonyishliakh1924unse | 792 883 | 0 | 0 | 0 | 711535 | 81348 | 89.7% |
-| hv_ia_chervonyishliakh1926unse | 233 759 | 0 | 0 | 0 | 216243 | 17516 | 92.5% |
+| hv_ia_chervonyishliak1923unse_0 | 211 153 | 0 | 0 | 0 | 191666 | 19487 | 90.8% |
+| hv_ia_chervonyishliak1923unse_1 | 97 206 | 0 | 0 | 0 | 88514 | 8692 | 91.1% |
+| hv_ia_chervonyishliak1923unse_2 | 213 646 | 0 | 0 | 0 | 194611 | 19035 | 91.1% |
+| hv_ia_chervonyishliakh1923unse | 216 398 | 0 | 0 | 0 | 200718 | 15680 | 92.8% |
+| hv_ia_chervonyishliakh1924unse | 792 883 | 0 | 0 | 0 | 711583 | 81300 | 89.7% |
+| hv_ia_chervonyishliakh1926unse | 233 759 | 0 | 0 | 0 | 216248 | 17511 | 92.5% |
 | hv_ia_dilynebesnihrote00vyshuoft | 2 611 | 0 | 0 | 0 | 2290 | 321 | 87.7% |
 | hv_ia_doosnovukranskoh0000rudn | 28 324 | 0 | 0 | 0 | 25349 | 2975 | 89.5% |
 | hv_ia_dvanatsiatdramav00irch | 17 002 | 0 | 0 | 0 | 15571 | 1431 | 91.6% |
 | hv_ia_file1923 | 5 101 | 0 | 0 | 0 | 4106 | 995 | 80.5% |
-| hv_ia_filmyrevoliutsii00irch | 83 402 | 0 | 0 | 0 | 77875 | 5527 | 93.4% |
-| hv_ia_holosrobitnytsiv00unse | 458 813 | 0 | 0 | 0 | 409522 | 49291 | 89.3% |
-| hv_ia_iedynadiialnatru0000ruso | 11 157 | 0 | 0 | 0 | 10052 | 1105 | 90.1% |
-| hv_ia_iliustrovanykali00unse_1 | 50 237 | 0 | 0 | 0 | 42657 | 7580 | 84.9% |
+| hv_ia_filmyrevoliutsii00irch | 83 402 | 0 | 0 | 0 | 77880 | 5522 | 93.4% |
+| hv_ia_holosrobitnytsiv00unse | 458 813 | 0 | 0 | 0 | 409540 | 49273 | 89.3% |
+| hv_ia_iedynadiialnatru0000ruso | 11 157 | 0 | 0 | 0 | 10053 | 1104 | 90.1% |
+| hv_ia_iliustrovanykali00unse_1 | 50 237 | 0 | 0 | 0 | 42658 | 7579 | 84.9% |
 | hv_ia_iliustrovanykali1927unse | 88 989 | 0 | 0 | 0 | 73924 | 15065 | 83.1% |
-| hv_ia_istoriiaukransko0000terl | 131 880 | 0 | 0 | 0 | 122551 | 9329 | 92.9% |
-| hv_ia_izkhrystompovosk00krat | 1 892 | 0 | 0 | 0 | 1708 | 184 | 90.3% |
+| hv_ia_istoriiaukransko0000terl | 131 880 | 0 | 0 | 0 | 122553 | 9327 | 92.9% |
+| hv_ia_izkhrystompovosk00krat | 1 892 | 0 | 0 | 0 | 1709 | 183 | 90.3% |
 | hv_ws_14251 | 1 142 | 0 | 0 | 0 | 1123 | 19 | 98.3% |
 | hv_ws_185581 | 211 | 0 | 0 | 0 | 193 | 18 | 91.5% |
-| hv_ws_188870 | 4 786 | 0 | 0 | 0 | 4486 | 300 | 93.7% |
+| hv_ws_188870 | 4 786 | 0 | 0 | 0 | 4487 | 299 | 93.8% |
 | hv_ws_189330 | 29 138 | 0 | 0 | 0 | 28051 | 1087 | 96.3% |
 | hv_ws_189590 | 3 219 | 0 | 0 | 0 | 3039 | 180 | 94.4% |
 | hv_ws_193196 | 3 793 | 0 | 0 | 0 | 3681 | 112 | 97.0% |
 | hv_ws_195659 | 144 | 0 | 0 | 0 | 132 | 12 | 91.7% |
 | hv_ws_211337 | 10 882 | 0 | 0 | 0 | 10268 | 614 | 94.4% |
 | hv_ws_212495 | 641 | 0 | 0 | 0 | 579 | 62 | 90.3% |
-| hv_ws_240461 | 11 635 | 0 | 0 | 0 | 11231 | 404 | 96.5% |
+| hv_ws_240461 | 11 635 | 0 | 0 | 0 | 11232 | 403 | 96.5% |
 | hv_ws_241749 | 110 | 0 | 0 | 0 | 102 | 8 | 92.7% |
 | hv_ws_245864 | 294 | 0 | 0 | 0 | 288 | 6 | 98.0% |
 | hv_ws_27872 | 2 261 | 0 | 0 | 0 | 2121 | 140 | 93.8% |
@@ -9918,32 +10534,32 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_544186 | 6 712 | 0 | 0 | 0 | 6283 | 429 | 93.6% |
 | hv_ws_547152 | 345 | 0 | 0 | 0 | 294 | 51 | 85.2% |
 | hv_ws_559633 | 98 | 0 | 0 | 0 | 91 | 7 | 92.9% |
-| hv_ws_579568 | 1 869 | 0 | 0 | 0 | 1767 | 102 | 94.5% |
+| hv_ws_579568 | 1 869 | 0 | 0 | 0 | 1768 | 101 | 94.6% |
 | hv_ws_598474 | 360 | 0 | 0 | 0 | 312 | 48 | 86.7% |
 | hv_ws_64920 | 3 440 | 0 | 0 | 0 | 3298 | 142 | 95.9% |
 | hv_ws_65475 | 160 | 0 | 0 | 0 | 156 | 4 | 97.5% |
 | yavornytsky1923 | 5 329 | 0 | 0 | 0 | 5119 | 210 | 96.1% |
-| hv_ia_1924knyha_1_2 | 98 225 | 0 | 0 | 0 | 83337 | 14888 | 84.8% |
+| hv_ia_1924knyha_1_2 | 98 225 | 0 | 0 | 0 | 83348 | 14877 | 84.9% |
 | hv_ia_31761117098871 | 16 207 | 0 | 0 | 0 | 15521 | 686 | 95.8% |
-| hv_ia_ao509_1924_oktjabrskij_sbornik | 45 232 | 0 | 0 | 0 | 18594 | 26638 | 41.1% |
+| hv_ia_ao509_1924_oktjabrskij_sbornik | 45 232 | 0 | 0 | 0 | 18608 | 26624 | 41.1% |
 | hv_ia_arkhyv12 | 81 634 | 0 | 0 | 0 | 26139 | 55495 | 32.0% |
-| hv_ia_artystykomediiav00nyko | 21 638 | 0 | 0 | 0 | 19603 | 2035 | 90.6% |
-| hv_ia_azbukakarpatorus0000volo | 11 452 | 0 | 0 | 0 | 7311 | 4141 | 63.8% |
+| hv_ia_artystykomediiav00nyko | 21 638 | 0 | 0 | 0 | 19604 | 2034 | 90.6% |
+| hv_ia_azbukakarpatorus0000volo | 11 452 | 0 | 0 | 0 | 7314 | 4138 | 63.9% |
 | hv_ia_benhurpovistzcha00wall | 151 803 | 0 | 0 | 0 | 139185 | 12618 | 91.7% |
-| hv_ia_canadianlife_19240331 | 6 603 | 0 | 0 | 0 | 3155 | 3448 | 47.8% |
-| hv_ia_canadianlife_19240424 | 8 220 | 0 | 0 | 0 | 4276 | 3944 | 52.0% |
-| hv_ia_canadianlife_19240508 | 9 834 | 0 | 0 | 0 | 6166 | 3668 | 62.7% |
-| hv_ia_canadianlife_19240523 | 7 746 | 0 | 0 | 0 | 5001 | 2745 | 64.6% |
-| hv_ia_canadianlife_19240614 | 11 799 | 0 | 0 | 0 | 7128 | 4671 | 60.4% |
-| hv_ia_canadianlife_19240630 | 8 607 | 0 | 0 | 0 | 5023 | 3584 | 58.4% |
-| hv_ia_canadianlife_19240712 | 8 240 | 0 | 0 | 0 | 5435 | 2805 | 66.0% |
-| hv_ia_canadianlife_19240830 | 8 304 | 0 | 0 | 0 | 3652 | 4652 | 44.0% |
+| hv_ia_canadianlife_19240331 | 6 603 | 0 | 0 | 0 | 3156 | 3447 | 47.8% |
+| hv_ia_canadianlife_19240424 | 8 220 | 0 | 0 | 0 | 4278 | 3942 | 52.0% |
+| hv_ia_canadianlife_19240508 | 9 834 | 0 | 0 | 0 | 6167 | 3667 | 62.7% |
+| hv_ia_canadianlife_19240523 | 7 746 | 0 | 0 | 0 | 5002 | 2744 | 64.6% |
+| hv_ia_canadianlife_19240614 | 11 799 | 0 | 0 | 0 | 7131 | 4668 | 60.4% |
+| hv_ia_canadianlife_19240630 | 8 607 | 0 | 0 | 0 | 5028 | 3579 | 58.4% |
+| hv_ia_canadianlife_19240712 | 8 240 | 0 | 0 | 0 | 5437 | 2803 | 66.0% |
+| hv_ia_canadianlife_19240830 | 8 304 | 0 | 0 | 0 | 3653 | 4651 | 44.0% |
 | hv_ia_cat10978537 | 14 929 | 0 | 0 | 0 | 5581 | 9348 | 37.4% |
 | hv_ia_childrensworld_19240800 | 7 991 | 0 | 0 | 0 | 7016 | 975 | 87.8% |
 | hv_ia_doistorirevoliut00naza | 7 507 | 0 | 0 | 0 | 6638 | 869 | 88.4% |
 | hv_ia_grafmontekristo00duma | 88 604 | 0 | 0 | 0 | 77876 | 10728 | 87.9% |
-| hv_ia_grafmontekristo00duma_1 | 102 801 | 0 | 0 | 0 | 89700 | 13101 | 87.3% |
-| hv_ia_grafmontekristo00duma_2 | 96 918 | 0 | 0 | 0 | 85841 | 11077 | 88.6% |
+| hv_ia_grafmontekristo00duma_1 | 102 801 | 0 | 0 | 0 | 89701 | 13100 | 87.3% |
+| hv_ia_grafmontekristo00duma_2 | 96 918 | 0 | 0 | 0 | 85842 | 11076 | 88.6% |
 | hv_ia_iakirlandiiazdob00hryh | 11 821 | 0 | 0 | 0 | 10917 | 904 | 92.4% |
 | hv_ws_179618 | 118 | 0 | 0 | 0 | 108 | 10 | 91.5% |
 | hv_ws_190350 | 5 574 | 0 | 0 | 0 | 5192 | 382 | 93.1% |
@@ -9962,23 +10578,23 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_242011 | 11 755 | 0 | 0 | 0 | 11296 | 459 | 96.1% |
 | hv_ws_310866 | 1 717 | 0 | 0 | 0 | 1648 | 69 | 96.0% |
 | hv_ws_32095 | 499 | 0 | 0 | 0 | 476 | 23 | 95.4% |
-| hv_ws_321984 | 36 584 | 0 | 0 | 0 | 35205 | 1379 | 96.2% |
+| hv_ws_321984 | 36 584 | 0 | 0 | 0 | 35206 | 1378 | 96.2% |
 | hv_ws_352170 | 3 359 | 0 | 0 | 0 | 3112 | 247 | 92.6% |
 | hv_ws_35393 | 102 | 0 | 0 | 0 | 88 | 14 | 86.3% |
 | hv_ws_357904 | 47 | 0 | 0 | 0 | 47 | 0 | 100.0% |
-| hv_ws_440419 | 12 089 | 0 | 0 | 0 | 11233 | 856 | 92.9% |
-| hv_ws_451465 | 51 997 | 0 | 0 | 0 | 47817 | 4180 | 92.0% |
+| hv_ws_440419 | 12 089 | 0 | 0 | 0 | 11234 | 855 | 92.9% |
+| hv_ws_451465 | 51 997 | 0 | 0 | 0 | 47818 | 4179 | 92.0% |
 | hv_ws_478259 | 1 486 | 0 | 0 | 0 | 1443 | 43 | 97.1% |
 | hv_ws_478542 | 141 | 0 | 0 | 0 | 135 | 6 | 95.7% |
 | hv_ws_532743 | 385 | 0 | 0 | 0 | 342 | 43 | 88.8% |
 | hv_ws_537550 | 13 524 | 0 | 0 | 0 | 13068 | 456 | 96.6% |
 | hv_ws_544196 | 132 | 0 | 0 | 0 | 121 | 11 | 91.7% |
 | hv_ws_545696 | 333 | 0 | 0 | 0 | 323 | 10 | 97.0% |
-| hv_ws_553017 | 18 008 | 0 | 0 | 0 | 17583 | 425 | 97.6% |
+| hv_ws_553017 | 18 008 | 0 | 0 | 0 | 17584 | 424 | 97.6% |
 | hv_ws_556901 | 3 381 | 0 | 0 | 0 | 3074 | 307 | 90.9% |
 | hv_ws_558922 | 792 | 0 | 0 | 0 | 726 | 66 | 91.7% |
 | hv_ws_569632 | 616 | 0 | 0 | 0 | 529 | 87 | 85.9% |
-| hv_hrushevsky_t4 | 263 650 | 0 | 0 | 0 | 248467 | 15183 | 94.2% |
+| hv_hrushevsky_t4 | 263 650 | 0 | 0 | 0 | 248479 | 15171 | 94.2% |
 | hv_ia_anhelskyilystopo00poli | 4 229 | 0 | 0 | 0 | 3880 | 349 | 91.7% |
 | hv_ia_bukvar1925 | 6 592 | 0 | 0 | 0 | 5147 | 1445 | 78.1% |
 | hv_ws_135128 | 5 717 | 0 | 0 | 0 | 5541 | 176 | 96.9% |
@@ -10004,7 +10620,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_356358 | 4 806 | 0 | 0 | 0 | 4641 | 165 | 96.6% |
 | hv_ws_36126 | 417 | 0 | 0 | 0 | 394 | 23 | 94.5% |
 | hv_ws_36731 | 28 154 | 0 | 0 | 0 | 26660 | 1494 | 94.7% |
-| hv_ws_435209 | 400 | 0 | 0 | 0 | 357 | 43 | 89.3% |
+| hv_ws_435209 | 400 | 0 | 0 | 0 | 360 | 40 | 90.0% |
 | hv_ws_471319 | 360 | 0 | 0 | 0 | 270 | 90 | 75.0% |
 | hv_ws_475382 | 2 723 | 0 | 0 | 0 | 2599 | 124 | 95.4% |
 | hv_ws_564223 | 259 | 0 | 0 | 0 | 245 | 14 | 94.6% |
@@ -10017,11 +10633,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_67212 | 160 | 0 | 0 | 0 | 157 | 3 | 98.1% |
 | hv_ws_9626 | 4 763 | 0 | 0 | 0 | 4667 | 96 | 98.0% |
 | mtt1925 | 763 | 0 | 0 | 0 | 544 | 219 | 71.3% |
-| hv_hrushevsky_t5 | 197 546 | 0 | 0 | 0 | 175937 | 21609 | 89.1% |
+| hv_hrushevsky_t5 | 197 546 | 0 | 0 | 0 | 175952 | 21594 | 89.1% |
 | hv_ws_103757 | 3 395 | 0 | 0 | 0 | 3199 | 196 | 94.2% |
 | hv_ws_131178 | 7 564 | 0 | 0 | 0 | 7200 | 364 | 95.2% |
 | hv_ws_1746 | 407 | 0 | 0 | 0 | 389 | 18 | 95.6% |
-| hv_ws_179346 | 664 | 0 | 0 | 0 | 652 | 12 | 98.2% |
+| hv_ws_179346 | 664 | 0 | 0 | 0 | 653 | 11 | 98.3% |
 | hv_ws_198995 | 1 009 | 0 | 0 | 0 | 890 | 119 | 88.2% |
 | hv_ws_201180 | 8 045 | 0 | 0 | 0 | 7882 | 163 | 98.0% |
 | hv_ws_216708 | 497 | 0 | 0 | 0 | 440 | 57 | 88.5% |
@@ -10043,9 +10659,9 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_575694 | 3 035 | 0 | 0 | 0 | 2864 | 171 | 94.4% |
 | hv_ws_59699 | 255 | 0 | 0 | 0 | 239 | 16 | 93.7% |
 | hv_ws_599052 | 2 204 | 0 | 0 | 0 | 2065 | 139 | 93.7% |
-| hv_ws_8702 | 924 | 0 | 0 | 0 | 831 | 93 | 89.9% |
-| hv_hrushevsky_t6 | 207 134 | 0 | 0 | 0 | 175563 | 31571 | 84.8% |
-| hv_ia_hrushevska1 | 229 530 | 0 | 0 | 0 | 199668 | 29862 | 87.0% |
+| hv_ws_8702 | 924 | 0 | 0 | 0 | 833 | 91 | 90.2% |
+| hv_hrushevsky_t6 | 207 134 | 0 | 0 | 0 | 175592 | 31542 | 84.8% |
+| hv_ia_hrushevska1 | 229 530 | 0 | 0 | 0 | 199720 | 29810 | 87.0% |
 | hv_ws_176491 | 3 444 | 0 | 0 | 0 | 3241 | 203 | 94.1% |
 | hv_ws_176884 | 2 883 | 0 | 0 | 0 | 2559 | 324 | 88.8% |
 | hv_ws_194253 | 3 654 | 0 | 0 | 0 | 3285 | 369 | 89.9% |
@@ -10056,7 +10672,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_23514 | 311 | 0 | 0 | 0 | 267 | 44 | 85.9% |
 | hv_ws_242033 | 7 235 | 0 | 0 | 0 | 7086 | 149 | 97.9% |
 | hv_ws_27438 | 275 | 0 | 0 | 0 | 262 | 13 | 95.3% |
-| hv_ws_282308 | 4 499 | 0 | 0 | 0 | 4263 | 236 | 94.8% |
+| hv_ws_282308 | 4 499 | 0 | 0 | 0 | 4264 | 235 | 94.8% |
 | hv_ws_28279 | 27 085 | 0 | 0 | 0 | 26512 | 573 | 97.9% |
 | hv_ws_292014 | 57 | 0 | 0 | 0 | 52 | 5 | 91.2% |
 | hv_ws_319438 | 140 | 0 | 0 | 0 | 133 | 7 | 95.0% |
@@ -10065,7 +10681,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_322188 | 143 | 0 | 0 | 0 | 132 | 11 | 92.3% |
 | hv_ws_322410 | 331 | 0 | 0 | 0 | 313 | 18 | 94.6% |
 | hv_ws_322652 | 199 | 0 | 0 | 0 | 193 | 6 | 97.0% |
-| hv_ws_324231 | 9 076 | 0 | 0 | 0 | 8931 | 145 | 98.4% |
+| hv_ws_324231 | 9 076 | 0 | 0 | 0 | 8932 | 144 | 98.4% |
 | hv_ws_324232 | 159 | 0 | 0 | 0 | 152 | 7 | 95.6% |
 | hv_ws_324427 | 1 243 | 0 | 0 | 0 | 1179 | 64 | 94.9% |
 | hv_ws_327940 | 73 | 0 | 0 | 0 | 62 | 11 | 84.9% |
@@ -10078,7 +10694,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_446008 | 514 | 0 | 0 | 0 | 489 | 25 | 95.1% |
 | hv_ws_451932 | 5 251 | 0 | 0 | 0 | 4887 | 364 | 93.1% |
 | hv_ws_468404 | 6 320 | 0 | 0 | 0 | 6255 | 65 | 99.0% |
-| hv_ws_468995 | 5 264 | 0 | 0 | 0 | 5191 | 73 | 98.6% |
+| hv_ws_468995 | 5 264 | 0 | 0 | 0 | 5192 | 72 | 98.6% |
 | hv_ws_469383 | 454 | 0 | 0 | 0 | 416 | 38 | 91.6% |
 | hv_ws_469392 | 4 266 | 0 | 0 | 0 | 4217 | 49 | 98.9% |
 | hv_ws_469474 | 7 656 | 0 | 0 | 0 | 7297 | 359 | 95.3% |
@@ -10103,7 +10719,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_58012 | 151 | 0 | 0 | 0 | 144 | 7 | 95.4% |
 | hv_ws_592539 | 1 357 | 0 | 0 | 0 | 1274 | 83 | 93.9% |
 | r2u_nikovsky | 3 708 | 0 | 0 | 0 | 0 | 3708 | 0.0% |
-| hv_ia_yuvil_zbirn_hrushevskoho_t_1 | 117 976 | 0 | 0 | 0 | 101624 | 16352 | 86.1% |
+| hv_ia_yuvil_zbirn_hrushevskoho_t_1 | 117 976 | 0 | 0 | 0 | 101626 | 16350 | 86.1% |
 | hv_ws_127541 | 162 | 0 | 0 | 0 | 152 | 10 | 93.8% |
 | hv_ws_18007 | 2 485 | 0 | 0 | 0 | 2403 | 82 | 96.7% |
 | hv_ws_18109 | 2 272 | 0 | 0 | 0 | 2057 | 215 | 90.5% |
@@ -10112,7 +10728,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_194306 | 650 | 0 | 0 | 0 | 557 | 93 | 85.7% |
 | hv_ws_195579 | 1 598 | 0 | 0 | 0 | 1542 | 56 | 96.5% |
 | hv_ws_198438 | 141 | 0 | 0 | 0 | 140 | 1 | 99.3% |
-| hv_ws_199188 | 878 | 0 | 0 | 0 | 813 | 65 | 92.6% |
+| hv_ws_199188 | 878 | 0 | 0 | 0 | 814 | 64 | 92.7% |
 | hv_ws_237246 | 1 296 | 0 | 0 | 0 | 1179 | 117 | 91.0% |
 | hv_ws_259034 | 615 | 0 | 0 | 0 | 517 | 98 | 84.1% |
 | hv_ws_32905 | 6 756 | 0 | 0 | 0 | 6428 | 328 | 95.1% |
@@ -10134,7 +10750,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_469904 | 1 798 | 0 | 0 | 0 | 1742 | 56 | 96.9% |
 | hv_ws_475345 | 253 | 0 | 0 | 0 | 214 | 39 | 84.6% |
 | hv_ws_479182 | 135 | 0 | 0 | 0 | 123 | 12 | 91.1% |
-| hv_ws_495427 | 3 935 | 0 | 0 | 0 | 3839 | 96 | 97.6% |
+| hv_ws_495427 | 3 935 | 0 | 0 | 0 | 3840 | 95 | 97.6% |
 | hv_ws_496398 | 2 834 | 0 | 0 | 0 | 2776 | 58 | 98.0% |
 | hv_ws_504219 | 3 313 | 0 | 0 | 0 | 3181 | 132 | 96.0% |
 | hv_ws_510155 | 18 686 | 0 | 0 | 0 | 18514 | 172 | 99.1% |
@@ -10142,7 +10758,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_510738 | 3 679 | 0 | 0 | 0 | 3561 | 118 | 96.8% |
 | hv_ws_510739 | 428 | 0 | 0 | 0 | 384 | 44 | 89.7% |
 | hv_ws_511730 | 5 074 | 0 | 0 | 0 | 5010 | 64 | 98.7% |
-| hv_ws_514700 | 5 924 | 0 | 0 | 0 | 5469 | 455 | 92.3% |
+| hv_ws_514700 | 5 924 | 0 | 0 | 0 | 5470 | 454 | 92.3% |
 | hv_ws_518311 | 19 413 | 0 | 0 | 0 | 18162 | 1251 | 93.6% |
 | hv_ws_523334 | 152 | 0 | 0 | 0 | 148 | 4 | 97.4% |
 | hv_ws_538116 | 9 265 | 0 | 0 | 0 | 7947 | 1318 | 85.8% |
@@ -10166,14 +10782,14 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_196312 | 735 | 0 | 0 | 0 | 670 | 65 | 91.2% |
 | hv_ws_196590 | 9 360 | 0 | 0 | 0 | 9120 | 240 | 97.4% |
 | hv_ws_200595 | 520 | 0 | 0 | 0 | 499 | 21 | 96.0% |
-| hv_ws_23068 | 9 578 | 0 | 0 | 0 | 8701 | 877 | 90.8% |
+| hv_ws_23068 | 9 578 | 0 | 0 | 0 | 8702 | 876 | 90.9% |
 | hv_ws_251439 | 286 | 0 | 0 | 0 | 266 | 20 | 93.0% |
 | hv_ws_251543 | 164 | 0 | 0 | 0 | 151 | 13 | 92.1% |
 | hv_ws_254364 | 42 409 | 0 | 0 | 0 | 41739 | 670 | 98.4% |
 | hv_ws_262814 | 184 | 0 | 0 | 0 | 182 | 2 | 98.9% |
 | hv_ws_313914 | 177 | 0 | 0 | 0 | 160 | 17 | 90.4% |
 | hv_ws_321043 | 43 | 0 | 0 | 0 | 35 | 8 | 81.4% |
-| hv_ws_321450 | 52 006 | 0 | 0 | 0 | 51612 | 394 | 99.2% |
+| hv_ws_321450 | 52 006 | 0 | 0 | 0 | 51613 | 393 | 99.2% |
 | hv_ws_360113 | 6 238 | 0 | 0 | 0 | 6011 | 227 | 96.4% |
 | hv_ws_384631 | 83 | 0 | 0 | 0 | 76 | 7 | 91.6% |
 | hv_ws_386075 | 426 | 0 | 0 | 0 | 411 | 15 | 96.5% |
@@ -10205,13 +10821,13 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | r2u_holoskevych | 3 282 | 0 | 0 | 0 | 0 | 3282 | 0.0% |
 | hv_ws_11343 | 271 | 0 | 0 | 0 | 255 | 16 | 94.1% |
 | hv_ws_122993 | 134 | 0 | 0 | 0 | 131 | 3 | 97.8% |
-| hv_ws_127068 | 862 | 0 | 0 | 0 | 624 | 238 | 72.4% |
+| hv_ws_127068 | 862 | 0 | 0 | 0 | 625 | 237 | 72.5% |
 | hv_ws_190081 | 207 | 0 | 0 | 0 | 194 | 13 | 93.7% |
 | hv_ws_193073 | 10 360 | 0 | 0 | 0 | 9809 | 551 | 94.7% |
 | hv_ws_194847 | 296 | 0 | 0 | 0 | 290 | 6 | 98.0% |
 | hv_ws_195619 | 152 | 0 | 0 | 0 | 147 | 5 | 96.7% |
 | hv_ws_201221 | 2 233 | 0 | 0 | 0 | 2199 | 34 | 98.5% |
-| hv_ws_201856 | 1 248 | 0 | 0 | 0 | 1182 | 66 | 94.7% |
+| hv_ws_201856 | 1 248 | 0 | 0 | 0 | 1183 | 65 | 94.8% |
 | hv_ws_21346 | 195 | 0 | 0 | 0 | 188 | 7 | 96.4% |
 | hv_ws_225630 | 384 | 0 | 0 | 0 | 357 | 27 | 93.0% |
 | hv_ws_226351 | 4 197 | 0 | 0 | 0 | 4119 | 78 | 98.1% |
@@ -10255,18 +10871,18 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_198754 | 151 | 0 | 0 | 0 | 138 | 13 | 91.4% |
 | hv_ws_246595 | 314 | 0 | 0 | 0 | 302 | 12 | 96.2% |
 | hv_ws_307849 | 393 | 0 | 0 | 0 | 374 | 19 | 95.2% |
-| hv_ws_322977 | 14 709 | 0 | 0 | 0 | 13907 | 802 | 94.5% |
+| hv_ws_322977 | 14 709 | 0 | 0 | 0 | 13908 | 801 | 94.6% |
 | hv_ws_52574 | 227 | 0 | 0 | 0 | 201 | 26 | 88.5% |
 | hv_ws_591925 | 243 | 0 | 0 | 0 | 232 | 11 | 95.5% |
 | hv_ws_70015 | 542 | 0 | 0 | 0 | 510 | 32 | 94.1% |
 | hv_ws_191173 | 577 | 0 | 0 | 0 | 529 | 48 | 91.7% |
 | hv_ws_191838 | 1 816 | 0 | 0 | 0 | 1751 | 65 | 96.4% |
 | hv_ws_193430 | 175 | 0 | 0 | 0 | 169 | 6 | 96.6% |
-| hv_ws_194846 | 31 023 | 0 | 0 | 0 | 29922 | 1101 | 96.5% |
+| hv_ws_194846 | 31 023 | 0 | 0 | 0 | 29924 | 1099 | 96.5% |
 | hv_ws_195068 | 231 | 0 | 0 | 0 | 214 | 17 | 92.6% |
 | hv_ws_24902 | 451 | 0 | 0 | 0 | 435 | 16 | 96.5% |
 | r2u_krymsky | 56 473 | 0 | 0 | 0 | 0 | 56473 | 0.0% |
-| hv_ws_113362 | 14 119 | 0 | 0 | 0 | 13538 | 581 | 95.9% |
+| hv_ws_113362 | 14 119 | 0 | 0 | 0 | 13539 | 580 | 95.9% |
 | hv_ws_187564 | 672 | 0 | 0 | 0 | 580 | 92 | 86.3% |
 | hv_ws_189694 | 1 443 | 0 | 0 | 0 | 1359 | 84 | 94.2% |
 | hv_ws_192283 | 5 821 | 0 | 0 | 0 | 5459 | 362 | 93.8% |
@@ -10274,7 +10890,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_230249 | 211 | 0 | 0 | 0 | 194 | 17 | 91.9% |
 | hv_ws_262129 | 8 117 | 0 | 0 | 0 | 7957 | 160 | 98.0% |
 | hv_ws_386021 | 193 | 0 | 0 | 0 | 179 | 14 | 92.7% |
-| hv_ws_455273 | 25 682 | 0 | 0 | 0 | 25024 | 658 | 97.4% |
+| hv_ws_455273 | 25 682 | 0 | 0 | 0 | 25025 | 657 | 97.4% |
 | hv_ws_560094 | 6 612 | 0 | 0 | 0 | 6201 | 411 | 93.8% |
 | hv_ws_561080 | 7 980 | 0 | 0 | 0 | 7551 | 429 | 94.6% |
 | hv_ws_67982 | 278 | 0 | 0 | 0 | 272 | 6 | 97.8% |
@@ -10286,11 +10902,11 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_362869 | 198 | 0 | 0 | 0 | 190 | 8 | 96.0% |
 | hv_ws_388177 | 210 | 0 | 0 | 0 | 203 | 7 | 96.7% |
 | hv_ws_567649 | 241 | 0 | 0 | 0 | 228 | 13 | 94.6% |
-| hv_ws_192232 | 2 250 | 0 | 0 | 0 | 2148 | 102 | 95.5% |
-| hv_ws_192484 | 6 799 | 0 | 0 | 0 | 6313 | 486 | 92.9% |
+| hv_ws_192232 | 2 250 | 0 | 0 | 0 | 2149 | 101 | 95.5% |
+| hv_ws_192484 | 6 799 | 0 | 0 | 0 | 6316 | 483 | 92.9% |
 | hv_ws_193727 | 923 | 0 | 0 | 0 | 863 | 60 | 93.5% |
 | hv_ws_194501 | 1 803 | 0 | 0 | 0 | 1740 | 63 | 96.5% |
-| hv_ws_226382 | 29 567 | 0 | 0 | 0 | 28302 | 1265 | 95.7% |
+| hv_ws_226382 | 29 567 | 0 | 0 | 0 | 28305 | 1262 | 95.7% |
 | hv_ws_228200 | 130 | 0 | 0 | 0 | 129 | 1 | 99.2% |
 | hv_ws_25214 | 279 | 0 | 0 | 0 | 270 | 9 | 96.8% |
 | hv_ws_27341 | 259 | 0 | 0 | 0 | 237 | 22 | 91.5% |
@@ -10303,7 +10919,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_191942 | 4 730 | 0 | 0 | 0 | 4417 | 313 | 93.4% |
 | hv_ws_200906 | 322 | 0 | 0 | 0 | 307 | 15 | 95.3% |
 | hv_ws_205740 | 229 | 0 | 0 | 0 | 219 | 10 | 95.6% |
-| hv_ws_232676 | 9 179 | 0 | 0 | 0 | 8863 | 316 | 96.6% |
+| hv_ws_232676 | 9 179 | 0 | 0 | 0 | 8864 | 315 | 96.6% |
 | hv_ws_236084 | 946 | 0 | 0 | 0 | 870 | 76 | 92.0% |
 | hv_ws_287704 | 166 | 0 | 0 | 0 | 162 | 4 | 97.6% |
 | hv_ws_287815 | 5 777 | 0 | 0 | 0 | 4970 | 807 | 86.0% |
@@ -10313,7 +10929,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_378240 | 176 | 0 | 0 | 0 | 162 | 14 | 92.0% |
 | hv_ws_38357 | 227 | 0 | 0 | 0 | 216 | 11 | 95.2% |
 | hv_ws_514861 | 4 843 | 0 | 0 | 0 | 4494 | 349 | 92.8% |
-| hv_ws_184414 | 6 694 | 0 | 0 | 0 | 5670 | 1024 | 84.7% |
+| hv_ws_184414 | 6 694 | 0 | 0 | 0 | 5671 | 1023 | 84.7% |
 | hv_ws_191526 | 553 | 0 | 0 | 0 | 503 | 50 | 91.0% |
 | hv_ws_25175 | 163 | 0 | 0 | 0 | 160 | 3 | 98.2% |
 | hv_ws_25223 | 247 | 0 | 0 | 0 | 240 | 7 | 97.2% |
@@ -10360,8 +10976,8 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_262100 | 593 | 0 | 0 | 0 | 575 | 18 | 97.0% |
 | hv_ws_378652 | 301 | 0 | 0 | 0 | 290 | 11 | 96.3% |
 | hv_ws_466696 | 254 | 0 | 0 | 0 | 239 | 15 | 94.1% |
-| hv_ws_479727 | 5 629 | 0 | 0 | 0 | 4815 | 814 | 85.5% |
-| hv_ws_70192 | 4 639 | 0 | 0 | 0 | 4348 | 291 | 93.7% |
+| hv_ws_479727 | 5 629 | 0 | 0 | 0 | 4816 | 813 | 85.6% |
+| hv_ws_70192 | 4 639 | 0 | 0 | 0 | 4349 | 290 | 93.7% |
 | hv_ws_71932 | 3 507 | 0 | 0 | 0 | 3373 | 134 | 96.2% |
 | hv_ws_71983 | 624 | 0 | 0 | 0 | 608 | 16 | 97.4% |
 | hv_ws_102324 | 568 | 0 | 0 | 0 | 544 | 24 | 95.8% |
@@ -10601,7 +11217,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_128404 | 607 | 0 | 0 | 0 | 559 | 48 | 92.1% |
 | hv_ws_128405 | 484 | 0 | 0 | 0 | 465 | 19 | 96.1% |
 | hv_ws_128406 | 868 | 0 | 0 | 0 | 820 | 48 | 94.5% |
-| hv_ws_128713 | 1 134 | 0 | 0 | 0 | 1082 | 52 | 95.4% |
+| hv_ws_128713 | 1 134 | 0 | 0 | 0 | 1083 | 51 | 95.5% |
 | hv_ws_128714 | 385 | 0 | 0 | 0 | 364 | 21 | 94.5% |
 | hv_ws_128744 | 489 | 0 | 0 | 0 | 478 | 11 | 97.8% |
 | hv_ws_128776 | 395 | 0 | 0 | 0 | 365 | 30 | 92.4% |
@@ -10988,7 +11604,7 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_210464 | 366 | 0 | 0 | 0 | 358 | 8 | 97.8% |
 | hv_ws_214681 | 207 | 0 | 0 | 0 | 204 | 3 | 98.6% |
 | hv_ws_215687 | 280 | 0 | 0 | 0 | 269 | 11 | 96.1% |
-| hv_ws_24528 | 4 864 | 0 | 0 | 0 | 4764 | 100 | 97.9% |
+| hv_ws_24528 | 4 864 | 0 | 0 | 0 | 4765 | 99 | 98.0% |
 | hv_ws_33321 | 115 | 0 | 0 | 0 | 112 | 3 | 97.4% |
 | hv_ws_3616 | 92 | 0 | 0 | 0 | 85 | 7 | 92.4% |
 | hv_ws_57621 | 351 | 0 | 0 | 0 | 338 | 13 | 96.3% |
@@ -11858,20 +12474,20 @@ Routes in order, first success wins: **torot-lemma** (TOROT lemma → derive →
 | hv_ws_447779 | 33 314 | 0 | 0 | 0 | 30846 | 2468 | 92.6% |
 | hv_ws_449423 | 16 435 | 0 | 0 | 0 | 15285 | 1150 | 93.0% |
 | hv_ws_453081 | 11 858 | 0 | 0 | 0 | 9323 | 2535 | 78.6% |
-| hv_ws_454123 | 40 800 | 0 | 0 | 0 | 35548 | 5252 | 87.1% |
+| hv_ws_454123 | 40 800 | 0 | 0 | 0 | 35549 | 5251 | 87.1% |
 | hv_ws_454210 | 9 274 | 0 | 0 | 0 | 8653 | 621 | 93.3% |
 | hv_ws_454226 | 5 269 | 0 | 0 | 0 | 4878 | 391 | 92.6% |
 | hv_ws_523733 | 1 246 | 0 | 0 | 0 | 1245 | 1 | 99.9% |
 | hv_ws_584830 | 12 391 | 0 | 0 | 0 | 12354 | 37 | 99.7% |
 | hv_ws_564963 | 506 | 0 | 0 | 0 | 496 | 10 | 98.0% |
 | hv_ws_586001 | 347 | 0 | 0 | 0 | 346 | 1 | 99.7% |
-| **total** | 49 177 589 | 33302 | 146274 | 651668 | 36216467 | 12129878 | 75.3% |
+| **total** | 49 237 909 | 32946 | 145553 | 653425 | 36264781 | 12141204 | 75.3% |
 
-Linked 37 047 711 of 49 177 589 tokens (75.3%); unresolved 12 129 878 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
+Linked 37 096 705 of 49 237 909 tokens (75.3%); unresolved 12 141 204 — never guessed (M-3.3). **Coverage is not accuracy:** a link means a derived candidate coincides with a VESUM entry (homophones such as short function words can link to a wrong lemma; ambiguity is resolved by B-2.1 and the alternatives are kept in `link.value.alternatives`).
 
 **Top 40 unresolved forms** (what the rules miss; share of all unresolved tokens):
 
-| form | f | % of unresolved (12 129 878) |
+| form | f | % of unresolved (12 141 204) |
 |---|---|---|
 | р | 26700 | 0.2% |
 | н | 14329 | 0.1% |
@@ -11922,98 +12538,98 @@ Noun lemmas of the lexicon; each token linked to such a lemma is placed in a gra
 | epoch | epoch N (corpus tokens) | tag source | tagged tokens | placed (% of tagged) | conflict | underspecified | untagged (linked, no tag) | lemmas with ≥ 1 cell | cells | cell spellings |
 |---|---|---|---|---|---|---|---|---|---|---|
 | shev.proto | 7 214 | TOROT (manual) | 164 | 164 (100.0%) | 0 | 0 | 8 | 310 | 605 | 705 |
-| shev.proto | 7 214 | Stanza (model, P-1.7) | 1 875 | 1 357 (72.4%) | 393 | 125 |  |  |  |  |
-| shev.old | 268 011 | TOROT (manual) | 22 636 | 22 396 (98.9%) | 228 | 12 | 3 277 | 3 292 | 9 554 | 13 956 |
-| shev.old | 268 011 | Stanza (model, P-1.7) | 50 734 | 29 685 (58.5%) | 16 898 | 4 151 |  |  |  |  |
-| shev.old | 268 011 | VESUM (modern spelling) | 4 523 | 2 673 (59.1%) | 8 | 1 842 |  |  |  |  |
-| shev.early_middle | 239 790 | Stanza (model, P-1.7) | 5 749 | 3 241 (56.4%) | 2 296 | 212 | 30 157 | 3 314 | 9 029 | 9 704 |
-| shev.early_middle | 239 790 | VESUM (modern spelling) | 35 266 | 22 777 (64.6%) | 26 | 12 463 |  |  |  |  |
-| shev.middle | 985 881 | Stanza (model, P-1.7) | 51 804 | 28 554 (55.1%) | 22 601 | 649 | 173 408 | 6 940 | 20 801 | 24 597 |
-| shev.middle | 985 881 | VESUM (modern spelling) | 81 787 | 52 427 (64.1%) | 87 | 29 273 |  |  |  |  |
-| shev.late_middle | 559 369 | VESUM (modern spelling) | 75 180 | 62 553 (83.2%) | 168 | 12 459 | 99 649 | 7 439 | 22 019 | 24 787 |
-| shev.modern | 47 117 324 | VESUM (modern spelling) | 21 900 610 | 18 381 501 (83.9%) | 76 062 | 3 443 047 | 801 | 51 307 | 369 277 | 437 336 |
+| shev.proto | 7 214 | Stanza (model, P-1.7) | 2 027 | 1 357 (66.9%) | 545 | 125 |  |  |  |  |
+| shev.old | 268 011 | TOROT (manual) | 22 853 | 22 399 (98.0%) | 442 | 12 | 3 282 | 3 295 | 9 558 | 13 964 |
+| shev.old | 268 011 | Stanza (model, P-1.7) | 51 016 | 29 693 (58.2%) | 17 172 | 4 151 |  |  |  |  |
+| shev.old | 268 011 | VESUM (modern spelling) | 4 525 | 2 675 (59.1%) | 8 | 1 842 |  |  |  |  |
+| shev.early_middle | 239 790 | Stanza (model, P-1.7) | 5 809 | 3 241 (55.8%) | 2 356 | 212 | 30 536 | 3 313 | 9 032 | 9 712 |
+| shev.early_middle | 239 790 | VESUM (modern spelling) | 35 274 | 22 785 (64.6%) | 26 | 12 463 |  |  |  |  |
+| shev.middle | 985 881 | Stanza (model, P-1.7) | 52 766 | 28 560 (54.1%) | 23 557 | 649 | 176 171 | 6 940 | 20 799 | 24 605 |
+| shev.middle | 985 881 | VESUM (modern spelling) | 81 794 | 52 437 (64.1%) | 82 | 29 275 |  |  |  |  |
+| shev.late_middle | 559 369 | VESUM (modern spelling) | 75 276 | 62 650 (83.2%) | 166 | 12 460 | 100 633 | 7 440 | 22 027 | 24 812 |
+| shev.modern | 47 177 644 | VESUM (modern spelling) | 21 937 168 | 18 413 828 (83.9%) | 75 691 | 3 447 649 | 12 749 | 51 317 | 369 284 | 439 072 |
 
-Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): vesum:grid:none: 50 121 · stanza:lemma: 38 602 · vesum:grid:noun: 26 190 · stanza:gender: 3 300 · stanza:grid:adj: 274 · torot:grid:none: 178 · torot:grid:adj: 50 · vesum:grid:adj: 40 · stanza:grid:none: 9 · stanza:grid:verb: 2 · stanza:grid:noun: 1.
+Conflicts by reason (token × epoch; `grid:X` = the token's own tag belongs to grid X, not noun — e.g. a participle or pronoun linked to a noun lemma; `lemma` = the Stanza lemma does not derive to the linked lemma, EP-3.4; `gender` = Stanza Gender ≠ VESUM gender of the lemma): vesum:grid:none: 49 722 · stanza:lemma: 39 738 · vesum:grid:noun: 26 211 · stanza:gender: 3 302 · torot:grid:none: 392 · stanza:grid:none: 313 · stanza:grid:adj: 274 · torot:grid:adj: 50 · vesum:grid:adj: 40 · stanza:grid:verb: 2 · stanza:grid:noun: 1.
 
 **Placement of the test lemmas (SPEC 61 FX-6)** — tokens (not token × epoch) by outcome. Pronouns are placed in the pronominal grid (case × number, attested-only, no stem type; FX-5 follow-up); uninflected and other non-noun lemmas have no grid by design (paradigm kind, FX-5): their tokens are `conflict` with reason `grid:none` etc.; this is not a linking error.
 
 | lemma | kind | tokens | placed | conflict | underspecified | untagged | main conflict reasons |
 |---|---|---|---|---|---|---|---|
-| він | pron | 411 458 | 404 565 | 2 826 | 0 | 4 067 | stanza:lemma 2826 |
-| я | pron | 363 526 | 358 239 | 88 | 0 | 5 199 | stanza:lemma 88 |
-| земля | noun | 46 576 | 27 265 | 3 | 18 567 | 741 | stanza:gender 2, stanza:lemma 1 |
-| син | noun | 23 419 | 22 495 | 106 | 0 | 818 | stanza:lemma 63, stanza:gender 43 |
-| да | uninflected | 27 147 | 0 | 1 485 | 24 329 | 1 333 | stanza:grid:none 1173, torot:grid:none 303, stanza:lemma 9 |
-| себе | pron | 107 432 | 106 214 | 0 | 0 | 1 218 | — |
-| ви | pron | 107 269 | 105 962 | 8 | 0 | 1 299 | stanza:lemma 7, stanza:grid:noun 1 |
-| ти | pron | 156 964 | 155 219 | 31 | 0 | 1 714 | stanza:lemma 31 |
-| ми | pron | 171 737 | 168 119 | 427 | 0 | 3 191 | stanza:lemma 425, stanza:grid:none 2 |
-| рука | noun | 46 911 | 46 071 | 21 | 0 | 819 | stanza:gender 16, stanza:lemma 5 |
+| він | pron | 412 218 | 405 325 | 2 826 | 0 | 4 067 | stanza:lemma 2826 |
+| я | pron | 364 145 | 358 858 | 88 | 0 | 5 199 | stanza:lemma 88 |
+| земля | noun | 46 597 | 27 282 | 3 | 18 571 | 741 | stanza:gender 2, stanza:lemma 1 |
+| син | noun | 23 470 | 22 545 | 106 | 0 | 819 | stanza:lemma 63, stanza:gender 43 |
+| да | uninflected | 27 156 | 0 | 1 485 | 24 338 | 1 333 | stanza:grid:none 1173, torot:grid:none 303, stanza:lemma 9 |
+| себе | pron | 107 607 | 106 389 | 0 | 0 | 1 218 | — |
+| ви | pron | 107 503 | 106 197 | 7 | 0 | 1 299 | stanza:lemma 6, stanza:grid:noun 1 |
+| ти | pron | 157 461 | 155 716 | 31 | 0 | 1 714 | stanza:lemma 31 |
+| ми | pron | 171 953 | 168 335 | 427 | 0 | 3 191 | stanza:lemma 425, stanza:grid:none 2 |
+| рука | noun | 46 978 | 46 138 | 21 | 0 | 819 | stanza:gender 16, stanza:lemma 5 |
 | князь | noun | 20 870 | 20 016 | 25 | 0 | 829 | stanza:gender 13, stanza:lemma 12 |
 | аз | noun | 4 388 | 4 200 | 0 | 0 | 188 | — |
-| город | noun | 11 696 | 10 566 | 101 | 0 | 1 029 | stanza:gender 53, stanza:lemma 48 |
+| город | noun | 11 702 | 10 572 | 101 | 0 | 1 029 | stanza:gender 53, stanza:lemma 48 |
 
-**Stem types** (EP-4): 53 833 lemmas carry epoch paradigms; stem claim known for 1 587 (of which 387 from a Stanza lemma, model-based per decision D4), `unknown` for 35 634. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 94 · ST-09: 677 · ST-10: 242 · ST-11: 75 · ST-12: 95 · ST-13: 287 · ST-14: 65.
+**Stem types** (EP-4): 53 844 lemmas carry epoch paradigms; stem claim known for 1 589 (of which 387 from a Stanza lemma, model-based per decision D4), `unknown` for 35 631. By rule: ST-01: 14 · ST-02: 5 · ST-03: 4 · ST-04: 1 · ST-06: 6 · ST-07: 22 · ST-08: 94 · ST-09: 677 · ST-10: 243 · ST-11: 75 · ST-12: 96 · ST-13: 287 · ST-14: 65.
 
-**Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 525 lemmas, 48 440 reconstructed cells with 51 224 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 109 cells (6.4%), 3 118 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
+**Reconstruction** (EP-5, shev.proto + shev.old only; computed, not stored): 1 526 lemmas, 48 470 reconstructed cells with 51 256 forms; **confirmed** by an attested spelling of the same cell and epoch: 3 109 cells (6.4%), 3 118 forms (6.1%). Denominator = reconstructed cells/forms, not attestations; only up to 4 spellings per cell are stored, so confirmation by a rarer spelling is not counted.
 
-**Shard bytes added by `epochs`**: 135.75 MB of 1208.01 MB shard total (11.2%); shards that needed ctx dropped: 18, cell cap 2: 17.
+**Shard bytes added by `epochs`**: 135.92 MB of 1403.23 MB shard total (9.7%); shards that needed ctx dropped: 26, cell cap 2: 20.
 
 ## 3. Rule firing statistics
 
-**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 589 537), *token* = occurrences (denominator linked tokens 37 047 711). Dialect-scope `D` rules are never applied.
+**Sound rules** (core/phonology.ts, after Шевельов ІФУМ) in the successful derivations. *Type* = distinct (lemma, spelling) pairs (denominator 591 218), *token* = occurrences (denominator linked tokens 37 096 705). Dialect-scope `D` rules are never applied.
 
 | rule | change | scope | types | % types | tokens | % tokens |
 |---|---|---|---|---|---|---|
-| R02 | Деназалізація ѧ > я, ѫ > у | G | 2150 | 0.4% | 13492 | 0.0% |
-| R14 | бы > бу (губне огублення) | L | 232 | 0.0% | 7543 | 0.0% |
+| R02 | Деназалізація ѧ > я, ѫ > у | G | 2151 | 0.4% | 13493 | 0.0% |
+| R14 | бы > бу (губне огублення) | L | 233 | 0.0% | 7546 | 0.0% |
 | R03 | ky, gy, xy > k'i, g'i, x'i | G | 260 | 0.0% | 953 | 0.0% |
 | R05 | Напружені єри: -ыи > -ий, -ии > -ій | G | 734 | 0.1% | 2222 | 0.0% |
 | R13 | C + j: подовження, -ьѥ > -ття | G | 417 | 0.1% | 1054 | 0.0% |
 | R06 | CъrC > CorC, CьrC > CerC, CъlC > ColC | G | 100 | 0.0% | 153 | 0.0% |
 | R21c | Зняття протетичного и- перед л, р (илвов > львов, ильняний > льняний) | L | 3 | 0.0% | 7 | 0.0% |
-| R04 | Занепад єрів (закон Гавліка) | G | 19178 | 3.3% | 1140285 | 3.1% |
+| R04 | Занепад єрів (закон Гавліка) | G | 19188 | 3.2% | 1125549 | 3.0% |
 | R21 | Протетичні в, г | L | 750 | 0.1% | 6097 | 0.0% |
 | R21d | Протетичне и- перед л, р + редукований голосний (иржа) | L | 12 | 0.0% | 128 | 0.0% |
-| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 3406 | 0.6% | 25706 | 0.1% |
+| R10 | Новий ікавізм: о, е > і в новозакритому складі | X | 3407 | 0.6% | 25724 | 0.1% |
 | R10a | Аналогійне о > і в -овл- (будівля, торгівля, зимівля) | L | 10 | 0.0% | 16 | 0.0% |
 | R10b | Повноголосне і: беріг, сторін (лексична перевизначеність винятку R10) | L | 2 | 0.0% | 215 | 0.0% |
 | R10c | і у відкритому складі: кінець-тип (-ьць) | L | 1 | 0.0% | 8 | 0.0% |
 | R07 | Вставні о, е в кінцевих групах | L | 49 | 0.0% | 750 | 0.0% |
 | R09j | ѣ > а/я після j і шиплячих у суфіксі -ѣти (стоѣти > стояти, лежѣти > лежати) | L | 2 | 0.0% | 2 | 0.0% |
-| R09 | ѣ > і (ї на початку та після голосного) | G | 5227 | 0.9% | 27807 | 0.1% |
+| R09 | ѣ > і (ї на початку та після голосного) | G | 5234 | 0.9% | 27826 | 0.1% |
 | R12 | ѥ у новозакритому складі > ї | G | 33 | 0.0% | 711 | 0.0% |
-| R11 | Злиття і та у > и | G | 7997 | 1.4% | 134698 | 0.4% |
-| R15 | Ствердіння губних у кінці складу | G | 1446 | 0.2% | 5442 | 0.0% |
+| R11 | Злиття і та у > и | G | 7998 | 1.4% | 134702 | 0.4% |
+| R15 | Ствердіння губних у кінці складу | G | 1448 | 0.2% | 5449 | 0.0% |
 | R16 | l > w після о, е | G | 545 | 0.1% | 2103 | 0.0% |
 | R16p | l > w у дієприкметнику на -лъ (ходилъ > ходив) | L | 1141 | 0.2% | 6718 | 0.0% |
 | R17 | е > о після шиплячих перед твердим | L | 279 | 0.0% | 2587 | 0.0% |
 | R18 | Ствердіння ж, ч, ш | G | 783 | 0.1% | 3083 | 0.0% |
 | R19 | Ствердіння кінцевого р' | G | 275 | 0.0% | 1467 | 0.0% |
-| R23 | Стягнення прикметникових закінчень | L | 2588 | 0.4% | 29413 | 0.1% |
+| R23 | Стягнення прикметникових закінчень | L | 2588 | 0.4% | 29424 | 0.1% |
 | R24 | Друга палаталізація (к, г, х > ц, з, с перед ѣ, и) зберігається | G | 0 | 0.0% | 0 | 0.0% |
 
-Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY: 3732 types / 9593 tokens · ORTH-YAR-JER: 1360 types / 4285 tokens · ORTH-YAR-Y: 2541 types / 4834 tokens · ORTH-YAR-I: 523 types / 1914 tokens · ORTH-PART-HYPH: 452 types / 909 tokens · ORTH-MAX-YAT: 1176 types / 1959 tokens · ORTH-MAX-JO: 96 types / 783 tokens · ORTH-MAX-JER-END: 1120 types / 2119 tokens · ORTH-ZHEL-JE: 138 types / 472 tokens · ORTH-MAX-U: 306 types / 449 tokens · ORTH-YAR-E: 226 types / 560 tokens · ORTH-MAX-E: 52 types / 91 tokens · ORTH-MAX-YAT-J: 99 types / 201 tokens · ORTH-KUL-I: 465 types / 1937 tokens · ORTH-KUL-E: 195 types / 310 tokens · ORTH-MAX-I: 735 types / 1687 tokens · ORTH-ZHEL-TE: 155 types / 294 tokens · ORTH-YAR-YAT: 293 types / 809 tokens · ORTH-MAX-Y: 625 types / 902 tokens · ORTH-SYA: 3107 types / 0 tokens · ORTH-VERB-OVATI: 2000 types / 7581 tokens · ORTH-ADJ-SOFT: 474 types / 1493 tokens · ORTH-ZHEL-SOFT: 531 types / 884 tokens · ORTH-KUL-JER: 185 types / 50 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-1928-LYO: 170 types / 3163 tokens · ORTH-ZHEL-INIT-I: 27 types / 38 tokens · ORTH-1928-SOFTL: 584 types / 13924 tokens · ORTH-1928-G: 529 types / 3453 tokens · ORTH-ADJ-IISH: 4542 types / 22534 tokens · ORTH-ZHEL-JE-OBL: 58 types / 123 tokens · ORTH-ZHEL-SKY: 44 types / 22 tokens
+Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY: 3734 types / 9595 tokens · ORTH-YAR-JER: 1360 types / 4285 tokens · ORTH-YAR-Y: 2610 types / 4933 tokens · ORTH-YAR-I: 523 types / 1914 tokens · ORTH-PART-HYPH: 454 types / 911 tokens · ORTH-MAX-YAT: 1176 types / 1959 tokens · ORTH-MAX-JO: 96 types / 783 tokens · ORTH-MAX-JER-END: 1120 types / 2119 tokens · ORTH-DAT-OVI: 1139 types / 7154 tokens · ORTH-ZHEL-JE: 138 types / 472 tokens · ORTH-MAX-U: 306 types / 449 tokens · ORTH-YAR-E: 259 types / 606 tokens · ORTH-MAX-E: 52 types / 91 tokens · ORTH-MAX-YAT-J: 99 types / 201 tokens · ORTH-KUL-I: 467 types / 1939 tokens · ORTH-KUL-E: 209 types / 330 tokens · ORTH-MAX-I: 737 types / 1689 tokens · ORTH-ZHEL-TE: 155 types / 294 tokens · ORTH-YAR-YAT: 294 types / 819 tokens · ORTH-MAX-Y: 625 types / 902 tokens · ORTH-SYA: 3107 types / 0 tokens · ORTH-VERB-OVATI: 2000 types / 7585 tokens · ORTH-ADJ-SOFT: 474 types / 1493 tokens · ORTH-ZHEL-SOFT: 537 types / 891 tokens · ORTH-TSYA-PHON: 830 types / 1344 tokens · ORTH-KUL-JER: 187 types / 52 tokens · ORTH-MAX-JER: 33 types / 61 tokens · ORTH-RDC: 36 types / 1216 tokens · ORTH-ZAK-Y: 2 types / 2 tokens · ORTH-YAR-EH: 13 types / 41 tokens · ORTH-1928-LYO: 170 types / 3163 tokens · ORTH-ZHEL-INIT-I: 27 types / 38 tokens · ORTH-1928-SOFTL: 584 types / 13929 tokens · ORTH-1928-G: 529 types / 3453 tokens · ORTH-ZAK-Y-E: 1 types / 1 tokens · ORTH-ADJ-IISH: 4542 types / 22537 tokens · ORTH-ZHEL-JE-OBL: 58 types / 123 tokens · ORTH-ZHEL-SKY: 44 types / 22 tokens
 
-**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 440 878 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
+**Detector rules** (CS, contact, dialect, Rusyn tables; core/rules.ts) — hits = labels that fired on the 441 508 stored spellings (FormCards). Weight-0 rules only produce review hints (P-3.1).
 
 | rule | axis | label | weight | label hits | hint hits |
 |---|---|---|---|---|---|
-| CS-C1 | cs | church_slavonic | 0.8 | 903 | 0 |
-| CS-C3 | cs | church_slavonic | 0.7 | 199 | 0 |
+| CS-C1 | cs | church_slavonic | 0.8 | 912 | 0 |
+| CS-C3 | cs | church_slavonic | 0.7 | 200 | 0 |
 | CS-C4 | cs | church_slavonic | 0.7 | 27 | 0 |
 | CS-C9 | cs | church_slavonic | 0.6 | 67 | 0 |
 | CS-C11 | cs | church_slavonic | 0.6 | 310 | 0 |
 | CS-C12 | cs | church_slavonic | 0 | 0 | 66 |
-| CS-C10 | cs | church_slavonic | 0 | 0 | 1878 |
+| CS-C10 | cs | church_slavonic | 0 | 0 | 1880 |
 | LEX-LT | contact | nonnormative | 0.8 | 1248 | 0 |
 | LEX-LT-SOFT | contact | not_recommended | 0.4 | 197 | 0 |
-| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 9565 | 0 |
-| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 739 | 0 |
+| LEX-VESUM-BAD | contact | russianism_or_hybrid | 0.8 | 9563 | 0 |
+| LEX-VESUM-SUBST | contact | nonstandard | 0.6 | 737 | 0 |
 | ORT-YI | contact | russianism_orth | 0.9 | 0 | 0 |
 | ORT-Y | contact | russianism_orth | 0.5 | 0 | 0 |
 | ORT-Y-AMB | contact | ambiguous_y | 0.2 | 0 | 0 |
-| ORT-OLD | contact | archaic_orthography | 0.9 | 18062 | 0 |
+| ORT-OLD | contact | archaic_orthography | 0.9 | 18057 | 0 |
 | ORT-JO | contact | russianism_phon | 0.6 | 0 | 0 |
 | MOR-PART-UCH | contact | calque_participle | 0.6 | 1039 | 0 |
 | MOR-PART-SHCH | contact | russianism_morph | 0.7 | 0 | 0 |
@@ -12029,7 +12645,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY
 | N-DIPH-UO:WPL | dialect | WPL | 0.8 | 17 | 0 |
 | N-DIPH-IE:CHN | dialect | CHN | 0.8 | 5 | 0 |
 | N-DIPH-IE:MPL | dialect | MPL | 0.8 | 5 | 0 |
-| CHN-INF-T:CHN | dialect | CHN | 0.3 | 2468 | 0 |
+| CHN-INF-T:CHN | dialect | CHN | 0.3 | 2467 | 0 |
 | SW-INF-CHY:SW | dialect | SW | 0.5 | 0 | 0 |
 | 3SG-HARD-T:POD | dialect | POD | 0.4 | 5 | 0 |
 | 3SG-HARD-T:NDN | dialect | NDN | 0.4 | 5 | 0 |
@@ -12044,16 +12660,16 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY
 | NDN-ADJ-KIJ:NDN | dialect | NDN | 0.6 | 81 | 0 |
 | CHN-INSTR-SHORT:CHN | dialect | CHN | 0.4 | 11 | 0 |
 | SW-INSTR-OW:SW | dialect | SW | 0.7 | 0 | 0 |
-| CARP-Y:BOY | dialect | BOY | 0.5 | 249 | 0 |
-| CARP-Y:LEM | dialect | LEM | 0.5 | 249 | 0 |
+| CARP-Y:BOY | dialect | BOY | 0.5 | 254 | 0 |
+| CARP-Y:LEM | dialect | LEM | 0.5 | 254 | 0 |
 | HARD-C-FINAL:NDN | dialect | NDN | 0.5 | 0 | 0 |
 | HARD-C-FINAL:POD | dialect | POD | 0.5 | 0 | 0 |
 | R-SOFT-FINAL:MDN | dialect | MDN | 0.3 | 3 | 0 |
 | R-SOFT-FINAL:SE | dialect | SE | 0.3 | 3 | 0 |
 | EPENTH-L-N:POD | dialect | POD | 0.4 | 253 | 0 |
 | EPENTH-L-N:MDN | dialect | MDN | 0.4 | 253 | 0 |
-| F-TO-X:CHN | dialect | CHN | 0.2 | 45 | 0 |
-| F-TO-X:MDN | dialect | MDN | 0.2 | 45 | 0 |
+| F-TO-X:CHN | dialect | CHN | 0.2 | 46 | 0 |
+| F-TO-X:MDN | dialect | MDN | 0.2 | 46 | 0 |
 | CHN-PREP:CHN | dialect | CHN | 0.7 | 0 | 0 |
 | MPL-YON:MPL | dialect | MPL | 0.7 | 0 | 0 |
 | ZAK-Y-VELAR:ZAK | dialect | ZAK | 0.6 | 9 | 0 |
@@ -12068,9 +12684,9 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY
 | SW-LABIAL-J:HUT | dialect | HUT | 0.5 | 0 | 0 |
 | SW-LABIAL-J:LEM | dialect | LEM | 0.5 | 0 | 0 |
 | SW-LABIAL-J:SYAN | dialect | SYAN | 0.5 | 0 | 0 |
-| SW-NOM-PL-OVE:BOY | dialect | BOY | 0.4 | 38 | 0 |
-| SW-NOM-PL-OVE:ZAK | dialect | ZAK | 0.4 | 38 | 0 |
-| SW-NOM-PL-OVE:SYAN | dialect | SYAN | 0.4 | 38 | 0 |
+| SW-NOM-PL-OVE:BOY | dialect | BOY | 0.4 | 39 | 0 |
+| SW-NOM-PL-OVE:ZAK | dialect | ZAK | 0.4 | 39 | 0 |
+| SW-NOM-PL-OVE:SYAN | dialect | SYAN | 0.4 | 39 | 0 |
 | SW-1PL-ME:BOY | dialect | BOY | 0.3 | 25 | 0 |
 | SW-1PL-ME:ZAK | dialect | ZAK | 0.3 | 25 | 0 |
 | SW-3SG-CONTRACT:BOY | dialect | BOY | 0.4 | 0 | 0 |
@@ -12341,7 +12957,7 @@ Orthography folds (core/orthography.ts) in successful direct links: ORTH-ZHEL-TY
 
 ## 4. Lexical statistics (M-5)
 
-Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 1176415, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
+Methods — ipm: DWDS <https://www.dwds.de/d/plot>: «Kategorisierungsfunktion zur Berechnung des Nenners für die Ergebnis-Skalierung pro Million Tokens». Frequency class HK: WLIST <https://en.wikipedia.org/wiki/Word_list>: «The most common item belongs to frequency class 0 (zero) and any item that is approximately half as frequent belongs in class 1.» (f_max = 1178454, the most frequent lemma). Gries DP: GRIES <https://stgries.info/research/2008_STG_Dispersion_IJCL.pdf>: «DP = ½ Σ |y_i/AF − n_i/N| (0 = perfectly even, 1 = concentrated)». G²/Log Ratio: UCREL <https://ucrel.lancs.ac.uk/llwizard.html>: «G² = 2·(a·ln(a/E1) + b·ln(b/E2)); critical values 3.84 (p<.05), 6.63, 10.83, 15.13». Smoothing: DWDS <https://www.dwds.de/d/plot>: «Fensterbreite für gleitenden Mittelwert (Glättung), als natürliche Zahl». logDice: DWDS <https://www.dwds.de/d/wortprofil>: «Abrufbar sind nur Kookkurrenzen, die statistisch signifikant sind, also eine Mindestfrequenz von fünf und einen logDice-Wert größer Null» — corpus is small, so f_xy ≥ 3 here (documented deviation, M-5.5).
 
 ### 4.1 Top 30 lemmas per Shevelov epoch (ipm = f / N_epoch · 10⁶)
 
@@ -12352,9 +12968,9 @@ Function words dominate the top of any frequency list; this is the expected shap
 |---|---|---|---|---|
 | 1 | і | сполучник | 628 | 87053 |
 | 2 | в | прийменник | 187 | 25922 |
-| 3 | же | сполучник | 135 | 18714 |
-| 4 | не | частка | 125 | 17327 |
-| 5 | яко | сполучник | 121 | 16773 |
+| 3 | як | займенник | 147 | 20377 |
+| 4 | же | сполучник | 135 | 18714 |
+| 5 | не | частка | 125 | 17327 |
 | 6 | бог | іменник, ч.р. | 113 | 15664 |
 | 7 | ти | займенник | 96 | 13307 |
 | 8 | от | частка | 86 | 11921 |
@@ -12395,21 +13011,21 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 9 | от | частка | 2005 | 7481 |
 | 10 | з | прийменник | 1857 | 6929 |
 | 11 | себе | займенник | 1750 | 6530 |
-| 12 | яко | сполучник | 1672 | 6239 |
-| 13 | по | прийменник | 1542 | 5753 |
-| 14 | бо | сполучник | 1451 | 5414 |
-| 15 | ти | займенник | 1381 | 5153 |
+| 12 | по | прийменник | 1542 | 5753 |
+| 13 | бо | сполучник | 1451 | 5414 |
+| 14 | ти | займенник | 1381 | 5153 |
+| 15 | яко | сполучник | 1285 | 4795 |
 | 16 | весь | займенник | 1049 | 3914 |
 | 17 | да | частка | 1029 | 3839 |
 | 18 | брат | іменник, ч.р. | 1025 | 3824 |
 | 19 | свій | займенник | 983 | 3668 |
 | 20 | князь | іменник, ч.р. | 973 | 3630 |
-| 21 | літо | іменник, с.р. | 968 | 3612 |
-| 22 | у | прийменник | 965 | 3601 |
+| 21 | у | прийменник | 969 | 3616 |
+| 22 | літо | іменник, с.р. | 968 | 3612 |
 | 23 | іти | дієслово | 947 | 3533 |
 | 24 | ми | займенник | 941 | 3511 |
 | 25 | той | займенник | 930 | 3470 |
-| 26 | ви | займенник | 918 | 3425 |
+| 26 | ви | займенник | 917 | 3422 |
 | 27 | Ізяслав | іменник, ч.р. | 837 | 3123 |
 | 28 | син | іменник, ч.р. | 831 | 3101 |
 | 29 | ректи | дієслово | 818 | 3052 |
@@ -12462,11 +13078,11 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 8 | бути | дієслово | 5416 | 5494 |
 | 9 | от | частка | 4532 | 4597 |
 | 10 | же | сполучник | 4523 | 4588 |
-| 11 | о | прийменник | 3572 | 3623 |
-| 12 | сей | займенник | 3547 | 3598 |
-| 13 | то | сполучник | 3102 | 3146 |
-| 14 | до | іменник, с.р. | 2897 | 2938 |
-| 15 | яко | сполучник | 2777 | 2817 |
+| 11 | як | займенник | 4105 | 4164 |
+| 12 | о | прийменник | 3572 | 3623 |
+| 13 | сей | займенник | 3547 | 3598 |
+| 14 | то | сполучник | 3102 | 3146 |
+| 15 | до | іменник, с.р. | 2897 | 2938 |
 | 16 | за | прислівник | 2727 | 2766 |
 | 17 | по | прийменник | 2618 | 2655 |
 | 18 | він | займенник, ч.р. | 2585 | 2622 |
@@ -12481,7 +13097,7 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 27 | его | іменник, с.р. | 1617 | 1640 |
 | 28 | святий | прикметник | 1518 | 1540 |
 | 29 | свій | займенник | 1508 | 1530 |
-| 30 | у | прийменник | 1468 | 1489 |
+| 30 | у | прийменник | 1469 | 1490 |
 
 **shev.late_middle** — пізньосередньоукраїнська доба, N = 559 369
 | # | lemma | POS | f | ipm |
@@ -12494,7 +13110,7 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 6 | з | прийменник | 6097 | 10900 |
 | 7 | не | частка | 5483 | 9802 |
 | 8 | той | займенник | 4307 | 7700 |
-| 9 | у | прийменник | 3307 | 5912 |
+| 9 | у | прийменник | 3308 | 5914 |
 | 10 | от | частка | 3098 | 5538 |
 | 11 | по | прийменник | 3072 | 5492 |
 | 12 | до | іменник, с.р. | 3060 | 5470 |
@@ -12506,89 +13122,89 @@ Function words dominate the top of any frequency list; this is the expected shap
 | 18 | е | вигук | 2143 | 3831 |
 | 19 | він | займенник, ч.р. | 2137 | 3820 |
 | 20 | же | сполучник | 2057 | 3677 |
-| 21 | весь | займенник | 1709 | 3055 |
-| 22 | вони | займенник | 1524 | 2724 |
-| 23 | ми | займенник | 1517 | 2712 |
-| 24 | й | сполучник | 1516 | 2710 |
-| 25 | то | сполучник | 1480 | 2646 |
-| 26 | сей | займенник | 1451 | 2594 |
-| 27 | перти | дієслово | 1398 | 2499 |
-| 28 | сам | займенник | 1320 | 2360 |
-| 29 | но | вигук | 1252 | 2238 |
-| 30 | ти | займенник | 1250 | 2235 |
+| 21 | як | займенник | 1901 | 3398 |
+| 22 | весь | займенник | 1709 | 3055 |
+| 23 | вони | займенник | 1524 | 2724 |
+| 24 | ми | займенник | 1517 | 2712 |
+| 25 | й | сполучник | 1516 | 2710 |
+| 26 | то | сполучник | 1480 | 2646 |
+| 27 | сей | займенник | 1451 | 2594 |
+| 28 | перти | дієслово | 1398 | 2499 |
+| 29 | сам | займенник | 1320 | 2360 |
+| 30 | що | сполучник | 1283 | 2294 |
 
-**shev.modern** — новітня доба, N = 47 117 324
+**shev.modern** — новітня доба, N = 47 177 644
 | # | lemma | POS | f | ipm |
 |---|---|---|---|---|
-| 1 | і | сполучник | 1048147 | 22245 |
-| 2 | в | прийменник | 779568 | 16545 |
-| 3 | з | прийменник | 659238 | 13991 |
-| 4 | той | займенник | 645014 | 13690 |
-| 5 | на | вигук | 623417 | 13231 |
-| 6 | що | сполучник | 522454 | 11088 |
-| 7 | не | частка | 518867 | 11012 |
-| 8 | сей | займенник | 502058 | 10655 |
-| 9 | а | сполучник | 501018 | 10633 |
-| 10 | бути | дієслово | 449574 | 9542 |
-| 11 | до | іменник, с.р. | 434804 | 9228 |
-| 12 | він | займенник, ч.р. | 398630 | 8460 |
-| 13 | у | прийменник | 345500 | 7333 |
-| 14 | я | займенник | 342254 | 7264 |
-| 15 | й | сполучник | 298500 | 6335 |
-| 16 | як | займенник | 254758 | 5407 |
-| 17 | за | прислівник | 217026 | 4606 |
-| 18 | вони | займенник | 212116 | 4502 |
-| 19 | мати | дієслово | 203558 | 4320 |
-| 20 | то | сполучник | 187273 | 3975 |
-| 21 | по | прийменник | 184231 | 3910 |
-| 22 | вона | займенник, ж.р. | 179213 | 3804 |
-| 23 | свій | займенник | 177849 | 3775 |
-| 24 | о | прийменник | 171976 | 3650 |
-| 25 | ми | займенник | 162043 | 3439 |
-| 26 | який | займенник | 159535 | 3386 |
-| 27 | від | прийменник | 153397 | 3256 |
-| 28 | ти | займенник | 148356 | 3149 |
-| 29 | так | займенник | 138075 | 2930 |
-| 30 | цей | займенник | 137722 | 2923 |
+| 1 | і | сполучник | 1049889 | 22254 |
+| 2 | в | прийменник | 780306 | 16540 |
+| 3 | з | прийменник | 659742 | 13984 |
+| 4 | той | займенник | 645948 | 13692 |
+| 5 | на | вигук | 624207 | 13231 |
+| 6 | що | сполучник | 545753 | 11568 |
+| 7 | не | частка | 519243 | 11006 |
+| 8 | а | сполучник | 502886 | 10659 |
+| 9 | сей | займенник | 502680 | 10655 |
+| 10 | бути | дієслово | 450250 | 9544 |
+| 11 | до | іменник, с.р. | 435631 | 9234 |
+| 12 | він | займенник, ч.р. | 399279 | 8463 |
+| 13 | у | прийменник | 360828 | 7648 |
+| 14 | я | займенник | 342804 | 7266 |
+| 15 | й | сполучник | 298612 | 6330 |
+| 16 | як | займенник | 265553 | 5629 |
+| 17 | за | прислівник | 217396 | 4608 |
+| 18 | вони | займенник | 212298 | 4500 |
+| 19 | мати | дієслово | 203827 | 4320 |
+| 20 | то | сполучник | 187932 | 3983 |
+| 21 | по | прийменник | 184467 | 3910 |
+| 22 | вона | займенник, ж.р. | 179377 | 3802 |
+| 23 | свій | займенник | 177920 | 3771 |
+| 24 | о | прийменник | 172019 | 3646 |
+| 25 | ми | займенник | 162238 | 3439 |
+| 26 | який | займенник | 159592 | 3383 |
+| 27 | від | прийменник | 153436 | 3252 |
+| 28 | ти | займенник | 148783 | 3154 |
+| 29 | так | займенник | 138454 | 2935 |
+| 30 | цей | займенник | 137729 | 2919 |
 
 ### 4.2 Strongest shifts between adjacent epochs (G², Log Ratio)
 
-Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (18476 shifts). Log Ratio > 0 = more frequent in the later epoch B.
+Filter: p ≤ 0.05 and f_A + f_B ≥ 10 (18466 shifts). Log Ratio > 0 = more frequent in the later epoch B.
 **Rising** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| що | shev.late_middle → shev.modern | 993 (1775) | 522454 (11088) | 6729.2 | 2.64 | 0.0001 |
+| що | shev.late_middle → shev.modern | 1283 (2294) | 545753 (11568) | 6174.7 | 2.33 | 0.0001 |
 | і | shev.early_middle → shev.middle | 1711 (7135) | 31143 (31589) | 5699.8 | 2.15 | 0.0001 |
-| сей | shev.late_middle → shev.modern | 1451 (2594) | 502058 (10655) | 4878.4 | 2.04 | 0.0001 |
+| сей | shev.late_middle → shev.modern | 1451 (2594) | 502680 (10655) | 4878.1 | 2.04 | 0.0001 |
 | е | shev.middle → shev.late_middle | 117 (119) | 2143 (3831) | 3539.6 | 5.01 | 0.0001 |
 | в | shev.early_middle → shev.middle | 329 (1372) | 12508 (12687) | 3459.3 | 3.21 | 0.0001 |
-| від | shev.late_middle → shev.modern | 61 (109) | 153397 (3256) | 3085.8 | 4.90 | 0.0001 |
+| від | shev.late_middle → shev.modern | 61 (109) | 153436 (3252) | 3082.3 | 4.90 | 0.0001 |
 | о | shev.middle → shev.late_middle | 3572 (3623) | 6163 (11018) | 2937.8 | 1.60 | 0.0001 |
 | і | shev.middle → shev.late_middle | 31143 (31589) | 27416 (49012) | 2765.5 | 0.63 | 0.0001 |
 | с | shev.middle → shev.late_middle | 465 (472) | 2351 (4203) | 2672.2 | 3.16 | 0.0001 |
 | не | shev.early_middle → shev.middle | 290 (1209) | 9966 (10109) | 2645.8 | 3.06 | 0.0001 |
 | я | shev.middle → shev.late_middle | 966 (980) | 2977 (5322) | 2527.6 | 2.44 | 0.0001 |
-| вона | shev.late_middle → shev.modern | 322 (576) | 179213 (3804) | 2377.1 | 2.72 | 0.0001 |
-| про | shev.late_middle → shev.modern | 112 (200) | 127621 (2709) | 2207.4 | 3.76 | 0.0001 |
-| у | shev.middle → shev.late_middle | 1468 (1489) | 3307 (5912) | 2147.5 | 1.99 | 0.0001 |
-| мати | shev.late_middle → shev.modern | 605 (1082) | 203558 (4320) | 1931.5 | 2.00 | 0.0001 |
+| вона | shev.late_middle → shev.modern | 322 (576) | 179377 (3802) | 2375.9 | 2.72 | 0.0001 |
+| про | shev.late_middle → shev.modern | 112 (200) | 127641 (2706) | 2204.3 | 3.76 | 0.0001 |
+| у | shev.middle → shev.late_middle | 1469 (1490) | 3308 (5914) | 2147.3 | 1.99 | 0.0001 |
+| мати | shev.late_middle → shev.modern | 605 (1082) | 203827 (4320) | 1931.7 | 2.00 | 0.0001 |
 **Falling** (top 15 by G²):
 | lemma | epochs | f_A (ipm) | f_B (ipm) | G² | Log Ratio (B vs A) | p |
 |---|---|---|---|---|---|---|
-| с | shev.late_middle → shev.modern | 2351 (4203) | 85 (2) | 20166.8 | -11.19 | 0.0001 |
+| с | shev.late_middle → shev.modern | 2351 (4203) | 85 (2) | 20172.7 | -11.19 | 0.0001 |
 | і | shev.old → shev.early_middle | 19777 (73792) | 1711 (7135) | 15904.0 | -3.37 | 0.0001 |
-| і | shev.late_middle → shev.modern | 27416 (49012) | 1048147 (22245) | 13158.1 | -1.14 | 0.0001 |
-| его | shev.late_middle → shev.modern | 2721 (4864) | 8483 (180) | 11970.1 | -4.76 | 0.0001 |
-| от | shev.late_middle → shev.modern | 3098 (5538) | 22833 (485) | 9107.9 | -3.52 | 0.0001 |
+| і | shev.late_middle → shev.modern | 27416 (49012) | 1049889 (22254) | 13147.2 | -1.14 | 0.0001 |
+| его | shev.late_middle → shev.modern | 2721 (4864) | 8498 (180) | 11968.7 | -4.75 | 0.0001 |
+| от | shev.late_middle → shev.modern | 3098 (5538) | 22867 (485) | 9107.2 | -3.51 | 0.0001 |
 | же | shev.old → shev.early_middle | 7364 (27476) | 198 (826) | 7876.0 | -5.06 | 0.0001 |
 | в | shev.old → shev.early_middle | 5935 (22145) | 329 (1372) | 5500.2 | -4.01 | 0.0001 |
-| о | shev.late_middle → shev.modern | 6163 (11018) | 171976 (3650) | 5278.2 | -1.59 | 0.0001 |
-| віть | shev.late_middle → shev.modern | 761 (1360) | 932 (20) | 4458.2 | -6.10 | 0.0001 |
+| о | shev.late_middle → shev.modern | 6163 (11018) | 172019 (3646) | 5286.6 | -1.59 | 0.0001 |
+| віть | shev.late_middle → shev.modern | 761 (1360) | 933 (20) | 4458.9 | -6.10 | 0.0001 |
 | не | shev.old → shev.early_middle | 3764 (14044) | 290 (1209) | 3157.5 | -3.54 | 0.0001 |
-| же | shev.late_middle → shev.modern | 2057 (3677) | 36929 (784) | 3053.3 | -2.23 | 0.0001 |
-| которий | shev.late_middle → shev.modern | 619 (1107) | 1609 (34) | 2908.4 | -5.02 | 0.0001 |
-| Война | shev.late_middle → shev.modern | 483 (863) | 579 (12) | 2844.4 | -6.13 | 0.0001 |
-| е | shev.late_middle → shev.modern | 2143 (3831) | 44320 (941) | 2727.8 | -2.03 | 0.0001 |
+| же | shev.late_middle → shev.modern | 2057 (3677) | 36965 (784) | 3054.3 | -2.23 | 0.0001 |
+| которий | shev.late_middle → shev.modern | 619 (1107) | 1609 (34) | 2909.9 | -5.02 | 0.0001 |
+| Война | shev.late_middle → shev.modern | 483 (863) | 586 (12) | 2837.3 | -6.12 | 0.0001 |
+| е | shev.late_middle → shev.modern | 2143 (3831) | 44370 (940) | 2728.3 | -2.03 | 0.0001 |
 | бути | shev.old → shev.early_middle | 3071 (11458) | 201 (838) | 2715.8 | -3.77 | 0.0001 |
 
 Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shevchenko corpus is poetry, the old epochs are chronicles and sermons) — a shift is a statement about *this corpus*, not about the language (research/06 §3.5).
@@ -12597,7 +13213,7 @@ Caveat: adjacent-epoch comparisons are confounded by genre and witness (the Shev
 
 Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire only when VESUM attests the East-Slavic counterpart, so each hit is a *pair*. Pairs, with the date of the earliest attestation of each member where the counterpart lemma is in the lexicon:
 
-1485 spellings with a church_slavonic label (denominator: 440 878 stored spellings); 228 lemmas with origin = church_slavonic.
+1495 spellings with a church_slavonic label (denominator: 441 508 stored spellings); 229 lemmas with origin = church_slavonic.
 
 | CS spelling | lemma | date | rules | East-Slavic counterpart (VESUM) | counterpart first attested |
 |---|---|---|---|---|---|
@@ -12637,8 +13253,8 @@ Detector rules CS-C1/C3/C4 (core/rules.ts; Шевельов 14.4–14.5) fire on
 | власности | власність | 1577 | CS-C1 | ↔ волосности (волосність: noun:inanim:f:v_rod:up19) | not in lexicon |
 | кожду | кождий | 1720 | CS-C4 | ↔ кожу (кожа: noun:inanim:f:v_zna:arch) | 1110–1118 |
 | плату | плата | 1672–1702 | CS-C1 | ↔ полоту (полотий: adj:f:v_zna:adjp:pasv:imperf) | 1110–1118 |
-| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | прати | прати | 1648 | CS-C1 | ↔ пороти (пороти: verb:imperf:inf) | 1599 |
+| град | град | 1096–1117 | CS-C1 | ↔ город (город: noun:inanim:m:v_naz) | 1096–1117 |
 | власний | власний | 1450–1599 | CS-C1 | ↔ волосний (волосний: adj:m:v_naz) | 1710 |
 | власними | власний | 1621–1622 | CS-C1 | ↔ волосними (волосний: adj:p:v_oru) | 1710 |
 
@@ -12672,36 +13288,36 @@ Rule P-2.3 / B-3.5: earliest `date.to` among admitted witnesses; ties by vetted 
 | сей | 1037–1050 | ilarion | ilarion | абз. 15 | ся | 0 |
 | бути | 1037–1050 | ilarion | ilarion | абз. 5 | бѣ | 0 |
 | у | 1037–1050 | ilarion | ilarion | абз. 12 | у | 0 |
+| як | 1037–1050 | ilarion | ilarion | абз. 3 | яко | 0 |
 | за | 1037–1050 | ilarion | ilarion | абз. 3 | за | 0 |
 | вони | 1037–1050 | ilarion | ilarion | абз. 87 | нихъ | 0 |
 | по | 1037–1050 | ilarion | ilarion | абз. 8 | по | 0 |
 | то | 1037–1050 | ilarion | ilarion | абз. 6 | то | 0 |
 | вона | 1037–1050 | ilarion | ilarion | абз. 10 | неѣ | 0 |
-| ми | 1037–1050 | ilarion | ilarion | абз. 56 | насъ | 0 |
 
-78147 of 78201 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
+78149 of 78203 lexicon lemmas have a first-attestation claim; the rest are `unknown`.
 
 ## 7. Surzhyk / contact and dialect hits
 
 This is a literary corpus; the latest admitted witness is dated 2026. Contact-layer rules are gated to attestations ≥ 1919 (`modern(ctx)`), dialect rules to ≥ 1798 and to forms VESUM does not list as normative (core/detect.ts), so **very few hits are expected, and the ones below are not “surzhyk in the corpus”** — they are lemmas whose headword itself carries a contact label in VESUM/LanguageTool (derived claim, SURZHYK_DEF as evidence).
 
-Surzhyk claims: 2760 of 78201 lexicon lemmas. Examples: вони (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); тай (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); да (derived: russianism_or_hybrid); ше (derived: russianism_or_hybrid); шо (derived: russianism_or_hybrid); схід (derived: russianism_or_hybrid); аа (derived: russianism_or_hybrid); товариш (derived: russianism_or_hybrid); ІІ (derived: russianism_or_hybrid); рр (derived: russianism_or_hybrid); бій (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); даний (derived: russianism_or_hybrid); східний (derived: russianism_or_hybrid); Гр (derived: russianism_or_hybrid); західний (derived: russianism_or_hybrid); рН (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); жати (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid); вон (derived: russianism_or_hybrid)
+Surzhyk claims: 2759 of 78203 lexicon lemmas. Examples: що (derived: russianism_or_hybrid); вони (derived: russianism_or_hybrid); ще (derived: russianism_or_hybrid); щоб (derived: russianism_or_hybrid); піти (derived: russianism_or_hybrid); тай (derived: russianism_or_hybrid); СО (derived: russianism_or_hybrid); да (derived: russianism_or_hybrid); схід (derived: russianism_or_hybrid); аа (derived: russianism_or_hybrid); товариш (derived: russianism_or_hybrid); ІІ (derived: russianism_or_hybrid); рр (derived: russianism_or_hybrid); бій (derived: russianism_or_hybrid); власть (derived: russianism_or_hybrid); даний (derived: russianism_or_hybrid); східний (derived: russianism_or_hybrid); Гр (derived: russianism_or_hybrid); західний (derived: russianism_or_hybrid); рН (derived: russianism_or_hybrid); грати (derived: russianism_or_hybrid); што (derived: russianism_or_hybrid); жати (derived: russianism_or_hybrid); хай (derived: russianism_or_hybrid); ад (derived: russianism_or_hybrid)
 
-Dialect labels (lemmas): SE: 74 · MDN: 92 · BOY: 268 · LEM: 209 · CHN: 2313 · NDN: 156 · POD: 188 · SYAN: 66 · VOL: 39 · HUT: 3 · ZAK: 100 · PKB: 39 · WPL: 53 · SLB: 2 · STP: 3 · MPL: 11 · SW: 1
+Dialect labels (lemmas): SE: 74 · MDN: 92 · BOY: 273 · LEM: 213 · CHN: 2312 · NDN: 160 · POD: 188 · SYAN: 66 · VOL: 39 · HUT: 3 · ZAK: 100 · PKB: 39 · WPL: 53 · SLB: 2 · STP: 3 · MPL: 11 · SW: 1
 
-**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 2 · rusyn: 10; stored spellings with a rusyn claim: 12 of 440878. Rule hits (forms): CARP-Y:BOY>rusyn 10, RUE-Y-VELAR 8, RUE-Y-MIX 2, PAN-SHE 1, PAN-INF-C 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
+**Rusyn axis** (SPEC 40-rusyn, research/10 §5; a parallel reading next to dialect:ZAK/LEM, neutral on language-vs-dialect status — see `rusynStatus` in corpus.json). Gate: only non-normative forms, attestations ≥ 1850. Lemma labels: rusyn:pannonian: 2 · rusyn: 10; stored spellings with a rusyn claim: 12 of 441508. Rule hits (forms): CARP-Y:BOY>rusyn 10, RUE-Y-VELAR 8, RUE-Y-MIX 2, PAN-SHE 1, PAN-INF-C 1. **Expected ≈ 0 here:** the corpus is canonical literary Ukrainian plus Old Rus' / Ruthenian texts; Rusyn spelling (ы after к/г/х, -ськый, ӱ …) would appear only in witnesses by Rusyn-standard authors, and none is admitted. A near-zero count is a property of the corpus, not evidence about Rusyn.
 
-LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 2942 types (204 774 tokens). Top: тай (30550, replace), ше (24093, replace), да (23902, replace), єсть (8392, replace), вон (4279, replace), около (3789, replace), підчас (3704, replace), сейчас (3602, replace), всьо (3590, replace), власть (3477, replace), ад (3439, replace), зам (3331, replace), щож (3168, replace), дол (3124, replace), троха (1961, replace), тоже (1824, replace), шоб (1697, replace), іу (1585, replace), зара (1549, replace), будучи (1444, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
+LanguageTool `replace`/`soft` keys found among modern (lang=uk) corpus tokens: 2942 types (205 394 tokens). Top: тай (31048, replace), ше (24095, replace), да (23911, replace), єсть (8392, replace), вон (4288, replace), около (3791, replace), підчас (3704, replace), всьо (3632, replace), сейчас (3602, replace), власть (3477, replace), ад (3439, replace), зам (3332, replace), щож (3171, replace), дол (3124, replace), троха (1969, replace), тоже (1824, replace), шоб (1697, replace), іу (1588, replace), зара (1549, replace), будучи (1444, replace). These are 19th-century spellings flagged against *today’s* norm — not evidence of contact.
 
-Python stages: run by this build; stress.json 762 336 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 45 170 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
+Python stages: run by this build; stress.json 761 994 forms (ukrainian-word-stress 2.1.0 (data derived from ULIF «Словники України»; licence unclear)); ru.json 45 535 forms (pymorphy3 ru: «known» = present in the OpenCorpora dictionary, not “standard Russian”).
 
 ## 8. Caveats
 
-- **Corpus bias.** 5806 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
+- **Corpus bias.** 6114 witnesses chosen for availability and vetted authorship (research/06 §3.5): chronicles, sermons, a Gospel, early-modern prose, 19th-century poetry. “First attested” means first in *this* corpus.
 - **Epochs.** Both schemes are kept apart (research/09 §4). A witness is assigned to the epoch containing its date midpoint for counting; its full assignment (with confidence) is in corpus.json. Epoch boundaries are conventions with fuzz, not events.
 - **Model output vs dictionary fact (P-1.7).** The `stanza-lemma` route is a neural lemmatiser trained on TOROT (CC BY-NC-SA 3.0), weak outside its domain (`ruthenian` texts are flagged outOfDomain); its links are labelled with that method and are not dictionary facts. Stress is from `ukrainian-word-stress` (ULIF-derived, licence unclear, context-free) with status `unknown` and method `dictionary`; ru.json is a dictionary-membership test.
 - **Frequencies count linked tokens only**; ipm and HK use N = all tokens as denominator, so lemma frequencies are lower bounds by the unresolved share (24.7%).
-- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 78 201 of 145 218 lemmas; 78 201 written, none dropped. Core lexicon.json 61.67 MiB (a build intermediate, sanity cap 256 MiB; the site loads the cd/ and ix/ parts), per column: paradigm 17.05, forms 14.21, ev (pool) 12.27, claims 6.99, first 5.97, pos 1.66, lemma 1.47, stats 1.20, paradigmKind 0.56, tags (table) 0.16 MiB. Evidence stored once in a shared pool (98 972 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 29 701 shards lex/<bucket>.json: max 256 KB, median 34 KB, total 1208.0 MiB (limit 256 KiB each). lexindex.json 7.69 MB (37016 corpus-attested flagged forms added).
+- **lexicon.json (B-5, core + detail shards)**: lemmas with f ≥ 2 or a pre-1400 attestation: 78 203 of 145 197 lemmas; 78 203 written, none dropped. Core lexicon.json 61.78 MiB (a build intermediate, sanity cap 256 MiB; the site loads the cd/ and ix/ parts), per column: paradigm 17.05, forms 14.27, ev (pool) 12.30, claims 7.02, first 5.97, pos 1.66, lemma 1.47, stats 1.20, paradigmKind 0.56, tags (table) 0.16 MiB. Evidence stored once in a shared pool (99 256 distinct objects; cards carry indices, lossless). Detail (stress, link evidence, full KWIC ≤ 6 per spelling, full statistics) in 29 706 shards lex/<bucket>.json: max 255 KB, median 41 KB, total 1403.2 MiB (limit 256 KiB each). lexindex.json 7.69 MB (37020 corpus-attested flagged forms added).
 - **Origin claims** are heuristics with citations: `church_slavonic` needs a CS detector hit carrying ≥ half of the lemma’s tokens (no vernacular doublet of comparable weight); `native` needs an orv attestation by torot-lemma/token with only G/X rules in its derivation; otherwise `unknown`. Absence of a label is not evidence of the opposite.
 - **Register**: only “colloquial” (from VESUM tags slang/subst/short/vulg) or unknown; “literary” is never inferred (research/08 B3).
 - **Collocations** use a ±3 lemma window inside the source segment and a minimum f_xy of 3; linking errors propagate into them.
