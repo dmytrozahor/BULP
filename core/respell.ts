@@ -110,7 +110,7 @@ export interface Respelled {
   code: string; input: string; text: string; segs: Seg[]; fired: FiredSpell[]
   skipped: { rule: string; why: string }[]
   /** OV-14: cited «no respelling» statements of the dialect (the standard sound is the dialect's own), for the letters whose origin the card knows */
-  standard: { rule: string; text: string; cite: Evidence }[]
+  standard: { rule: string; text: string; cite: Evidence; cites?: Evidence[] }[]
   /** stressed vowel indices of `text` (when the input had positions) */
   positions?: number[]
 }
@@ -196,7 +196,7 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     else segs.push({ text: c.t })
   }
   const orgAt = (i: number): Origin | null => ctx.origins?.[i] ?? null
-  const standard = STANDARD_RULES.filter(r => r.code === code && r.applies(lower, orgAt)).map(r => ({ rule: r.id, text: r.text, cite: r.cite }))
+  const standard = STANDARD_RULES.filter(r => r.code === code && r.applies(lower, orgAt)).map(r => ({ rule: r.id, text: r.text, cite: r.cite, ...(r.cites ? { cites: r.cites } : {}) }))
   return { code, input, text, segs, fired, skipped, standard, positions }
 }
 /** a dialect leaves the word unchanged → shown as is, no mark */

@@ -63,8 +63,17 @@ describe('OV-14 VOL / POD cited standard і', () => {
     const ipa = (w: string, p: number[], o: ReturnType<typeof org>, d = 'POD') => ipaOf(w, d, { positions: p, origins: o }).ipa
     expect(ipa('ніс', [1], org('ніс', [], ['носа']))).not.toContain('nʲ'); expect(ipa('ніс', [1], org('ніс', [], ['носа']), '')).toContain('nʲ')
   })
+  it('OV-14 ZAK (MM-41): і < о and і < е list every area with its source, nothing is picked; ходити has no ü in the source and is not generated', () => {
+    const r = respell('кінь', 'ZAK', { positions: [1], origins: org('кінь', [], ['коня']) })
+    expect(r.text).toBe('кінь'); expect(r.standard.map(x => x.rule)).toEqual(['ZAK-O-AREAS'])
+    expect(r.standard[0]!.text).toMatch(/у — східні й західні.*ÿ — центральні.*і — крайні північні/); expect(r.standard[0]!.cite.quote).toContain('[ÿ] в центральних [вÿс]')
+    expect(r.standard[0]!.cites?.[0]?.quote).toContain('верховинські (кін’, л’ід, прин’іс)')
+    expect(respell('піч', 'ZAK', { positions: [1], origins: org('піч', [], ['печі']) }).standard.map(x => x.rule)).toEqual(['ZAK-E-I'])
+    expect(respell('кінь', 'WPL', { positions: [1], origins: org('кінь', [], ['коня']) }).standard.map(x => x.rule)).not.toContain('ZAK-O-AREAS')
+    expect(respell('ходити', 'ZAK', { positions: [3], origins: org('ходити') }).text).toBe('ходити')   // um162: хôжу, хôд’ат (ô), no ü/ÿ in ходити
+  })
   it('OV-14 every cite is a valid evidence claim (non-empty locator and quote)', () => {
-    for (const s of STANDARD_RULES) expect(() => claim(true, s.cite), s.id).not.toThrow()
+    for (const s of STANDARD_RULES) expect(() => claim(true, [s.cite, ...(s.cites ?? [])]), s.id).not.toThrow()
     const r = SPELL_RULES.find(x => x.id === 'MDN-O-KEPT')!; expect(() => claim(true, spellCite(r, 'MDN')!.cite)).not.toThrow()
   })
 })
