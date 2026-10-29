@@ -36,7 +36,8 @@
     "ingest:pum": "tsx pipelines/ingest-pum.ts",
     "harvest:launch": "powershell -NoProfile -File harvest/launch.ps1",
     "harvest:status": "powershell -NoProfile -File harvest/status.ps1",
-    "data:hist-lex": "tsx pipelines/fetch-hist-lex.ts && tsx pipelines/parse-hist-lex.ts && tsx pipelines/fetch-hist-typed.ts && tsx pipelines/parse-hist-typed.ts && tsx pipelines/fetch-hist-ws.ts && tsx pipelines/parse-hist-ws.ts"
+    "data:hist-lex": "tsx pipelines/fetch-hist-lex.ts && tsx pipelines/parse-hist-lex.ts && tsx pipelines/fetch-hist-typed.ts && tsx pipelines/parse-hist-typed.ts && tsx pipelines/fetch-hist-ws.ts && tsx pipelines/parse-hist-ws.ts",
+    "e2e:cards": "tsx pipelines/e2e-cards.ts"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
@@ -47,6 +48,7 @@
     "@types/leaflet": "^1.9.12",
     "@types/node": "^26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
+    "playwright": "^1.64.1",
     "tsx": "^4.23.15",
     "typescript": "~5.9",
     "vite": "^6.4.4",

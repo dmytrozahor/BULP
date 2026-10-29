@@ -81,4 +81,4 @@ Before: no card kind showed synonyms, antonyms or a Wiktionary phraseology list 
 - (CP-9, implemented) the thin cards' Словозміна now loads the VESUM paradigm from `lm/par` (the modern equivalent only, labelled, for historical cards), and the thin-card `<h1>` goes through `ThinTitle` (`Spell` for a modern word; historical spellings are not respelled). It appears after the next `build:data` on the worker, which produces the sidecar; until then the cards print the honest line.
 - The `paradigm` cell of the thin kinds stays `honest-empty`: a lemma VESUM lacks, a historical word with no modern equivalent, or a word with a full card has no sidecar entry.
 - The feature chips on thin cards carry no witness qualifier (galician / edition / older): the card spans several witnesses, so the qualifier is `neutral`.
-- Not verified against live CDN data in this pass: components were SSR-rendered with vitest (unknown lemma, empty data); the dev server was not driven.
+- Live check (CP-10, 2026-10-29): see `analysis/card-parity-live.md` (Playwright against the deployed site, `npm run e2e:cards`).
