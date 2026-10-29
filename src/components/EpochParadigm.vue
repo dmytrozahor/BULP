@@ -43,6 +43,8 @@ const dropTxt = (p: NonNullable<typeof cur.value>['p']) => p && [p.dropped.confl
 
 const wOf = (f: CellForm) => (props.witnesses ?? corpus.value?.witnesses)?.[f.ex[0]]
 const evOf = (f: CellForm) => cellEvidence(f, props.epochs!, { witnesses: props.witnesses ?? corpus.value?.witnesses ?? [] })
+// CP-10.1: the full witness list arrives after the grid may already be open (ensureCorpus); until then a cell has no evidence to show (never throw while rendering)
+const evsOf = (f: CellForm) => (props.witnesses ?? corpus.value?.witnesses)?.[f.ex[0]] ? [evOf(f)] : []
 const isCs = (f: CellForm) => wOf(f)?.lang === 'chu-rus'
 const ood = (f: CellForm) => f.src === 'stanza' && !!wOf(f)?.outOfDomain
 const SRC_LET = { torot: 'T', stanza: 'M', vesum: 'В' } as const
@@ -105,7 +107,7 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                     <template v-if="c">
                       <span v-if="c.tag" class="small muted dutag">{{ c.tag }}</span>
                       <!-- attested: solid -->
-                      <EvidencePopover v-for="f in c.att" :key="f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key}`" :label="`${f.raw}, ${c.key}`"
+                      <EvidencePopover v-for="f in c.att" :key="f.raw" :evidence="evsOf(f)" :heading="`${f.raw} · ${c.key}`" :label="`${f.raw}, ${c.key}`"
                         :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
                         <span class="ef att"><strong :class="['lang', 'attested', { old: oldEp(f.raw) }]"><Spell v-if="modernOf?.(f.raw)" :w="modernOf(f.raw)!" :raw="f.raw" quiet /><template v-else>{{ f.raw }}</template></strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                           <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="f.amb && f.amb > 1" class="sb" :title="`токен міг стояти в ${f.amb} клітинках`">≈{{ f.amb }}</span>
@@ -121,14 +123,14 @@ const gridOn = computed(() => placed.value > 0 || forceGrid.value)
                       </EvidencePopover>
                       <!-- pronoun grid: enclitic (short) forms as a marked sub-row of the cell -->
                       <div v-if="c.enc?.length" class="encrow small">
-                        <EvidencePopover v-for="f in c.enc" :key="'e' + f.raw" :evidence="[evOf(f)]" :heading="`${f.raw} · ${c.key} · енклітична форма`" :label="`${f.raw}, ${c.key}, енклітична форма`"
+                        <EvidencePopover v-for="f in c.enc" :key="'e' + f.raw" :evidence="evsOf(f)" :heading="`${f.raw} · ${c.key} · енклітична форма`" :label="`${f.raw}, ${c.key}, енклітична форма`"
                           :meta="`${f.n} ${f.n === 1 ? 'вживання' : 'вживань'} у цій добі`">
                           <span class="ef att enc"><span class="sb" title="коротка (енклітична) форма; визначено за написанням у клітинці">енкл.</span> <strong :class="['lang', 'attested', { old: oldEp(f.raw) }]"><Spell v-if="modernOf?.(f.raw)" :w="modernOf(f.raw)!" :raw="f.raw" quiet /><template v-else>{{ f.raw }}</template></strong><sup v-if="f.n > 1" class="muted">×{{ f.n }}</sup>
                             <span class="sb" :title="SRC_NOTE[f.src]">{{ SRC_LET[f.src] }}</span><span v-if="isCs(f)" class="sb cs" title="церковнослов’янська пам’ятка руської редакції (MH-30)">ЦС</span></span>
                         </EvidencePopover>
                       </div>
                       <!-- reconstruction: dashed -->
-                      <EvidencePopover v-for="r in c.rec" :key="'r' + r.form" :evidence="[...r.trace.flatMap(s => s.cite), ...(r.confirmedBy ?? []).map(evOf)]"
+                      <EvidencePopover v-for="r in c.rec" :key="'r' + r.form" :evidence="[...r.trace.flatMap(s => s.cite), ...(r.confirmedBy ?? []).flatMap(evsOf)]"
                         :heading="`${r.form} · реконструкція · ${c.key}`" :label="`реконструкція ${r.form}, ${c.key}`" meta="не засвідчено: виведено за таблицею парадигм (P-1.7)">
                         <span class="ef rec"><strong :class="['lang', 'derived', { old: oldEp(r.form) }]">{{ r.form }}</strong><span class="derived-badge">реконструкція</span>
                           <span v-if="r.variant" class="sb" title="варіант цієї клітинки у джерелі">варіант</span>
