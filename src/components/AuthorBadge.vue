@@ -6,7 +6,7 @@
 import { computed } from 'vue'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { AUTHOR_LABEL_UK, STATUS_UK } from '../lib/format.ts'
-import { authorTo } from '../lib/nav.ts'
+import { personTo } from '../lib/nav.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ author: string; witness?: string }>()
 const { witnessById } = useData()
@@ -16,7 +16,7 @@ const a = computed(() => authorInfo(props.author, props.witness ? witnessById.va
   <span class="authorbadge">
     <EvidencePopover v-if="a.evidence.length" :evidence="a.evidence" :heading="`Самоідентифікація: ${a.name}`" meta="P-2.1" :label="a.name"><strong>{{ a.name }}</strong></EvidencePopover>
     <strong v-else>{{ a.name }}</strong>
-    <RouterLink class="small" :to="authorTo(a.id)" :title="`картка автора ${a.name}`" aria-label="картка автора">→</RouterLink>
+    <RouterLink class="small" :to="personTo(a.id)" :title="`сторінка постаті: ${a.name}`" aria-label="сторінка постаті">→</RouterLink>
     <span v-if="a.label" class="authlabel" :title="`статус: ${STATUS_UK[a.status ?? ''] ?? ''}`"> {{ AUTHOR_LABEL_UK[a.label] }}<template v-if="a.status && a.status !== 'vetted'"> · {{ STATUS_UK[a.status] }}</template></span>
   </span>
 </template>

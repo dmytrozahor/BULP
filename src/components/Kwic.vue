@@ -12,6 +12,7 @@ import { assignEpoch } from '../../core/epochs.ts'
 import { isKnown } from '../../core/evidence.ts'
 import { epochShort } from '../lib/format.ts'
 import SourceCite from './SourceCite.vue'
+import MentionText from './MentionText.vue'
 import MediaPanel from './MediaPanel.vue'
 import { hasMedia, resolveMedia } from '../lib/sophiaData.ts'
 import type { WitnessMedia } from '../lib/media.ts'
@@ -55,7 +56,7 @@ const view = computed(() => (all.value ? pageSlice(shown.value, Math.min(kp.valu
       <button v-for="e in epochs" :key="e" type="button" class="chip" :aria-pressed="sel === e" @click="sel = e">{{ epochShort(e) }}</button>
     </div>
     <div v-for="(k, i) in view" :key="i" class="kwic">
-      <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span>{{ k.left }}</span></span>{{ ' ' }}<span v-if="plain" :class="['n', { old: isOldForm(k.node, k.date[1]) }]">{{ k.node }}</span><RouterLink v-else :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]">{{ k.right }}</span>
+      <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span><MentionText :text="k.left" :witness="k.w" /></span></span>{{ ' ' }}<span v-if="plain" :class="['n', { old: isOldForm(k.node, k.date[1]) }]">{{ k.node }}</span><RouterLink v-else :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]"><MentionText :text="k.right" :witness="k.w" /></span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="oqOf(k.w)"> · <span class="badge" data-testid="oq-badge" :title="`невичитаний OCR archive.org, якість S = ${oqOf(k.w)!.score}; не є першою фіксацією й не дає епохи (SPEC 63 OQ)` + (oqOf(k.w)!.preferred ? '; є вичитане видання: ' + oqOf(k.w)!.preferred!.join(', ') : '')">OCR низької якості</span></template>
         <template v-if="phraseOf(k)"> · <RouterLink class="small" :to="phraseTo(phraseOf(k)!.id!)">сталий зворот →</RouterLink></template>

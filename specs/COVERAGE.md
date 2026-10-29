@@ -1100,3 +1100,25 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-15 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-16 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
 | GG-17 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| PS-1 | tests/persons.test.ts › PS-1 persons builder |
+| PS-1 | tests/persons.test.ts › PS-1 author records merge |
+| PS-1 | tests/persons.test.ts › PS-1 a pseudonym |
+| PS-1 | tests/persons.test.ts › PS-1 collective, anonymous |
+| PS-2 | tests/persons.test.ts › PS-1 linguist flag |
+| PS-2 | tests/persons.test.ts › PS-2 identity only |
+| PS-3 | tests/persons.test.ts › PS-3 index rows are compact |
+| PS-3 | tests/persons.test.ts › PS-3 name cleaning |
+| PS-4 | tests/persons.test.ts › PS-4 list filters and sort |
+| PS-5 | tests/persons.test.ts › PS-5 /persons and /person/:id are routes |
+| PS-5 | tests/persons.test.ts › PS-5 the views carry the honest empties |
+| PS-5 | tests/persons.test.ts › PS-5 the author badge |
+| PS-6 | tests/persons.test.ts › PS-6 only free licences pass |
+| PS-6 | tests/persons.test.ts › PS-6 one candidate with name |
+| PS-6 | tests/persons.test.ts › PS-6 two candidates that fit are ambiguous |
+| PS-6 | tests/persons.test.ts › PS-6 a non-free portrait |
+| PS-7 | manual: a coordination note, no code; the shared data model is `Person.linguist` in core/persons.ts |
+| PS-8 | tests/persons.test.ts › PS-8 true positives |
+| PS-8 | tests/persons.test.ts › PS-8 negatives |
+| PS-8 | tests/persons.test.ts › PS-8 context rescue |
+| PS-8 | tests/persons.test.ts › PS-8 surname detection |
+| PS-8 | tests/persons.test.ts › PS-8 the client only renders |

@@ -8,7 +8,7 @@ import { computed, ref, watch } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK, WTYPE_UK } from '../lib/format.ts'
-import { authorTo, epochTo, isOldForm, textTo, wordTo } from '../lib/nav.ts'
+import { authorTo, personTo, epochTo, isOldForm, textTo, wordTo } from '../lib/nav.ts'
 import { loadSophia, resolveMedia } from '../lib/sophiaData.ts'
 import { sophiaIdOf, type SophiaItem, type WitnessMedia } from '../lib/media.ts'
 import { loadTokens, rowRef, rowsOf, type Row } from '../lib/witnessText.ts'
@@ -40,7 +40,7 @@ const title = computed(() => w.value?.title ?? (item.value ? `Графіті ${i
   <p v-else-if="!w && !item" class="card muted" role="status">Пам’ятки «{{ id }}» немає в корпусі. <RouterLink to="/texts">Усі пам’ятки</RouterLink>.</p>
   <template v-else>
     <ul v-if="w" class="sans small" style="list-style:none;padding:0">
-      <li><span class="muted">автор: </span><AuthorBadge :author="w.author" :witness="w.id" /> <RouterLink :to="authorTo(w.author)">картка автора →</RouterLink></li>
+      <li><span class="muted">автор: </span><AuthorBadge :author="w.author" :witness="w.id" /> <RouterLink :to="personTo(w.author)">постать →</RouterLink> · <RouterLink :to="authorTo(w.author)">картка автора →</RouterLink></li>
       <li><span class="muted">дата: </span>{{ fmtDate(w.date) }}
         <EvidencePopover :evidence="[w.dateCite]" :heading="`Датування: ${fmtDate(w.date)}`" label="датування"><span class="badge">ⓘ джерело дати</span></EvidencePopover></li>
       <li v-if="epochs.length"><span class="muted">епоха: </span><template v-for="(e, i) in epochs" :key="e"><template v-if="i"> / </template><RouterLink :to="epochTo(e)">{{ epochShort(e) }}</RouterLink></template></li>

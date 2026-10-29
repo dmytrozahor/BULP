@@ -3,7 +3,7 @@
 import { computed } from 'vue'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { AUTHOR_LABEL_UK, fmtDate, STATUS_UK } from '../lib/format.ts'
-import { witnessTo } from '../lib/nav.ts'
+import { personTo, witnessTo } from '../lib/nav.ts'
 import EvidenceList from '../components/EvidenceList.vue'
 const props = defineProps<{ id: string }>()
 const { loaded, corpus, ensureCorpus } = useData()
@@ -17,6 +17,7 @@ const works = computed(() => (corpus.value?.witnesses ?? []).filter(w => w.autho
   <div v-if="!loaded" class="skeleton" style="height:5rem" />
   <template v-else>
     <h1>{{ a.name }}</h1>
+    <p class="small sans"><RouterLink :to="personTo(props.id)">сторінка постаті →</RouterLink></p>
     <p class="sans small">
       <span v-if="a.label" class="authlabel">{{ AUTHOR_LABEL_UK[a.label] }}</span>
       <template v-if="a.status"> · {{ STATUS_UK[a.status] ?? a.status }}</template>

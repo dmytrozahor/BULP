@@ -19,7 +19,7 @@ describe('BL-16 router walk: no element type is a dead end', () => {
       expect(m.matched.length, k).toBeGreaterThan(0)
       expect(m.matched.at(-1)!.name, k).not.toBe('catch-all')
     }
-    expect(KINDS.length).toBe(12)
+    expect(KINDS.length).toBe(13)
   })
   it('link builders encode ids and land on the right views', () => {
     const r = makeRouter(true), to = (p: string) => r.resolve(p).matched.at(-1)!.path

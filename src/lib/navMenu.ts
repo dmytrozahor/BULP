@@ -21,6 +21,7 @@ export const NAV_GROUPS: NavGroup[] = [
   { id: 'sources', label: 'Джерела та спільноти', items: [
     { to: '/plast', label: 'Пласт', hint: 'пластова лексика' },
     { to: '/sophia', label: 'Софія', hint: 'написи Софії Київської' },
+    { to: '/persons', label: 'Постаті', hint: 'автори, лінгвісти й діячі різних епох у корпусі' },
     { to: '/atlas', label: 'Атлас', hint: 'діалектні риси з «Атласу української мови»' },
     { to: '/map', label: 'Мапа', hint: 'історичні землі й пам’ятки на мапі' },
   ] },
@@ -33,7 +34,7 @@ export const NAV_GROUPS: NavGroup[] = [
 ]
 export const navRoutes = () => NAV_GROUPS.flatMap(g => g.items.filter(i => !i.external).map(i => i.to))
 /** which group a route belongs to (the active group is marked) */
-export const groupOf = (path: string) => NAV_GROUPS.find(g => g.items.some(i => !i.external && (i.to === '/' ? path === '/' || path.startsWith('/w/') || path.startsWith('/f/') : path === i.to || path.startsWith(i.to + '/'))))?.id
+export const groupOf = (path: string) => NAV_GROUPS.find(g => g.items.some(i => !i.external && (i.to === '/' ? path === '/' || path.startsWith('/w/') || path.startsWith('/f/') : path === i.to || path.startsWith(i.to + '/') || (i.to === '/persons' && path.startsWith('/person/')))))?.id
 /** arrow-key rule inside an open menu: index of the link to focus next (wraps), undefined = key not handled */
 export function nextIndex(key: string, i: number, n: number): number | undefined {
   if (!n) return undefined

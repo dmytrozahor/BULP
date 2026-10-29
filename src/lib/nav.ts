@@ -4,7 +4,7 @@
  */
 import { SOURCES } from '../../core/sources.ts'
 
-export type ElementKind = 'word' | 'form' | 'kwic' | 'token' | 'witness' | 'author' | 'source' | 'epoch' | 'dialect' | 'place' | 'rule' | 'evidence'
+export type ElementKind = 'word' | 'form' | 'kwic' | 'token' | 'witness' | 'author' | 'person' | 'source' | 'epoch' | 'dialect' | 'place' | 'rule' | 'evidence'
 const e = encodeURIComponent
 export const wordTo = (lemma: string) => `/w/${e(lemma)}`
 export const formTo = (form: string, lemma?: string) => (lemma ? `/f/${e(form)}?lemma=${e(lemma)}` : `/f/${e(form)}`)
@@ -12,6 +12,8 @@ export const formTo = (form: string, lemma?: string) => (lemma ? `/f/${e(form)}?
 export const phraseTo = (id: string) => `/p/${e(id)}`
 export const witnessTo = (id: string) => `/witness/${e(id)}`
 export const authorTo = (id: string) => `/author/${e(id)}`
+/** SPEC 63 PS: the page of one person (any of its author ids) */
+export const personTo = (id: string) => `/person/${e(id)}`
 export const sourceTo = (id: string) => `/source/${e(id)}`
 /** the witness's running text at a locator (scrolled to + highlighted by TextsView) */
 export const textTo = (id: string, loc?: string) => (loc ? `/texts?w=${e(id)}&loc=${e(loc)}` : `/texts?w=${e(id)}`)
@@ -29,7 +31,7 @@ export const evidenceTo = (source: string, locator?: string, isWitness = false) 
 /** One sample link per element type; the router-walk test resolves each and asserts it is not the catch-all redirect. */
 export const ELEMENT_ROUTES: Record<ElementKind, string> = {
   word: wordTo('вода'), form: formTo('води', 'вода'), kwic: formTo('води', 'вода'), token: wordTo('вода'),
-  witness: witnessTo('sophia-1'), author: authorTo('nestor'), source: sourceTo('SHEV'),
+  witness: witnessTo('sophia-1'), author: authorTo('nestor'), person: personTo('shevchenko'), source: sourceTo('SHEV'),
   epoch: epochTo('shev.old'), dialect: dialectTo('WPL'), place: placeTo('Київ'), rule: ruleTo('R10'), evidence: evidenceTo('SHEV', 'с. 1'),
 }
 

@@ -11,7 +11,8 @@ import { computed, nextTick, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { findLoc, loadTokens, rowRef, rowsOf, type Tok } from '../lib/witnessText.ts'
-import { epochTo, witnessTo, wordTo }  from '../lib/nav.ts'
+import { epochTo, personTo, witnessTo, wordTo }  from '../lib/nav.ts'
+import { mentionsOf, personTipOf } from '../lib/personsData.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { featureMarks, markTitle } from '../lib/featureMarks.ts'
@@ -52,6 +53,8 @@ watch(() => cur.value?.id, async id => {
   const t = await loadTokens(id); if (id === cur.value?.id) toks.value = t
 }, { immediate: true })
 const total = computed(() => (Array.isArray(toks.value) ? toks.value.length : 0))
+/** SPEC 63 PS-8: build-time person mentions of this witness that start at this token (same locator and first word) */
+const startsAt = (t: { raw: string; loc: string }) => (cur.value ? mentionsOf(cur.value.id).filter(m => m.loc === t.loc && m.f.split(' ')[0] === t.raw) : [])
 const rows = computed(() => (!Array.isArray(toks.value) || !loaded.value ? [] : rowsOf(toks.value, page.value * PAGE_SIZE, (page.value + 1) * PAGE_SIZE, annData.value)))
 watch([locIdx, () => rows.value.length], async () => { if (locIdx.value < 0) return; await nextTick(); document.querySelector('.tok.hit')?.scrollIntoView({ block: 'center' }) })
 /** MM-16: a spelling that shows a cited feature rule (сь before a labial, -є for -я, -ійш-, hyphenated particle …) gets a dotted underline and a tooltip with the feature, the qualifier and the rule id; computed per visible token, nothing new is loaded */
@@ -106,7 +109,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
         <template v-for="(t, i) in rows" :key="i">
           <RouterLink v-if="rowRef(t)" :class="['tok', 'attested', { feat: !!fm(t.raw), hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="rowRef(t)!" :title="`${t.loc} · ${t.ref}${fm(t.raw) ? ' · ' + fm(t.raw) : ''}`">{{ t.raw }}</RouterLink>
           <RouterLink v-else-if="t.lemma" :class="['tok', t.status, { derived: t.provenance === 'derived', feat: !!fm(t.raw), hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }]" :to="wordTo(t.lemma)" :title="`${t.loc} · лема «${t.lemma}»${fm(t.raw) ? ' · ' + fm(t.raw) : ''}`">{{ t.raw }}</RouterLink>
-          <RouterLink v-else class="tok unknown" :class="{ feat: !!fm(t.raw), hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="fm(t.raw) ? `${t.loc} · ${fm(t.raw)}` : t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}
+          <RouterLink v-else class="tok unknown" :class="{ feat: !!fm(t.raw), hit: isHit(t.loc), old: isOldForm(t.raw, cur.date[1]) }" :to="{ path: '/analyze', query: { q: t.raw } }" :title="fm(t.raw) ? `${t.loc} · ${fm(t.raw)}` : t.loc">{{ t.raw }}</RouterLink>{{ t.sep }}<RouterLink v-for="m in startsAt(t)" :key="m.p + m.t" class="pmention" :to="personTo(m.p)" :title="personTipOf(m.p, m.why)" aria-label="постать">◈</RouterLink>
         </template>
       </p>
       <p v-if="rows.length" class="small sans muted">Перше слово сторінки: {{ rows[0]!.loc }}
