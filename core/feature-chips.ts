@@ -24,7 +24,7 @@ const place = (edition?: string) => /^([А-ЯІЇЄҐ][а-яіїєґ'’-]+)\s+(
 interface Feature { label: string; feature: string; galician: string; edition: (p: string) => string; older?: string; /** text for a witness without the Желехівка orthography whose author is not Galician (OCR editions): the form is named, no dialect is claimed */ neutral?: string }
 const FEATURES: Record<string, Feature> = {
   'ORTH-ZHEL-SOFT': { feature: 'асимілятивна м’якість', label: 'ь після с, з, ц перед губним (сьпів, сьвіт, цьвях)',
-    galician: 'галицька вимова, передана желехівкою', edition: p => `західна (галицька) вимова, передана желехівкою (правопис видання${p ? ' ' + p : ''}), не діалект автора` },
+    galician: 'галицька вимова, передана желехівкою', edition: p => `західна (галицька) вимова, передана желехівкою (правопис видання${p ? ' ' + p : ''}), не діалект автора; діалектну належність джерело не називає (джерела не знайдено)` },
   'ORTH-ZHEL-INIT-I': { feature: 'початкове и- = [і]', label: 'и- на початку слова замість і- (инший)',
     galician: 'галицька форма', edition: p => `давніша / галицька форма (правопис видання${p ? ' ' + p : ''}), не діалект автора`, older: 'давніша форма' },
   'ORTH-ADJ-IISH': { feature: 'вищий ступінь на -ійш-', label: '-ійший / -ійше замість -іший / -іше (скорійше, новійший)', galician: 'галицька форма (Смаль-Стоцький: -ї(й)ший)', neutral: 'галицька (давніша) форма вищого ступеня, не діалектна ознака автора',

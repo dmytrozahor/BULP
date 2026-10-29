@@ -1008,3 +1008,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-8 | tests/card-parity.test.ts › CP-8 the RF flag reaches every cited line: Kwic -> SourceCite -> RuBadge, WitnessPanel -> RuBadge |
 | CP-8 | tests/card-parity.test.ts › CP-8 the thin card ( |
 | CP-8 | tests/card-parity.test.ts › CP-8 the matrix is written to analysis/card-parity.md (every kind and every block) and the spec carries the CP-8 item |
+| MM-37 | tests/mm37.test.ts › MM-37 сь / зь / ць + labial → с / з / ц for linking (every labial of the cited statement) |
+| MM-37 | tests/mm37.test.ts › MM-37 -тьця / -цця = -ться (сьпіваютьця, засьміетця) |

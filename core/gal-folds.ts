@@ -8,7 +8,7 @@
  *  ORTH-PART-HYPH   прийми-ж, було-б, ходи-но → the host word + a particle (the hyphen is the older / Galician way to attach it)
  *  ORTH-DAT-OVI     міст-ові, містові → міст (MM-29): the dative in -ові/-еві/-єві joined to the unchanged stem, with or without a hyphen
  */
-import { Q } from './evidence.ts'
+import { P, Q } from './evidence.ts'
 import type { Fold } from './orthography.ts'
 import type { Candidate } from './phonology.ts'
 import { familyMember } from './variant-families.ts'
@@ -67,8 +67,20 @@ const WPL_DAT = Q('WUK', 'uk.wikipedia «Західнополіський гов
   'Вікіпедія називає західні говори (західнополіський, наддністрянський) носіями давального на -ови / -еви. Стандартне закінчення -ові, -еві, -єві (Правопис 2019 § 83, research/02). Закінчення -ові на незміненій основі (містові: без чергування о / і) окремою цитатою у сховищі не підтверджено; дефіс у «міст-ові» — друкарське з’єднання (джерела про дефіс у відмінковому закінченні не знайдено)')
 export const DAT_OVI_FOLD: Fold = { id: 'ORTH-DAT-OVI', era: [], branch: true, cite: WPL_DAT, apply: toDatStem }
 
-export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD]
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD]
+/**
+ * MM-37: the 3rd-person reflexive ending written as it is PRONOUNCED, -тьця / -тця / -цця (сьпіваютьця, засьміетця): the link candidate -ться (сьпіваютьця -> співаються; засьміетця -> засміється, -ет- read as -єт- after a vowel).
+ * The ь in -тьця is a softness mark like ORTH-ZHEL-SOFT, but the quote on that page names only labials, so this fold has NO source statement of its own: it is the owner's identification
+ * (a link candidate only, VESUM decides; no feature chip, because a chip needs a cited rule, core/feature-chips.ts).
+ */
+const TSYA = /(?:ть|т|ц)ця$/
+export const toTsya = (w: string): string => TSYA.test(w) ? w.replace(TSYA, 'ться').replace(/([аеиіоуяюєї])е(ться)$/, '$1є$2') : w
+export const TSYA_PHON_FOLD: Fold = {
+  id: 'ORTH-TSYA-PHON', era: [], branch: true,
+  cite: P('OWNER', 'повідомлення власника, 2026-10-29 (сьпіваютьця, засьміетця у Грінченка 1893)', '-тьця / -цця = -ться (сьпіваютьця)', 'джерела (граматики, словника) з цим твердженням у сховищі не знайдено; кандидат для зв’язування, ознака не показується'),
+  apply: toTsya,
+}
+export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD]
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD]
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
 export function withGal<T extends Candidate[]>(cands: T): Candidate[] {

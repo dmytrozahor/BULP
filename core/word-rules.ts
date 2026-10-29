@@ -9,6 +9,7 @@
  */
 import { key } from './text.ts'
 import { familyMember, memberEvidence, ROLE_UK, type VFamily, type VMember } from './variant-families.ts'
+import { ZHEL_FOLDS } from './zhel-folds.ts'
 import { toDatStem, toOvati, toUvati, splitHyphenParticle, DAT_OVI_FOLD, VERB_OVATI_FOLD } from './gal-folds.ts'
 import { classifyRu, type RuClass, type RuCtx, type RuLookups } from './ru-contact.ts'
 import type { Evidence } from './evidence.ts'
@@ -38,7 +39,7 @@ export const variantKeys = (k: string): string[] => { const h = variantHit(k); r
 export { familyOfLemma } from './variant-families.ts'
 
 export interface FeaturePair {
-  /** feature rule id (core/feature-chips.ts FEATURES, cited fold in core/gal-folds.ts) */ rule: 'ORTH-VERB-OVATI' | 'ORTH-DAT-OVI'
+  /** feature rule id (core/feature-chips.ts FEATURES, cited fold in core/gal-folds.ts) */ rule: 'ORTH-VERB-OVATI' | 'ORTH-DAT-OVI' | 'ORTH-ZHEL-SOFT'
   /** 'forward' = the cited fold direction (-ова- → -ува-); 'reverse' = the counterpart seen from the standard side (-ува- → -ова-) */ direction: 'forward' | 'reverse'
   from: string; to: string; known: boolean
   /** Ukrainian one-line statement of the direction */ text: string
@@ -57,6 +58,10 @@ export function featurePairs(word: string, known: (k: string) => boolean): Featu
     text: `«${w}» — сучасна форма на -ува-; давніша / галицька друкована форма — на -ова-: «${op}» (те саме правило, зворотний напрям)` })
   if (dat !== w && !known(w) && known(key(dat))) out.push({ rule: 'ORTH-DAT-OVI', direction: 'forward', from: w, to: dat, known: true, cite: DAT_OVI_FOLD.cite,
     text: `«${w}» — давальний відмінок на -ові, прикріплений до незміненої основи «${dat}» (західна форма; стандартна форма має чергування, мостові)` })
+  // MM-37: сь / зь / ць before a hard labial (засьпіваєш, сьвіт, цьвях): the cited Желехівка spelling, shown in Аналіз слова for a word with no witness context
+  const soft = ZHEL_FOLDS.find(f => f.id === 'ORTH-ZHEL-SOFT')!, sf = soft.apply(w)
+  if (sf !== w && !known(w) && known(key(sf))) out.push({ rule: 'ORTH-ZHEL-SOFT', direction: 'forward', from: w, to: sf, known: true, cite: soft.cite,
+    text: `«${w}» — ь після с, з, ц перед губним: правопис Желехівки (друковані галицькі видання); сучасна форма «${sf}». Діалектну належність цього написання джерело не називає (джерела не знайдено)` })
   return out
 }
 
