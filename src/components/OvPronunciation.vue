@@ -10,11 +10,20 @@ import { DIALECTS } from '../../core/rules.ts'
 import { dialect, ipaOf } from '../lib/views.ts'
 import StressForms from './StressForms.vue'
 import Spell from './Spell.vue'
+import { stOf } from '../lib/stressSrc.ts'
+import { conflictLine, stGroups } from '../../core/stress-src.ts'
 const props = withDefaults(defineProps<{ word: string; /** stress variants of a word card */ stress?: StressVariant[]; /** dictionary stress positions of a thin card */ positions?: number[]; loaded?: boolean; /** CP-8: the word is a historical spelling (ORV / archaic / Middle Ukrainian card): the switches respell MODERN words only */ historical?: boolean }>(), { loaded: undefined })   // MM-27: absent ≠ false (Vue boolean casting)
 const variants = computed(() => props.stress ?? [])
-const pos = computed<number[] | undefined>(() => (variants.value[0]?.positions as number[] | undefined) ?? props.positions)
+/** GG-14: stress from the sidecar (СУМ headwords, r2u dictionaries, en.wiktionary), each with its source; historical spellings are never looked up */
+const own = computed(() => [...variants.value.map(v => ({ positions: v.positions as number[], src: 'ulif', loc: '' })), ...(variants.value.length ? [] : (props.positions ?? []).map(p => ({ positions: [p], src: 'ulif', loc: '' })))])
+const side = computed(() => (props.historical ? undefined : stOf(props.word)))
+const sideVars = computed(() => (side.value ?? []).flatMap(e => e.variants))
+const groups = computed(() => stGroups(props.word, sideVars.value.filter(v => v.positions.every(p => p < props.word.length)), own.value))
+const sideOnly = computed(() => !variants.value.length && !props.positions?.length && groups.value.length > 0)
+const conflict = computed(() => conflictLine(groups.value))
+const pos = computed<number[] | undefined>(() => (variants.value[0]?.positions as number[] | undefined) ?? props.positions ?? (sideOnly.value ? groups.value[0]!.positions : undefined))
 const base = computed(() => variants.value[0]?.form ?? props.word)
-const hasStress = computed(() => variants.value.length > 0 || !!props.positions?.length)
+const hasStress = computed(() => variants.value.length > 0 || !!props.positions?.length || sideOnly.value)
 const ipa = (d: string) => { try { return ipaOf(base.value, d, { positions: pos.value }).ipa } catch { return '' } }
 const std = computed(() => ipa('')), dia = computed(() => (dialect.value ? ipa(dialect.value) : ''))
 const dname = computed(() => DIALECTS[dialect.value] ?? dialect.value)
@@ -25,9 +34,12 @@ const dname = computed(() => DIALECTS[dialect.value] ?? dialect.value)
     <p style="margin:.1rem 0">
       <template v-if="variants.length"><StressForms :variants="variants" /></template>
       <template v-else-if="positions?.length"><strong style="font-size:1.1rem">{{ renderStress(word, positions) }}</strong> <span class="muted">· словниковий наголос</span></template>
+      <template v-else-if="sideOnly"><span v-for="(g, i) in groups" :key="i" data-testid="ov-st-group"><strong style="font-size:1.1rem">{{ g.shown }}</strong> <span class="muted" :title="g.sources.map(s => s.name + ' · ' + s.loc).join('; ')">· {{ g.sources.map(s => s.name).join(', ') }}</span><span v-if="i < groups.length - 1">; </span></span></template>
       <span v-else-if="loaded !== false" class="unk" tabindex="0" title="немає доказів — значення не встановлено (P-3.1)">наголос не встановлено</span>
       <span v-else class="muted">наголос: завантаження…</span>
     </p>
+    <p v-if="conflict" class="small" style="margin:.1rem 0" data-testid="ov-st-conflict">{{ conflict }} <span class="muted">· варіанти не зведено; IPA — за першим</span></p>
+    <p v-else-if="groups.length && !sideOnly && side?.some(e => e.variants.length)" class="small muted" style="margin:.1rem 0" data-testid="ov-st-agree">наголос підтверджують також: {{ groups[0]!.sources.map(s => s.name).join(', ') }}</p>
     <p v-if="!historical" style="margin:.1rem 0" data-testid="ov-spelling"><span class="muted">Написання (перемикачі «Говір» і «Правопис»): </span><Spell :w="word" /></p>
     <p v-else style="margin:.1rem 0" class="muted" data-testid="ov-spelling-none">Написання: «{{ word }}» — історичне написання пам’ятки; немає даних для перемикачів (перевірено: правила говору й правопису перекладають сучасне написання, а це написання пам’ятки; його сучасну форму дивись у «Виведення»)</p>
     <p v-if="std" style="margin:.1rem 0"><span class="muted">IPA: </span><span :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ std }}</span> <span class="muted">· виведено за правилами{{ hasStress ? '' : ', без наголосу' }}</span></p>

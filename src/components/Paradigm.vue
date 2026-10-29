@@ -6,8 +6,11 @@
 import { computed } from 'vue'
 import Spell from './Spell.vue'
 import { ctxOfTags } from '../lib/dialectView.ts'
+import { formStress, ST_SOURCES, type StLemma } from '../../core/stress-src.ts'
+import { renderStress } from '../../core/text.ts'
 import { buildGrids, nonNormative, type PForm } from '../lib/paradigm.ts'
-const props = defineProps<{ paradigm: PForm[]; kind?: string }>()
+const props = defineProps<{ paradigm: PForm[]; kind?: string; /** GG-14: stressed forms from the sidecar (kaikki …); a form that no source stresses is shown plain, nothing is generated */ stressForms?: StLemma['forms'] }>()
+const stressed = (form: string): { text: string; tip: string }[] => (props.stressForms?.length ? formStress(props.stressForms, form) : []).map(x => ({ text: renderStress(form.toLowerCase(), x.positions), tip: ST_SOURCES[x.src]?.by ?? x.src }))
 const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(props.paradigm))
 </script>
 
@@ -23,7 +26,7 @@ const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(prop
           <th scope="row">{{ r.label }}</th>
           <td v-for="(cell, i) in r.cells" :key="i">
             <template v-if="cell.length"><span v-for="(p, j) in cell" :key="j">
-              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`"><Spell :w="p.form" :ctx="ctxOfTags(p.tags)" quiet /></span><span v-if="j < cell.length - 1">, </span></span></template>
+              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`"><Spell :w="p.form" :ctx="ctxOfTags(p.tags)" quiet /></span><span v-for="(x, k) in stressed(p.form)" :key="k" class="muted small" :title="'наголос ' + x.tip" data-testid="par-stress"> ({{ x.text }})</span><span v-if="j < cell.length - 1">, </span></span></template>
             <span v-else class="muted">—</span>
           </td>
         </tr>

@@ -841,6 +841,16 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-16 | tests/fx.test.ts › MM-16c real case «бажанєм» (71 tokens, Франко 1893 / 1902 / 1906, Львів, Желехівка): the oblique -єм links to бажання › бажанєм → бажанням, бажанєми → бажаннями, знанєх → знаннях by ORTH-ZHEL-JE-OBL (a branching fold: VESUM decides) |
 | MM-16 | tests/fx.test.ts › MM-16c real case «бажанєм» (71 tokens, Франко 1893 / 1902 / 1906, Львів, Желехівка): the oblique -єм links to бажання › the token links to бажання through the lemma бажання (VESUM бажання noun:inanim:p:v_oru?) and carries the Galician chip for Франко |
 | GG-7 | tests/gg.test.ts › GG-7 nVocab equals the sum of vocabSources (other-language family excluded) and no source is counted twice |
+| GG-14 | tests/stress-src.test.ts › GG-14 parsing › positions are indices of stressed vowels in the unstressed form; one word only |
+| GG-14 | tests/stress-src.test.ts › GG-14 sources › СУМ headword with stress (GG-7): only sum11 / sum20 rows, locator kept |
+| GG-14 | tests/stress-src.test.ts › GG-14 sources › r2u: Грінченко (uk-ru) takes the first article word; Уманець (ru-uk) takes single-word equivalents |
+| GG-14 | tests/stress-src.test.ts › GG-14 sources › old orthography: mapped only when the fold is unambiguous and vowels map one to one |
+| GG-14 | tests/stress-src.test.ts › GG-14 sources › kaikki: headword form with stress and stressed paradigm forms (CC BY-SA source) |
+| GG-14 | tests/stress-src.test.ts › GG-14 shard, conflicts, no rule generation › each variant carries source + locator; same stress from two sources is one group, different stress is a conflict with both sources |
+| GG-14 | tests/stress-src.test.ts › GG-14 shard, conflicts, no rule generation › stressed forms are found by the plain form; a form no source stresses stays unstressed (no rule) |
+| GG-14 | tests/stress-src.test.ts › GG-14 shard, conflicts, no rule generation › no stress-by-rule code path |
+| GG-14 | tests/stress-src.test.ts › GG-14 build step (RS-1) › collectStress reads СУМ + kaikki fixtures, writes atomically, reports a missing input |
+| GG-14 | tests/stress-src.test.ts › GG-14 wiring › build chain, lm/st, lazy card reads |
 | GG-8 | tests/gg.test.ts › GG-8 old data shape (no vocabV): total and the three inflated sources hidden, the note shown, HPLT and the small sources kept |
 | GG-8 | tests/gg.test.ts › GG-8 new data shape (vocabV 2, as vocabCounts writes it): everything shown, no note |
 | MM-18 | tests/fx.test.ts › MM-18 «скорійше не прив’язано до скоріше»: -ійш- → -іш- (Смаль-Стоцький 1914 §§ 62–63: «-ший, -ї(й)ший, -іщий») › скорійше → скоріше, новійший → новіший, найсвятійша → найсвятіша: one extra branch, the cited fold id in the trace; VESUM decides |

@@ -52,7 +52,7 @@ describe('CP-9 thin-lemma VESUM paradigm sidecar', () => {
     } finally { rmSync(root, { recursive: true, force: true }) }
   })
   it('CP-9 the build chain runs the step before build-parts, and build-parts shards it into lm/par', () => {
-    expect(readFileSync('package.json', 'utf8')).toMatch(/build\.ts && tsx pipelines\/build-thin-par\.ts && tsx pipelines\/build-parts\.ts/)
+    expect(readFileSync('package.json', 'utf8')).toMatch(/build\.ts && tsx pipelines\/build-thin-par\.ts && tsx pipelines\/build-stress-src\.ts && tsx pipelines\/build-parts\.ts/)
     expect(readFileSync('pipelines/build-parts.ts', 'utf8')).toContain("fresh('lm/par')")
   })
 })

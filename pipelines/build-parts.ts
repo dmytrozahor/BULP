@@ -8,6 +8,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, w
 import { gzipSync } from 'node:zlib'
 import { basename } from 'node:path'
 import { thinParFiles } from './build-thin-par.ts'
+import { stressSrcFiles } from './build-stress-src.ts'
 import { bootEntries, readUvAttested } from './boot-uv.ts'
 import { unpackCore, packCore } from '../core/pack.ts'
 import { writeJsonAtomic } from './robust.ts'
@@ -263,6 +264,10 @@ function writeLm() {
   {   // SPEC 63 CP-9: data/work/thinpar/<bucket>.json (pipelines/build-thin-par.ts, not committed) → lm/par/<bucket>.json, the VESUM paradigm of the lemmas without a full card
     const files = thinParFiles('.')
     if (files.length) { fresh('lm/par'); let worst = 0; for (const f of files) { const j = JSON.parse(readFileSync(f, 'utf8')); worst = Math.max(worst, gz(j)); out(`lm/par/${basename(f)}`, j) }; log.push(`par ${files.length} (worst ${(worst / 1024).toFixed(1)} KB gz)`) }
+  }
+  {   // SPEC 63 GG-14: data/work/stsrc/<bucket>.json (pipelines/build-stress-src.ts, not committed) → lm/st/<bucket>.json, stress with source + locator
+    const files = stressSrcFiles('.')
+    if (files.length) { fresh('lm/st'); let worst = 0; for (const f of files) { const j = JSON.parse(readFileSync(f, 'utf8')); worst = Math.max(worst, gz(j)); out(`lm/st/${basename(f)}`, j) }; log.push(`st ${files.length} (worst ${(worst / 1024).toFixed(1)} KB gz)`) }
   }
   console.log('lm: shards per sidecar —', log.join(', '))
 }

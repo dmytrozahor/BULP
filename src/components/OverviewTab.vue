@@ -17,6 +17,7 @@ import LabelLine from './LabelLine.vue'
 import Kwic from './Kwic.vue'
 import SenseEpochs from './SenseEpochs.vue'
 import Paradigm from './Paradigm.vue'
+import { stOf } from '../lib/stressSrc.ts'
 const SynAntBlock = defineAsyncComponent(() => import('./SynAntBlock.vue'))   // GG-12: lazy, outside the first load
 const PhraseologyBlock = defineAsyncComponent(() => import('./PhraseologyBlock.vue'))   // GG-13: lazy
 const XrefLine = defineAsyncComponent(() => import('./XrefLine.vue'))   // GG-18: lazy, keeps the first load of a card unchanged
@@ -37,6 +38,7 @@ const props = withDefaults(defineProps<{
   /** DOM id of the Labels panel of the card kind (h-lab / t-lab) */ labelsPanel?: string
 }>(), { stressLoaded: undefined, paradigmLoaded: undefined })
 const { corpus, witnessById, byLemma } = useData()
+const stForms = computed(() => { const hist = props.seKind === 'orv' || props.seKind === 'arch' || props.seKind === 'mu'; const w = props.paradigmGroups?.length ? props.paradigmWord : hist ? undefined : props.lemma; return w ? (stOf(w) ?? []).flatMap(e => e.forms) : [] })
 const regs = computed(() => regionLine(props.byRegion, corpus.value?.regions))
 const hasRegions = computed(() => regs.value.length > 0)
 const examples = computed(() => pickExamples(props.kwic, w => !!(witnessById.value.get(w) as { oq?: unknown } | undefined)?.oq))
@@ -76,13 +78,14 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
     </section>
     <section class="ov-sec" data-testid="ov-paradigm" aria-labelledby="ov-h-par">
       <h3 id="ov-h-par" class="small sans">Словозміна</h3>
-      <Paradigm v-if="paradigm?.length || paradigmKind === 'uninflected'" :paradigm="paradigm ?? []" :kind="paradigmKind" />
+      <Paradigm v-if="paradigm?.length || paradigmKind === 'uninflected'" :paradigm="paradigm ?? []" :kind="paradigmKind" :stress-forms="stForms" />
       <div v-else-if="paradigmGroups?.length" class="ov-par-thin" data-testid="ov-paradigm-thin" style="width:100%">
         <p v-if="paradigmNote" class="small sans muted" data-testid="ov-paradigm-note">{{ paradigmNote }}</p>
         <div v-for="g in paradigmGroups" :key="g.label" style="width:100%">
           <p v-if="paradigmGroups.length > 1" class="small sans"><b>{{ g.label }}</b></p>
-          <Paradigm :paradigm="g.paradigm" :kind="g.kind" />
+          <Paradigm :paradigm="g.paradigm" :kind="g.kind" :stress-forms="stForms" />
         </div>
+        <p v-if="!stForms.length" class="small sans muted" data-testid="ov-par-nostress">Наголос у формах: джерела (en.wiktionary) його для цього слова не дають; за правилом наголос не ставиться.</p>
         <p class="small sans muted">Джерело: ВЕСУМ (теги дослівно, на наведення); у даних цієї картки парадигми немає — таблицю підвантажено з окремого файлу.</p>
       </div>
       <p v-else-if="paradigmLoaded === false" class="small sans muted" data-testid="ov-paradigm-loading">парадигма ВЕСУМ: завантаження…</p>
