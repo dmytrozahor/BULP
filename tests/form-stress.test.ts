@@ -10,9 +10,9 @@ const ST = vi.hoisted(() => ({ data: undefined as StLemma[] | undefined, loaded:
 vi.mock('../src/lib/stressSrc.ts', () => ({ stOf: () => ST.data, stLoaded: () => ST.loaded }))
 import FormStress from '../src/components/FormStress.vue'
 
-const render = async (props: Record<string, unknown>) => {
+const render = async (props: { form: string; lemma: string; lemmaStress?: unknown[] }) => {
   const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/', component: { render: () => null } }] })
-  const app = createSSRApp({ render: () => h(FormStress, props) }); app.use(router); await router.push('/'); await router.isReady()
+  const app = createSSRApp({ render: () => h(FormStress, props as never) }); app.use(router); await router.push('/'); await router.isReady()
   return renderToString(app)
 }
 const lemmaStress = [{ form: 'вода', positions: [2], status: 'unknown', method: 'dictionary', evidence: [{ source: 'ulif', quote: 'вода́' }] }]
