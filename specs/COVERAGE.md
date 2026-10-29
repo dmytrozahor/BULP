@@ -890,6 +890,13 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | OV-12 | tests/ov-overview.test.ts › OV-12 the curve normalises per period: ipm = f / N of that century |
 | OV-12 | tests/ov-overview.test.ts › OV-12 an uncovered period is a gap: not a zero, not interpolated, the line is broken |
 | OV-12 | tests/ov-overview.test.ts › OV-12 every number carries its basis (N, period), region bars are ipm on the region N |
+| OV-13 | tests/ov13.test.ts › OV-13 Полісся: the owner case — CHN (Східне Полісся) gives Паліесся (акання + іе), MPL Поліесся, WPL stays |
+| OV-13 | tests/ov13.test.ts › OV-13 every rule has a verbatim cite and its example holds with the origin and stress it needs |
+| OV-13 | tests/ov13.test.ts › OV-13 by sub-group and stress: віл → вуол / вул / віл; піч → піеч; лісок → лесок / лисок; взяв → взев |
+| OV-13 | tests/ov13.test.ts › OV-13 unknown origin of і: the standard form stays, with the note; no stress: skipped |
+| OV-13 | tests/ov13.test.ts › OV-13 a word without і is untouched, an і of another origin (и < ы, R11) is untouched |
+| OV-13 | tests/ov13.test.ts › OV-13 attested beats the rule and is labelled; Аркушин label has volume and page |
+| OV-13 | tests/ov13.test.ts › OV-13 the IPA of the dialect view reads the standard form with its origins |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › СУМ glosses: «Зменш.-пестл. до тонкий» → dim-aff, «Пестл.», «Збільш.», «Підсил.», «Зменш.» and the spelled-out forms; a gloss that merely contains «до» is not a link |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › en.wiktionary lines: «diminutive of …», «endearing diminutive of …», «augmentative of …», accents removed |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › addDim stores the link under the derivative (with quote and locator) and the derivative under the base, once |

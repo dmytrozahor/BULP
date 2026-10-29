@@ -8,13 +8,15 @@ import { featureMarks } from '../lib/featureMarks.ts'
  * (`full` = merged LemmaCard, undefined while the shard loads) and show a placeholder until then.
  * SPEC 61 FX-5: the paradigm panels follow the lemma's paradigm kind (lib/ux.ts paradigmKindOf — data field if present, else VESUM tags).
  */
-import { computed, defineAsyncComponent, nextTick, reactive, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, nextTick, reactive, ref, shallowRef, watch } from 'vue'
 import { key } from '../../core/text.ts'
 import { isKnown } from '../../core/evidence.ts'
 import { assignEpoch } from '../../core/epochs.ts'
 import type { Claim } from '../../core/evidence.ts'
 import { STAT_CITES } from '../../core/stats.ts'
 import { toIpa } from '../../core/ipa.ts'
+import { originsFor } from '../../core/origin.ts'
+import { attestedFormOf, type Reflex } from '../lib/dialectAttested.ts'
 import { renderStress } from '../../core/text.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import { epochName, fmtDate, fmtNum, labelUk, WTYPE_UK } from '../lib/format.ts'
@@ -98,7 +100,17 @@ const lemmaSenses = computed(() => (card.value ? sensesOf(card.value.lemma) : []
 const isNoun = computed(() => kind.value === 'noun')
 const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron' || kind.value === 'verb')   // SPEC 50: epoch grids are built for nouns, pronouns, and (BL-8) verbs
 /** SPEC 63 OV: context of the dialect / orthography views (part of speech and gender from the VESUM tags, stress from the lemma's shard) and the attestation check of the respelled lemma */
-const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined }))
+/** OV-13: the Polissian reflexes of і need the ORIGIN of і (core/origin.ts: an attested old spelling replayed through the derivation, or a VESUM alternation) and the printed dialect spelling of the lemma
+ *  (core/ikavism.ts, loaded only when a dialect is chosen: the first-load bundle does not grow) */
+const reflexes = shallowRef<Reflex[]>([])
+watch(dialect, d => { if (d && !reflexes.value.length) import('../../core/ikavism.ts').then(m => { reflexes.value = m.DIALECT_REFLEXES as Reflex[] }).catch(() => {}) }, { immediate: true })
+const lemmaOrigins = computed(() => {
+  if (!dialect.value || !card.value) return undefined
+  const o = originsFor(card.value.lemma, { paradigm: card.value.paradigm.map(p => p.form), oldForms: card.value.forms.map(f => f.raw) })
+  return o.via === 'none' ? undefined : o.origins
+})
+const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined, origins: lemmaOrigins.value,
+  attested: dialect.value && card.value ? attestedFormOf(card.value.lemma, dialect.value, reflexes.value) : undefined, noteOrigin: true }))
 const modernOf = (raw: string) => card.value?.forms.find(f => f.raw === raw)?.modern ?? raw
 const lemmaAttest = computed(() => (dialect.value && card.value && full.value ? attestOf(show(card.value.lemma, dialect.value, '2019', vctx.value).text, full.value.forms.map(f => ({ raw: f.raw, byW: f.byW, kwic: f.kwic })), dialect.value, id => witnessById.value.get(id)) : undefined))
 const lastYear = computed(() => { const ys = (full.value?.forms ?? []).filter(f => !f.ocrOnly && f.date?.[1]).map(f => f.date[1]); return ys.length ? Math.max(...ys) : undefined })

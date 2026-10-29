@@ -109,9 +109,9 @@ describe('OV-4 attested vs generated', () => {
   })
   it('OV-4 the badge: a rule-made form says «за правилами», an attested one names the witness', async () => {
     setDialect('NDN')
-    const gen = await render(Spell, { w: 'бажання', ctx: noun }); expect(gen).toContain('за правилами'); expect(gen).toContain('бажан'); expect(gen).toContain('title="говір: «ня» → SW-NO-LENGTH:NDN')
+    const gen = await render(Spell, { w: 'бажання', ctx: noun }); expect(gen).toContain('за правилом'); expect(gen).toContain('бажан'); expect(gen).toContain('title="говір: «ня» → SW-NO-LENGTH:NDN')
     const att = await render(Spell, { w: 'бажання', ctx: noun, attest: attestOf('бажанє', [f('бажанє', 'lviv')], 'NDN', get) }); expect(att).toContain('галицька форма / правопис видання'); expect(att).not.toContain('за правилами')
-    const same = await render(Spell, { w: 'вода' }); expect(same).not.toContain('за правилами'); expect(same).not.toContain('<mark')
+    const same = await render(Spell, { w: 'вода' }); expect(same).not.toContain('за правилом'); expect(same).not.toContain('<mark')
   })
 })
 

@@ -13,22 +13,28 @@ import { dialectRule } from './form-class.ts'
 import { DIALECTS } from './rules.ts'
 import { stripStress, unifyApostrophe } from './text.ts'
 import type { Evidence } from './evidence.ts'
+import type { Origin, Origins } from './origin.ts'
+import { NORTH_RULES } from './respell-north.ts'
 
-export type Need = 'verb' | 'neuter' | 'stress'
+export type Need = 'verb' | 'neuter' | 'stress' | 'origin'
 export interface RespellCtx {
   /** part of speech / gender of the word (from the card's VESUM tags); unknown = undefined */
   pos?: 'verb' | 'noun' | 'adj' | 'other'; gender?: 'm' | 'f' | 'n'
   /** indices (into the unstressed word) of stressed vowels */
   positions?: number[]
+  /** origin of each letter of the modern form (core/origin.ts originsFor; undefined = not established): the Polissian reflexes of і need it (SPEC 63 OV-13) */
+  origins?: Origins
 }
-type Edit = [start: number, end: number, to: string]
-interface SpellRule {
+export type Edit = [start: number, end: number, to: string]
+export interface SpellRule {
   id: string
   /** dialect codes that implement it → the detector feature (core/rules.ts) that carries the cite, default the rule id */
   codes: Record<string, string>
   needs?: Need
   /** edits on the CURRENT string; `st` = stressed vowel indices of the current string (only with needs 'stress') */
-  edits: (w: string, st: Set<number>) => Edit[]
+  edits: (w: string, st: Set<number>, org: (i: number) => Origin | null, code: string) => Edit[]
+  /** a cite of its own (verbatim ЕУМ quote) per dialect code, for a reflex that core/rules.ts has no detector row for */
+  own?: Record<string, Evidence>
   example: [std: string, dialect: string]
   /** the standard words the rule must not touch even though the pattern matches (not a prefix / not that part of speech) */
   skip?: RegExp
@@ -73,12 +79,14 @@ export const SPELL_RULES: SpellRule[] = [
   { id: 'PKB-VI-PREFIX', codes: { HUT: 'PKB-VI-PREFIX', PKB: 'PKB-VI-PREFIX' }, needs: 'verb', example: ['витратити', 'вітратити'],
     edits: all(/^в(и)(?=[бвгґдзжкпстхцчш])/, () => 'і', 1) },
   { id: 'SFX-ISHCH-CMP', codes: { POD: 'SFX-ISHCH-CMP', PKB: 'SFX-ISHCH-CMP' }, example: ['добріший', 'добрішчий'], edits: all(/і(ш)ий$/, () => 'шч', 1) },
+  ...NORTH_RULES,
   { id: 'MPL-YON', codes: { MPL: 'MPL-YON' }, example: ['він', 'йон'], edits: w => (w === 'він' ? [[0, 3, 'йон'] as Edit] : []) },
 ]
 for (const r of SPELL_RULES) for (const k of Object.keys(r.codes)) if (!(k in DIALECTS)) throw new Error(`respell: ${r.id}: unknown dialect code ${k}`)
 
 /** the detector row (core/rules.ts) that carries the cite of rule `r` for dialect `code` */
 export const spellCite = (r: SpellRule, code: string): { id: string; cite: Evidence } | undefined => {
+  if (r.own?.[code]) return { id: `${r.id}:${code}`, cite: r.own[code]! }
   const id = `${r.codes[code]}:${code}`, d = dialectRule(id)
   return d ? { id, cite: d.cite } : undefined
 }
@@ -113,6 +121,10 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     if (!(code in r.codes)) continue
     if (r.needs === 'verb' && ctx.pos !== 'verb') { skipped.push({ rule: r.id, why: ctx.pos ? 'правило для дієслів' : 'потребує частини мови' }); continue }
     if (r.needs === 'neuter' && !(ctx.pos === 'noun' && ctx.gender === 'n')) { skipped.push({ rule: r.id, why: ctx.gender ? 'правило для іменників середнього роду' : 'потребує роду' }); continue }
+    if (r.needs === 'origin') {
+      if (!stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }
+      if ([...lower].some((c, i) => c === 'і' && stressOrig.has(i)) && !ctx.origins?.some(Boolean)) { skipped.push({ rule: r.id, why: NO_ORIGIN }); continue }
+    }
     if (r.needs === 'stress' && !stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }
     const cite = spellCite(r, code); if (!cite) continue
     const cur = cells.map(c => c.t).join('')
@@ -120,7 +132,8 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     // stressed vowel indices of the current string
     const st = new Set<number>(); let at = 0
     for (const c of cells) { if ([...stressOrig].some(p => p >= c.o && p < c.o + c.n)) { const m = [...c.t.toLowerCase()].map((x, i) => [x, i] as const).filter(([x]) => VOWELS.includes(x)); st.add(at + (m.length ? m[m.length - 1]![1] : 0)) } at += c.t.length }
-    const edits = r.edits(cur.toLowerCase(), st).sort((a, b) => b[0] - a[0])
+    const org = (i: number): Origin | null => { let at = 0; for (const c of cells) { if (i < at + c.t.length) return c.n === 1 && !c.rule && c.t.length === 1 ? ctx.origins?.[c.o] ?? null : null; at += c.t.length } return null }
+    const edits = r.edits(cur.toLowerCase(), st, org, code).sort((a, b) => b[0] - a[0])
     if (!edits.length) continue
     let changed = false
     for (const [s0, e0, to0] of edits) {
@@ -130,6 +143,7 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
       let b = 0
       while (b < was.length - a && b < to0.length - a && was[was.length - 1 - b] === to0[to0.length - 1 - b]) b++
       if (a + b >= Math.min(was.length, to0.length) && !to0.slice(a, to0.length - b)) { if (a > 0) a--; else if (b > 0) b-- }
+      if (was && a + b >= was.length) { a = 0; b = 0 }   // і → іе: the whole letter is the changed segment (its tooltip names it), not an insertion before the next letter
       const s = s0 + a, e = e0 - b, to = to0.slice(a, to0.length - b)
       if (s === e && !to) continue
       // map char offsets to cells; an insertion (s === e) attaches to the cell it precedes (or the last one)
@@ -174,4 +188,6 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
   return { code, input, text, segs, fired, skipped, positions }
 }
 /** a dialect leaves the word unchanged → shown as is, no mark */
+/** the note shown when a rule needs the origin of і and the card has none (SPEC 63 OV-13) */
+export const NO_ORIGIN = 'походження і не встановлено — діалектну форму не виведено'
 export const unchanged = (r: Respelled) => r.text === r.input

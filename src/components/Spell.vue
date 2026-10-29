@@ -19,6 +19,7 @@ const s = computed(() => show(props.w, dialect.value, orth.value, props.ctx))
 const tip = (p: { rule?: string; ev?: { quote: string; source: string; locator: string }; from?: string; unsure?: boolean; kind: string }) =>
   p.unsure ? `«?» ${ORTH_NOTE_UNSURE}: сучасна літера «${p.from ?? ''}» залишена як є (${p.rule})`
   : `${p.kind === 'dialect' ? 'говір' : 'правопис'}: «${p.from ?? ''}» → ${p.rule}${p.ev ? ` · «${p.ev.quote}» (${p.ev.source}, ${p.ev.locator})` : ''}`
+const rules = computed(() => [...new Set((s.value.respelled?.fired ?? []).map(f => f.rule))].join(', '))
 const dname = computed(() => DIALECTS[dialect.value] ?? '')
 </script>
 
@@ -32,10 +33,12 @@ const dname = computed(() => DIALECTS[dialect.value] ?? '')
       </template>
     </template>
     <button v-if="historical && !orig" type="button" class="sp-rawbtn" :aria-pressed="showRaw" :title="showRaw ? 'показати сучасним правописом' : `оригінал: ${raw}`" @click.stop.prevent="showRaw = !showRaw">{{ showRaw ? 'сучасне' : 'оригінал' }}</button>
+    <template v-if="!quiet && s.attested && !showRaw"><span class="badge sp-att sp-attested" :title="s.attested.ev ? `«${s.attested.ev.quote}» (${s.attested.ev.locator})` : s.attested.src">{{ s.attested.src }}</span></template>
+    <span v-if="!quiet && s.note && !showRaw" class="muted small sp-note">{{ s.note }}</span>
     <template v-if="!quiet && s.generated && !showRaw">
       <span v-if="attest && attest.status !== 'generated'" class="badge sp-att" :class="'sp-' + attest.status" :title="attest.label + ' · ' + dname">{{ attest.label }}
         <template v-for="x in attest.witnesses.slice(0, 2)" :key="x.w"> · <RouterLink :to="witnessTo(x.w)">{{ x.title }}</RouterLink></template></span>
-      <span v-else class="derived-badge" :title="`реконструкція за правилами говору «${dname}», не засвідчено`">за правилами</span>
+      <span v-else class="derived-badge" :title="`реконструкція за правилами говору «${dname}», не засвідчено`">за правилом ({{ rules }})</span>
     </template>
   </span>
 </template>
