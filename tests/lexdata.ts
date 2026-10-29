@@ -21,3 +21,9 @@ export function readFull(dir = 'public/data'): LemmaCard[] {
     return mergeCard(c, s.get(c.lemma)!)
   })
 }
+/** one merged card by lemma: reads the core and only that lemma's bucket shard (readFull merges every shard — ~1 min on the full build and timed out when several test files ran at once) */
+export function readCard(lemma: string, dir = 'public/data'): LemmaCard | undefined {
+  if (!hasData(dir)) return undefined
+  const c = unpackCore(JSON.parse(readFileSync(`${dir}/lexicon.json`, 'utf8'))).find(x => x.lemma === lemma); if (!c) return undefined
+  const d = readShard(dir, String(bucketOf(lemma))).get(lemma); return d ? mergeCard(c, d) : undefined
+}

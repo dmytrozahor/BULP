@@ -108,11 +108,13 @@ export const tcBucket = (k: string) => bucketOf(k, TC_BUCKETS)
  * derivatives, labels) fetch more when the visitor opens them.
  */
 export const CARD_SMALL_FILES = ['places.json'] as const
+/** PF-2: the gazetteer (35 KB gzip) is read only for a capitalised lemma — every gazetteer place has a capitalised lemma and src/lib/placesData.ts placeForLemma matches nothing else, so a common-noun card (і, він, слово) never fetches it */
+export const needsPlaces = (lemma: string): boolean => /^[А-ЯІЇЄҐ]/.test(lemma)
 export function cardData(lemma: string, firstWitness?: string, heteronymKey?: string): string[] {
   return [
     cdUrl(lemma), `./data/lex/${bucketOf(lemma)}.json`, ...(firstWitness ? [witUrl(firstWitness)] : []),
     lmUrl('etymology', lemma), lmUrl('cognates', lemma), lmUrl('senses', lemma), lmUrl('heteronyms', heteronymKey ?? lemma.toLowerCase()), lmUrl('phrases', lemma.toLowerCase()),
-    ...CARD_SMALL_FILES.map(f => `./data/${f}`),
+    ...CARD_SMALL_FILES.filter(f => f !== 'places.json' || needsPlaces(lemma)).map(f => `./data/${f}`),
   ].map(u => u.replace(/^\.\/data\//, ''))
 }
 

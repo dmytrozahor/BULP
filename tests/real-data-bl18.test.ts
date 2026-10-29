@@ -26,6 +26,6 @@ describe.skipIf(!existsSync('public/data/songs.json'))('BL-18 built songs.json',
       expect(v.lemmas.map(l => l[0]), id).toEqual([...v.lemmas.map(l => l[0])].sort((a, b) => a.localeCompare(b, 'uk')))
       expect(d.songs.find(s => s.id === id)!.quotes.every(q => q.text.split(/\s*\/\s*|\n/).length <= 2)).toBe(true)
     }
-    expect(d.songs.filter(s => s.witness && s.id !== 'duma-mazepy').length).toBe(5)   // SG-3 adds one full-text authored song; the 5 Maksymovych 1834 folk songs stay exactly 5
+    expect(d.songs.filter(s => s.witness && s.id !== 'duma-mazepy' && s.id !== 'mykolay-1690s').length).toBe(5)   // SG-3 adds one full-text authored song and SRC-28 the owner's 1690s notated-songbook song (not Maksymovych); the 5 Maksymovych 1834 folk songs stay exactly 5
   })
 })

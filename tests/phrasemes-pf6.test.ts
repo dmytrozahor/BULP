@@ -37,7 +37,7 @@ describe('PF-6 maximality filter', () => {
     // machine independent: the same run's smaller input is the baseline, so only the growth rate is asserted, never seconds
     const small = gen(100_000), mid = gen(400_000)
     time(small)   // warm-up (JIT)
-    const s1 = Math.min(time(small).ms, time(small).ms), m = time(mid)
+    const s1 = Math.min(time(small).ms, time(small).ms), m = { ms: Math.min(time(mid).ms, time(mid).ms) }   // best of two: a GC pause or a loaded box inflates one run, not both
     expect(m.ms / Math.max(s1, 1), `400k took ${Math.round(m.ms)} ms, 100k ${Math.round(s1)} ms`).toBeLessThan(11)   // linear ~4 (+GC/cache noise); quadratic ~16
     expect(time(gen(1_000_000)).n).toBeGreaterThan(0)   // completes at full size (a quadratic filter never would)
   }, 300_000)

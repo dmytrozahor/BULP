@@ -14,7 +14,7 @@ import type { TokenRec, WitnessOut } from '../core/types.ts'
 import { textTokens } from './ingest-harvest.ts'
 import { witnessOf } from './ingest-torot.ts'
 
-/** OWNER_OCR_DIR, else data/raw/owner-ocr, else the worker's ~/work/ocr (where the OCR was run): the first root that holds the unit's directory */
+/** OWNER_OCR_DIR (exclusive when set), else data/raw/owner-ocr, else the worker's ~/work/ocr (where the OCR was run): the first root that holds the unit's directory */
 export const ownerOcrDir = (id: string) => {
   const roots = [process.env.OWNER_OCR_DIR, 'data/raw/owner-ocr', resolve(process.env.HOME ?? process.env.USERPROFILE ?? '.', 'work/ocr')].filter(Boolean) as string[]
   return resolve(roots.find(r => existsSync(resolve(r, id))) ?? roots[0]!, id)

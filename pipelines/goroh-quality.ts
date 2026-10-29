@@ -7,7 +7,8 @@
  * Usage: npx tsx pipelines/goroh-quality.ts [--sample-only]
  * The sample is reproducible: mulberry32(SEED) over the frequency list (see sampleLemmas).
  */
-import { existsSync, mkdirSync, readFileSync, writeFileSync, renameSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { writeJsonAtomic } from './robust.ts'
 import { join } from 'node:path'
 import { unpackCore } from '../core/pack.ts'
 import { bucketOf } from '../core/shard.ts'
@@ -34,7 +35,7 @@ async function shard(path: string): Promise<any> {
     for (let t = 0; ; t++) {
       try { const r = await fetch(`${BASE}/${path}`); if (r.status === 404 || r.status === 403) break; if (!r.ok) throw new Error(String(r.status)); txt = await r.text(); break } catch (e) { if (t >= 2) throw e }
     }
-    writeFileSync(f + '.tmp', txt); renameSync(f + '.tmp', f)
+    writeJsonAtomic(f, txt)
   }
   return JSON.parse(readFileSync(f, 'utf8'))
 }
@@ -131,6 +132,6 @@ await pool(buckets, 16, async b => { const s = await shard(`lex/${b}.json`); for
 const stressSample = { shards: buckets.length, lemmas: nl, withStress: ns, withDictionaryStress: nd }
 
 const out = { build: ptr.buildId, seed: SEED, params: { N_RANDOM, N_DIALECT, N_HIST, F_MIN, poolSize: { freq: byF.length, dialect: dialectPool2.length, hist: [...new Set(histPool)].length } }, sample: rows, count, stressSample }
-writeFileSync('analysis/goroh-quality.json', JSON.stringify(out, null, 1))
+writeJsonAtomic('analysis/goroh-quality.json', JSON.stringify(out, null, 1))
 console.log(JSON.stringify({ count, stressSample, params: out.params }, null, 1))
 console.log(rows.map(r => `${r.kind}\t${r.w}\tf=${r.f}`).join('\n'))

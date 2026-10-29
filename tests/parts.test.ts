@@ -115,3 +115,12 @@ describe.skipIf(!have)('PF-3 lookups through the same shards (no global paradigm
     const before = runs; await settled(() => { runs++; return ixHitMap.get(key(sample[1]!.lemma)) }); expect(runs).toBe(before + 1)   // all cached: one pass
   })
 })
+
+describe('PF-2 the gazetteer is a card file only for a capitalised lemma', () => {
+  it('cardData lists places.json for Київ and not for і / він / слово; every gazetteer lemma is capitalised', async () => {
+    const { cardData, needsPlaces } = await import('../core/parts.ts')
+    expect(cardData('Київ')).toContain('places.json'); for (const l of ['і', 'він', 'слово']) expect(cardData(l)).not.toContain('places.json')
+    expect(needsPlaces('Ірпінь')).toBe(true); expect(needsPlaces('ірпінь')).toBe(false)
+    if (existsSync('public/data/places.json')) for (const p of (JSON.parse(readFileSync('public/data/places.json', 'utf8')) as { places: { lemma: string }[] }).places) expect(needsPlaces(p.lemma), p.lemma).toBe(true)
+  })
+})

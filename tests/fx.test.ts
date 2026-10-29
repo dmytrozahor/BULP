@@ -10,7 +10,7 @@ import { chooseLemma, linkOptions, preferCommon, ONE_LETTER_PREP, posLabel, type
 import { rankFirst, selectForms, type FirstCand } from '../pipelines/build-annotate.ts'
 import { authorById } from '../pipelines/authors.ts'
 import type { VesumHit } from '../core/types.ts'
-import { hasData, readFull } from './lexdata.ts'
+import { hasData, readCard, readFull } from './lexdata.ts'
 import { uvStatus, uvShard, UV_CONFIRM_MIN_W, type UvGroup } from '../core/uv.ts'
 import { witnessPoints, showWitnessGraph } from '../src/lib/witnessPoints.ts'
 import { existsSync, readFileSync } from 'node:fs'
@@ -82,7 +82,7 @@ describe('MM-1 preposition recognised as pronoun', () => {
   it('the reflexive enclitic сѧ stays under себе', () => { expect(l3(T({ raw: 'сѧ', lemma: 'себе', gate: 'P:Pk' }))?.lemma).toBe('себе') })
   it('real data (after a rebuild with MM-1): the card себе lists no «с» spelling, while сѧ stays', () => {
     if (!hasData()) return
-    const c = readFull().find(x => x.lemma === 'себе'); if (!c) return
+    const c = readCard('себе'); if (!c) return
     const raws = c.forms.map(f => f.raw)
     expect(raws).not.toContain('с')
     expect(ONE_LETTER_PREP.has('с')).toBe(true)
@@ -177,7 +177,7 @@ describe('MM-3 пілки (dim. of пола) is not полки (pl. of полк 
   })
   it('real data (after a rebuild with MM-3): the card пілка lists no spelling of полк (полки, полъкы, полкы …)', () => {
     if (!hasData()) return
-    const c = readFull().find(x => x.lemma === 'пілка'); if (!c) return
+    const c = readCard('пілка'); if (!c) return
     expect(c.forms.map(f => f.raw).filter(r => /^полк|^полък/.test(r))).toEqual([])
   })
 })
@@ -540,7 +540,7 @@ describe('MM-11 «легінь злито з легені легенів і не
     if (!hasData()) return
     const gen = (JSON.parse(readFileSync(fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)), 'utf8')) as { generated: string }).generated
     if (gen < '2026-10-23') return   // data built before MM-11
-    const c = readFull().find(x => x.lemma === 'легінь'); if (!c) return
+    const c = readCard('легінь'); if (!c) return
     for (const raw of ['легені', 'легенів', 'легенях', 'легеням', 'легенями']) expect(c.forms.map(f => f.raw), raw).not.toContain(raw)
   })
   it('the Hutsul variant лигінь / лиґінь links to легінь: attested in the corpus (Етноґрафічний збірник т. 19, «Ішов лиґінь до дівчини»); no dictionary line found', () => {
@@ -571,7 +571,7 @@ describe('MM-13 «зі перша фіксація 1092 з невичитано�
   })
   it('real data (skips without shards): зі has no first attestation from the 1092 OCR witness; the first is a vetted witness', () => {
     if (!hasData()) return
-    const c = readFull().find(x => x.lemma === 'зі'); if (!c || c.first.value === 'unknown') return
+    const c = readCard('зі'); if (!c || c.first.value === 'unknown') return
     expect(c.first.value.witness).not.toBe('hv_ia_arch1092'); expect(c.first.value.date[0]).toBeGreaterThan(1092)
   })
 })
@@ -689,8 +689,9 @@ describe('MM-18 «скорійше не прив’язано до скоріш�
     if (!hasData()) return
     const gen = (JSON.parse(readFileSync(fileURLToPath(new URL('../public/data/corpus.json', import.meta.url)), 'utf8')) as { generated: string }).generated
     if (gen < '2026-10-23') return
-    const c = readFull().find(x => x.lemma === 'скоро'); if (!c) return
-    expect(c.forms.map(f => f.raw.toLowerCase())).toContain('скорійше')
+    // VESUM lemmatises скоріше under скоро, the corpus build keeps a скоріше card: the fold links скорійше to either
+    const c = readCard('скоро'), c2 = readCard('скоріше'); if (!c && !c2) return
+    expect([...(c?.forms ?? []), ...(c2?.forms ?? [])].map(f => f.raw.toLowerCase())).toContain('скорійше')
   })
 })
 

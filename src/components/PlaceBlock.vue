@@ -5,12 +5,13 @@ import { computed, onMounted, ref } from 'vue'
 import { isKnown } from '../../core/evidence.ts'
 import { NAME_KIND_UK, placeClaim, type PlaceOut } from '../../core/places.ts'
 import type { CoreCard } from '../../core/types.ts'
+import { needsPlaces } from '../../core/parts.ts'
 import { loadPlaces, osmLink, placeForLemma } from '../lib/placesData.ts'
 import { fmtDate } from '../lib/format.ts'
 import ClaimBadge from './ClaimBadge.vue'
 const props = defineProps<{ card: Pick<CoreCard, 'lemma' | 'claims'> }>()
 const place = ref<PlaceOut>()
-onMounted(() => { loadPlaces().then(d => { place.value = placeForLemma(d.places, props.card.lemma) }).catch(() => { /* optional data */ }) })
+onMounted(() => { if (!needsPlaces(props.card.lemma)) return; loadPlaces().then(d => { place.value = placeForLemma(d.places, props.card.lemma) }).catch(() => { /* optional data */ }) })
 const proper = computed(() => props.card.claims.proper)
 const kind = computed(() => (proper.value && isKnown(proper.value) ? NAME_KIND_UK[proper.value.value] : ''))
 const claim = computed(() => (place.value ? placeClaim(place.value) : undefined))
