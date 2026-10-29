@@ -88,12 +88,13 @@ async function curlGet(h: Harvest, url: string): Promise<{ status: number; buf: 
     const status = Number(code)
     if (status === 403 || status === 429) h.stop(`HTTP ${status} for ${url}`)
     return { status, buf: status === 200 ? readFileSync(tmp) : Buffer.alloc(0) }
-  } catch (e) { return h.stop(`curl failed (${(e as Error).message.slice(0, 120)}) for ${url}`) } finally { rmSync(tmp, { force: true }) }
+  } catch (e) { h.log(`curl failed (${(e as Error).message.slice(0, 100)}) for ${url}; the item is retried on the next run`); return { status: 0, buf: Buffer.alloc(0) } } finally { rmSync(tmp, { force: true }) }
 }
 
 async function main() {
   const h = new Harvest('linguists', { delayMs: 3000, logEvery: 1 })
   const H = { 'user-agent': LINGUISTS_UA }
+  let fails = 0
   for (const w of LINGUIST_WORKS) {
     const id = `linguists:${w.ia}`
     if (h.has(id)) continue
@@ -103,6 +104,8 @@ async function main() {
     const file = pickTextFile(files)
     if (!file) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, 404, '')]); continue }
     const r = await curlGet(h, `https://archive.org/download/${encodeURIComponent(w.ia)}/${encodeURIComponent(file)}`)
+    if (r.status === 0) { if (++fails >= 3) h.stop('3 curl failures in a row'); continue }   // transient: no index line, retried on the next run
+    fails = 0
     if (r.status !== 200) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, r.status, file)]); continue }
     const buf = r.buf
     h.put(`linguists_${w.ia}`, buf, [item(w, `https://archive.org/details/${w.ia}`, buf.length, 200, file)])
