@@ -48,7 +48,7 @@ export function measure() {
     '### Ступінь доказу', '', ...Object.entries(grade).sort().map(([k, n]) => { const [c, g] = k.split(':'); return `- ${CLASS_KEY_UK[c as keyof typeof CLASS_KEY_UK]}: ${g === 'none' ? 'без ступеня' : GRADE_UK[g as 'strong']}: ${n}` }), '',
     '### Чому «невизначено»', '', ...(Object.keys(few).length ? [...Object.entries(few).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([k, n]) => `- ${k}: ${n}`), `- (решта ${Object.keys(few).length - 12 > 0 ? Object.keys(few).length - 12 : 0} різновидів причини — суміші словників без названої бази — разом ${Object.values(few).sort((a, b) => b - a).slice(12).reduce((a, b) => a + b, 0)})`] : ['- таких записів немає']), '']
   const mdOut = process.env.LB_MEASURE_MD
-  if (mdOut && existsSync(mdOut)) { const t = readFileSync(mdOut, 'utf8').split('\n## LB-11')[0]!.replace(/\s+$/, ''); writeFileSync(mdOut, t + '\n' + md.join('\n') + '\n') }
+  if (mdOut && existsSync(mdOut)) { const t = readFileSync(mdOut, 'utf8').split('\n## LB-11')[0]!.replace(/\s+$/, ''); writeJsonAtomic(mdOut, t + '\n' + md.join('\n') + '\n') }
   console.log(JSON.stringify(res))
   return res
 }
