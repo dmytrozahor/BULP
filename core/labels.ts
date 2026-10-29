@@ -65,7 +65,7 @@ export type DialectClass = 'dict' | 'corpus' | 'general' | 'few' | 'witness' | '
 export const SUM_NORM_UK = 'загальновживане за словником (СУМ, без обмежувальних позначок)'
 export const VESUM_NORM_UK = 'нормативне (ВЕСУМ), регіональних даних немає'
 export const MARKED_UK = { sum: 'у СУМ, із позначкою вжитку; регіональних даних немає', vesum: 'у ВЕСУМ, із позначкою вжитку; регіональних даних немає' } as const
-export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[]; wit?: { ocr?: boolean } }): string => (d.c === 'nowit' && d.wit?.ocr ? NOWIT_OCR_UK : d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub && d.marks?.length ? MARKED_UK[d.sub] : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : d.c === 'general' && d.sub === 'vesum' ? VESUM_NORM_UK : CLASS_UK[d.c])
+export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum' | 'dnorm'; marks?: string[]; wit?: { ocr?: boolean } }): string => (d.c === 'nowit' && d.wit?.ocr ? NOWIT_OCR_UK : d.c === 'general' && d.sub === 'dnorm' ? DNORM_UK : d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub && d.sub !== 'dnorm' && d.marks?.length ? MARKED_UK[d.sub] : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : d.c === 'general' && d.sub === 'vesum' ? VESUM_NORM_UK : CLASS_UK[d.c])
 export const CLASS_UK: Record<DialectClass, string> = {
   dict: 'діалектне за словником', corpus: 'регіонально марковане (корпус)', general: 'загальновживане', few: 'невизначено',
   witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника',
@@ -87,13 +87,14 @@ export const CLASS_KEY_UK: Record<ClassKey, string> = {
   witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника', few: 'невизначено',
   epoch: 'історична лексика за словником епохи', author: 'мова автора', nowit: 'засвідчено лише в пам’ятках без регіону (OCR)',
 }
-export const classKeyOf = (d: { c: DialectClass; sub?: 'sum' | 'vesum' }): ClassKey => (d.c === 'general' && d.sub ? 'norm' : d.c)
+export const classKeyOf = (d: { c: DialectClass; sub?: 'sum' | 'vesum' | 'dnorm' }): ClassKey => (d.c === 'general' && d.sub ? 'norm' : d.c)
 /** the evidence grade of a result (derived from the stored result, so older shards get it too); undefined = no class (невизначено) */
-export function gradeOf(d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[]; corp?: { top?: { g2: number } } }): Grade | undefined {
+export function gradeOf(d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum' | 'dnorm'; marks?: string[]; corp?: { top?: { g2: number } } }): Grade | undefined {
   if (d.c === 'epoch') return 'medium'
   if (d.c === 'author' || d.c === 'nowit') return 'weak'
   if (d.c === 'dict') return d.strict === false ? 'medium' : 'strong'
   if (d.c === 'corpus') return (d.corp?.top?.g2 ?? 0) >= G2_STRONG ? 'strong' : 'medium'
+  if (d.c === 'general' && d.sub === 'dnorm') return 'weak'
   if (d.c === 'general') return d.sub ? (d.marks?.length ? 'weak' : 'medium') : 'strong'
   if (d.c === 'witness' || d.c === 'base') return 'weak'
   return undefined
@@ -117,10 +118,23 @@ export const DICT_BASES: DictBase[] = [
     quote: 'материял, зібраний … за цїлих двадцять років з різних кутків Української, Галицької, Буковинської і навіть з Угорскої Руси (передмова, Львів 1893)' },
   { id: 'biletsky-nosenko', short: 'Білецький-Носенко', region: 'Полтавська губернія та суміжні Київська, південь Чернігівської, Катеринославська, Харківська, Волинь, Поділля, Галичина', url: 'https://archive.org/details/slovnyk33',
     quote: 'Я придерживаюсь строго произношенію обитателей Полтавской губерній и прикосновенныхъ къ ней Кіевской, южной части Черниговской, Екатеринославской, Харьковской, также Волынской, Подольской и самой Галиціи (власні слова автора, «Предуведомленіе»; цитує вступна стаття В. Німчука до видання 1966 р., с. 18–19, яка додає: «лексичний матеріал його базується на говірках Полтавщини»)' },
+  { id: 'r2u_hrinch09', short: 'Грінченко, Словарь української мови', region: 'літературна фонетика «власне-українського наріччя» (від Котляревського) та слова місцевих наріч і говорів; територіальне поширення слів Грінченко прямо не встановлює', url: 'https://archive.org/details/slovarukrainskog01hrin',
+    quote: 'Слова народнаго языка — какъ собственныя, такъ и заимствованныя, но издавна принятыя всѣмъ народомъ или частью его … Относительно словъ изъ мѣстныхъ нарѣчій и говоровъ, вошедшихъ также въ словарь … Принявъ для словаря фонетику, употребляемую въ украинской литературѣ, начиная съ Котляревскаго, а именно фонетику такъ называемаго собственно-украинскаго нарѣчія, мы всѣ слова помѣщали именно въ этой фонетической формѣ. … Это значитъ, что слово или фраза записаны непосредственно отъ народа въ отмѣченной мѣстности; но отнюдь не указываетъ на территоріальное распространеніе слова (Предисловіе; скан передруку Берлін 1924, т. 1, лист 30 скану; друковану сторінку OCR не передає; цитату зіставлено з OCR і подано в сучасному накресленні літер ѣ, ъ)' },
   { id: 'arkushyn', short: 'Аркушин', region: 'західнополіські говірки', url: 'https://archive.org/details/slzhdplhv',
     quote: 'Словник західнополіських говірок (Аркушин, 2000): основу названо в заголовку словника' },
 ]
-export const baseOf = (id: string): DictBase | undefined => DICT_BASES.find(b => b.id === id)
+export const baseOf = (id: string): DictBase | undefined => DICT_BASES.find(b => b.id === id || (b.id === 'r2u_hrinch09' && id === 'r2u_hrinch27'))
+
+/** LB-15: a dictionary whose own preface declares that its words are the literary norm of its time (class 4, sub 'dnorm'); the class rests on that DECLARATION, quoted with its place */
+export interface DictNorm { id: string; short: string; /** what the preface says the dictionary is */ scope: string; quote: string; cite: string; url: string }
+export const DICT_NORMS: DictNorm[] = [
+  { id: 'r2u_nikovsky', short: 'Ніковський, Словник українсько-російський', scope: 'слова Грінченка, що вживаються в тогочасній літературній мові; діалектизми й провінціалізми здебільшого відсіяно', url: 'https://r2u.org.ua/html/nikovsky_pered.html',
+    quote: 'До Словника повношувано всі слова з словника Б. Грінченка, що вживаються тепер або можуть уживатися в теперішній літературній мові, в мові наших установ, по канцеляріях, в ділянках техничних, продукційних і культурних. … Діялектизми й провінціялізми здебільшого відвіяно', cite: 'Передмова, Київ 1927 (текст на r2u.org.ua)' },
+  { id: 'r2u_doroshenko', short: 'Дорошенко–Станиславський–Страшкевич, Словник ділової мови', scope: 'проєкт нормативного словника ділової мови на основі народної мови, без місцевих забарвлень', url: 'https://r2u.org.ua/html/dorosh_pered.html',
+    quote: 'дати громадянству … проект нормативного словника, цілком придатний до ділових стосунків і діловодства, складений на основі суто-народньої мови і позбавлений специфічного — селянського, міського чи якогось місцевого (льокалізми) забарвлення', cite: 'Передмова, Матеріяли до української термінології та номенклатури т. XVI, Харків–Київ 1930 (текст на r2u.org.ua)' },
+]
+export const normOf = (id: string): DictNorm | undefined => DICT_NORMS.find(n => n.id === id)
+export const DNORM_UK = 'літературна норма за заявою передмови словника'
 
 /** LB-14: a dictionary that describes the language of an EPOCH (kind 'epoch') or of ONE AUTHOR (kind 'author'), not of a region; the words are the dictionary's own, from its preface / title page, with the place */
 export interface HistDict { id: string; short: string; kind: 'epoch' | 'author'; /** the epoch or the author, as the dictionary states it */ scope: string; quote: string; /** where the quote stands */ cite: string; url: string; /** author dictionaries: the author's region, only with the source that states it */ region?: { name: string; quote: string; url: string } }
@@ -147,6 +161,7 @@ export interface TailFacts {
   /** the lemma's witnesses (class 5) */ wit?: WitSummary
   /** the ids of the dictionaries that are its ONLY source (class 6) */ bases?: string[]
   /** LB-14: the ids of the epoch / author dictionaries that are its ONLY sources (classes 7, 8) */ hist?: string[]
+  /** LB-15: the ids of the dictionaries whose preface declares the literary norm and that are its ONLY sources (class 4, sub dnorm) */ norms?: string[]
 }
 /** «XII ст.» or «XII–XV ст.» from a year range */
 export function periodUk(from: number, to: number): string {
@@ -179,11 +194,12 @@ export interface CorpusSummary {
 export interface SumNorm { d: string; n: number; u?: string; l?: string }
 export interface DialectResult {
   c: DialectClass
-  /** c only: 'sum' = class from the dictionary's unrestricted СУМ headword (LB-9); 'vesum' = a VESUM headword without a restrictive tag (LB-11) */ sub?: 'sum' | 'vesum'
+  /** c only: 'sum' = class from the dictionary's unrestricted СУМ headword (LB-9); 'vesum' = a VESUM headword without a restrictive tag (LB-11) */ sub?: 'sum' | 'vesum' | 'dnorm'
   /** sub sum / vesum: the register marks (ids) the headword carries; they restrict the style, not the region, so the class stays but the grade is weak */ marks?: string[]
   /** (witness) LB-11 */ wit?: WitSummary
   /** (base) LB-11: the dictionaries whose regional base the class rests on */ bases?: string[]
   /** (epoch, author) LB-14: the epoch / author dictionaries the class rests on */ hist?: string[]
+  /** (c, sub dnorm) LB-15: the dictionaries whose preface declares the norm */ norms?: string[]
   /** (few) LB-11: why none of the seven classes applies */ why?: string
   /** (c, sub sum) the headwords the class rests on */ sumNorm?: SumNorm[]
   /** (a): true = some label marks the word or sense as dialectal / regional; false = the dictionaries only record WHERE it was noted (county, governorate) */ strict?: boolean
@@ -235,6 +251,9 @@ export function tailClass(corp: CorpusSummary | undefined, sumNorm: SumNorm[] | 
   const hist = (facts?.hist ?? []).filter(b => histOf(b))
   if (hist.length) return { c: hist.some(b => histOf(b)!.kind === 'epoch') ? 'epoch' : 'author', hist, ...(bases.length ? { bases } : {}), ...(corp ? { corp } : {}) }
   if (bases.length) return { c: 'base', bases, ...(corp ? { corp } : {}) }
+  // 4 (LB-15): every source is a dictionary whose own preface declares the literary norm (no base / epoch dictionary among them)
+  const norms = (facts?.norms ?? []).filter(b => normOf(b))
+  if (norms.length) return { c: 'general', sub: 'dnorm', norms, ...(corp ? { corp } : {}) }
   // 9 (LB-14): attested, but no witness has an established region: say so and name them
   if (facts?.wit && facts.wit.n > 0 && !facts.wit.regions.length) return { c: 'nowit', wit: facts.wit, ...(corp ? { corp } : {}) }
   const why = facts?.wit && facts.wit.n > 0 ? `засвідчено в ${facts.wit.n} ${facts.wit.n === 1 ? 'пам’ятці' : 'пам’ятках'}, але регіон ${facts.wit.n === 1 ? 'її' : 'жодної'} не встановлено` : facts?.srcNames?.length ? `єдині джерела: ${facts.srcNames.join('; ')}; їхні передмови, які ми прочитали, не називають регіональної бази, а пам’яток з відомим регіоном немає` : 'єдине джерело — запис без регіональної бази і без пам’яток з відомим регіоном'
@@ -371,6 +390,7 @@ export const HOW: Record<DialectClass, string> = {
   nowit: 'Слово засвідчене лише в пам’ятках, для яких регіон не встановлено (здебільшого OCR-тексти без видавничого місця в метаданих). Це клас «звідки вони, невідомо», а не діалектне твердження; пам’ятки названо на картці.',
   base: 'Слово є лише в словнику, чия власна передмова називає край, де зібрано його матеріал. Це слабкий доказ: це походження збірки, а не діалектна мітка слова.',
 }
+export const HOW_DNORM = 'Усі словники, де є це слово, у своїх передмовах заявляють, що подають літературну норму свого часу (а не говірки); ми цитуємо цю заяву. Це слабкий доказ: заява укладача, а не вимір поширення слова.'
 export const HOW_VESUM = 'Слово є заголовним у ВЕСУМ без жодного тега, що обмежує вжиток (rare, coll, arch, slang, vulg, obsc, bad, subst, alt, err). У ВЕСУМ немає територіальних тегів, тому регіональних даних про слово немає: це нормативний статус за словником, а не вимір поширення.'
 /** tooltip of the sub-class «загальновживане за словником» (LB-9) */
 export const HOW_SUM = 'Для цього слова немає даних про розсіювання в корпусі (замало вживань або регіонів), тому клас узято зі словника: слово є заголовним у СУМ-11 / СУМ-20, і жодне його значення не має позначки діал., зах. чи регістрової позначки. Це нормативний статус за словником, а не вимір поширення: ми не стверджуємо, що слово засвідчене в усіх регіонах.'

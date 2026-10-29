@@ -14,7 +14,7 @@ import { useLabels } from '../lib/labelsData.ts'
 import { useData } from '../composables/useData.ts'
 import { openPanel } from '../lib/cardTabs.ts'
 import {
-  baseEvidence, histEvidence, dialectHeadline, dialectHow, gradeLine, formTagsLine, hitView, METHODS_PATH, METHODS_TITLE, NEUTRAL, neutralChecked, regTitle, regViews, SURZHYK_NOTE, THRESHOLDS_LINE, typeBase, typeViews,
+  baseEvidence, histEvidence, normEvidence, dialectHeadline, dialectHow, gradeLine, formTagsLine, hitView, METHODS_PATH, METHODS_TITLE, NEUTRAL, neutralChecked, regTitle, regViews, SURZHYK_NOTE, THRESHOLDS_LINE, typeBase, typeViews,
 } from '../lib/labelsText.ts'
 import { classUk } from '../../core/labels.ts'
 import type { LemmaCard } from '../../core/types.ts'
@@ -28,6 +28,7 @@ const how = computed(() => dialectHow(d.value))
 const grade = computed(() => gradeLine(d.value))
 const bases = computed(() => baseEvidence(d.value))
 const hist = computed(() => histEvidence(d.value))
+const norms = computed(() => normEvidence(d.value))
 const nowitNames = computed(() => (d.value.c === 'nowit' ? d.value.wit?.names ?? [] : []))
 const hits = computed(() => (d.value.dict ?? []).map(hitView))
 const regs = computed(() => regViews(entry.value.r))
@@ -64,6 +65,7 @@ const plainLine = (p: [string, string]) => (p[0] === 'w' ? `uk.Вікіслов�
         <p v-if="d.sumNorm?.length" class="small muted" data-testid="lb-sumnorm">Підстава: {{ d.sumNorm.map(x => `${x.d === 'sum11' ? 'СУМ-11' : x.d === 'sum20' ? 'СУМ-20' : x.d}${x.l ? ' ' + x.l : ''}, значень: ${x.n}`).join('; ') }}; жодне значення не має позначки діал., зах. чи регістрової. <template v-for="x in d.sumNorm" :key="x.d"><a v-if="x.u" :href="x.u" rel="noopener" target="_blank">стаття {{ x.d }} ↗ </a></template></p>
         <ul v-if="bases.length" class="small lb-ev" data-testid="lb-base"><li v-for="b in bases" :key="b.short"><strong>{{ b.short }}</strong>: основа — {{ b.region }}; <q class="lb-q">{{ b.quote }}</q> <a :href="b.url" rel="noopener" target="_blank">передмова ↗</a></li></ul>
         <ul v-if="hist.length" class="small lb-ev" data-testid="lb-hist"><li v-for="b in hist" :key="b.short"><strong>{{ b.short }}</strong>: {{ b.kind === 'epoch' ? 'епоха' : 'автор' }} — {{ b.scope }}; <q class="lb-q">{{ b.quote }}</q> ({{ b.cite }}) <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a>
+        <ul v-if="norms.length" class="small lb-ev" data-testid="lb-norm"><li v-for="b in norms" :key="b.short"><strong>{{ b.short }}</strong>: {{ b.scope }}; <q class="lb-q">{{ b.quote }}</q> ({{ b.cite }}) <a :href="b.url" rel="noopener" target="_blank">передмова ↗</a></li></ul>
           <template v-if="b.region"><br><span class="muted">Край автора (слабкий доказ): {{ b.region.name }} — <q class="lb-q">{{ b.region.quote }}</q> <a :href="b.region.url" rel="noopener" target="_blank">джерело ↗</a></span></template></li></ul>
         <p v-if="d.c === 'nowit' && d.wit" class="small muted" data-testid="lb-nowit">Регіон цих пам’яток не встановлено, тому це не діалектна мітка: {{ nowitNames.map(n => n[1]).join('; ') }}.</p>
         <p v-if="d.c === 'witness' && d.wit" class="small muted" data-testid="lb-wit">Регіон пам’ятки — місце видання чи авторства джерела, а не діалектна мітка слова; цей доказ слабкий.</p>

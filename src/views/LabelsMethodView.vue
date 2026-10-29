@@ -4,7 +4,7 @@
  * (core/labels.ts TH, core/dict-labels.ts tables, core/autolabel.ts GAZETTEER), so the page cannot drift from the code.
  */
 import { RouterLink } from 'vue-router'
-import { CHECKED_REGISTER, CLASS_KEY_UK, DICT_BASES, HIST_DICTS, G2_STRONG, GRADE_UK, HOW, HOW_SUM, HOW_VESUM, SUM_NORM_UK, VESUM_NORM_UK, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
+import { CHECKED_REGISTER, CLASS_KEY_UK, DICT_BASES, DICT_NORMS, HIST_DICTS, G2_STRONG, GRADE_UK, HOW, HOW_SUM, HOW_VESUM, SUM_NORM_UK, VESUM_NORM_UK, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
 import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, groupsOfArea, resolveRow } from '../../core/dict-labels.ts'
 import { GAZETTEER } from '../../core/autolabel.ts'
 import { DIALECTS } from '../../core/rules.ts'
@@ -50,7 +50,9 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
     <ul class="small" data-testid="lbm-bases"><li v-for="b in DICT_BASES" :key="b.id"><strong>{{ b.short }}</strong>: {{ b.region }} — <q>{{ b.quote }}</q> <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a></li></ul>
     <h3 id="hist">Словники епохи і словники автора (класи 7–8), дослівно з передмов і титулів</h3>
     <ul class="small" data-testid="lbm-hist"><li v-for="b in HIST_DICTS" :key="b.id"><strong>{{ b.short }}</strong> ({{ b.kind === 'epoch' ? 'епоха' : 'автор' }}): {{ b.scope }} — <q>{{ b.quote }}</q> ({{ b.cite }}) <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a><template v-if="b.region"> · край автора: {{ b.region.name }} — <q>{{ b.region.quote }}</q> <a :href="b.region.url" rel="noopener" target="_blank">джерело ↗</a></template></li></ul>
-    <p class="small muted">Словники без названої в передмові бази (наприклад Грінченко) до класу 6 не потрапляють. Усі десять класів: {{ Object.values(CLASS_KEY_UK).join('; ') }}.</p>
+    <h3 id="norms">Словники, що в передмові заявляють літературну норму (клас 4, слабкий доказ), дослівно</h3>
+    <ul class="small" data-testid="lbm-norms"><li v-for="b in DICT_NORMS" :key="b.id"><strong>{{ b.short }}</strong>: {{ b.scope }} — <q>{{ b.quote }}</q> ({{ b.cite }}) <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a></li></ul>
+    <p class="small muted">Словники без названої в передмові бази чи норми (наприклад Ізюмов, Якубські, Голоскевич, Закревський, Пластові словники) до класів 4–6 за словником не потрапляють. Усі десять класів: {{ Object.values(CLASS_KEY_UK).join('; ') }}.</p>
     <h3>Словники і їхні списки скорочень</h3>
     <p class="small">Кожен рядок цитує пояснення скорочення з власного списку словника (сторінка — посилання). Нічого не додано від себе, крім відповідності «скорочення → область»; повіти розкриваються за статтями uk.wikipedia (CC BY-SA 4.0).</p>
     <section v-for="t in [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES]" :key="t.id" class="lb-table" :data-testid="`lbm-${t.id}`">

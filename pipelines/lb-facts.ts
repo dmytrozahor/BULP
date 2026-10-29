@@ -3,7 +3,7 @@
  * attestation lines), the light card, the archaic card. Shared by pipelines/build-labels.ts and pipelines/lb-measure.ts.
  */
 import { regionOf, REGIONS } from './regions.ts'
-import { baseOf, histOf, summarizeWitnesses, type TailFacts, type WitMetaLite } from '../core/labels.ts'
+import { baseOf, histOf, normOf, summarizeWitnesses, type TailFacts, type WitMetaLite } from '../core/labels.ts'
 import { HIST_SRC } from '../core/dx-src.ts'
 
 /** witness id → region (code, name) and years; also the region-name lookup of the corpus table */
@@ -29,12 +29,12 @@ export function cvFacts(e: unknown[] | undefined, meta: (id: string) => WitMetaL
   const dictOnly = !!extra?.d || (ids.length > 0 && ids.every(isDictWitness)), vesum = !!tags || !!((extra?.d ?? 0) & 1)
   const bit0 = extra?.d ?? 0, srcIds = [...new Set([...ids, ...HIST_SRC.filter(s => bit0 & s.bit).map(s => s.ids[0]!)])]
   // class 6: every source has a documented regional base; LB-14: every source is a dictionary of an epoch or of one author (or has a base): the epoch / author is the class
-  const allKnown = dictOnly && !vesum && srcIds.length > 0 && !(bit0 & 13) && srcIds.every(i => baseOf(i) || histOf(i))
-  const bases = allKnown ? srcIds.filter(i => baseOf(i)) : [], hist = allKnown ? srcIds.filter(i => histOf(i)) : []
+  const allKnown = dictOnly && !vesum && srcIds.length > 0 && !(bit0 & 13) && srcIds.every(i => baseOf(i) || histOf(i) || normOf(i))
+  const bases = allKnown ? [...new Set(srcIds.filter(i => baseOf(i)).map(i => baseOf(i)!.id))] : [], hist = allKnown ? srcIds.filter(i => histOf(i)) : [], norms = allKnown ? srcIds.filter(i => normOf(i)) : []
   const wit = !dictOnly ? summarizeWitnesses(ids.filter(i => !isDictWitness(i)), meta, (e[2] as number) > ids.length) : undefined
   const bit = extra?.d ?? 0, sumHead = (['sum11', 'sum20'] as const).filter(id => bit & (HIST_SRC.find(s => s.ids[0] === id)?.bit ?? 0))
   const srcNames = dictOnly && !vesum && !sumHead.length ? [...new Set([...HIST_SRC.filter(s => (bit & s.bit) || s.ids.some(i => ids.includes(i))).map(s => s.name.split(',')[0]!), ...(bit & 4 ? ['Пластові словники'] : []), ...(bit & 8 ? ['інші словники корпусу'] : [])])] : []
-  return { facts: { ...(vesum ? { vesum: true } : {}), ...(sumHead.length ? { sumHead } : {}), ...(wit ? { wit } : {}), ...(bases.length ? { bases } : {}), ...(hist.length ? { hist } : {}), ...(srcNames.length ? { srcNames } : {}) }, attested: !dictOnly }
+  return { facts: { ...(vesum ? { vesum: true } : {}), ...(sumHead.length ? { sumHead } : {}), ...(wit ? { wit } : {}), ...(bases.length ? { bases } : {}), ...(hist.length ? { hist } : {}), ...(norms.length ? { norms } : {}), ...(srcNames.length ? { srcNames } : {}) }, attested: !dictOnly }
 }
 /** a light card [lemma, tags, n, "witness|title|form"]: a VESUM lemma attested in an admitted witness */
 export function lightFacts(row: [string, string, number, string], meta: (id: string) => WitMetaLite | undefined): TailFacts {

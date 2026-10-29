@@ -5,9 +5,9 @@ import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import {
-  CLASS_KEYS, DICT_BASES, HIST_DICTS, histOf, baseOf, nowitLine, G2_STRONG, assembleEntry, classKeyOf, classUk, dialectOf, gradeOf, periodUk, summarizeWitnesses, tailClass, witnessLine, TH, emptyEntry, type RegionCount, type WitSummary,
+  CLASS_KEYS, DICT_BASES, DICT_NORMS, HIST_DICTS, histOf, baseOf, normOf, nowitLine, G2_STRONG, assembleEntry, classKeyOf, classUk, dialectOf, gradeOf, periodUk, summarizeWitnesses, tailClass, witnessLine, TH, emptyEntry, type RegionCount, type WitSummary,
 } from '../core/labels.ts'
-import { dialectHeadline, dialectHow, gradeLine, histEvidence } from '../src/lib/labelsText.ts'
+import { dialectHeadline, dialectHow, gradeLine, histEvidence, baseEvidence, normEvidence } from '../src/lib/labelsText.ts'
 import { cvFacts, lightFacts, archaicFacts, witMeta } from '../pipelines/lb-facts.ts'
 import LabelsMethodView from '../src/views/LabelsMethodView.vue'
 
@@ -50,8 +50,8 @@ describe('LB-11 exhaustive classification: seven classes in order, each with a g
     expect(d.c).toBe('base'); expect(gradeOf(d)).toBe('weak'); expect(dialectHeadline(d, c => c)).toContain('Желехівський'); expect(dialectHeadline(d, c => c)).toContain('галицьке середовище')
     for (const r of [d, tailClass(undefined, undefined, { wit: kyiv }, false)]) { expect(classUk(r)).not.toMatch(/діалектн/); expect(dialectHeadline(r, c => c)).not.toMatch(/діалектн/); expect(dialectHow(r)).toContain('ступінь доказу: слабкий') }
     for (const b of DICT_BASES) { expect(b.quote.length).toBeGreaterThan(30); expect(b.url).toMatch(/^https:/) }
-    expect(DICT_BASES.map(b => b.id)).not.toContain('r2u_hrinch09')
-    expect(tailClass(undefined, undefined, { bases: ['r2u_hrinch09'] }, false).c).toBe('few')
+    expect(DICT_BASES.map(b => b.id)).toContain('r2u_hrinch09')   // LB-15: Грінченко's Предисловіе is read
+    expect(tailClass(undefined, undefined, { bases: ['r2u_izyumov'] }, false).c).toBe('few')
   })
   it('LB-11 class 7 «невизначено» says why and has no grade', () => {
     const d = tailClass(undefined, undefined, {}, false)
@@ -93,7 +93,7 @@ describe('LB-13 the facts of the tail classes and the measurement', () => {
   it('LB-13 VESUM, dictionary bases and witnesses are read from cv, light and archaic entries', () => {
     expect(cvFacts(['слово', 'noun:inanim:m:v_naz', 1, [['w1', 'l', 'слово']]], wm.meta).facts).toMatchObject({ vesum: true, wit: { n: 1 } })
     const z = cvFacts(['иногдї', '', 1, [['r2u_zheleh', 'q', 'иногдї']], { d: 2 }], wm.meta); expect(z.facts.bases).toEqual(['r2u_zheleh']); expect(z.attested).toBe(false); expect(z.facts.vesum).toBeUndefined()
-    expect(cvFacts(['x', '', 1, [['r2u_zheleh', 'q', 'x'], ['r2u_hrinch09', 'q', 'x']], { d: 2 }], wm.meta).facts.bases).toBeUndefined()
+    expect(cvFacts(['x', '', 1, [['r2u_zheleh', 'q', 'x'], ['r2u_izyumov', 'q', 'x']], { d: 2 }], wm.meta).facts.bases).toBeUndefined()
     expect(lightFacts(['нельма', 'noun', 3, 'w1|t|нельмо'], wm.meta)).toMatchObject({ vesum: true, wit: { n: 1, atLeast: true } })
     expect(archaicFacts({ witnesses: { w1: 2, w2: 5, r2u_zheleh: 1 } }, wm.meta).wit).toMatchObject({ n: 3, regions: [['kyiv', 'Київ і Київщина']] })
   })
@@ -130,7 +130,7 @@ describe('LB-14 honest classes for the tail: epoch dictionaries, author dictiona
     expect(baseOf('biletsky-nosenko')!.quote).toContain('Полтавской'); expect(baseOf('biletsky-nosenko')!.quote).toContain('Галиціи')
     const mixed = cv([], 65536 | 8192); expect(mixed.facts).toMatchObject({ bases: ['biletsky-nosenko'], hist: ['timchenko'] })
     const m = tailClass(undefined, undefined, mixed.facts, false); expect(m.c).toBe('epoch'); expect(m.bases).toEqual(['biletsky-nosenko'])
-    const grinchenko = cv(['r2u_hrinch09'], 8192 | 16); expect(grinchenko.facts.hist).toBeUndefined(); expect(tailClass(undefined, undefined, grinchenko.facts, false).c).toBe('few')   // Грінченко's preface is not read: no class is invented
+    const izyumov = cv(['r2u_izyumov'], 1024); expect(tailClass(undefined, undefined, izyumov.facts, false).c).toBe('few')   // Ізюмов: «Від автора» lists sources only (LB-15): no class is invented
   })
   it('LB-14 class 8: Словник мови Шевченка is «мова автора», grade слабкий; the author\'s region only with its cited source and worded as the author\'s birthplace', () => {
     const x = cv([], 131072); expect(x.facts.hist).toEqual(['shevchenko'])
@@ -156,5 +156,39 @@ describe('LB-14 honest classes for the tail: epoch dictionaries, author dictiona
     const html = await render(LabelsMethodView, {}); for (const h of HIST_DICTS) expect(html).toContain(h.short.replace(/&/g, '&amp;'))
     expect(html).toContain('Полтавской'); expect(html).not.toContain('недостатньо даних')
     for (const h of HIST_DICTS) { expect(h.quote.length).toBeGreaterThan(60); expect(h.url).toMatch(/^https:/); expect(h.cite.length).toBeGreaterThan(5) }
+  })
+})
+
+describe('LB-15 prefaces of the r2u dictionaries: a class only on a quoted statement, otherwise «невизначено» with what was checked', () => {
+  const cv = (atts: string[], d: number) => cvFacts(['слово', '', 1, atts.map(a => [a, 'q', 'слово']), { d }], witMeta(undefined).meta)
+  it('LB-15 Грінченко: class 6 on the quoted Предисловіе (народна мова, літературна фонетика, місцеві говори; no territorial claim); both editions share it', () => {
+    for (const id of ['r2u_hrinch09', 'r2u_hrinch27']) {
+      const x = cv([id], 16); expect(x.facts.bases).toEqual(['r2u_hrinch09'])
+      const d = tailClass(undefined, undefined, x.facts, false); expect(d.c).toBe('base'); expect(gradeOf(d)).toBe('weak')
+      const q = baseEvidence(d)[0]!.quote; expect(q).toContain('Котляревскаго'); expect(q).toContain('не указываетъ на территоріальное распространеніе'); expect(q).toContain('лист 30 скану')
+    }
+  })
+  it('LB-15 Ніковський and Дорошенко: class 4 (weak) on the preface declaration of the literary norm, with the quote and the place', () => {
+    for (const [id, bit, frag] of [['r2u_nikovsky', 128, 'теперішній літературній мові'], ['r2u_doroshenko', 2048, 'проект нормативного словника']] as const) {
+      const x = cv([id], bit); expect(x.facts.norms).toEqual([id])
+      const d = tailClass(undefined, undefined, x.facts, false)
+      expect(d.c).toBe('general'); expect(d.sub).toBe('dnorm'); expect(classKeyOf(d)).toBe('norm'); expect(gradeOf(d)).toBe('weak'); expect(classUk(d)).toContain('за заявою передмови')
+      const ev = normEvidence(d); expect(ev).toHaveLength(1); expect(ev[0]!.quote).toContain(frag); expect(ev[0]!.cite).toMatch(/Передмова/); expect(ev[0]!.url).toContain('https://r2u.org.ua/html/')
+      expect(dialectHeadline(d, c => c)).not.toMatch(/діалектн/); expect(dialectHow(d)).toContain('заява укладача')
+    }
+    expect(DICT_NORMS.map(n => n.id)).toEqual(['r2u_nikovsky', 'r2u_doroshenko'])
+  })
+  it('LB-15 a mix keeps the honest class: norm + unread dictionary stays «невизначено»; norm + epoch is the epoch class; a VESUM / СУМ headword still wins', () => {
+    expect(tailClass(undefined, undefined, cv(['r2u_nikovsky', 'r2u_izyumov'], 128 | 1024).facts, false).c).toBe('few')
+    expect(tailClass(undefined, undefined, cv([], 128 | 8192).facts, false).c).toBe('epoch')
+    expect(tailClass(undefined, undefined, { ...cv([], 128).facts, vesum: true }, true).sub).toBe('vesum')
+  })
+  it('LB-15 dictionaries whose prefaces were read but name no base or norm stay out: Ізюмов, Голоскевич, Якубські, Закревський, Пластові словники', () => {
+    for (const id of ['r2u_izyumov', 'r2u_holoskevych', 'r2u_yakubski', 'zakrevsky']) { expect(baseOf(id)).toBeUndefined(); expect(normOf(id)).toBeUndefined(); expect(histOf(id)).toBeUndefined() }
+  })
+  it('LB-15 the card and the methods page show the norm quotes', async () => {
+    expect(rd('src/components/LabelsBlock.vue')).toContain('data-testid="lb-norm"')
+    const html = await render(LabelsMethodView, {}); expect(html).toContain('lbm-norms'); for (const n of DICT_NORMS) expect(html).toContain(n.short.replace(/&/g, '&amp;'))
+    expect(html).toContain('Котляревскаго'); for (const n of DICT_NORMS) { expect(n.quote.length).toBeGreaterThan(60); expect(n.cite.length).toBeGreaterThan(5) }
   })
 })
