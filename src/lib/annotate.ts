@@ -24,6 +24,7 @@ import { PART_HYPH_FOLD, splitHyphenParticle, withGal } from '../../core/gal-fol
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
 import type { RuClass, RuLookups } from '../../core/ru-contact.ts'
 import { featurePairs, variantHit, wordRules, type FeaturePair, type VariantHit } from '../../core/word-rules.ts'
+import { COPULA_FORMS, COPULA_RULE, type CopulaReading } from '../../core/copula-ikavism.ts'
 
 export type Status = 'attested' | 'lexindex' | 'rules' | 'unknown'
 export interface AnnotateData extends LexData { search: SearchIndex; cards: CardLookup; /** MM-25: Russian headwords of the r2u ru→uk dictionaries (optional; without it no Russianism is detected) */ ru?: Pick<RuLookups, 'ruHead' | 'isDialect'> }
@@ -41,6 +42,7 @@ export interface AnnotatedToken {
   variant?: VariantHit                               // MM-30..34: the spelling belongs to a variant family (межи / мендзи → між, увесь → весь, тілько-що → тільки, уві → у, како → як); the source or «джерела не знайдено»
   pairs?: FeaturePair[]                              // MM-29 / MM-35: the cited feature that links this spelling with a counterpart, both directions (керовати ↔ керувати, міст-ові → міст)
   features?: string[]                                // MM-16: ids of the cited feature rules (core/feature-chips.ts) that link this spelling (сь before a labial, -ійш-, hyphenated particle …)
+  copula?: CopulaReading                             // MM-38: «їсть» may be the copula єсть (Galician ikavism є → ї): both readings, verdict eat / copula / ambiguous; never a silent choice
   contact?: ContactCorr                              // MM-9: the token is a contact (surzhyk) FORM; its literary counterpart and Russian variant
   mark?: Category; epoch?: string                    // epoch = shev epoch of the lemma's first attestation
 }
@@ -86,12 +88,15 @@ function galLink(k: string, data: AnnotateData) {
 /** the lexicon lookup of the shared rule functions: a card form / paradigm form, or a VESUM / LT index entry */
 export const knownKeyOf = (data: AnnotateData) => (kk: string) => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0
 
-export function annotate(text: string, data: AnnotateData, year?: number): AnnotatedToken[] {
+/** MM-38: witness context of the text (orth, regions) that gates the Galician-ikavism reading of їсть */
+export interface AnnotateCtx { orth?: string; witnessRegion?: string; authorRegion?: string }
+export function annotate(text: string, data: AnnotateData, year?: number, wctx: AnnotateCtx = {}): AnnotatedToken[] {
   const out: AnnotatedToken[] = []
   let from = 0
   const nums = findNumerals(text)
   const knownKey = knownKeyOf(data)
-  for (const t of tokenize(text)) {
+  const toks = tokenize(text)
+  for (const [ti, t] of toks.entries()) {
     const at = text.indexOf(t.raw, from); const start = at < 0 ? t.index : at
     from = start + t.raw.length
     const numeral = nums.find(n => start >= n.start && from <= n.end)
@@ -101,8 +106,17 @@ export function annotate(text: string, data: AnnotateData, year?: number): Annot
       .sort((a, b) => VIA_ORDER.indexOf(a.via) - VIA_ORDER.indexOf(b.via))
     const base = { raw: t.raw, start, end: from, key: k, provenance: 'attested' as const }
     const variant = variantHit(k), pairs = featurePairs(k, knownKey)   // MM-29..36: the SAME shared rule functions as the search keys and «Аналіз слова» (core/word-rules.ts)
-    const extra = { ...(variant ? { variant } : {}), ...(pairs.length ? { pairs } : {}) }
+    const extra: { variant?: VariantHit; pairs?: FeaturePair[]; copula?: CopulaReading } = { ...(variant ? { variant } : {}), ...(pairs.length ? { pairs } : {}) }
     const hit = hits[0], card = hit && data.cards.get(hit.lemma)
+    // MM-38: the SAME shared rule function (wordRules) as search and «Аналіз слова»; the neighbours are the cues, the witness orth / region the gate
+    const copula = COPULA_FORMS[k] ? wordRules(t.raw, { known: knownKey }, { ...wctx, prev: toks[ti - 1] && key(toks[ti - 1]!.raw), next: toks[ti + 1] && key(toks[ti + 1]!.raw),
+      sentStart: ti === 0 || /[.!?…]\s*$/.test(text.slice(0, start)), tagsOf: kk => hitsOf(data, kk).map(h => h.tags) }).copula : undefined
+    if (copula) extra.copula = copula
+    const bcard = copula?.verdict === 'copula' ? data.cards.get('бути') : undefined
+    if (copula && bcard) {
+      const cl = claimsOf(bcard)
+      out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: copula.copulaForm, trace: [{ rule: COPULA_RULE, from: k, to: copula.copulaForm }] }, status: 'attested', lemma: bcard.lemma, card: bcard, via: 'form', claims: cl, hints: [], mark: strongest(cl), epoch: shevEpochOf(bcard), features: [COPULA_RULE] }); continue
+    }
     if (hit && card) {
       const form = card.forms.find(f => [f.raw, f.norm, f.modern].some(x => key(x) === k || key(x) === kn))
       const claims = claimsOf(card, form)

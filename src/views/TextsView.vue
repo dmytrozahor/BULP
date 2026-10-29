@@ -15,6 +15,8 @@ import { epochTo, witnessTo, wordTo }  from '../lib/nav.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
 import { sourceLink } from '../lib/source.ts'
 import { featureMarks, markTitle } from '../lib/featureMarks.ts'
+import { copulaReading } from '../../core/copula-ikavism.ts'
+import { key } from '../../core/text.ts'
 import { authorInfo, useData } from '../composables/useData.ts'
 import AuthorBadge from '../components/AuthorBadge.vue'
 import Pagination from '../components/Pagination.vue'
@@ -53,7 +55,9 @@ const rows = computed(() => (!Array.isArray(toks.value) || !loaded.value ? [] : 
 watch([locIdx, () => rows.value.length], async () => { if (locIdx.value < 0) return; await nextTick(); document.querySelector('.tok.hit')?.scrollIntoView({ block: 'center' }) })
 /** MM-16: a spelling that shows a cited feature rule (сь before a labial, -є for -я, -ійш-, hyphenated particle …) gets a dotted underline and a tooltip with the feature, the qualifier and the rule id; computed per visible token, nothing new is loaded */
 const markCtx = computed(() => ({ orth: cur.value?.orth, edition: cur.value?.edition, witnessRegion: cur.value?.region, year: cur.value?.date[0], authorRegion: corpus.value?.authors.find(a => a.id === cur.value?.author)?.region }))
-const fm = (raw: string) => (annData.value ? markTitle(featureMarks(raw, markCtx.value, k => annData.value!.search.map.has(k))) : '')
+/** MM-38: in a Galician witness «їсть» is also the copula єсть (ікавізм); the tooltip names both readings, «неоднозначно» (the cues of the neighbours are used by the annotator, not here) */
+const cop = (raw: string) => { const c = copulaReading(key(raw), markCtx.value); return c ? `${c.chip.feature}: неоднозначно, їсти / бути через «${c.copulaForm}» (${c.chip.rule}); ${c.chip.text}` : '' }
+const fm = (raw: string) => (annData.value ? [markTitle(featureMarks(raw, markCtx.value, k => annData.value!.search.map.has(k))), cop(raw)].filter(Boolean).join(' · ') : '')
 const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node: raw })
 </script>
 

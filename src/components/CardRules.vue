@@ -16,10 +16,10 @@ import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ lemma?: string; spelling?: string; /** the host already prints the MM-16 feature chips (lemma header / form page) */ skipFeatures?: boolean }>()
 const { annData, searchIdx, loaded } = useData()
 const w = computed(() => props.spelling ?? props.lemma ?? '')
-const rules = computed(() => (w.value && loaded.value ? wordRules(w.value, { known: knownKeyOf(annData.value), ru: annData.value.ru }) : undefined))
+const rules = computed(() => (w.value && loaded.value ? wordRules(w.value, { known: knownKeyOf(annData.value), ru: annData.value.ru }, { isolated: true }) : undefined))
 const feats = computed(() => props.skipFeatures || !w.value ? [] : featureMarks(w.value, {}, k => k !== key(w.value) && searchIdx.value.map.has(k)))
-const t = computed(() => ({ variant: rules.value?.variant, pairs: rules.value?.pairs ?? [], ruClass: rules.value?.ruClass }))
-const n = computed(() => feats.value.length + t.value.pairs.length + (t.value.variant ? 1 : 0) + (t.value.ruClass ? 1 : 0))
+const t = computed(() => ({ variant: rules.value?.variant, pairs: rules.value?.pairs ?? [], ruClass: rules.value?.ruClass, copula: rules.value?.copula }))
+const n = computed(() => feats.value.length + t.value.pairs.length + (t.value.variant ? 1 : 0) + (t.value.ruClass ? 1 : 0) + (t.value.copula ? 1 : 0))
 const checked = computed(() => `правила ознак MM-16${props.skipFeatures ? ' (показані в заголовку)' : ''}, пари -ова-/-ува- і -ові, родини варіантів MM-29…35, російські заголовки r2u (MM-36) для «${w.value}»`)
 </script>
 

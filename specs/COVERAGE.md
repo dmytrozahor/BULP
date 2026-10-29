@@ -1010,6 +1010,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-8 | tests/card-parity.test.ts › CP-8 the matrix is written to analysis/card-parity.md (every kind and every block) and the spec carries the CP-8 item |
 | MM-37 | tests/mm37.test.ts › MM-37 сь / зь / ць + labial → с / з / ц for linking (every labial of the cited statement) |
 | MM-37 | tests/mm37.test.ts › MM-37 -тьця / -цця = -ться (сьпіваютьця, засьміетця) |
+| MM-38 | tests/mm38.test.ts › MM-38 the disambiguator (shared copulaReading / wordRules) |
+| MM-38 | tests/mm38.test.ts › MM-38 the annotator (token level) |
+| MM-38 | tests/mm38.test.ts › MM-38 the reverse guard: no rule links їсти (or its forms) to єсть / бути |
 | CP-9 | tests/thin-par.test.ts › CP-9 every VESUM lemma without a full card gets its paradigm, tags verbatim, in the shard of lk(lemma) |
 | CP-9 | tests/thin-par.test.ts › CP-9 homonyms of one key stay apart (мати n / v), an indeclinable head is a paradigm of its head line, a lemma VESUM lacks has no entry |
 | CP-9 | tests/thin-par.test.ts › CP-9 a lemma that has a full card is skipped (its paradigm is in the lexicon); forms share one tag table per shard |

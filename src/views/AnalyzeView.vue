@@ -58,7 +58,7 @@ const parallelLabel = (l: string) => isRusyn(l) || (hasRusyn.value && (l === 'ZA
 const claimList = computed(() => allClaims.value.filter(([l]) => !parallelLabel(l)))
 const parallelClaims = computed(() => Object.fromEntries(allClaims.value.filter(([l]) => parallelLabel(l))))
 /** MM-29..36: the SAME shared rule function as the annotator and the search keys (core/word-rules.ts): variant family, feature pairs in both directions, Russian-headword class */
-const wr = computed(() => (word.value && loaded.value ? wordRules(word.value, { known: knownKeyOf(annData.value), ru: annData.value.ru }, { year: y.value }) : undefined))
+const wr = computed(() => (word.value && loaded.value ? wordRules(word.value, { known: knownKeyOf(annData.value), ru: annData.value.ru }, { year: y.value, isolated: true }) : undefined))
 const spans = computed(() => (word.value && loaded.value ? annotateSyntax(word.value, annData.value, y.value) : []))   // SPEC 60 SX-4
 const open = ref<string | null>(null)
 /** SPEC 63 NV-2: every form shown here leads to its page (/w, /lw or /f); the rare-lemma set loads lazily */
@@ -115,8 +115,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
       <p class="small muted sans">Кандидат — лише гіпотеза за правилами Шевельова; він стає зв’язком лише після збігу з формою ВЕСУМ (SPEC 10 M-3.2).</p>
     </section>
 
-    <section v-if="wr && (wr.variant || wr.pairs.length || wr.ruClass)" class="card" data-testid="word-rules"><h2><span>Варіанти та ознаки</span><span class="small">одні й ті самі правила в аннотаторі, пошуку й тут</span></h2>
-      <WordRuleChips :t="{ variant: wr.variant, pairs: wr.pairs, ruClass: wr.ruClass }" :year="y" />
+    <section v-if="wr && (wr.variant || wr.pairs.length || wr.ruClass || wr.copula)" class="card" data-testid="word-rules"><h2><span>Варіанти та ознаки</span><span class="small">одні й ті самі правила в аннотаторі, пошуку й тут</span></h2>
+      <WordRuleChips :t="{ variant: wr.variant, pairs: wr.pairs, ruClass: wr.ruClass, copula: wr.copula }" :year="y" />
     </section>
 
     <DeicticStructure :word="word" />
