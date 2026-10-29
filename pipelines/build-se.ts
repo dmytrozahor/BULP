@@ -11,6 +11,7 @@ import { resolve } from 'node:path'
 import { createInterface } from 'node:readline'
 import { lk } from '../core/cv.ts'
 import { glossClean, isXrefGloss } from '../core/se-parse.ts'
+import { cleanGloss, textLayerGlossOk, tokensOf, volSource } from '../core/text-layer.ts'
 import { buildEntry, dictOfWitness, isTypedDict, rowOfLine, typeLabels, type SeEntry, type SeKwicIn, type SeRow } from '../core/se.ts'
 import { collectSenses } from './build-extras.ts'
 
@@ -82,7 +83,19 @@ export async function kaikkiRows(root: string, wanted: (k: string) => boolean, i
  * SE-11: rows of the parsed historical dictionaries (pipelines/parse-se-dicts.ts → data/work/se-parsed/<id>.json). A row is attached to the card whose key equals the headword (lk); a headword that no
  * card has is tried through `alt` (the first derivation candidate of the headword, flagged `m: 'd'`); otherwise it is dropped: an OCR headword never creates a lemma.
  */
-export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (head: string) => string[], into: Map<string, SeRow[]>): { files: number; rows: number; derived: number; blanked: Record<string, number>; xref: Record<string, number> } {
+/**
+ * The known-word predicate for the text-layer check (core/text-layer.ts): VESUM through the corpus folds over every token of the СУМ glosses (data/work/se-parsed/sum11.json, sum20.json).
+ * Async (VESUM is streamed); build.ts awaits it and hands it to parsedRows.
+ */
+export async function textLayerKnown(root: string): Promise<(w: string) => boolean> {
+  const words = new Set<string>()
+  for (const d of ['sum11', 'sum20']) {
+    const f = resolve(root, 'data/work/se-parsed', d + '.json'); if (!existsSync(f)) continue
+    try { for (const [, r] of (JSON.parse(readFileSync(f, 'utf8')) as { rows: [string, SeRow][] }).rows) for (const t of tokensOf(r.g)) { words.add(t.w); t.parts?.forEach(p => words.add(p)) } } catch { /* torn: ignored (RS-1) */ }
+  }
+  return words.size ? (await import('./parse-hist-lex.ts')).vesumVerifier([...words]) : () => true
+}
+export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (head: string) => string[], into: Map<string, SeRow[]>, known?: (w: string) => boolean): { files: number; rows: number; derived: number; blanked: Record<string, number>; xref: Record<string, number> } {
   const dir = resolve(root, 'data/work/se-parsed')
   let files = 0, n = 0, derived = 0
   const blanked: Record<string, number> = {}, xref: Record<string, number> = {}   // OQ: rows whose gloss failed the quality gate (kept as «текст не взято (OCR низької якості)») / cross-reference rows (dropped), per dictionary
@@ -94,7 +107,10 @@ export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (h
     for (const [head, row] of j.rows) {
       let k = lk(head), r = row
       if (r.g && isXrefGloss(r.g)) { xref[r.d] = (xref[r.d] ?? 0) + 1; continue }   // «Див. Цапе. …» is a cross-reference, not a sense
-      if (r.g && !isTypedDict(r.d) && !glossClean(r.g)) {   // typed / proofread sources (DictCover.typed) are not OCR: the gate does not apply
+      // text-layer volumes of СУМ-11/20 (volSource): the lighter check (rejoin hyphenation, unknown-word share) instead of the OCR score; worker-OCR volumes and OCR dictionaries keep glossClean
+      const gateOk = isTypedDict(r.d) ? true : known && volSource(r.d, r.l) === 'text' ? textLayerGlossOk(r.g, known, head) : glossClean(r.g)
+      if (r.g && gateOk && known && volSource(r.d, r.l) === 'text' && !isTypedDict(r.d)) r = { ...r, g: cleanGloss(r.g) }
+      if (r.g && !gateOk) {   // typed / proofread sources (DictCover.typed) are not OCR: the gate does not apply
         const { q: _q, t: _t, ...rest } = r; r = { ...rest, g: '', oq: 1 }; blanked[r.d] = (blanked[r.d] ?? 0) + 1 }   // a garbled gloss is never shown; the dated row stays
       if (!wanted(k)) { const a = alt(head).map(lk).find(wanted); if (!a) continue; k = a; r = { ...row, m: 'd' as const }; derived++ }
       const list = into.get(k) ?? into.set(k, []).get(k)!

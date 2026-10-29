@@ -70,7 +70,7 @@ import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../c
 import { writeEtymology } from './build-etymology.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
-import { buildSenseEntries, dictRows, kaikkiRows, parsedRows, wiktRows } from './build-se.ts'
+import { buildSenseEntries, dictRows, kaikkiRows, parsedRows, textLayerKnown, wiktRows } from './build-se.ts'
 import { writeUsage } from './build-usage.ts'
 import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
 import { autoContactClaim, withAutoContact } from '../core/autolabel.ts'
@@ -698,7 +698,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     const wanted = new Set<string>([...cards.map(c => lk(c.lemma)), ...light.file.lemmas.map(l => lk(l[0])), ...seWanted.map(lk)])
     wiktRows(ROOT, cards.map(c => c.lemma), rows)
     await kaikkiRows(ROOT, k => wanted.has(k), rows)
-    const pr = parsedRows(ROOT, k => wanted.has(k), h => derive(h, true).candidates.slice(0, 1).map(c => c.form), rows)   // SE-11: Тимченко, СУМ XVI–XVII, Матеріали, Шевченко, Білецький-Носенко, Закревський
+    const pr = parsedRows(ROOT, k => wanted.has(k), h => derive(h, true).candidates.slice(0, 1).map(c => c.form), rows, await textLayerKnown(ROOT))   // SE-11: Тимченко, СУМ XVI–XVII, Матеріали, Шевченко, Білецький-Носенко, Закревський
     lap(`SE-11 OQ gate: gloss blanked ${JSON.stringify(pr.blanked)}; cross-reference rows dropped ${JSON.stringify(pr.xref)}`)
     const dictW = new Set(adm.filter(({ w }) => w.witnessType === 'dictionary').map(({ w }) => w.id))
     const kw = new Map(cards.map(c => [lk(c.lemma), c.forms.flatMap(f => f.kwic).filter(x => !dictW.has(x.w)).slice(0, 12)] as const))
