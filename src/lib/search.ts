@@ -43,7 +43,7 @@ export const queryKeys = (q: string) => {
   // MM-29..36: the family head of a variant (межи, мендзи, увесь, тілько-що, уві → між, весь, тільки, у) and the older counterpart of an -ува- verb (керувати → керовати) are query variants too: the SAME
   // shared rule functions as the annotator and «Аналіз слова» (core/word-rules.ts)
   const rev = toOvati(t)
-  const extra = t.length > 2 ? [...withGal(fold(t, 'желехівка')).map(c => key(c.form)), ...(sp ? [sp.host] : []), ...(rev !== t ? [rev] : [])] : []
+  const extra = t.length > 2 ? [...withGal(fold(t, 'желехівка'), t).map(c => key(c.form)), ...(sp ? [sp.host] : []), ...(rev !== t ? [rev] : [])] : []
   extra.push(...variantKeys(t), ...(sp ? variantKeys(sp.host) : []))
   return [...new Set([...base, ...extra])].filter(Boolean)
 }

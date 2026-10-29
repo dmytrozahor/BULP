@@ -140,7 +140,10 @@ export function decodeVira(s: string): string {
 // ── Tokenizer ────────────────────────────────────────────────────────────────────────────────────
 
 const LETTER = "\\p{Script=Cyrillic}\\p{M}ⷠ-ⷿ'’ʼ"
-const WORD = new RegExp(`[${LETTER}]+(?:-[${LETTER}]+)*`, 'gu')
+// MM-41: the Transcarpathian marker letters ÿ ü ô ê (ЕУМ um162: вÿс, хôжу) belong to a word only when a Cyrillic letter touches them; a lone «für» or «Müller» is not a token
+const MARK = 'ÿüôê'
+const LET1 = `(?:[${LETTER}]|[${MARK}](?=[${LETTER}])|(?<=[${LETTER}])[${MARK}])+`
+const WORD = new RegExp(`${LET1}(?:-${LET1})*`, 'gu')
 export interface Token { raw: string; index: number }
 export const tokenize = (text: string): Token[] => [...text.matchAll(WORD)].map(m => ({ raw: m[0].replace(/^[^\p{Script=Cyrillic}]+|[^\p{Script=Cyrillic}\p{M}]+$/gu, ''), index: m.index! })).filter(t => t.raw)
 /** A token with a Latin letter left after decoding is dropped (SPEC 10 M-2.1). */

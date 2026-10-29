@@ -13,7 +13,7 @@ import { foldById } from './orthography.ts'
 import { ZHEL_FOLDS } from './zhel-folds.ts'
 
 export type FeatureQualifier = 'galician' | 'edition' | 'older' | 'neutral'
-export interface FeatureCtx { orth?: string; edition?: string; authorRegion?: string; witnessRegion?: string; year?: number }
+export interface FeatureCtx { orth?: string; edition?: string; authorRegion?: string; witnessRegion?: string; year?: number; /** sub-area of the witness (e.g. a Transcarpathian говірка) when the witness metadata gives one; never guessed */ area?: string }
 /** `dialect`: the dialect group the rule's own source names, for the dialect switch (OV agent). Absent when no source states one: the Желехівка statements are ORTHOGRAPHIC (how the edition writes), and no quote in the repo says which dialect group a spelling reflects (no cite, no link). */
 export interface FeatureChip { rule: string; feature: string; label: string; qualifier: FeatureQualifier; text: string; cite: Evidence; dialect?: { group: string; source: string } }
 
@@ -21,8 +21,21 @@ const GALICIAN = /Галич|Львів|Прикарпатт|Покутт|Бук
 export const isGalician = (region?: string) => !!region && GALICIAN.test(region)
 const place = (edition?: string) => /^([А-ЯІЇЄҐ][а-яіїєґ'’-]+)\s+(\d{4})/.exec(edition ?? '')?.slice(1, 3).join(' ')
 
-interface Feature { label: string; feature: string; galician: string; edition: (p: string) => string; older?: string; /** text for a witness without the Желехівка orthography whose author is not Galician (OCR editions): the form is named, no dialect is claimed */ neutral?: string }
+interface Feature { label: string; feature: string; galician: string; edition: (p: string) => string; older?: string; /** the dialect group the rule's own source names */ dialect?: { group: string; source: string }; /** text for a witness without the Желехівка orthography whose author is not Galician (OCR editions): the form is named, no dialect is claimed */ neutral?: string }
+/** MM-41 (ЕУМ um162): ÿ ü ӱ = the Transcarpathian reflex of о, е, ѣ in a new closed syllable. The area is the SOURCE's statement (ÿ < о: central говірки); the TEXT's own area is named only when the witness gives one (ctx.area). */
+const ZAK_Y: Feature = { feature: 'закарпатське ÿ (рефлекс о / ѣ)', label: 'ÿ, ü, ӱ замість і, е, о (вÿс, кÿнь, хл’ÿў)', dialect: { group: 'ZAK', source: 'ЕУМ um162' },
+  galician: 'закарпатське ÿ — так ЕУМ (um162) друкує закарпатський рефлекс давніх о, е, ѣ у новозакритому складі; стандартне слово — із і, е або о (вÿс = віз, кÿнь = кінь)',
+  neutral: 'літера ÿ (ü, ӱ): так ЕУМ (um162) друкує закарпатський рефлекс давніх о, е, ѣ; діалект автора цього тексту не встановлено, район не заявляється',
+  edition: p => `літера ÿ (ü, ӱ) у виданні${p ? ' ' + p : ''}: так ЕУМ (um162) друкує закарпатський рефлекс давніх о, е, ѣ; діалект автора не заявляється, район не заявляється` }
+const ZAK_O: Feature = { feature: 'закарпатське ô (закрите о)', label: 'ô, ê замість о, е (хôжу, ôс’ін’)', dialect: { group: 'ZAK', source: 'ЕУМ um162' },
+  galician: 'закарпатське ô — так ЕУМ (um162) друкує закрите о (ôс’ін’, хôжу); стандартне слово — з о',
+  neutral: 'літера ô: так ЕУМ (um162) друкує закрите о закарпатських говорів; діалект автора цього тексту не встановлено, район не заявляється',
+  edition: p => `літера ô у виданні${p ? ' ' + p : ''}: закрите о (ЕУМ um162); діалект автора не заявляється, район не заявляється` }
+/** MM-40: -рдц- is the older (Middle Ukrainian) spelling; the source is our own corpus, no dialect is claimed */
+const RDC_TXT = 'давніша форма (середньоукраїнське написання -рдц-: сердце, сердцем), діалект не заявляється'
 const FEATURES: Record<string, Feature> = {
+  'ORTH-ZAK-Y': ZAK_Y, 'ORTH-ZAK-Y-V': ZAK_Y, 'ORTH-ZAK-Y-E': ZAK_Y, 'ORTH-ZAK-Y-E-V': ZAK_Y, 'ORTH-ZAK-Y-O': ZAK_Y, 'ORTH-ZAK-Y-O-V': ZAK_Y, 'ORTH-ZAK-O': ZAK_O,
+  'ORTH-RDC': { feature: 'давніша форма -рдц-', label: 'сердце, сердцем замість серце, серцем', galician: RDC_TXT, neutral: RDC_TXT, older: RDC_TXT, edition: p => `давніша форма (правопис видання${p ? ' ' + p : ''}), діалект не заявляється` },
   'ORTH-ZHEL-SOFT': { feature: 'асимілятивна м’якість', label: 'ь після с, з, ц перед губним (сьпів, сьвіт, цьвях)',
     galician: 'галицька вимова, передана желехівкою', edition: p => `західна (галицька) вимова, передана желехівкою (правопис видання${p ? ' ' + p : ''}), не діалект автора; діалектну належність джерело не називає (джерела не знайдено)` },
   'ORTH-ZHEL-INIT-I': { feature: 'початкове и- = [і]', label: 'и- на початку слова замість і- (инший)',
@@ -51,8 +64,9 @@ export function featureChips(rules: readonly string[], ctx: FeatureCtx = {}): Fe
     const galicia = isGalician(ctx.authorRegion ?? ctx.witnessRegion)
     const zhel = ctx.orth === 'желехівка'
     const qualifier: FeatureQualifier = galicia ? 'galician' : f.older && !zhel && (ctx.year ?? 9999) < 1800 ? 'older' : f.neutral && !zhel ? 'neutral' : 'edition'
-    out.push({ rule: id, feature: f.feature, label: f.label, qualifier, cite: fold.cite,
-      text: qualifier === 'galician' ? f.galician : qualifier === 'older' ? f.older! : qualifier === 'neutral' ? f.neutral! : f.edition(place(ctx.edition) ?? '') })
+    const base = qualifier === 'galician' ? f.galician : qualifier === 'older' ? f.older! : qualifier === 'neutral' ? f.neutral! : f.edition(place(ctx.edition) ?? '')
+    out.push({ rule: id, feature: f.feature, label: f.label, qualifier, cite: fold.cite, ...(f.dialect ? { dialect: f.dialect } : {}),
+      text: f.dialect && ctx.area ? `${base}; район за даними свідка: ${ctx.area}` : base })
   }
   return out
 }

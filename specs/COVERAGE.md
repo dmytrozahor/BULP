@@ -909,6 +909,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-41 | tests/ov14.test.ts › OV-14 ZAK (MM-41) добродітель: ѣ → і, ÿ only before у in the source, so добродÿтель is not generated |
 | MM-39 | tests/ov14.test.ts › OV-14 MM-39 народ is never нарід and MM-40 серце never сердце under any dialect: no source names a dialect for нарід / сердце |
 | MM-40 | tests/ov14.test.ts › OV-14 MM-39 народ is never нарід and MM-40 серце never сердце under any dialect: no source names a dialect for нарід / сердце |
+| MM-41 | tests/mm40-41.test.ts › MM-41 ÿ / ü / ӱ / ô inside a Cyrillic word links to the standard lemma (ЕУМ um162 glosses: вÿс «віз», кÿнь, хл’ÿў, хôжу) |
+| MM-41 | tests/mm40-41.test.ts › no false links: Latin words with ü ô ê ÿ (German, Hungarian, French, Dutch) are not marked, have no candidate and are not even tokens |
+| MM-41 | tests/mm40-41.test.ts › chips: «закарпатське ÿ (рефлекс о / ѣ)» with the um162 quote; the source names the dialect group, the text own area only when the witness gives one |
+| MM-40 | tests/mm40-41.test.ts › MM-40 сердце / сердца / сердцем → серце: the older -рдц- spelling links to the standard word, evidence from our own corpus, no dialect claim |
+| MM-40 | tests/mm40-41.test.ts › the card u:сердце points to серце (Аналіз слова / CardRules pair), the annotator, the text mark and the search key |
 | OV-14 | tests/ov14.test.ts › OV-14 every cite is a valid evidence claim (non-empty locator and quote) |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › СУМ glosses: «Зменш.-пестл. до тонкий» → dim-aff, «Пестл.», «Збільш.», «Підсил.», «Зменш.» and the spelled-out forms; a gloss that merely contains «до» is not a link |
 | MM-23 | tests/fx.test.ts › MM-23 «тоненький теж має лінкуватися до тонкий»: the dictionary statement is parsed into a derivation link with its source › en.wiktionary lines: «diminutive of …», «endearing diminutive of …», «augmentative of …», accents removed |

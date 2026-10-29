@@ -6,12 +6,14 @@
  *  ORTH-ADJ-IISH    скорійше, новійший, найсьвятійшою → скоріше, новіший, найсвятішою
  *  ORTH-VERB-OVATI  шановати, купова́ти, малёвати → шанувати, купувати   (-ова- ~ -ува-; two hypotheses about WHY are recorded in specs/63, only the cited one is stated here)
  *  ORTH-PART-HYPH   прийми-ж, було-б, ходи-но → the host word + a particle (the hyphen is the older / Galician way to attach it)
+ *  ORTH-ZAK-*, ORTH-RDC  MM-40 / MM-41 (core/zak-folds.ts): ÿ ü ӱ ô in a Cyrillic word, сердце → серце
  *  ORTH-DAT-OVI     міст-ові, містові → міст (MM-29): the dative in -ові/-еві/-єві joined to the unchanged stem, with or without a hyphen
  */
 import { P, Q } from './evidence.ts'
 import type { Fold } from './orthography.ts'
 import type { Candidate } from './phonology.ts'
 import { familyMember } from './variant-families.ts'
+import { ALL_ZAK_FOLDS, RDC_FOLD, ZAK_FOLDS, isZakMarked } from './zak-folds.ts'
 
 const SS14 = 'Смаль-Стоцький, Граматика руської мови (1914), скан p. 44 (друк. с. 40), §§ 62–63 «Степенованє прикметників»'
 const OG89 = 'Огоновський, Граматика руської мови (1889), скан p. 31–32 (§ 38), p. 39'
@@ -79,12 +81,15 @@ export const TSYA_PHON_FOLD: Fold = {
   cite: P('OWNER', 'повідомлення власника, 2026-10-29 (сьпіваютьця, засьміетця у Грінченка 1893)', '-тьця / -цця = -ться (сьпіваютьця)', 'джерела (граматики, словника) з цим твердженням у сховищі не знайдено; кандидат для зв’язування, ознака не показується'),
   apply: toTsya,
 }
-export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD]
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD]
+export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...ALL_ZAK_FOLDS]
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, RDC_FOLD]
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
-export function withGal<T extends Candidate[]>(cands: T): Candidate[] {
+export function withGal<T extends Candidate[]>(cands: T, raw?: string): Candidate[] {
   const seen = new Set(cands.map(c => c.form)), extra: Candidate[] = []
+  // MM-41: the Transcarpathian marker letters are folded from the RAW token (the derive step has already turned ô into і); a Latin word never qualifies (isZakMarked)
+  const r = (raw ?? cands[0]?.form ?? '').toLowerCase()
+  if (isZakMarked(r)) for (const f of ZAK_FOLDS) { const s = f.apply(r); if (s !== r && !seen.has(s)) { seen.add(s); extra.push({ form: s, trace: [f.id], branches: (cands[0]?.branches ?? 0) + 1 }) } }
   for (const c of cands) for (const f of EXTRA) {
     const s = f.apply(c.form)
     if (s !== c.form && !seen.has(s)) { seen.add(s); extra.push({ form: s, trace: [...c.trace, f.id], branches: c.branches + 1 }) }

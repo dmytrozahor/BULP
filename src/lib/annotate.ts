@@ -76,7 +76,7 @@ function foldSteps(start: string, trace: string[]): TraceStep[] {
 }
 function galLink(k: string, data: AnnotateData) {
   const sp = splitHyphenParticle(k)
-  const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...withGal(fold(k, 'желехівка'))]
+  const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...withGal(fold(k, 'желехівка'), k)]
   for (const c of cands) {
     if (c.form === k) continue
     const h = (data.search.map.get(key(c.form)) ?? [])[0], card = h && data.cards.get(h.lemma)
