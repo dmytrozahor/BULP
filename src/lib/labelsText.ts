@@ -1,6 +1,6 @@
 /** SPEC 63 LB-5: the words of the «Мітки» block, as pure functions (tested; the components only lay them out). Every label is value + method + evidence. */
 import {
-  CHECKED_REGISTER, classUk, gradeOf, GRADE_UK, baseOf, witnessLine, HOW, HOW_SUM, HOW_VESUM, KIND_UK, REG_SRC_UK, TH, TYPE_SRC_UK, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk, regAbbr, regUk,
+  CHECKED_REGISTER, classUk, gradeOf, GRADE_UK, baseOf, histOf, witnessLine, nowitLine, HOW, HOW_SUM, HOW_VESUM, KIND_UK, REG_SRC_UK, TH, TYPE_SRC_UK, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk, regAbbr, regUk,
   type DialectResult, type LbEntry, type RegItem, type TypeItem,
 } from '../../core/labels.ts'
 import { DICT_LABEL_TABLES, tableById, type DictHit } from '../../core/dict-labels.ts'
@@ -36,6 +36,8 @@ export function dialectHeadline(d: DialectResult, regionName: (code: string) => 
   if (d.c === 'general' && d.sub && d.marks?.length) return `${d.sub === 'vesum' ? 'заголовне слово ВЕСУМ' : 'заголовне слово СУМ'} із позначкою вжитку (${d.marks.map(m => regAbbr(m)).join(', ')}): позначка стосується стилю, а не краю; територіальних позначок у словнику немає, регіональних даних немає${d.corp ? `; у корпусі ${d.corp.f} вживань` : ''}`
   if (d.c === 'general' && d.sub === 'vesum') return `нормативне (ВЕСУМ): заголовне слово без тега, що обмежує вжиток${d.corp ? `; у корпусі ${d.corp.f} вживань, перекосу, що проходить пороги, немає` : '; корпус не містить засвідчень'}; територіальних тегів у ВЕСУМ немає, тому регіональних даних немає`
   if (d.c === 'witness' && d.wit) return witnessLine(d.wit)
+  if (d.c === 'nowit' && d.wit) return nowitLine(d.wit)
+  if (d.c === 'epoch' || d.c === 'author') return (d.hist ?? []).map(b => { const x = histOf(b); return x ? (x.kind === 'epoch' ? `слово є лише в словнику епохи «${x.short}»: ${x.scope} (епоха, а не край; регіону словник не називає)` : `слово є лише в словнику мови автора «${x.short}»: ${x.scope}${x.region ? `; місце народження автора — ${x.region.name} (слабкий доказ: це про автора, а не про слово)` : ''}`) : b }).join('; ')
   if (d.c === 'base') return (d.bases ?? []).map(b => { const x = baseOf(b); return x ? `слово є лише в словнику «${x.short}», чия основа — ${x.region} (слабкий доказ: це походження збірки, а не мітка слова)` : b }).join('; ')
   if (d.c === 'few') return `невизначено: ${d.why ?? d.need ?? ''}`
   if (d.c === 'general' && d.sub === 'sum') return `загальновживане за словником: ${d.sumNorm!.map(x => `${x.d === 'sum11' ? 'СУМ-11' : x.d === 'sum20' ? 'СУМ-20' : x.d}, ${x.n ? `${x.n} ${x.n === 1 ? 'значення' : 'значень'}` : 'заголовне слово'}`).join('; ')} — жодне з них не має позначки діал., зах., розм., заст. тощо${d.corp ? `; у корпусі лише ${d.corp.f} вживань (для порівняння регіонів замало)` : '; корпус не містить засвідчень'}`
@@ -44,6 +46,8 @@ export function dialectHeadline(d: DialectResult, regionName: (code: string) => 
 }
 /** the evidence grade in words: «ступінь доказу: сильний» (nothing for невизначено, which claims nothing) */
 export const gradeLine = (d: DialectResult): string => { const g = gradeOf(d); return g ? `ступінь доказу: ${GRADE_UK[g]}` : 'ступінь доказу: немає (клас не визначено)' }
+/** the epoch / author dictionary quotes of a class-7/8 result, for the evidence list */
+export const histEvidence = (d: DialectResult): { short: string; kind: 'epoch' | 'author'; scope: string; quote: string; cite: string; url: string; region?: { name: string; quote: string; url: string } }[] => (d.hist ?? []).flatMap(b => { const x = histOf(b); return x ? [{ short: x.short, kind: x.kind, scope: x.scope, quote: x.quote, cite: x.cite, url: x.url, ...(x.region ? { region: x.region } : {}) }] : [] })
 /** the dictionary base quotes of a class-6 result, for the evidence list */
 export const baseEvidence = (d: DialectResult): { short: string; region: string; quote: string; url: string }[] => (d.bases ?? []).flatMap(b => { const x = baseOf(b); return x ? [{ short: x.short, region: x.region, quote: x.quote, url: x.url }] : [] })
 /** the plain-Ukrainian «як визначено» of the dialect value (tooltip) */

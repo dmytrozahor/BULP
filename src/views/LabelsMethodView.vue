@@ -4,7 +4,7 @@
  * (core/labels.ts TH, core/dict-labels.ts tables, core/autolabel.ts GAZETTEER), so the page cannot drift from the code.
  */
 import { RouterLink } from 'vue-router'
-import { CHECKED_REGISTER, CLASS_KEY_UK, DICT_BASES, G2_STRONG, GRADE_UK, HOW, HOW_SUM, HOW_VESUM, SUM_NORM_UK, VESUM_NORM_UK, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
+import { CHECKED_REGISTER, CLASS_KEY_UK, DICT_BASES, HIST_DICTS, G2_STRONG, GRADE_UK, HOW, HOW_SUM, HOW_VESUM, SUM_NORM_UK, VESUM_NORM_UK, CLASS_UK, REGISTER, TH, VESUM_TAGS, VESUM_TAGS_URL, VESUM_TYPE, WORD_TYPES, areaUk } from '../../core/labels.ts'
 import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, groupsOfArea, resolveRow } from '../../core/dict-labels.ts'
 import { GAZETTEER } from '../../core/autolabel.ts'
 import { DIALECTS } from '../../core/rules.ts'
@@ -20,8 +20,8 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
     <p>Блок «Мітки» на кожній картці показує <strong>діалект, регістр, тип і значення</strong>. Кожна позначка має <strong>метод</strong> (як її визначено) і <strong>докази</strong> (цитата зі словника, тег чи таблиця чисел).
       Якщо даних немає, картка так і пише: «невизначено» (з причиною) або «нейтральне (немає позначок у словниках)» з переліком перевірених джерел. Ми нічого не вгадуємо: діалектом слово називається лише тоді, коли так його позначає словник.</p>
 
-    <h2 id="dialect">1. Діалект: кожне слово має рівно один із семи класів</h2>
-    <p class="small muted">Порядок: 1 → 7; перший, що підходить, і є класом, жодне слово не лишається без класу. До кожного класу додано <strong>ступінь доказу</strong> (див. нижче). Нижче пункти а–в — це класи 1–3 (в «загальновживане»), далі 4–7. Числа корпусу показано в усіх класах.</p>
+    <h2 id="dialect">1. Діалект: кожне слово має рівно один із десяти класів</h2>
+    <p class="small muted">Порядок: 1 → 10; перший, що підходить, і є класом, жодне слово не лишається без класу. До кожного класу додано <strong>ступінь доказу</strong> (див. нижче). Нижче пункти а–в — це класи 1–3 (в «загальновживане»), далі 4–7. Числа корпусу показано в усіх класах.</p>
     <ol>
       <li><strong>{{ CLASS_UK.dict }}</strong>. {{ HOW.dict }} Ми читаємо власні списки скорочень словників (таблиці нижче). Слово з міткою <em>Галиц.</em>, <em>Гуцул.</em>, <em>Угор.</em>, <em>гал.</em>, <em>діал.</em>, <em>hucul.</em>, <em>ungr.</em> позначене як регіональне чи діалектне.
         Мітки <em>повіту чи губернії</em> у Грінченка («Лохв. у.», «Харьк. г.») лише кажуть, де слово чи приклад <em>записано</em>; такі слова мають окрему підпозначку «місце запису за словником (не обов’язково діалектне)» і діалектними не називаються.
@@ -34,7 +34,10 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
       <li><strong>{{ VESUM_NORM_UK }}</strong> (клас 4, ступінь середній; продовження попереднього пункту). {{ HOW_VESUM }} Слово обмежене, якщо тег ВЕСУМ чи позначка СУМ вказує вжиток (розм., заст., спец. …): тоді воно далі не підходить під клас 4.</li>
       <li><strong>{{ CLASS_UK.witness }}</strong> (клас 5, ступінь слабкий). {{ HOW.witness }} Картка пише кількість пам’яток, регіон і століття: «засвідчено лише в N пам’ятках з X, XII ст. (слабкий доказ)»; для давніх пам’яток — «давньоукраїнське, …». Ми <em>не називаємо</em> такі слова діалектними.</li>
       <li><strong>{{ CLASS_UK.base }}</strong> (клас 6, ступінь слабкий). {{ HOW.base }} Основу словника ми цитуємо з його власної передмови (таблиця нижче) і нічого не вигадуємо: якщо передмова краю не називає, словник сюди не потрапляє.</li>
-      <li><strong>{{ CLASS_UK.few }}</strong> (клас 7, без ступеня). {{ HOW.few }}</li>
+      <li><strong>{{ CLASS_UK.epoch }}</strong> (клас 7, ступінь середній; LB-14). {{ HOW.epoch }}</li>
+      <li><strong>{{ CLASS_UK.author }}</strong> (клас 8, ступінь слабкий; LB-14). {{ HOW.author }}</li>
+      <li><strong>{{ CLASS_UK.nowit }}</strong> (клас 9, ступінь слабкий; LB-14). {{ HOW.nowit }}</li>
+      <li><strong>{{ CLASS_UK.few }}</strong> (клас 10, без ступеня). {{ HOW.few }}</li>
     </ol>
 
     <h3 id="grades">Ступінь доказу</h3>
@@ -45,7 +48,9 @@ const rowGroup = (r: (typeof DICT_LABEL_TABLES)[number]['rows'][number]) => { co
     </ul>
     <h3 id="bases">Регіональна база словників (клас 6), дослівно з передмов</h3>
     <ul class="small" data-testid="lbm-bases"><li v-for="b in DICT_BASES" :key="b.id"><strong>{{ b.short }}</strong>: {{ b.region }} — <q>{{ b.quote }}</q> <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a></li></ul>
-    <p class="small muted">Словники без названої в передмові бази (наприклад Грінченко) до класу 6 не потрапляють. Усі сім класів: {{ Object.values(CLASS_KEY_UK).join('; ') }}.</p>
+    <h3 id="hist">Словники епохи і словники автора (класи 7–8), дослівно з передмов і титулів</h3>
+    <ul class="small" data-testid="lbm-hist"><li v-for="b in HIST_DICTS" :key="b.id"><strong>{{ b.short }}</strong> ({{ b.kind === 'epoch' ? 'епоха' : 'автор' }}): {{ b.scope }} — <q>{{ b.quote }}</q> ({{ b.cite }}) <a :href="b.url" rel="noopener" target="_blank">джерело ↗</a><template v-if="b.region"> · край автора: {{ b.region.name }} — <q>{{ b.region.quote }}</q> <a :href="b.region.url" rel="noopener" target="_blank">джерело ↗</a></template></li></ul>
+    <p class="small muted">Словники без названої в передмові бази (наприклад Грінченко) до класу 6 не потрапляють. Усі десять класів: {{ Object.values(CLASS_KEY_UK).join('; ') }}.</p>
     <h3>Словники і їхні списки скорочень</h3>
     <p class="small">Кожен рядок цитує пояснення скорочення з власного списку словника (сторінка — посилання). Нічого не додано від себе, крім відповідності «скорочення → область»; повіти розкриваються за статтями uk.wikipedia (CC BY-SA 4.0).</p>
     <section v-for="t in [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES]" :key="t.id" class="lb-table" :data-testid="`lbm-${t.id}`">

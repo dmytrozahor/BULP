@@ -61,15 +61,18 @@ export function dpNorm(by: RegionCount[]): number {
   return dp / (1 - minS)
 }
 
-export type DialectClass = 'dict' | 'corpus' | 'general' | 'few' | 'witness' | 'base'
+export type DialectClass = 'dict' | 'corpus' | 'general' | 'few' | 'witness' | 'base' | 'epoch' | 'author' | 'nowit'
 export const SUM_NORM_UK = 'загальновживане за словником (СУМ, без обмежувальних позначок)'
 export const VESUM_NORM_UK = 'нормативне (ВЕСУМ), регіональних даних немає'
 export const MARKED_UK = { sum: 'у СУМ, із позначкою вжитку; регіональних даних немає', vesum: 'у ВЕСУМ, із позначкою вжитку; регіональних даних немає' } as const
-export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[] }): string => (d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub && d.marks?.length ? MARKED_UK[d.sub] : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : d.c === 'general' && d.sub === 'vesum' ? VESUM_NORM_UK : CLASS_UK[d.c])
+export const classUk = (d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[]; wit?: { ocr?: boolean } }): string => (d.c === 'nowit' && d.wit?.ocr ? NOWIT_OCR_UK : d.c === 'dict' && d.strict === false ? 'місце запису за словником (не обов’язково діалектне)' : d.c === 'general' && d.sub && d.marks?.length ? MARKED_UK[d.sub] : d.c === 'general' && d.sub === 'sum' ? SUM_NORM_UK : d.c === 'general' && d.sub === 'vesum' ? VESUM_NORM_UK : CLASS_UK[d.c])
 export const CLASS_UK: Record<DialectClass, string> = {
   dict: 'діалектне за словником', corpus: 'регіонально марковане (корпус)', general: 'загальновживане', few: 'невизначено',
   witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника',
+  epoch: 'історична лексика за словником епохи', author: 'мова автора', nowit: 'засвідчено лише в пам’ятках без регіону',
 }
+/** LB-14: the class-9 wording when every region-less witness is an OCR text (WitSummary.ocr) */
+export const NOWIT_OCR_UK = 'засвідчено лише в OCR-пам’ятках без регіону'
 
 // ── LB-11: exhaustive classification — evidence grade, the seven classes, the facts the tail classes read ─────────────
 export type Grade = 'strong' | 'medium' | 'weak'
@@ -77,15 +80,18 @@ export const GRADE_UK: Record<Grade, string> = { strong: 'сильний', mediu
 /** G² at which a corpus skew counts as strong (χ² df 1, p < 0.001: 10.83) */
 export const G2_STRONG = 10.83
 /** the seven classes of LB-11, in order of precedence; the key under which shares are counted */
-export type ClassKey = 'dict' | 'corpus' | 'general' | 'norm' | 'witness' | 'base' | 'few'
-export const CLASS_KEYS: ClassKey[] = ['dict', 'corpus', 'general', 'norm', 'witness', 'base', 'few']
+export type ClassKey = 'dict' | 'corpus' | 'general' | 'norm' | 'witness' | 'base' | 'epoch' | 'author' | 'nowit' | 'few'
+export const CLASS_KEYS: ClassKey[] = ['dict', 'corpus', 'general', 'norm', 'witness', 'base', 'epoch', 'author', 'nowit', 'few']
 export const CLASS_KEY_UK: Record<ClassKey, string> = {
   dict: 'діалектне за словником', corpus: 'регіонально марковане за корпусом', general: 'загальновживане за корпусом', norm: 'літературна норма за словником',
   witness: 'засвідчене лише в пам’ятках регіону', base: 'за регіональною базою словника', few: 'невизначено',
+  epoch: 'історична лексика за словником епохи', author: 'мова автора', nowit: 'засвідчено лише в пам’ятках без регіону (OCR)',
 }
 export const classKeyOf = (d: { c: DialectClass; sub?: 'sum' | 'vesum' }): ClassKey => (d.c === 'general' && d.sub ? 'norm' : d.c)
 /** the evidence grade of a result (derived from the stored result, so older shards get it too); undefined = no class (невизначено) */
 export function gradeOf(d: { c: DialectClass; strict?: boolean; sub?: 'sum' | 'vesum'; marks?: string[]; corp?: { top?: { g2: number } } }): Grade | undefined {
+  if (d.c === 'epoch') return 'medium'
+  if (d.c === 'author' || d.c === 'nowit') return 'weak'
   if (d.c === 'dict') return d.strict === false ? 'medium' : 'strong'
   if (d.c === 'corpus') return (d.corp?.top?.g2 ?? 0) >= G2_STRONG ? 'strong' : 'medium'
   if (d.c === 'general') return d.sub ? (d.marks?.length ? 'weak' : 'medium') : 'strong'
@@ -99,6 +105,8 @@ export interface WitSummary {
   /** regions of those witnesses: [code, name] */ regions: [string, string][]
   /** witnesses of unknown region */ unk?: number
   /** first and last year of the witnesses */ from: number; to: number
+  /** LB-14: the witnesses of unknown region, [id, title] (up to 4), when there is no region at all (class 9) */ names?: [string, string][]
+  /** LB-14: every witness of unknown region is an OCR text */ ocr?: true
 }
 /** a dictionary with a documented regional base, quoted from its own preface (class 6) */
 export interface DictBase { id: string; short: string; region: string; quote: string; url: string }
@@ -107,10 +115,29 @@ export const DICT_BASES: DictBase[] = [
     quote: 'Високий Сойм Галицкий, котрий запоміг видавництво два рази ухвалюючи підмогу грошеву (передмова до II тому; словар укладено у Львові й Станіславі з матеріалів Закревского, Піскунова, Верхратского, Маґури в «Галичанині» і рукописів земляків «з ріжних сторін»)' },
   { id: 'r2u_umanets', short: 'Уманець–Спілка', region: 'змішана основа: Наддніпрянщина, Галичина, Буковина, Угорська Русь', url: 'https://r2u.org.ua/html/umanets_pered.html',
     quote: 'материял, зібраний … за цїлих двадцять років з різних кутків Української, Галицької, Буковинської і навіть з Угорскої Руси (передмова, Львів 1893)' },
+  { id: 'biletsky-nosenko', short: 'Білецький-Носенко', region: 'Полтавська губернія та суміжні Київська, південь Чернігівської, Катеринославська, Харківська, Волинь, Поділля, Галичина', url: 'https://archive.org/details/slovnyk33',
+    quote: 'Я придерживаюсь строго произношенію обитателей Полтавской губерній и прикосновенныхъ къ ней Кіевской, южной части Черниговской, Екатеринославской, Харьковской, также Волынской, Подольской и самой Галиціи (власні слова автора, «Предуведомленіе»; цитує вступна стаття В. Німчука до видання 1966 р., с. 18–19, яка додає: «лексичний матеріал його базується на говірках Полтавщини»)' },
   { id: 'arkushyn', short: 'Аркушин', region: 'західнополіські говірки', url: 'https://archive.org/details/slzhdplhv',
     quote: 'Словник західнополіських говірок (Аркушин, 2000): основу названо в заголовку словника' },
 ]
 export const baseOf = (id: string): DictBase | undefined => DICT_BASES.find(b => b.id === id)
+
+/** LB-14: a dictionary that describes the language of an EPOCH (kind 'epoch') or of ONE AUTHOR (kind 'author'), not of a region; the words are the dictionary's own, from its preface / title page, with the place */
+export interface HistDict { id: string; short: string; kind: 'epoch' | 'author'; /** the epoch or the author, as the dictionary states it */ scope: string; quote: string; /** where the quote stands */ cite: string; url: string; /** author dictionaries: the author's region, only with the source that states it */ region?: { name: string; quote: string; url: string } }
+export const HIST_DICTS: HistDict[] = [
+  { id: 'timchenko', short: 'Тимченко, Історичний словник українського язика', kind: 'epoch', scope: 'від найдавнішого часу до XIX ст. (цитати XIV–XVIII ст.; за територією — писані на території України)', url: 'https://archive.org/details/tymch1930',
+    quote: 'Завдання Комісії Історичного Словника українського язика — вичерпати той слівний скарб, що ми маємо в пам’ятках нашого письменства з найдавнішого його часу до ХІХ віку. … ми відмежуємося тільки територіяльно: … вибір слів з писаних на нашій території пам’яток', cite: 'Передмова, т. 1, Харків–Київ 1930, с. II' },
+  { id: 'timchenko-materials', short: 'Тимченко, Матеріали до словника писемної та книжної української мови XV–XVIII ст.', kind: 'epoch', scope: 'XV–XVIII ст.', url: 'https://archive.org/details/kniga1',
+    quote: 'Материалы для словаря письменной и книжной южнорусской речи XV–XVIII вв. … перший історичний словник української мови, складений на наукових засадах', cite: 'анотація на звороті титулу, кн. 1, Київ 2002, с. 4' },
+  { id: 'sum16', short: 'Словник української мови XVI – першої половини XVII ст.', kind: 'epoch', scope: 'XVI – перша половина XVII ст.', url: 'https://archive.org/details/SUM-28',
+    quote: 'подає інформацію про книжну і народнорозмовну лексику української мови цього періоду. … Ілюстративний матеріал наводиться з урахуванням хронології, територіального поширення і жанрових особливостей писемних пам’яток', cite: 'анотація на звороті титулу, вип. 10, Львів 2003' },
+  { id: 'r2u_krymsky', short: 'Кримський–Єфремов, Російсько-український словник', kind: 'epoch', scope: 'українська мова близько 1870–1923 рр.; регіональної бази передмова не називає (записи «в різних місцях України»)', url: 'https://r2u.org.ua/html/krym_pered.html',
+    quote: 'Головна вага нашого нового „Російсько-українського словника“ полягає … в тому, що він використовує більш-менш повно: а) лексику художньої літератури української за останні 50 – 55 років; б) етнографічні видання; в) твори наукові, критичні та публіцистичні переважно найближчих двох десятиліттів. … записи нових слів з народніх уст', cite: 'Переднє слово, т. 1, Київ 1924 (r2u)' },
+  { id: 'shevchenko', short: 'Словник мови Шевченка', kind: 'author', scope: 'мова одного автора, Т. Г. Шевченка (1814–61)', url: 'https://archive.org/details/1_20230624_20230624',
+    quote: 'Словник мови письменника — це праця особливого типу. … Основне ж його завдання — полегшувати пізнання всієї творчої спадщини Шевченка.', cite: 'Передмова, т. 1, Київ 1964, с. V',
+    region: { name: 'Київська губернія (Звенигородський повіт)', quote: 'с. Моринці, Звенигородський повіт, Київська губернія (місце народження автора, а не мітка слова)', url: 'https://uk.wikipedia.org/wiki/Шевченко_Тарас_Григорович' } },
+]
+export const histOf = (id: string): HistDict | undefined => HIST_DICTS.find(h => h.id === id)
 /** what the tail of dialectOf reads beyond the corpus table and the dictionary hits */
 export interface TailFacts {
   /** the lemma is a VESUM headword */ vesum?: boolean
@@ -119,6 +146,7 @@ export interface TailFacts {
   /** names of the only source dictionaries, for the reason of «невизначено» */ srcNames?: string[]
   /** the lemma's witnesses (class 5) */ wit?: WitSummary
   /** the ids of the dictionaries that are its ONLY source (class 6) */ bases?: string[]
+  /** LB-14: the ids of the epoch / author dictionaries that are its ONLY sources (classes 7, 8) */ hist?: string[]
 }
 /** «XII ст.» or «XII–XV ст.» from a year range */
 export function periodUk(from: number, to: number): string {
@@ -132,6 +160,12 @@ export function witnessLine(w: WitSummary): string {
   const old = w.to <= 1400 ? 'давньоукраїнське, ' : ''
   const where = reg.length === 1 ? `з ${reg[0]}` : `з регіонів: ${reg.join(', ')}`
   return `${old}засвідчено лише в ${w.atLeast ? 'щонайменше ' : ''}${w.n} ${w.n === 1 ? 'пам’ятці' : 'пам’ятках'} ${where}, ${periodUk(w.from, w.to)}${w.unk ? ` (ще ${w.unk} без встановленого регіону)` : ''} (слабкий доказ)`
+}
+/** LB-14: the class-9 sentence: no witness has a region; the witnesses are named */
+export function nowitLine(w: WitSummary): string {
+  const nm = (w.names ?? []).map(n => '«' + n[1] + '»').join(', ')
+  const more = w.n > (w.names?.length ?? 0) ? ', …' : ''
+  return (w.ocr ? NOWIT_OCR_UK : 'засвідчено лише в пам’ятках без встановленого регіону') + ': ' + (w.atLeast ? 'щонайменше ' : '') + w.n + ' ' + (w.n === 1 ? 'пам’ятка' : 'пам’яток') + (nm ? ' (' + nm + more + ')' : '') + (w.from ? ', ' + periodUk(w.from, w.to) : '') + ' (слабкий доказ; це не діалектна мітка)'
 }
 export interface CorpusSummary {
   /** total uses */ f: number
@@ -149,6 +183,7 @@ export interface DialectResult {
   /** sub sum / vesum: the register marks (ids) the headword carries; they restrict the style, not the region, so the class stays but the grade is weak */ marks?: string[]
   /** (witness) LB-11 */ wit?: WitSummary
   /** (base) LB-11: the dictionaries whose regional base the class rests on */ bases?: string[]
+  /** (epoch, author) LB-14: the epoch / author dictionaries the class rests on */ hist?: string[]
   /** (few) LB-11: why none of the seven classes applies */ why?: string
   /** (c, sub sum) the headwords the class rests on */ sumNorm?: SumNorm[]
   /** (a): true = some label marks the word or sense as dialectal / regional; false = the dictionaries only record WHERE it was noted (county, governorate) */ strict?: boolean
@@ -196,7 +231,12 @@ export function tailClass(corp: CorpusSummary | undefined, sumNorm: SumNorm[] | 
   if (facts?.wit && facts.wit.n > 0 && facts.wit.regions.length) return { c: 'witness', wit: facts.wit, ...(corp ? { corp } : {}) }
   // 6: the only source is a dictionary with a documented regional base
   const bases = (facts?.bases ?? []).filter(b => baseOf(b))
+  // 7, 8 (LB-14): the only sources are dictionaries of an epoch or of one author: the epoch or the author is stated, no region is claimed (a source with a documented regional base is listed beside)
+  const hist = (facts?.hist ?? []).filter(b => histOf(b))
+  if (hist.length) return { c: hist.some(b => histOf(b)!.kind === 'epoch') ? 'epoch' : 'author', hist, ...(bases.length ? { bases } : {}), ...(corp ? { corp } : {}) }
   if (bases.length) return { c: 'base', bases, ...(corp ? { corp } : {}) }
+  // 9 (LB-14): attested, but no witness has an established region: say so and name them
+  if (facts?.wit && facts.wit.n > 0 && !facts.wit.regions.length) return { c: 'nowit', wit: facts.wit, ...(corp ? { corp } : {}) }
   const why = facts?.wit && facts.wit.n > 0 ? `засвідчено в ${facts.wit.n} ${facts.wit.n === 1 ? 'пам’ятці' : 'пам’ятках'}, але регіон ${facts.wit.n === 1 ? 'її' : 'жодної'} не встановлено` : facts?.srcNames?.length ? `єдині джерела: ${facts.srcNames.join('; ')}; їхні передмови, які ми прочитали, не називають регіональної бази, а пам’яток з відомим регіоном немає` : 'єдине джерело — запис без регіональної бази і без пам’яток з відомим регіоном'
   const need = !corp ? `корпус не містить засвідчень цієї леми; для класу потрібно ≥ ${TH.fMin} уживань у ≥ ${TH.regionsMin} регіонах з матеріалом, або позначка словника`
     : f < TH.fMin ? `у корпусі ${f} ${f === 1 ? 'вживання' : 'вживань'}; потрібно ≥ ${TH.fMin} (ще ${TH.fMin - f}), або позначка словника`
@@ -326,6 +366,9 @@ export const HOW: Record<DialectClass, string> = {
   general: `Слово засвідчене щонайменше в ${TH.k} регіонах, розподіл близький до розподілу всього корпусу (DP ≤ ${TH.dpMax}), діалектної мітки у словниках немає.`,
   few: 'Жодна з шести підстав не підходить: немає позначки словника, значущого перекосу чи розсіювання в корпусі, нормативного заголовного слова, пам’яток з відомим регіоном, словника з відомою базою. Клас не визначено, і ми не вгадуємо; картка називає причину.',
   witness: 'Усі засвідчення слова — у пам’ятках одного регіону (чи кількох названих). Це слабкий доказ: він каже, звідки є тексти, а не що слово діалектне. Регіон пам’ятки — місце видання чи авторства джерела.',
+  epoch: 'Усі джерела слова — словники, що описують мову ЕПОХИ (не краю): історичні словники Тимченка і СУМ XVI–XVII ст., а також Кримський–Єфремов, чия передмова називає матеріал усієї України кінця XIX – початку XX ст. Картка пише епоху і словник і цитує його власне формулювання з передмови чи титулу. Регіону ми не називаємо: словник його не називає. Ступінь доказу середній: епоха названа самим словником.',
+  author: 'Усі джерела слова — словник мови одного автора (Словник мови Шевченка). Це мова автора, а не краю. Край автора названо лише там, де його подає цитоване джерело (місце народження), і це слабкий доказ: місце народження автора не робить слово регіональним.',
+  nowit: 'Слово засвідчене лише в пам’ятках, для яких регіон не встановлено (здебільшого OCR-тексти без видавничого місця в метаданих). Це клас «звідки вони, невідомо», а не діалектне твердження; пам’ятки названо на картці.',
   base: 'Слово є лише в словнику, чия власна передмова називає край, де зібрано його матеріал. Це слабкий доказ: це походження збірки, а не діалектна мітка слова.',
 }
 export const HOW_VESUM = 'Слово є заголовним у ВЕСУМ без жодного тега, що обмежує вжиток (rare, coll, arch, slang, vulg, obsc, bad, subst, alt, err). У ВЕСУМ немає територіальних тегів, тому регіональних даних про слово немає: це нормативний статус за словником, а не вимір поширення.'
@@ -389,6 +432,7 @@ export interface AssembleIn {
   /** LB-11: the lemma is a VESUM headword */ vesum?: boolean
   /** LB-11: the lemma's witnesses (class 5) */ wit?: WitSummary
   /** LB-11: ids of the dictionaries that are the ONLY source of the entry (class 6) */ bases?: string[]
+  /** LB-14: ids of the epoch / author dictionaries that are the ONLY sources (classes 7, 8) */ hist?: string[]
   /** LB-11: СУМ-11/20 headword known from the dictionary bit */ sumHead?: ('sum11' | 'sum20')[]
   /** LB-11: names of the only source dictionaries */ srcNames?: string[]
 }
@@ -422,28 +466,29 @@ export function assembleEntry(i: AssembleIn): LbEntry {
   const territorialFree = !dict.some(h => h.kind === 'area' || h.kind === 'dialectal') && !plain.length
   const marks = [...new Set(reg.map(r => r[0]))]
   const sumNorm: SumNorm[] = i.sum?.length && territorialFree ? i.sum.map(x => ({ d: x.d, n: x.n, ...(x.u ? { u: x.u } : {}), ...(x.l ? { l: x.l } : {}) })) : []
-  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by, TH, sumNorm, { ...(i.vesum && territorialFree ? { vesum: true } : {}), ...(marks.length ? { marks } : {}), ...(i.srcNames?.length ? { srcNames: i.srcNames } : {}), ...(i.sumHead?.length ? { sumHead: i.sumHead } : {}), ...(i.wit ? { wit: i.wit } : {}), ...(i.bases?.length ? { bases: i.bases } : {}) })
+  const d = dialectOf(dict.filter(h => h.kind === 'area' || h.kind === 'dialectal'), plain, i.by, TH, sumNorm, { ...(i.vesum && territorialFree ? { vesum: true } : {}), ...(marks.length ? { marks } : {}), ...(i.srcNames?.length ? { srcNames: i.srcNames } : {}), ...(i.sumHead?.length ? { sumHead: i.sumHead } : {}), ...(i.wit ? { wit: i.wit } : {}), ...(i.bases?.length ? { bases: i.bases } : {}), ...(i.hist?.length ? { hist: i.hist } : {}) })
   const sense: NonNullable<LbEntry['s']> = (i.se ?? []).filter(r => r.lb.length).map(r => [r.n, r.d, r.lb])
   const m = i.tagLine ? morphOf(i.tagLine) : '', pos = i.pos ?? (i.tagLine ? POS_UK[i.tagLine.split(':')[0]!] : undefined)
   return { v: 1, d, r: reg, t: ty, ...(sense.length ? { s: sense } : {}), ...(ft.length ? { f: ft } : {}), ...(i.by?.length ? { corpus: true } : {}), ...(pos ? { p: pos } : {}), ...(i.paradigmKind ? { k: i.paradigmKind } : {}), ...(m ? { m } : {}) }
 }
 
 // ── LB-11: the witness summary of class 5 ───────────────────────────────────────────────────────────────
-export interface WitMetaLite { /** region code and name, or undefined when the witness has no established region */ region?: [string, string]; from: number; to: number }
+export interface WitMetaLite { /** region code and name, or undefined when the witness has no established region */ region?: [string, string]; from: number; to: number; /** LB-14 */ title?: string; ocr?: boolean }
 /** Summarise the witnesses a word is attested in: count, the regions of those with an established region, the others as \`unk\`, and the year range. Undefined when no id is known. */
 export function summarizeWitnesses(ids: Iterable<string>, meta: (id: string) => WitMetaLite | undefined, atLeast = false): WitSummary | undefined {
   const seen = new Set<string>(), regs = new Map<string, string>()
-  let unk = 0, from = Infinity, to = -Infinity
+  let unk = 0, from = Infinity, to = -Infinity, allOcr = true
+  const names: [string, string][] = []
   for (const id of ids) {
     if (seen.has(id)) continue
     seen.add(id)
-    const m = meta(id); if (!m) { unk++; continue }
-    if (m.region) regs.set(m.region[0], m.region[1]); else unk++
+    const m = meta(id); if (!m) { unk++; allOcr = false; if (names.length < 4) names.push([id, id]); continue }
+    if (m.region) regs.set(m.region[0], m.region[1]); else { unk++; if (!m.ocr) allOcr = false; if (names.length < 4) names.push([id, (m.title ?? id).slice(0, 70)]) }
     if (m.from > 0) from = Math.min(from, m.from)
     if (m.to > 0) to = Math.max(to, m.to)
   }
   if (!seen.size) return undefined
-  return { n: seen.size, ...(atLeast ? { atLeast: true as const } : {}), regions: [...regs].sort((a, b) => a[0].localeCompare(b[0])), ...(unk ? { unk } : {}), from: Number.isFinite(from) ? from : 0, to: Number.isFinite(to) ? to : 0 }
+  return { n: seen.size, ...(atLeast ? { atLeast: true as const } : {}), regions: [...regs].sort((a, b) => a[0].localeCompare(b[0])), ...(unk ? { unk } : {}), from: Number.isFinite(from) ? from : 0, to: Number.isFinite(to) ? to : 0, ...(regs.size === 0 && unk && names.length ? { names, ...(allOcr ? { ocr: true as const } : {}) } : {}) }
 }
 /** fallback when no witness ids are at hand (shards without \`byW\`): the regions with at least one use, the card's first-attestation year */
 export function witFromRegionRows(rows: RegionCount[], names: (code: string) => string, year: number): WitSummary | undefined {

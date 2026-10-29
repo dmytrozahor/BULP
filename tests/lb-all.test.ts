@@ -5,9 +5,9 @@ import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import {
-  CLASS_KEYS, DICT_BASES, G2_STRONG, assembleEntry, classKeyOf, classUk, dialectOf, gradeOf, periodUk, summarizeWitnesses, tailClass, witnessLine, TH, emptyEntry, type RegionCount, type WitSummary,
+  CLASS_KEYS, DICT_BASES, HIST_DICTS, histOf, baseOf, nowitLine, G2_STRONG, assembleEntry, classKeyOf, classUk, dialectOf, gradeOf, periodUk, summarizeWitnesses, tailClass, witnessLine, TH, emptyEntry, type RegionCount, type WitSummary,
 } from '../core/labels.ts'
-import { dialectHeadline, dialectHow, gradeLine } from '../src/lib/labelsText.ts'
+import { dialectHeadline, dialectHow, gradeLine, histEvidence } from '../src/lib/labelsText.ts'
 import { cvFacts, lightFacts, archaicFacts, witMeta } from '../pipelines/lb-facts.ts'
 import LabelsMethodView from '../src/views/LabelsMethodView.vue'
 
@@ -57,8 +57,8 @@ describe('LB-11 exhaustive classification: seven classes in order, each with a g
     const d = tailClass(undefined, undefined, {}, false)
     expect(d.c).toBe('few'); expect(gradeOf(d)).toBeUndefined(); expect(d.why).toBeTruthy(); expect(classUk(d)).toBe('невизначено'); expect(gradeLine(d)).toContain('немає')
     expect(dialectHeadline(d, c => c)).toMatch(/^невизначено: /); expect(emptyEntry().d.why).toBeTruthy()
-    const noRegion = tailClass(undefined, undefined, { wit: { n: 2, regions: [], unk: 2, from: 1500, to: 1500 } }, false); expect(noRegion.c).toBe('few'); expect(noRegion.why).toContain('регіон')
-    expect(CLASS_KEYS).toEqual(['dict', 'corpus', 'general', 'norm', 'witness', 'base', 'few'])
+    const noRegion = tailClass(undefined, undefined, { wit: { n: 2, regions: [], unk: 2, from: 1500, to: 1500 } }, false); expect(noRegion.c).toBe('nowit'); expect(gradeOf(noRegion)).toBe('weak')   // LB-14: attested, region unknown: its own class, never «невизначено»
+    expect(CLASS_KEYS).toEqual(['dict', 'corpus', 'general', 'norm', 'witness', 'base', 'epoch', 'author', 'nowit', 'few'])
   })
   it('LB-11 precedence: dictionary > corpus > normative > witnesses > base; the corpus rows are kept with every class', () => {
     const rows: RegionCount[] = [{ code: 'a', f: 1, N: 1000 }, { code: 'b', f: 0, N: 1000 }]
@@ -78,7 +78,7 @@ describe('LB-12 card parity and the methods page', () => {
   })
   it('LB-12 the methods page explains every class and grade in plain Ukrainian and prints the quoted dictionary bases', async () => {
     const html = await render(LabelsMethodView, {})
-    for (const s of ['семи класів', 'Ступінь доказу', 'сильний', 'середній', 'слабкий', 'нормативне (ВЕСУМ), регіональних даних немає', 'засвідчене лише в пам’ятках регіону', 'за регіональною базою словника', 'невизначено', 'data-testid="lbm-grades"', 'data-testid="lbm-bases"', 'Галицкий', 'Угорскої Руси']) expect(html).toContain(s)
+    for (const s of ['десяти класів', 'data-testid="lbm-hist"', 'історична лексика за словником епохи', 'мова автора', 'Ступінь доказу', 'сильний', 'середній', 'слабкий', 'нормативне (ВЕСУМ), регіональних даних немає', 'засвідчене лише в пам’ятках регіону', 'за регіональною базою словника', 'невизначено', 'data-testid="lbm-grades"', 'data-testid="lbm-bases"', 'Галицкий', 'Угорскої Руси']) expect(html).toContain(s)
     expect(html).not.toContain('недостатньо даних')
   })
 })
@@ -101,6 +101,60 @@ describe('LB-13 the facts of the tail classes and the measurement', () => {
     const b = rd('pipelines/build-labels.ts')
     expect(b).not.toContain("if (e.d.c === 'few' && !e.d.corp"); expect(b).toContain('lb11Report'); expect(b).toContain('light.json'); expect(b).toContain('archaic.json'); expect(b).toContain('lb11.few')
     expect(rd('pipelines/lb-measure.ts')).toContain('tailClass')
-    expect(rd('analysis/labels-coverage.md')).toContain('LB-11')
+    expect(rd('analysis/labels-coverage.md')).toContain('LB-1')
+  })
+})
+
+describe('LB-14 honest classes for the tail: epoch dictionaries, author dictionary, Nosenko base, witnesses without a region', () => {
+  const wm = witMeta({ witnesses: [
+    { id: 'o1', title: 'Архангельське Євангеліє 1092', witnessType: 'ocr', date: [1092, 1092] }, { id: 'o2', title: 'Ізборник', witnessType: 'ocr', date: [1200, 1250] },
+    { id: 't1', title: 'TOROT text', witnessType: 'ms_copy', date: [1300, 1300] }, { id: 'k1', region: 'Київ', witnessType: 'ocr', date: [1500, 1500] },
+  ] })
+  const cv = (atts: string[], d: number) => cvFacts(['слово', '', 1, atts.map(a => [a, 'q', 'слово']), { d }], wm.meta)
+  it('LB-14 class 7: a word only in Тимченко / СУМ XVI–XVII / Кримський–Єфремов is «історична лексика за словником епохи», grade середній, with the dictionary\'s own words', () => {
+    for (const [id, bit] of [['timchenko', 8192], ['sum16', 16384], ['timchenko-materials', 32768], ['r2u_krymsky', 256]] as const) {
+      const x = cv(id === 'r2u_krymsky' ? [id] : [], bit); expect(x.facts.hist).toEqual([id]); expect(x.attested).toBe(false)
+      const d = tailClass(undefined, undefined, x.facts, false)
+      expect(d.c).toBe('epoch'); expect(classKeyOf(d)).toBe('epoch'); expect(gradeOf(d)).toBe('medium'); expect(classUk(d)).toBe('історична лексика за словником епохи')
+      expect(dialectHeadline(d, c => c)).toContain(histOf(id)!.short); expect(dialectHeadline(d, c => c)).not.toMatch(/діалектн/)
+      const ev = histEvidence(d); expect(ev).toHaveLength(1); expect(ev[0]!.quote.length).toBeGreaterThan(60); expect(ev[0]!.cite).toBeTruthy(); expect(ev[0]!.url).toMatch(/^https:/)
+    }
+    expect(histOf('timchenko')!.quote).toContain('з найдавнішого його часу до ХІХ віку')
+    expect(histOf('sum16')!.quote).toContain('книжну і народнорозмовну лексику'); expect(histOf('r2u_krymsky')!.quote).toContain('за останні 50 – 55 років')
+    expect(histOf('r2u_krymsky')!.scope).toContain('регіональної бази передмова не називає')   // no regional base is claimed for Кримський–Єфремов
+    expect(baseOf('r2u_krymsky')).toBeUndefined()
+  })
+  it('LB-14 class 6 now also holds Білецький-Носенко (its preface names the Poltava governorate and neighbours); mixed epoch + base keeps both; an unread dictionary keeps the entry «невизначено»', () => {
+    const n = cv([], 65536); expect(n.facts.bases).toEqual(['biletsky-nosenko']); expect(n.facts.hist).toBeUndefined()
+    const d = tailClass(undefined, undefined, n.facts, false); expect(d.c).toBe('base'); expect(gradeOf(d)).toBe('weak')
+    expect(baseOf('biletsky-nosenko')!.quote).toContain('Полтавской'); expect(baseOf('biletsky-nosenko')!.quote).toContain('Галиціи')
+    const mixed = cv([], 65536 | 8192); expect(mixed.facts).toMatchObject({ bases: ['biletsky-nosenko'], hist: ['timchenko'] })
+    const m = tailClass(undefined, undefined, mixed.facts, false); expect(m.c).toBe('epoch'); expect(m.bases).toEqual(['biletsky-nosenko'])
+    const grinchenko = cv(['r2u_hrinch09'], 8192 | 16); expect(grinchenko.facts.hist).toBeUndefined(); expect(tailClass(undefined, undefined, grinchenko.facts, false).c).toBe('few')   // Грінченко's preface is not read: no class is invented
+  })
+  it('LB-14 class 8: Словник мови Шевченка is «мова автора», grade слабкий; the author\'s region only with its cited source and worded as the author\'s birthplace', () => {
+    const x = cv([], 131072); expect(x.facts.hist).toEqual(['shevchenko'])
+    const d = tailClass(undefined, undefined, x.facts, false)
+    expect(d.c).toBe('author'); expect(classKeyOf(d)).toBe('author'); expect(gradeOf(d)).toBe('weak'); expect(classUk(d)).toBe('мова автора')
+    const h = histOf('shevchenko')!; expect(h.quote).toContain('Основне ж його завдання'); expect(h.region!.url).toMatch(/^https:/); expect(h.region!.quote).toContain('Київська губернія')
+    expect(dialectHeadline(d, c => c)).toContain('місце народження автора'); expect(dialectHeadline(d, c => c)).not.toMatch(/діалектн/)
+    const both = cv([], 131072 | 8192); expect(tailClass(undefined, undefined, both.facts, false).c).toBe('epoch')
+  })
+  it('LB-14 class 9: attested only in witnesses with no region is «засвідчено лише в OCR-пам’ятках без регіону» (слабкий), naming the witnesses; never a dialect claim', () => {
+    const w = summarizeWitnesses(['o1', 'o2'], wm.meta)!
+    expect(w.regions).toEqual([]); expect(w.ocr).toBe(true); expect(w.names).toEqual([['o1', 'Архангельське Євангеліє 1092'], ['o2', 'Ізборник']])
+    const d = tailClass(undefined, undefined, { wit: w }, false)
+    expect(d.c).toBe('nowit'); expect(classKeyOf(d)).toBe('nowit'); expect(gradeOf(d)).toBe('weak'); expect(classUk(d)).toBe('засвідчено лише в OCR-пам’ятках без регіону')
+    expect(dialectHeadline(d, c => c)).toBe(nowitLine(w)); expect(nowitLine(w)).toContain('«Архангельське Євангеліє 1092»'); expect(nowitLine(w)).toContain('не діалектна мітка'); expect(dialectHow(d)).toContain('ступінь доказу: слабкий')
+    const mix = summarizeWitnesses(['o1', 't1'], wm.meta)!; expect(mix.ocr).toBeUndefined(); expect(classUk(tailClass(undefined, undefined, { wit: mix }, false))).toBe('засвідчене лише в пам’ятках без регіону'.replace('засвідчене', 'засвідчено'))
+    expect(summarizeWitnesses(['o1', 'k1'], wm.meta)!.names).toBeUndefined()   // one witness has a region: class 5, not 9
+    expect(tailClass(undefined, undefined, { wit: summarizeWitnesses(['o1', 'k1'], wm.meta) }, false).c).toBe('witness')
+  })
+  it('LB-14 «невизначено» is left only for entries whose sources are unread dictionaries or unknown; the card and the methods page show the quotes', async () => {
+    expect(tailClass(undefined, undefined, { srcNames: ['Грінченко'] }, false).c).toBe('few')
+    const blk = rd('src/components/LabelsBlock.vue'); expect(blk).toContain('data-testid="lb-hist"'); expect(blk).toContain('data-testid="lb-nowit"')
+    const html = await render(LabelsMethodView, {}); for (const h of HIST_DICTS) expect(html).toContain(h.short.replace(/&/g, '&amp;'))
+    expect(html).toContain('Полтавской'); expect(html).not.toContain('недостатньо даних')
+    for (const h of HIST_DICTS) { expect(h.quote.length).toBeGreaterThan(60); expect(h.url).toMatch(/^https:/); expect(h.cite.length).toBeGreaterThan(5) }
   })
 })
