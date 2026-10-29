@@ -7,7 +7,7 @@
  * Огоновський 1889 from specs/63 MM-21). A member WITHOUT a cite is kept, because the owner named it, but it is flagged uncited and printed as «джерела не знайдено»:
  * the link then rests on the owner's identification, no feature or dialect is claimed for it.
  */
-import { D, type Evidence } from './evidence.ts'
+import { D, P, type Evidence } from './evidence.ts'
 
 export type VClassName = 'prep' | 'pron' | 'adv' | 'conj' | 'part' | 'noun'
 /** role of a member in its family (the label is what the card prints) */
@@ -75,7 +75,7 @@ export const VARIANT_FAMILIES: VFamily[] = [
 /** the evidence of a member; an uncited one says so */
 export const memberEvidence = (f: VFamily, m: VMember): Evidence =>
   m.cite ? D(m.cite.source, m.cite.url, m.cite.quote, `${m.cite.note}; «${m.form}» → «${f.head}»`)
-    : D('зауваження власника', '', '', `джерела не знайдено: зв’язок «${m.form}» → «${f.head}» за зауваженням власника проєкту (SPEC 63 ${f.mm}); ознак і діалекту не заявлено`)
+    : P('зауваження власника', `SPEC 63 ${f.mm}`, `«${m.form}» → «${f.head}»`, `джерела не знайдено: зв’язок «${m.form}» → «${f.head}» за зауваженням власника проєкту (SPEC 63 ${f.mm}); ознак і діалекту не заявлено`)
 
 const byForm = new Map<string, { family: VFamily; member: VMember }>()
 for (const f of VARIANT_FAMILIES) for (const m of f.members) byForm.set(m.form, { family: f, member: m })

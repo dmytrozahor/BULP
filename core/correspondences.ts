@@ -4,7 +4,7 @@
  * (e.g. есмь/быти → бути: the ЕСУМ page «бути» gave only «є … др. есть», no quote for есмь — not used).
  * The correspondence only names the modern LEMMA; the token is still linked through VESUM (M-3.2) and must pass the POS gate (core/pos-gate.ts), `pron` here.
  */
-import { D, type Evidence } from './evidence.ts'
+import { D, P, type Evidence } from './evidence.ts'
 import { VARIANT_FAMILIES } from './variant-families.ts'
 
 export type Cls = 'pron' | 'noun' | 'adv' | 'prep' | 'conj' | 'part'
@@ -29,6 +29,8 @@ export interface Correspondence {
   yields?: boolean
   /** MM-30..34: no source was found for this identification (the owner named it); the evidence says so */
   uncited?: boolean
+  /** SPEC 63 item of an uncited owner identification (the locator of its evidence) */
+  mm?: string
   url: string
   quote: string
   note: string
@@ -95,7 +97,7 @@ export const clsOk = (c: Pick<Correspondence, 'cls'>, vc: string): boolean => (A
 // vocative «како» of кака is not touched while an orv witness (TOROT lemma / un-lemmatised token) goes to як; the POS gate (core/pos-gate.ts) keeps Df / Dq / Du / C- tokens off the noun
 for (const f of VARIANT_FAMILIES) for (const m of f.members) {
   if (m.peer) continue
-  const base = { modern: f.head, cls: f.cls as Cls[], url: m.cite?.url ?? '', quote: m.cite?.quote ?? '', note: m.cite?.note ?? 'джерела не знайдено (зауваження власника)' }
+  const base = { modern: f.head, cls: f.cls as Cls[], url: m.cite?.url ?? '', quote: m.cite?.quote ?? '', note: m.cite?.note ?? 'джерела не знайдено (зауваження власника)', mm: f.mm }
   if (m.role === 'sense') CORRESPONDENCES.push({ old: [m.form], kind: 'cs', ...base, uncited: true, quote: 'яко: alternative form of як (Adverb, Conjunction)', url: 'https://en.wiktionary.org/wiki/яко#Ukrainian',
     note: 'як / яко — прислівник і сполучник «як» (ЦС / староукраїнське): джерела, що прямо ототожнює «како» з «як», не знайдено (en.wiktionary має лише яко = як): ототожнення — зауваження власника проєкту. Іменник кака (кличний кака → како) лишається читанням ВЕСУМ для тексту без позначки частини мови' })
   else CORRESPONDENCES.push({ old: [], kind: 'variant', variants: [m.form], yields: true, ...base, ...(m.cite ? {} : { uncited: true }) })
@@ -108,5 +110,5 @@ export const correspondenceFor = (oldLemma: string | undefined): Correspondence 
 /** MM-2: modern variant spelling (хомік, хомик) → the row whose standard lemma it varies */
 export const variantFor = (form: string): Correspondence | undefined => CORRESPONDENCES.find(c => c.variants?.includes(form))
 const label = (c: Correspondence) => c.uncited ? 'зауваження власника (джерела не знайдено)' : c.url.includes('brown-uk') ? 'ВЕСУМ' : c.url.includes('en.wiktionary') && c.kind === 'variant' ? 'Вікісловник (en)' : c.kind === 'cognate' ? 'Вікісловник (споріднені форми)' : c.kind === 'cs' ? 'ЕСУМ (ЦС-відповідність)' : c.kind === 'rule' ? 'Вікісловник (ru хомяк)' : 'ЕСУМ (goroh.pp.ua)'
-export const corrEvidence = (c: Correspondence, oldLemma: string): Evidence => D(label(c), c.url, c.quote,
+export const corrEvidence = (c: Correspondence, oldLemma: string): Evidence => (c.uncited && !c.url ? P : D)(label(c), c.url || `SPEC 63 ${c.mm ?? 'MM'}`, c.quote || `«${c.variants?.[0] ?? oldLemma}» → «${c.modern}»`,
   `${c.note}; «${oldLemma}» → «${c.modern}»${c.kind === 'cs' ? ' [ЦС-відповідність, без звукового правила]' : c.kind === 'cognate' ? ' [за спорідненими формами, без звукового правила]' : c.rule ? ` [за правилом ${c.rule}${c.kind === 'variant' ? '; ' + (c.variants ?? []).join(' / ') + " — варіанти, стандартна форма " + c.modern : ''}]` : ''}`)

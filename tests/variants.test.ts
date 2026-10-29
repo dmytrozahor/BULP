@@ -191,3 +191,18 @@ describe('MM-29..MM-36 the table is consistent', () => {
     for (const c of CORRESPONDENCES) if (c.uncited) expect(corrEvidence(c, c.old[0] ?? c.variants![0]!).note).toContain('джерела')
   })
 })
+
+describe('evidence validity: everything the build feeds to claim() passes it locally (a worker build failed on an empty locator/quote)', () => {
+  it('every variant-family member, correspondence row and Galician fold cite is valid evidence (non-empty source, quote, locator)', async () => {
+    const { claim } = await import('../core/evidence.ts')
+    const { memberEvidence } = await import('../core/variant-families.ts')
+    const { GAL_FOLDS } = await import('../core/gal-folds.ts')
+    const { EVIDENCE } = await import('../core/copula-ikavism.ts')
+    for (const f of VARIANT_FAMILIES) for (const m of f.members) expect(() => claim(m.form, memberEvidence(f, m)), m.form).not.toThrow()
+    for (const c of CORRESPONDENCES) for (const o of [...c.old, ...(c.variants ?? [])]) expect(() => claim(o, corrEvidence(c, o)), o).not.toThrow()
+    for (const f of GAL_FOLDS) expect(() => claim(f.id, f.cite), f.id).not.toThrow()
+    expect(() => claim('copula', EVIDENCE)).not.toThrow()
+    const u = CORRESPONDENCES.find(c => c.uncited && !c.url && c.variants?.includes('тилько'))!
+    expect(corrEvidence(u, 'тилько')).toMatchObject({ locator: 'SPEC 63 MM-33', kind: 'P' }); expect(corrEvidence(u, 'тилько').note).toContain('джерела не знайдено')
+  })
+})
