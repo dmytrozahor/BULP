@@ -72,6 +72,17 @@ describe('OV-14 VOL / POD cited standard і', () => {
     expect(respell('кінь', 'WPL', { positions: [1], origins: org('кінь', [], ['коня']) }).standard.map(x => x.rule)).not.toContain('ZAK-O-AREAS')
     expect(respell('ходити', 'ZAK', { positions: [3], origins: org('ходити') }).text).toBe('ходити')   // um162: хôжу, хôд’ат (ô), no ü/ÿ in ходити
   })
+  it('OV-14 ZAK (MM-41) добродітель: ѣ → і, ÿ only before у in the source, so добродÿтель is not generated', () => {
+    const o = org('добродітель', ['добродѣтель'])
+    const r = respell('добродітель', 'ZAK', { positions: [6], origins: o })
+    expect(r.text).toBe('добродітель'); expect(r.standard.map(x => x.rule)).toEqual(['ZAK-YAT']); expect(r.standard[0]!.cite.quote).toContain('переходить в [ÿ]')
+  })
+  it('OV-14 MM-39 народ is never нарід and MM-40 серце never сердце under any dialect: no source names a dialect for нарід / сердце', () => {
+    for (const d of ['NDN', 'ZAK', 'LEM', 'BOY', 'SYAN', 'POD', 'VOL', 'CHN', 'MDN']) {
+      expect(respell('народ', d, { positions: [3], origins: org('народ', [], ['народу']) }).text, d).not.toBe('нарід')
+      expect(respell('серце', d, { positions: [0] }).text, d).not.toBe('сердце')
+    }
+  })
   it('OV-14 every cite is a valid evidence claim (non-empty locator and quote)', () => {
     for (const s of STANDARD_RULES) expect(() => claim(true, [s.cite, ...(s.cites ?? [])]), s.id).not.toThrow()
     const r = SPELL_RULES.find(x => x.id === 'MDN-O-KEPT')!; expect(() => claim(true, spellCite(r, 'MDN')!.cite)).not.toThrow()
