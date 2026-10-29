@@ -1,0 +1,11 @@
+Oldest typed word lists for «Значення за епохами» (SPEC 63 SE-12). Input is NOT committed except this note; `npm run build:data` runs pipelines/fetch-hist-typed.ts then pipelines/parse-hist-typed.ts.
+All from «Лексис Лаврентія Зизанія. Синоніма славеноросская / Підг. текстів пам'яток і вступ. ст. В. В. Німчука. — К.: Наукова думка, 1964. — 259 с.», typed on litopys.org.ua («Ізборник»), pages of http://litopys.org.ua/zyzlex/ . Fetched 2026-10-29 over http (the https certificate of litopys.org.ua is wrong), windows-1251 bytes as served; robots.txt disallows only /dos /mac /koi; User-Agent BULP-research/1.0 (no personal data); 0.7 s between requests.
+Licence reasoning: the texts are manuscripts/prints of 1282, 1431, XVI c., XVII c. (public domain); the 1884 (Амфілохій) and 1889 (Житецький) publications are older than 70 years after their editors' deaths; the 1964 transcription is an edition, so the pages are fetched, not redistributed, and the editorial apparatus (introduction, footnotes) is not copied. Only headword + gloss (facts of the old text) become rows, dated by the manuscript / the editor's period.
+Format: file | size bytes | sha256 | what it is
+glossary1282/zyz101.htm | 20442 | 61cb1f49217187488744e2af27541bf91a98d5e1f7604a8cff8d0a23de4924e7 | «Рѣчь жидовьскаго языка преложена на роускую» (словничок при Новгородській кормчій 1282 р.; foreign Scripture words → East Slavic; not specifically Ukrainian)
+glossary1431/zyz102.htm | 13089 | 199160a3dcb3ba7d125b8ce1e7b74703da0df0c62a6d83ee14bfc7be51c3554d | «Тлъкованіе неудобь познаваемомъ въ писаныхъ речемь» (рукопис 1431 р.)
+lexis-prosto/zyz100.htm | 72642 | 6d1e09d013311e785db94d0607ea47506ea0bef05c19c9aa5542ca6dcb23a687 | «Лексисъ съ толкованіемъ словенскихъ мовъ просто» (рукописний словник XVI ст., вид. Амфілохій, Чтения в ОИДР 1884)
+synonima/zyz70.htm | 142452 | 2c6cb42e037b338de25155c6e31b4c58e495856206eba8497e3a9ea301f70226 | «Синонїма славеноросскаѧ», А–З (рукопис XVII ст., вид. П. Житецький 1889)
+synonima/zyz71.htm | 96592 | 5e3a962aba466dfdb89462f8399228a9175541c72a12138eebf410982cb6bfaf | the same, И–Н
+synonima/zyz72.htm | 120043 | 60b3fcb096c7a6b80212c7382956a07977dd118b943bdabdc1c9db7dcb77dbd1 | the same, О–П
+synonima/zyz73.htm | 139014 | 815162a2cd4f0aee3a29e7e1dfdd45ac7314a7be01a760645401f7f84b5c590e | the same, Р–Я

@@ -167,7 +167,7 @@ const readdirTmp = (d: string) => readdirSync(d).sort()
 describe('SPEC 63 SRC-3: the Лексис rows are part of build:data', () => {
   it('build:data fetches and parses the historical lexica before build.ts reads se-parsed', () => {
     const b = JSON.parse(readFileSync('package.json', 'utf8')).scripts['build:data'] as string
-    expect(b).toMatch(/^tsx pipelines\/fetch-hist-lex\.ts && tsx pipelines\/parse-hist-lex\.ts && tsx pipelines\/build\.ts/)
+    expect(b).toMatch(/^tsx pipelines\/fetch-hist-lex\.ts && tsx pipelines\/parse-hist-lex\.ts && (?:tsx pipelines\/(?:fetch|parse)-hist-(?:typed|ws)\.ts && )*tsx pipelines\/build\.ts/)
     expect(JSON.parse(readFileSync('package.json', 'utf8')).scripts['data:hist-lex']).toContain('parse-hist-lex.ts')
     expect(readFileSync('data/raw/hist-lex-ocr/SOURCES.txt', 'utf8')).toContain('zyz99.htm')
   })

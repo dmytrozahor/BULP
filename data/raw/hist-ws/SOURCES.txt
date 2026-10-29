@@ -1,0 +1,8 @@
+Two typed Ukrainian → Russian glossaries (public domain prints) from uk.wikisource.org for «Значення за епохами» (SPEC 63 SE-12). Input is NOT committed except this note; `npm run build:data` runs pipelines/fetch-hist-ws.ts then pipelines/parse-hist-ws.ts.
+Access: the MediaWiki API (action=parse, formatversion=2), 3 requests of 1 page each, 3 s apart, User-Agent BULP-research/1.0 (project name and repository only, no personal data); fetched 2026-10-29. robots.txt of wikisource allows the API for any agent.
+Licence reasoning: the prints (1798 Котляревський † 1838; 1818 Павловський † 1827) are public domain; the Wikisource transcription is CC BY-SA 4.0, so the pages are fetched and read, not redistributed; every row's locator names the page and the revision id, which is the attribution. The kept data are the headword and the Russian gloss (facts of the print), no wiki markup or apparatus.
+Format: file | size bytes | sha256 | page, revision
+kotliarevsky1798/0.json | 128897 | c15efdc76b7a06e713599b485376a81949614242adf31fd2078733bffd24b7fd | «Енеїда (1798)/Словник» (Собраніе Малороссійскихъ словъ, 1798), revid 59106; 891 articles
+pavlovsky1818/0.json | 203673 | 44c1d48efe9cdb1c26d341668d788c7d360442f6cecf15e48d4d8d9c4b518c28 | «Грамматика Малороссійскаго нарѣчія/Простыя слова» (1818), revid 97170
+pavlovsky1818/1.json | 35195 | ad363c87d56502c77f4da01cc8377822a523369bb57a6bb917cac64364490820 | «Грамматика Малороссійскаго нарѣчія/Слова принадлежащія къ Натуральной Исторіи» (1818), revid 97176. The page «…/Имена даемыя при крещеніи» (baptismal names) and «Фразы, и пословицы» are not read (not word senses).
+(the sha256 of a re-fetch differs by the `fetched` date stored in each file; the revision ids identify the text)
