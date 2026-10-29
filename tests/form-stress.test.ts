@@ -37,4 +37,12 @@ describe('CP-10.5 FormStress', () => {
     const v = readFileSync('src/views/FormView.vue', 'utf8')
     expect(v).toContain('<FormStress'); expect(v).toContain('<LoanAdaptBlock v-if="pick.lemma.toLowerCase() !== pick.raw.toLowerCase()" :word="pick.lemma" />')
   })
+  it('CP-10.8 the «можливо також» list names the types in Ukrainian, not as raw ids (yazychie, cs)', () => {
+    const v = readFileSync('src/components/WordRuleChips.vue', 'utf8')
+    expect(v).toContain('possible.slice(1).map(kindUk)'); expect(v).toContain('RU_KIND_UK[k]')
+  })
+  it('CP-10.9 the text reader resolves tokens through settled() (the prefix shards load lazily), not a synchronous computed', () => {
+    const v = readFileSync('src/views/TextsView.vue', 'utf8')
+    expect(v).toContain('await settled(() => rowsOf('); expect(v).not.toMatch(/const rows = computed(/)
+  })
 })

@@ -1151,3 +1151,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › FormView mounts FormStress and the lemma’s loan adaptation |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › CP-10.8 the «можливо також» list names the types in Ukrainian, not as raw ids (yazychie, cs) |
+| CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › CP-10.9 the text reader resolves tokens through settled() (the prefix shards load lazily), not a synchronous computed |

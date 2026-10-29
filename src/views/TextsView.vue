@@ -7,10 +7,11 @@ import { isOldForm } from '../lib/nav.ts'
  * produced later by the backend. Until that file exists the reader shows the witness's own KWIC examples (from the detail shards of its lemmas is not loaded here;
  * the fixture/real core has none per witness) and says so — it never invents text.
  */
-import { computed, nextTick, ref, watch } from 'vue'
+import { computed, nextTick, ref, shallowRef, watch } from 'vue'
+import { settled } from '../lib/parts.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
-import { findLoc, loadTokens, rowRef, rowsOf, type Tok } from '../lib/witnessText.ts'
+import { findLoc, loadTokens, rowRef, rowsOf, type Row, type Tok } from '../lib/witnessText.ts'
 import { epochTo, personTo, witnessTo, wordTo }  from '../lib/nav.ts'
 import { mentionsOf, personTipOf } from '../lib/personsData.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
@@ -55,7 +56,14 @@ watch(() => cur.value?.id, async id => {
 const total = computed(() => (Array.isArray(toks.value) ? toks.value.length : 0))
 /** SPEC 63 PS-8: build-time person mentions of this witness that start at this token (same locator and first word) */
 const startsAt = (t: { raw: string; loc: string }) => (cur.value ? mentionsOf(cur.value.id).filter(m => m.loc === t.loc && m.f.split(' ')[0] === t.raw) : [])
-const rows = computed(() => (!Array.isArray(toks.value) || !loaded.value ? [] : rowsOf(toks.value, page.value * PAGE_SIZE, (page.value + 1) * PAGE_SIZE, annData.value)))
+/** SPEC 63 CP-10.9: annotate() reads the prefix shards lazily (PF-3); a synchronous computed left every token whose lemma came from a not-yet-loaded shard (засьпіваєш → заспівати) as «unknown» for good. settled() re-runs it until every shard the page needs is in memory, as in the annotator. */
+const rows = shallowRef<Row[]>([]); let rowSeq = 0
+watch([toks, page, loaded, annData], async () => {
+  const n = ++rowSeq, t = toks.value
+  if (!Array.isArray(t) || !loaded.value) { rows.value = []; return }
+  const r = await settled(() => rowsOf(t, page.value * PAGE_SIZE, (page.value + 1) * PAGE_SIZE, annData.value))
+  if (n === rowSeq) rows.value = r
+}, { immediate: true })
 watch([locIdx, () => rows.value.length], async () => { if (locIdx.value < 0) return; await nextTick(); document.querySelector('.tok.hit')?.scrollIntoView({ block: 'center' }) })
 /** MM-16: a spelling that shows a cited feature rule (сь before a labial, -є for -я, -ійш-, hyphenated particle …) gets a dotted underline and a tooltip with the feature, the qualifier and the rule id; computed per visible token, nothing new is loaded */
 const markCtx = computed(() => ({ orth: cur.value?.orth, edition: cur.value?.edition, witnessRegion: cur.value?.region, year: cur.value?.date[0], authorRegion: corpus.value?.authors.find(a => a.id === cur.value?.author)?.region }))

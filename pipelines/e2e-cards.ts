@@ -3,7 +3,7 @@
  * Opens a seeded sample of cards (10 per kind + fixed owner examples) on the deployed site in Chromium, sequentially, and records per block of the
  * CP-8 parity matrix: data | empty (honest «немає даних») | MISSING | LOADING (stuck > 10 s) , plus console / network errors, transfer size and time to the first render.
  * Writes analysis/card-parity-live.md and <out>/results.json + one full-page screenshot per card.
- * Env: E2E_BASE (default https://dmytrozahor.github.io/BULP/), E2E_OUT (screenshots dir), E2E_SEED (default 10), E2E_N (cards per kind, default 10), E2E_ONLY (comma kinds).
+ * Env: E2E_BASE (default https://dmytrozahor.github.io/BULP/), E2E_OUT (screenshots dir), E2E_SEED (default 10), E2E_N (cards per kind, default 10), E2E_ONLY (comma kinds; the word `content` selects the person / text / annotator content checks of e2e-content.ts, which also run when E2E_ONLY is unset).
  */
 import { readFileSync, mkdirSync, existsSync } from 'node:fs'
 import { writeJsonAtomic } from './robust.ts'
@@ -13,6 +13,7 @@ import { BLOCKS, MATRIX, KIND_ROUTE, type BlockId, type KindId } from '../src/li
 import { unlinkedName, unlinkedTop, unlinkedManifestName } from '../core/unlinked.ts'
 import { uvAttested, uvShard, type UvGroup } from '../core/uv.ts'
 import { key } from '../core/text.ts'
+import { personChecks, textChecks, annotateChecks, contentReport, type Check } from './e2e-content.ts'
 
 const BASE = process.env.E2E_BASE ?? 'https://dmytrozahor.github.io/BULP/'
 const OUT = process.env.E2E_OUT ?? join(process.env.TEMP ?? '/tmp', 'bulp-e2e-cards')
@@ -210,8 +211,14 @@ async function main() {
     console.log(`${i}/${items.length} ${r.ok ? 'ok ' : 'ERR'} ${it.kind} ${it.label} ${r.firstRenderMs}ms ${Math.round(r.bytes / 1024)}KiB miss=${Object.entries(r.states).filter(([, s]) => s === 'MISSING').map(([b]) => b).join(',')}`)
     writeJsonAtomic(join(OUT, 'results.json'), JSON.stringify(rs, null, 1))
   }
+  const checks: Check[] = []
+  if (!ONLY || ONLY.includes('content')) {
+    for (const f of [personChecks, textChecks, annotateChecks]) { try { checks.push(...await f(browser, BASE)) } catch (e) { checks.push({ id: f.name, name: f.name, ok: false, evidence: 'exception: ' + String(e).slice(0, 200) }) } }
+    for (const c of checks) console.log(c.ok ? 'PASS' : 'FAIL', c.id, c.evidence.slice(0, 160))
+    writeJsonAtomic(join(OUT, 'checks.json'), JSON.stringify(checks, null, 1))
+  }
   await browser.close()
-  writeJsonAtomic('analysis/card-parity-live.md', report(rs))
+  writeJsonAtomic('analysis/card-parity-live.md', report(rs) + contentReport(checks))
   console.log('analysis/card-parity-live.md written')
 }
 if (!existsSync('src/data/data-version.json')) throw new Error('run from the repo root')

@@ -5,6 +5,8 @@
  */
 import { computed } from 'vue'
 import { featureChips } from '../../core/feature-chips.ts'
+import { RU_KIND_UK, type RuKind } from '../../core/ru-contact.ts'
+const kindUk = (k: RuKind): string => RU_KIND_UK[k] ?? k
 import type { AnnotatedToken } from '../lib/annotate.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ t: Pick<AnnotatedToken, 'features' | 'pairs' | 'variant' | 'ruClass' | 'copula' | 'short'>; year?: number }>()
@@ -43,7 +45,7 @@ const pairs = computed(() => (props.t.pairs ?? []).map(p => ({ p, chip: featureC
       <span class="badge" :title="'тип форми визначено за роком тексту і регіоном; мітка належить формі, не лемі'">{{ t.ruClass.label }}</span>
       <template v-if="t.ruClass.standard.length"> літературні відповідники (r2u): <template v-for="(s, i) in t.ruClass.standard" :key="s.lemma"><template v-if="i">, </template><RouterLink :to="wl(s.lemma)"><strong>{{ s.lemma }}</strong></RouterLink></template></template>
       · <span class="muted">російський варіант:</span> {{ t.ruClass.ruVariant }}
-      <template v-if="t.ruClass.possible.length > 1"> · <span class="muted">можливо також: {{ t.ruClass.possible.slice(1).join(', ') }} (без року тексту тип не визначити)</span></template>
+      <template v-if="t.ruClass.possible.length > 1"> · <span class="muted">можливо також: {{ t.ruClass.possible.slice(1).map(kindUk).join(', ') }} (без року тексту тип не визначити)</span></template>
       <EvidencePopover :evidence="t.ruClass.evidence" heading="Докази: російське слово в r2u" />
     </div>
     <div v-if="t.variant" data-testid="variant-note">
