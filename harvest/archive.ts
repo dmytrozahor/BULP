@@ -1,10 +1,15 @@
 /**
  * SPEC 63 HV-2: archive.org OCR texts (public domain by publication date) — advancedsearch + `<id>_djvu.txt`.
- * Usage: tsx harvest/archive.ts <preset>   presets: archive-ukr | archive-rusyn | archive-kuban | archive-novhorod-siversk
+ * The text file name is resolved from `https://archive.org/metadata/<id>` (ia-text.ts; `<id>_djvu.txt` is often wrong: 8 672 of 10 000 archive-ukr items were 404), recorded as `iaFile`.
+ * Usage: tsx harvest/archive.ts <preset> [--retry-404]   --retry-404 re-visits only items whose latest index line is status 404 (append-only, a second 404 is marked `retried404`, so a re-run skips it).
+ * Neutral User-Agent without an e-mail address, `curl -4`, >= 1.5 s between requests, 403/429 stop, 503 backs off.
+ *   (old usage:) tsx harvest/archive.ts <preset>   presets: archive-ukr | archive-rusyn | archive-kuban | archive-novhorod-siversk
  * archive.org robots.txt: only /control/ and /report/ are disallowed; pacing 2 s. PD rule (heuristic, the owner may tighten): publication year ≤ 1925.
  * Index `date` = the item's own year/date; `ocr: true` tells ingest to apply the ia-ocr rules (Cyrillic-only tokens, Russian-letter lines dropped).
  */
+import { readFileSync, existsSync } from 'node:fs'
 import { Harvest, type IndexItem } from './lib.ts'
+import { IA_UA, curlGet, resolveTextFile, retryCandidates } from './ia-text.ts'
 
 const PD = 'date:[1000-01-01 TO 1925-12-31]'
 export const ARCHIVE_PRESETS: Record<string, { q: string; region?: string; licence: string }> = {
@@ -34,26 +39,52 @@ export function docItem(d: SearchDoc, cfg: { region?: string; licence: string },
   }
 }
 
+const H = { 'user-agent': IA_UA }
+const textUrl = (id: string, file: string) => `https://archive.org/download/${encodeURIComponent(id)}/${encodeURIComponent(file)}`
+
+/** fetch one item's text via /metadata: payload stored + index line with iaFile; no text file at all stays 404 (index-only line, no refetch) */
+async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licence: string }, retry: boolean): Promise<void> {
+  const { status: ms, file } = await resolveTextFile(h, d.identifier)
+  const mark = retry ? { retried404: true } : {}
+  if (ms !== 200 || !file) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, ms === 200 ? 404 : ms), iaFile: '', ...mark }]); return }
+  const r = await curlGet(h, textUrl(d.identifier, file))
+  if (r.status === 0) return   // transient: no index line, retried on the next run
+  if (r.status !== 200) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, r.status), iaFile: file, ...mark }]); return }
+  h.put(d.identifier, r.buf, [{ ...docItem(d, cfg, r.buf.length, 200), iaFile: file }])
+}
+
+/** «retry 404s»: only ids whose latest stored status is 404; the old index line supplies title/author/date/language */
+async function retry404(h: Harvest, cfg: { region?: string; licence: string }) {
+  const lines = existsSync(h.indexPath) ? readFileSync(h.indexPath, 'utf8').split('\n') : []
+  const todo = retryCandidates(lines)
+  h.log(`retry-404: ${todo.length} items`)
+  const limit = Number(process.env.RETRY_LIMIT ?? 0)
+  let n = 0
+  for (const { id, line } of todo) {
+    if (limit && n++ >= limit) break
+    const d: SearchDoc = { identifier: id, title: line.title as string, creator: line.author as string | undefined, date: (line.date as string | null) ?? undefined, language: line.language as string }
+    await fetchItem(h, d, cfg, true)
+  }
+  h.finish()
+}
+
 async function main() {
   const name = process.argv[2] ?? ''
   const cfg = ARCHIVE_PRESETS[name]
   if (!cfg) { console.error(`preset? ${Object.keys(ARCHIVE_PRESETS).join(' | ')}`); process.exit(1) }
   const h = new Harvest(name, { delayMs: 2000, logEvery: 25 })
+  if (process.argv.includes('--retry-404')) await retry404(h, cfg)
   let st = h.state<{ page: number; finished?: boolean }>({ page: 1 })
   if (st.finished) h.finish()
   for (;;) {
     const u = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(cfg.q)}&fl[]=identifier&fl[]=title&fl[]=creator&fl[]=date&fl[]=year&fl[]=language&sort[]=identifier+asc&rows=100&page=${st.page}&output=json`
-    const r = await h.getJson<{ response?: { docs: SearchDoc[]; numFound: number } }>(u)
+    const { status, text } = await h.getText(u, { headers: H })
+    let r: { response?: { docs: SearchDoc[]; numFound: number } }
+    try { r = JSON.parse(text) } catch { return h.stop(`non-JSON answer (HTTP ${status}) for ${u}`) }
     const docs = r.response?.docs ?? []
     if (st.page === 1) h.log(`numFound ${r.response?.numFound}`)
     if (!docs.length) { h.saveState({ page: st.page, finished: true }); h.finish() }
-    for (const d of docs) {
-      if (h.has(d.identifier)) continue
-      const { status, res } = await h.get(`https://archive.org/download/${d.identifier}/${d.identifier}_djvu.txt`, { soft5xx: true })
-      if (status !== 200) { h.put(`${d.identifier}.none`, '', [docItem(d, cfg, 0, status)]); continue }   // no OCR text: recorded, not refetched
-      const buf = Buffer.from(await res.arrayBuffer())
-      h.put(d.identifier, buf, [docItem(d, cfg, buf.length, 200)])
-    }
+    for (const d of docs) { if (!h.has(d.identifier)) await fetchItem(h, d, cfg, false) }
     st = { page: st.page + 1 }; h.saveState(st)
   }
 }

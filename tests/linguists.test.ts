@@ -30,3 +30,28 @@ describe('SRC-5 linguists harvest', () => {
     expect(LINGUISTS_UA).not.toMatch(/@/)
   })
 })
+
+import { mkdtempSync, writeFileSync, readFileSync, mkdirSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { gzipSync } from 'node:zlib'
+import { pickTextFile as pick2, retryCandidates, IA_UA } from '../harvest/ia-text.ts'
+import { docItem, ARCHIVE_PRESETS } from '../harvest/archive.ts'
+
+describe('HV-n archive 404 retry', () => {
+  it('text file from /metadata: DjVuTXT first (largest), else plain Text .txt, else null (stays 404)', () => {
+    expect(pick2([{ name: 'a.pdf', format: 'Text PDF' }, { name: 'Real_Name_djvu.txt', format: 'DjVuTXT', size: '900' }, { name: 'o_djvu.txt', size: '5' }])).toBe('Real_Name_djvu.txt')
+    expect(pick2([{ name: 'a.pdf', format: 'Text PDF' }, { name: 'book.txt', format: 'Text', size: '10' }, { name: 'x_meta.txt', format: 'Text', size: '99' }])).toBe('book.txt')
+    expect(pick2([{ name: 'a.pdf', format: 'Text PDF' }, { name: 'a_meta.xml', format: 'Metadata' }])).toBeNull()
+  })
+  it('retry candidates: only the latest status-404 lines, a retried or resolved id is skipped (idempotent)', () => {
+    const L = (o: object) => JSON.stringify(o)
+    const lines = [L({ id: 'a', status: 404 }), L({ id: 'b', status: 200 }), L({ id: 'c', status: 404 }), L({ id: 'c', status: 200 }), L({ id: 'd', status: 404 }), L({ id: 'd', status: 404, retried404: true }), '{torn']
+    expect(retryCandidates(lines).map(x => x.id)).toEqual(['a'])
+  })
+  it('the user agent has no e-mail; the stored 404 line keeps the item fields for the retry', () => {
+    expect(IA_UA).not.toMatch(/@/)
+    const it = docItem({ identifier: 'q', title: 'T', date: '1900' }, ARCHIVE_PRESETS['archive-ukr']!, 0, 404)
+    expect(it.status).toBe(404); expect(it.date).toBe('1900')
+  })
+})

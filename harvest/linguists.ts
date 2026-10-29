@@ -8,12 +8,11 @@
  * Neutral research User-Agent WITHOUT an e-mail address; archive.org robots.txt disallows only /control/ and /report/; pacing 3 s.
  * Usage: tsx harvest/linguists.ts      (resumable: index.jsonl is the truth; each item is one gz file whose index line is written after it)
  */
-import { execFileSync } from 'node:child_process'
-import { readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
-import { Harvest, sleep, type IndexItem } from './lib.ts'
+import { Harvest, type IndexItem } from './lib.ts'
+import { IA_UA, curlGet, pickTextFile } from './ia-text.ts'
 
-export const LINGUISTS_UA = 'BULP-research/1.0 (non-commercial linguistic corpus research; archive.org OCR of public-domain prints)'
+export const LINGUISTS_UA = IA_UA
+export { pickTextFile }
 const GENRE = 'лінгвістична праця'
 type RuKind = 'edition' | 'dictionary' | 'apparatus'
 export interface LingWork {
@@ -73,24 +72,6 @@ export function item(w: LingWork, url: string, bytes: number, status: number, ia
     ...(w.ru ? { ru: w.ru } : {}), ...(w.note ? { note: w.note } : {}), ocr: true, iaItem: w.ia, iaFile,
   }
 }
-/** the OCR text file of an item from its /metadata `files`: the largest `*_djvu.txt` (an item may hold several scans), else null */
-export function pickTextFile(files: { name: string; size?: string | number }[]): string | null {
-  const c = files.filter(f => /_djvu\.txt$/i.test(f.name)).sort((a, b) => Number(b.size ?? 0) - Number(a.size ?? 0))
-  return c[0]?.name ?? null
-}
-
-/** the text download goes through curl (node fetch cannot connect to the archive.org item servers dnNNN.*.archive.org from the harvester box; same as hv6.ts; curl -4 because IPv6 to dnNNN.eu.archive.org hangs, tested 2026-10-29); pacing 3 s, 403/429 stop the script */
-async function curlGet(h: Harvest, url: string): Promise<{ status: number; buf: Buffer }> {
-  await sleep(3000)
-  const tmp = `${tmpdir()}/linguists-${process.pid}.dl`
-  try {
-    const code = execFileSync('curl', ['-4', '-sL', '--max-time', '600', '--retry', '3', '--retry-delay', '20', '-A', LINGUISTS_UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
-    const status = Number(code)
-    if (status === 403 || status === 429) h.stop(`HTTP ${status} for ${url}`)
-    return { status, buf: status === 200 ? readFileSync(tmp) : Buffer.alloc(0) }
-  } catch (e) { h.log(`curl failed (${(e as Error).message.slice(0, 100)}) for ${url}; the item is retried on the next run`); return { status: 0, buf: Buffer.alloc(0) } } finally { rmSync(tmp, { force: true }) }
-}
-
 async function main() {
   const h = new Harvest('linguists', { delayMs: 3000, logEvery: 1 })
   const H = { 'user-agent': LINGUISTS_UA }
@@ -103,7 +84,7 @@ async function main() {
     const files = ((await meta.res.json()) as { files?: { name: string; size?: string }[] }).files ?? []
     const file = pickTextFile(files)
     if (!file) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, 404, '')]); continue }
-    const r = await curlGet(h, `https://archive.org/download/${encodeURIComponent(w.ia)}/${encodeURIComponent(file)}`)
+    const r = await curlGet(h, `https://archive.org/download/${encodeURIComponent(w.ia)}/${encodeURIComponent(file)}`, 3000)
     if (r.status === 0) { if (++fails >= 3) h.stop('3 curl failures in a row'); continue }   // transient: no index line, retried on the next run
     fails = 0
     if (r.status !== 200) { h.put(`linguists_${w.ia}.none`, '', [item(w, `https://archive.org/details/${w.ia}`, 0, r.status, file)]); continue }
