@@ -13,6 +13,7 @@ import { useData } from '../composables/useData.ts'
 import { kwicFromRefs, witnessCounts } from '../lib/refKwic.ts'
 import PlastSenses from '../components/PlastSenses.vue'
 import ThinCard from '../components/ThinCard.vue'
+import ThinTitle from '../components/ThinTitle.vue'
 import WitnessBlock from '../components/WitnessBlock.vue'
 const props = defineProps<{ id: string; kind: 'name' | 'orv' }>()
 const found = computed(() => torotCard(props.kind, props.id))   // PF-1: the card's own bucket shard (tc/), not torot.json
@@ -35,7 +36,7 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
   <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!card" class="muted sans">Картки «{{ id }}» немає в TOROT-даних.</p>
   <template v-else>
-    <h1>{{ card.lemma }} <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1>
+    <h1><ThinTitle :word="card.lemma" historical /> <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1>
     <p v-if="asName?.basis" class="sans small">Підстава (SPEC 63 MU-3): слово з великої літери всередині абзацу, не розпізнане (форми немає у VESUM навіть після правил MU) і ніде в корпусі не вжите з малої; анотації TOROT тут немає · {{ card.n }} вжив.</p>
     <p v-else-if="card.model" class="sans small" data-testid="model-tag"><span class="badge" title="прогноз моделі Stanza ORV, а не золота розмітка TOROT">{{ MODEL_NOTE }}</span> <code>{{ posShown(card) }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>
     <p v-else class="sans small">TOROT: <code>{{ card.pos }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>

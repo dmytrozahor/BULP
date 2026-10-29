@@ -72,7 +72,7 @@ After: 0 MISSING. Fixes: new `CardRules.vue` (panel «Ознаки й варіа
 
 ## What stays open
 
-- Archaic / ORV / uv / unlinked cards have no VESUM paradigm in their data; Огляд says so and links the lemma card when one exists (a paradigm for a thin card needs a build item that emits the VESUM forms per thin lemma).
-- The heading `<h1>` of the thin cards is not wrapped in `Spell`; the switches act in Огляд › Вимова › Написання (ORV / archaic spellings are historical and are not respelled).
+- (CP-9, implemented) the thin cards' Словозміна now loads the VESUM paradigm from `lm/par` (the modern equivalent only, labelled, for historical cards), and the thin-card `<h1>` goes through `ThinTitle` (`Spell` for a modern word; historical spellings are not respelled). It appears after the next `build:data` on the worker, which produces the sidecar; until then the cards print the honest line.
+- The `paradigm` cell of the thin kinds stays `honest-empty`: a lemma VESUM lacks, a historical word with no modern equivalent, or a word with a full card has no sidecar entry.
 - The feature chips on thin cards carry no witness qualifier (galician / edition / older): the card spans several witnesses, so the qualifier is `neutral`.
 - Not verified against live CDN data in this pass: components were SSR-rendered with vitest (unknown lemma, empty data); the dev server was not driven.

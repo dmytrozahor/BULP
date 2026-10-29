@@ -1,5 +1,5 @@
 /** SPEC 63 CP-1…CP-6: every card kind shows every feature block its data allows (src/lib/cardParity.ts); the shared blocks render with honest empty states. */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
@@ -11,6 +11,9 @@ import ThinCard from '../src/components/ThinCard.vue'
 import LemmaBlocks from '../src/components/LemmaBlocks.vue'
 import WitnessBlock from '../src/components/WitnessBlock.vue'
 
+// CP-9: the lm/par sidecar is a fetch; the render tests below seed it through PAR (empty = VESUM has no such lemma)
+const PAR = vi.hoisted(() => ({ data: {} as Record<string, { lemma: string; tags: string; paradigm: { form: string; tags: string }[] }[]>, asked: [] as string[] }))
+vi.mock('../src/lib/thinPar.ts', () => ({ parOf: (w: string) => { PAR.asked.push(w); return PAR.data[w] }, parLoaded: () => true }))
 const rd = (p: string) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n')
 const spec = rd('specs/63-corpus-dialects.md')
 const render = async (c: object, props: Record<string, unknown>) => {
@@ -155,5 +158,44 @@ describe('CP-8 every card kind renders every card feature (owner 2026-10-29)', (
     for (const k of kinds) expect(md, k).toContain(`\`${k}\``)
     for (const b of blocks) expect(md, b).toContain(`\`${b}\``)
     expect(spec).toContain('**CP-8** (implemented')
+  })
+})
+
+describe('CP-9 thin-card Словозміна from lm/par and the title through Spell', () => {
+  const noun = { lemma: 'абажур', tags: 'noun:inanim:m:v_naz', paradigm: [['абажур', 'v_naz'], ['абажура', 'v_rod'], ['абажури', 'p:v_naz']].map(([form, c]) => ({ form: form!, tags: `noun:inanim:${c!.includes('p:') ? c : 'm:' + c}` })) }
+  it('CP-9 a light / dictionary card renders the VESUM paradigm with the full card Paradigm component, full width, no «немає даних» line', async () => {
+    PAR.data = { абажур: [noun] }
+    const html = await render(ThinCard, { lemma: 'абажур', spelling: 'абажур', kwic: [], dictOnly: true, f: 0 })
+    expect(html).toContain('data-testid="ov-paradigm-thin"'); expect(html).toContain('width:100%'); expect(html).toContain('<table'); expect(html).toContain('абажура'); expect(html).toContain('noun:inanim:m:v_rod')
+    expect(html).not.toContain('data-testid="ov-paradigm-none"'); expect(html).not.toContain('data-testid="ov-paradigm-note"')
+    expect(rd('src/components/OverviewTab.vue')).toContain('<Paradigm :paradigm="g.paradigm"')
+  })
+  it('CP-9 a lemma VESUM lacks keeps the honest «немає даних (перевірено: ВЕСУМ …)» line naming the word', async () => {
+    PAR.data = {}
+    const html = await render(ThinCard, { lemma: 'невідомеслово', spelling: 'невідомеслово', kwic: [] })
+    expect(html).toContain('data-testid="ov-paradigm-none"'); expect(html).toContain('ВЕСУМ не має леми «невідомеслово»'); expect(html).not.toContain('ov-paradigm-thin')
+  })
+  it('CP-9 a historical card shows a paradigm only for the MODERN equivalent, labelled as such, and never looks its own spelling up', async () => {
+    PAR.data = { абажур: [noun], нѣгдѣ: [noun] }; PAR.asked = []
+    const html = await render(ThinCard, { lemma: 'абажур', spelling: 'нѣгдѣ', kwic: [], seKind: 'orv' })
+    expect(html).toContain('data-testid="ov-paradigm-note"'); expect(html).toContain('парадигма сучасного відповідника «абажур» (за словником)'); expect(html).toContain('історичних форм не наведено')
+    expect(PAR.asked).not.toContain('нѣгдѣ'); expect(PAR.asked).toContain('абажур')
+    PAR.data = {}; PAR.asked = []
+    const none = await render(ThinCard, { spelling: 'нѣгдѣ', kwic: [], seKind: 'arch' })
+    expect(none).toContain('data-testid="ov-paradigm-none"'); expect(PAR.asked).not.toContain('нѣгдѣ')   // a derived candidate (if any) is asked, the spelling itself never
+  })
+  it('CP-9 ThinTitle: a modern title goes through Spell (switches act), a historical one is plain and says why', async () => {
+    const T = (await import('../src/components/ThinTitle.vue')).default
+    const m = await render(T, { word: 'вода' }), h = await render(T, { word: 'вѣда', historical: true })
+    expect(m).toContain('class="spell"'); expect(m).toContain('data-testid="thin-title"')
+    expect(h).not.toContain('class="spell"'); expect(h).toContain('data-historical="1"'); expect(h).toContain('вѣда')
+  })
+  it('CP-9 every thin-card <h1> goes through ThinTitle: modern for /lw, historical (not respelled) for /ar /orv /name /uv and the unlinked spelling', () => {
+    expect(rd('src/views/LightWordView.vue')).toContain('<h1><ThinTitle :word="word" />')
+    for (const [f, s] of [['src/views/ArchaicView.vue', '<ThinTitle :word="e.head" historical'], ['src/views/TorotCardView.vue', '<ThinTitle :word="card.lemma" historical'], ['src/views/UnverifiedView.vue', '<ThinTitle :word="g[0]" historical'], ['src/components/UnlinkedSpelling.vue', '<ThinTitle :word="entry?.[0] ?? form" historical']] as const) expect(rd(f), f).toContain(s)
+  })
+  it('CP-9 the spec carries the CP-9 item and the card-parity analysis no longer lists the two items as open', () => {
+    expect(spec).toContain('**CP-9** (implemented'); expect(rd('specs/COVERAGE.md')).toContain('CP-9')
+    expect(rd('analysis/card-parity.md')).not.toContain('The heading `<h1>` of the thin cards is not wrapped')
   })
 })

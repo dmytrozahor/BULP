@@ -17,6 +17,7 @@ import { occurrenceKwic, type UnlinkedKwic } from '../lib/unlinked.ts'
 import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
 import ThinCard from '../components/ThinCard.vue'
+import ThinTitle from '../components/ThinTitle.vue'
 import WitnessPanel from '../components/WitnessPanel.vue'
 import PlastSenses from '../components/PlastSenses.vue'
 import { cognatesOf } from '../lib/cognatesData.ts'
@@ -67,7 +68,7 @@ watch(cands, async cs => {
   <p v-else-if="!g" class="muted sans">Картки неперевіреної леми «{{ id }}» немає.</p>
   <template v-else>
     <header class="wordhead headline compact">
-      <h1 class="lemma">{{ g[0] }}</h1>
+      <h1 class="lemma"><ThinTitle :word="g[0]" historical /></h1>
       <p class="hl-line sans">
         <span class="derived-badge" data-testid="uv-status" :title="att ? 'Засвідчено кількома вичитаними пам’ятками; жоден словник слова не містить, ВЕСУМ його не знає; частину мови не визначено' : status.confirmed ? 'Лема TOROT у кількох пам’ятках; жоден словник слова не містить, ВЕСУМ його не знає' : 'Жоден словник не містить слова, ВЕСУМ його не знає: це група написань із текстів, не підтверджена лема'">{{ status.label }}</span>
         <span class="muted"> зустрічається </span>{{ fmtNum(g[1]) }}<span class="muted"> разів у </span>{{ fmtNum(g[2]) }}<span class="muted"> пам’ятках</span>

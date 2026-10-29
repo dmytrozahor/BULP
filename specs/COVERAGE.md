@@ -1010,3 +1010,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-8 | tests/card-parity.test.ts › CP-8 the matrix is written to analysis/card-parity.md (every kind and every block) and the spec carries the CP-8 item |
 | MM-37 | tests/mm37.test.ts › MM-37 сь / зь / ць + labial → с / з / ц for linking (every labial of the cited statement) |
 | MM-37 | tests/mm37.test.ts › MM-37 -тьця / -цця = -ться (сьпіваютьця, засьміетця) |
+| CP-9 | tests/thin-par.test.ts › CP-9 every VESUM lemma without a full card gets its paradigm, tags verbatim, in the shard of lk(lemma) |
+| CP-9 | tests/thin-par.test.ts › CP-9 homonyms of one key stay apart (мати n / v), an indeclinable head is a paradigm of its head line, a lemma VESUM lacks has no entry |
+| CP-9 | tests/thin-par.test.ts › CP-9 a lemma that has a full card is skipped (its paradigm is in the lexicon); forms share one tag table per shard |
+| CP-9 | tests/thin-par.test.ts › CP-9 writeThinPar writes data/work/thinpar/<bucket>.json atomically, replaces an older run, and reports sizes |
+| CP-9 | tests/thin-par.test.ts › CP-9 the build chain runs the step before build-parts, and build-parts shards it into lm/par |
+| CP-9 | tests/card-parity.test.ts › CP-9 a light / dictionary card renders the VESUM paradigm with the full card Paradigm component, full width, no «немає даних» line |
+| CP-9 | tests/card-parity.test.ts › CP-9 a lemma VESUM lacks keeps the honest «немає даних (перевірено: ВЕСУМ …)» line naming the word |
+| CP-9 | tests/card-parity.test.ts › CP-9 a historical card shows a paradigm only for the MODERN equivalent, labelled as such, and never looks its own spelling up |
+| CP-9 | tests/card-parity.test.ts › CP-9 ThinTitle: a modern title goes through Spell (switches act), a historical one is plain and says why |
+| CP-9 | tests/card-parity.test.ts › CP-9 every thin-card <h1> goes through ThinTitle: modern for /lw, historical (not respelled) for /ar /orv /name /uv and the unlinked spelling |
+| CP-9 | tests/card-parity.test.ts › CP-9 the spec carries the CP-9 item and the card-parity analysis no longer lists the two items as open |

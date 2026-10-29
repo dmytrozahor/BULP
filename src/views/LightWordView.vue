@@ -18,6 +18,7 @@ import PlastSenses from '../components/PlastSenses.vue'
 import AttSenses from '../components/AttSenses.vue'
 import { attSenses } from '../lib/senseLines.ts'
 import ThinCard from '../components/ThinCard.vue'
+import ThinTitle from '../components/ThinTitle.vue'
 import WitnessBlock from '../components/WitnessBlock.vue'
 import { witnessCounts } from '../lib/refKwic.ts'
 import IkavismChain from '../components/IkavismChain.vue'
@@ -76,7 +77,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
   <div v-else-if="!done" class="skeleton" style="height:4rem" />
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
-    <h1>{{ word }} <small class="muted sans">коротка картка</small></h1>
+    <h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1>
     <p v-if="dict" class="sans small" data-testid="dict-only">
       <span class="badge">{{ dict.status }}</span>
       Джерела: <b>{{ dict.sources.join(' · ') }}</b>. Вжив. у корпусі: f = {{ dict.f }}. Найраніше: — <span class="muted">(роки словників нижче — дати словників, а не перша фіксація слова)</span>

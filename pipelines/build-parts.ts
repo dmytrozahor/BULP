@@ -6,6 +6,8 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { gzipSync } from 'node:zlib'
+import { basename } from 'node:path'
+import { thinParFiles } from './build-thin-par.ts'
 import { bootEntries, readUvAttested } from './boot-uv.ts'
 import { unpackCore, packCore } from '../core/pack.ts'
 import { writeJsonAtomic } from './robust.ts'
@@ -235,6 +237,10 @@ function writeLm() {
     P.candidates.forEach((c, i) => { for (const l of c.lemmas) { const b = lmBucket(l.replace(/^~/, '').toLowerCase()); if (!seen[b]!.has(i)) { seen[b]!.add(i); parts[b]!.push(c as unknown as unknown[]) } } })
     const meta = Object.fromEntries(Object.entries(P).filter(([k]) => !['candidates', 'formulas', 'frames', 'attested', 'attestedIds', 'dict'].includes(k)))
     fresh('lm/phrases'); let n = 0; parts.forEach((p, b) => { if (p.length) { out(`lm/phrases/${b}.json`, { ...meta, candidates: p }); n++ } }); log.push(`phrases ${n}`)
+  }
+  {   // SPEC 63 CP-9: data/work/thinpar/<bucket>.json (pipelines/build-thin-par.ts, not committed) → lm/par/<bucket>.json, the VESUM paradigm of the lemmas without a full card
+    const files = thinParFiles('.')
+    if (files.length) { fresh('lm/par'); let worst = 0; for (const f of files) { const j = JSON.parse(readFileSync(f, 'utf8')); worst = Math.max(worst, gz(j)); out(`lm/par/${basename(f)}`, j) }; log.push(`par ${files.length} (worst ${(worst / 1024).toFixed(1)} KB gz)`) }
   }
   console.log('lm: shards per sidecar —', log.join(', '))
 }

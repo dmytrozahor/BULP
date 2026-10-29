@@ -10,6 +10,7 @@ import { useData } from '../composables/useData.ts'
 import PlastSenses from '../components/PlastSenses.vue'
 import WitnessBlock from '../components/WitnessBlock.vue'
 import ThinCard from '../components/ThinCard.vue'
+import ThinTitle from '../components/ThinTitle.vue'
 import { kwicFromRefs } from '../lib/refKwic.ts'
 import { archEntryOf } from '../lib/torotData.ts'
 import { textTo, witnessTo } from '../lib/nav.ts'
@@ -39,7 +40,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
   <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!e" class="muted sans">Архаїчної картки «{{ id }}» немає.</p>
   <template v-else>
-    <h1>{{ e.head }} <small class="muted sans">{{ badge }}</small></h1>
+    <h1><ThinTitle :word="e.head" historical /> <small class="muted sans">{{ badge }}</small></h1>
     <p v-if="e.status === 'unverified'" class="sans small"><b>Неперевірено:</b> повторюване нерозпізнане слово середньоукраїнського тексту (≥ 3 вживань); словникового запису для нього не знайдено, значення та частина мови — невідомо.</p>
     <template v-else-if="e.dict">
       <p class="sans small">Заголовне слово: <b>{{ e.head }}</b><template v-if="e.variants.length > 1"> · варіанти: {{ e.variants.slice(1).join(', ') }}</template><template v-if="e.dict.pos"> · частина мови за джерелом: {{ e.dict.pos }}.</template>

@@ -18,6 +18,7 @@ import { uvOfSpelling } from '../lib/uvData.ts'
 import UserHypotheses from './UserHypotheses.vue'
 import WitnessPanel from './WitnessPanel.vue'
 import ThinCard from './ThinCard.vue'
+import ThinTitle from './ThinTitle.vue'
 import { ixCards } from '../lib/parts.ts'
 const props = defineProps<{ form: string; /** inside a page that already has its own header: render nothing when the spelling is in no text */ quiet?: boolean }>()
 const { byLemma, searchIdx, annData, witnessById } = useData()
@@ -54,7 +55,7 @@ const reason = computed(() => {
   <div v-if="state === 'loading'" class="skeleton" style="height:4rem" />
   <template v-else-if="entry || para.length">
     <header v-if="!quiet" class="wordhead headline compact">
-      <h1 class="lemma">{{ entry?.[0] ?? form }}</h1>
+      <h1 class="lemma"><ThinTitle :word="entry?.[0] ?? form" historical /></h1>
       <p class="hl-line sans">
         <span class="derived-badge">{{ entry ? 'незв’язане написання' : 'словоформа парадигми' }}</span>
         <template v-if="entry"> <span class="muted">зустрічається </span>{{ fmtNum(+entry[1]) }}<span class="muted"> разів у </span>{{ fmtNum(+entry[2]) }}<span class="muted"> пам’ятках</span></template>

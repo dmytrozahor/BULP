@@ -52,7 +52,7 @@ export async function scanVesum(lines: Lines, cb: (e: VesumEntry) => void): Prom
   }
 }
 
-const fileLines = (p = VESUM_TXT): Lines => createInterface({ input: createReadStream(p, { encoding: 'utf8', highWaterMark: 1 << 20 }), crlfDelay: Infinity })
+export const fileLines = (p = VESUM_TXT): Lines => createInterface({ input: createReadStream(p, { encoding: 'utf8', highWaterMark: 1 << 20 }), crlfDelay: Infinity })
 const segs = (tags: string) => tags.split(':')
 
 export interface VesumIndex {

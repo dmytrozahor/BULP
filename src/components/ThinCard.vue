@@ -21,10 +21,24 @@ import CardLayout from './CardLayout.vue'
 import OverviewTab from './OverviewTab.vue'
 import RegionBars from './RegionBars.vue'
 import SenseEpochs from './SenseEpochs.vue'
+import { lk } from '../../core/cv.ts'
+import { paradigmKindOf } from '../../core/pos-gate.ts'
+import { parLoaded, parOf } from '../lib/thinPar.ts'
 const props = defineProps<{ /** SPEC 63 SE-6: card kind of the host view (label of the sense block) */ seKind?: 'light' | 'dict' | 'orv' | 'arch' | 'mu'; lemma?: string; spelling: string; kwic: KwicLine[]; /** SPEC 63 CP-4: corpus tokens of the word (f) for the «Статистика» panel; undefined = not known */ f?: number; /** SPEC 63 CP-6: dictionary stress (CvExtra.s) */ stress?: number[]; /** witness → count for the region map (default: one per KWIC line) */ witnesses?: Record<string, number>; /** the host page already prints these blocks */ noKwic?: boolean; noDerivation?: boolean; /** SPEC 63 DO-3: a dictionary-only card — the corpus blocks are collapsed with «немає засвідчень у корпусі» */ dictOnly?: boolean }>()
 const d = computed(() => deriveWithSteps(props.spelling))
 const best = computed(() => d.value.candidates[0])
-const { corpus, witnessById } = useData()
+const { corpus, witnessById, byLemma } = useData()
+/** SPEC 63 CP-9: the VESUM paradigm of the card's word. A historical card (ORV / archaic / unlinked / Middle Ukrainian) never gets a paradigm of its own spelling: only its MODERN equivalent
+ *  (the dictionary's, else the first rule-derived candidate) is looked up, and the label says so. A word that has a full card is left to that card (sidecar skips it). */
+const historical = computed(() => props.seKind === 'orv' || props.seKind === 'arch' || props.seKind === 'mu')
+const parWord = computed(() => {
+  if (!historical.value) return props.lemma ?? props.spelling
+  const l = props.lemma; if (l && lk(l) !== lk(props.spelling)) return l
+  return best.value?.form
+})
+const parNote = computed(() => (historical.value && parWord.value ? `парадигма сучасного відповідника «${parWord.value}» (за ${props.lemma && lk(props.lemma) !== lk(props.spelling) ? 'словником' : 'правилами виведення, гіпотеза'}), а не форми пам’ятки «${props.spelling}»; історичних форм не наведено` : undefined))
+const parGroups = computed(() => (parWord.value && !byLemma.value.has(parWord.value) ? parOf(parWord.value) : undefined)?.map(p => ({ label: `${p.lemma} · ${p.tags}`, kind: paradigmKindOf(p.tags), paradigm: p.paradigm })))
+const parReady = computed(() => !parWord.value || byLemma.value.has(parWord.value) || parLoaded(parWord.value))
 /** SPEC 63 CP-4: region of the witnesses behind the card (a witness region, not a dialect label — SPEC 20 B-3.6) and the f / ipm line; HK needs the lemma's fMax and is not defined here */
 const byRegion = computed(() => formRegions(props.witnesses ?? props.kwic, corpus.value?.regions, w => witnessById.value.get(w)?.region))
 const nRegions = computed(() => byRegion.value.filter(r => r.f).length)
@@ -36,7 +50,7 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
     <CardLayout>
     <CardTabs>
       <template #overview>
-        <OverviewTab :lemma="lemma" :spelling="spelling" :kwic="kwic" :by-region="byRegion" map-panel="t-reg" labels-panel="t-lab" :pron-word="spelling" :stress-positions="stress" :origin-panel="noDerivation ? undefined : 't-der'" :origin-line="noDerivation ? undefined : `перша фіксація не встановлена; за правилами: норма ${d.norm}${best ? ' → сучасна (гіпотеза) ' + best.form : ''}`" :se-kind="seKind ?? (dictOnly ? 'dict' : 'light')" :dict-only="dictOnly" />
+        <OverviewTab :lemma="lemma" :spelling="spelling" :kwic="kwic" :by-region="byRegion" map-panel="t-reg" labels-panel="t-lab" :pron-word="spelling" :stress-positions="stress" :origin-panel="noDerivation ? undefined : 't-der'" :origin-line="noDerivation ? undefined : `перша фіксація не встановлена; за правилами: норма ${d.norm}${best ? ' → сучасна (гіпотеза) ' + best.form : ''}`" :se-kind="seKind ?? (dictOnly ? 'dict' : 'light')" :dict-only="dictOnly" :paradigm-groups="parGroups" :paradigm-note="parNote" :paradigm-word="parWord" :paradigm-loaded="parReady" />
       </template>
       <template #forms><LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="forms" /><slot name="forms" /></template>
       <template #history>
