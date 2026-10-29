@@ -10,7 +10,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { HIST_LEX_SPECS, glossRows, headRows, parsePages, glossItems, pageCandidates, lexForm, type LexStats } from '../core/hist-lex.ts'
+import { HIST_LEX_SPECS, NIMCHUK_LEXIS, glossRows, headRows, parsePages, parseNimchukLexis, glossItems, pageCandidates, lexForm, type LexStats } from '../core/hist-lex.ts'
 import { derive as deriveRaw } from '../core/phonology.ts'
 import { fold } from '../core/orthography.ts'
 import { writeJsonAtomic } from './robust.ts'
@@ -36,7 +36,18 @@ export async function parseHistLex(ocrRoot: string, outDir: string, verifier: (w
   mkdirSync(outDir, { recursive: true })
   const res: HistLexResult[] = []
   for (const spec of Object.values(HIST_LEX_SPECS)) {
+    // the PROOFREAD typed transcription (Німчук 1964) of the Лексис, when present, replaces the OCR; the OCR stays only as a cross-check
+    const html = resolve(ocrRoot, spec.id, 'zyz99.htm')
     const dir = resolve(ocrRoot, spec.id); if (!existsSync(dir)) continue
+    if (spec.id === 'zyzanii1596' && existsSync(html)) {
+      const buf = readFileSync(html), srcBytes = buf.length, hf = resolve(outDir, `${spec.id}.json`), gf = resolve(outDir, `${spec.id}-gloss.json`)
+      if (existsSync(hf) && existsSync(gf)) { try { const j = JSON.parse(readFileSync(hf, 'utf8')); if (j.srcBytes === srcBytes) { res.push({ id: spec.id, stats: j.stats, heads: j.rows.length, gloss: JSON.parse(readFileSync(gf, 'utf8')).rows.length, reused: true }); continue } } catch { /* torn: reparse */ } }
+      const { articles, stats } = parseNimchukLexis(new TextDecoder('windows-1251').decode(buf), spec)
+      const loc = `${spec.short}, Німчук 1964, ${NIMCHUK_LEXIS.url}`, heads = headRows(articles, spec).map(([h, r]) => [h, { ...r, l: loc }] as [string, typeof r]), gloss = glossRows(articles, spec).map(([h, r]) => [h, { ...r, l: loc }] as [string, typeof r])
+      writeJsonAtomic(hf, JSON.stringify({ id: spec.id, dict: spec.dict, kind: 'heads', srcBytes, stats, source: NIMCHUK_LEXIS.source, rows: heads }))
+      writeJsonAtomic(gf, JSON.stringify({ id: spec.id, dict: spec.dict, kind: 'hist-gloss', srcBytes, stats, source: NIMCHUK_LEXIS.source, rows: gloss }))
+      res.push({ id: spec.id, stats, heads: heads.length, gloss: gloss.length, reused: false }); continue
+    }
     const pages = readPages(dir), srcBytes = pages.reduce((n, p) => n + Buffer.byteLength(p.text), 0)
     const hf = resolve(outDir, `${spec.id}.json`), gf = resolve(outDir, `${spec.id}-gloss.json`)
     if (existsSync(hf) && existsSync(gf)) {

@@ -981,5 +981,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SRC-3 | tests/src28.test.ts › SRC-28 article parser: Headword: gloss items; continuation lines join; the gate rejects noise and short debris |
 | SRC-3 | tests/src28.test.ts › SRC-28 rows: (a) the gloss word sense dated by the print year, (b) the CS headword with its equivalents; dictionary registered with its coverage |
 | SRC-3 | tests/src28.test.ts › SRC-28 dx-hist-load: only the headword files give dictionary headwords; the gloss-keyed rows (modern words) are skipped |
+| SRC-3 | tests/src28.test.ts › SRC-28 the proofread Лексис (Німчук 1964, litopys zyz99.htm): typed articles parse into head and gloss rows, ѣ / я / accents / titlo parentheses normalised |
 | SRC-4 | tests/src28.test.ts › SRC-28 every feature has verbatim quotes with a locator, a dialect group and the print year; the Galician/Belarusian attribution is marked contested |
 | SRC-4 | tests/src28.test.ts › SRC-28 biography cited from research/44 (Львів → Берестя → Вільно); uncited candidates are hypotheses with the reason |

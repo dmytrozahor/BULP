@@ -90,3 +90,37 @@ export const headRows = (a: LexArticle[], spec: HistLexSpec): [string, SeRow][] 
  */
 export const glossRows = (a: LexArticle[], spec: HistLexSpec): [string, SeRow][] =>
   a.flatMap(x => x.glosses.filter(g => !g.includes(' ')).map(g => [g, { d: spec.dict, g: `ц.-сл. «${x.head}»${x.glosses.length > 1 ? ` = ${x.glosses.filter(y => y !== g).join(', ')}` : ''}`.slice(0, 200), e: [spec.year, spec.year], l: `${spec.short}, скан ${x.page}` } as SeRow] as [string, SeRow]))
+
+// ── the PROOFREAD Лексис: В. В. Німчук's typed transcription on litopys.org.ua (SRC-28) ──────────────────────────────────────────────
+/**
+ * «Лексис Лаврентія Зизанія. Синоніма славеноросская» / Підг. текстів пам'яток і вступ. ст. В. В. Німчука. — К.: Наукова думка, 1964. — 259 с. (Пам'ятки української мови XVI–XVII ст.),
+ * typed on http://litopys.org.ua/zyzlex/zyz99.htm («Л. Зизаній. Лексис Сирѣчь реченія…», текст). One `<p><b>headword</b>, glosses.</p>` per article; Німчук's conventions: <small>Ђ</small> = ѣ,
+ * <small>А</small> = ѧ (я), latin letters with acute (á é í ó ý) = stressed Cyrillic vowels, (ъ) = letters under a titlo, z = з, /N/ = page break of the original.
+ * Берінда's Лексікон is NOT typed online (the berlex pages are facsimile images): it stays on the OCR path above.
+ */
+export const NIMCHUK_LEXIS = { source: 'Лексис Лаврентія Зизанія. Синоніма славеноросская. Підг. текстів і вступ. ст. В. В. Німчука. К.: Наукова думка, 1964', url: 'http://litopys.org.ua/zyzlex/zyz99.htm' }
+const NAMED: Record<string, string> = { aacute: 'а', eacute: 'е', iacute: 'і', oacute: 'о', yacute: 'у', ograve: 'о', agrave: 'а', egrave: 'е', igrave: 'і', nbsp: ' ', amp: '&' }
+const decodeEnt = (s: string) => s.replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&([a-z]+);/g, (m, n) => NAMED[n] ?? m)
+const NIMCHUK_MAP: Record<string, string> = { 'z': 'з', 'ѕ': 'з', 'ω': 'о', 'Ω': 'О', 'ε': 'е', 'θ': 'ѳ', 'Θ': 'Ѳ', 'ψ': 'пс', 'ξ': 'кс', 'ѵ': 'и' }
+/** one headword or gloss text → lower-case Cyrillic: tags/entities decoded, accents, titlo parentheses and page marks removed */
+export function nimchukText(html: string): string {
+  let s = html.replace(/<small>\s*Ђ\s*<\/small>/gi, 'ѣ').replace(/<small>\s*А\s*<\/small>/gi, 'я').replace(/<[^>]+>/g, '')
+  s = decodeEnt(s).normalize('NFD').replace(/[\u0300-\u0303]/g, '').normalize('NFC').replace(/\/[^/]{0,6}\//g, ' ').replace(/[()]/g, '')
+  s = [...s].map(c => NIMCHUK_MAP[c] ?? c).join('').replace(/Ђ/g, 'ѣ').replace(/\s+/g, ' ').trim()
+  return s.toLowerCase()
+}
+export function parseNimchukLexis(html: string, spec: HistLexSpec): { articles: LexArticle[]; stats: LexStats } {
+  const st: LexStats = { pages: 1, lines: 0, candidates: 0, skippedHead: 0, skippedGloss: 0, skippedScore: 0, skippedVerify: 0, passed: 0, glossWords: 0, passRate: 0 }
+  const articles: LexArticle[] = []
+  for (const m of html.matchAll(/<p class=K1><b>([\s\S]*?)<\/b>([\s\S]*?)<\/p>/g)) {
+    st.lines++; st.candidates++
+    const head = nimchukText(m[1]!).replace(/[,.;:\s]+$/, ''), rest = nimchukText(m[2]!).replace(/^[\s,;:]+/, '')
+    if (!head || head.includes(' ') || !/^[\p{Script=Cyrillic}'’-]+$/u.test(head) || head.length < 3) { st.skippedHead++; continue }
+    const first = rest.split(/\.\s/)[0]!.replace(/[.\s]+$/, '')   // the gloss runs to the first full stop (later sentences are the printed notes)
+    const glosses = [...new Set(first.split(/\s*[,;]\s*|\s+(?:албо|або|или)\s+/).map(g => g.replace(/^[\s\-–—.]+|[\s\-–—.]+$/g, '')).filter(g => g.length >= 2 && /^[\p{Script=Cyrillic}'’ -]+$/u.test(g)))]
+    if (!glosses.length) { st.skippedGloss++; continue }
+    articles.push({ head, glosses, page: 0 }); st.passed++; st.glossWords += glosses.filter(g => !g.includes(' ')).length
+  }
+  st.passRate = st.candidates ? Math.round((st.passed / st.candidates) * 1000) / 1000 : 0
+  return { articles, stats: st }
+}

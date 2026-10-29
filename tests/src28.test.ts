@@ -9,7 +9,7 @@ import { authorById, admissible } from '../pipelines/authors.ts'
 import { admit } from '../pipelines/build-annotate.ts'
 import { ruOfWitness } from '../core/ru-source.ts'
 import ingester, { cleanTranscription, parseTsv, tsvTokens } from '../pipelines/ingest-owner-text.ts'
-import { HIST_LEX_SPECS, MIN_WORD, glossItems, glossRows, headRows, pageCandidates, parsePages } from '../core/hist-lex.ts'
+import { HIST_LEX_SPECS, MIN_WORD, NIMCHUK_LEXIS, parseNimchukLexis, nimchukText, glossItems, glossRows, headRows, pageCandidates, parsePages } from '../core/hist-lex.ts'
 import { DICT_COVER, atOf } from '../core/se.ts'
 import { HIST_BY_ID, HIST_SRC } from '../core/dx-src.ts'
 import { seHeads } from '../pipelines/dx-hist-load.ts'
@@ -85,6 +85,15 @@ describe('SRC-28 part 3: Лексис (1596) and Лексікон Беринди
     writeFileSync(resolve(dir, 'berynda1627.json'), JSON.stringify({ dict: 'berynda', kind: 'heads', rows: [['агнецъ', {}]] }))
     writeFileSync(resolve(dir, 'berynda1627-gloss.json'), JSON.stringify({ dict: 'berynda', kind: 'hist-gloss', rows: [['баранъ', {}]] }))
     expect(seHeads('.', dir)).toEqual([{ word: 'агнецъ', src: 'berynda' }])
+  })
+  it('SRC-28 the proofread Лексис (Німчук 1964, litopys zyz99.htm): typed articles parse into head and gloss rows, ѣ / я / accents / titlo parentheses normalised', () => {
+    const html = '<p class=K1><b>Адана(й)</b>, г&#771;ь,\nпа(н).</p><p class=K1><b>&aacute;вва</b>, т&aacute;то,\n&#969;т&eacute;цъ.</p><p class=K1><b>&aacute;гг&#771;лъ</b>,\nв<small>Ђ</small>&#769;стни(к) албо пов<small>Ђ</small>д&aacute;(ч).</p><p class=K1><b>&aacute;гнїца</b>,\nмолод&aacute;<small>А</small> ов&eacute;(ч)ка.</p><p class=K1><b>x1</b>, zz.</p>'
+    expect(nimchukText('в<small>Ђ</small>&#769;стни(к)')).toBe('вѣстник'); expect(nimchukText('Адана(й)')).toBe('аданай')
+    const r = parseNimchukLexis(html, HIST_LEX_SPECS.zyzanii1596!)
+    expect(r.articles.map(a => [a.head, a.glosses])).toEqual([['аданай', ['гь', 'пан']], ['авва', ['тато', 'отецъ']], ['агглъ', ['вѣстник', 'повѣдач']], ['агнїца', ['молодая овечка']]])
+    expect(r.stats.candidates).toBe(5); expect(r.stats.skippedHead).toBe(1)
+    const g = glossRows(r.articles, HIST_LEX_SPECS.zyzanii1596!); expect(g.find(x => x[0] === 'вѣстник')![1]).toMatchObject({ d: 'zyzanii-lexis', e: [1596, 1596], g: 'ц.-сл. «агглъ» = повѣдач' })
+    expect(NIMCHUK_LEXIS.source).toContain('Німчука'); expect(NIMCHUK_LEXIS.source).toContain('1964'); expect(NIMCHUK_LEXIS.url).toBe('http://litopys.org.ua/zyzlex/zyz99.htm')
   })
   it('SRC-28 the real OCR is noisy: the gate is strict (measured on 66 pages of the 1627 scan: 2 of 1486 candidate lines pass; documented in SPEC SRC-28)', () => { expect(existsSync('pipelines/parse-hist-lex.ts')).toBe(true) })
 })
