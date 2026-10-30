@@ -33,6 +33,7 @@ export function mentionsOf(witness: string): MentionRec[] {
   return mentions.get(s)?.[witness] ?? []
 }
 export const personTipOf = (id: string, why: string): string => {
-  const r = personsIndex.value?.rows.find(x => x.id === id)
+  loadPersonsIndex() // the tooltip names the person: the index is fetched on first need (CP-10.10: a KWIC card never loaded it, so the tip lost the name and years)
+  const ix = personsIndex.value, r = ix ? (ix.rows.find(x => x.id === id) ?? ix.rows.find(x => x.id === ix.alias[id])) : undefined
   return r ? `постать: ${r.name} (${r.b ?? '?'}–${r.d ?? ''}) — підстава: ${why}` : `постать — підстава: ${why}`
 }

@@ -5,11 +5,15 @@ import { featureChips } from '../../core/feature-chips.ts'
  * BL-6 form page /f/:form — everything for exactly one spelling of a lemma: its KWIC, epoch cells, witnesses, f / ipm / HK / DP with denominators (lib/formStats.ts),
  * the derivation trace and the claims. All of it comes from the lemma's detail shard (fullOf). Several lemmas can share a spelling: ?lemma= picks one.
  */
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { key } from '../../core/text.ts'
-import { ixHitMap, ixLoaded } from '../lib/parts.ts'
+import { ixCards, ixHitMap, ixLoaded } from '../lib/parts.ts'
+import { knownKeyOf } from '../lib/annotate.ts'
+import { analyzeLink } from '../lib/analyze-links.ts'
+import { zakTarget } from '../lib/zakRoute.ts'
+import ZakNote from '../components/ZakNote.vue'
 import { useData } from '../composables/useData.ts'
 import { epochShort, fmtDate, fmtNum } from '../lib/format.ts'
 import { formRegions, formStats, restrictEpochs } from '../lib/formStats.ts'
@@ -46,8 +50,8 @@ import { paradigmKindOf } from '../lib/ux.ts'
 import { isOldForm, witnessTo } from '../lib/nav.ts'
 
 const props = defineProps<{ form: string }>()
-const route = useRoute()
-const { byLemma, loaded, corpus, fullOf, detailError, witnessById } = useData()
+const route = useRoute(), router = useRouter()
+const { byLemma, loaded, corpus, fullOf, detailError, witnessById, annData, searchIdx } = useData()
 
 /** every (lemma, spelling) whose raw spelling is this one; falls back to the normalised key (KWIC nodes keep the surface case) */
 /** SPEC 63 PF: the lemmas that own a spelling come from the prefix shard of its key (ix/), their cards from the cd shards */
@@ -99,11 +103,18 @@ const witPoints = computed<TPoint[]>(() => (stats.value?.witnesses ?? []).flatMa
   return x ? [{ id: w.w, label: x.title.slice(0, 18), year: (x.date[0] + x.date[1]) / 2, f: w.lines, kind: witKind(x.witnessType), to: witnessTo(w.w), title: x.title }] : []
 }))
 const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.date) } : {})
+/** SPEC 63 CP-10.4: a Transcarpathian ÿ / ô spelling (кÿнь, вÿс) no card owns resolves through the MM-41 fold candidates of search; exactly one confirmed standard spelling = redirect to its card with the note */
+const zak = computed(() => (!loaded.value || resolving.value || pick.value || derivedOnly.value ? { state: 'none' as const } : zakTarget(props.form, knownKeyOf(annData.value), ixLoaded)))
+watch(zak, z => {
+  if (z.state !== 'one') return
+  const l = analyzeLink(z.to, { lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards })
+  if (l.kind === 'word') void router.replace(`${l.to}${l.to.includes('?') ? '&' : '?'}zak=${encodeURIComponent(props.form)}`)
+}, { immediate: true })
 const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
 </script>
 
 <template>
-  <div v-if="!loaded || resolving"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
+  <div v-if="!loaded || resolving || zak.state === 'loading' || zak.state === 'one'"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <template v-else-if="!pick && derivedOnly">
     <header class="wordhead headline"><h1 class="lemma">{{ form }}</h1>
       <p class="hl-line sans"><span class="derived-badge">{{ derivedOnly.kind === 'dp' ? 'виведено за правилом DP' : 'складено за афіксами DX' }}</span> <span class="muted">у словнику такого написання немає (P-1.7: виведена форма не є свідченням)</span>
@@ -114,6 +125,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
   </template>
   <UnlinkedSpelling v-else-if="!pick" :form="form" />
   <template v-else>
+    <ZakNote :target="pick.raw" />
     <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]"><Spell :w="fc?.modern ?? pick.raw" :raw="pick.raw" /></h1>
       <SociolectBadges :word="pick.raw" /><ModernBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />

@@ -71,7 +71,7 @@ export function measureCard(dist: string, lemma: string): Measure & { cold: numb
   if (!c) throw new Error(`${lemma}: no core card in dist`)
   const w = (c.first.value as { witness?: string })?.witness
   const files = cardData(lemma, typeof w === 'string' ? w : undefined, heteronymKey(lemma)).map(f => join(dist, 'data', f)).filter(f => existsSync(f))
-  const home = new Set(homeFiles(dist)), all = [...codeOf(dist, 'WordView'), ...files, join(dist, 'data', 'boot.json')]
+  const home = new Set(homeFiles(dist)), all = [...codeOf(dist, 'WordView'), ...files, join(dist, 'data', 'boot.json'), join(dist, 'data', 'lm', 'presence.json')].filter(f => existsSync(f))   // CP-10.7: the presence index is fetched with the first sidecar
   const m = measure(all.filter(f => !home.has(f)))
   return { ...m, cold: sum(all) }
 }

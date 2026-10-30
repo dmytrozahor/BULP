@@ -4,6 +4,7 @@
  */
 import { ref, shallowReactive } from 'vue'
 import { dataUrl } from './dataUrl.ts'
+import { knownAbsent } from './presence.ts'
 
 /** URLs whose load failed after the retries and has not succeeded since (reactive) */
 export const loadFailures = shallowReactive(new Set<string>())
@@ -24,6 +25,7 @@ const sleep = (ms: number) => (ms > 0 ? new Promise<void>(r => setTimeout(r, ms)
 
 /** GET + parse JSON. null = the file does not exist (404/410); throws after `delays.length + 1` attempts on a transient failure (and on a non-transient HTTP error / bad JSON, without retry) */
 export async function fetchJson(url: string, delays: readonly number[] = BACKOFF_MS): Promise<unknown | null> {
+  if (await knownAbsent(url)) return null   // CP-10.7: the build's presence index says this sidecar bucket does not exist: no request, no console 404
   let last: unknown
   for (let i = 0; i <= delays.length; i++) {
     if (i > 0) await sleep(delays[i - 1]!)

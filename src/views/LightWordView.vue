@@ -27,6 +27,7 @@ import { findLoc, loadTokens } from '../lib/witnessText.ts'
 import { kwicAt } from '../lib/unlinked.ts'
 import { altStandardOf } from '../lib/altData.ts'
 import { foldById } from '../../core/orthography.ts'
+import ZakNote from '../components/ZakNote.vue'
 const props = defineProps<{ lemma: string }>()
 const cv = ref<CvEntry>(), err = ref(''), cvDone = ref(false), kwic = ref<Kwic[]>([])
 const { annData, loaded, witnessById, byLemma } = useData()
@@ -77,6 +78,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
   <div v-else-if="!done" class="skeleton" style="height:4rem" />
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
+    <ZakNote :target="lemma" />
     <h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1>
     <p v-if="dict" class="sans small" data-testid="dict-only">
       <span class="badge">{{ dict.status }}</span>

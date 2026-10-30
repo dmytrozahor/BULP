@@ -85,6 +85,7 @@ const DerivationSteps = defineAsyncComponent(() => import('../components/Derivat
 import { formsWitnesses } from '../lib/refKwic.ts'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
+import ZakNote from '../components/ZakNote.vue'
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
@@ -223,6 +224,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
     <AnalyzeView :embed="lemma" />
   </template>
   <template v-else>
+    <ZakNote :target="card.lemma" />
     <header class="wordhead headline compact">
       <h1 :class="['lemma', { old: isOldForm(card.lemma) }]"><Spell :w="card.lemma" :ctx="vctx" :attest="lemmaAttest" /></h1>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
