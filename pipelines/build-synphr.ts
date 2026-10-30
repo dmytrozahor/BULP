@@ -26,25 +26,33 @@ const sameSyn = (a: SynRow, b: SynRow) => a.t === b.t && a.r === b.r && a.d === 
 const samePhr = (a: PhrRow, b: PhrRow) => a.p === b.p && a.k === b.k && a.d === b.d && a.x === b.x
 
 const unxml = (s: string) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&')
-/** pages of the main namespace (not redirects) of a MediaWiki XML dump stream: [title, wikitext] */
-export async function* xmlPages(input: NodeJS.ReadableStream): AsyncGenerator<[string, string]> {
+export interface XmlRecord { title: string; ns: string; redirect: boolean; text: string; rev?: number; ts?: string }
+/** every page of a MediaWiki XML dump stream (all namespaces, redirects flagged) with the id and timestamp of its revision (GG-11 needs the revision; the templates live in ns 10) */
+export async function* xmlRecords(input: NodeJS.ReadableStream): AsyncGenerator<XmlRecord> {
   const rl = createInterface({ input, crlfDelay: Infinity })
-  let title = '', ns = '', redirect = false, buf: string[] | undefined
+  let title = '', ns = '', redirect = false, buf: string[] | undefined, rev: number | undefined, ts: string | undefined, inRev = false
   for await (const line of rl) {
     if (buf) {
       const e = line.indexOf('</text>')
-      if (e >= 0) { buf.push(line.slice(0, e)); if (ns === '0' && !redirect && title) yield [title, unxml(buf.join('\n'))]; buf = undefined } else buf.push(line)
+      if (e >= 0) { buf.push(line.slice(0, e)); if (title) yield { title, ns, redirect, text: unxml(buf.join('\n')), rev, ts }; buf = undefined } else buf.push(line)
       continue
     }
     let m: RegExpExecArray | null
-    if (line.includes('<page>')) { title = ''; ns = ''; redirect = false } else if ((m = /<title>(.*)<\/title>/.exec(line))) title = unxml(m[1]!)
-    else if ((m = /<ns>(\d+)<\/ns>/.exec(line))) ns = m[1]!
+    if (line.includes('<page>')) { title = ''; ns = ''; redirect = false; rev = undefined; ts = undefined; inRev = false } else if (line.includes('<revision>')) inRev = true
+    else if (!inRev && (m = /<title>(.*)<\/title>/.exec(line))) title = unxml(m[1]!)
+    else if (!inRev && (m = /<ns>(\d+)<\/ns>/.exec(line))) ns = m[1]!
     else if (line.includes('<redirect')) redirect = true
+    else if (inRev && rev === undefined && (m = /^\s*<id>(\d+)<\/id>/.exec(line))) rev = +m[1]!
+    else if (inRev && (m = /<timestamp>([^<]*)<\/timestamp>/.exec(line))) ts = m[1]!
     else if ((m = /<text\b[^>]*>(.*)$/.exec(line))) {
       const rest = m[1]!, e = rest.indexOf('</text>')
-      if (e >= 0) { if (ns === '0' && !redirect && title) yield [title, unxml(rest.slice(0, e))] } else buf = [rest]
+      if (e >= 0) { if (title) yield { title, ns, redirect, text: unxml(rest.slice(0, e)), rev, ts } } else buf = [rest]
     }
   }
+}
+/** pages of the main namespace (not redirects) of a MediaWiki XML dump stream: [title, wikitext] */
+export async function* xmlPages(input: NodeJS.ReadableStream): AsyncGenerator<[string, string]> {
+  for await (const r of xmlRecords(input)) if (r.ns === '0' && !r.redirect) yield [r.title, r.text]
 }
 
 export function dumpFile(raw: string): string | undefined {

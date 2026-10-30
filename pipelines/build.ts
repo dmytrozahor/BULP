@@ -68,6 +68,7 @@ import { acceptParticiples, participleCandidates, participleSurfaces } from '../
 import { corrEvidence } from '../core/correspondences.ts'
 import { PlaceScan, properClaim, type NameEvidence, type PlacesFile } from '../core/places.ts'
 import { writeEtymology } from './build-etymology.ts'
+import { writeUkEtym } from './build-etymuk.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
 import { buildSenseEntries, dictRows, kaikkiRows, parsedRows, textLayerKnown, wiktRows } from './build-se.ts'
@@ -756,7 +757,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   { const x = writeXref(ROOT); lap(`xr.json (GG-18): ${x.pointers} dictionary cross-references on ${x.heads} headwords; per dictionary: ${Object.entries(x.perDict).map(([d, n]) => d + ' ' + n).join(', ') || 'none'}`) }   // GG-18: data/work/xr.json -> lm/xr/ (build-parts)
   { const known = new Set(cards.map(c => lk(c.lemma))); for (const k of (await vesumLemmaList()).keys()) known.add(k); const t = await writeSynPhr(ROOT, ROOT, k => known.has(k)); lap(`syn.json/phr.json (GG-12/GG-13; uk.wiktionary dump + kaikki, CC BY-SA 4.0): ${t.synPairs} relation rows (${JSON.stringify(t.synByRel)}) on ${t.synHeads} headwords, ${t.groups} synonym groups, ${t.synUnlinked} targets without a lemma; ${t.phrRows} phraseology rows on ${t.phrHeads} headwords, ${t.phrDistinct} distinct units`) }   // GG-12/13: data/work/{syn,phr}.json -> lm/{syn,phr}/ (build-parts)
   { const d = await writeDim(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`dim.json (MM-23): ${d.derivatives} derivatives of ${d.bases} bases (${d.sum} links from СУМ, ${d.wikt} from en.wiktionary)`) }
-  { const e = writeEtymology(cards, ROOT, PUB, generated); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags`) }   // ET-1…ET-3
+  { const ukw = await writeUkEtym(ROOT, ROOT); const e = writeEtymology(cards, ROOT, PUB, generated, ukw); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags; GG-11 uk.wiktionary «Етимологія»: ${e.uk} lemmas (${e.ukAlso} also have an en.wiktionary text, ${e.ukOnly} only uk), ${e.ukEsum} cite ЕСУМ`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1; ruhead.json MM-36: ${r.ruHeads ?? 0} Russian headwords): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1
   { const c = writeCognates(cards, ROOT, PUB, generated); lap(`cognates.json (BL-15): ${c.entries} lemmas with Proto-Slavic counterparts, ${c.dated} with a dated counterpart, ${c.flags} ET-3 review flags`) }   // BL-15
 

@@ -10,6 +10,7 @@
  * The conflict flag is a prompt for review: it corrects nothing and is never shown as a dictionary fact.
  */
 import { Q, type Evidence } from './evidence.ts'
+import { ukEtymEvidence, type UkEtym } from './etymuk.ts'
 
 export interface EtymHypothesis { author: string; text: string; status: 'proposed' | 'accepted' | 'rejected'; evidence: Evidence[]; date: string }
 export interface EtymStep { rel: string; text: string }   // rel: inh | der | bor | calque | sl …; text = Wiktionary's own expansion («Old East Slavic мѣ́сто (mě́sto)»)
@@ -24,6 +25,8 @@ export interface Etymology {
   chain?: EtymStep[]
   /** MM-22: aspect and partner(s) (Вікісловник, en) — the «видова пара» line of the card */
   aspect?: AspectPair
+  /** GG-11: the «Етимологія» section of uk.wiktionary (CC BY-SA 4.0), a separate sourced block, never merged into `text`; its Evidence is in `sources` (source WIKTUK) */
+  uk?: UkEtym
   hypotheses: EtymHypothesis[]
   family?: FamilyLink[]
   conflict?: EtymConflict
@@ -32,7 +35,7 @@ export interface Etymology {
 export interface EtymologyFile {
   format: 1; generated: string
   /** attribution that must travel with the data (CC BY-SA 4.0) */
-  attribution: { wiktionary: string; licence: string; esum: string; kaikki: { file: string; sha256: string; extracted: string } }
+  attribution: { wiktionary: string; licence: string; esum: string; kaikki: { file: string; sha256: string; extracted: string }; ukwikt?: { dump: string; date: string; licence: string } }
   entries: Record<string, Etymology>
 }
 
@@ -100,13 +103,14 @@ export function withoutFormOf(k: KaikkiRec | undefined): KaikkiRec | undefined {
   const text = k.text.replace(FORM_OF_ETYM, '').trim()
   return text ? { ...k, text } : undefined   // (the aspect of a form-of entry is the lemma's business: dropped with the pointer)
 }
-export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = []): Etymology | undefined {
+export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = [], uk?: UkEtym, ukDump = ''): Etymology | undefined {
   const k = withoutFormOf(k0)
-  if (!k && !esumQuote && !hyps.length && !family.length && !k0?.aspect) return undefined
+  if (!k && !esumQuote && !uk && !hyps.length && !family.length && !k0?.aspect) return undefined
   const sources: Evidence[] = []
   if (k && k.text) sources.push(wiktEvidence(lemma, k.text, extracted))
   if (esumQuote) sources.push(esumEvidence(lemma, esumQuote))
-  const e: Etymology = { sources, text: k?.text ?? '', hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}), ...((k ?? k0)?.aspect ? { aspect: (k ?? k0)!.aspect } : {}) }
+  if (uk) sources.push(ukEtymEvidence(lemma, uk, ukDump))
+  const e: Etymology = { sources, text: k?.text ?? '', ...(uk ? { uk } : {}), hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}), ...((k ?? k0)?.aspect ? { aspect: (k ?? k0)!.aspect } : {}) }
   const c = k ? etymConflict(dictDating(k.text), corpusFirst) : undefined
   if (c) { e.conflict = c.conflict; e.conflictNote = c.note }
   return e

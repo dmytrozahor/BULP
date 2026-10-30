@@ -4,6 +4,7 @@
  * project's own `hypotheses`; the corpus-vs-dictionary dating conflict is a review prompt, never a correction.
  */
 import { onMounted, ref, watch } from 'vue'
+import { citeLabel, ukWiktRevUrl, ukWiktUrl } from '../../core/etymuk.ts'
 import { CONFLICT_UK, LANG_UK, goroh, type Etymology, type EtymologyFile } from '../../core/etymology.ts'
 import { etymologyOf } from '../lib/etymologyData.ts'
 import { clipWords } from '../lib/format.ts'
@@ -17,7 +18,7 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
 </script>
 
 <template>
-  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? clipWords(entry.text ?? entry.chain?.[0]?.text ?? 'є запис у словниках', 130) : 'завантаження…'"
+  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? clipWords(entry.text || entry.chain?.[0]?.text || entry.uk?.t || 'є запис у словниках', 130) : 'завантаження…'"
     :info="entry ? `Вікісловник — ${file?.attribution.licence ?? 'CC BY-SA 4.0'}; витяг Wiktextract/kaikki.org. ЕСУМ цитується коротко, повний текст — на goroh.pp.ua.` : undefined">
 
     <template v-if="entry">
@@ -29,6 +30,13 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
       <ul v-if="entry.chain?.length" class="sans small" style="list-style:none;padding:0;margin:0 0 .5rem" lang="en">
         <li v-for="(s, i) in entry.chain" :key="i"><span class="muted">{{ LANG_UK[s.rel] ?? s.rel }}: </span>{{ s.text }}</li>
       </ul>
+      <section v-if="entry.uk" data-testid="etym-ukwikt">
+        <h3 class="sans small muted">З uk.Вікісловника (окремо від en.Вікісловника; {{ file?.attribution.ukwikt?.licence ?? 'CC BY-SA 4.0' }})</h3>
+        <p class="sans" lang="uk">{{ entry.uk.t }}</p>
+        <p v-if="entry.uk.lo" class="sans small muted">Сторінка називає лише мову-джерело, без слова.</p>
+        <p v-if="entry.uk.cites?.length" class="sans small" data-testid="etym-ukwikt-cites">Названо на сторінці: {{ entry.uk.cites.map(citeLabel).join('; ') }}. <span class="muted">Це вказівник, а не наше прочитання ЕСУМ.</span></p>
+        <p class="sans small muted"><a :href="ukWiktUrl(lemma)" target="_blank" rel="noopener">сторінка ↗</a><template v-if="entry.uk.rev"> · <a :href="ukWiktRevUrl(entry.uk.rev)" target="_blank" rel="noopener">версія {{ entry.uk.rev }} ↗</a> ({{ (entry.uk.ts ?? '').slice(0, 10) }})</template><template v-if="file?.attribution.ukwikt"> · дамп {{ file.attribution.ukwikt.date }}</template> · автори — в історії сторінки</p>
+      </section>
       <EvidenceList :evidence="entry.sources" />
       <p class="small muted sans">Про ЕСУМ: <RouterLink to="/source/ESUM">картка джерела</RouterLink> · <a :href="goroh(lemma)" target="_blank" rel="noopener">оригінал (goroh.pp.ua) ↗</a></p>
     </template>

@@ -1085,7 +1085,23 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-18 | tests/xref.test.ts › GG-18 the card: «за посиланням словника», the target labelled as the target › lazy: the Огляд tab and the ORV card load the component asynchronously (the first load of a card does not grow); every thin card kind has the Огляд |
 | GG-18 | tests/xref.test.ts › GG-18 sum-scan writes the pointer sidecar of a dictionary (volume/page locator, deduped, next to the parsed dir) › writeXref: tNN.ptrs.json -> xref/<dict>.json with d and the printed locator |
 | GG-10 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
-| GG-11 | manual: proposed, not implemented; see analysis/goroh-quality.md §5 and the item text in specs/63-corpus-dialects.md |
+| GG-11 | tests/etymuk.test.ts › GG-11 etymSections: which part of a page is read › the «Етимологія» body of the Ukrainian part only, up to the next heading; levels 3 and 4 both count; a foreign part is not read |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › plain prose with links and quotes is cleaned to one line; the text is what the page prints |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › {{етимологія|lang|word}} and {{lang-xx|word}} are expanded with the language label of the project's own lang templates |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › a transcluded article {{етимологія:зуб|uk}} is expanded from its template page; the sources it names become pointers, not text |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › an article template that does not exist is unresolved: «Від» alone is a stub, a partial text is flagged |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › stubs: «Від ??» (language and no word is kept as a statement, no language is not), an empty template, comments only |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › a bare pointer to another entry is not an etymology (MM-12) |
+| GG-11 | tests/etymuk.test.ts › GG-11 parseSection: section shapes › ЕСУМ citations: template {{ЕСУМ5}}, a template with the page, and «ЕСУМ 1, 467» in prose; never invented |
+| GG-11 | tests/etymuk.test.ts › GG-11 ukEtymOf: the entry of a page › sections are joined, stubs skipped, the text is clipped, revision and timestamp kept; nothing real gives undefined |
+| GG-11 | tests/etymuk.test.ts › GG-11 ukEtymOf: the entry of a page › the evidence is a Q with the page as locator, revision/dump/licence in the note and the ЕСУМ pointer worded as the Wiktionary page's, not ours |
+| GG-11 | tests/etymuk.test.ts › GG-11 merge with en.wiktionary: separate sourced blocks › both texts are kept apart (text = en, uk = uk), two evidences; uk alone also makes an entry; the form-of rule of en is unchanged |
+| GG-11 | tests/etymuk.test.ts › GG-11 the dump reader › xmlRecords gives every namespace with the revision id (not the contributor id) and timestamp; xmlPages is still the main namespace without redirects |
+| GG-11 | tests/etymuk.test.ts › GG-11 the build step › stageUkEtym: Ukrainian sections + templates from the dump (templates may come AFTER the pages); counts; a foreign page is not read |
+| GG-11 | tests/etymuk.test.ts › GG-11 the build step › writeUkEtym: cache keyed by size, atomic write, torn cache is rebuilt, no dump gives undefined (RS-1) |
+| GG-11 | tests/etymuk.test.ts › GG-11 the build step › writeEtymology puts the uk block on the lemma, counts the overlap and carries the dump attribution |
+| GG-11 | tests/etymuk.test.ts › GG-11 the build step › the main build runs the step before writeEtymology; the card shows the block apart from the en text, with the pointer wording and the revision |
+| GG-11 | manual (not implemented): the permission request for factual ЕСУМ data; see analysis/goroh-quality.md §5 |
 | GG-12 | tests/synphr.test.ts › GG-12 uk.wiktionary: which part of a page is Ukrainian › the explicit «= {{-uk-}} =» block ends at the next language heading; the «{{=uk=}}» marker and a leading part with Ukrainian markers also count; a foreign page and a foreign part do not |
 | GG-12 | tests/synphr.test.ts › GG-12 parseUkPage: relations with the sense they are attached to › each target keeps its relation, the item number of the list (= the sense number) and the gloss of that sense; stress, links and the examples template are cleaned |
 | GG-12 | tests/synphr.test.ts › GG-12 parseUkPage: relations with the sense they are attached to › qualifiers are those the page prints (урочист., рідк., під час пологів); an empty item «—» gives nothing; the other-language section is not read |
