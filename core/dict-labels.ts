@@ -24,6 +24,7 @@ export const AREAS: Record<string, string> = {
   livoberezhzhia: 'Лівобережна Україна', pravoberezhzhia: 'Правобережна Україна', west: 'захід України', east: 'схід України',
   /** LB-8 Wiktionary: «Southwestern Ukrainian» = «Ukrainian as spoken in Western and Central Ukraine» (en.wiktionary category text) */ southwest: 'південно-західна Україна (захід і центр)',
   /** «Southeastern Ukrainian» = «Central, Southern (incl. Crimea), Eastern Ukraine» */ southeast: 'південно-східна Україна (центр, південь, схід)',
+  /** LB-17 en.wiktionary «Central / Dnieper Ukraine» */ dnieper: 'центр України (Подніпров’я)', /** LB-17 en.wiktionary «Southern (incl. Crimea), Eastern Ukraine, and Russia» */ steppe: 'південь і схід (степ)',
   pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
 }
 /** governorate (nominative, as uk.wikipedia names it) → area */
@@ -105,7 +106,7 @@ export const HRINCH_LABELS: DTable = {
     R('Лубен. у.', 'Лубен. у. — Лубенскій у ѣ здъ', 'area', { county: 'Лубенський' }),
     R('Мирг. у.', 'Мирг. у. — Миргородскій у ѣ здъ.', 'area', { county: 'Миргородський' }),
     R('Могил. у.', 'Могил. у. — Могилевскій у ѣ здъ Подольской губерніи.', 'area', { county: 'Могилівський' }),
-    R('Н. Вол. у.', 'Н. Вол. у. — Новградъ-Волынскій у ѣ здъ.', 'area', { area: 'volyn', re: 'Н\\.\\s?Вол(?:ын)?\\.\\s?у\\.' }),
+    R('Н. Вол. у.', 'Н. Вол. у. — Новградъ-Волынскій у ѣ здъ.', 'area', { area: 'volyn', re: '[НH]\\.?\\s?-?\\s?Вол(?:ын)?(?:ск)?\\.\\s?у\\.' }),
     R('Новомоск. у.', 'Новомоск. у. — Новомосковскій у ѣ здъ.', 'area', { county: 'Новомосковський' }),
     R('Ніжин у.', 'Н ѣ жин у. — Н ѣ жинскій у ѣ здъ.', 'area', { county: 'Ніжинський', re: 'Н[іѣ]жин\\.?\\s?у\\.' }),
     R('Одесс. у.', 'Одесс. у. — Одесскій у ѣ здъ.', 'area', { county: 'Одеський' }),
@@ -237,12 +238,16 @@ export const KAIKKI_REGION: DTable = {
     R('Transcarpathian', 'Category:Transcarpathian Ukrainian — Terms or senses in Ukrainian as spoken in Transcarpathia region (Zakarpattia Oblast in Ukraine), and eastern Slovakia. (label Transcarpathian, alias Transcarpathia)', 'area', { area: 'zakarpattia' }),
     R('Slobozhan', 'Category:Slobozhan Ukrainian — Terms or senses in Ukrainian as spoken in Sloboda Ukraine (Sumy, Kharkiv, Luhansk Oblast), and Russia (Belgorod, Voronezh, Rostov Oblast). (label Slobozhan, alias Sloboda)', 'area', { area: 'slobozhanshchyna' }),
     R('Pokuttia–Bukovina', 'Category:Pokuttia–Bukovina Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine. (label Pokuttia–Bukovina, aliases Bukovina, Bukovinian, Pokuttia, Pokuttian, Upper Prutian)', 'area', { area: 'pokuttia' }),
+    // LB-17: three region categories that are in the dump but were not read (category pages fetched 2026-10-30)
+    R('Dniestrian', 'Category:Dniestrian Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine. (label Dniestrian; aliases Galicia, Galician, Opillia, Opillian)', 'area', { area: 'west' }),
+    R('Middle Dnieprian', 'Category:Middle Dnieprian Ukrainian — Terms or senses in Ukrainian as spoken in Central / Dnieper Ukraine. (label Middle Dnieprian)', 'area', { area: 'dnieper' }),
+    R('Steppe', 'Category:Steppe Ukrainian — Terms or senses in Ukrainian as spoken in Southern (incl. Crimea), Eastern Ukraine, and Russia (Rostov Oblast, Krasnodar Krai). (label Steppe)', 'area', { area: 'steppe' }),
   ],
 }
 /** en.wiktionary categories of a sense that carry no tag (Transcarpathian, Slobozhan, Pokuttia–Bukovina senses have an empty tag list) → the label of KAIKKI_REGION that produces the category */
 export const KAIKKI_CATEGORY_TAG: Record<string, string> = {
   'Southwestern Ukrainian': 'Southwestern', 'Southeastern Ukrainian': 'Southeastern', 'Transcarpathian Ukrainian': 'Transcarpathian', 'Slobozhan Ukrainian': 'Slobozhan',
-  'Pokuttia–Bukovina Ukrainian': 'Pokuttia–Bukovina', 'Regional Ukrainian': 'regional',
+  'Pokuttia–Bukovina Ukrainian': 'Pokuttia–Bukovina', 'Regional Ukrainian': 'regional', 'Dniestrian Ukrainian': 'Dniestrian', 'Middle Dnieprian Ukrainian': 'Middle Dnieprian', 'Steppe Ukrainian': 'Steppe',
 }
 /** uk.wiktionary categories of the article (harvest: pipelines/usage-wikt.ts, core/usage.ts WIKT_CATEGORIES). The category NAME is the quote; the area is the one the name states. */
 export const WIKTUK_REGION: DTable = {
@@ -303,9 +308,29 @@ export const countyOf = (adj: string) => COUNTIES.find(c => c[0] === adj)
 /** the county that an unlisted stem («Звен.») names: the unique county whose normalised base starts with the stem (≥ 3 letters), else undefined */
 export function countyByStem(stem: string): (typeof COUNTIES)[number] | undefined {
   const s = NORM(stem.replace(/\.$/, '')); if (s.length < 3) return undefined
-  const hit = COUNTIES.filter(c => countyBase(c[0]).startsWith(s))
+  // LB-17: the stem may keep the county's own «ц»/«з» («Козелец. у.» for Козелецький), which countyBase strips with the ending
+  const hit = COUNTIES.filter(c => countyBase(c[0]).startsWith(s) || NORM(c[0].replace(/(ський|ький)$/, '')).startsWith(s))
   const gov = new Set(hit.map(h => h[1]))
   return hit.length === 1 || (hit.length > 1 && gov.size === 1 && hit.every(h => h[0] === hit[0]![0])) ? hit[0] : undefined
+}
+/**
+ * LB-17: the Russian adjectives that Грінченко's own list of abbreviations prints for a county / governorate («Камен. у. — Каменецкій у ѣ здъ»). The articles cut the same name differently («Каменец. у.»,
+ * «Екатериносл. у.», «Кіев. г.», «Міус. окр.»). Such a stem is read as the listed row ONLY when it is a prefix (≥ 4 letters) of the adjective the list prints for exactly one target and the abbreviation starts like it.
+ */
+const RU_ADJ = /[А-ЯІ][а-яіѣ]{3,}(?:скій|цкій|ской|ская|ній)/g
+const KIND_END: Record<string, string> = { у: ' у.', г: ' г.', окр: ' окр.', обл: ' обл.', об: ' об.' }
+export function listStemRow(stem: string, kind: string): DRow | undefined {
+  const s = NORM(stem); if (s.length < 4 || !KIND_END[kind]) return undefined
+  const hit = new Map<string, DRow>()
+  for (const r of HRINCH_LABELS.rows) {
+    if (!r.abbr.endsWith(KIND_END[kind]!) || !(r.county || r.area || r.place)) continue
+    const head = NORM(r.abbr).slice(0, 3)
+    for (const adj of r.meaning.match(RU_ADJ) ?? []) {
+      const a = NORM(adj)
+      if (a.startsWith(s) && a.slice(0, 3) === head) { hit.set(r.county ?? r.area ?? r.place ?? r.abbr, r); break }
+    }
+  }
+  return hit.size === 1 ? [...hit.values()][0] : undefined
 }
 /** the AC-2 gazetteer groups whose area name matches (empty = the gazetteer does not know the area → no dialect group) */
 export const groupsOfArea = (area: string): GazRow[] => (AREAS[area] ? gazetteerRows(AREAS[area]!) : [])
@@ -365,10 +390,21 @@ export function scanArticle(table: DTable, text: string, maxStart?: number): Art
     }
   }
   if (table.id === HRINCH_LABELS.id) {   // the list's generic rule: «<Stem>. у.» = <Stem>-ський повіт, for the counties the list does not print
-    for (const m of text.matchAll(/(?<![\p{L}])([А-ЯІЇЄҐ][\p{L}']{2,11})\.\s?у\./gu)) {
+    for (const m of text.matchAll(/(?<![\p{L}])([А-ЯІЇЄҐ][\p{L}']{2,13})\.\s?(у|г|окр|обл|об)\./gu)) {
       if (!free(m.index!, m[0].length)) continue
+      const kind = m[2]!
       const printed = rows.some(r => r.county && r.abbr.toLowerCase().startsWith(m[1]!.toLowerCase().slice(0, 4)) && rowRe(r).test(m[0]))
       if (printed) continue
+      // LB-17: a longer or differently cut stem of an abbreviation the list PRINTS («Каменец. у.» for «Камен. у. — Каменецкій у ѣ здъ») is read as that list row
+      const lr = listStemRow(m[1]!, kind)
+      if (lr) {
+        const key = `variant|list|${lr.county ?? lr.area ?? lr.place}|${kind}`; if (seen.has(key)) continue
+        seen.add(key); taken.push([m.index!, m.index! + m[0].length])
+        const row: DRow = { ...lr, abbr: m[0], meaning: `${m[0]} — as «${lr.abbr}» of the list: ${lr.meaning}`, scope: 'place' }
+        out.push({ row, quote: slice(text, m.index!, m[0].length), resolved: resolveRow(row), variant: true })
+        continue
+      }
+      if (kind !== 'у') continue
       const c = countyByStem(m[1]!); if (!c) continue
       const key = `variant|${c[0]}`; if (seen.has(key)) continue
       seen.add(key)

@@ -77,6 +77,9 @@ export const KAIKKI_TAGS: AbbrTable = {
     { abbr: 'Transcarpathian', usage: 'dial', meaning: 'Category:Transcarpathian Ukrainian — Terms or senses in Ukrainian as spoken in Transcarpathia region.' },
     { abbr: 'Slobozhan', usage: 'dial', meaning: 'Category:Slobozhan Ukrainian — Terms or senses in Ukrainian as spoken in Sloboda Ukraine.' },
     { abbr: 'Pokuttia–Bukovina', usage: 'dial', meaning: 'Category:Pokuttia–Bukovina Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine.' },
+    { abbr: 'Dniestrian', usage: 'dial', meaning: 'Category:Dniestrian Ukrainian — Terms or senses in Ukrainian as spoken in Western Ukraine.' },
+    { abbr: 'Middle Dnieprian', usage: 'dial', meaning: 'Category:Middle Dnieprian Ukrainian — Terms or senses in Ukrainian as spoken in Central / Dnieper Ukraine.' },
+    { abbr: 'Steppe', usage: 'dial', meaning: 'Category:Steppe Ukrainian — Terms or senses in Ukrainian as spoken in Southern (incl. Crimea), Eastern Ukraine, and Russia.' },
     { abbr: 'poetic', usage: 'poet', meaning: 'Language, commonly associated with poetry, that is typically chosen to have an artistic or cultural impact on the listener.' },
   ],
 }

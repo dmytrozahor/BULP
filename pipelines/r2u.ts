@@ -139,7 +139,7 @@ export function parseCell(dict: number, rowId: number, html: string): R2uRow | n
   for (; i < nodes.length; i++) {
     const n = nodes[i]!
     if (n.cls === 'num' || n.cls === 'br' || n.cls === 'quote') break
-    if (n.cls === boldCls) head.push(...wordList(n.text.replace(/^\s*[IVX]+\.\s*/, '').split(/[,;]/).filter(x => !/^\s*-/.test(x)).join(',')))
+    if (n.cls === boldCls) head.push(...wordList(n.text.replace(/^\s*[IVXІ]+\.\s*/, '').split(/[,;]|\s+и\s+/).filter(x => !/^\s*-/.test(x)).join(',')))
     else if (n.text.trim() && !/^\s*(сов|несов|в|гл|м|ж|с|мн|пр|нар|v|a|n|praep|adv|подв|одн|многокр)\.?\s*[ав,.]*\s*$/i.test(n.text) && n.cls !== boldCls && head.length) break
   }
   head = [...new Set(head)].slice(0, 6)

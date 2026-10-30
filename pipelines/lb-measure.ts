@@ -54,6 +54,7 @@ export function measure() {
   for (const r of rj<{ lemmas: [string, string, number, string][] }>(`${PUB}/light.json`)?.lemmas ?? []) one(lk(r[0]), 'light', lightFacts(r, wm.meta), true)
   for (const a of rj<{ entries: { id: string; witnesses?: Record<string, number>; dict?: { w?: string } }[] }>(`${PUB}/archaic.json`)?.entries ?? []) one(lk(a.id), 'archaic', archaicFacts(a, wm.meta), true)
   if (CV && existsSync(CV)) for (const f of readdirSync(CV)) for (const [w, e] of Object.entries(rj<Record<string, unknown[]>>(`${CV}/${f}`) ?? {})) { const x = cvFacts(e, wm.meta); one(lk(w), x.attested ? 'cv-attested' : 'cv-dict', x.facts, x.attested) }
+  if (process.env.LB_KNOWN_OUT) writeJsonAtomic(process.env.LB_KNOWN_OUT, JSON.stringify([...seen]))
   const res = { total, attTotal, all, att, grade, few, fewKind, kinds, dictAtt: split, dictKind, fullDict: fullSplit, ...(extra.size ? { extra: { lemmasWithHits: extra.size, ...add } } : {}) }
   writeJsonAtomic(OUT, JSON.stringify(res, null, 1))
   const pc = (n: number, d: number) => `${n} (${d ? ((100 * n) / d).toFixed(1) : '0.0'} %)`

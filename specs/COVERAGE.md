@@ -1017,6 +1017,14 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-16 | tests/lb16.test.ts › LB-16 the class: a dialect word-list hit makes the word dialectal (strict), a collection hit records the place only; the card text names the list |
 | LB-16 | tests/lb16.test.ts › LB-16 scanR2u reads both lists of Грінченко from one article; `only` restricts to the new table; the extra-hits pipeline returns every key |
 | LB-16 | tests/lb16.test.ts › LB-16 the measurement overlay and the spec rows are in place |
+| LB-17 | tests/lb17.test.ts › LB-17 Грінченко, stems of the list › LB-17 a stem cut longer than the list prints is read as the listed county (the list entry is the evidence) |
+| LB-17 | tests/lb17.test.ts › LB-17 Грінченко, stems of the list › LB-17 «НВолын. у.» (no space) is the list row «Н. Вол. у.» |
+| LB-17 | tests/lb17.test.ts › LB-17 Грінченко, stems of the list › LB-17 nothing is read from a short, ambiguous or unlisted stem |
+| LB-17 | tests/lb17.test.ts › LB-17 Грінченко, stems of the list › LB-17 the county stem keeps its own «ц» («Козелец. у.» for Козелецький) |
+| LB-17 | tests/lb17.test.ts › LB-17 Грінченко, stems of the list › LB-17 the variant hit is a normal place-only dictionary hit with the printed spelling and a quote |
+| LB-17 | tests/lb17.test.ts › LB-17 head of the article › LB-17 a Cyrillic homonym number «І.» / «ІІ.» does not hide the headword; «X и Y» gives both |
+| LB-17 | tests/lb17.test.ts › LB-17 en.wiktionary region categories › LB-17 three categories name an area, quote the category page, and the harvest keeps them |
+| LB-17 | tests/lb17.test.ts › LB-17 en.wiktionary region categories › LB-17 the pipeline, spec rows and ledger are in place |
 | LB-13 | tests/lb-all.test.ts › LB-13 build-labels writes every entry (no default skipping), counts the seven classes over all and attested entries, and reports the reason of «невизначено» |
 | MM-26 | tests/fx.test.ts › MM-26 «ніколи не никола.png»: «николы» (Острозька епіграма 1581) is the adverb ніколи, never the name Никола › a lower-case «николы» / «николи» links to ніколи whatever the model lemma / POS says (variant row, MM-2 order); a capitalised «Никола» is not touched |
 | MM-26 | tests/fx.test.ts › MM-26 «ніколи не никола.png»: «николы» (Острозька епіграма 1581) is the adverb ніколи, never the name Никола › the name card: a MODEL (Stanza) PROPN on a lower-case token is no name; a capitalised one is; TOROT gold Ne stays a name in lower case (manuscripts) |
