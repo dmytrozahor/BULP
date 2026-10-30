@@ -265,10 +265,32 @@ export const ARKUSHYN_LABELS: DTable = {
     R('зпол.', 'Словник західнополіських говірок — «диференційного типу: у ньому вміщені слова, відсутні в сучасній українській літературній мові»; записи зроблені у понад півтисячі населених пунктів (Волинь, Рівненщина, Берестейщина, Піншина, південне Підляшшя, Холмщина)', 'area', { area: 'polissia' }),
   ],
 }
-export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS]
+
+/**
+ * LB-16: Грінченко's own «Список источников» (т. 1, 1907; archive.org item slovarukrainskog01hrin, file slovarukrainskog01hrin_djvu.txt, read 2026-10-30; the OCR spellings «Галищи» → «Галичи» are corrected, nothing else).
+ * A citation «Вх. Лем. 425» in an article names a source whose OWN list entry states the locality of its words. Only sources whose entry names ONE region are read (Гол., Гол. Од., Грин., ЕЗ., Мнж. name two or more
+ * and are not read; authors' literary works are not read). «Вх. Лем.» and «Вх. Уг.» are word-lists («Словарець») of a named dialect: they mark the word dialectal; the others are a regional collection and record only
+ * WHERE the word was noted (scope place). The citation must carry a page or a volume + page, so a bare «Вас.» (a person's name) is not read.
+ */
+export const HRINCH_SOURCES: DTable = {
+  id: 'hrinch-sources', dicts: [12, 18], short: 'Грінченко (список джерел)', source: 'HRINCH', list: 'https://archive.org/details/slovarukrainskog01hrin (т. 1, «Список источников»)', attach: 'article',
+  rows: [
+    R('Вх. Лем.', 'Вх. Лем. = «Словарець», приложенный къ книгѣ И. Верхратскаго: «Про говор галицких лемків». Л. 1902.', 'area', { area: 'lemko', re: 'Вх\\.\\s?Лем\\.\\s?\\d' }),
+    R('Вх. Уг.', 'Вх. Уг. = „Словарець“, приложенный къ статьѣ И. Верхратскаго: „Знадоби для знання угорскоруских говорів“. (Записки Наукового Товариства імені Шевченка, т. XLV, 1902).', 'area', { area: 'zakarpattia', re: 'Вх\\.\\s?Уг\\.\\s?\\d' }),
+    R('Вх. Зн.', 'Вх. Зн. = Знадоби до словаря южноруского. Написав Иван Верхратский. Л. 1877. Былъ только первый выпускъ. Слова преимущественно изъ Галичи и немного изъ Буковины и Угор. Руси.', 'area', { area: 'halychyna', scope: 'place', re: 'Вх\\.\\s?Зн\\.\\s?\\d' }),
+    R('Шух.', 'Шух. = Гуцульщина. Написав Проф. Володимир Шухевич. 2 части. Л. 1899,', 'area', { area: 'hutsul', scope: 'place', re: 'Шух\\.\\s?(?:[IІV]+\\.\\s?)?\\d' }),
+    R('Фр. Пр.', 'Фр. Пр. = Галицько-руські народні приповідки. Зібрав, упорядкував і пояснив Д-р Іван Франко. Вип. 1. (А—Вишкріб) [т. X-й „Етнографічного збірника“ Наук. т-ва ім. Шевченка]. Л. 1901.', 'area', { area: 'halychyna', scope: 'place', re: 'Фр\\.\\s?Пр\\.\\s?\\d' }),
+    R('Гн.', 'Гн. = Галицько-руські народні легенди. Зібрав Володимир Гнатюк. Тт. I и II. Л. 1902.', 'area', { area: 'halychyna', scope: 'place', re: 'Гн\\.\\s?(?:[IІV]+\\.\\s?)?\\d' }),
+    R('Вас.', 'Вас. = В. И. Василенко. Этнографическіе матеріалы, собранные по Полтавской губ. Опытъ толковаго словаря народной технической терминологіи по Полтавской губ.', 'area', { area: 'poltavshchyna', scope: 'place', re: '(?:В\\.\\s?)?Вас\\.\\s?\\d' }),
+    R('Мил.', 'Мил. = В. П. Милорадовичъ. Народные обряды и пѣсни Лубенскаго уѣзда, Полтавской губ., записанные въ 1888—1895 г.', 'area', { county: 'Лубенський', scope: 'place', re: 'Мил\\.(?:\\s?(?:М|Св)\\.)?\\s?\\d' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, HRINCH_SOURCES]
 /** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
 export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))
+/** LB-16: every table read from the articles of one r2u dictionary (its list of abbreviations + the tables of other lists of the same dictionary, e.g. Грінченко's list of sources) */
+export const tablesOfDict = (dict: number): DTable[] => [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES].filter(t => t.dicts.includes(dict))
 
 /** an abbreviation of a table, with the area it names resolved */
 export interface Resolved { area?: string; places: string[]; gov?: { name: string; title: string; quote: string }; group: GazRow[] }

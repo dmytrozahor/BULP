@@ -21,7 +21,7 @@ import { seBucket } from '../core/parts.ts'
 import { unpackCore } from '../core/pack.ts'
 import { assembleEntry, CLASS_KEYS, CLASS_KEY_UK, CLASS_UK, SUM_NONRESTRICTIVE, SUM_NORM_UK, dialectOf, classKeyOf, gradeOf, GRADE_UK, summarizeWitnesses, witFromRegionRows, TH, type LbEntry, type RegionCount, type Thresholds, type WitSummary } from '../core/labels.ts'
 import { cvFacts, lightFacts, archaicFacts, witMeta } from './lb-facts.ts'
-import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tableOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
+import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tablesOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
 import { nodesOf, plainOf, parseCell, r2uDictById, rowUrl } from './r2u.ts'
 import { tokenRaw } from './ingest-r2u.ts'
 import { swapDir, writeJsonAtomic } from './robust.ts'
@@ -32,7 +32,7 @@ const readJson = <T>(p: string): T | undefined => { try { return existsSync(p) ?
 export interface DictScan { hits: Map<string, DictHit[]>; per: Record<string, { articles: number; labelled: number; hits: number; lemmas: number; byAbbr: Record<string, number> }> }
 
 /** LB-2: read the r2u dump once; every label of a table → hits keyed by lk(target word). `known` filters to entries that have a card. */
-export function scanR2u(dir: string, known: (k: string) => boolean): DictScan {
+export function scanR2u(dir: string, known: (k: string) => boolean, only?: ReadonlySet<string>): DictScan {
   const hits = new Map<string, DictHit[]>(), per: DictScan['per'] = {}, seen = new Set<string>()
   const idx = resolve(dir, 'index.jsonl'); if (!existsSync(idx)) return { hits, per }
   const targets = new Map<string, Set<string>>()
@@ -43,26 +43,28 @@ export function scanR2u(dir: string, known: (k: string) => boolean): DictScan {
     let html: string; try { html = gunzipSync(readFileSync(resolve(dir, 'pages', l.file))).toString('utf8') } catch { continue }
     for (const m of html.matchAll(/<td id="(\d+)_(\d+)" class="result_row[a-z_]*">([\s\S]*?)<\/td>/g)) {
       const dict = +m[1]!, rowId = +m[2]!, id = `${dict}_${rowId}`
-      const table = tableOfDict(dict), d = r2uDictById[dict]
-      if (!table || !d || seen.has(id)) continue
+      const tables = tablesOfDict(dict).filter(t => !only || only.has(t.id)), d = r2uDictById[dict]
+      if (!tables.length || !d || seen.has(id)) continue
       seen.add(id)
-      const p = (per[table.short] ??= { articles: 0, labelled: 0, hits: 0, lemmas: 0, byAbbr: {} }); p.articles++
       const nodes = nodesOf(m[3]!), text = plainOf(nodes), url = rowUrl(l.q, l.scope, { dict, rowId })
-      const found = table.attach === 'article' ? scanArticle(table, text) : scanBracketed(table, text)
-      if (!found.length) continue
-      p.labelled++
-      let heads: string[] = []
-      if (table.attach === 'article') heads = parseCell(dict, rowId, m[3]!)?.head ?? []
-      for (const h of found) {
-        const words = table.attach === 'article' ? heads : [h.word!]
-        const wire = wireHit(table, h, url)
-        for (const w of words) {
-          const cands = fold(tokenRaw(w), d.orth).map(c => lk(c.form)), ks = [...new Set(cands)].filter(known)
-          for (const k of ks.length ? ks : []) {
-            const list = hits.get(k) ?? hits.set(k, []).get(k)!
-            if (list.some(x => x.t === wire.t && x.a === wire.a && x.u === wire.u)) continue
-            list.push(wire); p.hits++; p.byAbbr[h.row.abbr] = (p.byAbbr[h.row.abbr] ?? 0) + 1
-            ;(targets.get(table.short) ?? targets.set(table.short, new Set()).get(table.short)!).add(k)
+      for (const table of tables) {   // LB-16: one dictionary can have several quoted lists (Грінченко: abbreviations + sources)
+        const p = (per[table.short] ??= { articles: 0, labelled: 0, hits: 0, lemmas: 0, byAbbr: {} }); p.articles++
+        const found = table.attach === 'article' ? scanArticle(table, text) : scanBracketed(table, text)
+        if (!found.length) continue
+        p.labelled++
+        let heads: string[] = []
+        if (table.attach === 'article') heads = parseCell(dict, rowId, m[3]!)?.head ?? []
+        for (const h of found) {
+          const words = table.attach === 'article' ? heads : [h.word!]
+          const wire = wireHit(table, h, url)
+          for (const w of words) {
+            const cands = fold(tokenRaw(w), d.orth).map(c => lk(c.form)), ks = [...new Set(cands)].filter(known)
+            for (const k of ks.length ? ks : []) {
+              const list = hits.get(k) ?? hits.set(k, []).get(k)!
+              if (list.some(x => x.t === wire.t && x.a === wire.a && x.u === wire.u)) continue
+              list.push(wire); p.hits++; p.byAbbr[h.row.abbr] = (p.byAbbr[h.row.abbr] ?? 0) + 1
+              ;(targets.get(table.short) ?? targets.set(table.short, new Set()).get(table.short)!).add(k)
+            }
           }
         }
       }
