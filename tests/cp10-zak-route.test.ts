@@ -17,6 +17,7 @@ describe('CP-10.4 zakTarget', () => {
   it('live data: кÿнь → кінь and конь (a form of кінь) are one lemma; вÿс → віз wins as the і-reading although вез and воз are also known', () => {
     expect(zakTarget('кÿнь', L({ кінь: ['кінь'], конь: ['кінь'] }), ready)).toEqual({ state: 'one', to: 'кінь' })
     expect(zakTarget('вÿс', L({ віз: ['віз'], вез: ['ВЕЗ'], воз: ['віз', 'воз'] }), ready)).toEqual({ state: 'one', to: 'віз' })
+    expect(zakTarget('вÿс', L({ віз: ['віз', 'везти'], віс: ['ВІС'], вез: ['ВЕЗ', 'везти'], воз: ['воз'] }), ready)).toEqual({ state: 'one', to: 'віз' })   // live: віз is also a form of везти, but it is a headword itself
     expect(zakTarget('вÿс', L({ віз: ['віз'], віс: ['ВІС'], вез: ['ВЕЗ'] }), ready)).toEqual({ state: 'one', to: 'віз' })   // live: віс is a token lemma, the voiced і-spelling decides
     expect(zakTarget('вÿс', L({ віс: ['віс', 'віс2'], вез: ['ВЕЗ'] }), ready)).toEqual({ state: 'none' })   // the first confirmed і-reading is itself ambiguous
   })

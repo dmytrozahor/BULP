@@ -22,7 +22,9 @@ export function zakTarget(form: string, lemmasOf: (k: string) => string[], loade
   const cands = [...new Set(ZAK_FOLDS.map(f => key(f.apply(k))).filter(c => c && c !== k))]
   if (cands.some(c => !loaded(c))) return { state: 'loading' }
   const pairs = featurePairs(k, c => lemmasOf(c).length > 0).filter(p => p.rule.startsWith('ORTH-ZAK') && p.known)
-  const lemmas = (ps: typeof pairs) => new Set(ps.flatMap(p => lemmasOf(p.to)))
+  /** a candidate that is itself a headword stands for that headword alone (віз is also a past form of везти, but вÿс → віз is the noun) */
+  const lem = (c: string) => { const l = lemmasOf(c); return l.includes(c) ? [c] : l }
+  const lemmas = (ps: typeof pairs) => new Set(ps.flatMap(p => lem(p.to)))
   const pick = (ps: typeof pairs): ZakTarget => { const l = lemmas(ps), first = [...ps].sort((a, b) => Number(I_TIER.has(b.rule)) - Number(I_TIER.has(a.rule)))[0]; return l.size === 1 && first ? { state: 'one', to: first.to } : { state: 'none' } }
   const all = pick(pairs)
   if (all.state === 'one') return all
