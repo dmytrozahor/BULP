@@ -15,10 +15,9 @@ async function withPage<T>(browser: Browser, fn: (p: Page) => Promise<T>): Promi
   await page.addInitScript('window.__name = (f) => f')
   try { return await fn(page) } finally { await ctx.close() }
 }
-const openAll = async (page: Page) => {
-  for (const t of await page.$$('[role="tab"]')) { await t.click().catch(() => {}); await page.waitForTimeout(300) }
-  for (const b of await page.$$('button.ptoggle[aria-expanded="false"]')) await b.click().catch(() => {})
-  await page.waitForTimeout(1200)
+const openAll = async (page: Page) => {   // every tab, and in each tab every collapsed panel; short click timeouts (a panel of another tab is not visible and would wait 30 s)
+  const expand = async () => { for (const b of await page.$$('button.ptoggle[aria-expanded="false"]')) await b.click({ timeout: 1500 }).catch(() => {}) }
+  for (const t of await page.$$('[role="tab"]')) { await t.click({ timeout: 3000 }).catch(() => {}); await page.waitForTimeout(400); await expand(); await page.waitForTimeout(200) }
 }
 const squash = (s: string) => s.replace(/\s+/g, ' ').trim()
 
@@ -34,7 +33,7 @@ export async function personChecks(browser: Browser, base: string): Promise<Chec
     const h1 = squash((await page.textContent('h1').catch(() => '')) ?? '')
     const portrait = await page.$('[data-testid="portrait"]'), none = await page.$('[data-testid="no-portrait"]')
     if (portrait) {
-      const cap = squash(await portrait.$eval('figcaption', e => e.textContent ?? '').catch(() => '')), w = await portrait.$eval('img', e => (e as HTMLImageElement).naturalWidth).catch(() => 0)
+      const cap = squash(await portrait.$eval('figcaption', e => e.textContent ?? '').catch(() => '')), w = await (async () => { for (let i = 0; i < 16; i++) { const n = await portrait.$eval('img', e => (e as HTMLImageElement).naturalWidth).catch(() => 0); if (n > 0) return n; await page.waitForTimeout(500) } return 0 })()
       out.push({ id: 'person.portrait', name: 'Шевченко: portrait loads and has a licence line', ok: w > 0 && /Public domain|CC[ -]|PD/i.test(cap) && /Commons/.test(cap), evidence: `img naturalWidth ${w}; figcaption «${cap.slice(0, 200)}»` })
     } else {
       const t = none ? squash((await none.textContent()) ?? '') : ''
@@ -52,26 +51,26 @@ export async function personChecks(browser: Browser, base: string): Promise<Chec
     const j = JSON.parse(readFileSync(`public/data/persons/mentions/${f}`, 'utf8')) as Record<string, { p: string; loc: string; f: string; why: string }[]>
     for (const [w, l] of Object.entries(j)) for (const m of l) if (m.p === sh.id && m.why === 'повне ім’я') recs.push([w, m])
   }
-  const cands: string[] = [], deadline = Date.now() + 240000
+  const cands: string[] = [], collectUntil = Date.now() + 60000
   for (const [w, m] of recs) {
-    if (cands.length >= 12 || Date.now() > deadline) break
+    if (cands.length >= 14 || Date.now() > collectUntil) break
     try {
       const r = await fetch(`${ptr.base}/data/${ptr.buildId}/texts/${encodeURIComponent(w)}.json`); if (!r.ok) continue
       const toks = (await r.json()).tokens as string[][], i = toks.findIndex(t => t[0] === m.f.split(' ')[0] && t[1] === m.loc); if (i < 0) continue
       for (const t of [...toks.slice(Math.max(0, i - 5), i), ...toks.slice(i + 2, i + 7)]) { const x = (t[0] ?? '').toLowerCase(); if (lemmas.has(x) && x.length > 3 && !cands.includes(x)) cands.push(x) }
     } catch { /* next witness */ }
   }
-  const tried: string[] = []; let found: string | undefined
-  await withPage(browser, async page => {
-    for (const lemma of cands) {
-      if (Date.now() > deadline + 120000) break
-      await page.goto(`${base}#/w/${encodeURIComponent(lemma)}`, { waitUntil: 'domcontentloaded' }); await page.waitForSelector('h1', { timeout: 20000 }).catch(() => {}); await page.waitForTimeout(1500); await openAll(page)
+  const tried: string[] = [], deadline = Date.now() + 240000; let found: string | undefined
+  for (const lemma of cands) {
+    if (Date.now() > deadline || found) break
+    await Promise.race([new Promise<void>((_, rej) => setTimeout(() => rej(new Error('timeout 45 s')), 45000)), withPage(browser, async page => {   // a fresh context per card and a 45 s cap: one heavy card must not end the search
+      await page.goto(`${base}#/f/${encodeURIComponent(lemma)}`, { waitUntil: 'domcontentloaded' }); await page.waitForSelector('h1', { timeout: 20000 }).catch(() => {}); await page.waitForTimeout(1500); await openAll(page)
       const links = await page.$$eval('.pmention', es => es.map(e => ({ t: e.textContent ?? '', h: e.getAttribute('href') ?? '', title: e.getAttribute('title') ?? '', inKwic: !!e.closest('.kwic,[id$="-kw"]') })))
       tried.push(`${lemma}: ${links.length}`)
       const hit = links.find(l => l.inKwic && /#\/person\//.test(l.h) && l.title)
-      if (hit) { found = `/w/${lemma}: «${hit.t}» → ${decode(hit.h)}; title «${hit.title.slice(0, 120)}»`; break }
-    }
-  }).catch(e => tried.push('error ' + String(e).slice(0, 80)))
+      if (hit) found = `/f/${lemma}: «${hit.t}» → ${decode(hit.h)}; title «${hit.title.slice(0, 120)}»`
+    })]).catch(e => tried.push(`${lemma}: ${String(e).slice(0, 50)}`))
+  }
   out.push({ id: 'person.mention', name: 'a KWIC of a card shows a dotted person-mention link to /person/<id>', ok: !!found, evidence: found ?? `${recs.length} full-name mentions in the sidecar; none of ${cands.length} neighbour-word cards showed a link in its KWIC (${tried.join('; ')})` })
   return out
 }
