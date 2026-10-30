@@ -10,7 +10,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
 import { key } from '../../core/text.ts'
 import { ixCards, ixHitMap, ixLoaded } from '../lib/parts.ts'
-import { knownKeyOf } from '../lib/annotate.ts'
+import { hitsOf } from '../lib/analyze.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
 import { zakTarget } from '../lib/zakRoute.ts'
 import ZakNote from '../components/ZakNote.vue'
@@ -104,7 +104,7 @@ const witPoints = computed<TPoint[]>(() => (stats.value?.witnesses ?? []).flatMa
 }))
 const chainDates = computed(() => fc.value ? { [fc.value.raw]: fmtDate(fc.value.date) } : {})
 /** SPEC 63 CP-10.4: a Transcarpathian ÿ / ô spelling (кÿнь, вÿс) no card owns resolves through the MM-41 fold candidates of search; exactly one confirmed standard spelling = redirect to its card with the note */
-const zak = computed(() => (!loaded.value || resolving.value || pick.value || derivedOnly.value ? { state: 'none' as const } : zakTarget(props.form, knownKeyOf(annData.value), ixLoaded)))
+const zak = computed(() => (!loaded.value || resolving.value || pick.value || derivedOnly.value ? { state: 'none' as const } : zakTarget(props.form, k => [...new Set([...(searchIdx.value.map.get(k) ?? []).map(h => h.lemma), ...hitsOf(annData.value, k).map(h => h.lemma), ...(ixCards.get(k) ?? []).map(c => `${c.kind}:${c.id}`)])], ixLoaded)))
 watch(zak, z => {
   if (z.state !== 'one') return
   const l = analyzeLink(z.to, { lemmas: byLemma.value, hits: searchIdx.value.map, cards: ixCards })
