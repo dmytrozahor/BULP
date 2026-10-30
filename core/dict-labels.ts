@@ -12,7 +12,7 @@
  * A place named by the dictionary resolves to a historical area (AREAS) and, through the AC-2 gazetteer (uk.wikipedia, quoted), to a dialect group where the gazetteer names that area.
  * Ніковський and Голоскевич print no regional abbreviations that their own lists define; Ум./Ув. of Грінченко mark the DERIVED forms listed in the article (not the headword) and are not read as labels.
  */
-import { COUNTIES } from './dict-counties.ts'
+import { COUNTIES, COUNTY_RU, GOV_RU } from './dict-counties.ts'
 import { gazetteerRows, type GazRow } from './autolabel.ts'
 
 /** historical / ethnographic areas the dictionaries name. `uk` is shown on the card; the dialect group, if any, comes from the AC-2 gazetteer by that name. */
@@ -300,7 +300,7 @@ export const tablesOfDict = (dict: number): DTable[] => [...DICT_LABEL_TABLES, .
 /** an abbreviation of a table, with the area it names resolved */
 export interface Resolved { area?: string; places: string[]; gov?: { name: string; title: string; quote: string }; group: GazRow[] }
 
-const NORM = (s: string) => s.normalize('NFC').toLowerCase().replace(/[ьъ'’ʼ`́-]/g, '').replace(/ё/g, 'е').replace(/[иіїѣеє]/g, 'і').replace(/ґ/g, 'г')
+const NORM = (s: string) => s.normalize('NFC').toLowerCase().replace(/[ьъ'’ʼ`́-]/g, '').replace(/ё/g, 'е').replace(/[иіїѣеєы]/g, 'і').replace(/ґ/g, 'г')
 const countyBase = (adj: string) => NORM(adj.replace(/(ський|цький|зький)$/, ''))
 
 /** the county row for an adjective (exact) */
@@ -309,7 +309,12 @@ export const countyOf = (adj: string) => COUNTIES.find(c => c[0] === adj)
 export function countyByStem(stem: string): (typeof COUNTIES)[number] | undefined {
   const s = NORM(stem.replace(/\.$/, '')); if (s.length < 3) return undefined
   // LB-17: the stem may keep the county's own «ц»/«з» («Козелец. у.» for Козелецький), which countyBase strips with the ending
-  const hit = COUNTIES.filter(c => countyBase(c[0]).startsWith(s) || NORM(c[0].replace(/(ський|ький)$/, '')).startsWith(s))
+  const s2 = s.replace(/ск$/, '')   // «Уманск. у.» keeps the Russian «-ск»
+  const hit = COUNTIES.filter(c => countyBase(c[0]).startsWith(s) || NORM(c[0].replace(/(ський|ький)$/, '')).startsWith(s) || (s2.length >= 4 && s2 !== s && countyBase(c[0]) === s2))
+  if (!hit.length) {   // LB-18: the Russian spelling of the county name (COUNTY_RU)
+    const ru = COUNTY_RU.filter(r => NORM(r[0].replace(/ский$/, '')).startsWith(s) || NORM(r[0]).startsWith(s)), u = ru.length === 1 ? countyOf(ru[0]![1]) : undefined
+    if (u) return u
+  }
   const gov = new Set(hit.map(h => h[1]))
   return hit.length === 1 || (hit.length > 1 && gov.size === 1 && hit.every(h => h[0] === hit[0]![0])) ? hit[0] : undefined
 }
@@ -390,9 +395,9 @@ export function scanArticle(table: DTable, text: string, maxStart?: number): Art
     }
   }
   if (table.id === HRINCH_LABELS.id) {   // the list's generic rule: «<Stem>. у.» = <Stem>-ський повіт, for the counties the list does not print
-    for (const m of text.matchAll(/(?<![\p{L}])([А-ЯІЇЄҐ][\p{L}']{2,13})\.\s?(у|г|окр|обл|об)\./gu)) {
+    for (const m of text.matchAll(/(?<![\p{L}])([А-ЯІЇЄҐ][\p{L}']{2,13})\.\s?(у|г|губ|окр|обл|об)\./gu)) {
       if (!free(m.index!, m[0].length)) continue
-      const kind = m[2]!
+      const kind = m[2] === 'губ' ? 'г' : m[2]!
       const printed = rows.some(r => r.county && r.abbr.toLowerCase().startsWith(m[1]!.toLowerCase().slice(0, 4)) && rowRe(r).test(m[0]))
       if (printed) continue
       // LB-17: a longer or differently cut stem of an abbreviation the list PRINTS («Каменец. у.» for «Камен. у. — Каменецкій у ѣ здъ») is read as that list row
@@ -401,6 +406,15 @@ export function scanArticle(table: DTable, text: string, maxStart?: number): Art
         const key = `variant|list|${lr.county ?? lr.area ?? lr.place}|${kind}`; if (seen.has(key)) continue
         seen.add(key); taken.push([m.index!, m.index! + m[0].length])
         const row: DRow = { ...lr, abbr: m[0], meaning: `${m[0]} — as «${lr.abbr}» of the list: ${lr.meaning}`, scope: 'place' }
+        out.push({ row, quote: slice(text, m.index!, m[0].length), resolved: resolveRow(row), variant: true })
+        continue
+      }
+      if (kind === 'г') {   // LB-18: a governorate the list does not print (Волынская)
+        const g = GOV_RU.filter(x => NORM(x[0]).startsWith(NORM(m[1]!)) && NORM(m[1]!).length >= 4)
+        if (g.length !== 1) continue
+        const key = `variant|gov|${g[0]![1]}`; if (seen.has(key)) continue
+        seen.add(key); taken.push([m.index!, m.index! + m[0].length])
+        const row: DRow = R(m[0], `${m[0]} — governorate (${g[0]![2]}): ${g[0]![3]}`, 'area', { area: g[0]![1], scope: 'place' })
         out.push({ row, quote: slice(text, m.index!, m[0].length), resolved: resolveRow(row), variant: true })
         continue
       }

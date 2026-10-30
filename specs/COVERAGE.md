@@ -1025,6 +1025,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | LB-17 | tests/lb17.test.ts › LB-17 head of the article › LB-17 a Cyrillic homonym number «І.» / «ІІ.» does not hide the headword; «X и Y» gives both |
 | LB-17 | tests/lb17.test.ts › LB-17 en.wiktionary region categories › LB-17 three categories name an area, quote the category page, and the harvest keeps them |
 | LB-17 | tests/lb17.test.ts › LB-17 en.wiktionary region categories › LB-17 the pipeline, spec rows and ledger are in place |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 every county has a non-empty quote that names its governorate (Ukrainian or Russian form) |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 «Полт. у.», «Ковел. у.», «Острожск. у.», «Винниц. у.», «Старод. у.» resolve to a county and its governorate |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 the Russian spelling of the county name maps through COUNTY_RU: Волч., Верхнеднѣпр., Александров. |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 «Волын. г.» is the governorate Волинь with the ru.wikipedia sentence; «губ.» reads as «г.» |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 nothing is read from an author siglum, a short stem or a place outside the Ukrainian governorates |
+| LB-18 | tests/lb18.test.ts › LB-18 missing counties › LB-18 ledger and analysis are in place |
 | LB-13 | tests/lb-all.test.ts › LB-13 build-labels writes every entry (no default skipping), counts the seven classes over all and attested entries, and reports the reason of «невизначено» |
 | MM-26 | tests/fx.test.ts › MM-26 «ніколи не никола.png»: «николы» (Острозька епіграма 1581) is the adverb ніколи, never the name Никола › a lower-case «николы» / «николи» links to ніколи whatever the model lemma / POS says (variant row, MM-2 order); a capitalised «Никола» is not touched |
 | MM-26 | tests/fx.test.ts › MM-26 «ніколи не никола.png»: «николы» (Острозька епіграма 1581) is the adverb ніколи, never the name Никола › the name card: a MODEL (Stanza) PROPN on a lower-case token is no name; a capitalised one is; TOROT gold Ne stays a name in lower case (manuscripts) |
