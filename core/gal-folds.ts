@@ -53,6 +53,9 @@ export const splitHyphenParticle = (w: string): { host: string; particle: string
   const s = HYPH_SCHO.exec(l), f = s && familyMember(s[1]!)
   return s && f && f.family.tails && !f.member.peer ? { host: s[1]!, particle: s[2]! } : undefined
 }
+/** MM-44: an attached OBJECT clitic (pronoun «-го» = його) takes a verb (or a particle) as its host; a noun reading of the host (видів = gen. pl. of вид) must not win. «-ж, -би, -то …» are particles of any host and are unconstrained */
+export const OBJECT_CLITICS: ReadonlySet<string> = new Set(['го'])
+export const hostTagOk = (particle: string, tags: string): boolean => !OBJECT_CLITICS.has(particle) || /^(verb|part|advp)/.test(tags)
 export const PART_HYPH_FOLD: Fold = {
   id: 'ORTH-PART-HYPH', era: [], branch: true,
   cite: Q('SMALST', SS92, 'Пишемо завсїди окремо: би, же, но, ся, то, пр.: я робив би; брат же відповів; ходи но сюда; … Противно пишемо разом слова зложені з: -б, -будь, -небудь, -де, -ж, -крат, -сь, пр. ділалаб, хвалилиб, колиб; хтож, щож',

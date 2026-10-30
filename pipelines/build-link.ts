@@ -18,7 +18,7 @@ import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 import type { AltLink } from '../core/vesum-alt.ts'
-import { PART_HYPH_FOLD, splitHyphenParticle } from '../core/gal-folds.ts'
+import { PART_HYPH_FOLD, splitHyphenParticle, hostTagOk } from '../core/gal-folds.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
@@ -167,7 +167,9 @@ export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[
   if (!sp) return undefined
   const h = linkOptions({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)
   const add = (c: Candidate): Candidate => ({ ...c, trace: [PART_HYPH_FOLD.id, ...c.trace], branches: c.branches + 1 })
-  return h ? { ...h, opts: h.opts.map(o => ({ ...o, cand: add(o.cand), own: add(o.own) })) } : undefined
+  // MM-44: «видів-го» — a host with an attached object clitic is a verb: the noun вид (gen. pl. видів) is dropped; no verb reading → the token stays unlinked
+  const ho = h && h.opts.filter(o => hostTagOk(sp.particle, o.hit.tags))
+  return h && ho && ho.length ? { ...h, opts: ho.map(o => ({ ...o, cand: add(o.cand), own: add(o.own) })) } : undefined
 }
 function linkOptionsPrep(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const k1 = key(t.raw)

@@ -20,7 +20,7 @@ import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 import { fold } from '../../core/orthography.ts'
 import { foldById } from '../../core/orthography.ts'
-import { PART_HYPH_FOLD, splitHyphenParticle, withGal } from '../../core/gal-folds.ts'
+import { PART_HYPH_FOLD, splitHyphenParticle, withGal, hostTagOk, OBJECT_CLITICS } from '../../core/gal-folds.ts'
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
 import type { RuClass, RuLookups } from '../../core/ru-contact.ts'
 import { featurePairs, variantHit, wordRules, type FeaturePair, type VariantHit } from '../../core/word-rules.ts'
@@ -78,13 +78,21 @@ function foldSteps(start: string, trace: string[]): TraceStep[] {
 }
 function galLink(k: string, data: AnnotateData) {
   const sp = splitHyphenParticle(k)
-  const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...withGal(fold(k, 'желехівка'), k)]
+  // MM-44: the host of an attached object clitic («видів-го») must be a verb: only the lemmas of its VESUM verb readings are candidates (вид, gen. pl. видів, never)
+  const verbLemmas = sp && OBJECT_CLITICS.has(sp.particle) ? new Set(hitsOf(data, sp.host).filter(h => hostTagOk(sp.particle, h.tags)).map(h => h.lemma)) : undefined
+  const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...(verbLemmas ? [] : withGal(fold(k, 'желехівка'), k))]
   for (const c of cands) {
     if (c.form === k) continue
-    const h = (data.search.map.get(key(c.form)) ?? [])[0], card = h && data.cards.get(h.lemma)
+    const hs = data.search.map.get(key(c.form)) ?? [], h = verbLemmas ? hs.find(x => verbLemmas.has(x.lemma)) : hs[0], card = h && data.cards.get(h.lemma)
     if (h && card) return { c, via: h.via, card }
   }
   return undefined
+}
+/** MM-44: the host of an attached object clitic has no verb reading: not linked, marked «неоднозначно» */
+const clitHostHint = (k: string, data: AnnotateData) => {
+  const sp = splitHyphenParticle(k)
+  return sp && OBJECT_CLITICS.has(sp.particle) && !hitsOf(data, sp.host).some(h => hostTagOk(sp.particle, h.tags))
+    ? [{ rule: 'OBJ-CLITIC-HOST', label: `неоднозначно: «${sp.host}-${sp.particle}» — при енклітиці-додатку «${sp.particle}» основа має бути дієсловом, дієслівного читання «${sp.host}» немає; іменникове читання не береться` }] : []
 }
 
 /** the lexicon lookup of the shared rule functions: a card form / paradigm form, or a VESUM / LT index entry */
@@ -156,7 +164,7 @@ export function annotate(text: string, data: AnnotateData, year?: number, wctx: 
     }
     const ruClass = data.ru && !a.known ? wordRules(t.raw, { known: knownKey, ru: data.ru }, { year }).ruClass : undefined   // MM-25 / MM-36: the shared rule function
     const contact = contactCorr(t.raw, f => hitsOf(data, f))   // MM-9: the SAME rule as MOR-ICHESK (core/rules.ts), so chip and counterpart agree
-    out.push({ ...base, ...extra, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: a.hints, vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}), ...(ruClass ? { ruClass } : {}) })
+    out.push({ ...base, ...extra, status: a.known ? 'lexindex' : has ? 'rules' : 'unknown', claims: a.claims, hints: [...a.hints, ...clitHostHint(k, data)], vesum: a.vesum, lt: a.lt, mark: strongest(a.claims), ...(contact ? { contact } : {}), ...(ruClass ? { ruClass } : {}) })
   }
   return out
 }

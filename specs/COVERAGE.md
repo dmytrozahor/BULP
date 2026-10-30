@@ -1052,6 +1052,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | MM-42 | tests/mm42.test.ts › MM-42 the annotator (token level) and the він card |
 | MM-42 | tests/mm42.test.ts › MM-42 the build variant row го → він (orth желехівка only, yields to VESUM) |
 | MM-43 | tests/mm42.test.ts › MM-43 the speaker’s reductions |
+| MM-44 | tests/mm44.test.ts › MM-44 annotator: an object clitic selects a verb host |
+| MM-44 | tests/mm44.test.ts › MM-44 build linker: the hyphenated pattern is decidable without context |
 | CP-9 | tests/thin-par.test.ts › CP-9 every VESUM lemma without a full card gets its paradigm, tags verbatim, in the shard of lk(lemma) |
 | CP-9 | tests/thin-par.test.ts › CP-9 homonyms of one key stay apart (мати n / v), an indeclinable head is a paradigm of its head line, a lemma VESUM lacks has no entry |
 | CP-9 | tests/thin-par.test.ts › CP-9 a lemma that has a full card is skipped (its paradigm is in the lexicon); forms share one tag table per shard |
