@@ -12,15 +12,17 @@
 import { dialectRule } from './form-class.ts'
 import { DIALECTS } from './rules.ts'
 import { stripStress, unifyApostrophe } from './text.ts'
-import type { Evidence } from './evidence.ts'
+import { Q, type Evidence } from './evidence.ts'
 import type { Origin, Origins } from './origin.ts'
 import { NORTH_RULES } from './respell-north.ts'
 import { SW_RULES, STANDARD_RULES } from './respell-sw.ts'
 
-export type Need = 'verb' | 'neuter' | 'stress' | 'origin' | 'origin-word'
+export type Need = 'verb' | 'verb3' | 'neuter' | 'stress' | 'origin' | 'origin-word'
 export interface RespellCtx {
   /** part of speech / gender of the word (from the card's VESUM tags); unknown = undefined */
   pos?: 'verb' | 'noun' | 'adj' | 'other'; gender?: 'm' | 'f' | 'n'
+  /** MM-48..51: the form is a FINITE 3rd person of the present / future (VESUM tag verb:…:pres|futr:…:3), not an infinitive: the hard -т of POD / NDN fires only on it */
+  fin3?: boolean
   /** indices (into the unstressed word) of stressed vowels */
   positions?: number[]
   /** origin of each letter of the modern form (core/origin.ts originsFor; undefined = not established): the Polissian reflexes of і need it (SPEC 63 OV-13) */
@@ -83,6 +85,21 @@ export const SPELL_RULES: SpellRule[] = [
   { id: 'PKB-VI-PREFIX', codes: { HUT: 'PKB-VI-PREFIX', PKB: 'PKB-VI-PREFIX' }, needs: 'verb', example: ['витратити', 'вітратити'],
     edits: all(/^в(и)(?=[бвгґдзжкпстхцчш])/, () => 'і', 1) },
   { id: 'SFX-ISHCH-CMP', codes: { POD: 'SFX-ISHCH-CMP', PKB: 'SFX-ISHCH-CMP' }, example: ['добріший', 'добрішчий'], edits: all(/і(ш)ий$/, () => 'шч', 1) },
+  // MM-48: я after a soft consonant > є / е (тяжко → тєжко, дякувати → дєкувати). NDN um173 «перехід а … після м’яких … приголосних в е, і, и (… д’éкувати)», PKB um175 «[а] після м’яких приголосних переходить в [е], [и], [і] — у ненаголошеній і наголошеній позиціях»;
+  // the letter is є (the sound [’е]). Not in -яти / -ять (the infinitive and the 3pl keep я: -єти would read as the і-class stem, -єть is the 3rd person) nor word-finally (the neuter -ня has SW-NO-LENGTH). POD has the cited opposite (POD-A-KEPT), WPL its own stressed rule.
+  { id: 'GAL-A-SOFT', codes: { NDN: 'SW-A-SOFT', PKB: 'SW-A-SOFT' }, example: ['тяжко', 'тєжко'],
+    edits: w => [...w.matchAll(/([дтнлзсцрчжшщ])(я)(?=[бвгґджзклмнпрстфхцчшщ])/g)].filter(m => !/^я(ти|тися|тись|ть|ться)$/.test(w.slice(m.index! + 1))).map(m => [m.index! + 1, m.index! + 2, 'є'] as Edit) },
+  // SYAN um174: only the STRESSED а (в центр. говірках у наголошеній позиції переходить в [’е]: ч’ес, т’éжко)
+  { id: 'SYAN-A-SOFT', codes: { SYAN: 'SW-A-SOFT' }, needs: 'stress', example: ['тяжко', 'тєжко'],
+    edits: (w, st) => [...w.matchAll(/([дтнлзсцрчжшщ])(я)(?=[бвгґджзклмнпрстфхцчшщ])/g)].filter(m => st.has(m.index! + 1) && !/^я(ти|тися|тись|ть|ться)$/.test(w.slice(m.index! + 1))).map(m => [m.index! + 1, m.index! + 2, 'є'] as Edit) },
+  // MM-49: the hard -т of the 3rd person singular / plural of the present: POD um180 «Твердість приголосного т у дієсловах 3-ї ос. одн. і мн. теп. ч. … (рóбит, нóсит, рóбл’ат, нóс’ат)», NDN um173 «3-ї ос. одн. і мн. теп. ч. з кінцевим т (хóдит — хóд’ат)».
+  // Only on a finite form (tag), never on an infinitive: ходити stays, ходить → ходит, ходять → ходят, мають → мают.
+  { id: 'GAL-3T-HARD', codes: { POD: '3SG-HARD-T', NDN: '3SG-HARD-T' }, needs: 'verb3', example: ['ходить', 'ходит'],
+    own: {
+      POD: Q('ENC', 'http://litopys.org.ua/ukrmova/um180.htm', 'твердість приголосного т у дієсловах 3-ї ос. одн. і мн. теп. ч. і 2-ї ос. мн. нак. сп. (рóбит, нóсит, рóбл’ат, нóс’ат, роб’ іт, нос’ іт)', 'ЕУМ «Подільський говір»; the page prints the accented vowels as images, the stress letters are restored'),
+      NDN: Q('ENC', 'http://litopys.org.ua/ukrmova/um173.htm', 'формі … 3-ї ос. одн. і мн. теп. ч. з кінцевим т (хóдит — хóд’ат)', 'ЕУМ «Наддністрянський говір»; the page prints the accented vowels as images, the stress letters are restored'),
+    },
+    edits: w => (/[аиіуюяє]ть$/.test(w) ? [[w.length - 1, w.length, ''] as Edit] : []) },
   ...NORTH_RULES,
   { id: 'MPL-YON', codes: { MPL: 'MPL-YON' }, example: ['він', 'йон'], edits: w => (w === 'він' ? [[0, 3, 'йон'] as Edit] : []) },
 ]
@@ -126,6 +143,7 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
   for (const r of SPELL_RULES) {
     if (!(code in r.codes)) continue
     if (r.needs === 'verb' && ctx.pos !== 'verb') { skipped.push({ rule: r.id, why: ctx.pos ? 'правило для дієслів' : 'потребує частини мови' }); continue }
+    if (r.needs === 'verb3' && !ctx.fin3) { skipped.push({ rule: r.id, why: 'правило для 3-ї особи теперішнього часу дієслова (за тегом форми)' }); continue }
     if (r.needs === 'neuter' && !(ctx.pos === 'noun' && ctx.gender === 'n')) { skipped.push({ rule: r.id, why: ctx.gender ? 'правило для іменників середнього роду' : 'потребує роду' }); continue }
     if (r.needs === 'origin') {
       if (!stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }

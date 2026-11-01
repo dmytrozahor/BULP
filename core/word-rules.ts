@@ -12,6 +12,7 @@ import { familyMember, memberEvidence, ROLE_UK, type VFamily, type VMember } fro
 import { ZHEL_FOLDS } from './zhel-folds.ts'
 import { ZAK_FOLDS, RDC_FOLD } from './zak-folds.ts'
 import { toDatStem, toOvati, toUvati, splitHyphenParticle, DAT_OVI_FOLD, VERB_OVATI_FOLD } from './gal-folds.ts'
+import { GAL_SOFT_FOLDS } from './gal-soft.ts'
 import { classifyRu, type RuClass, type RuCtx, type RuLookups } from './ru-contact.ts'
 import type { Evidence } from './evidence.ts'
 import { copulaReading, copulaKeys, type CopulaCtx, type CopulaReading } from './copula-ikavism.ts'
@@ -42,7 +43,7 @@ export const variantKeys = (k: string): string[] => { const h = variantHit(k); r
 export { familyOfLemma } from './variant-families.ts'
 
 export interface FeaturePair {
-  /** feature rule id (core/feature-chips.ts FEATURES, cited fold in core/gal-folds.ts) */ rule: 'ORTH-VERB-OVATI' | 'ORTH-DAT-OVI' | 'ORTH-ZHEL-SOFT' | 'ORTH-RDC' | 'ORTH-ZAK-Y' | 'ORTH-ZAK-Y-V' | 'ORTH-ZAK-Y-E' | 'ORTH-ZAK-Y-E-V' | 'ORTH-ZAK-Y-O' | 'ORTH-ZAK-Y-O-V' | 'ORTH-ZAK-O'
+  /** feature rule id (core/feature-chips.ts FEATURES, cited fold in core/gal-folds.ts) */ rule: 'ORTH-GAL-A-SOFT' | 'ORTH-GAL-3T' | 'ORTH-GAL-3T-E' | 'ORTH-GAL-E-I' | 'ORTH-GAL-E-Y' | 'ORTH-GAL-REM' | 'ORTH-GAL-I-E' | 'ORTH-VERB-OVATI' | 'ORTH-DAT-OVI' | 'ORTH-ZHEL-SOFT' | 'ORTH-RDC' | 'ORTH-ZAK-Y' | 'ORTH-ZAK-Y-V' | 'ORTH-ZAK-Y-E' | 'ORTH-ZAK-Y-E-V' | 'ORTH-ZAK-Y-O' | 'ORTH-ZAK-Y-O-V' | 'ORTH-ZAK-O'
   /** 'forward' = the cited fold direction (-ова- → -ува-); 'reverse' = the counterpart seen from the standard side (-ува- → -ова-) */ direction: 'forward' | 'reverse'
   from: string; to: string; known: boolean
   /** Ukrainian one-line statement of the direction */ text: string
@@ -71,6 +72,12 @@ export function featurePairs(word: string, known: (k: string) => boolean): Featu
     if (to !== w && known(key(to)) && !out.some(p => p.to === key(to))) out.push({ rule: f.id as FeaturePair['rule'], direction: 'forward', from: w, to: key(to), known: true, cite: f.cite,
       text: f === RDC_FOLD ? `«${w}» — давніша (середньоукраїнська) форма з -рдц-; сучасна «${to}» (власний корпус, свідки з датами у цитаті). Діалект не заявляється`
         : `«${w}» — літера ${/[ôê]/.test(w) ? 'ô' : 'ÿ'}, якою ЕУМ (um162) друкує закарпатську вимову; стандартне слово «${to}». Район не заявляється` })
+  }
+  // MM-48..51: Galician spellings written as pronounced (тєжко, ходит, мусєт, папірєм); the lexicon must know the standard word and not the spelling itself. The tag gate (a verb for -т …) is the build's and the annotator's; here only the lexicon decides
+  if (!known(w)) for (const f of GAL_SOFT_FOLDS) {
+    const to = f.apply(w)
+    if (to !== w && known(key(to)) && !out.some(p => p.to === key(to))) out.push({ rule: f.id as FeaturePair['rule'], direction: 'forward', from: w, to: key(to), known: true, cite: f.cite,
+      text: f.cite.kind === 'Q' ? `«${w}» — галицька / подільська вимова, передана на письмі (ЕУМ); стандартне слово «${to}»` : `«${w}» — написання за вимовою; стандартне слово «${to}». Джерела у репозиторії немає (кандидат лише для зв’язування), діалект не заявляється` })
   }
   return out
 }

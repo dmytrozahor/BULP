@@ -43,10 +43,11 @@ export function attestOf(generated: string, forms: AttestForm[], code: string, w
 }
 
 /** part of speech and gender from the card's VESUM tags (noun:inanim:n:v_naz): empty when the card gives none, never guessed */
-export function ctxOfTags(tags?: string): Pick<RespellCtx, 'pos' | 'gender'> {
+export function ctxOfTags(tags?: string): Pick<RespellCtx, 'pos' | 'gender' | 'fin3'> {
   if (!tags) return {}
   const p = tags.split(':'), head = p[0]
   const pos = head === 'verb' ? 'verb' : head === 'noun' ? 'noun' : head === 'adj' ? 'adj' : head ? 'other' : undefined
   const g = p.find(x => x === 'm' || x === 'f' || x === 'n')
-  return { ...(pos ? { pos } : {}), ...(g ? { gender: g as 'm' | 'f' | 'n' } : {}) }
+  const fin3 = head === 'verb' && p.some(x => x === 'pres' || x === 'futr') && p.includes('3')
+  return { ...(pos ? { pos } : {}), ...(g ? { gender: g as 'm' | 'f' | 'n' } : {}), ...(fin3 ? { fin3: true } : {}) }
 }

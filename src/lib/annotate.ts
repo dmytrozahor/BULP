@@ -20,6 +20,7 @@ import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 import { fold } from '../../core/orthography.ts'
 import { foldById } from '../../core/orthography.ts'
+import { galSoftGate } from '../../core/gal-soft.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, withGal, hostTagOk, OBJECT_CLITICS } from '../../core/gal-folds.ts'
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
 import type { RuClass, RuLookups } from '../../core/ru-contact.ts'
@@ -76,13 +77,20 @@ function foldSteps(start: string, trace: string[]): TraceStep[] {
   for (const id of trace) { const f = foldById[id]; if (!f) continue; const next = f.apply(cur); out.push({ rule: id, from: cur, to: next }); cur = next }
   return out
 }
+/** MM-48…51: a Galician spelling fold (core/gal-soft.ts) counts only when the target form has the analysis the rule is about: the SAME gate as the build (build-link.ts galSoftGateOpts) */
+function galGateOk(c: { form: string; trace: string[] }, k: string, data: AnnotateData): boolean {
+  const id = c.trace.find(i => i.startsWith('ORTH-GAL-')); if (!id) return true
+  const isForm = (kk: string) => (data.search.map.get(kk)?.length ?? 0) > 0 || hitsOf(data, kk).length > 0
+  const hs = hitsOf(data, key(c.form))
+  return hs.length === 0 ? isForm(key(c.form)) && galSoftGate(id, k, '', isForm) && !/ORTH-GAL-(3T|E-|REM|I-)/.test(id) : hs.some(h => galSoftGate(id, k, h.tags, isForm, key(h.lemma)))
+}
 function galLink(k: string, data: AnnotateData) {
   const sp = splitHyphenParticle(k)
   // MM-44: the host of an attached object clitic («видів-го») must be a verb: only the lemmas of its VESUM verb readings are candidates (вид, gen. pl. видів, never)
   const verbLemmas = sp && OBJECT_CLITICS.has(sp.particle) ? new Set(hitsOf(data, sp.host).filter(h => hostTagOk(sp.particle, h.tags)).map(h => h.lemma)) : undefined
   const cands = [...(sp ? [{ form: sp.host, trace: [PART_HYPH_FOLD.id], branches: 1 }] : []), ...(verbLemmas ? [] : withGal(fold(k, 'желехівка'), k))]
   for (const c of cands) {
-    if (c.form === k) continue
+    if (c.form === k || !galGateOk(c, k, data)) continue
     const hs = data.search.map.get(key(c.form)) ?? [], h = verbLemmas ? hs.find(x => verbLemmas.has(x.lemma)) : hs[0], card = h && data.cards.get(h.lemma)
     if (h && card) return { c, via: h.via, card }
   }
