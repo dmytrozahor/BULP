@@ -47,7 +47,9 @@ import OverviewTab from '../components/OverviewTab.vue'
 import FreqCurve from '../components/FreqCurve.vue'
 import RegionBars from '../components/RegionBars.vue'
 import Spell from '../components/Spell.vue'
-import { dialect, ipaOf, show } from '../lib/views.ts'
+import { dialect, ipaOf, orth, show } from '../lib/views.ts'
+import { orthAttestedOf } from '../lib/orthAttestedData.ts'
+import type { OaEntry } from '../../core/orth-attested.ts'
 import { attestOf, ctxOfTags } from '../lib/dialectView.ts'
 import { openPanel } from '../lib/cardTabs.ts'
 import ProvenanceTimeline from '../components/ProvenanceTimeline.vue'
@@ -105,12 +107,15 @@ const epochKinds = computed(() => kind.value === 'noun' || kind.value === 'pron'
  *  (core/ikavism.ts, loaded only when a dialect is chosen: the first-load bundle does not grow) */
 const reflexes = shallowRef<Reflex[]>([])
 watch(dialect, d => { if (d && !reflexes.value.length) import('../../core/ikavism.ts').then(m => { reflexes.value = m.DIALECT_REFLEXES as Reflex[] }).catch(() => {}) }, { immediate: true })
+/** MM-45: the old initial-и spelling of the lemma that Грінченко / Желехівський print (lm/oa), loaded only for the orthographies that use it */
+const attInitI = shallowRef<OaEntry | undefined>()
+watch([() => props.lemma, orth], ([l, o]) => { attInitI.value = undefined; if (o === 'kul' || o === 'zhel') orthAttestedOf(l).then(e => { if (l === props.lemma) attInitI.value = e }).catch(() => {}) }, { immediate: true })
 const lemmaOrigins = computed(() => {
   if (!dialect.value || !card.value) return undefined
   const o = originsFor(card.value.lemma, { paradigm: card.value.paradigm.map(p => p.form), oldForms: card.value.forms.map(f => f.raw) })
   return o.via === 'none' ? undefined : o.origins
 })
-const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined, origins: lemmaOrigins.value,
+const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined, origins: lemmaOrigins.value, attInitI: attInitI.value,
   attested: dialect.value && card.value ? attestedFormOf(card.value.lemma, dialect.value, reflexes.value) : undefined, noteOrigin: true }))
 const modernOf = (raw: string) => card.value?.forms.find(f => f.raw === raw)?.modern ?? raw
 const lemmaAttest = computed(() => (dialect.value && card.value && full.value ? attestOf(show(card.value.lemma, dialect.value, '2019', vctx.value).text, full.value.forms.map(f => ({ raw: f.raw, byW: f.byW, kwic: f.kwic })), dialect.value, id => witnessById.value.get(id)) : undefined))

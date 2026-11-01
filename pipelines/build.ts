@@ -73,6 +73,7 @@ import { writeEtymology } from './build-etymology.ts'
 import { writeUkEtym } from './build-etymuk.ts'
 import { writeCognates } from './build-cognates.ts'
 import { writeR2u } from './build-r2u.ts'
+import { writeOrthAttested } from './build-orth-attested.ts'
 import { buildSenseEntries, dictRows, kaikkiRows, parsedRows, textLayerKnown, wiktRows } from './build-se.ts'
 import { writeUsage } from './build-usage.ts'
 import { buildAutoLabels, writeAutoReport } from './build-autolabel.ts'
@@ -768,6 +769,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   { const d = await writeDim(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`dim.json (MM-23): ${d.derivatives} derivatives of ${d.bases} bases (${d.sum} links from СУМ, ${d.wikt} from en.wiktionary)`) }
   { const ukw = await writeUkEtym(ROOT, ROOT); const e = writeEtymology(cards, ROOT, PUB, generated, ukw); lap(`etymology.json: ${e.entries} lemmas with an etymology, ${e.conflicts} conflict flags; GG-11 uk.wiktionary «Етимологія»: ${e.uk} lemmas (${e.ukAlso} also have an en.wiktionary text, ${e.ukOnly} only uk), ${e.ukEsum} cite ЕСУМ`) }   // ET-1…ET-3
   { const r = writeR2u(ROOT, PUB, generated, cards.map(c => c.lemma)); lap(`r2u.json (R2U-1; ruhead.json MM-36: ${r.ruHeads ?? 0} Russian headwords): ${r.rows} articles from ${r.lookups} lookups, ${r.lemmasWith} kept lemmas appear as a native equivalent of a Russian headword`) }   // R2U-1
+  { const o = writeOrthAttested(ROOT, PUB, generated, [...cards.map(c => c.lemma), ...(await vesumLemmaList()).keys()]); lap(`oa.json (MM-45): ${o.lemmas} lemmas with an attested initial-и spelling (Желехівський ${o.zhel}, Грінченко ${o.kul})`) }   // MM-45
   { const c = writeCognates(cards, ROOT, PUB, generated); lap(`cognates.json (BL-15): ${c.entries} lemmas with Proto-Slavic counterparts, ${c.dated} with a dated counterpart, ${c.flags} ET-3 review flags`) }   // BL-15
 
   const rd2: ReportData = {

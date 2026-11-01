@@ -11,6 +11,7 @@
 import { foldById } from './orthography.ts'
 import type { Evidence } from './evidence.ts'
 import type { Origins } from './origin.ts'
+import { OA_RULE, type OaEntry } from './orth-attested.ts'
 
 export type OrthId = '2019' | 'orig' | '1928' | 'zhel' | 'kul' | 'max' | 'yar'
 export const ORTHS: { id: OrthId; label: string; year?: string; note?: string }[] = [
@@ -33,6 +34,8 @@ export interface OrthCtx {
   /** the word is a loanword (true) / a native word (false) / not known (undefined) */
   loan?: boolean
   gender?: 'm' | 'f' | 'n'
+  /** MM-45: the old initial-и spelling of this lemma a dictionary prints (lm/oa, core/orth-attested.ts); wins over every initial-і rule below */
+  attInitI?: OaEntry
 }
 export interface OSeg { text: string; /** the modern letters this segment replaces */ from?: string; rule?: string; unsure?: boolean }
 export interface OrthResult { orth: OrthId; input: string; text: string; segs: OSeg[]; rules: { id: string; cite: Evidence }[]; unsure: number; notes: string[] }
@@ -63,6 +66,11 @@ export function toOrth(modern: string, orth: OrthId, ctx: OrthCtx = {}): OrthRes
   if (orth === 'kul') {
     each(/ї/, m => { if (edge(m.index!)) set(m.index!, m.index! + 1, 'і', 'ORTH-KUL-I') })
     each(/є/, m => { if (edge(m.index!)) set(m.index!, m.index! + 1, 'е', 'ORTH-KUL-E') })
+  }
+  // MM-45: an ATTESTED initial и- (Грінченко -> kul, Желехівський -> zhel) is the evidence; it is tried before any rule, and the stem must be the attested one (forms share it: ірода -> ирода)
+  if ((orth === 'kul' || orth === 'zhel') && w[0] === 'і' && w.length > 1) {
+    const at = ctx.attInitI?.[orth], stem = at ? at.form.slice(1, 3) : ''
+    if (at && at.form[0] === 'и' && w.slice(1).startsWith(stem) && !eds.some(x => x.s < 1 && x.e > 0)) { eds.push({ s: 0, e: 1, to: 'и', rule: OA_RULE, unsure: false }); used.set(OA_RULE, at.ev) }
   }
   if (orth === 'zhel') {
     if (ctx.gender === 'n') each(/([нлтдсзцчшжр])\1я$/, m => set(m.index! + 1, m.index! + 3, 'є', 'ORTH-ZHEL-JE'))
