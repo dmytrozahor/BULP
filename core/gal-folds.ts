@@ -13,6 +13,8 @@ import { P, Q } from './evidence.ts'
 import type { Fold } from './orthography.ts'
 import type { Candidate } from './phonology.ts'
 import { familyMember } from './variant-families.ts'
+import { GAL_SOFT_FOLDS } from './gal-soft.ts'
+import { ZHEL_FOLDS } from './zhel-folds.ts'
 import { ALL_ZAK_FOLDS, RDC_FOLD, ZAK_FOLDS, isZakMarked } from './zak-folds.ts'
 
 const SS14 = 'Смаль-Стоцький, Граматика руської мови (1914), скан p. 44 (друк. с. 40), §§ 62–63 «Степенованє прикметників»'
@@ -86,8 +88,10 @@ export const TSYA_PHON_FOLD: Fold = {
   cite: P('OWNER', 'повідомлення власника, 2026-10-29 (сьпіваютьця, засьміетця у Грінченка 1893)', '-тьця / -цця = -ться (сьпіваютьця)', 'джерела (граматики, словника) з цим твердженням у сховищі не знайдено; кандидат для зв’язування, ознака не показується'),
   apply: toTsya,
 }
-export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...ALL_ZAK_FOLDS]
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, RDC_FOLD]
+export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...ALL_ZAK_FOLDS, ...GAL_SOFT_FOLDS]
+/** MM-50: ORTH-ZHEL-SOFT (сьвіт → світ, сьпівати → співати, зьвір → звір) is also a link branch for a token of ANY orthography: the Galician-region texts write it too; VESUM decides, a word that is already a form is never reached */
+const ZHEL_SOFT = ZHEL_FOLDS.find(f => f.id === 'ORTH-ZHEL-SOFT')!
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, RDC_FOLD, ZHEL_SOFT, ...GAL_SOFT_FOLDS]
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
 export function withGal<T extends Candidate[]>(cands: T, raw?: string): Candidate[] {

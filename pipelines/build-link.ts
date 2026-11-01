@@ -18,6 +18,7 @@ import { oesPast } from '../core/oes-folds.ts'
 import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 import type { AltLink } from '../core/vesum-alt.ts'
+import { galSoftGate } from '../core/gal-soft.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, hostTagOk } from '../core/gal-folds.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
@@ -153,6 +154,13 @@ export const ETYMON_VOWEL: Record<string, { vowel: 'е' | 'о'; /** the spelling
   // MM-24 (owner: «рік приконектився до ріці»): рѣци / рѣцѣ (loc. sg. of рѣка «river») was turned into the velar-stem masculine «рік» by R09 + R24r; the stem of рік «year» is рок-
   рік: { vowel: 'о', forbid: /ѣ/, via: ['R24r'], quote: 'псл. rоkъ «термін, умовлений час», пов’язане чергуванням голосних з *rekti «ректи»; др. рокъ «вік; доля»', url: 'https://goroh.pp.ua/Етимологія/рік' },
 }
+/** MM-48…51: the Galician spelling folds (core/gal-soft.ts) keep only the analysis the rule is about (a 3rd-person present verb for -т, a verb for the є-stem, an instrumental noun for -рєм …) */
+export function galSoftGateOpts<T extends { route: Route; opts: Option[] }>(t: TypeCtx, r: T | undefined, hits: Env['hits']): T | undefined {
+  if (!r) return r
+  const raw = key(t.raw), isForm = (k: string) => (hits.get(k) ?? []).length > 0
+  const o = r.opts.filter(x => { const f = x.cand.trace.find(i => i.startsWith('ORTH-GAL-') && i !== 'ORTH-GAL-OVATI'); return !f || galSoftGate(f, raw, x.hit.tags, isForm, key(x.hit.lemma)) })
+  return o.length === r.opts.length ? r : o.length ? { ...r, opts: o } : undefined
+}
 export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: TypeCtx, r: T | undefined): T | undefined {
   if (!r) return r
   const raw = key(t.raw), o = r.opts.filter(x => { const e = ETYMON_VOWEL[x.id]; return !(e && e.forbid.test(raw) && e.via.some(v => x.cand.trace.includes(v))) })
@@ -161,7 +169,7 @@ export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: T
 /** MM-20: a token that does not link whole and ends in a hyphenated clitic particle (прийми-ж, було-б, ходи-но) links through its HOST word (core/gal-folds.ts ORTH-PART-HYPH); VESUM decides first,
  *  so будь-хто, де-не-де and every hyphenated word VESUM lists keep their own link. The step is recorded in the trace. */
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
-  const r = remapAlt(etymonVowelGate(t, preferCommon(t, linkOptionsPrep(t, env))), env)
+  const r = remapAlt(etymonVowelGate(t, galSoftGateOpts(t, preferCommon(t, linkOptionsPrep(t, env)), env.hits)), env)
   if (r) return r
   const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined
   if (!sp) return undefined
@@ -253,6 +261,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') { out.push(key(t.raw), key(ruleById['R11']!.apply(key(t.raw)))) }   // MM-3: the plain spelling and its ы > и
   if (t.orth && MU_ORTH.has(t.orth)) for (const m of muCandidates(key(t.raw), !!env.phon)) { if (t.lang === 'uk') out.push(key(m.form)); else { out.push(key(ruleById['R11']!.apply(m.form))); for (const c of env.derive(m.form, t.oldI).candidates) out.push(key(c.form)) } }
+  if (t.raw) { const r = key(t.raw); if (/є/.test(r)) out.push(r.replace(/є/g, 'е')); if (/і/.test(r)) out.push(r.replace(/і/g, 'и')) }   // MM-48…51 galSoftGate reads these two plain readings
   return out
 }
 
