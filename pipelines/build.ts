@@ -30,7 +30,9 @@ import { AUTHORS, authorById } from './authors.ts'
 import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
 import { writeDim } from './build-dim.ts'
 import { attachDictModern } from './build-orvdict.ts'
-import { writeXref } from './build-xref.ts'
+import { loadPointers, writeXref } from './build-xref.ts'
+import { attachHist, type ArchFile } from '../core/archaic.ts'
+import { dictById } from '../core/se.ts'
 import { writeSynPhr } from './build-synphr.ts'
 import { withSoftAdj } from '../core/adj-soft.ts'
 import { withGal } from '../core/gal-folds.ts'
@@ -707,6 +709,13 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     return { entries: r.entries, stats: r.stats }
   })
   // #end
+  {   // MM-46: a head found in a historical dictionary (the SE rows) is attested there; archaic.json is rewritten with `hist` / `modern` (gloss match = «зіставлено»)
+    const known = new Set<string>((await vesumLemmaList()).keys()); for (const c of cards) known.add(lk(c.lemma))
+    const ptrs = loadPointers(ROOT).byHead, histDict = (d: string) => { const c = dictById(d); return !!c && c.basis === 'period' && !!c.cover && c.cover[1] <= 1850 }
+    const arf = JSON.parse(readFileSync(resolve(PUB, 'archaic.json'), 'utf8')) as ArchFile
+    const nh = attachHist(arf.entries, h => se.entries.get(lk(h))?.rows ?? [], histDict, d => dictById(d)?.cover ?? null, w => known.has(lk(w)), h => (ptrs.get(lk(h)) ?? []).map(p => ({ d: p.d, ...(p.l ? { l: p.l } : {}), t: p.t })))
+    writeJsonAtomic(resolve(PUB, 'archaic.json'), JSON.stringify(arf)); lap(`archaic lemmas attested in a historical dictionary (MM-46): ${nh} of ${arf.entries.length}, with a gloss-named modern word: ${arf.entries.filter(e => e.modern).length}`)
+  }
   // #tail
   // ── 8. outputs ────────────────────────────────────────────────────────────────────────────────
   const generated = new Date().toISOString()

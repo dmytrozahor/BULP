@@ -44,7 +44,15 @@ export interface ArchEntry {
   n: number; forms: ArchForm[]; epochs: Record<string, number>; witnesses: Record<string, number>
   first?: { w: string; loc: string; raw: string; date: [number, number] }
   kwic: { w: string; loc: string; raw: string }[]
+  /** MM-46: historical-dictionary articles for this headword (from the SE rows); present = «attested in a dictionary», whatever `status` says */
+  hist?: HistAttest[]
+  /** MM-46: modern counterparts named by those glosses / cross-references (grade «зіставлено») */
+  modern?: HistModern[]
 }
+/** MM-46: a historical-dictionary article (СУМ XVI–XVII, Тимченко, Матеріали …) that lists the headword: the dictionary's own gloss line, its locator and period. Attestation, not a VESUM verdict. */
+export interface HistAttest { d: string; loc: string; g: string; date: [number, number] | null }
+/** MM-46: a modern word the dictionary's gloss names. grade «зіставлено» = a gloss match (the gloss text contains this word), NEVER «підтверджено»; `via` = how it was reached. */
+export interface HistModern { form: string; d: string; loc: string; grade: 'зіставлено'; via: 'gloss' | 'xr' }
 export interface ArchFile { generated: string; source: string; entries: ArchEntry[] }
 
 export const archId = (head: string) => head.normalize('NFC').toLowerCase().replace(/[^\p{L}\p{N}'’ʼ-]+/gu, '')
@@ -99,4 +107,32 @@ export function archStats(f: ArchFile): ArchStats {
     for (const ep of eps) { const b = (s.byEpoch[ep] ??= { lemmas: 0, tokens: 0 }); b.lemmas++; b.tokens += e.epochs[ep] ?? 0 }
   }
   return s
+}
+
+/** MM-46: modern single words a historical gloss names: «(приєднує підрядне речення умови) коли, якщо» → [коли, якщо]; parenthetical remarks are dropped, only whole one-word items count. */
+export function glossWords(g: string): string[] {
+  const t = g.replace(/\([^()]*\)/g, ' ').replace(/[«»"“”]/g, '')
+  return [...new Set(t.split(/[,;]/).map(x => x.trim().replace(/[.\s]+$/, '').toLowerCase()).filter(x => /^[а-яіїєґ'’-]{2,}$/.test(x)))]
+}
+const lkA = (s: string) => s.normalize('NFC').replace(/́/g, '').toLowerCase()
+/**
+ * MM-46 (owner file «як не знайдено якщо знайдено в сум»): an archaic card whose head the senses panel finds in a historical dictionary is NOT «словникового запису не знайдено». `rowsOf(head)` = SE rows of the
+ * headword (any dictionary); `isHist(d)` picks the historical ones; `known(w)` = a modern word (VESUM / a card); `ptrs(head)` = cross-reference targets (GG-18). Mutates the entries; returns how many gained `hist`.
+ */
+export function attachHist(entries: ArchEntry[], rowsOf: (head: string) => { d: string; g: string; l?: string; e?: [number, number]; oq?: 1 }[], isHist: (d: string) => boolean,
+  coverOf: (d: string) => [number, number] | null, known: (w: string) => boolean, ptrs: (head: string) => { d: string; l?: string; t: string }[] = () => []): number {
+  let n = 0
+  for (const e of entries) {
+    const heads = [...new Set([e.head, ...e.variants])], rows = heads.flatMap(h => rowsOf(h)).filter(r => isHist(r.d))
+    if (!rows.length) continue
+    const hist: HistAttest[] = [], modern: HistModern[] = [], seen = new Set<string>()
+    for (const r of rows) {
+      const k = r.d + '|' + (r.l ?? '') + '|' + r.g; if (seen.has(k)) continue; seen.add(k)
+      hist.push({ d: r.d, loc: r.l ?? '', g: r.oq ? '' : r.g.slice(0, 200), date: r.e ?? coverOf(r.d) })
+      if (!r.oq) for (const w of glossWords(r.g)) if (known(w) && !heads.some(h => lkA(h) === lkA(w)) && !modern.some(m => m.form === w)) modern.push({ form: w, d: r.d, loc: r.l ?? '', grade: 'зіставлено', via: 'gloss' })
+    }
+    for (const h of heads) for (const p of ptrs(h)) if (known(p.t) && !modern.some(m => m.form === lkA(p.t))) modern.push({ form: lkA(p.t), d: p.d, loc: p.l ?? '', grade: 'зіставлено', via: 'xr' })
+    e.hist = hist.slice(0, 6); if (modern.length) e.modern = modern.slice(0, 4); n++
+  }
+  return n
 }
