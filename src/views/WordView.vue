@@ -305,7 +305,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         </Panel>
         <CardRules :lemma="card.lemma" skip-features />   <!-- CP-8 -->
         <DerivativesBlock panel :lemma="card.lemma" />
-        <HypLinks :word="card.lemma" :tags="card.paradigm[0]?.tags" />   <!-- CP-11 -->
+        <HypLinks :word="card.lemma" :tags="card.paradigm[0]?.tags" :forms="card.forms.map(f => f.raw)" />   <!-- CP-11 -->
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
         <!-- 3. Paradigm, by the lemma's paradigm kind (FX-5) -->

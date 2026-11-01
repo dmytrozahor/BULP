@@ -10,7 +10,7 @@ import type { Hypothesis, Relation } from '../lib/hypothesis.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import HypNotes from './HypNotes.vue'
 const props = defineProps<{ hyp: Hypothesis }>()
-const ROLE: Record<Relation['role'], string> = { plural: 'множина (засвідчена)', singular: 'однина', derived: 'похідне', base: 'похідне від' }
+const ROLE: Record<Relation['role'], string> = { plural: 'множина (засвідчена)', singular: 'однина', variant: 'варіант', swap: 'варіант з и/і', attested: 'засвідчений варіант', derived: 'похідне', base: 'похідне від' }
 const rels = computed(() => props.hyp.relations)
 </script>
 

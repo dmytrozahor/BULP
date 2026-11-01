@@ -1245,3 +1245,12 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-13 | tests/se13.test.ts › SE-13 area labels of the print › scanZhel merges the labels into the hits of the linked card as strict area hits with the page link |
 | CP-11 | tests/cp11-hypothesis.test.ts › CP-11c labels on reconstructed forms › двері → дверь carries the archaic badge (давня і-основа, *dvьрь) and the Russian-coincidence note; ножиці → ножиця carries neither |
 | CP-11 | tests/cp11-hypothesis.test.ts › CP-11c labels on reconstructed forms › the page /w/дверь is a hypothesis with the labels; байдик has none |
+| CP-11 | tests/cp11d-search-tiers.test.ts › CP-11d rendered search tiers › a query matching a main lemma, an other card, a dictionary word, an unverified spelling, a Plast term and a hypothesis renders them in that order |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11e hardened final р › двері yields both дверь (давня форма) and двер (затвердіння), each with its own badge, the Russian note only on дверь |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11e hardened final р › /w/двер resolves to a hypothesis page that cross-links to дверь, and the other way round; other consonants do not harden |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f swaps › candidates: one swap at every и / і position, then two; never the word itself |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f swaps › rules: initial и- = Желехівка, и between consonants before a final consonant = ярижка, anything else = kind P без джерела |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › ирод and иней (no entry) are swap hypotheses linking to the real ірод / іней, with the cited rule |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › two swaps work too, and a nonsense word with no real word within two swaps has no page |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › кит and кіт are both real: /w/кит is its own card, never a swap hypothesis; neither card links to the other |
+| CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › a real card lists only ATTESTED variants of its own lemma, with their cites: a corpus spelling, an old-dictionary row; unattested swaps stay out |

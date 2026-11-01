@@ -94,18 +94,6 @@ watch(q, async v => {
     <p v-if="corpus?.nEntries" class="small muted sans" data-test="entry-counts">Усього {{ fmtNum(corpus.nEntries) }} статей: <EntryCounts :corpus="corpus" /></p>
   </section>
 
-  <section v-if="cardHits.length" class="card" aria-live="polite">
-    <h2><span>Інші картки (словники, рідкісні й архаїчні слова)</span> <span class="muted small">{{ cardHits.length }}</span></h2>
-    <ul class="results">
-      <li v-for="r in cardHits" :key="r.kind + r.id">
-        <RouterLink :to="cardRoute(r)">
-          <span class="lem">{{ r.id }}</span>
-          <span class="badge">{{ r.kind === 'ar' ? 'архаїчна/словникова картка' : 'коротка картка' }}</span>
-          <span v-if="r.matched.toLowerCase() !== r.id.toLowerCase()" class="small sans">знайдено: «{{ r.matched }}»</span>
-        </RouterLink>
-      </li>
-    </ul>
-  </section>
   <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
   <ul v-else-if="rows.length" class="results" aria-live="polite">
     <li v-for="r in pgR.slice(rows)" :key="r.lemma">
@@ -135,6 +123,19 @@ watch(q, async v => {
     <Pagination :page="pgL.page.value" :pages="pgL.pages.value" @go="pgL.go" />
     <p class="small muted sans" style="margin-top:.8rem">Спробуйте <a href="#/annotate">анотатор тексту</a> на прикладах із пам’яток корпусу.</p>
   </div>
+  <!-- CP-11d: «інші картки» are the SECOND tier: directly after the main results (exact and prefix lemma matches), never above or between them -->
+  <section v-if="cardHits.length" class="card" aria-live="polite" data-testid="card-hits">
+    <h2><span>Інші картки (словники, рідкісні й архаїчні слова)</span> <span class="muted small">{{ cardHits.length }}</span></h2>
+    <ul class="results">
+      <li v-for="r in cardHits" :key="r.kind + r.id">
+        <RouterLink :to="cardRoute(r)">
+          <span class="lem">{{ r.id }}</span>
+          <span class="badge">{{ r.kind === 'ar' ? 'архаїчна/словникова картка' : 'коротка картка' }}</span>
+          <span v-if="r.matched.toLowerCase() !== r.id.toLowerCase()" class="small sans">знайдено: «{{ r.matched }}»</span>
+        </RouterLink>
+      </li>
+    </ul>
+  </section>
   <!-- SPEC 63 DO-4: dictionary-only cards (VESUM / r2u / Plast) — after every corpus-attested result -->
   <section v-if="dictRows.length" class="card" aria-live="polite" data-testid="dict-hits">
     <h2><span>Лише зі словників</span> <span class="muted small">{{ dictRows.length }}</span></h2>

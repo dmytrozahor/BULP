@@ -29,6 +29,7 @@ export const RULES: Record<string, HypRule> = {
   'SG-F-A': { id: 'SG-F-A', pattern: '-а / -и', uk: 'однина відтворена за зразком відміни на -а: називний однини на -а, у множині -и (р. мн. без закінчення)', cite: noSource('SG-F-A', 'відміна на -а ~ -и') },
   'SG-F-JA': { id: 'SG-F-JA', pattern: '-я / -і', uk: 'однина відтворена за зразком відміни на -я: називний однини на -я, у множині -і (р. мн. без закінчення)', cite: noSource('SG-F-JA', 'відміна на -я ~ -і') },
   'SG-F-SOFT': { id: 'SG-F-SOFT', pattern: '-ь / -і', uk: 'однина відтворена за зразком третьої відміни: називний однини на -ь, у множині -і (р. мн. -ей)', cite: noSource('SG-F-SOFT', 'третя відміна: -ь ~ -і, -ей') },
+  'SG-HARD-R': { id: 'SG-HARD-R', pattern: '-рь → -р', uk: 'варіант із затвердінням кінцевого р: м’який р наприкінці слова твердіє, ь не пишеться (звір, кобзар; у непрямих відмінках р лишається м’яким)', cite: P('INPUT', 'research/04-dialectology.md HARD-R; research/13-phonetics-ipa.md HARD-R; core/ipa.ts HARD-R', 'правило HARD-R сховища (POD, VOL, STP): твердий р замість м’якого, бурак, зора; кінцевий р — за аналогією звір, кобзар; прямого джерела для позиції в кінці слова не знайдено', 'method: hypothesis (P-1.7)') },
   'SG-N-O': { id: 'SG-N-O', pattern: '-о / -а', uk: 'однина відтворена за зразком середнього роду: називний однини на -о, у множині -а', cite: noSource('SG-N-O', 'середній рід -о ~ -а') },
   'SG-N-E': { id: 'SG-N-E', pattern: '-е / -я', uk: 'однина відтворена за зразком середнього роду: називний однини на -е, у множині -я', cite: noSource('SG-N-E', 'середній рід -е ~ -я') },
   'DV-UVATY': { id: 'DV-UVATY', pattern: 'X → X-увати', uk: 'дієслівний суфікс -ува- / -юва-: дієслово утворене від іменної основи', cite: noSource('DV-UVATY', 'суфікс -ува-/-юва-') },
@@ -62,7 +63,7 @@ export function singularOf(plural: string, genPl?: string): Singular[] {
     order.push([noEnd && !VOWEL.test(stem), () => add(stem + 'а', 'SG-F-A')])
   } else if (last === 'і') {
     order.push([masc && !VOWEL.test(stem), () => add(SOFT_CONS.test(stem) ? stem + 'ь' : stem, SOFT_CONS.test(stem) ? 'SG-M-SOFT' : 'SG-M')])
-    order.push([soft3 && !VOWEL.test(stem), () => add(stem + 'ь', 'SG-F-SOFT')])
+    order.push([soft3 && !VOWEL.test(stem), () => { add(stem + 'ь', 'SG-F-SOFT'); if (/р$/.test(stem)) add(stem, 'SG-HARD-R') }])   // р always hardens at the end; other consonants only with a cite (none yet)
     order.push([noEnd && /[цсз]$/.test(stem), () => add(stem + 'я', 'SG-F-JA')])
   } else if (last === 'а') {
     order.push([!!stem, () => add(stem + 'о', 'SG-N-O')])
@@ -128,11 +129,14 @@ export const RU_COINCIDE_NOTE = 'збігається з російським н
 /** the proto-Slavic stems that the i-stem rule is known for (kind P: no etymology file of the repo holds them, to be checked against ЕСУМ) */
 const PROTO: Record<string, string> = { 'дверь': '*dvьrь' }
 export interface FormNotes {
+  /** CP-11e: the variant with a hardened final р (двер ← дверь) */
+  hardened?: { uk: string; cite: Evidence }
   /** the form is an old-declension reconstruction (SG-F-SOFT: a soft-sign singular of the old i-stems, дверь) */
   archaic?: { uk: string; stem: string; proto?: string; cite: Evidence }
 }
 /** the labels of a hypothetical form that its rule knows: the declension / stem class, the proto form when known (P) */
 export function formNotes(form: string, rule: HypRule): FormNotes {
+  if (rule.id === 'SG-HARD-R') return { hardened: { uk: 'варіант із затвердінням кінцевого р', cite: rule.cite } }
   if (rule.id !== 'SG-F-SOFT') return {}
   const proto = PROTO[key(form)]
   return { archaic: { uk: ARCHAIC_NOTE, stem: 'давня і-основа', proto,

@@ -111,6 +111,26 @@ describe('CP-11c labels on reconstructed forms', () => {
   })
 })
 
+describe('CP-11e hardened final р', () => {
+  const d = (): Deps => ({ ...lexicon({ 'двері': { word: 'двері', to: '/lw/двері', tags: PL } }), genPl: async w => ({ 'двері': 'дверей' } as Record<string, string>)[w], ruHeads: async w => (w === 'дверь' ? 2 : 0) })
+  it('двері yields both дверь (давня форма) and двер (затвердіння), each with its own badge, the Russian note only on дверь', async () => {
+    const rel = await relationsOf('двері', PL, d())
+    const sg = rel.find(r => r.role === 'singular')!, v = rel.find(r => r.role === 'variant')!
+    expect([sg.form, v.form]).toEqual(['дверь', 'двер'])
+    expect(sg.notes?.archaic).toBeTruthy(); expect(sg.notes?.hardened).toBeUndefined(); expect(sg.notes?.ru).toBe(RU_COINCIDE_NOTE)
+    expect(v.notes?.hardened?.uk).toBe('варіант із затвердінням кінцевого р'); expect(v.notes?.archaic).toBeUndefined(); expect(v.notes?.ru).toBeUndefined(); expect(v.notes?.hardened?.cite.kind).toBe('P')
+    const html = await render(HypNotes, { notes: v.notes })
+    expect(html).toContain('hyp-hardened'); expect(html).toContain('затвердіння'); expect(html).not.toContain('hyp-archaic')
+  })
+  it('/w/двер resolves to a hypothesis page that cross-links to дверь, and the other way round; other consonants do not harden', async () => {
+    const h1 = await buildHypothesis('двер', d()), h2 = await buildHypothesis('дверь', d())
+    expect(h1?.notes?.hardened).toBeTruthy(); expect(h1!.relations.map(r => r.form)).toEqual(expect.arrayContaining(['двері', 'дверь']))
+    expect(h2?.notes?.archaic).toBeTruthy(); expect(h2!.relations.map(r => r.form)).toEqual(expect.arrayContaining(['двері', 'двер']))
+    expect(singularOf('сіллі', 'сіллей').some(s => s.rule.id === 'SG-HARD-R')).toBe(false)
+    expect(singularOf('груди', 'грудей').some(s => s.rule.id === 'SG-HARD-R')).toBe(false)
+  })
+})
+
 describe('CP-11 budgets and ordering', () => {
   const rd = (p: string) => readFileSync(p, 'utf8').replace(/\r\n/g, '\n')
   it('the hypothesis path adds no data file and is lazy: no per-word shard, route component async, search debounced', () => {
