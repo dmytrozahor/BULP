@@ -270,3 +270,28 @@ describe('GG-19 the card block', () => {
     const v = readFileSync('src/components/PhraseologyBlock.vue', 'utf8'); expect(v).not.toMatch(/import\s+(?!type)[^\n]*proverbs\.ts/); expect(v).toContain("from '../lib/synData.ts'")
   })
 })
+
+import { OWNER_ITEM, ingestOwner } from '../harvest/proverbs-owner.ts'
+describe('GG-19b the owner-supplied NPLU scan of т. 23', () => {
+  it('ingestOwner files the OCR text as item nplu-etnohr_23 (gz + index line, 200), is idempotent, and refuses a partial OCR; the build then reads it like the archive.org volumes', async () => {
+    const dir = mkdtempSync(join(tmpdir(), 'gg19c-')), ia = join(dir, 'ia-proverbs'); mkdirSync(join(ia, 'items'), { recursive: true })
+    const ocr = join(dir, 'ocr.txt'); writeFileSync(ocr, 'x'.repeat(50))
+    expect(() => ingestOwner(ocr, ia)).toThrow('partial OCR')
+    writeFileSync(ocr, REGISTER + '\n' + FRANKO + '\n' + '\n=====PDF 5=====\n\n'.repeat(8000))
+    expect(ingestOwner(ocr, ia)).toBe(true); expect(ingestOwner(ocr, ia)).toBe(false)
+    const lines = readFileSync(join(ia, 'index.jsonl'), 'utf8').trim().split('\n'); expect(lines.length).toBe(1)
+    expect(JSON.parse(lines[0]!)).toMatchObject({ iaItem: OWNER_ITEM, status: 200, source: 'franko', vol: '23', url: 'https://nplu.org' })
+    const { inputs } = loadProverbInputs(dir); expect(inputs.map(i => i.ia)).toEqual([OWNER_ITEM])
+    const vesum = join(dir, 'v.txt'); writeFileSync(vesum, VESUM)
+    const { phr, stats } = await stageProverbs(inputs, vesum)
+    expect(phr['азбука']![0]).toMatchObject({ s: OWNER_ITEM, l: 'ЕЗ т. 23, с. 2, «Азбука» 2' }); expect(stats.volumes[OWNER_ITEM]!.kept).toBeGreaterThan(0)
+    const c = phrClaim('азбука', phr['азбука']![0]!); expect(c.evidence[0]!.note).toContain('НПБУ'); expect(c.evidence[0]!.locator).toContain('т. 23')
+  })
+  it('the source is named as the owner-supplied NPLU scan: no archive.org link on the card, the title says so; the OCR job is resumable and not for the local machine', async () => {
+    expect(IA_TITLE[OWNER_ITEM]).toContain('nplu.org'); expect(IA_TITLE[OWNER_ITEM]).toContain('надано власником')
+    const router = createRouter({ history: createMemoryHistory(), routes: [{ path: '/:p(.*)*', component: { render: () => null } }] })
+    const app = createSSRApp({ render: () => h(PhraseologyBlock, { word: 'азбука', rows: [{ p: 'Дре сї як ворона.', k: 'p', d: 'f', l: 'ЕЗ т. 23, с. 9, «Дерти» 1', s: OWNER_ITEM }] as never }) }); app.use(router)
+    const s = await renderToString(app); expect(s).toContain('скан Національної парламентарної бібліотеки'); expect(s).not.toContain('archive.org/details/nplu')
+    const sh = readFileSync('ops/worker/ocr-etnohr23.sh', 'utf8'); expect(sh).toContain('tesseract'); expect(sh).toContain('-l ukr'); expect(sh).toContain('qpdf --decrypt'); expect(sh).toContain('page_$p.txt" ] && continue')
+  })
+})

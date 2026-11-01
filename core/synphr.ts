@@ -226,6 +226,7 @@ export const IA_TITLE: Record<string, string> = {
   etnohr_24: 'Франко І. Галицько-руські народні приповідки, т. II, вип. 2 (Кравець–Пять). Етнографічний збірник, т. 24. Львів, 1908',
   etnohr_27: 'Франко І. Галицько-руські народні приповідки, т. III, вип. 1 (Рабунок–Час). Етнографічний збірник, т. 27. Львів, 1909',
   etnohr_28: 'Франко І. Галицько-руські народні приповідки, т. III, вип. 2 (Рабунок–Ячмінь). Етнографічний збірник, т. 28. Львів, 1910',
+  'nplu-etnohr_23': 'Франко І. Галицько-руські народні приповідки, т. II, вип. 1 (Діти–Кпити); Етнографічний збірник, т. 23. Львів, 1907 (скан Національної парламентарної бібліотеки України, nplu.org; надано власником проєкту; OCR tesseract ukr, не вичитано)',
 }
 /** ids in core/sources.ts of the two printed collections */
 export const PROV_SOURCE: Record<'n' | 'f', string> = { n: 'NOMIS1864', f: 'FRANKO-PRYP' }
@@ -236,6 +237,6 @@ export function synClaim(head: string, r: SynRow): Claim<string> {
 }
 export function phrClaim(head: string, r: PhrRow): Claim<string> {
   // GG-19: a printed-collection row: locator = volume / page / number of the print, quote = the OCR slice (verbatim)
-  if (r.d === 'n' || r.d === 'f') return claim(r.p, Q(PROV_SOURCE[r.d], r.l ?? '', r.q ?? r.p, r.s ? `https://archive.org/details/${r.s} (OCR, не вичитано)` : undefined))
+  if (r.d === 'n' || r.d === 'f') return claim(r.p, Q(PROV_SOURCE[r.d], r.l ?? '', r.q ?? r.p, r.s ? (r.s.startsWith('nplu-') ? 'скан НПБУ (nplu.org), наданий власником проєкту (OCR, не вичитано)' : `https://archive.org/details/${r.s} (OCR, не вичитано)`) : undefined))
   return claim(r.p, D(SRC_NAME[r.d], wiktUrl(r.d, r.x ? r.p : head), `${r.p}${r.g ? ' — ' + r.g : ''}`, LICENCE))
 }

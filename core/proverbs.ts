@@ -230,7 +230,7 @@ export function placeNote(abbr: string, reg: Map<string, RegEntry>): PlaceNote {
 
 /** short locator: «т. 10, с. 5, Азбука 1» / «Ном. №80» / «Ном. після №80, +4» */
 export function locatorOf(c: ProvCand): string {
-  if (c.src === 'franko') return `${c.ia.replace('etnohr_', 'ЕЗ т. ')}${c.page ? `, с. ${c.page}` : ''}, «${c.hw || '—'}» ${c.no}`
+  if (c.src === 'franko') return `${c.ia.replace(/^(?:nplu-)?etnohr_/, 'ЕЗ т. ')}${c.page ? `, с. ${c.page}` : ''}, «${c.hw || '—'}» ${c.no}`
   const n = c.nomis!
   return n.exact ? `Ном. №${n.n}` : `Ном. після друкованого №${n.n}, ще ~${n.since} записів (лічба за OCR, наближена)`
 }

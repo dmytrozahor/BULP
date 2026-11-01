@@ -57,7 +57,7 @@ const editions = computed(() => [...new Set((list.value ?? []).filter(x => !x.x 
           <ul class="phrw-list"><li v-for="x in printed.slice(PLIMIT)" :key="x.p + x.l"><span class="phrw-p">{{ x.p }}</span><span v-if="x.m" class="muted"> (сучасним правописом: {{ x.m }})</span><span v-if="x.v?.length" class="muted"> ({{ x.v.join(' — ') }})</span> <span class="badge" :title="ED_NAME[x.d]">{{ x.d === 'n' ? 'Ном.' : 'Фр.' }}</span><span class="muted small"> {{ x.l }}<template v-if="placeText(x.pl)">; записано: {{ placeText(x.pl) }}</template></span></li></ul>
         </details>
         <p class="muted small" data-testid="phrw-print-src">Джерело (громадське надбання; текст — розпізнаний OCR archive.org, не вичитаний, тож написання можуть мати помилки розпізнавання):
-          <template v-for="(id, i) in printedSrc" :key="id"><a :href="`https://archive.org/details/${id}`" rel="noopener" target="_blank">{{ IA_TITLE[id] ?? id }} ↗</a><template v-if="i < printedSrc.length - 1">; </template></template>.
+          <template v-for="(id, i) in printedSrc" :key="id"><a v-if="!id.startsWith('nplu-')" :href="`https://archive.org/details/${id}`" rel="noopener" target="_blank">{{ IA_TITLE[id] ?? id }} ↗</a><span v-else>{{ IA_TITLE[id] ?? id }}</span><template v-if="i < printedSrc.length - 1">; </template></template>.
           Місце запису подано лише там, де його розв’язує реєстр скорочень самого видання; діалектної групи ми з нього не виводимо.</p>
       </div>
       <p v-if="editions.length" class="muted phrw-src" data-testid="phrw-src">Джерело:
