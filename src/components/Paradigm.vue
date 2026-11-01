@@ -8,9 +8,20 @@ import Spell from './Spell.vue'
 import { ctxOfTags } from '../lib/dialectView.ts'
 import { formStress, ST_SOURCES, type StLemma } from '../../core/stress-src.ts'
 import { renderStress } from '../../core/text.ts'
+import { dialect } from '../lib/views.ts'
+import { originsFor } from '../../core/origin.ts'
 import { buildGrids, nonNormative, type PForm } from '../lib/paradigm.ts'
 const props = defineProps<{ paradigm: PForm[]; kind?: string; /** GG-14: stressed forms from the sidecar (kaikki …); a form that no source stresses is shown plain, nothing is generated */ stressForms?: StLemma['forms'] }>()
 const stressed = (form: string): { text: string; tip: string }[] => (props.stressForms?.length ? formStress(props.stressForms, form) : []).map(x => ({ text: renderStress(form.toLowerCase(), x.positions), tip: ST_SOURCES[x.src]?.by ?? x.src }))
+/** MM-55: the dialect respelling of a FORM needs what the header gets: the stress of that form (sidecar) and the origin of its і (the alternation inside this paradigm: сел- ~ сіл) - without them the stressed-vowel and origin rules (CHN сіл → сіел) were skipped for every form of the table */
+const formList = computed(() => props.paradigm.map(p => p.form))
+const ctxFor = (p: PForm) => {
+  const base = ctxOfTags(p.tags)
+  if (!dialect.value) return base
+  const st = props.stressForms?.length ? formStress(props.stressForms, p.form)[0] : undefined
+  const o = originsFor(p.form, { paradigm: formList.value })
+  return { ...base, ...(st ? { positions: st.positions as number[] } : {}), ...(o.via !== 'none' ? { origins: o.origins } : {}) }
+}
 const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(props.paradigm))
 </script>
 
@@ -26,7 +37,7 @@ const grids = computed(() => props.kind === 'uninflected' ? [] : buildGrids(prop
           <th scope="row">{{ r.label }}</th>
           <td v-for="(cell, i) in r.cells" :key="i">
             <template v-if="cell.length"><span v-for="(p, j) in cell" :key="j">
-              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`"><Spell :w="p.form" :ctx="ctxOfTags(p.tags)" quiet /></span><span v-for="(x, k) in stressed(p.form)" :key="k" class="muted small" :title="'наголос ' + x.tip" data-testid="par-stress"> ({{ x.text }})</span><span v-if="j < cell.length - 1">, </span></span></template>
+              <span class="tagtip" tabindex="0" :class="{ nonnorm: nonNormative(p.tags) }" :title="p.tags" :aria-label="`${p.form}: ${p.tags}`"><Spell :w="p.form" :ctx="ctxFor(p)" quiet /></span><span v-for="(x, k) in stressed(p.form)" :key="k" class="muted small" :title="'наголос ' + x.tip" data-testid="par-stress"> ({{ x.text }})</span><span v-if="j < cell.length - 1">, </span></span></template>
             <span v-else class="muted">—</span>
           </td>
         </tr>
