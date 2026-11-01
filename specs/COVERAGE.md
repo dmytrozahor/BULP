@@ -1243,3 +1243,5 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-13 | tests/se13.test.ts › SE-13 area labels of the print › the list explains hucul./łemk./ungr.; the articles print them in Cyrillic; only area rows are read from the OCR |
 | SE-13 | tests/se13.test.ts › SE-13 area labels of the print › a label that stands after ANOTHER headword (two articles run into one line) is not the first headword’s |
 | SE-13 | tests/se13.test.ts › SE-13 area labels of the print › scanZhel merges the labels into the hits of the linked card as strict area hits with the page link |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11c labels on reconstructed forms › двері → дверь carries the archaic badge (давня і-основа, *dvьрь) and the Russian-coincidence note; ножиці → ножиця carries neither |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11c labels on reconstructed forms › the page /w/дверь is a hypothesis with the labels; байдик has none |

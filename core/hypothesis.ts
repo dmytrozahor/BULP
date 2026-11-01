@@ -120,3 +120,21 @@ export function baseCandidates(word: string): Rel[] {
 export function hypClaim(form: string, rule: HypRule, from: string): Claim<string> {
   return claim(form, [rule.cite, noSource(rule.id, `«${form}» виведено з «${from}»`)], { method: 'hypothesis' })
 }
+
+// ── CP-11c: labels on a reconstructed form ──────────────────────────────────────────────────────
+
+export const ARCHAIC_NOTE = 'давня (архаїчна) форма — відтворення за давньою відміною (і-основа)'
+export const RU_COINCIDE_NOTE = 'збігається з російським написанням, не русизм'
+/** the proto-Slavic stems that the i-stem rule is known for (kind P: no etymology file of the repo holds them, to be checked against ЕСУМ) */
+const PROTO: Record<string, string> = { 'дверь': '*dvьrь' }
+export interface FormNotes {
+  /** the form is an old-declension reconstruction (SG-F-SOFT: a soft-sign singular of the old i-stems, дверь) */
+  archaic?: { uk: string; stem: string; proto?: string; cite: Evidence }
+}
+/** the labels of a hypothetical form that its rule knows: the declension / stem class, the proto form when known (P) */
+export function formNotes(form: string, rule: HypRule): FormNotes {
+  if (rule.id !== 'SG-F-SOFT') return {}
+  const proto = PROTO[key(form)]
+  return { archaic: { uk: ARCHAIC_NOTE, stem: 'давня і-основа', proto,
+    cite: P('INPUT', 'core/hypothesis.ts SG-F-SOFT', `${ARCHAIC_NOTE}${proto ? `; праслов’янська форма ${proto}` : ''}: ${HYP_NO_SOURCE} у сховищі, перевірити за ЕСУМ`, 'method: hypothesis (P-1.7)') } }
+}

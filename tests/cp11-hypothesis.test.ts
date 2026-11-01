@@ -6,6 +6,8 @@ import { renderToString } from 'vue/server-renderer'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import { baseCandidates, derivedCandidates, HYP_BADGE, HYP_GRADE, hypClaim, isPluralOnly, pluralCandidates, RULES, singularOf } from '../core/hypothesis.ts'
 import { buildHypothesis, relationsOf, type Deps, type Found } from '../src/lib/hypothesis.ts'
+import { ARCHAIC_NOTE, RU_COINCIDE_NOTE } from '../core/hypothesis.ts'
+import HypNotes from '../src/components/HypNotes.vue'
 import HypothesisCard from '../src/components/HypothesisCard.vue'
 
 const PL = 'noun:inanim:p:v_naz:ns'
@@ -85,6 +87,27 @@ describe('CP-11 pages', () => {
     expect(await buildHypothesis('абракадабра', d)).toBeUndefined()
     expect(await buildHypothesis('ножиця', d)).toBeTruthy()
     expect((await relationsOf('слово', 'noun:inanim:n:v_naz', d)).every(r => r.role !== 'singular')).toBe(true)
+  })
+})
+
+describe('CP-11c labels on reconstructed forms', () => {
+  const d = (): Deps => ({ ...lexicon({ 'двері': { word: 'двері', to: '/lw/двері', tags: PL } }), genPl: async w => ({ 'двері': 'дверей', 'ножиці': 'ножиць' } as Record<string, string>)[w], ruHeads: async w => (w === 'дверь' ? 2 : 0) })
+  it('двері → дверь carries the archaic badge (давня і-основа, *dvьрь) and the Russian-coincidence note; ножиці → ножиця carries neither', async () => {
+    const rel = await relationsOf('двері', PL, d())
+    const n = rel.find(r => r.role === 'singular')!
+    expect(n.form).toBe('дверь'); expect(n.notes?.archaic?.uk).toBe(ARCHAIC_NOTE); expect(n.notes?.archaic?.proto).toBe('*dvьrь'); expect(n.notes?.archaic?.cite.kind).toBe('P')
+    expect(n.notes?.ru).toBe(RU_COINCIDE_NOTE)
+    const z = (await relationsOf('ножиці', PL, d())).find(r => r.role === 'singular')!
+    expect(z.form).toBe('ножиця'); expect(z.notes).toBeUndefined()
+    const html = await render(HypNotes, { notes: n.notes })
+    expect(html).toContain('data-testid="hyp-archaic"'); expect(html).toContain('давня і-основа'); expect(html).toContain('не русизм')
+    expect(await render(HypNotes, { notes: z.notes })).not.toContain('hyp-archaic')
+  })
+  it('the page /w/дверь is a hypothesis with the labels; байдик has none', async () => {
+    const h0 = await buildHypothesis('дверь', d())
+    expect(h0?.notes?.archaic?.stem).toBe('давня і-основа'); expect(h0?.notes?.ru).toBe(RU_COINCIDE_NOTE)
+    expect((await buildHypothesis('байдик', d()))?.notes).toBeUndefined()
+    expect(await render(HypothesisCard, { hyp: h0 })).toContain('hyp-archaic')
   })
 })
 

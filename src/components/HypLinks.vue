@@ -6,6 +6,7 @@
 import { ref, watch } from 'vue'
 import { HYP_BADGE } from '../../core/hypothesis.ts'
 import { relationsOf, type Relation } from '../lib/hypothesis.ts'
+import HypNotes from './HypNotes.vue'
 const props = defineProps<{ word: string; tags?: string }>()
 const rels = ref<Relation[]>([]), done = ref(false)
 const ROLE = { plural: 'множина', singular: 'однина', derived: 'похідне', base: 'похідне від' } as const
@@ -22,7 +23,7 @@ watch(() => [props.word, props.tags] as const, async ([w, t]) => {
     <ul>
       <li v-for="r in rels" :key="r.role + r.form">
         <span class="muted">{{ ROLE[r.role] }}:</span> <RouterLink :to="r.to" class="lang">{{ r.form }}</RouterLink>
-        <span v-if="r.hyp" class="badge" data-testid="hyp-badge" :title="r.rule.uk">{{ HYP_BADGE }}</span>
+        <span v-if="r.hyp" class="badge" data-testid="hyp-badge" :title="r.rule.uk">{{ HYP_BADGE }}</span> <HypNotes :notes="r.notes" />
         <span class="muted"> · {{ r.rule.pattern }}</span>
       </li>
     </ul>

@@ -8,6 +8,7 @@ import { computed } from 'vue'
 import { HYP_BADGE, HYP_GRADE } from '../../core/hypothesis.ts'
 import type { Hypothesis, Relation } from '../lib/hypothesis.ts'
 import EvidencePopover from './EvidencePopover.vue'
+import HypNotes from './HypNotes.vue'
 const props = defineProps<{ hyp: Hypothesis }>()
 const ROLE: Record<Relation['role'], string> = { plural: 'множина (засвідчена)', singular: 'однина', derived: 'похідне', base: 'похідне від' }
 const rels = computed(() => props.hyp.relations)
@@ -15,7 +16,7 @@ const rels = computed(() => props.hyp.relations)
 
 <template>
   <article class="card hyp" data-testid="hyp-card" role="status">
-    <h1 class="lemma"><span class="hyp-word">{{ hyp.word }}</span> <span class="badge hyp-badge" data-testid="hyp-badge">{{ HYP_BADGE }}</span></h1>
+    <h1 class="lemma"><span class="hyp-word">{{ hyp.word }}</span> <span class="badge hyp-badge" data-testid="hyp-badge">{{ HYP_BADGE }}</span> <HypNotes :notes="hyp.notes" /></h1>
     <p class="sans small" data-testid="hyp-grade"><b>Оцінка:</b> {{ HYP_GRADE }}. Це не слово словника й не засвідчена форма: сторінка існує, щоб початкова форма не була «дірою» у групі споріднених слів.</p>
     <h2 class="sans">Звідки гіпотеза</h2>
     <ul class="sans small" data-testid="hyp-rules">
@@ -26,7 +27,7 @@ const rels = computed(() => props.hyp.relations)
     <ul class="sans small" data-testid="hyp-rels">
       <li v-for="r in rels" :key="r.role + r.form">
         <span class="muted">{{ ROLE[r.role] }}:</span> <RouterLink :to="r.to" class="lang">{{ r.form }}</RouterLink>
-        <span v-if="r.hyp" class="badge">{{ HYP_BADGE }}</span><code v-else-if="r.tags" class="muted"> {{ r.tags }}</code>
+        <span v-if="r.hyp" class="badge">{{ HYP_BADGE }}</span><code v-else-if="r.tags" class="muted"> {{ r.tags }}</code> <HypNotes :notes="r.notes" />
         <span class="muted"> · {{ r.rule.pattern }}</span>
       </li>
     </ul>

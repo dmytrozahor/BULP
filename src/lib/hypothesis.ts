@@ -2,13 +2,15 @@
  * SPEC 63 CP-11 — the browser side of core/hypothesis.ts. Nothing is shipped per hypothetical word: the page of /w/<word> that has no entry is generated at route time from the indexes
  * the card routes already read (ix/, dx/, cd/, cv/, lm/par/), each lazy and sharded. `buildHypothesis(word, deps)` is pure over `deps`, so tests inject a fake lexicon.
  */
-import { settled, ixRow, ixCards, loadCore } from './parts.ts'
+import { settled, ixRow, ixCards, loadCore, lmLoad } from './parts.ts'
+import { ruKey } from '../../core/ru-contact.ts'
+import { ruHitsOf, type RuHeadFile } from '../../core/ru-head.ts'
 import { loadCv } from './cardIndex.ts'
 import { parOf } from './thinPar.ts'
 import { cardRoute, lk } from '../../core/cv.ts'
 import { key } from '../../core/text.ts'
 import {
-  baseCandidates, derivedCandidates, hypClaim, isPluralOnly, pluralCandidates, singularOf, type HypRule,
+  baseCandidates, derivedCandidates, formNotes, hypClaim, RU_COINCIDE_NOTE, type FormNotes, isPluralOnly, pluralCandidates, singularOf, type HypRule,
 } from '../../core/hypothesis.ts'
 import type { Claim } from '../../core/evidence.ts'
 
@@ -19,11 +21,15 @@ export interface Deps {
   resolve(w: string): Promise<Found | undefined>
   /** the genitive plural of a plural-only lemma when its paradigm is available */
   genPl?(w: string): Promise<string | undefined>
+  /** CP-11c: how many Russian headwords (ru→uk dictionaries, lm/ru, lazy) are spelled like the form */
+  ruHeads?(w: string): Promise<number>
 }
 export type RelRole = 'plural' | 'singular' | 'derived' | 'base'
 /** a relation of a (hypothetical or real) word to another page; `hyp` = the other end is itself a hypothesis (no page of evidence) */
-export interface Relation { role: RelRole; form: string; to: string; hyp: boolean; rule: HypRule; tags?: string }
-export interface Hypothesis { word: string; rules: HypRule[]; claim: Claim<string>; relations: Relation[] }
+export interface Relation { role: RelRole; form: string; to: string; hyp: boolean; rule: HypRule; tags?: string; notes?: Notes }
+/** CP-11c: labels of a reconstructed form: the old-declension note (known to the rule) and the Russian coincidence (the repo Russian headword index) */
+export interface Notes extends FormNotes { ru?: string }
+export interface Hypothesis { word: string; notes?: Notes; rules: HypRule[]; claim: Claim<string>; relations: Relation[] }
 
 export const hypTo = (w: string) => `/w/${encodeURIComponent(w)}`
 
@@ -38,11 +44,22 @@ export const browserDeps: Deps = {
     if (c && key(c.id) === k) return { word: c.id, to: cardRoute(c), tags: (await loadCv(c.id).catch(() => undefined))?.[1] ?? '' }
     return undefined
   },
+  async ruHeads(w) {
+    const k = ruKey(w), f = await lmLoad<RuHeadFile>('ru', k).catch(() => undefined)
+    return ruHitsOf(f?.entries, k).length
+  },
   async genPl(w) {
     await settled(() => parOf(w))
     const l = parOf(w)?.find(x => key(x.lemma) === key(w))
     return l?.paradigm.find(f => /(^|:)v_rod(:|$)/.test(f.tags))?.form
   },
+}
+
+/** CP-11c: the labels of a hypothetical form */
+export async function notesOf(form: string, rule: HypRule, d: Deps): Promise<Notes | undefined> {
+  const n: Notes = formNotes(form, rule)
+  if (await d.ruHeads?.(form)) n.ru = RU_COINCIDE_NOTE
+  return n.archaic || n.ru ? n : undefined
 }
 
 /** the relations of a REAL word to the hypothetical pages: its singular (plurale tantum), its base chain, the derived forms that exist. Every end is a page; `hyp` marks the ones without evidence. */
@@ -51,7 +68,7 @@ export async function relationsOf(word: string, tags: string, d: Deps = browserD
   const seen = new Set<string>([key(word)])
   if (isPluralOnly(tags)) {
     const sg = singularOf(word, await d.genPl?.(word))[0]
-    if (sg && !seen.has(sg.form)) { const r = await d.resolve(sg.form); seen.add(sg.form); out.push({ role: 'singular', form: r?.word ?? sg.form, to: r?.to ?? hypTo(sg.form), hyp: !r, rule: sg.rule, tags: r?.tags }) }
+    if (sg && !seen.has(sg.form)) { const r = await d.resolve(sg.form); seen.add(sg.form); out.push({ role: 'singular', form: r?.word ?? sg.form, to: r?.to ?? hypTo(sg.form), hyp: !r, rule: sg.rule, tags: r?.tags, notes: r ? undefined : await notesOf(sg.form, sg.rule, d) }) }
   }
   // base chain (байдикування → байдикувати → байдик): up to three steps, each end real or hypothetical
   let cur = word
@@ -59,7 +76,7 @@ export async function relationsOf(word: string, tags: string, d: Deps = browserD
     const b = baseCandidates(cur)[0]; if (!b || seen.has(b.form)) break
     seen.add(b.form)
     const r = await d.resolve(b.form)
-    out.push({ role: 'base', form: r?.word ?? b.form, to: r?.to ?? hypTo(b.form), hyp: !r, rule: b.rule, tags: r?.tags })
+    out.push({ role: 'base', form: r?.word ?? b.form, to: r?.to ?? hypTo(b.form), hyp: !r, rule: b.rule, tags: r?.tags, notes: r ? undefined : await notesOf(b.form, b.rule, d) })
     cur = b.form
   }
   for (const c of derivedCandidates(word)) {
@@ -96,5 +113,5 @@ export async function buildHypothesis(word: string, d: Deps = browserDeps): Prom
     rel.push({ role: 'base', form: r.word, to: r.to, hyp: false, rule: b.rule, tags: r.tags })
   }
   if (!rel.length) return undefined
-  return { word: w, rules, claim: hypClaim(w, rules[0]!, from), relations: rel }
+  return { word: w, rules, claim: hypClaim(w, rules[0]!, from), relations: rel, notes: await notesOf(w, rules[0]!, d) }
 }
