@@ -80,6 +80,11 @@ export const VARIANT_FAMILIES: VFamily[] = [
     { form: 'яко', role: 'arch', cite: W('яко', 'alternative form of як (Adverb, Conjunction)', 'en.wiktionary, стаття «яко» (Adverb, Conjunction); ВЕСУМ: яко conj:subord:arch') },
     { form: 'како', role: 'sense', ambiguous: true },
   ] },
+  // MM-52 (owner: «жеби'м теж має розпізнаватися»): жеби = щоб, Надсяння / Лемківщина; the person clitic -м / -сь / -смо / -сте that follows it is split by core/gal-mm52.ts
+  { id: 'VF-ZHEBY', mm: 'MM-52', head: 'щоб', cls: ['conj'], title: 'щоб ~ жеби (Надсяння, Лемківщина)', members: [
+    { form: 'жеби', role: 'dialect', cite: { source: 'ЕУМ «Надсянський говір» (um174)', url: 'https://litopys.org.ua/ukrmova/um174.htm', quote: 'сполучнику жы (вуган’еў ‘виганяв’, жыбу < жеби ‘щоби’, робиў бу ‘би’)',
+      note: 'ЕУМ, стаття «Надсянський говір»: жеби ‘щоби’ названо вихідною формою сполучника; ВЕСУМ має жеби як окрему архаїчну лему (conj:subord:arch)' } },
+  ] },
 ]
 
 /** the evidence of a member; an uncited one says so */

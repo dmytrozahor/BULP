@@ -19,14 +19,15 @@ import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 import type { AltLink } from '../core/vesum-alt.ts'
 import { galSoftGate } from '../core/gal-soft.ts'
-import { PART_HYPH_FOLD, splitHyphenParticle, hostTagOk } from '../core/gal-folds.ts'
+import { PART_HYPH_FOLD, splitHyphenParticle, hostTagOk, SYA_SEP_FOLD, FUSED_FOLD, PCL_FOLD } from '../core/gal-folds.ts'
+import { galGate, fusedHostOk, personClitic, splitFused } from '../core/gal-mm52.ts'
 
 export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 /** B-2 order; lower rank = stronger route (used when one spelling is reached by several routes). */
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string; past?: boolean }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
+export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string; past?: boolean; /** MM-52: the next token is a separated reflexive «ся» (старав ся) */ refl?: boolean }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
@@ -168,9 +169,35 @@ export function etymonVowelGate<T extends { route: Route; opts: Option[] }>(t: T
 }
 /** MM-20: a token that does not link whole and ends in a hyphenated clitic particle (прийми-ж, було-б, ходи-но) links through its HOST word (core/gal-folds.ts ORTH-PART-HYPH); VESUM decides first,
  *  so будь-хто, де-не-де and every hyphenated word VESUM lists keep their own link. The step is recorded in the trace. */
+/** MM-52: the reverse guard + the analysis check of the Galician folds (core/gal-mm52.ts galGate): an option made by a guarded fold is dropped when VESUM lists the token itself */
+function gateGal(t: TypeCtx, env: Env, r: { route: Route; opts: Option[] } | undefined): { route: Route; opts: Option[] } | undefined {
+  if (!r) return r
+  const opts = galGate(r.opts, (env.hits.get(key(t.raw)) ?? []).length > 0, t.orth, t.raw)
+  return opts.length === r.opts.length ? r : opts.length ? { ...r, opts } : undefined
+}
+const hostOf = (t: TypeCtx, host: string): TypeCtx => ({ ...t, raw: host, lemma: undefined, stanza: undefined, gate: undefined, refl: undefined })
+const addStep = (id: string) => (c: Candidate): Candidate => ({ ...c, trace: [id, ...c.trace], branches: c.branches + 1 })
+/** MM-52: a verb followed by a separated «ся» links to the reflexive verb whose VESUM form is the two joined (старав ся → старатися); only a reflexive verb counts */
+function reflOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
+  const r = linkOptions(hostOf(t, t.raw + 'ся'), env), add = addStep(SYA_SEP_FOLD.id)
+  const o = r?.opts.filter(x => /(ся|сь)$/.test(x.hit.lemma) && /^(verb|advp)/.test(x.hit.tags))
+  return r && o && o.length ? { ...r, opts: o.map(x => ({ ...x, cand: add(x.cand), own: add(x.own) })) } : undefined
+}
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
-  const r = remapAlt(etymonVowelGate(t, galSoftGateOpts(t, preferCommon(t, linkOptionsPrep(t, env)), env.hits)), env)
+  const rf = t.refl && t.raw ? reflOptions(t, env) : undefined
+  if (rf) return rf
+  const r = remapAlt(etymonVowelGate(t, galSoftGateOpts(t, preferCommon(t, gateGal(t, env, linkOptionsPrep(t, env))), env.hits)), env)
   if (r) return r
+  const k0 = t.raw ? key(t.raw) : ''
+  // MM-52: a person clitic on a conjunction (жеби'м, бись, щом) and a particle written fused (чомуж, колиб) link through their host; VESUM decides first (щось, бис, ніж keep their own link)
+  const pc = k0 ? personClitic(k0) : undefined
+  if (pc) { const h = linkOptions(hostOf(t, pc.host), env), add = addStep(PCL_FOLD.id); return h ? { ...h, opts: h.opts.map(o => ({ ...o, cand: add(o.cand), own: add(o.own) })) } : undefined }
+  const fu = k0 && !splitHyphenParticle(k0) ? splitFused(k0) : undefined
+  if (fu) {
+    const h = linkOptions(hostOf(t, t.raw.replace(/[’ʼ`']/g, '').slice(0, fu.host.length)), env), add = addStep(FUSED_FOLD.id)
+    const ho = h && h.opts.filter(o => fusedHostOk(fu.particle, o.hit.tags))
+    if (h && ho && ho.length) return { ...h, opts: ho.map(o => ({ ...o, cand: add(o.cand), own: add(o.own) })) }
+  }
   const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined
   if (!sp) return undefined
   const h = linkOptions({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)
@@ -257,6 +284,12 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
   if (t.lang !== 'uk' && !t.lemma && !t.stanza) { const row = correspondenceFor(key(t.raw)); if (row) for (const c of env.derive(row.modern, false).candidates) out.push(key(c.form)) }
   if (t.raw && t.raw === t.raw.toLowerCase()) { const vr = variantFor(key(t.raw)); if (vr && (!vr.orth || (t.orth && vr.orth.includes(t.orth)))) out.push(key(vr.modern)) }   // MM-2, MM-21
   { const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined; if (sp) out.push(...wantedKeys({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)) }   // MM-20
+  if (t.raw) {   // MM-52: separated «ся», person clitic, fused -ж / -б
+    const k = key(t.raw), h = (raw: string) => out.push(...wantedKeys({ ...t, raw, lemma: undefined, stanza: undefined, gate: undefined, refl: undefined }, env))
+    if (t.refl) h(t.raw + 'ся')
+    const pc = personClitic(k); if (pc) h(pc.host)
+    const fu = splitHyphenParticle(k) ? undefined : splitFused(k); if (fu) h(t.raw.replace(/[’ʼ`']/g, '').slice(0, fu.host.length))
+  }
   if (t.lang !== 'uk') for (const c of candsOf(env, t.raw, t.oldI)) { out.push(key(c.form)); for (const v of velarCandidates(key(c.form))) out.push(v.lemma) }
   else for (const c of env.fold(key(t.raw), t.orth)) out.push(key(c.form))
   if (t.orth && MU_ORTH.has(t.orth) && t.lang !== 'uk') { out.push(key(t.raw), key(ruleById['R11']!.apply(key(t.raw)))) }   // MM-3: the plain spelling and its ы > и

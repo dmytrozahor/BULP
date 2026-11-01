@@ -42,6 +42,7 @@ import { altFile, altStandardMap } from '../core/vesum-alt.ts'
 import { FLAG_TAGS, lexIndexVesum, vesumIndex, vesumLemmaList } from './vesum.ts'
 import { ltIndex } from './lt.ts'
 import { palatalClaim, R24_CITE } from '../core/palatalization.ts'
+import { isReflNext } from '../core/gal-mm52.ts'
 import { chooseLemma, linkOptions, posLabel, traceSteps, wantedKeys, ROUTE_RANK, type Chosen, type Env, type Route, type TypeCtx } from './build-link.ts'
 import {
   admit, detectCard, firstClaim, lemmaContact, lemmaRusyn, lookupKeys, mergeClaims, originClaim, primaryEpoch, rankFirst, registerClaim, RULE_AXIS, selectForms, stressVariants, surzhykClaim, VESUM_LOC,
@@ -192,19 +193,20 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     return extra.length ? { ...d, candidates: [...d.candidates, ...extra] } : d
   }
   const derive: Env['derive'] = (s, oldI) => { const k = (oldI ? '1' : '0') + s; let d = dmemo.get(k); if (!d) dmemo.set(k, d = withGalD(withSoftAdj(deriveOes(s, oldI)), s)); return d }
-  const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = withGal(foldRaw(s, orth), s)); return d }
+  // MM-52: a text without `orth` (archive.org OCR, Wikisource) is read with the cited Желехівка folds as extra branches too (the reverse guard of core/gal-mm52.ts galGate keeps VESUM-listed tokens as they are)
+  const fold: Env['fold'] = (s, orth) => { const k = (orth ?? '') + '|' + s; let d = fmemo.get(k); if (!d) fmemo.set(k, d = withGal(foldRaw(s, orth ?? 'желехівка'), s)); return d }
 
   // #stage tokens
   // RS-2: tokenisation is cached per witness file (types local to the witness); the global type table is merged in witness order, so the ids are the one-pass numbering
   const tokeniseWitness = (w: WitnessOut, nlp: NlpOut | undefined) => {
     const idx = new Int32Array(w.tokens.length), local = new Map<string, number>(), keys: string[] = [], ts: TypeCtx[] = [], counts: number[] = []
     w.tokens.forEach((t, i) => {
-      const raw = rawKey(t.raw), lemma = t.lemma || undefined, stanza = !lemma ? nlp?.tokens[i]?.lemma || undefined : undefined
+      const raw = rawKey(t.raw), refl = isReflNext(w.tokens[i + 1]?.raw), lemma = t.lemma || undefined, stanza = !lemma ? nlp?.tokens[i]?.lemma || undefined : undefined
       const gate = w.lang === 'uk' ? undefined : gateKey(t.morph, nlp?.tokens[i]?.upos)   // FX-1: the token's own POS (TOROT manual, else Stanza)
       const past = !!stanza && /(^|\|)Tense=Past\b/.test(nlp?.tokens[i]?.feats ?? '') && /VerbForm=Fin/.test(nlp?.tokens[i]?.feats ?? '')   // PV-8b: finite past verb (Stanza ORV feats, model output)
-      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${past ? 'P' : ''}|${raw}`
+      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${past ? 'P' : ''}|${refl ? 'R' : ''}|${raw}`
       let x = local.get(k)
-      if (x === undefined) { x = ts.length; local.set(k, x); keys.push(k); ts.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate, ...(past ? { past } : {}) }); counts.push(0) }
+      if (x === undefined) { x = ts.length; local.set(k, x); keys.push(k); ts.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate, ...(past ? { past } : {}), ...(refl ? { refl } : {}) }); counts.push(0) }
       counts[x]!++
       idx[i] = x
     })

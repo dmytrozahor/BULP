@@ -16,6 +16,7 @@ import { familyMember } from './variant-families.ts'
 import { GAL_SOFT_FOLDS } from './gal-soft.ts'
 import { ZHEL_FOLDS } from './zhel-folds.ts'
 import { ALL_ZAK_FOLDS, RDC_FOLD, ZAK_FOLDS, isZakMarked } from './zak-folds.ts'
+import { MM52_FOLDS, SYA_SEP_ID, SYA_SEP_CITE, FUSED_ID, FUSED_CITE, PCL_ID, PCL_CITE, splitFused, personClitic } from './gal-mm52.ts'
 
 const SS14 = 'Смаль-Стоцький, Граматика руської мови (1914), скан p. 44 (друк. с. 40), §§ 62–63 «Степенованє прикметників»'
 const OG89 = 'Огоновський, Граматика руської мови (1889), скан p. 31–32 (§ 38), p. 39'
@@ -70,7 +71,7 @@ const UVATI = /^(.{2,}?)ува(ти|в|ла|ло|ли|ний|ння|вши)$/
 export const toOvati = (w: string): string => { const m = UVATI.exec(w); return m ? m[1]! + 'ова' + m[2]! : w }
 
 /** MM-29: dative sg. in -ові / -еві / -єві attached to the unchanged stem (міст-ові, містові): the stem is the candidate. VESUM decides (мостові is the standard dative of міст and is a VESUM form, so it never reaches this branch) */
-const DAT = /^(.{3,}?)-?(ові|еві|єві)$/
+const DAT = /^(.{3,}?)-?(ові|еві|єві|ови|еви|єви)$/   // MM-52: the cited statement itself names -ови, -еви (сьвітови, коневи), not only -ові
 export const toDatStem = (w: string): string => { const m = DAT.exec(w); return m ? m[1]! : w }
 const WPL_DAT = Q('WUK', 'uk.wikipedia «Західнополіський говір» (W-WPL), «Наддністрянський говір» (W-NDN); research/04 SW-DAT-OVY', 'Поширеність закінчення -ови, -еви в давальному відмінку однини іменників чоловічого роду (си́нови, брáтови, дýбови, конéви …)',
   'Вікіпедія називає західні говори (західнополіський, наддністрянський) носіями давального на -ови / -еви. Стандартне закінчення -ові, -еві, -єві (Правопис 2019 § 83, research/02). Закінчення -ові на незміненій основі (містові: без чергування о / і) окремою цитатою у сховищі не підтверджено; дефіс у «міст-ові» — друкарське з’єднання (джерела про дефіс у відмінковому закінченні не знайдено)')
@@ -88,10 +89,14 @@ export const TSYA_PHON_FOLD: Fold = {
   cite: P('OWNER', 'повідомлення власника, 2026-10-29 (сьпіваютьця, засьміетця у Грінченка 1893)', '-тьця / -цця = -ться (сьпіваютьця)', 'джерела (граматики, словника) з цим твердженням у сховищі не знайдено; кандидат для зв’язування, ознака не показується'),
   apply: toTsya,
 }
-export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...ALL_ZAK_FOLDS, ...GAL_SOFT_FOLDS]
+/** MM-52: the three split-token steps (reflexive «ся» apart, fused -ж / -б, person clitic) are recorded in the trace like the others; their `apply` is the host the link goes through */
+export const SYA_SEP_FOLD: Fold = { id: SYA_SEP_ID, era: [], branch: true, cite: SYA_SEP_CITE, apply: w => (/ся$/.test(w) ? w : w + 'ся') }
+export const FUSED_FOLD: Fold = { id: FUSED_ID, era: [], branch: true, cite: FUSED_CITE, apply: w => splitFused(w)?.host ?? w }
+export const PCL_FOLD: Fold = { id: PCL_ID, era: [], branch: true, cite: PCL_CITE, apply: w => personClitic(w)?.host ?? w }
+export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...MM52_FOLDS, SYA_SEP_FOLD, FUSED_FOLD, PCL_FOLD, ...ALL_ZAK_FOLDS, ...GAL_SOFT_FOLDS]
 /** MM-50: ORTH-ZHEL-SOFT (сьвіт → світ, сьпівати → співати, зьвір → звір) is also a link branch for a token of ANY orthography: the Galician-region texts write it too; VESUM decides, a word that is already a form is never reached */
 const ZHEL_SOFT = ZHEL_FOLDS.find(f => f.id === 'ORTH-ZHEL-SOFT')!
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, RDC_FOLD, ZHEL_SOFT, ...GAL_SOFT_FOLDS]
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...MM52_FOLDS, RDC_FOLD, ZHEL_SOFT, ...GAL_SOFT_FOLDS]
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
 export function withGal<T extends Candidate[]>(cands: T, raw?: string): Candidate[] {
