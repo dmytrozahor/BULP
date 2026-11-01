@@ -1254,3 +1254,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › two swaps work too, and a nonsense word with no real word within two swaps has no page |
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › кит and кіт are both real: /w/кит is its own card, never a swap hypothesis; neither card links to the other |
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › a real card lists only ATTESTED variants of its own lemma, with their cites: a corpus spelling, an old-dictionary row; unattested swaps stay out |
+| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › «Родина варіантів» is collapsed by default: title + count in the summary, no member rendered yet |
+| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › opening it (the remembered state, localStorage "1") shows the family; a throwing localStorage just starts closed |
+| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › the generic block (used by HypLinks) collapses with its count and shows the items once open |

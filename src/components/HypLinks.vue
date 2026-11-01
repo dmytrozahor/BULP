@@ -7,6 +7,7 @@ import { ref, watch } from 'vue'
 import { HYP_BADGE } from '../../core/hypothesis.ts'
 import { relationsOf, type Relation } from '../lib/hypothesis.ts'
 import HypNotes from './HypNotes.vue'
+import Collapsible from './Collapsible.vue'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ word: string; tags?: string; /** the card's own spellings (corpus), for the attested и/і variants */ forms?: string[] }>()
 const rels = ref<Relation[]>([]), done = ref(false)
@@ -19,8 +20,7 @@ watch(() => [props.word, props.tags] as const, async ([w, t]) => {
 </script>
 
 <template>
-  <section v-if="rels.length" class="card sans small" data-testid="hyp-links" aria-label="Початкова форма й похідні">
-    <strong>Початкова форма й похідні</strong>
+  <Collapsible v-if="rels.length" id="hyp-links" title="Початкова форма й похідні" :count="rels.length" testid="hyp-links">
     <ul>
       <li v-for="r in rels" :key="r.role + r.form">
         <span class="muted">{{ ROLE[r.role] }}:</span> <RouterLink v-if="r.to" :to="r.to" class="lang">{{ r.form }}</RouterLink><b v-else>{{ r.form }}</b>
@@ -29,5 +29,5 @@ watch(() => [props.word, props.tags] as const, async ([w, t]) => {
         <span class="muted"> · {{ r.rule.pattern }}</span>
       </li>
     </ul>
-  </section>
+  </Collapsible>
 </template>

@@ -102,7 +102,7 @@ describe('DO-4 search, ranking and badges', () => {
   it('DO-4 the page lists every attested result before any dictionary-only one (order of the sections in SearchView)', () => {
     const v = rd('src/views/SearchView.vue')
     const at = (s: string) => v.indexOf(s)
-    expect(at('class="results" aria-live="polite">\n    <li v-for="r in pgR.slice(rows)"')).toBeGreaterThan(at('v-for="r in cardHits"'))   // lemma list after the attested «інші картки»
+    expect(at('v-for="r in cardHits"')).toBeGreaterThan(at('v-for="r in pgR.slice(rows)"'))   // CP-11d (owner): «інші картки» are the SECOND tier, after the lemma list
     expect(at('data-testid="dict-hits"')).toBeGreaterThan(at('v-for="r in pgR.slice(rows)"'))                                          // dictionary-only after the lemma list
     expect(at('data-testid="uv-hits"')).toBeGreaterThan(at('data-testid="dict-hits"'))
     expect(v).toMatch(/<span class="badge" :title="DICT_STATUS">лише словник<\/span>/)

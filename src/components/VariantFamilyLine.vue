@@ -6,13 +6,14 @@
 import { computed } from 'vue'
 import { familyOfLemma, memberEvidence, ROLE_UK } from '../../core/variant-families.ts'
 import EvidencePopover from './EvidencePopover.vue'
+import Collapsible from './Collapsible.vue'   // CP-11g: collapsed by default, count in the summary
 const props = defineProps<{ lemma: string }>()
 const fam = computed(() => familyOfLemma(props.lemma))
 const wl = (l: string) => '/w/' + encodeURIComponent(l)
 </script>
 
 <template>
-  <div v-if="fam" data-testid="variant-family" class="hl-line sans small">
+  <Collapsible v-if="fam" id="variant-family" title="Родина варіантів" :count="fam.members.length" testid="variant-family">
     <span class="badge" :title="'родина варіантів ' + fam.id + ' (' + fam.mm + ')'">родина варіантів</span>
     <RouterLink v-if="fam.head !== lemma" :to="wl(fam.head)"><strong>{{ fam.head }}</strong></RouterLink><strong v-else>{{ fam.head }}</strong>
     <span class="muted"> ← </span>
@@ -21,5 +22,5 @@ const wl = (l: string) => '/w/' + encodeURIComponent(l)
       <span class="muted"> ({{ ROLE_UK[m.role] }}<template v-if="!m.cite">, джерела не знайдено</template>)</span>
       <EvidencePopover :evidence="[memberEvidence(fam, m)]" heading="Джерело варіанта" /></template>
     <div v-if="fam.feature" class="muted">ознака вимови слова «{{ fam.head }}»: {{ fam.feature.label }} <EvidencePopover :evidence="[memberEvidence({ ...fam, head: fam.head }, { form: fam.head, role: 'alt', cite: fam.feature.cite })]" heading="Діалектна ознака" /></div>
-  </div>
+  </Collapsible>
 </template>
