@@ -20,6 +20,7 @@ export interface VCite { source: string; url: string; quote: string; note: strin
 export interface VMember {
   form: string; role: VRole
   /** absent = the owner named it, no source was found */ cite?: VCite
+  /** MM-52b: the owner's statement, verbatim (the quote of the evidence when there is no cite) and the relation it states */ owner?: { quote: string; relation: string }
   /** the form is also an ordinary form of another word (меж = gen. pl. of межа): it is shown as a family member but never overrides a VESUM reading */ ambiguous?: boolean
   /** peer: a member that has its own card (в beside у): shown, never redirected */ peer?: boolean
   /** only the link and the search key, no chip on a token (declension forms of весь) */ quiet?: boolean
@@ -36,6 +37,7 @@ const WIKT = (w: string) => `https://en.wiktionary.org/wiki/${encodeURIComponent
 const W = (word: string, quote: string, note: string): VCite => ({ source: 'Вікісловник (en)', url: WIKT(word), quote, note })
 const ALT_V = 'Alternative forms: вві, ві, во, ув, уві (rare)'
 
+const OWNER_KURVOI = { quote: 'Курвої це прийменник від курва, редукований', relation: 'присвійний прикметник від курва, редукована форма мовця (курвиної → курвої); власник написав «прийменник», маючи на увазі прикметник' }
 export const VARIANT_FAMILIES: VFamily[] = [
   // MM-43 (owner remark 2026-10-29: «ну коли редукцію робить мовець»): the speaker's own colloquial reduction, recorded in direct speech / dialect and folk texts. Corpus counts (BULP data/work shards, 2026-10-29):
   // шо 799 tokens in 10 witnesses (ez26_shekerik 724, cheremshyna1940 51), ше 93 in 6 (ez26_shekerik 71), шоб 7 in 2 (kobzar1876 5, rusalka1837 2), тра 7 in 6. Sources are cited only where en.wiktionary has the line.
@@ -85,12 +87,18 @@ export const VARIANT_FAMILIES: VFamily[] = [
     { form: 'жеби', role: 'dialect', cite: { source: 'ЕУМ «Надсянський говір» (um174)', url: 'https://litopys.org.ua/ukrmova/um174.htm', quote: 'сполучнику жы (вуган’еў ‘виганяв’, жыбу < жеби ‘щоби’, робиў бу ‘би’)',
       note: 'ЕУМ, стаття «Надсянський говір»: жеби ‘щоби’ названо вихідною формою сполучника; ВЕСУМ має жеби як окрему архаїчну лему (conj:subord:arch)' } },
   ] },
+  // MM-52b (owner: «Курвої це прийменник від курва, редукований»; прикметник is meant): a possessive adjective of курва, reduced by the speaker (курвиної → курвої, «до курвої мами»).
+  // VESUM has no курвин; the link goes to курва. No cited general pattern for the speaker's reduction of -ин- / -ов- possessives was found in the repo (only per-word MM-43 rows), so this is NOT generalised: only the case forms below.
+  { id: 'VF-KURVOI', mm: 'MM-52b', head: 'курва', cls: ['noun'], title: 'курва ~ курвої (присвійний прикметник, редукована форма мовця)', members: [
+    ...['курвої', 'курвого', 'курвому'].map((form): VMember => ({ form, role: 'reduced', owner: OWNER_KURVOI })),
+    ...['курвій', 'курву'].map((form): VMember => ({ form, role: 'reduced', ambiguous: true, owner: OWNER_KURVOI })),   // also ordinary forms of курва (dat./loc., acc.): VESUM wins
+  ] },
 ]
 
 /** the evidence of a member; an uncited one says so */
 export const memberEvidence = (f: VFamily, m: VMember): Evidence =>
   m.cite ? D(m.cite.source, m.cite.url, m.cite.quote, `${m.cite.note}; «${m.form}» → «${f.head}»`)
-    : P('зауваження власника', `SPEC 63 ${f.mm}`, `«${m.form}» → «${f.head}»`, `джерела не знайдено: зв’язок «${m.form}» → «${f.head}» за зауваженням власника проєкту (SPEC 63 ${f.mm}); ознак і діалекту не заявлено`)
+    : P('зауваження власника', `SPEC 63 ${f.mm}`, m.owner?.quote ?? `«${m.form}» → «${f.head}»`, m.owner ? `${m.owner.relation}; «${m.form}» → «${f.head}»; ступінь: за свідченням носія (не засвідчено); джерела (словника, граматики) не знайдено` : `джерела не знайдено: зв’язок «${m.form}» → «${f.head}» за зауваженням власника проєкту (SPEC 63 ${f.mm}); ознак і діалекту не заявлено`)
 
 const byForm = new Map<string, { family: VFamily; member: VMember }>()
 for (const f of VARIANT_FAMILIES) for (const m of f.members) byForm.set(m.form, { family: f, member: m })

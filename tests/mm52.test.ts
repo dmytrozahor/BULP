@@ -9,6 +9,7 @@ import { GEN_I_FOLD, UNCONTR_FOLD, GEM_FOLD, APOS_FOLD, PL1_M_FOLD, LONG_INF_FOL
 import { foldById } from '../core/orthography.ts'
 import { derive as deriveRaw } from '../core/phonology.ts'
 import { key } from '../core/text.ts'
+import { variantFor, corrEvidence } from '../core/correspondences.ts'
 import { chooseLemma, linkOptions, wantedKeys, type Env, type TypeCtx } from '../pipelines/build-link.ts'
 import type { VesumHit } from '../core/types.ts'
 
@@ -20,7 +21,7 @@ const V: Record<string, [string, string][]> = {   // form → [lemma, tags]
   питання: [['питання', 'noun:inanim:n:v_naz']], життю: [['життя', 'noun:inanim:n:v_dav']], життя: [['життя', 'noun:inanim:n:v_naz']], "п'ять": [['п\'ять', 'numr:v_naz']], "м'ясо": [['м\'ясо', 'noun:inanim:n:v_naz']],
   станції: [['станція', 'noun:inanim:f:v_rod']], партії: [['партія', 'noun:inanim:f:v_rod']], парти: [['парта', 'noun:inanim:p:v_naz']], діти: [['дитина', 'noun:anim:p:v_naz']], дітей: [['дитина', 'noun:anim:p:v_rod']], люди2: [],
   старався: [['старатися', 'verb:rev:imperf:past:m']], старав: [['старати', 'verb:imperf:past:m']], чому: [['чому', 'adv:pron:int']], ж: [['ж', 'part']], ніж: [['ніж', 'noun:inanim:m:v_naz']], ти: [['ти', 'noun:anim:p:v_naz:pron:pers:2']],
-  поїдемо: [['поїхати', 'verb:perf:futr:p:1']], тамка: [['тамка', 'adv:pron:dem:arch']], бис: [['бис', 'noun:anim:m:v_naz']], абим: [], аби: [['аби', 'conj:subord']],
+  курва: [['курва', 'noun:anim:f:v_naz:vulg']], поїдемо: [['поїхати', 'verb:perf:futr:p:1']], тамка: [['тамка', 'adv:pron:dem:arch']], бис: [['бис', 'noun:anim:m:v_naz']], абим: [], аби: [['аби', 'conj:subord']],
 }
 const hits = new Map<string, VesumHit[]>(Object.entries(V).map(([k, v]) => [key(k), v.map(([lemma, tags]) => ({ lemma, tags }))]))
 const dm = new Map<string, ReturnType<typeof deriveRaw>>()
@@ -45,8 +46,14 @@ describe('MM-52 the owner sentence «але дїд казав, жебиʼм йш
   it('поїдем (short 1pl) is the rule ORTH-GAL-1PL-M when VESUM does not list it itself', () => {
     expect(link('поїдем')).toMatchObject({ lemma: 'поїхати', trace: ['ORTH-GAL-1PL-M'] })
   })
-  it('курвої stays unlinked: no cited rule turns a possessive adjective of «курва» into a VESUM form', () => {
-    expect(link('курвої')).toBeUndefined()
+  it('MM-52b курвої (= курвиної, possessive adjective of курва reduced by the speaker) links to курва; evidence kind P, the owner quoted verbatim, locator SPEC 63 MM-52b', () => {
+    expect(link('курвої')?.lemma).toBe('курва'); expect(link('курвого')?.lemma).toBe('курва'); expect(link('курвому')?.lemma).toBe('курва')
+    const row = variantFor('курвої')!, ev = corrEvidence(row, 'курвої')
+    expect(ev.kind).toBe('P'); expect(ev.quote).toBe('Курвої це прийменник від курва, редукований'); expect(ev.locator).toBe('SPEC 63 MM-52b')
+    expect(ev.note).toContain('присвійний прикметник'); expect(ev.note).toContain('за свідченням носія')
+  })
+  it('MM-52b is not generalised: no cited pattern for the reduction of -ин- possessives, so мамин-type forms are untouched', () => {
+    expect(link('мамої')).toBeUndefined(); expect(link('батької')).toBeUndefined()
   })
 })
 

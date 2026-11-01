@@ -102,7 +102,7 @@ export const clsOk = (c: Pick<Correspondence, 'cls'>, vc: string): boolean => (A
 // vocative «како» of кака is not touched while an orv witness (TOROT lemma / un-lemmatised token) goes to як; the POS gate (core/pos-gate.ts) keeps Df / Dq / Du / C- tokens off the noun
 for (const f of VARIANT_FAMILIES) for (const m of f.members) {
   if (m.peer) continue
-  const base = { modern: f.head, cls: f.cls as Cls[], url: m.cite?.url ?? '', quote: m.cite?.quote ?? '', note: m.cite?.note ?? 'джерела не знайдено (зауваження власника)', mm: f.mm }
+  const base = { modern: f.head, cls: f.cls as Cls[], url: m.cite?.url ?? '', quote: m.cite?.quote ?? m.owner?.quote ?? '', note: m.cite?.note ?? (m.owner ? `${m.owner.relation}; ступінь: за свідченням носія (не засвідчено); джерела не знайдено` : 'джерела не знайдено (зауваження власника)'), mm: f.mm }
   if (m.role === 'sense') CORRESPONDENCES.push({ old: [m.form], kind: 'cs', ...base, uncited: true, quote: 'яко: alternative form of як (Adverb, Conjunction)', url: 'https://en.wiktionary.org/wiki/яко#Ukrainian',
     note: 'як / яко — прислівник і сполучник «як» (ЦС / староукраїнське): джерела, що прямо ототожнює «како» з «як», не знайдено (en.wiktionary має лише яко = як): ототожнення — зауваження власника проєкту. Іменник кака (кличний кака → како) лишається читанням ВЕСУМ для тексту без позначки частини мови' })
   else CORRESPONDENCES.push({ old: [], kind: 'variant', variants: [m.form], yields: true, ...base, ...(m.cite ? {} : { uncited: true }) })
