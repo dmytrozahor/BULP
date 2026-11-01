@@ -1216,3 +1216,13 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-19 | tests/proverbs.test.ts › GG-19 the card block › lazy as before: the printed rows ride in the existing lm/phr shard, nothing new is loaded by the first card render |
 | GG-19 | tests/proverbs.test.ts › GG-19b the owner-supplied NPLU scan of т. 23 › ingestOwner files the OCR text as item nplu-etnohr_23 (gz + index line, 200), is idempotent, and refuses a partial OCR; the build then reads it like the archive.org volumes |
 | GG-19 | tests/proverbs.test.ts › GG-19b the owner-supplied NPLU scan of т. 23 › the source is named as the owner-supplied NPLU scan: no archive.org link on the card, the title says so; the OCR job is resumable and not for the local machine |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 rules › plural-only nouns get the singular of the regular declension, by the genitive plural when known |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 rules › VESUM tags: only plural + ns is a plurale tantum |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 rules › derivation candidates go both ways (байдик ~ байдикувати ~ байдикування, байдикство) |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 rules › the hypothesis claim passes claim(): kind P «джерела не знайдено», method hypothesis, never attested |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 pages › байдик (no entry) is a hypothesis page linking to байдики and байдикувати |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 pages › байдики links to the hypothetical singular; an attested singular is a real page, not a hypothesis |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 pages › the base chain of байдикування ends at the hypothetical байдик |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 pages › a real word is never marked hypothetical, and a word with no derivable relation has no page |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 budgets and ordering › the hypothesis path adds no data file and is lazy: no per-word shard, route component async, search debounced |
+| CP-11 | tests/cp11-hypothesis.test.ts › CP-11 budgets and ordering › CP-11b: Plast terms are the tier after every other result, the hypothetical forms the last |

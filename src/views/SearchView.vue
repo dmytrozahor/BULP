@@ -18,6 +18,8 @@ import { fmtDate, fmtNum } from '../lib/format.ts'
 import Dots from '../components/Dots.vue'
 import EntryCounts from '../components/EntryCounts.vue'
 import AnalyzeView from './AnalyzeView.vue'   // UX-7: rule-based fallback for words outside the lexicon
+import { buildHypothesis, hypTo, type Hypothesis } from '../lib/hypothesis.ts'
+import { HYP_BADGE } from '../../core/hypothesis.ts'
 import { plastSearch } from '../lib/sociolectData.ts'
 import { uvSearch, type UvHit } from '../lib/uvData.ts'
 const { loaded, byLemma, corpus, witnessById, searchIdx } = useData()
@@ -70,6 +72,16 @@ const lemmaChips = computed(() => lemmaPage(pgL.page.value) ?? [])
 const uvHits = ref<UvHit[]>([])
 watch(q, async v => { const x = v; const r = await uvSearch(x).catch(() => []); if (x === q.value) uvHits.value = r }, { immediate: true })
 const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
+/** CP-11: a hypothetical form (original / derived, no source attests it) is the LAST tier, after Plast terms; debounced so a keystroke costs nothing extra while typing, and only for a query that no real page answers */
+const hypHit = shallowRef<Hypothesis>(), hseq = ref(0)
+watch(q, async v => {
+  const t = v.trim(), n = ++hseq.value; hypHit.value = undefined
+  if ([...t].length < 4) return
+  await new Promise(r => setTimeout(r, 350))
+  if (n !== hseq.value) return
+  const h = await buildHypothesis(t).catch(() => undefined)
+  if (n === hseq.value) hypHit.value = h
+}, { immediate: true })
 </script>
 
 <template>
@@ -82,21 +94,6 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
     <p v-if="corpus?.nEntries" class="small muted sans" data-test="entry-counts">Усього {{ fmtNum(corpus.nEntries) }} статей: <EntryCounts :corpus="corpus" /></p>
   </section>
 
-  <section v-if="plast.length" class="card" aria-live="polite">
-    <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
-    <ul class="results">
-      <li v-for="e in plast.slice(0, 3)" :key="e.src + e.loc">
-        <RouterLink :to="wordCardTo(e.w, searchIdx, ixCards)">
-          <span class="lem">{{ e.w }}</span>
-          <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
-          <span class="small sans">«{{ e.g }}»</span>
-          <span class="small muted sans">{{ e.loc }}<template v-if="e.byGloss"> · знайдено в тлумаченні</template></span>
-        </RouterLink>
-        <span class="small sans"> · <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">джерело</RouterLink></span>
-      </li>
-    </ul>
-    <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>
-  </section>
   <section v-if="cardHits.length" class="card" aria-live="polite">
     <h2><span>Інші картки (словники, рідкісні й архаїчні слова)</span> <span class="muted small">{{ cardHits.length }}</span></h2>
     <ul class="results">
@@ -162,6 +159,29 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
           <span v-if="h.matched !== h.head.toLowerCase()" class="small sans">знайдено: «{{ h.matched }}»</span>
         </RouterLink>
       </li>
+    </ul>
+  </section>
+  <!-- CP-11b: Plast terms are the tier AFTER every other match (regular words, other cards, dictionary-only, unverified), then hypothetical forms (CP-11) -->
+  <section v-if="plast.length" class="card" aria-live="polite">
+    <h2><span>Пластова лексика</span> <span class="muted small">{{ plast.length }}</span></h2>
+    <ul class="results">
+      <li v-for="e in plast.slice(0, 3)" :key="e.src + e.loc">
+        <RouterLink :to="wordCardTo(e.w, searchIdx, ixCards)">
+          <span class="lem">{{ e.w }}</span>
+          <span class="badge">{{ e.k === 'abbr' ? 'абревіатура' : 'пластова лексика' }}</span>
+          <span class="small sans">«{{ e.g }}»</span>
+          <span class="small muted sans">{{ e.loc }}<template v-if="e.byGloss"> · знайдено в тлумаченні</template></span>
+        </RouterLink>
+        <span class="small sans"> · <RouterLink :to="`/source/${encodeURIComponent(e.src)}`">джерело</RouterLink></span>
+      </li>
+    </ul>
+    <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>
+  </section>
+  <section v-if="hypHit" class="card" aria-live="polite" data-testid="hyp-hits">
+    <h2><span>Гіпотетичні форми</span></h2>
+    <ul class="results">
+      <li><RouterLink :to="hypTo(hypHit.word)"><span class="lem">{{ hypHit.word }}</span><span class="badge" data-testid="hyp-badge">{{ HYP_BADGE }}</span>
+        <span class="small sans">виведено з «{{ hypHit.relations[0]?.form }}» ({{ hypHit.rules[0]?.pattern }})</span></RouterLink></li>
     </ul>
   </section>
 </template>

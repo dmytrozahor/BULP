@@ -88,6 +88,8 @@ import { formsWitnesses } from '../lib/refKwic.ts'
 const AnalyzeView = defineAsyncComponent(() => import('./AnalyzeView.vue'))   // UX-7: words outside the lexicon fall back to the rule-based analysis
 
 import ZakNote from '../components/ZakNote.vue'
+const HypothesisGate = defineAsyncComponent(() => import('../components/HypothesisGate.vue'))   // CP-11: lazy, off the deep-link path of a real card
+const HypLinks = defineAsyncComponent(() => import('../components/HypLinks.vue'))
 const props = defineProps<{ lemma: string }>()
 const { byLemma, loaded, corpus, witnessById, fullOf, detailError, searchIdx, att } = useData()
 const card = computed(() => byLemma.value.get(props.lemma))
@@ -221,12 +223,14 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
 <template>
   <div v-if="!loaded"><div class="skeleton" style="height:3rem;width:50%" /><div class="skeleton" v-for="i in 5" :key="i" /></div>
   <template v-else-if="!card">
-    <div class="card" role="status">
-      <h1>«{{ lemma }}» — немає в корпусі</h1>
-      <p class="sans">Немає в корпусі — аналіз за правилами. Нижче — розбір у браузері (будова, деривація, шлях запозичення, омографи, русинська, IPA), лише за правилами з джерелами.
-        <RouterLink :to="{ path: '/analyze', query: { q: lemma } }">Відкрити в «Аналізі слова» →</RouterLink> · <RouterLink to="/">до пошуку</RouterLink></p>
-    </div>
-    <AnalyzeView :embed="lemma" />
+    <HypothesisGate :word="lemma">
+      <div class="card" role="status">
+        <h1>«{{ lemma }}» — немає в корпусі</h1>
+        <p class="sans">Немає в корпусі — аналіз за правилами. Нижче — розбір у браузері (будова, деривація, шлях запозичення, омографи, русинська, IPA), лише за правилами з джерелами.
+          <RouterLink :to="{ path: '/analyze', query: { q: lemma } }">Відкрити в «Аналізі слова» →</RouterLink> · <RouterLink to="/">до пошуку</RouterLink></p>
+      </div>
+      <template #analysis><AnalyzeView :embed="lemma" /></template>
+    </HypothesisGate>
   </template>
   <template v-else>
     <ZakNote :target="card.lemma" />
@@ -301,6 +305,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         </Panel>
         <CardRules :lemma="card.lemma" skip-features />   <!-- CP-8 -->
         <DerivativesBlock panel :lemma="card.lemma" />
+        <HypLinks :word="card.lemma" :tags="card.paradigm[0]?.tags" />   <!-- CP-11 -->
         <DeicticStructure :word="card.lemma" />   <!-- SPEC 60 DX-3 «Будова» (renders only for parsable deictics) -->
         <HeteronymReadings :form="card.lemma" />   <!-- SPEC 60 HT-2 «Наголос і значення» (heteronyms and the [U] послуха́тися note) -->
         <!-- 3. Paradigm, by the lemma's paradigm kind (FX-5) -->

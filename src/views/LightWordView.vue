@@ -28,6 +28,8 @@ import { kwicAt } from '../lib/unlinked.ts'
 import { altStandardOf } from '../lib/altData.ts'
 import { foldById } from '../../core/orthography.ts'
 import ZakNote from '../components/ZakNote.vue'
+import { defineAsyncComponent } from 'vue'
+const HypLinks = defineAsyncComponent(() => import('../components/HypLinks.vue'))   // CP-11
 const props = defineProps<{ lemma: string }>()
 const cv = ref<CvEntry>(), err = ref(''), cvDone = ref(false), kwic = ref<Kwic[]>([])
 const { annData, loaded, witnessById, byLemma } = useData()
@@ -102,6 +104,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
     <p v-else-if="dict" class="sans small muted">Слово є у словнику, але жоден текст нашого корпусу його не засвідчує, тому частот, першої фіксації й прикладів немає — нічого не вигадано. Правила, виведення з написання й довідкові блоки нижче працюють без корпусу.</p>
     <p v-else-if="cv && cv[2] === 0" class="sans small muted">Слово засвідчене у пластових словниках (значення нижче); у корпусі текстів і в історичних словниках не трапляється.</p>
     <p v-else class="sans small muted">Слово засвідчене лише в словниках (заголовне слово або цитований відповідник); у корпусі текстів не трапляється, тому повної картки з частотами немає.</p>
+    <HypLinks :word="word" :tags="tags" />
     <AttSenses v-if="cv && cv[3].length" :word="word" :atts="cv[3]" />
     <IkavismChain v-if="row && base.length" :lemma="row[0]" :paradigm="base" />
     <p v-if="ex" class="sans small">Приклад: <RouterLink :to="textTo(ex.w, ex.loc)">«{{ ex.raw }}»</RouterLink> · {{ ex.loc }} · <RouterLink :to="witnessTo(ex.w)">{{ ex.w }}</RouterLink></p>
