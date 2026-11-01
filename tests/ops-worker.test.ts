@@ -148,6 +148,13 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
 })
 
 d('RS-3 the scripts are consistent', () => {
+  it('RS-3 next.sh runs the incremental ingest before the build, and the ingest markers track the harvest index size (new harvested items are not skipped)', () => {
+    const nx = readFileSync('ops/worker/next.sh', 'utf8'), ing = readFileSync('ops/worker/ingest.sh', 'utf8')
+    expect(nx.indexOf('ops/worker/ingest.sh')).toBeGreaterThan(0)
+    expect(nx.indexOf('ops/worker/ingest.sh')).toBeLessThan(nx.indexOf('reparse.sh')); expect(nx.indexOf('reparse.sh')).toBeLessThan(nx.indexOf('npm run build:data'))
+    expect(ing).toContain('idx=$(wc -l < data/raw/harvest/$s/index.jsonl'); expect(ing).toContain('echo "$sig" > $D/$s')
+    for (const s of ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'linguists']) expect(ing.split('\n').some(l => /^(run |for s in )/.test(l) && l.includes(s)), s).toBe(true)
+  })
   it('RS-3 every script parses, sources the ONE shared env.sh and sets no heap of its own', () => {
     for (const f of readdirSync('ops/worker').filter(x => x.endsWith('.sh'))) {
       expect(spawnSync('bash', ['-n', `${W}/${f}`]).status, f).toBe(0)

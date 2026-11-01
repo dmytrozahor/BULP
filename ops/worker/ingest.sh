@@ -12,12 +12,14 @@ D=$BULP_LOGS/done; failed=()
 run() { # src extra-args...
   local s=$1; shift
   # GG-5: the marker keeps the parameters; a source finished with other parameters (e.g. another --wiki-stride) is read again
-  [ -z "$FULL" ] && [ -f $D/$s ] && [ "$(cat $D/$s)" = "$*" ] && { echo "skip $s"; return; }
+  # the marker also keeps the size of the harvest index: a harvester that added items since the last ingest makes the marker miss (the incremental manifest then reads only the delta)
+  local sig="$* idx=$(wc -l < data/raw/harvest/$s/index.jsonl 2>/dev/null || echo 0)"
+  [ -z "$FULL" ] && [ -f $D/$s ] && [ "$(cat $D/$s)" = "$sig" ] && { echo "skip $s"; return; }
   echo "ingest $s $(date +%T)" > ~/import-step
   /usr/bin/time -v npx tsx pipelines/ingest-harvest.ts --only $s $FULL "$@" > $BULP_LOGS/ingest-$s.out 2> $BULP_LOGS/ingest-$s.time
   local rc=$?
   cat $BULP_LOGS/ingest-$s.out
-  if [ $rc -eq 0 ]; then echo "$*" > $D/$s; for m in build unlinked vitest vuetsc vitebuild budget; do rm -f $D/$m; done
+  if [ $rc -eq 0 ]; then echo "$sig" > $D/$s; for m in build unlinked vitest vuetsc vitebuild budget; do rm -f $D/$m; done
   else echo "ingest source $s FAILED rc=$rc (see $BULP_LOGS/ingest-$s.time)" >&2; failed+=("$s(rc=$rc)"); fi
 }
 # SPEC 63 RF-8/KV-1/RU-5: ingesters that are not harvest sources (own script, own done-marker). The marker holds a SIGNATURE of the input (OCR page count / seed checksum), so a rerun after the OCR grew
@@ -41,6 +43,7 @@ ADF="${BOOKS:-$HOME/work/books}/Ad_Fontes (1).pdf"
 for s in wikisource-uk hrushevsky archive-hrushevsky poets gramoty user-books faust-lukash; do run $s; done
 run hv6
 run linguists
+for s in archive-rusyn archive-kuban archive-hv5-authors; do run $s; done   # harvested by harvest/archive.ts, never ingested before (no marker, no step)
 run archive-ukr --hv6-volumes "$(hv6sig)"
 run wikipedia-uk --wiki-stride "$BULP_WIKI_STRIDE"
 run hplt --limit "$BULP_HPLT_LIMIT"

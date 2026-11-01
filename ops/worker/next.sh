@@ -16,6 +16,9 @@ git diff --quiet $OLD HEAD -- package-lock.json || npm ci --no-audit --no-fund >
 RUN=$(date -u +%Y%m%dT%H%M%SZ); R=$BULP_LOGS/runs/$RUN; mkdir -p $R/done
 echo "$RUN" > ~/logs/$NAME.run
 for s in ff; do touch $R/done/$s; done
+st "ingest (incremental, run $RUN)"   # the harvests (archive-*, linguists, ...) reach data/work only through ingest.sh; markers carry the harvest index size, so a rerun is a no-op when nothing was harvested
+bash ~/BULP/ops/worker/ingest.sh > $R/ingest.out 2> $R/ingest.err || fail "ingest (see $R/ingest.err)"
+touch $R/done/ingest
 st "reparse (sum-scan, parse-se-dicts) (run $RUN)"
 bash ~/BULP/ops/worker/reparse.sh > $R/reparse.out 2> $R/reparse.err || fail "reparse (see $R/reparse.err)"
 touch $R/done/reparse
