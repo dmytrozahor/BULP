@@ -4,7 +4,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { gzipSync } from 'node:zlib'
-import { dirHas, encodeBuckets, presenceOf, type PresenceIndex } from '../core/presence.ts'
+import { dirHas, encodeBuckets, presenceOf, presenceSideFile, type PresenceIndex } from '../core/presence.ts'
 import { scanPresence } from '../pipelines/build-presence.ts'
 import { fetchJson } from '../src/lib/fetchJson.ts'
 import { isIndexed, resetPresence } from '../src/lib/presence.ts'
@@ -59,6 +59,19 @@ describe('CP-10.7 fetchJson skips absent buckets', () => {
   it('only the sidecar directories are looked up; the index file and other URLs are not', () => {
     for (const u of ['./data/lm/st/5.json', './data/cd/5.json', './data/tc/orv/5.json', './data/uv/p/04.json', './data/unlinked/idx-04.json', './data/wit/5.json']) expect(isIndexed(u), u).toBe(true)
     for (const u of ['./data/lm/presence.json', './data/boot.json', './data/ix/0061.json', './data/persons/index.json', '/a.json']) expect(isIndexed(u), u).toBe(false)
+  })
+})
+
+describe('CP-10.7 a long directory lives in its own file (the keystroke budget)', () => {
+  afterEach(() => { vi.unstubAllGlobals(); resetPresence() })
+  it('the main index carries only a reference; the side file is fetched on the first lookup of that directory', async () => {
+    const f = vi.fn(async (u: string) => new Response(String(u).includes('presence-uv_p') ? JSON.stringify({ names: ['0432'] }) : '{"x":1}'))
+    vi.stubGlobal('fetch', f)
+    resetPresence({ format: 1, dirs: { 'uv/p': { f: presenceSideFile('uv/p') }, 'lm/st': { p: [4] } } })
+    expect(presenceSideFile('uv/p')).toBe('lm/presence-uv_p.json')
+    expect(await fetchJson('./data/lm/st/5.json', [0])).toBeNull(); expect(f).not.toHaveBeenCalled()   // a short directory never touches the side file
+    expect(await fetchJson('./data/uv/p/04ff.json', [0])).toBeNull(); expect(f).toHaveBeenCalledTimes(1)
+    expect(await fetchJson('./data/uv/p/0432.json', [0])).toEqual({ x: 1 }); expect(f).toHaveBeenCalledTimes(2)
   })
 })
 

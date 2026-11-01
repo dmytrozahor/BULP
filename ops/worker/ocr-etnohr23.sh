@@ -4,6 +4,7 @@
 # Usage on the worker, when the build is idle:  ops/worker/ocr-etnohr23.sh /path/Etnohrafichnyi_zbirnyk_T23.pdf   (copy the PDF to an ASCII path first)
 # Then: HARVEST_DIR=<raw>/harvest npx tsx harvest/proverbs-owner.ts ~/work/etnohr23-ocr/etnohr23.txt ; npm run build:data (or pipelines/synphr-run.ts)
 set -euo pipefail
+. ~/BULP/ops/worker/env.sh   # the ONE shared worker env (RS-3)
 PDF=${1:?pdf}; OUT=${OUT:-$HOME/work/etnohr23-ocr}; mkdir -p "$OUT"
 [ -s "$OUT/plain.pdf" ] || qpdf --decrypt "$PDF" "$OUT/plain.pdf"          # owner-password only; if it asks for a user password, stop and tell the owner
 N=$(qpdf --show-npages "$OUT/plain.pdf")

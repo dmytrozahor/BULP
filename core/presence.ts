@@ -6,7 +6,10 @@
  * Per directory the smallest of: the list of present numbers, the list of absent numbers, a hex bitmap; named (non-numeric) files: the list of names.
  */
 /** p = present numbers; a = absent numbers below n (n and above are absent); h = hex bitmap (a number past its end is absent); names = the present file names */
-export interface PresenceDir { p?: number[]; a?: number[]; n?: number; h?: string; names?: string[] }
+export interface PresenceDir { p?: number[]; a?: number[]; n?: number; h?: string; names?: string[]; f?: string }
+/** a directory whose encoding is longer than this (JSON chars) is written to its own file lm/presence-<dir>.json (`f` in the main index = that file, fetched only when the directory is first looked up): a search keystroke reads the main index and must not pay for uv/p's name list (~9 KB gz) */
+export const PRESENCE_SPLIT = 16000
+export const presenceSideFile = (dir: string): string => `lm/presence-${dir.replaceAll('/', '_')}.json`
 export interface PresenceIndex { format: 1; dirs: Record<string, PresenceDir> }
 /** the file of the index, under the data root (lm/ is a CDN dir, so the index travels with the build it describes) */
 export const PRESENCE_FILE = 'lm/presence.json'

@@ -5,7 +5,7 @@
  */
 import { existsSync, mkdirSync, readdirSync, statSync } from 'node:fs'
 import { join, resolve } from 'node:path'
-import { PRESENCE_DIRS, PRESENCE_FILE, encodeBuckets, encodeNames, type PresenceDir, type PresenceIndex } from '../core/presence.ts'
+import { PRESENCE_DIRS, PRESENCE_FILE, PRESENCE_SPLIT, presenceSideFile, encodeBuckets, encodeNames, type PresenceDir, type PresenceIndex } from '../core/presence.ts'
 import { writeJsonAtomic } from './robust.ts'
 
 const subdirs = (p: string) => existsSync(p) ? readdirSync(p).filter(f => statSync(join(p, f)).isDirectory()) : []
@@ -25,8 +25,13 @@ export function scanPresence(root: string): PresenceIndex {
 
 if (process.argv[1]?.endsWith('build-presence.ts')) {
 const root = resolve(process.env.PARTS_DATA ?? 'public/data')
-const ix = scanPresence(root), text = JSON.stringify(ix)
+const ix = scanPresence(root)
 mkdirSync(resolve(root, 'lm'), { recursive: true })
+for (const [d, v] of Object.entries(ix.dirs)) {   // a long directory goes to its own file (see PRESENCE_SPLIT)
+  if (JSON.stringify(v).length <= PRESENCE_SPLIT) continue
+  writeJsonAtomic(resolve(root, presenceSideFile(d)), JSON.stringify(v)); ix.dirs[d] = { f: presenceSideFile(d) }
+}
+const text = JSON.stringify(ix)
 writeJsonAtomic(resolve(root, PRESENCE_FILE), text)
 console.log(`presence: ${Object.keys(ix.dirs).length} directories indexed, ${text.length} bytes`)
 }

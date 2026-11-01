@@ -288,10 +288,12 @@ describe.skipIf(!hasData())('P-1.1 every claim in the built lexicon passes claim
   cards.forEach((c, i) => walk({ first: c.first, stress: c.stress, forms: c.forms, claims: c.claims, epochs: c.epochs }, `#${i}:${c.lemma}`, all))
   it('has claims', () => expect(all.length).toBeGreaterThan(1000))
   it('every known claim re-constructs through claim(); unknown ones have no evidence', () => {
+    const bad: string[] = []   // one expect at the end: a per-claim expect over every claim of the full build (~1M) took > 60 s and hit the test timeout
     for (const { path, c } of all) {
-      if (c.value === 'unknown') { expect(c.evidence, path).toEqual([]); continue }
-      expect(() => claim(c.value, c.evidence, { score: c.score, method: c.method }), path).not.toThrow()
+      if (c.value === 'unknown') { if (c.evidence.length) bad.push(path + ': unknown with evidence'); continue }
+      try { claim(c.value, c.evidence, { score: c.score, method: c.method }) } catch (e) { bad.push(path + ': ' + (e as Error).message) }
     }
+    expect(bad.slice(0, 20)).toEqual([])
   })
   it('rusyn claims name an axis label', () => {
     for (const c of cards) {

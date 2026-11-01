@@ -274,7 +274,9 @@ function writeReport(st: Stats, scan: DictScan, written: number, shards: number)
     `## Значення (позначки на значеннях)`, '', `- рядків значень у SE: ${st.sense.rows}, з позначкою на значенні: ${st.sense.labelled}.`, '',
     `Записано ${written} записів у ${shards} шардах lm/lb.`,
   ]
-  if (existsSync('analysis')) writeJsonAtomic('analysis/labels-coverage.md', text.join('\n') + '\n')
+  // hand-measured sections (LB-16..LB-18, from pipelines/lb-measure.ts) live in analysis/labels-measured.md and survive every regeneration
+  const measured = existsSync('analysis/labels-measured.md') ? '\n' + readFileSync('analysis/labels-measured.md', 'utf8') : ''
+  if (existsSync('analysis')) writeJsonAtomic('analysis/labels-coverage.md', text.join('\n') + '\n' + measured)
 }
 
 if (process.argv[1]?.endsWith('build-labels.ts')) main()
