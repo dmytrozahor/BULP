@@ -11,7 +11,7 @@
 import { foldById } from './orthography.ts'
 import type { Evidence } from './evidence.ts'
 import type { Origins } from './origin.ts'
-import { OA_RULE, type OaEntry } from './orth-attested.ts'
+import { OA_RULE, OA_HEAD_RULE, attestedEdit, type OaEntry } from './orth-attested.ts'
 
 export type OrthId = '2019' | 'orig' | '1928' | 'zhel' | 'kul' | 'max' | 'yar'
 export const ORTHS: { id: OrthId; label: string; year?: string; note?: string }[] = [
@@ -53,7 +53,7 @@ export function toOrth(modern: string, orth: OrthId, ctx: OrthCtx = {}): OrthRes
   /** replace [s, e) of the modern word (s === e inserts); `unsure` keeps the modern letters and tags them «?» */
   const set = (s: number, e: number, to: string, rule: string, unsure = false) => {
     if (!unsure && w.slice(s, e) === to) return
-    if (eds.some(x => s < x.e && e > x.s)) return   // a letter is changed by one rule only
+    if (eds.some(x => (s < x.e && e > x.s) || (s === e && x.s === x.e && s === x.s))) return   // a letter is changed by one rule only (and a place gets one insertion)
     use(rule); eds.push({ s, e, to, rule, unsure })
   }
   const each = (re: RegExp, f: (m: RegExpExecArray) => void) => { for (const m of w.matchAll(new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g'))) f(m as RegExpExecArray) }
@@ -67,10 +67,14 @@ export function toOrth(modern: string, orth: OrthId, ctx: OrthCtx = {}): OrthRes
     each(/ї/, m => { if (edge(m.index!)) set(m.index!, m.index! + 1, 'і', 'ORTH-KUL-I') })
     each(/є/, m => { if (edge(m.index!)) set(m.index!, m.index! + 1, 'е', 'ORTH-KUL-E') })
   }
-  // MM-45: an ATTESTED initial и- (Грінченко -> kul, Желехівський -> zhel) is the evidence; it is tried before any rule, and the stem must be the attested one (forms share it: ірода -> ирода)
-  if ((orth === 'kul' || orth === 'zhel') && w[0] === 'і' && w.length > 1) {
-    const at = ctx.attInitI?.[orth], stem = at ? at.form.slice(1, 3) : ''
-    if (at && at.form[0] === 'и' && w.slice(1).startsWith(stem) && !eds.some(x => x.s < 1 && x.e > 0)) { eds.push({ s: 0, e: 1, to: 'и', rule: OA_RULE, unsure: false }); used.set(OA_RULE, at.ev) }
+  // MM-45 / SE-13: an ATTESTED spelling (Грінченко -> kul, Желехівський -> zhel) is the evidence; it is tried before any rule. The cite carries the modern lemma, so the one edit
+  // modern -> printed is replayed on the form (ірод -> ирод, ірода -> ирода, сміх -> сьміх); the initial і -> и keeps its own rule id
+  if (orth === 'kul' || orth === 'zhel') {
+    const at = ctx.attInitI?.[orth], ed = at?.mod ? attestedEdit(at.mod, at.form, w) : null
+    if (at && ed && !eds.some(x => ed.s < x.e && ed.e > x.s)) {
+      const rule = ed.s === 0 && ed.e === 1 && w[0] === 'і' && ed.to === 'и' ? OA_RULE : OA_HEAD_RULE
+      eds.push({ s: ed.s, e: ed.e, to: ed.to, rule, unsure: false }); used.set(rule, at.ev)
+    }
   }
   if (orth === 'zhel') {
     if (ctx.gender === 'n') each(/([нлтдсзцчшжр])\1я$/, m => set(m.index! + 1, m.index! + 3, 'є', 'ORTH-ZHEL-JE'))

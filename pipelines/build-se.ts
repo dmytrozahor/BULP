@@ -120,6 +120,28 @@ export function parsedRows(root: string, wanted: (k: string) => boolean, alt: (h
   return { files, rows: n, derived, blanked, xref }
 }
 
+/**
+ * SE-13: rows of the full Желехівський 1886 (data/work/zhel-parsed.json, pipelines/parse-zhel.ts). The article is attached to the card of its modern lemma (the parse linked it through VESUM); a lemma that already has the
+ * clean r2u row of the same dictionary (d r2u_zheleh) gets none (one dictionary, one 1886 row). A garbled German gloss is not shown (oq), the dated headword row stays.
+ */
+const ZHEL_POS: Record<string, string> = { m: 'ч', f: 'ж', n: 'с', verb: 'дієсл', adj: 'прикм', adv: 'присл' }
+export function zhelRows(root: string, wanted: (k: string) => boolean, into: Map<string, SeRow[]>): { rows: number; withGloss: number; skippedR2u: number } {
+  const f = resolve(root, 'data/work/zhel-parsed.json'); let rows = 0, withGloss = 0, skippedR2u = 0
+  if (!existsSync(f)) return { rows, withGloss, skippedR2u }
+  let j: { articles: { v: number; p: string; lf: number; a: string; lm: string; ps: string; g: string; q: string }[] }
+  try { j = JSON.parse(readFileSync(f, 'utf8')) } catch { return { rows, withGloss, skippedR2u } }   // a torn file is ignored (RS-1)
+  for (const a of j.articles) {
+    const k = lk(a.lm); if (!a.lm || !wanted(k)) continue
+    const list = into.get(k) ?? into.set(k, []).get(k)!
+    if (list.some(r => r.d === 'r2u_zheleh' || r.d === 'zhelekhivsky')) { skippedR2u++; continue }
+    const row: SeRow = { d: 'zhelekhivsky', g: a.g, a: a.a, q: a.q.slice(0, 200), l: `Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, u: `https://archive.org/details/zhelekhivsk${a.v}/page/n${a.lf}` }
+    if (!a.g) row.oq = 1; else withGloss++
+    if (ZHEL_POS[a.ps]) row.p = ZHEL_POS[a.ps]
+    list.push(row); rows++
+  }
+  return { rows, withGloss, skippedR2u }
+}
+
 export interface SeStats { lemmas: number; rows: number; groups: number; aligned: number; transitions: number; typed: number; byDict: Record<string, number>; withHistory: number; kwicAssigned: number }
 /** SE-2…SE-4: rows → entries. `kwic(key)` = the corpus contexts of the card (dictionary witnesses excluded by the caller). */
 export function buildSenseEntries(rows: Map<string, SeRow[]>, kwic: (k: string) => SeKwicIn[] = () => []): { entries: Map<string, SeEntry>; stats: SeStats } {

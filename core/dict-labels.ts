@@ -476,3 +476,11 @@ export function wireHit(table: DTable, h: ArticleHit, url: string): DictHit {
   }
 }
 export const tableById = (id: string): DTable | undefined => [...DICT_LABEL_TABLES, ...EXTRA_LABEL_TABLES].find(t => t.id === id)
+
+/**
+ * SE-13: the area labels of Желехівський as the PRINT writes them in an article. The list «Обясненє скорочень» explains hucul. / łemk. / ungr. (German «huculisch», «łemkisch», «ungarisch-ruthenisch»);
+ * the articles print them in Cyrillic («Вши́ткий, a. s. Весь II. (лемк.)»), and the OCR reads Latin and Cyrillic alike. Only the area rows are read from OCR text (registers and types of the list are
+ * Latin abbreviations that the OCR garbles into other words); the Cyrillic spelling is added to the same row, the meaning is the list's.
+ */
+const ZHEL_CYR: Record<string, string> = { 'hucul.': 'hucul\.|гуц(?:ул)?\.', 'łemk.': 'łemk\.|лемк\.', 'ungr.': 'ungr\.|угор\.' }
+export const ZHEL_PRINT_LABELS: DTable = { ...ZHELEH_LABELS, rows: ZHELEH_LABELS.rows.filter(r => r.kind === 'area').map(r => ({ ...r, re: ZHEL_CYR[r.abbr] ?? r.re })) }

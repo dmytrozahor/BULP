@@ -17,7 +17,7 @@
 import type { Evidence } from './evidence.ts'
 
 export type OaOrth = 'kul' | 'zhel'
-export interface OaCite { /** the headword as the dictionary prints it (stress marks removed, lower case) */ form: string; ev: Evidence }
+export interface OaCite { /** the headword as the dictionary prints it (stress marks removed, lower case) */ form: string; /** SE-13: the modern lemma the spelling belongs to (the edit modern -> form is replayed on its forms) */ mod?: string; ev: Evidence }
 export type OaEntry = Partial<Record<OaOrth, OaCite>>
 export interface OaFile { format: 1; generated: string; entries: Record<string, OaEntry> }
 export const OA_DICTS: { dict: number; orth: OaOrth; short: string; page: string }[] = [
@@ -52,8 +52,39 @@ export function attestedInitI(rows: Iterable<OaRow>, have: (lemma: string) => bo
       const e = out[mod] ??= {}
       if (e[d.orth]) continue
       const ev: Evidence = { source: 'R2U', quote: r.text.slice(0, 300), locator: `${d.page} · ${d.short}, s?w=${r.q}#${r.dict}_${r.rowId}`, kind: 'Q', note: NOTE[d.orth] }
-      e[d.orth] = { form: h, ev }
+      e[d.orth] = { form: h, mod, ev }
     }
+  }
+  return out
+}
+
+export const OA_HEAD_RULE = 'ORTH-ATT-HEAD'
+/**
+ * SE-13: the ONE contiguous edit that turns the modern lemma into the attested spelling (common prefix and suffix trimmed), replayed on a form of the same lemma.
+ * The lemma itself becomes the attested spelling exactly. A form takes the edit only if it starts with the edit's left context, the replaced letters and two letters of the unchanged tail
+ * (so ірода -> ирода, сміху -> сьміху, but not імла) and the edit does not touch the end of the lemma (an ending such as -є is not a stem fact). null = no edit.
+ */
+export function attestedEdit(mod: string, form: string, w: string): { s: number; e: number; to: string } | null {
+  if (mod === form) return null
+  let p = 0; while (p < mod.length && p < form.length && mod[p] === form[p]) p++
+  let q = 0; while (q < mod.length - p && q < form.length - p && mod[mod.length - 1 - q] === form[form.length - 1 - q]) q++
+  const from = mod.slice(p, mod.length - q), to = form.slice(p, form.length - q)
+  if (w === mod) return { s: p, e: p + from.length, to }
+  if (q === 0) return null
+  const ctx = mod.slice(0, p + from.length) + mod.slice(mod.length - q, mod.length - q + Math.min(2, q))
+  return w.startsWith(ctx) ? { s: p, e: p + from.length, to } : null
+}
+
+/** SE-13 input row (data/work/zhel-parsed.json): a gated article of the full 1886 print */
+export interface OaZhelIn { h: string; lm: string; q: string; v: number; p: string; lf: number }
+export const ZHEL_IA = (v: number, lf: number) => `https://archive.org/details/zhelekhivsk${v}/page/n${lf}`
+/** every modern lemma gets the headword spelling the 1886 print gives it (also when it equals the modern one), cite = the article (verbatim OCR slice) and the scan page */
+export function attestedFromZhel(arts: Iterable<OaZhelIn>, have: (lemma: string) => boolean): Record<string, OaEntry> {
+  const out: Record<string, OaEntry> = {}
+  for (const a of arts) {
+    const mod = strip(a.lm).replace(/[’ʼ]/g, "'"); if (!mod || !have(mod) || out[mod]?.zhel) continue
+    const ev: Evidence = { source: 'ZHEL1886', quote: a.q.slice(0, 300), locator: `${ZHEL_IA(a.v, a.lf)} · Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, kind: 'Q', note: 'Заголовне слово друку 1886 р. (желехівка); цитата — OCR archive.org, не вичитаний; сучасна лема підтверджена ВЕСУМ через зворотні правила желехівки.' }
+    ;(out[mod] ??= {}).zhel = { form: a.h, mod, ev }
   }
   return out
 }

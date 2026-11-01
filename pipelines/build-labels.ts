@@ -21,7 +21,7 @@ import { seBucket } from '../core/parts.ts'
 import { unpackCore } from '../core/pack.ts'
 import { assembleEntry, CLASS_KEYS, CLASS_KEY_UK, CLASS_UK, SUM_NONRESTRICTIVE, SUM_NORM_UK, dialectOf, classKeyOf, gradeOf, GRADE_UK, summarizeWitnesses, witFromRegionRows, TH, type LbEntry, type RegionCount, type Thresholds, type WitSummary } from '../core/labels.ts'
 import { cvFacts, lightFacts, archaicFacts, witMeta } from './lb-facts.ts'
-import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tablesOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
+import { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, scanArticle, scanBracketed, tableById, tablesOfDict, wireHit, type DictHit } from '../core/dict-labels.ts'
 import { nodesOf, plainOf, parseCell, r2uDictById, rowUrl } from './r2u.ts'
 import { tokenRaw } from './ingest-r2u.ts'
 import { swapDir, writeJsonAtomic } from './robust.ts'
@@ -72,6 +72,30 @@ export function scanR2u(dir: string, known: (k: string) => boolean, only?: Reado
   }
   for (const [s, set] of targets) per[s]!.lemmas = set.size
   return { hits, per }
+}
+
+/**
+ * SE-13: the area labels printed in the articles of the full Желехівський 1886 (data/work/zhel-parsed.json): the same table as the r2u pages (zheleh-labels, kind area; strict: the label marks the word),
+ * merged into the hits of the linked modern lemma. `known` filters to entries that have a card.
+ */
+export function scanZhel(file: string, known: (k: string) => boolean, hits: Map<string, DictHit[]>, per: DictScan['per']): number {
+  const j = readJson<{ articles: { v: number; lf: number; lm: string; lb?: [string, string][] }[] }>(file); if (!j) return 0
+  const t = tableById('zheleh-labels')!, p = (per['Желехівський (друк 1886, SE-13)'] ??= { articles: 0, labelled: 0, hits: 0, lemmas: 0, byAbbr: {} }), lemmas = new Set<string>()
+  for (const a of j.articles) {
+    p.articles++
+    if (!a.lb?.length) continue
+    const k = lk(a.lm); if (!k || !known(k)) continue
+    p.labelled++
+    for (const [abbr, q] of a.lb) {
+      const row = t.rows.find(r => r.abbr === abbr); if (!row) continue
+      const wire: DictHit = { t: t.id, a: abbr, kind: row.kind, v: row.area ?? '', q, u: `https://archive.org/details/zhelekhivsk${a.v}/page/n${a.lf}` }
+      const list = hits.get(k) ?? hits.set(k, []).get(k)!
+      if (list.some(x => x.t === wire.t && x.a === wire.a && x.u === wire.u)) continue
+      list.push(wire); p.hits++; p.byAbbr[abbr] = (p.byAbbr[abbr] ?? 0) + 1; lemmas.add(k)
+    }
+  }
+  p.lemmas = lemmas.size
+  return lemmas.size
 }
 
 export interface Stats {
@@ -129,6 +153,7 @@ export function main(): Stats {
   const cardKeys = new Set(cards.map(c => lk(c.lemma)))
   const known = (k: string) => cardKeys.has(k) || cvTags.has(k) || usage.has(k)
   const scan = scanR2u(resolve(ROOT, 'data/raw/r2u'), known)
+  scanZhel(resolve(ROOT, 'data/work/zhel-parsed.json'), known, scan.hits, scan.per)   // SE-13
   console.log(`labels: r2u scanned (${Object.entries(scan.per).map(([s, p]) => `${s} ${p.articles} статей / ${p.labelled} з позначкою / ${p.hits} позначок / ${p.lemmas} лем`).join('; ')})`)
 
   const entries = new Map<string, LbEntry>()

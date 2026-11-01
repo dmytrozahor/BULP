@@ -1226,3 +1226,20 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-11 | tests/cp11-hypothesis.test.ts › CP-11 pages › a real word is never marked hypothetical, and a word with no derivable relation has no page |
 | CP-11 | tests/cp11-hypothesis.test.ts › CP-11 budgets and ordering › the hypothesis path adds no data file and is lazy: no per-word shard, route component async, search debounced |
 | CP-11 | tests/cp11-hypothesis.test.ts › CP-11 budgets and ordering › CP-11b: Plast terms are the tier after every other result, the hypothetical forms the last |
+| SE-13 | tests/se13.test.ts › SE-13 structure of the OCR text › spaced bold letters are one word; running heads and page numbers are noise |
+| SE-13 | tests/se13.test.ts › SE-13 structure of the OCR text › an article starts on a capital headword + comma; the next lines continue it; a hyphenated line end is joined |
+| SE-13 | tests/se13.test.ts › SE-13 headword decode (VESUM through the Желехівка folds; stress only when the decode is unique) › a printed spelling that is a lemma after the folds is taken as printed |
+| SE-13 | tests/se13.test.ts › SE-13 headword decode (VESUM through the Желехівка folds; stress only when the decode is unique) › a capital vowel inside the word is the stress; a stray letter (й) is decoded only if exactly one decoding is a headword |
+| SE-13 | tests/se13.test.ts › SE-13 part of speech and alphabetical order › POS from the first words: gender (OCR т./ш./п.), verb, adjective |
+| SE-13 | tests/se13.test.ts › SE-13 part of speech and alphabetical order › the order gate keeps a longest non-decreasing run and drops OCR outliers |
+| SE-13 | tests/se13.test.ts › SE-13 German gloss: recovered only to the vocabulary of the clean rows › look-alike glyphs are read back to a vocabulary word, an unknown word is not guessed |
+| SE-13 | tests/se13.test.ts › SE-13 German gloss: recovered only to the vocabulary of the clean rows › the gloss keeps the leading items that are ALL recovered; a garbled item ends it |
+| SE-13 | tests/se13.test.ts › SE-13 whole volume: gates, stats, rejected share › a volume text gives gated articles with page, leaf, stress, POS, gloss; every candidate is kept or rejected for a named reason |
+| SE-13 | tests/se13.test.ts › SE-13 harvest page markers › leaf offsets are the non-space counts of the search text before each leaf; printed pages come from the page numbers |
+| SE-13 | tests/se13.test.ts › SE-13 attested Желехівка spelling in the orthography view › every linked lemma gets the printed headword, also when it equals the modern one; the cite is valid claim() evidence with a registered source |
+| SE-13 | tests/se13.test.ts › SE-13 attested Желехівка spelling in the orthography view › ї after dentals, сь before labials, -ский: the one edit is replayed on the lemma and on forms that share its context |
+| SE-13 | tests/se13.test.ts › SE-13 attested Желехівка spelling in the orthography view › the initial и- edit keeps its own rule id (MM-45); a spelling equal to the modern one changes nothing; a желехівка cite is not a кулішівка cite |
+| SE-13 | tests/se13.test.ts › SE-13 the 1886 sense row › typed dictionary of 1886; a garbled gloss is blanked (oq) and the dated row stays; a lemma with the r2u row gets none; no card, no row |
+| SE-13 | tests/se13.test.ts › SE-13 area labels of the print › the list explains hucul./łemk./ungr.; the articles print them in Cyrillic; only area rows are read from the OCR |
+| SE-13 | tests/se13.test.ts › SE-13 area labels of the print › a label that stands after ANOTHER headword (two articles run into one line) is not the first headword’s |
+| SE-13 | tests/se13.test.ts › SE-13 area labels of the print › scanZhel merges the labels into the hits of the linked card as strict area hits with the page link |

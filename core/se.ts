@@ -29,6 +29,9 @@ export interface DictCover {
 const R = (id: string, short: string, title: string, edition: [number, number], lang: GlossLang, dir: DictDir, note = ''): DictCover => ({ id, short, title, edition, cover: edition, basis: 'own-time', lang, dir, harvested: true, note: note || 'описує мову свого часу (роки видання)' })
 export const DICT_COVER: DictCover[] = [
   R('r2u_zheleh', 'Желехівський', 'Малорусько-німецький словар', [1886, 1886], 'de', 'uk-de'),
+  // SE-13: the FULL print of 1886 (archive.org OCR, both volumes), headwords and glosses that passed the gates of core/zhel.ts; `typed` because the gloss gate is the dictionary's own (a German word is kept only when it is recovered
+  // to the vocabulary of the clean r2u rows), not the modern-orthography OCR score; a row whose German is garbled keeps the headword and carries no gloss (oq)
+  { id: 'zhelekhivsky', short: 'Желехівський (друк 1886)', title: 'Малоруско-нїмецкий словар (Львів 1886, т. 1–2; Є. Желехівський, С. Недільський)', edition: [1886, 1886], cover: [1886, 1886], basis: 'own-time', lang: 'de', dir: 'uk-de', harvested: true, typed: true, note: 'повний друк 1886 р. (archive.org zhelekhivsk1, zhelekhivsk2; громадське надбання); OCR не вичитаний: беруться лише заголовні слова, що пройшли ворота (ВЕСУМ крізь правила желехівки, алфавітний порядок), і німецькі тлумачення, розпізнані за словником чистих рядків r2u' },
   R('r2u_umanets', 'Уманець–Спілка', 'Словарь росийсько-український', [1893, 1898], 'ru', 'ru-uk'),
   R('r2u_hrinch09', 'Грінченко', 'Словарь української мови', [1907, 1909], 'ru', 'uk-ru'),
   R('r2u_nikovsky', 'Ніковський', 'Словник українсько-російський', [1927, 1927], 'ru', 'uk-ru'),

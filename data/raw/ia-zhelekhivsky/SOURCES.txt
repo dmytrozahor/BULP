@@ -1,0 +1,7 @@
+SPEC 63 SE-13: Є. Желехівський, С. Недільський, «Малоруско-нїмецкий словар», Львів 1886 (т. 1 А–О, т. 2 П–Я), OCR text layer from archive.org. harvest/zhelekhivsky.ts (resumable; HARVEST_DIR=<raw>/harvest -> data/raw/harvest/ia-zhelekhivsky/items/<item>.gz + index.jsonl).
+Not committed: the raw data is ignored and lives next to the other harvests. Public domain: Желехівський † 1885, Недільський † 1899, print of 1886; the OCR is not proof-read.
+Access: archive.org robots.txt disallows only /control/ and /report/; pacing 2 s; User-Agent "BULP-research/1.0 (non-commercial linguistic corpus research; archive.org OCR of public-domain prints)" (no e-mail); fetched 2026-11-01. research/45 v7 (e7aaeba5) H18 verified both _djvu.txt files.
+The djvu text has no form feeds: the page markers come from the small files <item>_hocr_searchtext.txt.gz, <item>_hocr_pageindex.json.gz, <item>_page_numbers.json (leaf offsets and the printed page of each leaf, stored as <item>.pages2).
+Format: archive.org item | file | bytes | sha256 | print | URL fetched
+zhelekhivsk1 | zhelekhivsk1_djvu.txt | 3877887 | 375e19194d298d1f4af92e4fa7e0cf49e239543a7d1bf2c0bab2aac4656d9eff | т. 1 (А–О), Львів 1886 | https://archive.org/download/zhelekhivsk1/zhelekhivsk1_djvu.txt
+zhelekhivsk2 | zhelekhivsk2_djvu.txt | 3334008 | c2c2e428fd34d80ddf2ed3e0dbf11d00ed359a24efbbd0440939e79f78711194 | т. 2 (П–Я), Львів 1886 | https://archive.org/download/zhelekhivsk2/zhelekhivsk2_djvu.txt
