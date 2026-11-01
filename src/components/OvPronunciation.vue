@@ -25,6 +25,8 @@ const pos = computed<number[] | undefined>(() => (variants.value[0]?.positions a
 const base = computed(() => variants.value[0]?.form ?? props.word)
 const hasStress = computed(() => variants.value.length > 0 || !!props.positions?.length || sideOnly.value)
 const ipa = (d: string) => { try { return ipaOf(base.value, d, { positions: pos.value }).ipa } catch { return '' } }
+/** MM-47: the spelling needs the SAME stress the IPA row gets (akanye, ukanye, stressed-vowel rules are skipped without positions): both lines read `pos` of `base` */
+const spellCtx = computed(() => (pos.value?.length ? { positions: pos.value } : undefined))
 const std = computed(() => ipa('')), dia = computed(() => (dialect.value ? ipa(dialect.value) : ''))
 const dname = computed(() => DIALECTS[dialect.value] ?? dialect.value)
 </script>
@@ -40,10 +42,10 @@ const dname = computed(() => DIALECTS[dialect.value] ?? dialect.value)
     </p>
     <p v-if="conflict" class="small" style="margin:.1rem 0" data-testid="ov-st-conflict">{{ conflict }} <span class="muted">· варіанти не зведено; IPA — за першим</span></p>
     <p v-else-if="groups.length && !sideOnly && side?.some(e => e.variants.length)" class="small muted" style="margin:.1rem 0" data-testid="ov-st-agree">наголос підтверджують також: {{ groups[0]!.sources.map(s => s.name).join(', ') }}</p>
-    <p v-if="!historical" style="margin:.1rem 0" data-testid="ov-spelling"><span class="muted">Написання (перемикачі «Говір» і «Правопис»): </span><Spell :w="word" /></p>
+    <p v-if="!historical" style="margin:.1rem 0" data-testid="ov-spelling"><span class="muted">Написання (перемикачі «Говір» і «Правопис»): </span><Spell :w="base" :ctx="spellCtx" /></p>
     <p v-else style="margin:.1rem 0" class="muted" data-testid="ov-spelling-none">Написання: «{{ word }}» — історичне написання пам’ятки; немає даних для перемикачів (перевірено: правила говору й правопису перекладають сучасне написання, а це написання пам’ятки; його сучасну форму дивись у «Виведення»)</p>
     <p v-if="std" style="margin:.1rem 0"><span class="muted">IPA: </span><span :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ std }}</span> <span class="muted">· виведено за правилами{{ hasStress ? '' : ', без наголосу' }}</span></p>
-    <p v-if="dialect" style="margin:.1rem 0" data-testid="ov-pron-dialect"><span class="muted">говір «{{ dname }}»: </span><Spell :w="word" /> <span v-if="dia" class="muted">·</span> {{ dia }}
+    <p v-if="dialect" style="margin:.1rem 0" data-testid="ov-pron-dialect"><span class="muted">говір «{{ dname }}»: </span><Spell :w="base" :ctx="spellCtx" /> <span v-if="dia" class="muted">·</span> {{ dia }}
       <span v-if="dia && dia === std" class="muted"> (збігається з літературною)</span></p>
   </div>
 </template>
