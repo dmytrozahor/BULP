@@ -1,0 +1,15 @@
+SPEC 63 GG-19 (phraseology gap): two public-domain proverb collections, OCR text layer from archive.org. harvest/proverbs.ts (resumable; HARVEST_DIR=<raw>/harvest -> data/raw/harvest/ia-proverbs/items/<item>.gz + index.jsonl).
+Not committed: the raw data is ignored and lives next to the other harvests (the build reads it through HARVEST_DIR or data/raw/harvest). Only items whose /metadata the search returned and whose text file was actually fetched are listed.
+Access: archive.org robots.txt disallows only /control/ and /report/; pacing 3 s; User-Agent "BULP-research/1.0 (non-commercial linguistic corpus research; archive.org OCR of public-domain prints)" (no e-mail); fetched 2026-11-01.
+Format: archive.org item | file | bytes | author (death year) | print | URL fetched
+
+nomis1864 | nomis1864_djvu.txt | 1901466 | М. Номис [Симонов] († 1866) | Українські приказки, прислів'я і таке інше, С.-Петербург 1864 | https://archive.org/download/nomis1864/nomis1864_djvu.txt
+etnohr_10 | etnohr_10_djvu.txt | 877602 | І. Франко († 1916) | Галицько-руські народні приповідки, т. I вип. 1 (А-Відати), Етнографічний збірник т. 10, Львів 1901 | https://archive.org/download/etnohr_10/etnohr_10_djvu.txt
+etnohr_16 | etnohr_16_djvu.txt | 1676821 | І. Франко († 1916) | т. I вип. 2 (Відати-Діти), Етнографічний збірник т. 16, Львів 1905 | https://archive.org/download/etnohr_16/etnohr_16_djvu.txt
+etnohr_24 | etnohr_24_djvu.txt | 1337634 | І. Франко († 1916) | т. II вип. 2 (Кравець-Пять), Етнографічний збірник т. 24, Львів 1908 | https://archive.org/download/etnohr_24/etnohr_24_djvu.txt
+etnohr_27 | etnohr_27_djvu.txt | 1115548 | І. Франко († 1916) | т. III вип. 1 (Рабунок-Час), Етнографічний збірник т. 27, Львів 1909 | https://archive.org/download/etnohr_27/etnohr_27_djvu.txt
+etnohr_28 | etnohr_28_djvu.txt | 1549328 | І. Франко († 1916) | т. III вип. 2 (Рабунок-Ячмінь), Етнографічний збірник т. 28, Львів 1910 | https://archive.org/download/etnohr_28/etnohr_28_djvu.txt
+
+Metadata pages fetched for the same items: https://archive.org/metadata/<item>. Search: https://archive.org/advancedsearch.php (title / identifier etnohr_*).
+etnohr_23 (т. II вип. 1, Діти-Кпити, 1907): the item has NO text layer in its /metadata (a 124 MB .djvu image only): recorded with status 404, not read. Not OCR'd here.
+Not used: nomis1993 (the 1993 reprint; not an original edition). uk.wikisource and litopys.org.ua were NOT searched (the archive.org scans sufficed), so no copy there is claimed.

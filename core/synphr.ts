@@ -12,11 +12,17 @@ export type Edition = 'u' | 'e'
 export interface SynRow { t: string; r: RelKind; d: Edition; n?: number; g?: string; q?: string[]; u?: 1 }
 /** f established expression / phraseological unit (uk section) · p proverb / saying (uk section) · w multi-word headword of en.wiktionary (phrase, proverb, prep_phrase); x = 1: the page is that of a word INSIDE the phrase */
 export type PhrKind = 'f' | 'p' | 'w'
-export interface PhrRow { p: string; k: PhrKind; d: Edition; v?: string[]; g?: string; x?: 1 }
+/** GG-19: n = Номис 1864, f = Франко (Етнографічний збірник) — public-domain printed collections read from the archive.org OCR; u / e = Wiktionary */
+export type PhrEdition = Edition | 'n' | 'f'
+/**
+ * GG-19 extras of a printed-collection row (d = n | f): p = the text in the ORIGINAL orthography of the print · m = the same with the spellings VESUM knows after the folds of core/proverbs.ts (only when it differs) ·
+ * l = locator (volume, page, headword + number, or Номис number) · s = archive.org item · q = verbatim OCR slice when it is more than p · pl = place notes (Франко)
+ */
+export interface PhrRow { p: string; k: PhrKind; d: PhrEdition; v?: string[]; g?: string; x?: 1; m?: string; l?: string; s?: string; q?: string; pl?: PlaceNote[] }
 
 export const REL_NAME: Record<RelKind, string> = { s: 'Синоніми', a: 'Антоніми', h: 'Ширші поняття (гіпероніми)', o: 'Вужчі поняття (гіпоніми)', c: 'Співрядні поняття' }
 export const REL_ORDER: RelKind[] = ['s', 'a', 'h', 'o', 'c']
-export const ED_NAME: Record<Edition, string> = { u: 'uk.Вікісловник', e: 'en.Вікісловник (kaikki)' }
+export const ED_NAME: Record<PhrEdition, string> = { u: 'uk.Вікісловник', e: 'en.Вікісловник (kaikki)', n: 'Номис, 1864 (archive.org, OCR)', f: 'Франко, Етнографічний збірник (archive.org, OCR)' }
 export const wiktUrl = (d: Edition, page: string) => `https://${d === 'u' ? 'uk' : 'en'}.wiktionary.org/wiki/${encodeURIComponent(page)}`
 export const LICENCE = 'CC BY-SA 4.0'
 /** what the «немає даних (перевірено: …)» line names */
@@ -209,13 +215,27 @@ export function kaikkiPhrase(e: KkEntry): { row: PhrRow; keys: string[] } | unde
 }
 
 // ── evidence (core/evidence.ts): every row can be turned into a claim that the validator accepts (source, non-empty locator, non-empty quote) ──
-import { D, claim, type Claim } from './evidence.ts'
+import { D, Q, claim, type Claim } from './evidence.ts'
+import type { PlaceNote } from './proverbs.ts'
 const SRC_NAME: Record<Edition, string> = { u: 'uk.wiktionary', e: 'en.wiktionary (kaikki.org)' }
+/** archive.org item → title of the print (shown on the card) */
+export const IA_TITLE: Record<string, string> = {
+  nomis1864: 'Номис М. Українські приказки, прислів\'я і таке інше. С.-Петербург, 1864',
+  etnohr_10: 'Франко І. Галицько-руські народні приповідки, т. I, вип. 1 (А–Відати). Етнографічний збірник, т. 10. Львів, 1901',
+  etnohr_16: 'Франко І. Галицько-руські народні приповідки, т. I, вип. 2 (Відати–Діти). Етнографічний збірник, т. 16. Львів, 1905',
+  etnohr_24: 'Франко І. Галицько-руські народні приповідки, т. II, вип. 2 (Кравець–Пять). Етнографічний збірник, т. 24. Львів, 1908',
+  etnohr_27: 'Франко І. Галицько-руські народні приповідки, т. III, вип. 1 (Рабунок–Час). Етнографічний збірник, т. 27. Львів, 1909',
+  etnohr_28: 'Франко І. Галицько-руські народні приповідки, т. III, вип. 2 (Рабунок–Ячмінь). Етнографічний збірник, т. 28. Львів, 1910',
+}
+/** ids in core/sources.ts of the two printed collections */
+export const PROV_SOURCE: Record<'n' | 'f', string> = { n: 'NOMIS1864', f: 'FRANKO-PRYP' }
 /** a relation row as a claim: locator = the source page URL (+ the sense), quote = the statement the page makes */
 export function synClaim(head: string, r: SynRow): Claim<string> {
   const sense = r.g ? ` [${r.g}]` : r.n ? ` [п.${r.n}]` : ''
   return claim(r.t, D(SRC_NAME[r.d], wiktUrl(r.d, head), `${head}${sense} — ${REL_NAME[r.r].toLowerCase()}: ${r.t}`, LICENCE))
 }
 export function phrClaim(head: string, r: PhrRow): Claim<string> {
+  // GG-19: a printed-collection row: locator = volume / page / number of the print, quote = the OCR slice (verbatim)
+  if (r.d === 'n' || r.d === 'f') return claim(r.p, Q(PROV_SOURCE[r.d], r.l ?? '', r.q ?? r.p, r.s ? `https://archive.org/details/${r.s} (OCR, не вичитано)` : undefined))
   return claim(r.p, D(SRC_NAME[r.d], wiktUrl(r.d, r.x ? r.p : head), `${r.p}${r.g ? ' — ' + r.g : ''}`, LICENCE))
 }

@@ -16,10 +16,13 @@ import { resolve } from 'node:path'
 import { lk } from '../core/cv.ts'
 import { kaikkiPhrase, kaikkiRelRows, parseUkPage, type KkEntry, type PhrRow, type SynRow } from '../core/synphr.ts'
 import { readJson, writeJsonAtomic } from './robust.ts'
+import { PROV_VERSION, loadProverbInputs, stageProverbs, type ProvStats } from './build-proverbs.ts'
 
 export type Rows<T> = Record<string, T[]>
-export interface Stage { v: 1; src: string; bytes: number; pages: number; syn: Rows<SynRow>; phr: Rows<PhrRow> }
+export interface Stage { v: 1; src: string; bytes: number; pages: number; syn: Rows<SynRow>; phr: Rows<PhrRow>; /** GG-19: counts of the proverb stage */ prov?: ProvStats }
 const CAP_SYN = 80, CAP_PHR = 60
+/** GG-19: printed-collection proverbs kept per headword (the cards are lazy and the shard budget is checked by tests/budget.test.ts); the cap drops the longest texts first, own-headword rows are kept first */
+export const CAP_PROV = 15
 
 const add = <T>(m: Rows<T>, k: string, row: T, same: (a: T, b: T) => boolean) => { const l = (m[k] ??= []); if (!l.some(x => same(x, row))) l.push(row) }
 const sameSyn = (a: SynRow, b: SynRow) => a.t === b.t && a.r === b.r && a.d === b.d && a.n === b.n && a.g === b.g
@@ -99,9 +102,11 @@ function cached(path: string, bytes: number): Stage | undefined {
 }
 
 export interface SynPhrStats {
-  inputs: { ukwikt?: { bytes: number; pages: number }; kaikki?: { bytes: number; pages: number } }
+  inputs: { ukwikt?: { bytes: number; pages: number }; kaikki?: { bytes: number; pages: number }; proverbs?: { bytes: number; pages: number } }
   synHeads: number; synPairs: number; synByRel: Record<string, number>; synByEd: Record<string, number>; synLinked: number; synUnlinked: number; groups: number
   phrHeads: number; phrRows: number; phrByKind: Record<string, number>; phrDistinct: number
+  /** GG-19: the proverb collections (Номис, Франко): rows after the per-headword cap, headwords, headwords that had NO Wiktionary phraseology row before, and the stage's own counts */
+  prov?: { rows: number; heads: number; newHeads: number; withWikt: number; capped: number; stage: ProvStats }
 }
 /** merge both stages, mark unlinked targets, cap per headword, write the two work files */
 export function combine(stages: Stage[], known: (key: string) => boolean): { syn: Rows<SynRow>; phr: Rows<PhrRow>; stats: SynPhrStats } {
@@ -111,7 +116,7 @@ export function combine(stages: Stage[], known: (key: string) => boolean): { syn
     for (const [k, l] of Object.entries(st.phr)) for (const r of l) add(phr, k, r, samePhr)
   }
   const stats: SynPhrStats = { inputs: {}, synHeads: 0, synPairs: 0, synByRel: {}, synByEd: {}, synLinked: 0, synUnlinked: 0, groups: 0, phrHeads: 0, phrRows: 0, phrByKind: {}, phrDistinct: 0 }
-  for (const st of stages) stats.inputs[st.src as 'ukwikt' | 'kaikki'] = { bytes: st.bytes, pages: st.pages }
+  for (const st of stages) stats.inputs[st.src as 'ukwikt' | 'kaikki' | 'proverbs'] = { bytes: st.bytes, pages: st.pages }
   // union-find over synonym pairs (measurement only: «groups» = connected components of the s-relation)
   const parent = new Map<string, string>()
   const find = (x: string): string => { let r = x; while (parent.get(r) !== undefined && parent.get(r) !== r) r = parent.get(r)!; parent.set(x, r); return r }
@@ -128,12 +133,19 @@ export function combine(stages: Stage[], known: (key: string) => boolean): { syn
     }
   }
   const comps = new Set<string>(); for (const x of parent.keys()) comps.add(find(x)); stats.groups = comps.size
-  const distinct = new Set<string>()
+  const distinct = new Set<string>(), prov = { rows: 0, heads: 0, newHeads: 0, withWikt: 0, capped: 0 }
   for (const k of Object.keys(phr).sort()) {
-    phr[k] = phr[k]!.sort((a, b) => (a.x ?? 0) - (b.x ?? 0) || a.k.localeCompare(b.k) || a.p.localeCompare(b.p, 'uk')).slice(0, CAP_PHR)
+    const isProv = (r: PhrRow) => r.d === 'n' || r.d === 'f'
+    const wk = phr[k]!.filter(r => !isProv(r)).sort((a, b) => (a.x ?? 0) - (b.x ?? 0) || a.k.localeCompare(b.k) || a.p.localeCompare(b.p, 'uk')).slice(0, CAP_PHR)
+    const pr = phr[k]!.filter(isProv).sort((a, b) => (a.x ?? 0) - (b.x ?? 0) || a.p.length - b.p.length || a.p.localeCompare(b.p, 'uk'))
+    prov.capped += Math.max(0, pr.length - CAP_PROV)
+    const pk = pr.slice(0, CAP_PROV)
+    phr[k] = [...wk, ...pk]
     stats.phrHeads++
-    for (const r of phr[k]!) { stats.phrRows++; stats.phrByKind[r.k + (r.x ? 'x' : '')] = (stats.phrByKind[r.k + (r.x ? 'x' : '')] ?? 0) + 1; if (!r.x) distinct.add(lk(r.p)) }
+    if (pk.length) { prov.heads++; prov.rows += pk.length; wk.length ? prov.withWikt++ : prov.newHeads++ }
+    for (const r of phr[k]!) { stats.phrRows++; const kk = (isProv(r) ? r.d + '-' : '') + r.k + (r.x ? 'x' : ''); stats.phrByKind[kk] = (stats.phrByKind[kk] ?? 0) + 1; if (!r.x && !isProv(r)) distinct.add(lk(r.p)) }
   }
+  stats.prov = { ...prov, stage: stages.find(st => st.prov)?.prov ?? ({} as ProvStats) }
   stats.phrDistinct = distinct.size
   return { syn, phr, stats }
 }
@@ -151,6 +163,13 @@ export async function writeSynPhr(raw: string, work: string, known: (key: string
   if (existsSync(kk)) {
     const c = resolve(work, 'data/work/synphr-kaikki.json'); let s = cached(c, statSync(kk).size)
     if (!s) { s = await stageKaikki(kk); writeJsonAtomic(c, JSON.stringify(s)) }
+    stages.push(s)
+  }
+  const hd = process.env.HARVEST_DIR ?? resolve(raw, 'data/raw/harvest'), vesum = resolve(raw, 'data/raw/vesum/dict_corp_vis.txt')   // GG-19: proverb collections (harvest/proverbs.ts), lemma links from VESUM
+  const pv = loadProverbInputs(hd)
+  if (pv.inputs.length && existsSync(vesum)) {
+    const c = resolve(work, 'data/work/synphr-proverbs.json'), bytes = pv.bytes * 10 + PROV_VERSION; let s = cached(c, bytes)
+    if (!s) { const r = await stageProverbs(pv.inputs, vesum); s = { v: 1, src: 'proverbs', bytes, pages: Object.values(r.stats.candidates).reduce((a, b) => a + b, 0), syn: {}, phr: r.phr, prov: r.stats }; writeJsonAtomic(c, JSON.stringify(s)) }
     stages.push(s)
   }
   const { syn, phr, stats } = combine(stages, known)
