@@ -1186,6 +1186,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-12 | tests/old-dicts.test.ts › SE-12 the typed 1798 and 1818 glossaries of uk.wikisource.org › SE-12 Павловський 1818: table rows with highlighted spans; a variant is its own headword, an ending «-ая» is not |
 | SE-12 | tests/old-dicts.test.ts › SE-12 the typed 1798 and 1818 glossaries of uk.wikisource.org › SE-12 registered: coverage record (lang ru, uk→ru), dx bits, the parse is idempotent and a failed API call only warns |
 | SE-12 | tests/old-dicts.test.ts › SE-12 wiring › SE-12 build:data fetches and parses the typed lists and the Wikisource glossaries before build.ts; each input has a SOURCES.txt with sha256 and licence reasoning |
+| SE-14 | tests/se14.test.ts › the lists of settlements are read from the text layer (modern and old); a short list is not trusted |
+| SE-14 | tests/se14.test.ts › places: abbreviations after the illustration; the old source |
+| SE-14 | tests/se14.test.ts › articles confirmed by both readings: headword, POS, labels, numbered senses, gloss |
+| SE-14 | tests/se14.test.ts › the label hit: a standard headword only records the PLACE |
+| SE-14 | tests/se14.test.ts › a reading seen once only is kept when it is word-like AND on the alphabetical spine |
+| SE-14 | tests/se14.test.ts › the gloss is at most 200 characters, cut at a word boundary |
+| SE-14 | tests/se14.test.ts › statement: starts at «запозичення …» / «псл. …» |
+| SE-14 | tests/se14.test.ts › a volume: running head, page number from the footer |
+| SE-14 | tests/se14.test.ts › the etymology panel gets ONE Q-evidence with volume and page |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |

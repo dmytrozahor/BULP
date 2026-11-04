@@ -25,7 +25,7 @@ export const AREAS: Record<string, string> = {
   /** LB-8 Wiktionary: «Southwestern Ukrainian» = «Ukrainian as spoken in Western and Central Ukraine» (en.wiktionary category text) */ southwest: 'південно-західна Україна (захід і центр)',
   /** «Southeastern Ukrainian» = «Central, Southern (incl. Crimea), Eastern Ukraine» */ southeast: 'південно-східна Україна (центр, південь, схід)',
   /** LB-17 en.wiktionary «Central / Dnieper Ukraine» */ dnieper: 'центр України (Подніпров’я)', /** LB-17 en.wiktionary «Southern (incl. Crimea), Eastern Ukraine, and Russia» */ steppe: 'південь і схід (степ)',
-  pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
+  /** SE-14 Чабаненко: the survey area of the book, 350 settlements of Дніпропетровська, Запорізька, Херсонська (+ part of Донецька, Миколаївська, Кіровоградська) oblasts = the steppe (степові) dialects of the south-eastern group */ lower_dnipro: 'Нижня Наддніпрянщина (степові говірки)', pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
 }
 /** governorate (nominative, as uk.wikipedia names it) → area */
 const GOV_AREA: Record<string, string> = {
@@ -290,7 +290,20 @@ export const HRINCH_SOURCES: DTable = {
     R('Мил.', 'Мил. = В. П. Милорадовичъ. Народные обряды и пѣсни Лубенскаго уѣзда, Полтавской губ., записанные въ 1888—1895 г.', 'area', { county: 'Лубенський', scope: 'place', re: 'Мил\\.(?:\\s?(?:М|Св)\\.)?\\s?\\d' }),
   ],
 }
-export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, HRINCH_SOURCES]
+/**
+ * SE-14: Чабаненко В. А., «Словник говірок Нижньої Наддніпрянщини», т. 1–4 (Запоріжжя: Запорізький державний університет, 1992); preface «Загальна характеристика словника», «Реєстр словника» (т. 1 pp. 3-6), the book's own lists
+ * of the abbreviations of the settlements (т. 1 pp. 14-43). «регіональний словник диференціального типу»: the register has (1) local words not used in the literary language, (2) words with another meaning, (3) old Rus' inherited words,
+ * (4) loans, (5-8) words that differ from the literary ones in sound, grammatical meaning or derivation, (9-10) shortened and distorted words. Two grades (not one): a headword that is no standard word (VESUM, through the corpus folds) is a word of the
+ * area (word-level, strict); a headword that IS a standard word was recorded in the surveyed settlements with the meaning or form the book glosses (place of recording only, never a dialect marker of the word).
+ */
+export const NAN_LABELS: DTable = {
+  id: 'nan-labels', dicts: [], short: 'Чабаненко (1992)', source: 'CHABANENKO', list: 'Чабаненко В. А. Словник говірок Нижньої Наддніпрянщини, т. 1 (Запоріжжя, 1992), «Реєстр словника», «Умовні скорочення назв населених пунктів»', attach: 'sense',
+  rows: [
+    R('ниж.-наддн.', 'Словник говірок Нижньої Наддніпрянщини — «регіональний словник диференціального типу»; слово не є стандартним (немає у ВЕСУМ) і записане в обстежених селах Нижньої Наддніпрянщини', 'area', { area: 'lower_dnipro' }),
+    R('ниж.-наддн. (місце запису)', 'Словник говірок Нижньої Наддніпрянщини — стандартне слово (є у ВЕСУМ), записане в обстежених селах із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'lower_dnipro', scope: 'place' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, NAN_LABELS, HRINCH_SOURCES]
 /** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
 export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))

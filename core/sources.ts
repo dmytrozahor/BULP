@@ -65,6 +65,7 @@ export const SOURCES: Record<string, Source> = {
   OGON:   { title: 'Огоновський О. Граматика руської мови. Львів, 1889; власний скан, OCR на worker ~/work/ocr (цитати — з OCR)', url: 'https://uk.wikipedia.org/wiki/Огоновський_Омелян', year: '1889' },
   SYNYAV: { title: 'Синявський О. Норми української літературної мови, 1941 (розд. 5 «Займенник», r2u.org.ua)', url: 'https://r2u.org.ua/guides/synyavsky/slovozmina_zaymennyk', year: '1941' },
   GU:     { title: 'University of Gothenburg — новини про документування графіті Софії Київської', url: 'https://www.gu.se/en/news/researchers-document-thousand-year-old-graffiti-in-kyiv' },
+  CHABANENKO: { title: 'Чабаненко В. А. Словник говірок Нижньої Наддніпрянщини. Т. 1–4. Запоріжжя: Запорізький державний університет, 1992 (скан, наданий власником; цитування: заголовок, граматика, місця запису, глоса ≤ 200 знаків, том і сторінка)', year: '1992' },
   ARKUSHYN: { title: 'Аркушин Г. Л. Словник західнополіських говірок. У 2 т. Луцьк: Вежа, 2000 (скан: archive.org slzhdplhv; цитування, один заголовок + уривок тлумачення)', url: 'https://archive.org/details/slzhdplhv', year: '2000' },
   LYSENKO:  { title: 'Лисенко П. С. Словник поліських говорів. К.: Наукова думка, 1974 (скан: archive.org p0lissia; цитуються приклади з Передмови)', url: 'https://archive.org/details/p0lissia', year: '1974' },
   ZAKREV:   { title: 'Закревська Я. (ред.) Гуцульські говірки: Короткий словник. Львів, 1997 (скан: archive.org hutsulslovnyk; цитування)', url: 'https://archive.org/details/hutsulslovnyk', year: '1997' },

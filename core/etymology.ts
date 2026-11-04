@@ -47,6 +47,10 @@ const clip = (s: string, n = 300) => (s.length <= n ? s : s.slice(0, n - 1) + '�
 export const wiktEvidence = (lemma: string, text: string, extracted: string): Evidence =>
   Q('KAIKKI', wiktEn(lemma), clip(text.replace(/\s+/g, ' ').trim()), `Wiktionary (en), CC BY-SA 4.0, автори статті — на сторінці; витяг Wiktextract/kaikki.org ${extracted}`)
 /** ЕСУМ via goroh: the first one or two clauses of the entry, verbatim, with the page URL as locator (print entry volume/page are not exposed by goroh, research/22 R2-A). */
+/** SE-14: ЕСУМ from the owner-supplied scan of the printed volumes: the headword's volume and page and ONE excerpt (≤ 200 characters) that starts at the etymological statement; «[…]» = a form the OCR could not read */
+export interface EsumScanEntry { t: string; v: number; p: number; k?: 'bor' | 'proto' | 'other'; n?: number }
+export const esumScanEvidence = (e: EsumScanEntry): Evidence =>
+  Q('ESUM', `ЕСУМ, т. ${e.v}, с. ${e.p}`, e.t.slice(0, 201), 'ЕСУМ, друкований том (скан наданий власником проєкту): уривок до 200 знаків від етимологічного твердження; розпізнавання тексту автоматичне, «[…]» — форма, яку не вдалося прочитати; повний текст — у виданні')
 export const esumEvidence = (lemma: string, quote: string): Evidence =>
   Q('ESUM', goroh(lemma), clip(quote), 'ЕСУМ за дзеркалом goroh.pp.ua; коротка цитата, повний текст — за посиланням; том і сторінку друкованого видання goroh не показує')
 
@@ -103,12 +107,13 @@ export function withoutFormOf(k: KaikkiRec | undefined): KaikkiRec | undefined {
   const text = k.text.replace(FORM_OF_ETYM, '').trim()
   return text ? { ...k, text } : undefined   // (the aspect of a form-of entry is the lemma's business: dropped with the pointer)
 }
-export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = [], uk?: UkEtym, ukDump = ''): Etymology | undefined {
+export function buildEtymology(lemma: string, k0: KaikkiRec | undefined, esumQuote: string | undefined, hyps: EtymHypothesis[], corpusFirst: [number, number] | undefined, extracted: string, family: FamilyLink[] = [], uk?: UkEtym, ukDump = '', esumScan?: EsumScanEntry): Etymology | undefined {
   const k = withoutFormOf(k0)
-  if (!k && !esumQuote && !uk && !hyps.length && !family.length && !k0?.aspect) return undefined
+  if (!k && !esumQuote && !esumScan && !uk && !hyps.length && !family.length && !k0?.aspect) return undefined
   const sources: Evidence[] = []
   if (k && k.text) sources.push(wiktEvidence(lemma, k.text, extracted))
   if (esumQuote) sources.push(esumEvidence(lemma, esumQuote))
+  if (esumScan) sources.push(esumScanEvidence(esumScan))
   if (uk) sources.push(ukEtymEvidence(lemma, uk, ukDump))
   const e: Etymology = { sources, text: k?.text ?? '', ...(uk ? { uk } : {}), hypotheses: hyps, ...(family.length ? { family } : {}), ...(k?.chain?.length ? { chain: k.chain } : {}), ...((k ?? k0)?.aspect ? { aspect: (k ?? k0)!.aspect } : {}) }
   const c = k ? etymConflict(dictDating(k.text), corpusFirst) : undefined

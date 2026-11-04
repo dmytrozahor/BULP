@@ -7,23 +7,26 @@ import { buildEtymology, type EtymHypothesis, type EtymologyFile, type KaikkiRec
 import type { FamilyLink } from '../core/etymology.ts'
 import type { UkEtymStage } from './build-etymuk.ts'
 import type { LemmaCard } from '../core/types.ts'
+import type { EsumScanEntry } from '../core/etymology.ts'
 
 const rdj = <T>(p: string, d: T): T => (existsSync(p) ? JSON.parse(readFileSync(p, 'utf8')) as T : d)
 
 export function writeEtymology(
-  cards: Pick<LemmaCard, 'lemma' | 'first'>[], root: string, pub: string, generated: string, ukw?: Pick<UkEtymStage, 'dump' | 'date' | 'entries'>): { entries: number; conflicts: number; uk: number; ukOnly: number; ukAlso: number; ukEsum: number } {
+  cards: Pick<LemmaCard, 'lemma' | 'first'>[], root: string, pub: string, generated: string, ukw?: Pick<UkEtymStage, 'dump' | 'date' | 'entries'>): { entries: number; conflicts: number; uk: number; ukOnly: number; ukAlso: number; ukEsum: number; esumScan: number; esumScanNew: number } {
   const kk = rdj<{ file: string; sha256: string; extracted: string; words: Record<string, KaikkiRec> } | undefined>(resolve(root, 'data/work/etymology-kaikki.json'), undefined)
   const gh = rdj<Record<string, string | null>>(resolve(root, 'data/work/etymology-goroh.json'), {})
   const hyps = rdj<(EtymHypothesis & { lemma: string })[]>(resolve(root, 'pipelines/etymology-hypotheses.json'), [])
+  const esc = rdj<{ entries: Record<string, EsumScanEntry> } | undefined>(resolve(root, 'data/work/etymology-esum-scan.json'), undefined)   // SE-14: ЕСУМ scan (pipelines/esum-scan.ts)
   const fam = rdj<{ edges: { a: string; b: string; rel: string; basis: FamilyLink['basis']; evidence: FamilyLink['evidence'] }[] }[]>(resolve(root, 'pipelines/word-families.json'), []).flatMap(g => g.edges)
   const have = new Set(cards.map(c => c.lemma))
   const famOf = (l: string): FamilyLink[] => fam.flatMap(e => e.a === l ? [{ lemma: e.b, rel: e.rel, basis: e.basis, evidence: e.evidence, inLexicon: have.has(e.b) }] : e.b === l ? [{ lemma: e.a, rel: e.rel, basis: e.basis, evidence: e.evidence, inLexicon: have.has(e.a) }] : [])
   const entries: EtymologyFile['entries'] = {}
-  let conflicts = 0, nUk = 0, ukOnly = 0, ukAlso = 0, ukEsum = 0
+  let conflicts = 0, nUk = 0, ukOnly = 0, ukAlso = 0, ukEsum = 0, nScan = 0, nScanNew = 0
   for (const c of cards) {
     const first = isKnown(c.first) ? c.first.value.date : undefined
-    const e = buildEtymology(c.lemma, kk?.words[c.lemma], gh[c.lemma] ?? undefined, hyps.filter(h => h.lemma === c.lemma).map(({ lemma: _l, ...h }) => h), first, kk?.extracted ?? '', famOf(c.lemma), ukw?.entries[c.lemma], ukw?.dump.replace(/^ukwiktionary-(d{4})(dd)(dd).*$/, '$1-$2-$3') ?? '')
+    const e = buildEtymology(c.lemma, kk?.words[c.lemma], gh[c.lemma] ?? undefined, hyps.filter(h => h.lemma === c.lemma).map(({ lemma: _l, ...h }) => h), first, kk?.extracted ?? '', famOf(c.lemma), ukw?.entries[c.lemma], ukw?.dump.replace(/^ukwiktionary-(d{4})(dd)(dd).*$/, '$1-$2-$3') ?? '', esc?.entries[c.lemma])
     if (e) {
+      if (esc?.entries[c.lemma]) { nScan++; if (e.sources.length === 1 && !e.text && !e.uk && !e.chain?.length) nScanNew++ }   // SE-14: a lemma whose etymology rests only on the ЕСУМ scan
       entries[c.lemma] = e; if (e.conflict) conflicts++
       if (e.uk) { nUk++; if (e.text) ukAlso++; else if (!e.sources.some(s => s.source === 'ESUM')) ukOnly++; if (e.uk.cites?.some(x => x.src === 'ЕСУМ')) ukEsum++ }
     }
@@ -39,5 +42,5 @@ export function writeEtymology(
     entries,
   }
   writeFileSync(resolve(pub, 'etymology.json'), JSON.stringify(file))
-  return { entries: Object.keys(entries).length, conflicts, uk: nUk, ukOnly, ukAlso, ukEsum }
+  return { entries: Object.keys(entries).length, conflicts, uk: nUk, ukOnly, ukAlso, ukEsum, esumScan: nScan, esumScanNew: nScanNew }
 }

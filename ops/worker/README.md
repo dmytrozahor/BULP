@@ -47,6 +47,9 @@ Stops the instance (`shutdown -h +1`, disk kept) only when ALL of this holds for
 
 `DRY=1 bash ~/idle-stop.sh` lists every reason it is busy (or says what it would do) and never touches the timer. Kill switch: `touch ~/.no-idle-stop`. Log: `~/logs/idle-stop.log`.
 
+## ocr-se14.sh (SPEC 63 SE-14)
+
+OCR of the owner-supplied scans of Чабаненко, «Словник говірок Нижньої Наддніпрянщини» (`nan1..4.pdf`) and ЕСУМ (`esum1..6.pdf`), copied to ASCII names in `~/work/se14-ocr/`. Detached: `nohup ops/worker/ocr-se14.sh > ~/logs/se14-ocr.out 2>&1 &`. Resumable (one `page_NNNN.txt` per page; for Чабаненко also the text layer `tl_NNNN.txt`), `nice 19`, `OMP_THREAD_LIMIT=4`, at most 4 pages at a time, 300 dpi gray, Tesseract `ukr` (Чабаненко) / `ukr+rus+lat+grc+deu` (ЕСУМ; the extra traineddata are in `~/work/se14-ocr/tessdata`). A volume that is complete gets `DONE`. Both works are in copyright: the OCR text stays on the worker (never git, never the CDN). The build reads it through `NAN_OCR` / `ESUM_OCR` (default `data/raw/se14-ocr`): `NAN_OCR=~/work/se14-ocr ESUM_OCR=~/work/se14-ocr npm run build:data`; absent input = the steps are skipped.
 ## How the owner learns what happened
 
 `notify.sh` always appends to `~/logs/notify.log` and, when the git credential helper on the worker has a token (it does, the worker pushes with it), opens an issue labelled `worker`
