@@ -19,6 +19,7 @@ import { velarCandidates } from '../core/palatalization.ts'
 import { MU_ORTH, muById, muCandidates } from '../core/mu-fold.ts'
 import type { AltLink } from '../core/vesum-alt.ts'
 import { galSoftGate } from '../core/gal-soft.ts'
+import { reflJoins } from '../core/respell-refl.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, hostTagOk, SYA_SEP_FOLD, FUSED_FOLD, PCL_FOLD } from '../core/gal-folds.ts'
 import { galGate, fusedHostOk, personClitic, splitFused } from '../core/gal-mm52.ts'
 
@@ -179,9 +180,14 @@ const hostOf = (t: TypeCtx, host: string): TypeCtx => ({ ...t, raw: host, lemma:
 const addStep = (id: string) => (c: Candidate): Candidate => ({ ...c, trace: [id, ...c.trace], branches: c.branches + 1 })
 /** MM-52: a verb followed by a separated «ся» links to the reflexive verb whose VESUM form is the two joined (старав ся → старатися); only a reflexive verb counts */
 function reflOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
-  const r = linkOptions(hostOf(t, t.raw + 'ся'), env), add = addStep(SYA_SEP_FOLD.id)
-  const o = r?.opts.filter(x => /(ся|сь)$/.test(x.hit.lemma) && /^(verb|advp)/.test(x.hit.tags))
-  return r && o && o.length ? { ...r, opts: o.map(x => ({ ...x, cand: add(x.cand), own: add(x.own) })) } : undefined
+  // MM-58: the host may carry the hard -т (смієт ся), have it dropped (сміє ся) or stand before the particle (ся бою): every joined spelling is tried, VESUM decides
+  const add = addStep(SYA_SEP_FOLD.id)
+  for (const j of reflJoins(t.raw)) {
+    const r = linkOptions(hostOf(t, j), env)
+    const o = r?.opts.filter(x => /(ся|сь)$/.test(x.hit.lemma) && /^(verb|advp)/.test(x.hit.tags))
+    if (r && o && o.length) return { ...r, opts: o.map(x => ({ ...x, cand: add(x.cand), own: add(x.own) })) }
+  }
+  return undefined
 }
 export function linkOptions(t: TypeCtx, env: Env): { route: Route; opts: Option[] } | undefined {
   const rf = t.refl && t.raw ? reflOptions(t, env) : undefined
@@ -286,7 +292,7 @@ export function wantedKeys(t: TypeCtx, env: Pick<Env, 'derive' | 'fold' | 'phon'
   { const sp = t.raw ? splitHyphenParticle(key(t.raw)) : undefined; if (sp) out.push(...wantedKeys({ ...t, raw: t.raw.slice(0, sp.host.length), lemma: undefined, stanza: undefined, gate: undefined }, env)) }   // MM-20
   if (t.raw) {   // MM-52: separated «ся», person clitic, fused -ж / -б
     const k = key(t.raw), h = (raw: string) => out.push(...wantedKeys({ ...t, raw, lemma: undefined, stanza: undefined, gate: undefined, refl: undefined }, env))
-    if (t.refl) h(t.raw + 'ся')
+    if (t.refl) for (const j of reflJoins(t.raw)) h(j)
     const pc = personClitic(k); if (pc) h(pc.host)
     const fu = splitHyphenParticle(k) ? undefined : splitFused(k); if (fu) h(t.raw.replace(/[’ʼ`']/g, '').slice(0, fu.host.length))
   }

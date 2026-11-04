@@ -96,7 +96,7 @@ export const PCL_FOLD: Fold = { id: PCL_ID, era: [], branch: true, cite: PCL_CIT
 export const GAL_FOLDS: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, PART_HYPH_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...MM52_FOLDS, SYA_SEP_FOLD, FUSED_FOLD, PCL_FOLD, ...ALL_ZAK_FOLDS, ...GAL_SOFT_FOLDS]
 /** MM-50: ORTH-ZHEL-SOFT (сьвіт → світ, сьпівати → співати, зьвір → звір) is also a link branch for a token of ANY orthography: the Galician-region texts write it too; VESUM decides, a word that is already a form is never reached */
 const ZHEL_SOFT = ZHEL_FOLDS.find(f => f.id === 'ORTH-ZHEL-SOFT')!
-const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...MM52_FOLDS, RDC_FOLD, ZHEL_SOFT, ...GAL_SOFT_FOLDS]
+const EXTRA: Fold[] = [ADJ_IISH_FOLD, VERB_OVATI_FOLD, DAT_OVI_FOLD, TSYA_PHON_FOLD, ...MM52_FOLDS, RDC_FOLD, ZHEL_SOFT, ZHEL_FOLDS.find(f => f.id === 'ORTH-ZHEL-SKY')!, ...GAL_SOFT_FOLDS]   // MM-57: ORTH-ZHEL-SKY (галицка, україньский) is a branch for a token of ANY orthography too
 
 /** one extra branch per applicable fold, after the plain candidates; `src` is the candidate list of derive() or fold() */
 export function withGal<T extends Candidate[]>(cands: T, raw?: string): Candidate[] {

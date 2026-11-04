@@ -14,10 +14,11 @@ import { DIALECTS } from './rules.ts'
 import { stripStress, unifyApostrophe } from './text.ts'
 import { Q, type Evidence } from './evidence.ts'
 import type { Origin, Origins } from './origin.ts'
+import { REFL_RULES, reflSplit } from './respell-refl.ts'
 import { NORTH_RULES } from './respell-north.ts'
 import { SW_RULES, STANDARD_RULES } from './respell-sw.ts'
 
-export type Need = 'verb' | 'verb3' | 'neuter' | 'stress' | 'origin' | 'origin-word'
+export type Need = 'verb' | 'verb3' | 'refl' | 'noun' | 'neuter' | 'stress' | 'origin' | 'origin-word'
 export interface RespellCtx {
   /** part of speech / gender of the word (from the card's VESUM tags); unknown = undefined */
   pos?: 'verb' | 'noun' | 'adj' | 'other'; gender?: 'm' | 'f' | 'n'
@@ -99,7 +100,31 @@ export const SPELL_RULES: SpellRule[] = [
       POD: Q('ENC', 'http://litopys.org.ua/ukrmova/um180.htm', 'твердість приголосного т у дієсловах 3-ї ос. одн. і мн. теп. ч. і 2-ї ос. мн. нак. сп. (рóбит, нóсит, рóбл’ат, нóс’ат, роб’ іт, нос’ іт)', 'ЕУМ «Подільський говір»; the page prints the accented vowels as images, the stress letters are restored'),
       NDN: Q('ENC', 'http://litopys.org.ua/ukrmova/um173.htm', 'формі … 3-ї ос. одн. і мн. теп. ч. з кінцевим т (хóдит — хóд’ат)', 'ЕУМ «Наддністрянський говір»; the page prints the accented vowels as images, the stress letters are restored'),
     },
-    edits: w => (/[аиіуюяє]ть$/.test(w) ? [[w.length - 1, w.length, ''] as Edit] : []) },
+    // MM-58: on -ться the same hard -т (смієтся), only in a dialect that separates the particle afterwards (REFL_RULES), so that «ся смієт» is the composed form
+    edits: (w, _st, _org, code) => (/[аиіуюяє]ть$/.test(w) ? [[w.length - 2, w.length, 'т'] as Edit] : code in REFL_RULES && /[аиіуюяє]ться$/.test(w) ? [[w.length - 4, w.length - 2, 'т'] as Edit] : []) },
+  // MM-58: the mobile reflexive particle written apart (PKB um175 before or after the verb, POD um180 before it): see core/respell-refl.ts. Last of the verb rules: it composes with GAL-3T-HARD
+  { id: 'GAL-REFL-SEP', codes: { PKB: 'REFL-SEP', POD: 'REFL-SEP' }, needs: 'refl', example: ['боюся', 'бою ся'],
+    own: { PKB: REFL_RULES.PKB!.cite, POD: REFL_RULES.POD!.cite },
+    edits: (w, _st, _org, code) => { const sp = reflSplit(w), r = REFL_RULES[code]; if (!sp || !r) return []; return r.main === 'post' ? [[w.length - 2, w.length - 2, ' '] as Edit] : [[0, 0, sp.clitic + ' '] as Edit, [w.length - 2, w.length, ''] as Edit] } },
+  // MM-57: the hard -ск- / -цк- / -зк- of adjectives and adverbs (галицький → галицкий, низько → низко): PKB um175 «депалаталізація [с], [ц] … у прикметниках і прислівниках на -ск, -зк, -цк, (ни́ско, пóл.ский, вітц’ўский, н’імéцкий)», SYAN um174 «диспалаталізацією м’яких приголосних: … [с’], [ц’] у прикм. суфіксах (пóнскій, л’éцкій)».
+  // NDN has no such statement (um173): not in the codes. The IPA reads the respelled letters, so the hard с / ц agree.
+  { id: 'GAL-SK-HARD', codes: { PKB: 'PKB-DEPAL-S', SYAN: 'SYAN-DEPAL-SK' }, example: ['галицький', 'галицкий'],
+    own: {
+      PKB: Q('ENC', 'http://litopys.org.ua/ukrmova/um175.htm', 'депалаталізація [с], [ц] у кінці слів (дес, хтос, хл пец, от ц), перед флексійними -а, -у (в лица, т рница, на в лицу, копи́цу), у прикметниках і прислівниках на -ск, -зк, -цк, (ни́ско, п л.ский, вітц’ ўский, н’ім цкий)', 'ЕУМ «Покутсько-буковинський говір»; the page prints the accented vowels as images, the extract has gaps in their place'),
+      SYAN: Q('ENC', 'http://litopys.org.ua/ukrmova/um174.htm', 'диспалаталізацією м’яких приголосних: [р’] перев. у сполуках р’у, р’е при збереженні м’якості у сполуці з р’а (пур док, журус’а), [с’], [ц’] у прикм. суфіксах (п нскій, л’ цкій)', 'ЕУМ «Надсянський говір»; the extract has gaps where the page prints accented vowels'),
+    },
+    edits: w => [...w.matchAll(/([сцз])(ь)к(?=(?:ий|их|им|ім|ого|ому|ої|ою|ими|а|е|у|і|о)$)/g)].map(m => [m.index!, m.index! + 2, m[1]!] as Edit) },   // the consonant is part of the edit, so that the changed segment is visible (a bare deletion leaves an empty mark)
+  // MM-57: the other hardenings (твердішання) the ЕУМ pages state. PKB um175 «депалаталізація [с], [ц] у кінці слів (дес, хтос, хлóпец, отéц), перед флексійними -а, -у (в лица, тéрница, на вулицу, копи́цу)»;
+  // POD um180 «твердість p перед голосними (бурáк, рáдий, расни́й, зóра, говóру)». The final -ц of NDN / POD / PKB / HUT is HARD-C-FINAL above (um180 «твердість (у південноподіл. говірках) кінцевого ц»).
+  { id: 'GAL-S-FINAL', codes: { PKB: 'PKB-DEPAL-S' }, example: ['десь', 'дес'],
+    own: { PKB: Q('ENC', 'http://litopys.org.ua/ukrmova/um175.htm', 'депалаталізація [с], [ц] у кінці слів (дес, хтос, хл пец, от ц), перед флексійними -а, -у (в лица, т рница, на в лицу, копи́цу)', 'ЕУМ «Покутсько-буковинський говір»; the extract has gaps where the page prints accented vowels') },
+    skip: /^(вісь|вісь)$/, edits: w => (w.length > 3 && /[аеиіоуєя]сь$/.test(w) ? [[w.length - 2, w.length, 'с'] as Edit] : []) },
+  { id: 'GAL-C-DEPAL', codes: { PKB: 'PKB-DEPAL-S' }, needs: 'noun', example: ['вулиця', 'вулица'],
+    own: { PKB: Q('ENC', 'http://litopys.org.ua/ukrmova/um175.htm', 'депалаталізація [с], [ц] … перед флексійними -а, -у (в лица, т рница, на в лицу, копи́цу)', 'ЕУМ «Покутсько-буковинський говір»; the extract has gaps where the page prints accented vowels') },
+    edits: w => (/ц[яю]$/.test(w) && w.length > 3 ? [[w.length - 1, w.length, w.endsWith('я') ? 'а' : 'у'] as Edit] : []) },
+  { id: 'GAL-R-HARD', codes: { POD: 'POD-R-HARD' }, example: ['буряк', 'бурак'],
+    own: { POD: Q('ENC', 'http://litopys.org.ua/ukrmova/um180.htm', 'твердість p перед голосними (бур к, рад к, расни́й, зор , гов ру)', 'ЕУМ «Подільський говір»; the extract has gaps where the page prints accented vowels (бурáк, рáдий, зóра, говóру)') },
+    edits: w => [...w.matchAll(/р([яю])/g)].map(m => [m.index! + 1, m.index! + 2, m[1] === 'я' ? 'а' : 'у'] as Edit) },
   ...NORTH_RULES,
   { id: 'MPL-YON', codes: { MPL: 'MPL-YON' }, example: ['він', 'йон'], edits: w => (w === 'він' ? [[0, 3, 'йон'] as Edit] : []) },
 ]
@@ -144,6 +169,8 @@ export function respell(word: string, code: string, ctx: RespellCtx = {}): Respe
     if (!(code in r.codes)) continue
     if (r.needs === 'verb' && ctx.pos !== 'verb') { skipped.push({ rule: r.id, why: ctx.pos ? 'правило для дієслів' : 'потребує частини мови' }); continue }
     if (r.needs === 'verb3' && !ctx.fin3) { skipped.push({ rule: r.id, why: 'правило для 3-ї особи теперішнього часу дієслова (за тегом форми)' }); continue }
+    if (r.needs === 'refl' && !(ctx.pos === 'verb' && /(ся|сь)$/.test(lower))) { skipped.push({ rule: r.id, why: 'правило для зворотних дієслів (за тегом)' }); continue }
+    if (r.needs === 'noun' && ctx.pos !== 'noun') { skipped.push({ rule: r.id, why: 'правило для іменників (за тегом)' }); continue }
     if (r.needs === 'neuter' && !(ctx.pos === 'noun' && ctx.gender === 'n')) { skipped.push({ rule: r.id, why: ctx.gender ? 'правило для іменників середнього роду' : 'потребує роду' }); continue }
     if (r.needs === 'origin') {
       if (!stressOrig.size) { skipped.push({ rule: r.id, why: 'потребує наголосу' }); continue }

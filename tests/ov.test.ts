@@ -147,7 +147,8 @@ describe('OV-7 IPA follows the dialect, not the orthography', () => {
     const both = show('бажання', 'NDN', 'zhel', c); expect(both.text).toBe('бажанє'); expect(both.generated).toBe(true)
     const j = show('життя', 'POD', 'zhel', noun); expect(j.text).toBe('житя')
     expect(show('українське', 'SYAN', 'zhel').text).toBe('українске'); expect(show('український', '', 'zhel').text).toBe('українский')
-    expect(show('українське', 'SYAN', 'zhel').pieces.some(p => p.kind === 'orth')).toBe(true)
+    // MM-57: SYAN now hardens -ськ- itself (um174), so the change is a dialect piece; for a dialect without the row (NDN) it is still the Желехівка orthography piece
+    expect(show('українське', 'SYAN', 'zhel').pieces.some(p => p.kind === 'dialect')).toBe(true); expect(show('українське', 'NDN', 'zhel').pieces.some(p => p.kind === 'orth')).toBe(true)
   })
 })
 

@@ -107,7 +107,7 @@ export function galGate<O extends { cand: { trace: string[] }; hit: { tags: stri
 export const SYA_SEP_ID = 'ORTH-GAL-SYA-SEP'
 export const SYA_SEP_CITE = Q('WUK', WZ, 'Частку -ся писано окремо від дієслова: учить ся, являєть ся, сьміяти ся', 'Желехівка: «ся» окремо (старав ся); дієслово з наступним ся шукається як форма зворотного дієслова (старав + ся → старатися), якщо ВЕСУМ має таку форму')
 /** the next token is a separated reflexive particle */
-export const isReflNext = (next: string | undefined): boolean => !!next && /^(ся|сь)$/.test(next.toLowerCase())
+export const isReflNext = (next: string | undefined): boolean => !!next && /^(ся|сь|сє|си|са)$/.test(next.toLowerCase())   // MM-58: сє (owner, Galician), си / са (ЕУМ um175) are members of the same word; the caller links only when the joined form is a reflexive verb
 
 export const FUSED_ID = 'ORTH-GAL-FUSED'
 export const FUSED_CITE = Q('SMALST', 'Смаль-Стоцький, Руска правопись зі словарцем (1892), скан p. 9 (с. 12) і p. 22 (с. 19–20)', 'Противно пишемо разом слова зложені з: -б, -будь, -небудь, -де, -ж, -крат, -сь, пр. ділалаб, хвалилиб, колиб; хтож, щож', 'OCR; частка -ж / -б, написана разом з господарем (чомуж, колиб), це окрема частка: зв’язується господар; господар — ВЕСУМ-слово певного класу (див. fusedHostOk)')

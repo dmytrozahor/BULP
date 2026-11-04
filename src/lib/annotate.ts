@@ -20,6 +20,8 @@ import { findNumerals, type Numeral } from '../../core/numerals.ts'
 import { detectSyntax, type SyntaxSpan } from '../../core/syntax.ts'
 import { fold } from '../../core/orthography.ts'
 import { foldById } from '../../core/orthography.ts'
+import { isReflClitic, reflJoins } from '../../core/respell-refl.ts'
+import { SYA_SEP_ID } from '../../core/gal-mm52.ts'
 import { galSoftGate } from '../../core/gal-soft.ts'
 import { PART_HYPH_FOLD, splitHyphenParticle, withGal, hostTagOk, OBJECT_CLITICS } from '../../core/gal-folds.ts'
 import { FEATURE_RULE_IDS } from '../../core/feature-chips.ts'
@@ -84,6 +86,16 @@ function galGateOk(c: { form: string; trace: string[] }, k: string, data: Annota
   const hs = hitsOf(data, key(c.form))
   return hs.length === 0 ? isForm(key(c.form)) && galSoftGate(id, k, '', isForm) && !/ORTH-GAL-(3T|E-|REM|I-)/.test(id) : hs.some(h => galSoftGate(id, k, h.tags, isForm, key(h.lemma)))
 }
+function reflLink(k: string, data: AnnotateData) {
+  for (const j of reflJoins(k)) {
+    const tags = hitsOf(data, key(j))
+    for (const h of data.search.map.get(key(j)) ?? []) {
+      const card = /(ся|сь)$/.test(h.lemma) && tags.some(x => x.lemma === h.lemma && /^(verb|advp)/.test(x.tags)) ? data.cards.get(h.lemma) : undefined
+      if (card) return { joined: j, via: h.via, card }
+    }
+  }
+  return undefined
+}
 function galLink(k: string, data: AnnotateData) {
   const sp = splitHyphenParticle(k)
   // MM-44: the host of an attached object clitic («видів-го») must be a verb: only the lemmas of its VESUM verb readings are candidates (вид, gen. pl. видів, never)
@@ -145,6 +157,9 @@ export function annotate(text: string, data: AnnotateData, year?: number, wctx: 
       const cl = claimsOf(bcard)
       out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: copula.copulaForm, trace: [{ rule: COPULA_RULE, from: k, to: copula.copulaForm }] }, status: 'attested', lemma: bcard.lemma, card: bcard, via: 'form', claims: cl, hints: [], mark: strongest(cl), epoch: shevEpochOf(bcard), features: [COPULA_RULE] }); continue
     }
+    // MM-52 / MM-58: a verb next to a separated reflexive particle (бою ся, ся бою, смієт сє, сміє ся) links to the reflexive verb whose VESUM form is the two joined; the SAME joins as the build (core/respell-refl.ts reflJoins), only a reflexive verb counts
+    const reflJ = !isReflClitic(k) && (isReflClitic(toks[ti + 1]?.raw) || isReflClitic(toks[ti - 1]?.raw)) ? reflLink(k, data) : undefined
+    if (reflJ) { const cl = claimsOf(reflJ.card); out.push({ ...base, ...extra, provenance: 'derived', derivedFrom: { form: reflJ.joined, trace: [{ rule: SYA_SEP_ID, from: k, to: reflJ.joined }] }, status: 'attested', lemma: reflJ.card.lemma, card: reflJ.card, via: reflJ.via, claims: cl, hints: [], mark: strongest(cl), epoch: shevEpochOf(reflJ.card) }); continue }
     if (hit && card) {
       const form = card.forms.find(f => [f.raw, f.norm, f.modern].some(x => key(x) === k || key(x) === kn))
       const claims = claimsOf(card, form)

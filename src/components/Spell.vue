@@ -34,6 +34,7 @@ const dname = computed(() => DIALECTS[dialect.value] ?? '')
     </template>
     <button v-if="historical && !orig" type="button" class="sp-rawbtn" :aria-pressed="showRaw" :title="showRaw ? 'показати сучасним правописом' : `оригінал: ${raw}`" @click.stop.prevent="showRaw = !showRaw">{{ showRaw ? 'сучасне' : 'оригінал' }}</button>
     <template v-if="!quiet && s.attested && !showRaw"><span class="badge sp-att sp-attested" :title="s.attested.ev ? `«${s.attested.ev.quote}» (${s.attested.ev.locator})` : s.attested.src">{{ s.attested.src }}</span></template>
+    <span v-if="s.variants?.length && !showRaw" class="muted small sp-var" data-testid="sp-variants" :title="s.variants.map(v => `${v.text} (${v.grade === 'Q' ? 'ЕУМ' : 'за свідченням носія'}${v.why ? ': ' + v.why : ''}) · ` + v.cite.map(c => `«${c.quote}» (${c.source}, ${c.locator})`).join(' ')).join(' | ')"> · також: <template v-for="(v, i) in s.variants.slice(0, 4)" :key="v.text"><template v-if="i">; </template>{{ v.text }}<sup>{{ v.grade }}</sup></template><template v-if="s.variants.length > 4"> …</template></span>
     <span v-if="!quiet && s.note && !showRaw" class="muted small sp-note">{{ s.note }}</span>
     <span v-for="x in (!quiet && !showRaw ? s.standard : undefined)" :key="x.rule" class="muted small sp-note sp-std" :title="`«${x.cite.quote}» (${x.cite.source}, ${x.cite.locator})`">{{ x.text }}, джерело: ЕУМ ({{ x.rule }})</span>
     <template v-if="!quiet && s.generated && !showRaw">

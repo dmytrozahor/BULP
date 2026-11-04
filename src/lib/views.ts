@@ -10,6 +10,7 @@ import type { AttestedForm } from './dialectAttested.ts'
 import { toOrth, ORTHS, type OrthCtx, type OrthId, type OrthResult } from '../../core/orth-forward.ts'
 import { toIpa } from '../../core/ipa.ts'
 import type { Evidence } from '../../core/evidence.ts'
+import { reflForms, type ReflVariant } from '../../core/respell-refl.ts'
 
 export const DIALECT_KEY = 'ukr-lex.dialect', ORTH_KEY = 'ukr-lex.orth'
 const store = (): Storage | undefined => { try { return globalThis.localStorage ?? undefined } catch { return undefined } }
@@ -44,6 +45,8 @@ export interface Shown {
   attested?: AttestedForm
   /** OV-13: a rule needed the origin of і and the card has none */
   note?: string
+  /** MM-58: the other shapes of a reflexive verb whose particle is written apart (main form first in `text`): Q = ЕУМ states it, P = за свідченням носія */
+  variants?: ReflVariant[]
   /** OV-14: cited «the dialect has the standard sound» statements (VOL, POD), only when the card asked for notes (the header) */
   standard?: Respelled['standard']
 }
@@ -81,7 +84,8 @@ export function show(word: string, d: string, o: OrthId, ctx: ViewCtx = {}): Sho
     if (d1) { const f = dr!.fired.find(x => x.rule === d1.rule); push({ text: t1.slice(a, b), kind: 'dialect', from: d1.from, rule: f?.detector ?? d1.rule, ev: f?.cite }); continue }
     push({ text: t1.slice(a, b), kind: 'plain' })
   }
-  return { word, dialect: d, orth: o, text: pieces.map(p => p.text).join(''), pieces, respelled: dr, ortho: or, generated: !!dr, ...(note ? { note } : {}), ...(ctx.noteOrigin && rs?.standard.length ? { standard: rs.standard } : {}) }
+  const rv = d && ctx.pos === 'verb' ? reflForms(word, d)?.variants : undefined
+  return { word, dialect: d, orth: o, text: pieces.map(p => p.text).join(''), pieces, respelled: dr, ortho: or, generated: !!dr, ...(rv?.length ? { variants: rv } : {}), ...(note ? { note } : {}), ...(ctx.noteOrigin && rs?.standard.length ? { standard: rs.standard } : {}) }
 }
 
 /** IPA of the word: the dialect only (the orthography never enters). The stress positions follow the respelling. */

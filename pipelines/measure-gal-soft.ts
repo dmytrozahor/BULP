@@ -28,7 +28,7 @@ for (const f of readdirSync(dir).filter(x => x.endsWith('.json') && !x.endsWith(
   if (!Array.isArray(j.tokens)) continue
   for (const t of j.tokens) { if (!/^\p{L}[\p{L}'’ʼ-]*$/u.test(t.raw)) continue; const k = norm(t.raw); freq.set(k, (freq.get(k) ?? 0) + 1) }
 }
-const folds = [...GAL_SOFT_MEASURED, ...ZHEL_FOLDS.filter(f => f.id === 'ORTH-ZHEL-SOFT')]
+const folds = [...GAL_SOFT_MEASURED, ...ZHEL_FOLDS.filter(f => f.id === 'ORTH-ZHEL-SOFT' || f.id === 'ORTH-ZHEL-SKY')]
 const rep: Record<string, { types: number; tokens: number; top: [string, string, number][]; blocked: [string, string, number][]; gated: [string, string, number][]; sample: [string, string, number][] }> = {}
 for (const f of folds) rep[f.id] = { types: 0, tokens: 0, top: [], blocked: [], gated: [], sample: [] }
 const need = new Set<string>()
