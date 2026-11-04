@@ -215,6 +215,7 @@ export interface NanRow {
   /** word-level (the headword is no standard word) or a standard word recorded in the area */ wl?: boolean
   /** passed the alphabetical-sequence gate for the volume (new cards) */ seq?: boolean
   /** the settlement abbreviations of the entry, used by the gates only, never written */ ab?: string[]
+  /** SE-16: a cross-reference article «X див. Y»; confirmed by the text layer; pieces of evidence for a card */ xr?: boolean; conf?: boolean; ev?: number
 }
 
 const fold = (h: string): string => h.toLowerCase().replace(/й/g, 'и').replace(/ї/g, 'і').replace(/[’ʼ]/g, "'")
@@ -340,4 +341,137 @@ export function markNanSequence(rows: NanRow[], st?: NanStats): void {
   const spine = new Set<number>()
   for (let i = tails[tails.length - 1] ?? -1; i >= 0; i = prev[i]!) spine.add(i)
   rows.forEach((r, i) => { r.seq = spine.has(i) && strictNanHead(r.head); if (!r.seq && st) st.seqDropped++ })
+}
+
+// ═══ SE-16: recall design (as SE-15) ═══════════════════════════════════════════════════════════════════
+/**
+ * SPEC 63 SE-16. SE-14 kept ≈ 25 % of the book: an article was dropped for a garbled grammar block (2,558 of 9,683), a garbled gloss (2,258), no second reading (764) or an off-spine headword (1,013). Here an article
+ * whose HEADWORD is read is kept: a garbled gloss → the headword with `oq`; no readable grammar → the gloss starts at the first Capitalised word after the garbled block; a cross-reference «ЗАБЛАКУВАТЬ див. ЗАБЛАКОВУВАТЬ»
+ * is a headword too (no gloss stored); a headword off the alphabetical spine is kept as `unv` (it labels an existing lemma, makes no card). A headword makes a CARD only when it is strict, on the spine and has two of three
+ * pieces of evidence: the text layer reads the same article on the same page, a settlement group, a clean gloss. Only the Tesseract reading yields headwords (the text layer's letters are broken); it confirms and supplies settlements.
+ */
+export interface NanStats16 extends NanStats { garbledGram: number; oqRows: number; xrefRows: number; unv: number; cardOk: number; repaired: number; tlOnly: number; headOnly: number }
+export const newNanStats16 = (): NanStats16 => ({ ...newNanStats(), garbledGram: 0, oqRows: 0, xrefRows: 0, unv: 0, cardOk: 0, repaired: 0, tlOnly: 0, headOnly: 0 })
+/** where the gloss starts when the grammar block is unreadable: the first Capitalised word after a full stop / comma / dash within the first 90 characters */
+const GLOSS_AT = /(?:^|[.;:,]\s+|\s[-–—]\s)(?:[1І]\.\s+)?(?=[А-ЯІЇЄҐ][а-яіїєґ'’]{2})/u
+const LONG_WORD = /[а-яіїєґ]{7,}/u
+
+/** the share of the tokens of a gloss that are the book's own settlement abbreviations («Кір., Коп., Про, Чуб., Юр») */
+const abbrShare = (g: string, s: Settlements): number => { const t = g.split(/[\s,;.()]+/).filter(Boolean); return t.length ? t.filter(w => s.modern.has(w) || s.old.has(w)).length / t.length : 0 }
+
+/** one reading → rows, none dropped for the gloss or the grammar (counters: only the Tesseract side is counted) */
+function readSide16(pages: NanPage[], vol: number, settlements: Settlements, tl: boolean, st: NanStats16): NanRow[] {
+  const rows: NanRow[] = []
+  for (const e of splitNanEntries(pages, tl ? undefined : st, tl)) {
+    if (!tl) st.candidates++
+    const m = START.exec(e.text)!
+    const h = m[1]!.replace(/^[^\p{L}]+/u, '').replace(/[’ʼ]/g, "'").toLowerCase()
+    const rest0 = e.text.slice(m[0].length).replace(/^\s+/, '')
+    if (!/^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(h) || !headwordOk(h)) { if (!tl) st.badHead++; continue }
+    if (/^[.,\s\-–—]*(?:ТМ\s*)?див\.?/u.test(rest0)) {
+      if (!tl) { st.xref++; st.xrefRows++ }
+      rows.push({ head: h, vol, page: e.page, senses: [{ n: 1, labels: [], gloss: '', oq: 1 }], xr: true, ab: [], ...(e.star ? { old: true } : {}) })
+      continue
+    }
+    let rest = rest0
+    const tr = /^\/[^/]{0,80}\//u.exec(rest) ?? /^\/[^,/]{0,50}(?=,)/u.exec(rest)
+    if (tr) rest = rest.slice(tr[0].length)
+    for (let k = 0; k < 4; k++) { const v = /^\s*(?:і|й|та)\s+[ІЇ]?[А-ЯІЇЄҐ'’ʼ-]{3,}\s*(?:\/[^/]{0,80}(?:\/|(?=,)))?/u.exec(rest); if (!v) break; rest = rest.slice(v[0].length) }
+    rest = rest.replace(/^[\s7]+(?=[,\s])/, '')
+    const g = findGram(rest)
+    let body: string | undefined, pos: string | undefined
+    if (g && g.start <= 60) { body = rest.slice(g.end); pos = POS_UK(g.text) }
+    else if (/^[.\s]*[А-ЯІЇЄҐ]/u.test(rest)) body = rest.replace(/^[.\s]+/, '')
+    else {   // the grammar block is garbled («8,2;», «и, х.», «ДА:»): the gloss starts at the first Capitalised word after it, when the block before it is short and holds no long word
+      if (!tl) st.garbledGram++
+      const ga = GLOSS_AT.exec(rest.slice(0, 90))
+      if (ga && ga.index + ga[0].length <= 70 && !LONG_WORD.test(rest.slice(0, ga.index + ga[0].length))) body = rest.slice(ga.index + ga[0].length)
+    }
+    const senses: NanRow['senses'] = []
+    let tailAll = ''
+    if (body !== undefined) {
+      for (const s of splitSenses(body.replace(/^[\s,;.]+/, '')).slice(0, 10)) {
+        const lb = labelsOf(s.text.replace(/^\s*[1І]\.\s+/u, '').replace(/^\s+/, ''))
+        const fs = firstSentence(lb.rest)
+        tailAll += ' ' + fs.tail
+        let gloss = slashToParen(fs.gloss).replace(/\s*\([А-ЯІЇЄҐ][\p{L}]{0,4}[,.\s]*\d[^)]*\)/gu, '').replace(/\s*\((?:[\p{Lu}][\p{L}]{0,6}\.?[,\s]*)+\)?\s*\.?$/u, '').replace(/\s*\(\s*$/, '').replace(/[\s,;:.]+$/, '')
+        if (!gloss) continue
+        if (!glossShape(gloss) || !/^[А-ЯІЇЄҐ«(]/u.test(gloss) || abbrShare(gloss, settlements) >= 0.5) { senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }   // the book capitalises every gloss; a run of settlement abbreviations is no gloss
+        gloss = clip(gloss, GLOSS_MAX)
+        if (!nanGlossClean(gloss.replace(/…$/, ''))) { senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }
+        senses.push({ n: s.n, labels: lb.labels, gloss })
+      }
+    }
+    if (!senses.length) { senses.push({ n: 1, labels: [], gloss: '', oq: 1 }); if (!tl) st.headOnly++ }
+    const pl = placesOf(tailAll + ' ' + (body ?? rest).slice(-260), settlements)
+    rows.push({ head: h, ...(pos ? { pos } : {}), vol, page: e.page, senses, ...(pl.names.length ? { v: pl.names.slice(0, 3), vn: pl.names.length } : {}), ...(pl.all ? { all: true } : {}), ...(pl.old || e.star ? { old: true } : {}), ab: pl.abbrs })
+  }
+  return rows
+}
+
+/** a headword off the spine whose first letter is the debris of the book's `*` (Ж, Я, У, Ш, І …) and which fits between its spine neighbours without it is repaired */
+export function repairStarHeads(rows: NanRow[], st?: NanStats16): void {
+  const spineIdx = rows.map((r, i) => (r.seq ? i : -1)).filter(i => i >= 0)
+  let p = 0
+  rows.forEach((r, i) => {
+    if (r.seq) return
+    while (p < spineIdx.length && spineIdx[p]! < i) p++
+    const prev = rows[spineIdx[p - 1] ?? -1], next = rows[spineIdx[p] ?? -1]
+    const alt = r.head.slice(1)
+    if (!/^[жяушзі]/u.test(r.head) || alt.length < 3 || !/^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(alt)) return
+    const k = keyOf(alt)
+    if ((!prev || cmpKey(keyOf(prev.head), k) <= 0) && (!next || cmpKey(k, keyOf(next.head)) <= 0)) { r.head = alt; r.seq = strictNanHead(alt); if (st) { st.repaired++; if (r.seq) st.seqDropped-- } }
+  })
+}
+
+/**
+ * The articles of one volume, recall design. The Tesseract reading gives the rows; the text layer confirms (same page, folded headword ≤ 1–2 letters apart) and adds its settlements and a better gloss. Evidence `ev` = confirmed +
+ * a settlement group + a clean gloss; `seq` (a CARD) = strict headword, on the alphabetical spine, `ev ≥ 2`.
+ */
+export function parseNanRecall(pages: NanPage[], vol: number, settlements: Settlements, known: (h: string) => boolean = () => false, wordKnown?: (w: string) => boolean): { rows: NanRow[]; stats: NanStats16; cands: Set<string> } {
+  const st = newNanStats16(), cands = new Set<string>()
+  const ocr = readSide16(pages, vol, settlements, false, st), tl = readSide16(pages, vol, settlements, true, st)
+  const byPage = new Map<number, NanRow[]>(); for (const t of tl) (byPage.get(t.page) ?? byPage.set(t.page, []).get(t.page)!).push(t)
+  const used = new Set<NanRow>(), rows: NanRow[] = []
+  for (const o of ocr) {
+    cands.add(o.head)
+    const pool = (byPage.get(o.page) ?? []).filter(t => !used.has(t) && !t.xr)
+    const fo = fold(o.head), lim = fo.length >= 8 ? 2 : 1
+    const t = o.xr ? undefined : pool.map(c => ({ c, d: lev(fo, fold(c.head)) })).filter(x => x.d <= lim).sort((a, b) => a.d - b.d)[0]?.c
+    let row: NanRow = { ...o }
+    if (t) {
+      used.add(t); cands.add(t.head)
+      const best = glossScore(t) > glossScore(o) + 0.0001 ? t : o
+      const names = [...new Set([...(o.v ?? []), ...(t.v ?? [])])]
+      const pos = best.pos ?? o.pos ?? t.pos
+      row = { ...o, ...(pos ? { pos } : {}), senses: best.senses, ...(names.length ? { v: names.slice(0, 3), vn: Math.max(o.vn ?? 0, t.vn ?? 0, names.length) } : {}), ...(o.all || t.all ? { all: true } : {}), ...(o.old || t.old ? { old: true } : {}), ab: [...new Set([...(o.ab ?? []), ...(t.ab ?? [])])], conf: true }
+    }
+    row.wl = !known(row.head)
+    rows.push(row)
+  }
+  st.tlOnly = tl.filter(t => !used.has(t) && !t.xr).length
+  for (const r of rows) for (const x of r.senses) for (const t of tokensOf(x.gloss)) cands.add(t.w)
+  if (wordKnown) for (const r of rows) for (const x of r.senses) if (x.gloss && !textLayerGlossOk(x.gloss.replace(/…$/, ''), wordKnown, r.head)) { x.gloss = ''; x.oq = 1; st.badGloss++ }
+  const evOf = (r: NanRow): number => (r.conf ? 1 : 0) + (r.v?.length || r.all ? 1 : 0) + (r.senses.some(s => !s.oq && s.gloss) ? 1 : 0)
+  for (const r of rows) r.ev = evOf(r)
+  markNanSequence(rows, st)
+  repairStarHeads(rows, st)
+  for (const r of rows) if (r.seq && r.ev! < 2) r.seq = false
+  for (const r of rows) {
+    st.entries++; st.senses += r.senses.length; st.clipped += r.senses.filter(s => s.gloss.endsWith('…')).length
+    if (r.senses.every(s => s.oq)) st.oqRows++
+    if (r.seq) st.cardOk++; else st.unv++
+    if (r.v?.length) { st.withPlaces++; st.placeHits += r.vn ?? r.v.length }
+    if (r.all) st.allPlaces++
+    if (r.old) st.old++
+    if (r.wl) st.wordLevel++; else st.placeOnly++
+  }
+  return { rows, stats: st, cands }
+}
+/** SE rows of a recall-design article: `unv` unless it passed the card gates; a cross-reference is a headword with no gloss (`oq`) */
+export function nanRows16(a: NanRow): [string, import('./se.ts').SeRow][] {
+  return a.senses.map(s => [a.head, {
+    d: NAN_DICT, g: s.gloss, ...(a.pos ? { p: a.pos } : {}), n: s.n, l: `т.${a.vol} с.${a.page}`, lb: [a.wl ? NAN_LABEL : NAN_PLACE, ...s.labels],
+    ...(s.oq ? { oq: 1 as const } : {}), ...(!a.seq ? { unv: 1 as const } : {}), ...(a.v ? { v: a.v, vn: a.vn } : {}), ...(a.all ? { va: 1 as const } : {}),
+  }])
 }

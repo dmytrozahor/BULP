@@ -1214,6 +1214,17 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the notes of the 1973 edition are not stored) › Latin part: head in ASCII, the letters in parentheses belong to the word, the glosses are Cyrillic |
 | SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the notes of the 1973 edition are not stored) › word-pair part: the Slavonic head, the Latin words |
 | SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the notes of the 1973 edition are not stored) › rows: dated by the manuscript (1642 / 1650), keyed by the single-word gloss |
+| SE-16 | tests/se16.test.ts › a garbled grammar block no longer drops the article: the gloss starts at the first Capitalised word |
+| SE-16 | tests/se16.test.ts › a garbled gloss keeps the headword with `oq`; a cross-reference is a headword with no gloss |
+| SE-16 | tests/se16.test.ts › a headword off the alphabetical spine is kept as `unv` (no card); a card needs the spine and two pieces of evidence |
+| SE-16 | tests/se16.test.ts › the label of a row: a standard headword only records the place, a non-standard one is a word of the area; `oq` rows are kept |
+| SE-16 | tests/se16.test.ts › the page: two running-head lines, the printed number as the last line; either head may be missing |
+| SE-16 | tests/se16.test.ts › articles: a lowercase headword after a paragraph that ended with a full stop; a blank line inside an article after a hyphen is a continuation |
+| SE-16 | tests/se16.test.ts › grades: a clean excerpt (a), an excerpt with «[…]» or cut back (b), a pointer only (c); the bracketed dialect headword makes no row |
+| SE-16 | tests/se16.test.ts › the wrong-lemma gates stay: a headword outside the running-head range, off the alphabetical spine or not strict gives no row |
+| SE-16 | tests/se16.test.ts › tidy: a lone mangled token becomes «[…]», a run of them cuts the excerpt with «…», a lone digit before […] is «з» |
+| SE-16 | tests/se16.test.ts › the statement may follow the cognate list («; — від лат. …»); no marker at all → a pointer (undefined excerpt) |
+| SE-16 | tests/se16.test.ts › the panel: an excerpt is a Q-evidence, a pointer is a D-evidence with the volume and page and no text; a lemma with only a pointer still gets the source |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |

@@ -1,5 +1,5 @@
 /**
- * SPEC 63 SE-14: Чабаненко, «Словник говірок Нижньої Наддніпрянщини» т. 1–4 (owner-supplied scans, OCR on the worker by ops/worker/ocr-se14.sh) → data/work/se-parsed/chabanenko.json
+ * SPEC 63 SE-14 (SE-16: recall design, as SE-15): Чабаненко, «Словник говірок Нижньої Наддніпрянщини» т. 1–4 (owner-supplied scans, OCR on the worker by ops/worker/ocr-se14.sh) → data/work/se-parsed/chabanenko.json
  * (policy fields only: headword, POS, labels, settlements, sense numbers, gloss ≤ 200, volume/page). The OCR text is © and stays outside git: `NAN_OCR` (default data/raw/se14-ocr, which is gitignored) holds
  * nan1..nan4/page_NNNN.txt (Tesseract) and nan1..nan4/tl_NNNN.txt (the text layer). Absent input → the step is skipped, no error (the build runs without the book).
  * Usage: tsx pipelines/nan-scan.ts [ocr dir] [out dir (default data/work/se-parsed)] [status file]
@@ -7,7 +7,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { NAN_DICT, nanPassRate, nanRows, parseNan, parseSettlements, type NanPage, type NanStats } from '../core/nan-parse.ts'
+import { NAN_DICT, nanRows16, parseNanRecall, parseSettlements, type NanPage, type NanStats16 } from '../core/nan-parse.ts'
 import type { SeRow } from '../core/se.ts'
 import { writeJsonAtomic } from './robust.ts'
 
@@ -35,7 +35,7 @@ export function loadNanPages(dir: string, vol: number): { pages: NanPage[]; tl: 
   return { pages, tl, size }
 }
 
-export interface NanRun { cands: Set<string>; rows: [string, SeRow][]; stats: Record<string, NanStats & { passRate: number }>; settlements: { modern: number; old: number } }
+export interface NanRun { cands: Set<string>; rows: [string, SeRow][]; stats: Record<string, NanStats16 & { passRate: number }>; settlements: { modern: number; old: number } }
 export function runNan(ocr: string, out: string, status?: string, known?: (h: string) => boolean, wordKnown?: (w: string) => boolean): NanRun | undefined {
   if (!existsSync(resolve(ocr, 'nan1'))) { console.log(`nan-scan: ${ocr}/nan1 absent, skipped`); return undefined }
   const st = (o: object) => { if (status) writeJsonAtomic(status, JSON.stringify({ at: new Date().toISOString(), ...o })) }
@@ -45,10 +45,10 @@ export function runNan(ocr: string, out: string, status?: string, known?: (h: st
   for (const vol of NAN_VOLS) {
     const l = vol === 1 ? v1 : loadNanPages(ocr, vol); if (!l.pages.length) continue
     sizes[`nan${vol}`] = l.size
-    const r = parseNan(l.pages, vol, settlements, known, wordKnown)
+    const r = parseNanRecall(l.pages, vol, settlements, known, wordKnown)
     r.cands.forEach(c => cands.add(c))
-    for (const a of r.rows) rows.push(...nanRows(a))
-    stats[`t${vol}`] = { ...r.stats, passRate: nanPassRate(r.stats) }
+    for (const a of r.rows) rows.push(...nanRows16(a))
+    stats[`t${vol}`] = { ...r.stats, passRate: r.stats.candidates ? Math.round((r.stats.entries / r.stats.candidates) * 1000) / 1000 : 0 }
     st({ step: `vol ${vol} done`, stats })
   }
   mkdirSync(out, { recursive: true })

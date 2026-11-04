@@ -10,7 +10,7 @@
  * (the OCR prints «Ідрагіль», «|драйка|»). The OCR reads Latin / Greek forms badly, so the article is only used when its headword is on the alphabetical spine of the volume, inside the page's running-head range,
  * and the excerpt is word-like (the Cyrillic part passes the OCR score, almost no stray symbols).
  */
-import { headwordOk, ocrScore } from './se-parse.ts'
+import { headwordOk, ocrScore, wordish } from './se-parse.ts'
 import { inPageRange } from './sum-article.ts'
 
 export const ESUM_MAX = 200
@@ -97,6 +97,8 @@ export function splitEsum(pages: EsumPage[], off: number, st: EsumStats): EsumAr
 // ── the statement ─────────────────────────────────────────────────────────────────────────────────────
 const STRONG = /(?:^|[;:—–.]\s*|-{1,2}\s*)(запозичен|запозичуван|п[сe][лп]\.|прасл|праслов|результат|утворен|утвор|звуконаслід|ономатоп|суфікс|префікс|складн|походить|калька|скорочен|видозміна|експресивн|зближен|похідн|успадкован|перенесен|спільнослов|дав\.-?\s?рус|друс\.)/iu
 const WEAK = /(?:^|[;:—–.]\s*|-{1,2}\s*)(споріднен|пов['’]яз|неясн|очевидно|можливо|стсл\.)/iu
+/** SE-16: an article with no strong / weak marker has its statement after the cognate list: «; — від лат. …», «; — походять від …», «; — назва, засвоєна з …» */
+const FALLBACK = /(?:;\s*[—–-]{1,2}\s*)(від\s|походять|походить|назва|засвоєн|слово\s|виведен|виник|вживан|з\s+[а-яіїєґ]+(?:ськ|цьк|зьк)[а-яіїєґ]*\s+(?:мов|діал)|через\s)/iu
 /** where the literature begins: «— Фасмер І 534;», «— ЭСРЯ …», «— Пор. …», «— Див. ще …» */
 const BIBL = /(?:\s|(?<=[.»)]))(?:[—–]|-{1,2})\s*(?:(?:Пор|Див|Зіст)\.|[A-ZА-ЯІЇЄҐ0-9][\p{L}.\-?²]*[\s,]+(?:[IVXІ]+|\d)\b|[A-ZА-ЯІЇЄҐ0-9][\p{L}.\-?²]{1,12}\s+[A-ZА-ЯІЇЄҐ])/u
 /** the abbreviations of the languages the OCR reads as Latin look-alikes: «rp.» for «гр.», «p.» for «р.» */
@@ -125,9 +127,9 @@ export interface Statement { t: string; kind: 'bor' | 'proto' | 'other'; cut?: b
  * the excerpt of an article body: from the etymological statement on (the strong markers first: «запозичення», «псл.», «утворене», «результат»; the weak ones only when no strong marker exists), without the literature,
  * ≤ 200 characters, «…» at a word boundary. The language / source-form chain is kept as far as the OCR reads it: the excerpt stops before the first mangled token.
  */
-export function statementOf(body: string, max = ESUM_MAX): Statement | undefined {
+export function statementOf(body: string, max = ESUM_MAX, fallback = false): Statement | undefined {
   const b = repairText(body.replace(/\s+/g, ' ').trim())
-  const m = STRONG.exec(b) ?? WEAK.exec(b); if (!m) return undefined
+  const m = STRONG.exec(b) ?? WEAK.exec(b) ?? (fallback ? FALLBACK.exec(b) : null); if (!m) return undefined
   let at = m.index + m[0].length - m[1]!.length
   const pre = /(?:очевидно|можливо|мабуть),?\s*$/iu.exec(b.slice(Math.max(0, at - 14), at)); if (pre) at -= pre[0].length
   let s = b.slice(at)
@@ -194,5 +196,148 @@ export function parseEsum(pages: EsumPage[], vol: number): { rows: EsumRow[]; st
   const seen = new Map<string, number>()
   const kept = rows.filter(r => r.seq && strictEsumHead(r.head)).filter(r => { const n = (seen.get(r.head) ?? 0) + 1; seen.set(r.head, n); if (n > 1) { st.duplicates++; return false } return true })
   for (const r of kept) { st.entries++; if (r.t.endsWith('…')) st.clipped++; if (r.kind === 'bor') st.withBorrowing++; if (r.kind === 'proto') st.withProto++ }
+  return { rows: kept, stats: st }
+}
+
+// ═══ SE-16: column-aware pages, paragraph articles, graded rows ═══════════════════════════════════════════
+/**
+ * SPEC 63 SE-16. SE-14 kept ≈ 12 % of the ЕСУМ: the two-column page was read line by line (about a third of the pages), an article was cut only where `headword «gloss»` followed a full stop, and an article without a
+ * clear etymological statement or with a garbled excerpt was dropped. Now the pages are the column-aware re-OCR (`ops/worker/ocr-se16.mjs`: head L, head R, blank line, left column, blank line, right column, printed
+ * number), an article = a paragraph that starts with a lowercase headword after a paragraph that ended with a full stop / bracket / quote, inside the running-head range of its page; and every confirmed headword yields a row:
+ *   grade `a` = a clean excerpt from the etymological statement; `b` = an excerpt with parts the OCR mangled shown as «[…]», or from a weak marker only («споріднене», «очевидно»), or cut back to its clean prefix;
+ *   `c` = a page pointer only («ЕСУМ, т. N, с. M»), which is true and useful by itself. The wrong-lemma risk stays low: the headword must be in the page's running-head range, on the volume's alphabetical spine
+ *   and strict; a bracketed (dialect) headword makes no row. © policy as SE-14: headword, volume, page and ≤ 200 characters at a word boundary; nothing else is stored.
+ */
+export type EsumGrade = 'a' | 'b' | 'c'
+export interface Esum16Page { lo?: string; hi?: string; body: string; no?: number }
+const HEAD16 = /^[\[|(]?([а-яіїєґ][а-яіїєґ'’ʼ-]{1,})[0-9¹²³]?[\]|)]?[.,:;]?$/u
+/** the page of the column-aware OCR: two running-head lines (either may be empty), a body, the printed number as the last line when read */
+export function pageHead16(text: string): Esum16Page | undefined {
+  const lines = text.replace(/\r/g, '').split('\n')
+  if (lines.length < 8) return undefined
+  const h = (s: string | undefined): string | undefined => { const t = fixScript((s ?? '').trim().toLowerCase()); const m = HEAD16.exec(t); return m ? m[1]!.replace(/[’ʼ]/g, "'") : undefined }
+  const lo = h(lines[0]), hi = h(lines[1])
+  let end = lines.length; while (end > 2 && !lines[end - 1]!.trim()) end--
+  let no: number | undefined
+  const last = /^\s*\[?(\d{1,4})\]?\s*$/.exec(lines[end - 1] ?? ''); if (last) { no = Number(last[1]); end-- }
+  const body = lines.slice(2, end).join('\n')
+  if (body.replace(/\s/g, '').length < 200) return undefined
+  return { ...(lo ? { lo } : {}), ...(hi ? { hi } : {}), body, ...(no !== undefined ? { no } : {}) }
+}
+export function pageOffset16(pages: EsumPage[]): number {
+  const d: number[] = []
+  for (const p of pages) { const h = pageHead16(p.text); if (h?.no !== undefined && Math.abs(p.idx - h.no) < 80) d.push(p.idx - h.no) }
+  if (!d.length) return 0
+  d.sort((a, b) => a - b); return d[Math.floor(d.length / 2)]!
+}
+export interface Esum16Article { head: string; bracket: boolean; body: string; page: number; lo?: string; hi?: string; gloss: boolean }
+/** a paragraph starts an article: [bracket] lowercase word, then «,» «;» «(» ««» a bracket, a dash or a blank */
+const START16 = /^([\[|(ІЇl]?)([а-яіїєґ][а-яіїєґ'’ʼ-]{2,})[0-9¹²³]?[\]|]?(?=\s*[,;«(\[|—–-]|\s)/u
+/** an article that follows a «— Див. ще X.» / «— Пор. X.» line inside the same paragraph (the OCR lost the blank line) */
+const MID = /(?<=(?:Пор|Див|Зіст)\.[^.]{1,70}\.)\s+(?=[\[|]?[а-яіїєґ]{3,}[0-9¹²³]?[\]|]?\s*(?:[,;«(]|\s[(«]))/u
+const TERM_END = /[.»)\]!?]["'”’]?\s*$/u
+export interface Esum16Stats { pages: number; bodyPages: number; paragraphs: number; starts: number; notStart: number; badHead: number; bracketed: number; outOfRange: number; noSignal: number; offSpine: number; seqDropped: number; duplicates: number; entries: number; a: number; b: number; c: number; clipped: number; withBorrowing: number; withProto: number }
+export const newEsum16Stats = (): Esum16Stats => ({ pages: 0, bodyPages: 0, paragraphs: 0, starts: 0, notStart: 0, badHead: 0, bracketed: 0, outOfRange: 0, noSignal: 0, offSpine: 0, seqDropped: 0, duplicates: 0, entries: 0, a: 0, b: 0, c: 0, clipped: 0, withBorrowing: 0, withProto: 0 })
+/** an article has the shape of the book: a gloss in «», a «; —» section break, a literature line or a language chain */
+const SIGNAL = /«[^»]{1,170}»|;\s*[—–-]{1,2}\s|[—–]\s*(?:Фасмер|Преобр|Шанский|Brückner|Bern|Mikl|Machek|Пор\.|Див\.)|\b(?:р|бр|п|ч|болг|схв|псл|гр|лат|нім)\.\s/u
+export function splitEsum16(pages: EsumPage[], off: number, st: Esum16Stats): Esum16Article[] {
+  const out: Esum16Article[] = []
+  let cur: Esum16Article | undefined, prevTerm = true
+  for (const p of pages) {
+    st.pages++
+    const h = pageHead16(p.text); if (!h) continue
+    st.bodyPages++
+    const paras = h.body.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean)
+    const pieces = paras.flatMap(raw => repairText(raw.replace(/([\p{L}])[-­]\n(?=[\p{Ll}])/gu, '$1').replace(/\n/g, ' ').replace(/\s+/g, ' ')).split(MID))
+    for (const t of pieces) {
+      st.paragraphs++
+      const m = START16.exec(t)
+      const joined = !!cur && /[\p{L}][-­]$/u.test(cur.body) && /^\p{Ll}/u.test(t)   // a blank line inside an article after a hyphen at a line end: the halves of a word
+      if (m && (prevTerm || !cur) && !joined) {
+        st.starts++
+        cur = { head: m[2]!.replace(/[’ʼ]/g, "'"), bracket: /^[\[|]/.test(m[1]!), body: t.slice(m[0].length), page: p.idx - off, ...(h.lo ? { lo: h.lo } : {}), ...(h.hi ? { hi: h.hi } : {}), gloss: /^\s*[,;]?\s*(?:\([^()]{1,18}\)\s*)?«/u.test(t.slice(m[0].length)) }
+        out.push(cur)
+      } else if (cur) { cur.body = joined ? cur.body.slice(0, -1) + t : cur.body + ' ' + t; if (m) st.notStart++ }   // a blank line inside an article is a continuation
+      prevTerm = TERM_END.test(t)
+    }
+  }
+  return out
+}
+/** a token of an excerpt the OCR has probably mangled (a Cyrillic non-word, a Latin token with no vowel / a long consonant run, a digit-letter mix, a stray number) */
+export function suspiciousToken(w: string): boolean {
+  const t = w.replace(/^[«»"'(\[*„“]+|[»"')\].,;:!?…]+$/gu, '')
+  if (/^\d{1,2}$/.test(t)) return true   // a stray digit between words («посередництво 8 …»)
+  if (t.length < 3) return false
+  if (t === '[…]') return false
+  if (/\d/.test(t)) return !/^\d{3,4}$/.test(t)   // a year is fine, «8.539» is not
+  return t.split(/[-–]/).filter(p => p.length >= 3).some(p => {
+    if (/^[а-яіїєґА-ЯІЇЄҐ'’ʼ]+$/u.test(p)) return !wordish(p)
+    if (/^[A-Za-zäöüßéèêëáàâíìîóòôúùûýçñłąęśźżćńšžčřěůÄÖÜ'’*-]+$/u.test(p)) {
+      const q = p.replace(/^\*/, '').toLowerCase()
+      if (q.length < 3) return false
+      if (q.length >= 12) return true   // «fhnanmvyarnunt»: a foreign form this long is nearly always debris
+      const v = (q.match(/[aeiouyäöüéèêëáàâíìîóòôúùûýąęěů]/g) ?? []).length
+      return v === 0 || /[^aeiouyäöüéèêëáàâíìîóòôúùûýąęěů]{5,}/.test(q) || (q.length >= 5 && v / q.length < 0.2)
+    }
+    return false   // Greek and the like: not judged
+  })
+}
+/** the excerpt tidied: a lone suspicious token becomes «[…]», a run of them (2 in a window of 4) cuts the excerpt before it with «…»; a lone «3» before «[…]» is «з» */
+export function tidyExcerpt(t: string): { t: string; changed: boolean } | undefined {
+  const toks = t.replace(/(?<=[а-яіїєґ,])\s3(?=\s+\[…\])/gu, ' з').split(' ').filter(Boolean), out: string[] = []
+  let changed = false
+  for (let i = 0; i < toks.length; i++) {
+    const w = toks[i]!
+    if ((w === '3' || w === '8') && /^(?:запозичен\S*|утворен\S*|виведен\S*|походить|пов'язан\S*|споріднен\S*|зближен\S*|виник\S*)$/u.test(out[out.length - 1] ?? '') && i + 1 < toks.length && suspiciousToken(toks[i + 1]!) && !suspiciousToken(toks[i + 2] ?? '')) { out.push('з'); changed = true; continue }   // the OCR of the preposition «з» before a mangled form
+    if (suspiciousToken(w)) {
+      if (toks.slice(i + 1, i + 4).some(suspiciousToken)) {
+        const s = out.join(' ').replace(/[\s,;:—–(\[-]+$/u, '')
+        if (s.length < 25) return undefined
+        return { t: s + '…', changed: true }
+      }
+      if (out[out.length - 1] !== '[…]') out.push('[…]')
+      changed = true
+    } else out.push(w)
+  }
+  const s = out.join(' ').replace(/(?<=[а-яіїєґ,]) [38] (?=[…])/gu, ' з ')
+  if (s.length < 25 || (s.match(/[а-яіїєґ]{3,}/gu)?.length ?? 0) < 3) return undefined
+  return { t: s, changed: changed || s !== t }
+}
+/** the excerpt of an article with its grade; a statement the OCR garbled is cut back to its longest clean prefix, else the row is a pointer only */
+export function gradeExcerpt(body: string): { t: string; kind: Statement['kind']; grade: 'a' | 'b' } | undefined {
+  const s = statementOf(body, ESUM_MAX, true); if (!s) return undefined
+  const flat = body.replace(/\s+/g, ' '), weak = !STRONG.test(flat) && WEAK.test(flat)
+  let t = s.t
+  if (!excerptClean(t)) {   // cut at the last «;» / «,» that leaves a clean prefix of at least 25 characters
+    let found: string | undefined
+    for (let i = t.length - 1; i >= 25; i--) if (/[;,]/.test(t[i]!) && excerptClean(t.slice(0, i))) { found = t.slice(0, i) + '…'; break }
+    if (!found) return undefined
+    t = found
+  }
+  const td = tidyExcerpt(t); if (!td) return undefined
+  t = td.t
+  return { t: t.length > ESUM_MAX ? t.slice(0, ESUM_MAX - 1).replace(/\s+\S*$/, '') + '…' : t, kind: s.kind, grade: s.cut || td.changed || weak || t !== s.t ? 'b' : 'a' }
+}
+export interface Esum16Row { head: string; vol: number; page: number; grade: EsumGrade; t?: string; kind?: Statement['kind']; seq?: boolean; n?: number }
+export function parseEsum16(pages: EsumPage[], vol: number): { rows: Esum16Row[]; stats: Esum16Stats } {
+  const st = newEsum16Stats(), off = pageOffset16(pages), rows: Esum16Row[] = []
+  for (const a of splitEsum16(pages, off, st)) {
+    if (a.bracket) { st.bracketed++; continue }
+    if (!/^[а-яіїєґ]+(?:['\-][а-яіїєґ]+)*$/u.test(a.head) || !headwordOk(a.head) || !strictEsumHead(a.head)) { st.badHead++; continue }
+    if (!inPageRange(a.head, a.lo, a.hi)) { st.outOfRange++; continue }
+    const ex = gradeExcerpt(a.body)
+    if (!ex && !a.gloss && !SIGNAL.test(a.body.slice(0, 500))) { st.noSignal++; continue }
+    rows.push(ex ? { head: a.head, vol, page: a.page, grade: ex.grade, t: ex.t, kind: ex.kind } : { head: a.head, vol, page: a.page, grade: 'c' })
+  }
+  const probe = rows as unknown as EsumRow[], sp = { seqDropped: 0 } as EsumStats
+  markEsumSequence(probe, sp); st.seqDropped = sp.seqDropped
+  const seen = new Map<string, Esum16Row>(), kept: Esum16Row[] = []
+  for (const r of rows) {
+    if (!r.seq) { st.offSpine++; continue }
+    const prev = seen.get(r.head)
+    if (prev) { prev.n = (prev.n ?? 1) + 1; st.duplicates++; if (prev.grade === 'c' && r.grade !== 'c') Object.assign(prev, { grade: r.grade, t: r.t, kind: r.kind, page: r.page }); continue }
+    seen.set(r.head, r); kept.push(r)
+  }
+  for (const r of kept) { st.entries++; st[r.grade]++; if (r.t?.endsWith('…')) st.clipped++; if (r.kind === 'bor') st.withBorrowing++; if (r.kind === 'proto') st.withProto++ }
   return { rows: kept, stats: st }
 }
