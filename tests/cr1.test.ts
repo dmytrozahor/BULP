@@ -227,6 +227,16 @@ describe('CR-1 display: collapsed by default, nothing on the first fetch', () =>
 
 // a real build, when one exists (data/work/corr.json, made by pipelines/build-corr.ts): the stored groups obey the same rules
 const real = process.env.CORR_FILE ?? 'data/work/corr.json'
+describe('CR-1 transitivity does not undo the и/і guard', () => {
+  it('two components that each hold a spelling of the same word do not merge through a third pair (сикірований / сікірований)', () => {
+    const ev = D('s', 'l', 'q'), mk = (a: string, b: string): CorrPair => ({ a, b, pos: 'adj', rel: 'lexical', src: 'wikt-alt', ev, sense: 'one' })
+    const { groups, stats } = assemble([mk('застрахований', 'асикурований'), mk('асикурований', 'сикірований'), mk('застрахований', 'сікірований')])
+    for (const g of groups) { const ks = g.members.map(m => swapKey(m.form)); expect(new Set(ks).size, g.id).toBe(ks.length) }
+    expect(stats.swapBlocked).toBeGreaterThan(0)
+    expect(groups.some(g => g.members.some(m => m.form === 'сикірований') && g.members.some(m => m.form === 'сікірований'))).toBe(false)
+  })
+})
+
 describe.skipIf(!existsSync(real))('CR-1 real data (skips without data/work/corr.json)', () => {
   const groups = (existsSync(real) ? JSON.parse(readFileSync(real, 'utf8')).groups : []) as CorrGroup[]
   it('every group passes claim(); no group pairs two words that differ only by и/і; кит and кіт share none; sizes ≤ cap', () => {

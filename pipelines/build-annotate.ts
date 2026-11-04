@@ -54,10 +54,18 @@ function runDetect(c: Ctx): { claims: Record<string, Claim<any>>; hints: { rule:
 }
 const dedupe = (ev: Evidence[]) => { const s = new Set<string>(); return ev.filter(e => { const k = JSON.stringify(e); return s.has(k) ? false : (s.add(k), true) }) }
 
+/** two `rusyn` claims of one form (two years' detection): a specific variant outranks the undetermined `rusyn`, then the higher score; the evidence of both (deduped) */
+export function mergeRusyn(a: Claim<string>, b: Claim<string>): Claim<string> {
+  const rank = (c: Claim<string>) => [c.value === 'rusyn' ? 0 : 1, c.score ?? 0] as const
+  const [best, other] = rank(a)[0] !== rank(b)[0] ? (rank(a)[0] > rank(b)[0] ? [a, b] : [b, a]) : ((rank(a)[1] >= rank(b)[1]) ? [a, b] : [b, a])
+  const same = best.value === other.value ? [best, other] : [best]
+  return claim(best.value, dedupe(same.flatMap(c => c.evidence)), { score: Math.max(...same.map(c => c.score ?? 0)), method: [...new Set(same.flatMap(c => (c.method ?? '').split('+')))].sort().join('+') })
+}
 export function mergeClaims(a: Record<string, Claim<any>>, b: Record<string, Claim<any>>): Record<string, Claim<any>> {
   const out = { ...a }
   for (const [l, c] of Object.entries(b)) {
     const p = out[l]
+    if (p && l === 'rusyn') { out[l] = mergeRusyn(p as Claim<string>, c as Claim<string>); continue }   // the contract claim `rusyn` has the axis label as its value, never `true`
     out[l] = !p ? c : claim(true as const, dedupe([...p.evidence, ...c.evidence]), { score: Math.max(p.score ?? 0, c.score ?? 0), method: [...new Set(`${p.method}+${c.method}`.split('+'))].join('+') })
   }
   return out

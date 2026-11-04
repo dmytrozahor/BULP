@@ -15,7 +15,7 @@ import { bucketOf } from './shard.ts'
 export const BUDGET = { firstLoad: 500 * 1024, card: 300 * 1024, keystroke: 64 * 1024 } as const
 
 // ── prefix-sharded lookup index ──────────────────────────────────────────────────────────────────
-export const IX_MIN = 2, IX_MAX = 5
+export const IX_MIN = 2, IX_MAX = 6   // 6: a 5-letter prefix such as «перес» holds 3500+ keys (35 KB gz) and must split once more
 /** a shard is split one letter deeper while its gzip size is above this (a keystroke may load two of them) */
 export const IX_GZ_MAX = 30 * 1024
 export const IX_SPLIT_MIN_KEYS = 8

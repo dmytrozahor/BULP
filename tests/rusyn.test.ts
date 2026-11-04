@@ -52,3 +52,15 @@ describe('RU-4 evidence', () => {
   it('rusyn claim carries rule cite + trigger', () => expect(rusyn('русинськый')!.evidence.map(e => e.kind)).toContain('D'))
   it('status note is neutral and cites both positions', () => { expect(RUSYN_STATUS.evidence.length).toBeGreaterThanOrEqual(4); expect(RUSYN_STATUS.note).toMatch(/не є висновком про статус/) })
 })
+
+describe('mergeClaims keeps the axis label of the contract claim `rusyn` (two years of detection must not turn it into `true`)', () => {
+  it('same label: evidence of both, max score; specific variant beats the undetermined one; the value is never true', async () => {
+    const { mergeClaims } = await import('../pipelines/build-annotate.ts'), { claim, Q } = await import('../core/evidence.ts')
+    const ev = (q: string) => [Q('ENC', 'http://litopys.org.ua/ukrmova/um87.htm', q)]
+    const a = { rusyn: claim('rusyn:pannonian', ev('а'), { score: 0.3, method: 'PAN-INF-C' }) }, b = { rusyn: claim('rusyn:pannonian', ev('б'), { score: 0.6, method: 'PAN-LEX' }) }
+    const m = mergeClaims(a, b).rusyn!
+    expect(m.value).toBe('rusyn:pannonian'); expect(m.evidence).toHaveLength(2); expect(m.score).toBe(0.6); expect(m.method).toBe('PAN-INF-C+PAN-LEX')
+    const u = { rusyn: claim('rusyn', ev('в'), { score: 0.9, method: 'RUE-Y-VELAR' }) }
+    expect(mergeClaims(u, a).rusyn!.value).toBe('rusyn:pannonian'); expect(mergeClaims(a, u).rusyn!.value).toBe('rusyn:pannonian')
+  })
+})

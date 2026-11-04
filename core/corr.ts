@@ -101,7 +101,7 @@ const prio = (s: string) => { const i = (SRC_PRIORITY as readonly string[]).inde
 /** merge areas without duplicates (same dialect + grade) */
 const mergeAreas = (xs: CorrArea[], ys: CorrArea[] = []): CorrArea[] => { const out = [...xs]; for (const y of ys) if (!out.some(x => x.dialect === y.dialect && x.grade === y.grade)) out.push(y); return out }
 
-export interface AssembleStats { pairs: number; edgesUsed: number; capped: number; unspecGroups: number; groups: number; members: number }
+export interface AssembleStats { pairs: number; edgesUsed: number; capped: number; swapBlocked?: number; unspecGroups: number; groups: number; members: number }
 /**
  * Confirmed pairs (`sense: 'one'`) of one POS are merged into groups in source-priority order, a merge that would give a group of more than GROUP_CAP members is skipped (it is a polysemous bridge,
  * counted in `capped`). Each unspecified pair becomes its own two-member group with both members flagged `unspec`. A lemma may be in several groups.
@@ -135,6 +135,9 @@ export function assemble(pairs: CorrPair[], meaningOf?: (pos: string, p: CorrPai
     const ra = find(ka), rb = find(kb)
     if (ra !== rb) {
       if (size.get(ra)! + size.get(rb)! > GROUP_CAP) { st.capped++; continue }
+      // transitivity must not undo the pair guard: two components that each hold a spelling of the same word (и/і/ї/ы swap) never merge (сикірований ~ сікірований through different partners)
+      const swaps = new Set([...members.get(ra)!].map(k => swapKey(nodes.get(k)!.form)))
+      if ([...members.get(rb)!].some(k => swaps.has(swapKey(nodes.get(k)!.form)))) { st.swapBlocked = (st.swapBlocked ?? 0) + 1; continue }
       parent.set(rb, ra); size.set(ra, size.get(ra)! + size.get(rb)!)
       const m = members.get(ra)!; for (const x of members.get(rb)!) m.add(x); members.delete(rb)
     }
