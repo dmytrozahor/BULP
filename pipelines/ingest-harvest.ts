@@ -25,6 +25,7 @@ import { writeAtomic } from '../harvest/lib.ts'
 import { decodeIzbornyk } from '../core/text.ts'
 import { pageParagraphs } from './ingest-izbornyk-pages.ts'
 import { MARKER } from './ingest-izbornyk.ts'
+import { foreignLine, isRussianDoc, lineForeign, polishLookalike, stopProfile, ukDominant, RU_ONLY } from './lang-gate.ts'
 import { Incr, itemSig, recordSource, sourceUnchanged, vocabSig } from './incr-manifest.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
@@ -35,18 +36,20 @@ const RU_WORDS = /(^|\s)(что|это|или|который|которы\S*|б�
 const RU = new RegExp(`[ъѣэЪѢ]|${RU_WORDS.source}`, 'i')
 const OK = /^[\p{Script=Cyrillic}\p{M}'’ʼ]+$/u
 /** `oldOrth`: the text is Ruthenian/Middle Ukrainian, where ъ ѣ are normal letters — only the Russian function words mark a line as apparatus (HV-5) */
-export function textTokens(text: string, loc: string, oldOrth = false): { tokens: TokenRec[]; unmapped: number; apparatus: number } {
-  const tokens: TokenRec[] = []; let unmapped = 0, apparatus = 0, s = 0
+export function textTokens(text: string, loc: string, oldOrth = false): { tokens: TokenRec[]; unmapped: number; apparatus: number; /** CQ-1: lettered words / non-Cyrillic lettered words of the lines that are not Russian apparatus */ words: number; foreign: number; /** lines dropped for being > 50 % non-Cyrillic */ foreignLines: number } {
+  const tokens: TokenRec[] = []; let unmapped = 0, apparatus = 0, s = 0, words = 0, foreign = 0, foreignLines = 0
   const joined: string[] = []
   for (const ln of text.split('\n')) { const prev = joined[joined.length - 1]; if (prev !== undefined && /[\p{L}]-$/u.test(prev)) joined[joined.length - 1] = prev.slice(0, -1) + ln.trim(); else joined.push(ln.trim()) }
   for (const ln of joined) {
     const ws = ln.match(/[\p{L}\p{M}\p{N}'’ʼ]+/gu) ?? []
     if ((oldOrth ? RU_WORDS : RU).test(ln)) { apparatus += ws.length; continue }
+    const lf = lineForeign(ws); words += lf.words; foreign += lf.foreign
+    if (foreignLine(ws)) { unmapped += ws.length; foreignLines++; continue }   // CQ-1 gate 1: Latin / look-alike junk line
     let n = 0
     for (const w of ws) { if (OK.test(w)) { tokens.push({ raw: w, loc, s }); n++ } else unmapped++ }
     if (n) s++
   }
-  return { tokens, unmapped, apparatus }
+  return { tokens, unmapped, apparatus, words, foreign, foreignLines }
 }
 
 /** «1380-1400» → [1380,1400]; «1893», «1893-05-01», «1899-01-01T00:00:00Z» → [1893,1893]; null when the index gives no year */
@@ -96,15 +99,22 @@ export function mergeHarvestAuthors(out: string) {
 }
 
 // ── builders ─────────────────────────────────────────────────────────────────────────────────────────
-export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
+export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; /** CQ-1 gate 3: pre-1925 Ukrainian-dominant text uses the oldOrth line gate (ъ ѣ are letters there) */ autoOldOrth?: boolean; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
   const date = yearRange(it.date)
   if (!date) return { skip: 'undated' }
-  const t = textTokens(text, opts.loc, opts.oldOrth)
+  const prof = stopProfile(text)
+  const old = opts.oldOrth || (opts.autoOldOrth === true && date[1] < 1925 && ukDominant(prof))
+  const t = textTokens(text, opts.loc, old)
   if (t.tokens.length < 20) return { skip: 'too-short' }
+  if (t.words > 0 && t.foreign * 2 > t.words) return { skip: 'non-cyrillic' }   // CQ-1 gate 1: Latin-script text with a few look-alike OCR tokens
+  if ((src.startsWith('archive') || src === 'linguists') && polishLookalike(it.title, t.tokens.map(k => k.raw)) !== null) return { skip: 'polish-ocr' }   // OCR sources only: a transcription (wikisource) has no look-alike OCR, and р. с. abbreviations are real
+  // CQ-1 gate 2: a Russian-language document is written but not admitted (excludeReason, like Shevchenko's Russian poems)
+  const ruLine = (src.startsWith('archive') || src === 'linguists') && isRussianDoc(prof) ? text.split('\n').find(l => l.toLowerCase().split(/[^\p{L}]+/u).some(w => RU_ONLY.has(w)))?.replace(/\s+/g, ' ').trim().slice(0, 200) : undefined
   return {
     id, unit: id, title: it.title, author: opts.authorId, url: it.url, date, dateCite: Q(it.url, `harvest/${src}/index.jsonl`, opts.dateQuote.slice(0, 300), 'дата з index.jsonl харвестера (джерело вказує її саме так)'),
     lang: opts.lang, ...(it.region ? { region: it.region } : {}), witnessType: opts.witnessType, edition: opts.edition, ...(opts.orth ? { orth: opts.orth } : {}), ...(opts.school ? { school: opts.school } : {}), license: it.licence,
     dropped: { unmapped: t.unmapped, apparatus: t.apparatus }, tokens: t.tokens,
+    ...(ruLine ? { excludeReason: { why: `текст написано російською мовою, не українською (лексикон українських форм): ${prof.ru} російських службових слів проти ${prof.uk} українських`, evidence: [Q(it.url, `harvest/${src}: профіль службових слів (CQ-1)`, ruLine)] } } : {}),
   }
 }
 
@@ -176,7 +186,7 @@ function runArchive(ctx: Ctx, src: string): Sum {
     const buf = readItem(src, it.file); if (!buf) continue
     const authorId = authorFor(it.author, src, it.url, it.author ? `creator: ${it.author}` : it.title, it.region)
     const rusyn = src === 'archive-rusyn'
-    const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}` })
+    const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}`, autoOldOrth: true })
     if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
     commit(ctx, s, src, it.id, itemSig(it), w)
   }
@@ -370,7 +380,7 @@ const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': '
 const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky', 'archive-hv5-authors']
 
 /** bump when the OCR / language-gate rules above change: every item-level source is then read again */
-const ITEM_PARAMS = 'gate1'
+const ITEM_PARAMS = 'gate2-cq1'
 export async function main(argv: string[]) {
   const arg = (k: string) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined }
   const full = argv.includes('--full')

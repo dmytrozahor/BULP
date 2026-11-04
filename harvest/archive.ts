@@ -1,6 +1,8 @@
 /**
  * SPEC 63 HV-2: archive.org OCR texts (public domain by publication date) — advancedsearch + `<id>_djvu.txt`.
  * The text file name is resolved from `https://archive.org/metadata/<id>` (ia-text.ts; `<id>_djvu.txt` is often wrong: 8 672 of 10 000 archive-ukr items were 404), recorded as `iaFile`.
+ * SPEC 63 CQ-1 (audit analysis/archive-funnel.md): `--retry-5xx` re-visits ids whose latest line is a 5xx (not the Sejm Kadencja series); `--retry-404 --all` also re-visits 404s that were already retried once;
+ *   `--scrape` lists the preset query through the archive.org Scraping API (cursor; https://archive.org/help/aboutsearch.htm) instead of advancedsearch, which cannot go past the first 10,000 hits; state.scrapeCursor makes it resumable, ids already in index.jsonl are skipped.
  * Usage: tsx harvest/archive.ts <preset> [--retry-404]   --retry-404 re-visits only items whose latest index line is status 404 (append-only, a second 404 is marked `retried404`, so a re-run skips it).
  * Neutral User-Agent without an e-mail address, `curl -4`, >= 1.5 s between requests, 403/429 stop, 503 backs off.
  *   (old usage:) tsx harvest/archive.ts <preset>   presets: archive-ukr | archive-rusyn | archive-kuban | archive-novhorod-siversk
@@ -9,11 +11,13 @@
  */
 import { readFileSync, existsSync } from 'node:fs'
 import { Harvest, type IndexItem } from './lib.ts'
-import { IA_UA, curlGet, resolveTextFile, retryCandidates } from './ia-text.ts'
+import { IA_UA, curlGet, resolveTextFile, retryCandidates, retry5xxCandidates } from './ia-text.ts'
 
 const PD = 'date:[1000-01-01 TO 1925-12-31]'
+/** CQ-1 fix 5: the Galician Sejm series (Kadencja ..., Alegata do Sprawozdań Stenograficznych; 6,839 ids of the first 10,000) is Latin-script Polish: not fetched */
+export const NOT_SEJM = 'NOT title:(Kadencja OR Alegata OR Sprawozdanie OR Sprawozdania OR Sprawozdań OR Stenograficzne OR Stenograficznych)'
 export const ARCHIVE_PRESETS: Record<string, { q: string; region?: string; licence: string }> = {
-  'archive-ukr': { q: `mediatype:texts AND language:(ukr OR Ukrainian) AND ${PD}`, licence: 'PD (publication year ≤ 1925, archive.org OCR, не вичитано)' },
+  'archive-ukr': { q: `mediatype:texts AND language:(ukr OR Ukrainian) AND ${PD} AND ${NOT_SEJM}`, licence: 'PD (publication year ≤ 1925, archive.org OCR, не вичитано)' },
   'archive-rusyn': { q: `mediatype:texts AND (language:(rue OR Rusyn) OR subject:(Rusyn OR русин* OR лемк* OR Lemko OR "Carpatho-Rusyn" OR "Ruthenian")) AND ${PD}`, region: 'русинська (Закарпаття, Пряшівщина, Лемківщина)', licence: 'PD (publication year ≤ 1925, archive.org OCR, не вичитано)' },
   'archive-kuban': { q: `mediatype:texts AND language:(ukr OR Ukrainian) AND (title:(Кубань OR кубан* OR черноморск* OR Kuban) OR subject:(Кубань OR кубан* OR Kuban OR черноморск*)) AND ${PD}`, region: 'Кубань', licence: 'PD (publication year ≤ 1925, archive.org OCR, не вичитано)' },
   'archive-novhorod-siversk': { q: `mediatype:texts AND (title:("Новгород-Сіверськ*" OR "Новгородсіверськ*" OR "Новгородсеверск*" OR "Новгород-Северск*") OR subject:("Новгород-Сіверськ*" OR "Новгород-Северск*")) AND ${PD}`, region: 'Новгород-Сіверщина', licence: 'PD (publication year ≤ 1925, archive.org OCR, не вичитано)' },
@@ -43,9 +47,9 @@ const H = { 'user-agent': IA_UA }
 const textUrl = (id: string, file: string) => `https://archive.org/download/${encodeURIComponent(id)}/${encodeURIComponent(file)}`
 
 /** fetch one item's text via /metadata: payload stored + index line with iaFile; no text file at all stays 404 (index-only line, no refetch) */
-async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licence: string }, retry: boolean): Promise<void> {
+async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licence: string }, retry: boolean | 'retried5xx'): Promise<void> {
   const { status: ms, file } = await resolveTextFile(h, d.identifier)
-  const mark = retry ? { retried404: true } : {}
+  const mark = retry === 'retried5xx' ? { retried5xx: true } : retry ? { retried404: true } : {}
   if (ms !== 200 || !file) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, ms === 200 ? 404 : ms), iaFile: '', ...mark }]); return }
   const r = await curlGet(h, textUrl(d.identifier, file))
   if (r.status === 0) return   // transient: no index line, retried on the next run
@@ -54,26 +58,58 @@ async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licen
 }
 
 /** «retry 404s»: only ids whose latest stored status is 404; the old index line supplies title/author/date/language */
-async function retry404(h: Harvest, cfg: { region?: string; licence: string }) {
+async function retry404(h: Harvest, cfg: { region?: string; licence: string }, mode: { all404?: boolean; fivexx?: boolean } = {}) {
   const lines = existsSync(h.indexPath) ? readFileSync(h.indexPath, 'utf8').split('\n') : []
-  const todo = retryCandidates(lines)
-  h.log(`retry-404: ${todo.length} items`)
+  const todo = mode.fivexx ? retry5xxCandidates(lines) : retryCandidates(lines, mode.all404)
+  h.log(`${mode.fivexx ? 'retry-5xx' : 'retry-404'}: ${todo.length} items`)
   const limit = Number(process.env.RETRY_LIMIT ?? 0)
   let n = 0
   for (const { id, line } of todo) {
     if (limit && n++ >= limit) break
     const d: SearchDoc = { identifier: id, title: line.title as string, creator: line.author as string | undefined, date: (line.date as string | null) ?? undefined, language: line.language as string }
-    await fetchItem(h, d, cfg, true)
+    await fetchItem(h, d, cfg, mode.fivexx ? 'retried5xx' : true)
   }
   h.finish()
+}
+
+/** Scraping API page URL: fields comma-separated, count 100-10000, cursor from the previous page */
+export function scrapeUrl(q: string, cursor: string | null, count = 1000): string {
+  return `https://archive.org/services/search/v1/scrape?q=${encodeURIComponent(q)}&fields=${['identifier', 'title', 'creator', 'date', 'year', 'language'].join(',')}&count=${count}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`
+}
+/** {docs, cursor, total} of a scrape answer; cursor is null on the last page; null when the answer is not a scrape answer */
+export function parseScrape(text: string): { docs: SearchDoc[]; cursor: string | null; total: number } | null {
+  try { const j = JSON.parse(text) as { items?: SearchDoc[]; cursor?: string; total?: number }; if (!Array.isArray(j.items)) return null; return { docs: j.items, cursor: j.cursor ?? null, total: Number(j.total ?? 0) } } catch { return null }
+}
+
+/** CQ-1 fix 4: list the whole query through the Scraping API (no 10,000 limit) and fetch what index.jsonl does not hold yet; resumable through state.scrapeCursor (an expired cursor restarts the listing, finished ids are skipped) */
+async function scrape(h: Harvest, cfg: { q: string; region?: string; licence: string }) {
+  let st = h.state<{ scrapeCursor: string | null; scrapeDone?: boolean; scraped?: number }>({ scrapeCursor: null })
+  if (st.scrapeDone) h.finish()
+  for (;;) {
+    const { status, text } = await h.getText(scrapeUrl(cfg.q, st.scrapeCursor), { headers: H })
+    const r = parseScrape(text)
+    if (!r) {
+      if (st.scrapeCursor) { h.log(`scrape: no list for the cursor (HTTP ${status}), restarting the listing; done ids are skipped`); st = { scrapeCursor: null }; h.saveState(st); continue }
+      return h.stop(`non-JSON scrape answer (HTTP ${status})`)
+    }
+    if (!st.scraped) h.log(`scrape total ${r.total}, already in the index ${h.count}`)
+    let n = 0
+    for (const d of r.docs) { if (!h.has(d.identifier)) { await fetchItem(h, d, cfg, false); n++ } }
+    st = { scrapeCursor: r.cursor, scraped: (st.scraped ?? 0) + r.docs.length }; h.saveState(st)
+    h.log(`scrape page: ${r.docs.length} listed, ${n} fetched, ${st.scraped} listed in all`)
+    if (!r.cursor || !r.docs.length) { h.saveState({ ...st, scrapeDone: true }); h.finish() }
+  }
 }
 
 async function main() {
   const name = process.argv[2] ?? ''
   const cfg = ARCHIVE_PRESETS[name]
   if (!cfg) { console.error(`preset? ${Object.keys(ARCHIVE_PRESETS).join(' | ')}`); process.exit(1) }
-  const h = new Harvest(name, { delayMs: 2000, logEvery: 25 })
-  if (process.argv.includes('--retry-404')) await retry404(h, cfg)
+  const fast = ['--scrape', '--retry-5xx', '--retry-404'].some(f => process.argv.includes(f))
+  const h = new Harvest(name, { delayMs: fast ? 1000 : 2000, logEvery: 25, capBytes: Number(process.env.HARVEST_CAP ?? 8e9) })   // >= 1 s between requests
+  if (process.argv.includes('--retry-5xx')) await retry404(h, cfg, { fivexx: true })
+  if (process.argv.includes('--retry-404')) await retry404(h, cfg, { all404: process.argv.includes('--all') })
+  if (process.argv.includes('--scrape')) await scrape(h, cfg)
   let st = h.state<{ page: number; finished?: boolean }>({ page: 1 })
   if (st.finished) h.finish()
   for (;;) {

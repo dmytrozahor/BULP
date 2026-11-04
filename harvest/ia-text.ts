@@ -55,8 +55,15 @@ export function latestById<T extends { id: string }>(lines: string[]): Map<strin
   return m
 }
 /** ids to re-visit in «retry 404s» mode: the latest line is status 404 and has not been retried already (`retried404` marks a second 404, so a re-run is idempotent) */
-export function retryCandidates(lines: string[]): { id: string; line: Record<string, unknown> }[] {
+export function retryCandidates(lines: string[], all404 = false): { id: string; line: Record<string, unknown> }[] {
   const out: { id: string; line: Record<string, unknown> }[] = []
-  for (const [id, it] of latestById<{ id: string; status: number; retried404?: boolean }>(lines)) if (it.status === 404 && !it.retried404) out.push({ id, line: it as unknown as Record<string, unknown> })
+  for (const [id, it] of latestById<{ id: string; status: number; retried404?: boolean }>(lines)) if (it.status === 404 && (all404 || !it.retried404)) out.push({ id, line: it as unknown as Record<string, unknown> })
+  return out
+}
+/** CQ-1 fix 4: ids whose latest line is a 5xx and was not retried yet (retried5xx), except the Sejm Kadencja series (Polish, never wanted) */
+export const SEJM_TITLE = /Kadencj|Alegat|Sprawozda[ńn]|Stenograf/i
+export function retry5xxCandidates(lines: string[]): { id: string; line: Record<string, unknown> }[] {
+  const out: { id: string; line: Record<string, unknown> }[] = []
+  for (const [id, it] of latestById<{ id: string; status: number; title?: string; retried5xx?: boolean }>(lines)) if (it.status >= 500 && !it.retried5xx && !SEJM_TITLE.test(it.title ?? '')) out.push({ id, line: it as unknown as Record<string, unknown> })
   return out
 }
