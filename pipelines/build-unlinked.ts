@@ -62,7 +62,7 @@ let bytes = 0, worst = 0, gzTotal = 0
 const gzLen = (t: string) => gzipSync(t, { level: 6 }).length
 const { ids, num } = idTable(acc.m)   // NV-6: witness ids by number, one table per build
 const leaves = planUnlinked(acc.m, gzLen, undefined, num)
-{ const t = JSON.stringify(ids); writeFileSync(resolve(dir, `${UNL_IDS}.json`), t); bytes += Buffer.byteLength(t); gzTotal += gzLen(t) }
+{ const t = JSON.stringify(ids); writeJsonAtomic(resolve(dir, `${UNL_IDS}.json`), t); bytes += Buffer.byteLength(t); gzTotal += gzLen(t) }
 for (const [p, ks] of leaves) {
   const t = JSON.stringify(leafShard(acc.m, ks, num)), g = gzLen(t); bytes += Buffer.byteLength(t); gzTotal += g; worst = Math.max(worst, g)
   writeFileSync(resolve(dir, `${unlinkedName(p)}.json`), t)

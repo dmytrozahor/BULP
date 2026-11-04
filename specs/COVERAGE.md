@@ -416,6 +416,8 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | NV-4 | tests/attest.test.ts › NV-4 every unlinked headword of mtt1925 has an archaic.json card with its equivalents and the text token refs it |
 | NV-5 | tests/unlinked.test.ts › NV-5 prefix sharding: every key lands in exactly one leaf, found again through the manifest; nothing is dropped |
 | NV-5 | tests/unlinked.test.ts › NV-5 unlinked/ travels on the data branch (DIRS) and is ignored by git like ix/ and uv/; budgets are per leaf + manifest + sane total |
+| NV-6 | tests/unlinked.test.ts › pack / unpack is lossless for every entry |
+| NV-6 | tests/unlinked.test.ts › the lookup reads a format 2 leaf with the ids table |
 | NV-5 | tests/unlinked.test.ts › NV-5 the built index: total within budget, every leaf ≤ hard gz limit, every manifest small and consistent |
 | HV-1 | tests/harvest.test.ts › HV-1 an item batch is written as items/<file>.gz with an index line; a new run sees it as done |
 | HV-1 | tests/harvest.test.ts › HV-1 a torn last index line (killed mid-write) does not break the resume |
