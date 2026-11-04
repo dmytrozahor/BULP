@@ -16,7 +16,7 @@
  */
 import { claim, P, Q, type Claim, type Evidence } from './evidence.ts'
 import { AREAS, groupsOfArea, tableById } from './dict-labels.ts'
-import { TH, keyness, type DialectResult } from './labels.ts'
+import { TH, keyness, corpusSummary, type DialectResult } from './labels.ts'
 import { DIALECTS } from './rules.ts'
 import { GROUP_MARK, markKeyOf, markByKey } from './coats.ts'
 import type { CorrGroup } from './corr.ts'
@@ -57,6 +57,9 @@ export function contrast(a: string, b: string): number {
   const lum = (h: string) => { const f = (i: number) => { const v = parseInt(h.slice(1 + i * 2, 3 + i * 2), 16) / 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4 }; return 0.2126 * f(0) + 0.7152 * f(1) + 0.0722 * f(2) }
   const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05)
 }
+
+/** DB-1c (owner: «і еміграцію плашками не додавай»): a witness region that is a place of PUBLICATION abroad is not a dialect and never makes a chip or a map marker, at any grade. The `abroad-<city>` rows of pipelines/regions.ts (every city outside Ukraine of core/witness-place.ts) and any region named «еміграція / поза Україною …», «діаспора», «невідомо». The historical Ukrainian territories (Кубань, Холмщина, Підляшшя …) stay: they are ethnographic areas, not emigration. */
+export const isDialectRegion = (code: string, name = ''): boolean => !/^(abroad-|emigr|diaspor|unknown|unk$)/i.test(code) && !/еміграц|поза Україною|діаспор|невідом/i.test(name)
 
 export interface BadgeChip {
   grade: BadgeGrade
@@ -118,17 +121,20 @@ export function badgeChips(inp: BadgeInput): BadgeChip[] {
   // ── the CR-1 group: the lemma's own member, where a source or a distribution names an area ──
   const own = (inp.groups ?? []).flatMap(g => g.members.filter(m => m.form === lemma).map(m => ({ g, m })))
   for (const { m } of own) for (const a of m.areas) {
+    if (!isDialectRegion('', a.dialect)) continue   // DB-1c
     if (a.grade === 'owner') continue
     const code = a.code, mk = code ? GROUP_MARK[code] : undefined
     if (a.grade === 'dict' && !out.some(c => c.grade === 'dict' && c.code === code && code)) out.push({ grade: 'dict', text: code ? groupShort(code) : a.dialect, ...(code ? { code } : {}), marks: mk ? [mk] : [], basis: `мітка «${a.dialect}» у відповідниках (Відповідники, CR-1)`, evidence: [a.ev] })
     if (a.grade === 'corpus' && d.c !== 'corpus') out.push({ grade: 'corpus', text: `у корпусі переважно: ${a.dialect}`, ...(code ? { code } : {}), marks: mk ? [mk] : [], basis: `розподіл варіанта за регіонами пам’яток (CR-1): ${a.tokens ?? '?'} уживань, ${a.witnesses ?? '?'} пам’яток`, evidence: [a.ev] })
   }
   // ── the corpus: a skew that passes the thresholds ──
-  if (d.c === 'corpus' && d.corp?.top) {
-    const t = d.corp.top, name = inp.regionName(t.code), mk = markKeyOf(t.code)
+  // DB-1c: when the top region is a place abroad, the next real region is taken IF it passes the same thresholds on the remaining regions; otherwise there is no corpus chip
+  const real = d.corp ? corpusSummary(d.corp.rows.filter(r => isDialectRegion(r.code, inp.regionName(r.code)))) : undefined
+  if (d.c === 'corpus' && real?.top) {
+    const t = real.top, name = inp.regionName(t.code), mk = markKeyOf(t.code)
     out.push({ grade: 'corpus', text: `у корпусі переважно: ${name}`, ...(mk && markByKey[mk]?.code ? { code: markByKey[mk]!.code } : {}), marks: mk ? [mk] : [],
-      basis: `${t.f} із ${d.corp.f} вживань (${SHARE(t.f, d.corp.f)}) у пам’ятках регіону «${name}»; значущий перекіс (G² = ${t.g2.toFixed(1)}, log₂ = ${t.lr.toFixed(1)}). Регіон пам’ятки — не діалектна мітка`,
-      evidence: [{ source: 'CORPUS', quote: `${name}: f = ${t.f}, N = ${t.N}; усього f = ${d.corp.f}`, locator: `lm/lb: ${lemma}`, kind: 'D' }] })
+      basis: `${t.f} із ${real.f} вживань (${SHARE(t.f, real.f)}) у пам’ятках регіону «${name}»; значущий перекіс (G² = ${t.g2.toFixed(1)}, log₂ = ${t.lr.toFixed(1)}). Регіон пам’ятки — не діалектна мітка`,
+      evidence: [{ source: 'CORPUS', quote: `${name}: f = ${t.f}, N = ${t.N}; усього f = ${real.f}`, locator: `lm/lb: ${lemma}`, kind: 'D' }] })
   }
   if (out.length) return out
   // ── clearly general ──
@@ -137,7 +143,7 @@ export function badgeChips(inp: BadgeInput): BadgeChip[] {
   }
   // ── hypotheses: weak or no evidence, shown anyway and said so ──
   // (1) the corpus distribution below the regular threshold
-  const rows = d.corp?.rows ?? []
+  const rows = (d.corp?.rows ?? []).filter(r => isDialectRegion(r.code, inp.regionName(r.code)))
   if (rows.length) {
     const F = rows.reduce((a, r) => a + r.f, 0), ks = keyness(rows).filter(k => k.g2 > 0 && k.f >= 2 && k.lr >= 1).sort((a, b) => b.g2 - a.g2)
     const k = ks[0]
@@ -146,8 +152,8 @@ export function badgeChips(inp: BadgeInput): BadgeChip[] {
       out.push(hyp(name, mk ? markByKey[mk]?.code : undefined, mk ? [mk] : [], `у корпусі ${k.f} із ${F} вживань (${SHARE(k.f, F)}) у пам’ятках регіону «${name}» (log₂-відношення ${k.lr.toFixed(1)}); для твердження «регіонально марковане» потрібно ≥ ${TH.fRegionMin} вживань у регіоні і значущість G² з поправкою Бонферроні — це не виконано, тому лише гіпотеза`, [{ source: 'CORPUS', quote: `${name}: f = ${k.f}, N = ${k.N}; усього f = ${F}`, locator: `lm/lb: ${lemma}`, kind: 'D' }], 'corpus', lemma))
     }
   }
-  if (!out.length && d.c === 'witness' && d.wit?.regions.length) {
-    for (const [code, name] of d.wit.regions.slice(0, 2)) {
+  if (!out.length && d.c === 'witness' && d.wit?.regions.some(r => isDialectRegion(r[0], r[1]))) {
+    for (const [code, name] of d.wit.regions.filter(r => isDialectRegion(r[0], r[1])).slice(0, 2)) {
       const mk = markKeyOf(code)
       out.push(hyp(name, mk ? markByKey[mk]?.code : undefined, mk ? [mk] : [], `слово засвідчене лише в ${d.wit.n} ${d.wit.n === 1 ? 'пам’ятці' : 'пам’ятках'} (регіони: ${d.wit.regions.map(r => r[1]).join(', ')}); це слабкий доказ, не діалектна мітка`, [{ source: 'CORPUS', quote: `${d.wit.n} пам’яток; регіон: ${name}`, locator: `lm/lb: ${lemma}`, kind: 'D' }], 'corpus', lemma))
     }
@@ -163,6 +169,7 @@ export function badgeChips(inp: BadgeInput): BadgeChip[] {
   for (const g of inp.groups ?? []) for (const m of g.members) {
     if (m.form === lemma || (m.relation !== 'phonetic' && m.relation !== 'morph')) continue
     for (const a of m.areas) {
+    if (!isDialectRegion('', a.dialect)) continue   // DB-1c
       if (!own.length && a.grade === 'owner') continue
       const code = a.code, mk = code ? GROUP_MARK[code] : undefined, name = code ? groupShort(code) : a.dialect
       if (out.some(c => c.text === `гіпотеза: ${name}`)) continue

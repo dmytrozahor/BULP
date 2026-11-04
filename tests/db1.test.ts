@@ -96,7 +96,7 @@ describe('DB-1 the map: arms at the smallest level the evidence supports, with t
     expect(hyp).toContain('data-grade="hyp"'); expect(hyp).toContain('am-hyp'); expect(hyp).toMatch(/<title>гіпотеза: Галичина/)
   })
   it('the marker of a region equal to an oblast is flagged as such (its tooltip names the oblast arms only when they are drawn)', async () => {
-    const c = chips({ c: 'corpus', corp: corp({ code: 'volyn', f: 20, N: 45268, g2: 30, lr: 3, p: 1e-8 }) })
+    const c = chips({ c: 'corpus', corp: { f: 22, nReg: 3, att: 3, dp: 0.7, rows: [{ code: 'volyn', f: 20, N: 45268 }, { code: 'halychyna', f: 1, N: 172081 }, { code: 'kyiv', f: 1, N: 435607 }] } })
     expect(c[0]!.marks).toEqual(['volyn']); expect(await render(ArmsMarks, { lemma: 'тест', chipsIn: c })).toContain('data-testid="arms-volyn"')
   })
 })
@@ -139,3 +139,37 @@ describe('DB-1b «За регіонами»: nothing overflows, low-N regions ar
     expect(await render(RegionBars, { by: [big], names: nm })).not.toContain('rb-low')
   })
 })
+
+describe('DB-1c emigration is not a dialect: no chip, no map marker, at any grade', () => {
+  const abroad = { code: 'abroad-strasbourg', f: 30, N: 15_000 }, ab = (c: string) => (c === 'abroad-strasbourg' ? 'еміграція / поза Україною (Страсбург)' : name(c))
+  const run = (d: DialectResult) => badgeChips({ d, regionName: ab, lemma: 'тест' })
+  it('isDialectRegion excludes every abroad row and names with emigration/diaspora; keeps Ukrainian territories', async () => {
+    const { isDialectRegion } = await import('../core/dialect-badge.ts')
+    for (const c of ['abroad-strasbourg', 'abroad-new-york', 'abroad-germany', 'diaspora']) expect(isDialectRegion(c), c).toBe(false)
+    expect(isDialectRegion('x', 'еміграція / поза Україною (Париж)')).toBe(false)
+    for (const c of ['halychyna', 'kuban', 'kholm', 'volyn']) expect(isDialectRegion(c), c).toBe(true)
+  })
+  it('a corpus skew whose top region is abroad gives no chip for it (the next real region only if it passes the rules, else «говір не встановлено»)', () => {
+    const rowsAb = [abroad, { code: 'halychyna', f: 1, N: 172081 }, { code: 'volyn', f: 1, N: 45268 }, { code: 'kyiv', f: 1, N: 435607 }]
+    const d: DialectResult = { c: 'corpus', corp: corpusSummaryOf(rowsAb, { code: 'abroad-strasbourg', f: 30, N: 15_000, g2: 90, lr: 5, p: 1e-12 }) }
+    const cs = run(d); expect(cs.map(c => c.text).join('|')).not.toMatch(/Страсбург|еміграц|поза Україною/); expect(cs.every(c => !c.marks.some(m => /abroad/.test(m)))).toBe(true)
+    expect(cs[0]!.grade).toBe('none')
+  })
+  it('a hypothesis is never built from an abroad region, but the next real one is used when it exists', () => {
+    const only = run({ c: 'few', corp: { f: 4, nReg: 1, att: 1, dp: 1, rows: [{ code: 'abroad-strasbourg', f: 4, N: 15_000 }, { code: 'kyiv', f: 0, N: 435607 }] } })
+    expect(only).toHaveLength(1); expect(only[0]!.grade).toBe('none')
+    const next = run({ c: 'few', corp: { f: 8, nReg: 3, att: 2, dp: 1, rows: [{ code: 'abroad-strasbourg', f: 5, N: 1_000_000 }, { code: 'halychyna', f: 3, N: 100_000 }, { code: 'kyiv', f: 0, N: 435607 }] } })
+    expect(next.some(c => /Страсбург/.test(c.text))).toBe(false)
+  })
+  it('a witness-only class in a place abroad gives no hypothesis chip', () => {
+    const cs = run({ c: 'witness', wit: { n: 2, regions: [['abroad-strasbourg', 'еміграція / поза Україною (Страсбург)']], from: 1900, to: 1950 } })
+    expect(cs[0]!.grade).toBe('none')
+  })
+  it('the row stays in the «За регіонами» statistics block', async () => {
+    const html = await render(RegionBars, { by: [{ code: 'abroad-strasbourg', f: 672, N: 10_000 }], names: { 'abroad-strasbourg': 'еміграція / поза Україною (Страсбург)' } })
+    expect(html).toContain('еміграція / поза Україною (Страсбург)')
+  })
+})
+function corpusSummaryOf(rows: { code: string; f: number; N: number }[], top: object) {
+  return { f: rows.reduce((a, r) => a + r.f, 0), nReg: rows.length, att: rows.length, dp: 0.6, rows, top } as DialectResult['corp']
+}
