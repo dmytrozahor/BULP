@@ -65,3 +65,7 @@ DRY=1 bash ~/idle-stop.sh
 ```
 
 Tests: `tests/ops-worker.test.ts` runs idle-stop and chain against a throw-away git origin with stub `npm`/`npx` (needs bash; skipped without it).
+
+## ocr-se15.sh (SPEC 63 SE-15)
+
+OCR of the owner-supplied scans (`~/work/nb`, `nb2`, `nb3`): Онишкевич ч. 1–2 (`onysh1`, `onysh2`), Сабадош (`sabadosh`), «Словник буковинських говірок» (`bukovyna`), «Гуцульські говірки» (`hutsul`), Лисенко (`polissia`), Славинецький (`slavynetsky`); output `~/work/se15-ocr/<vol>/page_NNNN.txt`. Detached: `setsid nohup bash ocr-se15.sh > ~/logs/se15-ocr.out 2>&1 &`; resumable (a page file that exists is skipped), `nice 19`, `OMP_THREAD_LIMIT=4`, at most 4 pages at a time, no kill switch (`tesseract`/`pdftoppm` processes keep `idle-stop.sh` from stopping the box). Layout decided on real pages: one column (Онишкевич 110 dpi, Лисенко 170 dpi, `--psm 4`) or two columns cut at 49–50 % of the page width and read one by one (page file = LEFT + `<<COL>>` + RIGHT; Сабадош and Славинецький 300 dpi, Буковина 220 dpi because the scan is 72 ppi). The front matter of the column books also gets a whole-page reading `full_NNNN.txt` (title pages, prefaces, lists of abbreviations). The text is © and never leaves the worker except into the git-ignored `data/raw/se15-ocr`.

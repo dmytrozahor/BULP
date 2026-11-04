@@ -21,7 +21,7 @@ import { lk, isCvWord } from './cv.ts'
 import { HIST_BY_ID, HIST_SRC, type HistSrc } from './dx-src.ts'
 
 export interface HistHead { word: string; /** dictionary id: r2u unit id or PARSE_SPECS dict */ src: string }
-export interface HistGroup { key: string; word: string; rank: number; mask: number; srcs: Set<HistSrc>; cands: Set<string> }
+export interface HistGroup { key: string; word: string; rank: number; mask: number; /** SE-15: bits of the second mask (`extra.d2`) */ mask2: number; srcs: Set<HistSrc>; cands: Set<string> }
 export interface HistStats { heads: number; rejected: number; groups: number; merged: number; inCards: number; added: number; sole: number; dropped: number; corroborated: number }
 export const emptyStats = (): HistStats => ({ heads: 0, rejected: 0, groups: 0, merged: 0, inCards: 0, added: 0, sole: 0, dropped: 0, corroborated: 0 })
 
@@ -45,16 +45,17 @@ export function groupHist(heads: Iterable<HistHead>, stats: Record<string, HistS
     if (!(src.ocr ? headwordOk(w) : isCvWord(w))) { st.rejected++; continue }
     const [g0, ks] = foldKeys(w, src.orth)
     let g = groups.get(g0)
-    if (!g) groups.set(g0, g = { key: lk(w), word: w, rank: src.rank, mask: 0, srcs: new Set(), cands: new Set() })
+    if (!g) groups.set(g0, g = { key: lk(w), word: w, rank: src.rank, mask: 0, mask2: 0, srcs: new Set(), cands: new Set() })
     else if (src.rank < g.rank) { g.word = w; g.key = lk(w); g.rank = src.rank }
-    g.mask |= src.bit; g.srcs.add(src); for (const k of ks) g.cands.add(k)
+    if (src.m2) g.mask2 |= src.bit; else g.mask |= src.bit
+    g.srcs.add(src); for (const k of ks) g.cands.add(k)
   }
   return groups
 }
 
 export type Resolved = 'do' | 'card' | undefined
-export interface HistNew { key: string; word: string; mask: number; /** corpus tokens (no lemma claims them) that corroborate a single OCR'd dictionary */ c?: number }
-export interface HistResult { news: HistNew[]; /** [key of an existing dictionary-only card, bits to add] */ merges: [string, number][]; stats: Record<string, HistStats> }
+export interface HistNew { key: string; word: string; mask: number; mask2?: number; /** corpus tokens (no lemma claims them) that corroborate a single OCR'd dictionary */ c?: number }
+export interface HistResult { news: HistNew[]; /** [key of an existing dictionary-only card, bits to add] */ merges: [string, number, number?][]; stats: Record<string, HistStats> }
 
 /** the independent witnesses of a group: typeset dictionaries count one each, OCR'd ones one per lineage */
 export const independent = (g: HistGroup): number => new Set([...g.srcs].map(s => s.lineage)).size
@@ -64,16 +65,16 @@ export const independent = (g: HistGroup): number => new Set([...g.srcs].map(s =
  * (VESUM lemma without a card counts as 'do' when the build made its dictionary-only card first). `corpus(key)` = tokens of the corpus with that spelling (full-text N only).
  */
 export function selectHist(groups: Map<string, HistGroup>, resolve: (cands: string[]) => [string, Resolved] | undefined, corpus: (k: string) => number, stats: Record<string, HistStats> = {}): HistResult {
-  const news: HistNew[] = [], merges: [string, number][] = []
+  const news: HistNew[] = [], merges: [string, number, number?][] = []
   for (const g of groups.values()) {
     for (const s of g.srcs) (stats[s.name] ??= emptyStats()).groups++
     const r = resolve([...g.cands])
-    if (r?.[1] === 'do') { merges.push([r[0], g.mask]); for (const s of g.srcs) stats[s.name]!.merged++; continue }
+    if (r?.[1] === 'do') { merges.push(g.mask2 ? [r[0], g.mask, g.mask2] : [r[0], g.mask]); for (const s of g.srcs) stats[s.name]!.merged++; continue }
     if (r?.[1] === 'card') { for (const s of g.srcs) stats[s.name]!.inCards++; continue }
     const typeset = [...g.srcs].some(s => !s.ocr)
     let c = 0
     if (!typeset && independent(g) < 2) { for (const k of g.cands) c += corpus(k); if (!c) { for (const s of g.srcs) stats[s.name]!.dropped++; continue } }
-    news.push({ key: g.key, word: g.word, mask: g.mask, ...(c ? { c } : {}) })
+    news.push({ key: g.key, word: g.word, mask: g.mask, ...(g.mask2 ? { mask2: g.mask2 } : {}), ...(c ? { c } : {}) })
     for (const s of g.srcs) { const st = stats[s.name]!; st.added++; if (g.srcs.size === 1) st.sole++; if (c) st.corroborated++ }
   }
   return { news, merges, stats }

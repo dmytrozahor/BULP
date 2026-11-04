@@ -77,7 +77,7 @@ describe('SRC-28 part 3: Лексис (1596) and Лексікон Беринди
     expect(g[0]).toEqual(['баранъ', expect.objectContaining({ d: 'berynda', e: [1627, 1627], g: 'ц.-сл. «агнецъ» = ягня' })]); expect(h[0]![1]).toMatchObject({ d: 'berynda', e: [1627, 1627] }); expect(h[0]![1].g).toContain('баранъ')
     expect(atOf(g[0]![1])).toMatchObject({ a: 1627, b: 1627, basis: 'quote' })
     expect(DICT_COVER.find(d => d.id === 'zyzanii-lexis')!.edition).toEqual([1596, 1596]); expect(DICT_COVER.find(d => d.id === 'berynda')!.title).toContain('Беринда'); expect(DICT_COVER.find(d => d.id === 'berynda')!.note).toContain('не Зизанія')
-    expect(HIST_BY_ID['zyzanii-lexis']!.bit).not.toBe(HIST_BY_ID['berynda']!.bit); expect(new Set(HIST_SRC.map(s => s.bit)).size).toBe(HIST_SRC.length)
+    expect(HIST_BY_ID['zyzanii-lexis']!.bit).not.toBe(HIST_BY_ID['berynda']!.bit); expect(new Set(HIST_SRC.filter(s => !s.m2).map(s => s.bit)).size).toBe(HIST_SRC.filter(s => !s.m2).length)
     expect(HIST_LEX_SPECS.zyzanii1596!.year).toBe(1596)
   })
   it('SRC-28 dx-hist-load: only the headword files give dictionary headwords; the gloss-keyed rows (modern words) are skipped', () => {

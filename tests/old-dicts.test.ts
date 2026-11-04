@@ -55,7 +55,7 @@ describe('SE-12 the typed word lists of litopys.org.ua (Німчук 1964)', () 
       expect(HIST_BY_ID[s.dict], s.id).toBeTruthy(); for (const p of s.pages) expect(p).toMatch(/^zyz\d+\.htm$/)
     }
     expect(TYPED_BASE).toBe('http://litopys.org.ua/zyzlex/')
-    const bits = HIST_SRC.map(s => s.bit); expect(new Set(bits).size).toBe(bits.length)
+    const bits = HIST_SRC.filter(s => !s.m2).map(s => s.bit); expect(new Set(bits).size).toBe(bits.length)
   })
   it('SE-12 the lists add epochs the dictionaries did not reach: 1282 → давньоукраїнська, 1431 and the XVI c. → ранньосередньоукраїнська, 1650–1700 → середньоукраїнська', () => {
     const ep = (y: [number, number]) => { const v = assignEpoch(y, 'shev').value; return v === 'unknown' ? [] : v.epochs }

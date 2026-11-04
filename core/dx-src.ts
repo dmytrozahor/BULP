@@ -7,6 +7,8 @@ export interface HistSrc {
   /** the dictionary id in the data: r2u unit id (pipelines/r2u.ts) or the `dict` of core/se-parse.ts PARSE_SPECS */
   ids: string[]
   bit: number
+  /** SE-15: the bit lives in the SECOND mask `extra.d2` (the first int32 mask `extra.d` has no free bit left: 2^31 is unsafe); the card format stays `"d2":N`, a number, never a name list */
+  m2?: true
   /** the name the card shows */
   name: string
   /** the period the dictionary describes (edition years for the r2u dictionaries, which describe their own time) */
@@ -24,6 +26,8 @@ const R = (id: string, bit: number, name: string, period: string, rank: number, 
 const S = (id: string, bit: number, name: string, period: string, rank: number, lineage = id): HistSrc => ({ ids: [id], bit, name, period, ocr: true, lineage, rank })
 /** SPEC 63 GG-7: a licensed dump of a modern © dictionary: typeset (not OCR), so ONE such dictionary suffices for a card */
 const Y = (id: string, bit: number, name: string, period: string, rank: number): HistSrc => ({ ids: [id], bit, name, period, ocr: false, orth: [], lineage: id, rank })
+/** SE-15: a dictionary whose bit is in the second mask `extra.d2` (bits 1, 2, 4 … of that mask; 31 are usable) */
+const Z = (id: string, bit: number, name: string, period: string, rank: number, ocr = false): HistSrc => ({ ids: [id], bit, m2: true, name, period, ocr, orth: [], lineage: id, rank })
 export const HIST_SRC: HistSrc[] = [
   R('r2u_hrinch09', 16, 'Грінченко, Словарь української мови', '1907–09; 3-тє вид. 1927–28', 1, ['r2u', '1928'], ['r2u_hrinch09', 'r2u_hrinch27']),
   R('r2u_zheleh', 32, 'Желехівський, Малорусько-німецький словар', '1886', 9, ['желехівка', '1928']),
@@ -52,7 +56,16 @@ export const HIST_SRC: HistSrc[] = [
   Y('sum11', 524288, 'Словник української мови в 11 томах (СУМ-11)', '1970–80', 16),
   { ...Y('arkushyn', 2097152, 'Аркушин, Словник західнополіських говірок', '1980–99; друк 2000', 18), ocr: true },   // LB-11: OCR text, new cards need the gates + corroboration
   Y('sum20', 1048576, 'Словник української мови (СУМ-20)', '2010–', 17),
+  // SE-15: the second mask. The © dialect dictionaries are typeset books read by OCR; their parsers gate the headwords (strict form, alphabetical spine, evidence) and mark the rest `unv`, so ONE such dictionary suffices for a card
+  Z('chabanenko', 1, 'Чабаненко, Словник говірок Нижньої Наддніпрянщини', '1955–1990; друк 1992', 20),
+  Z('onyshkevych', 2, 'Онишкевич, Словник бойківських говірок', 'друк 1984', 20),
+  Z('sabadosh', 4, 'Сабадош, Словник закарпатської говірки села Сокирниця', 'друк 2008', 20),
+  Z('bukovyna', 8, 'Словник буковинських говірок', 'друк 2005', 20),
+  Z('lysenko', 32, 'Лисенко, Словник поліських говорів', '1947–1963; друк 1974', 20),
+  Z('hutsul', 16, 'Гуцульські говірки. Короткий словник', 'друк 1997', 20),
 ]
+/** the dictionaries of the first / the second mask */
+export const HIST_MASK1 = HIST_SRC.filter(s => !s.m2), HIST_MASK2 = HIST_SRC.filter(s => s.m2)
 export const HIST_BY_ID: Record<string, HistSrc> = Object.fromEntries(HIST_SRC.flatMap(s => s.ids.map(i => [i, s] as const)))
 /** the name the card lists: «Тимченко, Історичний словник українського язика (цитати XIV–XVIII ст.; друк 1930–32)» */
 export const histLabel = (s: HistSrc): string => `${s.name} (${s.period})`

@@ -97,8 +97,12 @@ export function buildCv(ins: CvWitness[], lookup: CvLookup, archKeys: ReadonlySe
       for (const k of cands) for (const l of dict.hist!.lemmaOf.get(k) ?? []) return own(l) ?? [l, 'card']   // VESUM knows the spelling as a form: its lemma's card (or none: still no new card for a form)
       return undefined
     }, k => dict.hist!.corpus.get(k) ?? 0, dict.hist.stats); st.hist = dict.hist.stats
-    for (const [k, bits] of r.merges) { const i = at.get(k)!, e = entries[i]![1]; if ((e[4]!.d! & bits) === bits) continue; entries[i] = [k, [e[0], e[1], e[2], e[3], { ...e[4], d: e[4]!.d! | bits }]]; st.histMerged++ }
-    for (const n of r.news) { if (at.has(n.key)) continue; entries.push([n.key, [n.word, '', 0, NO_ATT, { d: n.mask, ...(n.c ? { c: n.c } : {}) }]]); at.set(n.key, entries.length - 1); st.dictOnly++; st.histNew++ }
+    for (const [k, bits, bits2] of r.merges) {
+      const i = at.get(k)!, e = entries[i]![1], x = e[4]!, have = x.d ?? 0, have2 = x.d2 ?? 0
+      if ((have & bits) === bits && (have2 & (bits2 ?? 0)) === (bits2 ?? 0)) continue
+      entries[i] = [k, [e[0], e[1], e[2], e[3], { ...x, ...(have | bits ? { d: have | bits } : {}), ...(have2 | (bits2 ?? 0) ? { d2: have2 | (bits2 ?? 0) } : {}) }]]; st.histMerged++
+    }
+    for (const n of r.news) { if (at.has(n.key)) continue; entries.push([n.key, [n.word, '', 0, NO_ATT, { ...(n.mask ? { d: n.mask } : {}), ...(n.mask2 ? { d2: n.mask2 } : {}), ...(n.c ? { c: n.c } : {}) }]]); at.set(n.key, entries.length - 1); st.dictOnly++; st.histNew++ }
   }
   return { entries, forms: scan.forms(), refs, stats: st }
 }

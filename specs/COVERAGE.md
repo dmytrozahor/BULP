@@ -1195,6 +1195,21 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-14 | tests/se14.test.ts › statement: starts at «запозичення …» / «псл. …» |
 | SE-14 | tests/se14.test.ts › a volume: running head, page number from the footer |
 | SE-14 | tests/se14.test.ts › the etymology panel gets ONE Q-evidence with volume and page |
+| SE-15 | tests/se15.test.ts › SE-15 the second mask extra.d2 (HIST_SRC bit 2^31 is unsafe in an int32 mask) › the dictionaries of the second mask have distinct small powers of two, none of them in the first mask; the first mask is unchanged |
+| SE-15 | tests/se15.test.ts › SE-15 the second mask extra.d2 (HIST_SRC bit 2^31 is unsafe in an int32 mask) › a card known only to second-mask dictionaries is dictionary-only: d2 names them, no first-mask bit is needed; the shard format stays a number |
+| SE-15 | tests/se15.test.ts › SE-15 the second mask extra.d2 (HIST_SRC bit 2^31 is unsafe in an int32 mask) › groupHist / selectHist carry the second mask: a headword of Онишкевич makes a new card with mask2, and merges into an existing dictionary-only card |
+| SE-15 | tests/se15.test.ts › SE-15 Онишкевич › the list of settlements is read; the code is matched through the OCR confusions of the typescript |
+| SE-15 | tests/se15.test.ts › SE-15 Онишкевич › entries: headword, senses, places; the illustration, the cross-reference tail and the foreign parallel are never taken |
+| SE-15 | tests/se15.test.ts › SE-15 Онишкевич › rows: a standard word records only the PLACE, a non-standard one is a word of the area |
+| SE-15 | tests/se15.test.ts › SE-15 Онишкевич › the gloss is at most 200 characters, cut at a word boundary with «…» |
+| SE-15 | tests/se15.test.ts › SE-15 Словник буковинських говірок / Сабадош (two columns, capital headwords) › Bukovyna: columns are read apart, the running head is skipped, districts are the places |
+| SE-15 | tests/se15.test.ts › SE-15 Словник буковинських говірок / Сабадош (two columns, capital headwords) › Bukovyna labels: strict for a non-standard word, place-only for a VESUM lemma |
+| SE-15 | tests/se15.test.ts › SE-15 Словник буковинських говірок / Сабадош (two columns, capital headwords) › Сабадош: one locality; the OCR of the vowel «ы» is repaired |
+| SE-15 | tests/se15.test.ts › SE-15 Словник буковинських говірок / Сабадош (two columns, capital headwords) › firstSentence does not stop at an abbreviation |
+| SE-15 | tests/se15.test.ts › SE-15 Гуцульські говірки and Лисенко › Гуцульські: heads with synonyms «//», endings, labels, numbered senses, «див.» |
+| SE-15 | tests/se15.test.ts › SE-15 Гуцульські говірки and Лисенко › Лисенко: the list of settlements, the code groups in parentheses are places |
+| SE-15 | tests/se15.test.ts › SE-15 gates › the alphabetical spine: a misread headword is off the spine and gets no card (unv) |
+| SE-15 | tests/se15.test.ts › SE-15 gates › all the new dictionaries are registered with a source, a coverage row and the SPEC 63 label table |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |

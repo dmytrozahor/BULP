@@ -23,17 +23,17 @@ const isDictWitness = (id: string): boolean => /^(r2u_|plast|dsu|sum|vesum)/i.te
 /** a cv entry [word, tags, n, atts, extra?]: VESUM when it has tags or the VESUM bit; class 6 only when EVERY attestation is from a dictionary with a documented base */
 export function cvFacts(e: unknown[] | undefined, meta: (id: string) => WitMetaLite | undefined): { facts: TailFacts; attested: boolean } {
   if (!e) return { facts: {}, attested: false }
-  const tags = typeof e[1] === 'string' ? e[1] : '', atts = (e[3] as [string, string, string][] | undefined) ?? [], extra = e[4] as { d?: number } | undefined
+  const tags = typeof e[1] === 'string' ? e[1] : '', atts = (e[3] as [string, string, string][] | undefined) ?? [], extra = e[4] as { d?: number; d2?: number } | undefined
   const ids = atts.map(a => a[0])
   // LB-14: an entry whose every attestation is a dictionary lookup (r2u_*, dsu…) is dictionary-only even when it carries no dictionary bit
-  const dictOnly = !!extra?.d || (ids.length > 0 && ids.every(isDictWitness)), vesum = !!tags || !!((extra?.d ?? 0) & 1)
-  const bit0 = extra?.d ?? 0, srcIds = [...new Set([...ids, ...HIST_SRC.filter(s => bit0 & s.bit).map(s => s.ids[0]!)])]
+  const dictOnly = !!extra?.d || !!extra?.d2 || (ids.length > 0 && ids.every(isDictWitness)), vesum = !!tags || !!((extra?.d ?? 0) & 1)
+  const bit0 = extra?.d ?? 0, srcIds = [...new Set([...ids, ...HIST_SRC.filter(s => (s.m2 ? (extra?.d2 ?? 0) : bit0) & s.bit).map(s => s.ids[0]!)])]
   // class 6: every source has a documented regional base; LB-14: every source is a dictionary of an epoch or of one author (or has a base): the epoch / author is the class
   const allKnown = dictOnly && !vesum && srcIds.length > 0 && !(bit0 & 13) && srcIds.every(i => baseOf(i) || histOf(i) || normOf(i))
   const bases = allKnown ? [...new Set(srcIds.filter(i => baseOf(i)).map(i => baseOf(i)!.id))] : [], hist = allKnown ? srcIds.filter(i => histOf(i)) : [], norms = allKnown ? srcIds.filter(i => normOf(i)) : []
   const wit = !dictOnly ? summarizeWitnesses(ids.filter(i => !isDictWitness(i)), meta, (e[2] as number) > ids.length) : undefined
-  const bit = extra?.d ?? 0, sumHead = (['sum11', 'sum20'] as const).filter(id => bit & (HIST_SRC.find(s => s.ids[0] === id)?.bit ?? 0))
-  const srcNames = dictOnly && !vesum && !sumHead.length ? [...new Set([...HIST_SRC.filter(s => (bit & s.bit) || s.ids.some(i => ids.includes(i))).map(s => s.name.split(',')[0]!), ...(bit & 4 ? ['Пластові словники'] : []), ...(bit & 8 ? ['інші словники корпусу'] : [])])] : []
+  const bit = extra?.d ?? 0, bit2 = extra?.d2 ?? 0, sumHead = (['sum11', 'sum20'] as const).filter(id => bit & (HIST_SRC.find(s => s.ids[0] === id)?.bit ?? 0))
+  const srcNames = dictOnly && !vesum && !sumHead.length ? [...new Set([...HIST_SRC.filter(s => ((s.m2 ? bit2 : bit) & s.bit) || s.ids.some(i => ids.includes(i))).map(s => s.name.split(',')[0]!), ...(bit & 4 ? ['Пластові словники'] : []), ...(bit & 8 ? ['інші словники корпусу'] : [])])] : []
   return { facts: { ...(vesum ? { vesum: true } : {}), ...(sumHead.length ? { sumHead } : {}), ...(wit ? { wit } : {}), ...(bases.length ? { bases } : {}), ...(hist.length ? { hist } : {}), ...(norms.length ? { norms } : {}), ...(srcNames.length ? { srcNames } : {}) }, attested: !dictOnly }
 }
 /** a light card [lemma, tags, n, "witness|title|form"]: a VESUM lemma attested in an admitted witness */

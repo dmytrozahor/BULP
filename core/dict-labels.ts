@@ -25,7 +25,7 @@ export const AREAS: Record<string, string> = {
   /** LB-8 Wiktionary: «Southwestern Ukrainian» = «Ukrainian as spoken in Western and Central Ukraine» (en.wiktionary category text) */ southwest: 'південно-західна Україна (захід і центр)',
   /** «Southeastern Ukrainian» = «Central, Southern (incl. Crimea), Eastern Ukraine» */ southeast: 'південно-східна Україна (центр, південь, схід)',
   /** LB-17 en.wiktionary «Central / Dnieper Ukraine» */ dnieper: 'центр України (Подніпров’я)', /** LB-17 en.wiktionary «Southern (incl. Crimea), Eastern Ukraine, and Russia» */ steppe: 'південь і схід (степ)',
-  /** SE-14 Чабаненко: the survey area of the book, 350 settlements of Дніпропетровська, Запорізька, Херсонська (+ part of Донецька, Миколаївська, Кіровоградська) oblasts = the steppe (степові) dialects of the south-eastern group */ lower_dnipro: 'Нижня Наддніпрянщина (степові говірки)', pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
+  /** SE-14 Чабаненко: the survey area of the book, 350 settlements of Дніпропетровська, Запорізька, Херсонська (+ part of Донецька, Миколаївська, Кіровоградська) oblasts = the steppe (степові) dialects of the south-eastern group */ lower_dnipro: 'Нижня Наддніпрянщина (степові говірки)', /** SE-15 Онишкевич: Бойківщина (the Carpathian highlands of the Sambir, Drohobych, Stryi districts; 20 villages in the core, the rest by the book's own list) */ boyko: 'Бойківщина', /** SE-15 Лисенко: середньополіські й східнополіські говірки (Чернігівська, Житомирська, Київська, Сумська обл.); the gazetteer names no dialect group by this label */ polissia_ce: 'Середнє й східне Полісся (Чернігівщина, Житомирщина, Київщина, Сумщина)', pokuttia: 'Покуття й Буковина', polissia: 'Полісся (західнополіський говір)',
 }
 /** governorate (nominative, as uk.wikipedia names it) → area */
 const GOV_AREA: Record<string, string> = {
@@ -303,7 +303,47 @@ export const NAN_LABELS: DTable = {
     R('ниж.-наддн. (місце запису)', 'Словник говірок Нижньої Наддніпрянщини — стандартне слово (є у ВЕСУМ), записане в обстежених селах із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'lower_dnipro', scope: 'place' }),
   ],
 }
-export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, NAN_LABELS, HRINCH_SOURCES]
+/**
+ * SE-15: the four dialect dictionaries of the owner's second scan set. Each is a differential dictionary of ONE region (every article is a word of the region, or a standard word with the form / meaning recorded there), so — as for
+ * Чабаненко (SE-14) — two grades: a headword that is no standard word (VESUM through the corpus folds) is a word of the area (word-level, strict); a standard word only records the PLACE of recording (scope place), unless the sense itself
+ * carries the dictionary's own «діал.» mark. The dialect group is the one the AC-2 gazetteer gives for the area name (BOY for Бойківщина, HUT for Гуцульщина, ZAK for Закарпаття); the area «Буковина» has no gazetteer group, so no group is claimed.
+ */
+export const ONY_LABELS: DTable = {
+  id: 'ony-labels', dicts: [], short: 'Онишкевич (1984)', source: 'ONYSHKEVYCH', list: 'Онишкевич М. Й. Словник бойківських говірок, ч. 1–2 (Київ: Наукова думка, 1984), «Принципи побудови словника», «Скорочення назв населених пунктів»', attach: 'sense',
+  rows: [
+    R('бойк.', 'Словник бойківських говірок — «словник диференційного типу»; слово не є стандартним (немає у ВЕСУМ) і записане в бойківських говірках (села за списком словника)', 'area', { area: 'boyko' }),
+    R('бойк. (місце запису)', 'Словник бойківських говірок — стандартне слово (є у ВЕСУМ), записане в бойківських говірках із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'boyko', scope: 'place' }),
+  ],
+}
+export const SAB_LABELS: DTable = {
+  id: 'sab-labels', dicts: [], short: 'Сабадош (2008)', source: 'SABADOSH', list: 'Сабадош І. Словник закарпатської говірки села Сокирниця Хустського району (Ужгород, 2008)', attach: 'sense',
+  rows: [
+    R('закарп. (сокирниця)', 'Словник закарпатської говірки села Сокирниця Хустського району — слово не є стандартним (немає у ВЕСУМ) і записане в одній говірці (с. Сокирниця Хустського р-ну)', 'area', { area: 'zakarpattia' }),
+    R('закарп. (сокирниця, місце запису)', 'Словник закарпатської говірки села Сокирниця — стандартне слово (є у ВЕСУМ), записане в говірці із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'zakarpattia', scope: 'place' }),
+  ],
+}
+export const BUK_LABELS: DTable = {
+  id: 'buk-labels', dicts: [], short: 'Словник буковинських говірок (2005)', source: 'BUKOVYNA', list: 'Словник буковинських говірок / За заг. ред. Н. В. Гуйванюк (Чернівці: Рута, 2005), «Перелік умовних скорочень», «Скорочені назви районів»', attach: 'sense',
+  rows: [
+    R('букович.', 'Словник буковинських говірок — «праця диференційного типу»; слово не є стандартним (немає у ВЕСУМ) і записане у 227 населених пунктах Чернівецької області (райони за словником)', 'area', { area: 'bukovyna' }),
+    R('букович. (місце запису)', 'Словник буковинських говірок — стандартне слово (є у ВЕСУМ), записане в буковинських говірках із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'bukovyna', scope: 'place' }),
+  ],
+}
+export const HUT_LABELS: DTable = {
+  id: 'hut-labels', dicts: [], short: 'Гуцульські говірки (1997)', source: 'HUTSUL', list: 'Гуцульські говірки. Короткий словник / відп. ред. Я. Закревська (Львів, 1997)', attach: 'sense',
+  rows: [
+    R('гуцул.', 'Гуцульські говірки. Короткий словник — слово не є стандартним (немає у ВЕСУМ) і записане в гуцульських говірках', 'area', { area: 'hutsul' }),
+    R('гуцул. (місце запису)', 'Гуцульські говірки. Короткий словник — стандартне слово (є у ВЕСУМ), записане в гуцульських говірках із значенням або формою, яку дає словник; позначає лише місце запису', 'area', { area: 'hutsul', scope: 'place' }),
+  ],
+}
+export const POL_LABELS: DTable = {
+  id: 'pol-labels', dicts: [], short: 'Лисенко (1974)', source: 'LYSENKO', list: 'Лисенко П. С. Словник поліських говорів (Київ: Наукова думка, 1974), «Передмова», «Умовні скорочення назв населених пунктів»', attach: 'sense',
+  rows: [
+    R('полісс.', 'Словник поліських говорів — «регіональний словник диференціального типу» (середньополіські й східнополіські говірки, 218 населених пунктів); слово не є стандартним (немає у ВЕСУМ) і записане в поліських говірках', 'area', { area: 'polissia_ce' }),
+    R('полісс. (місце запису)', 'Словник поліських говорів — стандартне слово (є у ВЕСУМ), записане в поліських говірках із значенням або формою, яку дає словник (передмова: «загальновідомі слова, що в місцевих говірках виступають з іншим значенням»); позначає лише місце запису', 'area', { area: 'polissia_ce', scope: 'place' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, NAN_LABELS, ONY_LABELS, SAB_LABELS, BUK_LABELS, HUT_LABELS, POL_LABELS, HRINCH_SOURCES]
 /** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
 export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))

@@ -25,9 +25,9 @@ const sel = (heads: HistHead[], opt: { have?: Record<string, 'do' | 'card'>; cor
 
 describe('GG-1 every historical dictionary has its own bit, named with the period it describes', () => {
   it('GG-1 the bits are distinct powers of two above the DO bits, and DICT_SRC names each dictionary with its period', () => {
-    const bits = HIST_SRC.map(s => s.bit)
+    const bits = HIST_SRC.filter(s => !s.m2).map(s => s.bit)
     expect(new Set(bits).size).toBe(bits.length); for (const b of bits) { expect(b & (b - 1)).toBe(0); expect(b).toBeGreaterThan(8) }
-    expect(DICT_SRC.length).toBe(4 + HIST_SRC.length)
+    expect(DICT_SRC.length).toBe(4 + HIST_SRC.filter(s => !s.m2).length)
     const names = dictSources(HIST_BY_ID['r2u_hrinch09']!.bit | HIST_BY_ID['timchenko']!.bit | 1)
     expect(names[0]).toBe('ВЕСУМ'); expect(names[1]).toContain('Грінченко'); expect(names[1]).toContain('1907–09'); expect(names[2]).toContain('Тимченко'); expect(names[2]).toContain('XIV–XVIII')
     expect(HIST_BY_ID['r2u_hrinch27']).toBe(HIST_BY_ID['r2u_hrinch09'])   // the 3rd edition shares the dictionary's bit

@@ -15,7 +15,7 @@
  *  LB-4 TYPE: part of speech + morphological class + word type (власна назва / абревіатура / запозичення / церковнослов'янізм / архаїзм / …) where a source says so
  *  Surzhyk is a property of a FORM (MM-9), never of a lemma: the block says so instead of a value.
  */
-import { ARKUSHYN_LABELS, NAN_LABELS, DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
+import { ARKUSHYN_LABELS, NAN_LABELS, ONY_LABELS, SAB_LABELS, BUK_LABELS, HUT_LABELS, POL_LABELS, DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
 
 // ── thresholds (LB-1; every one is printed on the methods page) ───────────────────────────────────────
 export const TH = {
@@ -399,7 +399,9 @@ export { DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, tableById }
 
 // ── LB-8/LB-9: СУМ and Wiktionary labels ──────────────────────────────────────────────────────────────────
 /** СУМ dictionary id of a parsed row (SeRow.d) → its cited label table */
-const SUM_TABLES = { sum11: SUM11_LABELS, sum20: SUM20_LABELS, arkushyn: ARKUSHYN_LABELS, chabanenko: NAN_LABELS } as const
+const SUM_TABLES = { sum11: SUM11_LABELS, sum20: SUM20_LABELS, arkushyn: ARKUSHYN_LABELS, chabanenko: NAN_LABELS, onyshkevych: ONY_LABELS, sabadosh: SAB_LABELS, bukovyna: BUK_LABELS, hutsul: HUT_LABELS, lysenko: POL_LABELS } as const
+/** SE-15: the dialect group of a dictionary's area where the AC-2 gazetteer names one (the card shows it with the hit) */
+const TABLE_GROUP = new Map<unknown, string>([[NAN_LABELS, 'STP'], [ONY_LABELS, 'BOY'], [SAB_LABELS, 'ZAK'], [HUT_LABELS, 'HUT']])
 /**
  * labels of a СУМ sense that do not restrict the word to a register, a region or a sphere: a figurative sense, and the grammatical / derivational notes
  * (only imperfective / perfective / plural / singular, adverbial use, diminutive, augmentative, collective, possessive). Every other label (розм., прост., заст., рідко., діал., зах.,
@@ -427,7 +429,7 @@ export function sumLabelHit(d: string, lb: string, gloss?: string, url?: string,
   const t = SUM_TABLES[d as keyof typeof SUM_TABLES]; if (!t) return undefined
   const row = extraRow(t, lb.trim().toLowerCase()); if (!row) return undefined
   const q = `${row.abbr} ${gloss ?? ''}`.trim().slice(0, 200)
-  return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list, ...(place ? { place } : {}), ...(t === NAN_LABELS ? { g: 'STP' } : {}), ...(row.scope === 'place' ? { p: true as const } : {}) } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
+  return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list, ...(place ? { place } : {}), ...(TABLE_GROUP.has(t) ? { g: TABLE_GROUP.get(t)! } : {}), ...(row.scope === 'place' ? { p: true as const } : {}) } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
 }
 
 // ── assembling one lemma's entry (used by pipelines/build-labels.ts and the tests) ──────────────────────
