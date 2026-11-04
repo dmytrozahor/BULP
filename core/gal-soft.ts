@@ -84,7 +84,7 @@ export const toLocJa = (w: string): string => { const m = /^(.{2,}[бвгґдж�
 const LOC_NDN = Q('ENC', UM(173), 'у місц. в. мн. -ох (на з’ат’ох; так само і множинні іменники — на грудьох, на дворох)', 'NDN, ЕУМ «Наддністрянський говір»; the page prints the accented vowels as images, the stress letters are lost in the extract: the quote keeps the ending -ох and the rule text')
 export const LOC_OH_A_FOLD: Fold = { id: 'ORTH-GAL-LOC-OH-A', era: [], branch: true, cite: LOC_NDN, apply: toLocA }
 export const LOC_OH_JA_FOLD: Fold = { id: 'ORTH-GAL-LOC-OH-JA', era: [], branch: true, cite: Q('ENC', UM(174), 'у місц. в. мн. іменників ж. р. збереглося закінчення -ох (ф кунупл’ох, на меж’ох), зрідка — -ex (у груд’ех)', 'SYAN (um174); the same -ох for NDN (um173), POD (um180: сіни, груди), ZAK (um162: кон’ох, люд’ох); soft stem -ях'), apply: toLocJa }
-const SK = /([сцз])к(?=(?:ий|их|им|ім|ого|ому|ої|ою|ими|а|е|у|і|о)$)/
+const SK = /([сцз])к(?=(?:ий|ій|их|им|ім|ого|ому|ої|ою|ими|а|е|у|і|о)$)/
 export const toSkSoft = (w: string): string => w.replace(SK, '$1ьк')
 export const SK_FOLD: Fold = { id: 'ORTH-GAL-SK', era: [], branch: true,
   cite: Q('ENC', UM(175), 'депалаталізація [с], [ц] … у прикметниках і прислівниках на -ск, -зк, -цк, (ни́ско, пóл.ский, вітц’ўский, н’імéцкий)', 'PKB (um175); the same for SYAN (um174: [с’], [ц’] у прикм. суфіксах пóнскій, л’éцкій). Reverse: -ск-/-цк-/-зк- → -ськ-/-цьк-/-зьк-; the Желехівка fold ORTH-ZHEL-SKY covers [сц] with the Wikipedia quote'), apply: toSkSoft }
@@ -104,7 +104,9 @@ export const R_HARD_FOLD: Fold = { id: 'ORTH-GAL-R-HARD', era: [], branch: true,
 export const SE_FOLD: Fold = { id: 'ORTH-GAL-SE', era: [], branch: true, cite: SE_OWNER, apply: toSya }
 export const GAL_SOFT_FOLDS: Fold[] = [SE_FOLD, C_FINAL_FOLD, S_FINAL_FOLD, C_DEPAL_FOLD, LOC_OH_A_FOLD, LOC_OH_JA_FOLD, SK_FOLD, A_SOFT_FOLD, HARD_T_FOLD, HARD_T_E_FOLD, E_I_FOLD, E_Y_FOLD, REM_FOLD, I_KEPT_E_FOLD]
 /** ORTH-GAL-R-HARD (ра → ря, ру → рю) is measured but NOT shipped as a reverse fold: 191 types / 483 tokens, but about a quarter of a 30-form sample was wrong (умірати > уміряти, добраго > добряго, надзору > надзорю, манастиру > манастирю): far above 5 %. The FORWARD row GAL-R-HARD (POD um180) is shipped. */
-export const GAL_SOFT_MEASURED: Fold[] = [...GAL_SOFT_FOLDS, I_KEPT_O_FOLD, R_HARD_FOLD]
+/** MM-60 (measured only): a GENERAL initial є- → я- (єкий → який, єблуко → яблуко); the shipped link is the VF-JAKYJ family limited to the який paradigm */
+export const JA_E_FOLD: Fold = { id: 'ORTH-GAL-JA-E', era: [], branch: true, cite: P('OWNER', 'повідомлення власника, 2026-11-04', '«єкий для галицкого діалекту на який»', 'ЕУМ um175: а > е після й лише в одній групі говірок'), apply: w => (/^є.{2,}/.test(w) ? 'я' + w.slice(1) : w) }
+export const GAL_SOFT_MEASURED: Fold[] = [...GAL_SOFT_FOLDS, I_KEPT_O_FOLD, R_HARD_FOLD, JA_E_FOLD]
 
 /**
  * Tag / context gate of the MM-48…51 branches (the fold only proposes a spelling; the TARGET must be the analysis the rule is about). `raw` = the lower-case token, `tags` = the VESUM tags of the

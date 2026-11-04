@@ -12,7 +12,7 @@
 import { dialectRule } from './form-class.ts'
 import { DIALECTS } from './rules.ts'
 import { stripStress, unifyApostrophe } from './text.ts'
-import { Q, type Evidence } from './evidence.ts'
+import { P, Q, type Evidence } from './evidence.ts'
 import type { Origin, Origins } from './origin.ts'
 import { REFL_RULES, reflSplit } from './respell-refl.ts'
 import { NORTH_RULES } from './respell-north.ts'
@@ -108,12 +108,14 @@ export const SPELL_RULES: SpellRule[] = [
     edits: (w, _st, _org, code) => { const sp = reflSplit(w), r = REFL_RULES[code]; if (!sp || !r) return []; return r.main === 'post' ? [[w.length - 2, w.length - 2, ' '] as Edit] : [[0, 0, sp.clitic + ' '] as Edit, [w.length - 2, w.length, ''] as Edit] } },
   // MM-57: the hard -ск- / -цк- / -зк- of adjectives and adverbs (галицький → галицкий, низько → низко): PKB um175 «депалаталізація [с], [ц] … у прикметниках і прислівниках на -ск, -зк, -цк, (ни́ско, пóл.ский, вітц’ўский, н’імéцкий)», SYAN um174 «диспалаталізацією м’яких приголосних: … [с’], [ц’] у прикм. суфіксах (пóнскій, л’éцкій)».
   // NDN has no such statement (um173): not in the codes. The IPA reads the respelled letters, so the hard с / ц agree.
-  { id: 'GAL-SK-HARD', codes: { PKB: 'PKB-DEPAL-S', SYAN: 'SYAN-DEPAL-SK' }, example: ['галицький', 'галицкий'],
+  { id: 'GAL-SK-HARD', codes: { PKB: 'PKB-DEPAL-S', SYAN: 'SYAN-DEPAL-SK', NDN: 'OWNER-SK' }, example: ['галицький', 'галицкий'],
     own: {
+      // MM-57b: NDN is the switch's «наддністрянський (галицький)», the only option labelled Galician. ЕУМ um173 has no statement; the owner (a native speaker) states it for Galician: kind P
+      NDN: P('OWNER', 'повідомлення власника, 2026-11-04', '«єкий для галицкого діалекту на який і галицький досі без твредішання»', 'за свідченням носія; ЕУМ um173 (NDN) цього не називає: джерела не знайдено. Не плутати з цитатою Желехівки (правопис, не говір)'),
       PKB: Q('ENC', 'http://litopys.org.ua/ukrmova/um175.htm', 'депалаталізація [с], [ц] у кінці слів (дес, хтос, хл пец, от ц), перед флексійними -а, -у (в лица, т рница, на в лицу, копи́цу), у прикметниках і прислівниках на -ск, -зк, -цк, (ни́ско, п л.ский, вітц’ ўский, н’ім цкий)', 'ЕУМ «Покутсько-буковинський говір»; the page prints the accented vowels as images, the extract has gaps in their place'),
       SYAN: Q('ENC', 'http://litopys.org.ua/ukrmova/um174.htm', 'диспалаталізацією м’яких приголосних: [р’] перев. у сполуках р’у, р’е при збереженні м’якості у сполуці з р’а (пур док, журус’а), [с’], [ц’] у прикм. суфіксах (п нскій, л’ цкій)', 'ЕУМ «Надсянський говір»; the extract has gaps where the page prints accented vowels'),
     },
-    edits: w => [...w.matchAll(/([сцз])(ь)к(?=(?:ий|их|им|ім|ого|ому|ої|ою|ими|а|е|у|і|о)$)/g)].map(m => [m.index!, m.index! + 2, m[1]!] as Edit) },   // the consonant is part of the edit, so that the changed segment is visible (a bare deletion leaves an empty mark)
+    edits: w => [...w.matchAll(/([сцз])(ь)к(?=(?:ий|ій|их|им|ім|ого|ому|ої|ою|ими|а|е|у|і|о)$)/g)].map(m => [m.index!, m.index! + 2, m[1]!] as Edit) },   // the consonant is part of the edit, so that the changed segment is visible (a bare deletion leaves an empty mark)
   // MM-57: the other hardenings (твердішання) the ЕУМ pages state. PKB um175 «депалаталізація [с], [ц] у кінці слів (дес, хтос, хлóпец, отéц), перед флексійними -а, -у (в лица, тéрница, на вулицу, копи́цу)»;
   // POD um180 «твердість p перед голосними (бурáк, рáдий, расни́й, зóра, говóру)». The final -ц of NDN / POD / PKB / HUT is HARD-C-FINAL above (um180 «твердість (у південноподіл. говірках) кінцевого ц»).
   { id: 'GAL-S-FINAL', codes: { PKB: 'PKB-DEPAL-S' }, example: ['десь', 'дес'],
@@ -125,6 +127,13 @@ export const SPELL_RULES: SpellRule[] = [
   { id: 'GAL-R-HARD', codes: { POD: 'POD-R-HARD' }, example: ['буряк', 'бурак'],
     own: { POD: Q('ENC', 'http://litopys.org.ua/ukrmova/um180.htm', 'твердість p перед голосними (бур к, рад к, расни́й, зор , гов ру)', 'ЕУМ «Подільський говір»; the extract has gaps where the page prints accented vowels (бурáк, рáдий, зóра, говóру)') },
     edits: w => [...w.matchAll(/р([яю])/g)].map(m => [m.index! + 1, m.index! + 2, m[1] === 'я' ? 'а' : 'у'] as Edit) },
+  // MM-60: який → єкий. NDN: the owner («єкий для галицкого діалекту на який», kind P); PKB: ЕУМ um175 «Лише після й перехід [а] в [е], [і] обмежений (йійц, йек, пйес…) східнонадпрутською групою говірок» (one group of говірки, so the switch shows it only for the який paradigm the owner named). Only the paradigm of який: якось, якийсь, якраз are untouched
+  { id: 'GAL-JAKYJ', codes: { NDN: 'OWNER-JAKYJ', PKB: 'OWNER-JAKYJ' }, example: ['який', 'єкий'],
+    own: {
+      NDN: P('OWNER', 'повідомлення власника, 2026-11-04', '«єкий для галицкого діалекту на який»', 'за свідченням носія; джерела не знайдено у ЕУМ um173'),
+      PKB: Q('ENC', 'http://litopys.org.ua/ukrmova/um175.htm', 'Лише після й перехід [а] в [е], [і] обмежений (йійц, йек, пйес...) східнонадпрутською групою говірок', 'ЕУМ «Покутсько-буковинський говір»: а > е після й в ОДНІЙ групі говірок; форму єкий називає власник'),
+    },
+    edits: w => (/^я(кий|ка|ке|кі|кого|кому|ким|кою|кої|ку|ких|кими|кій)$/.test(w) ? [[0, 1, 'є'] as Edit] : []) },
   ...NORTH_RULES,
   { id: 'MPL-YON', codes: { MPL: 'MPL-YON' }, example: ['він', 'йон'], edits: w => (w === 'він' ? [[0, 3, 'йон'] as Edit] : []) },
 ]

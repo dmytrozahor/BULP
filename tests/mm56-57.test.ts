@@ -56,7 +56,7 @@ describe('MM-56 людях ~ людєх (GAL-A-SOFT, ЕУМ um173 NDN / um175 PK
 describe('MM-57 hard -ск- / -цк- (PKB um175, SYAN um174; NDN has no statement)', () => {
   it('forward: PKB and SYAN галицький → галицкий, галицька → галицка, низько → низко, німецький → німецкий; NDN, POD, WPL unchanged', () => {
     for (const c of ['PKB', 'SYAN']) { expect(respell('галицький', c).text, c).toBe('галицкий'); expect(respell('галицька', c).text, c).toBe('галицка'); expect(respell('низько', c).text, c).toBe('низко'); expect(respell('німецький', c).text, c).toBe('німецкий') }
-    for (const c of ['NDN', 'POD', 'WPL', 'HUT']) expect(respell('галицький', c).text, c).toBe('галицький')
+    for (const c of ['POD', 'WPL', 'HUT']) expect(respell('галицький', c).text, c).toBe('галицький')
   })
   it('IPA agrees: the dialect IPA is read from the hard spelling (no soft с / ц)', () => {
     expect(ipaOf('галицький', 'PKB').ipa).toBe(toIpa('галицкий', null, 'PKB').ipa); expect(ipaOf('галицький', 'PKB').ipa).not.toBe(ipaOf('галицький', '').ipa)

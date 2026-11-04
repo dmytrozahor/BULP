@@ -37,7 +37,9 @@ const WIKT = (w: string) => `https://en.wiktionary.org/wiki/${encodeURIComponent
 const W = (word: string, quote: string, note: string): VCite => ({ source: 'Вікісловник (en)', url: WIKT(word), quote, note })
 const ALT_V = 'Alternative forms: вві, ві, во, ув, уві (rare)'
 
-const OWNER_ODYN = { quote: 'один єден теж галицка риса', relation: 'єден = один (галицька лексична форма; Галичина, ступінь: за свідченням носія; джерела не знайдено)' }
+const OWNER_ODYN = { quote: 'один єден теж галицка риса', relation: 'єден = один (галицька лексична форма; Галичина, ступінь: за свідченням носія); близьке свідчення ЕУМ um173 «Наддністрянський говір»: «у числівниках — формальна структура числівників один … йід’н, йед’н, … (йедин йц’ік’)» (написання з й- і з голосним, що видруковано зображенням: це не те саме написання єден, тож для самого написання джерела не знайдено)' }
+const OWNER_JAKYJ = { quote: 'єкий для галицкого діалекту на який', relation: 'єкий = який (галицька форма, а > е після й; Галичина, ступінь: за свідченням носія). ЕУМ um175 (PKB): «Лише після й перехід [а] в [е], [і] обмежений (йійц, йек, пйес…) східнонадпрутською групою говірок»; загального правила я- > є- джерело не дає, лише ця група' }
+const OWNER_SHTYRY = { quote: 'штери штири теж діалектне', relation: 'форма числівника чотири (діалектна, область не названа; ступінь: за свідченням носія)' }
 const OWNER_KURVOI = { quote: 'Курвої це прийменник від курва, редукований', relation: 'присвійний прикметник від курва, редукована форма мовця (курвиної → курвої); власник написав «прийменник», маючи на увазі прикметник' }
 export const VARIANT_FAMILIES: VFamily[] = [
   // MM-43 (owner remark 2026-10-29: «ну коли редукцію робить мовець»): the speaker's own colloquial reduction, recorded in direct speech / dialect and folk texts. Corpus counts (BULP data/work shards, 2026-10-29):
@@ -76,6 +78,15 @@ export const VARIANT_FAMILIES: VFamily[] = [
   // kind P, «за свідченням носія», area Галичина = the owner's word. VESUM lists every one of these spellings as an ARCHAIC numeral (єден numr:arch), so each is ambiguous: the VESUM reading wins, the family is shown beside it.
   { id: 'VF-ODYN', mm: 'MM-59', head: 'один', cls: ['pron'], title: 'один ~ єден (єдна, єдно, єдного …), галицька форма', members:
     ['єден', 'єдна', 'єдно', 'єдного', 'єдному', 'єдним', 'єдній', 'єдну', 'єдної', 'єдною', 'єдні', 'єдних', 'єдними'].map((form): VMember => ({ form, role: 'dialect', ambiguous: true, owner: OWNER_ODYN })) },
+  // MM-60 (owner: «єкий для галицкого діалекту на який»): єкий (єка, єке, єкі, єкого …) is the Galician spelling of який. The owner states it for «галицкий діалект»; ЕУМ um175 PKB has the general statement «Лише після й перехід [а] в [е], [і] обмежений (йійц, йек, пйес…) східнонадпрутською групою говірок» (a > е after й, limited to ONE group of говірки): the spelling єкий and the area are the owner's, kind P. The family is limited to the який paradigm: якось, якийсь, якраз are NOT added (no source, no owner word).
+  { id: 'VF-JAKYJ', mm: 'MM-60', head: 'який', cls: ['pron'], title: 'який ~ єкий (єка, єке, єкого …), галицька форма', members:
+    ['єкий', 'єка', 'єке', 'єкі', 'єкого', 'єкому', 'єким', 'єкою', 'єкої', 'єку', 'єких', 'єкими', 'єкій'].map((form): VMember => ({ form, role: 'dialect', owner: OWNER_JAKYJ })) },
+  // MM-62 (owner: «штери штири теж діалектне»): шти́ри and its forms are dialect forms of чотири. en.wiktionary (kaikki uk): шти́ри «four», tag dialectal, forms штирьо́х, штирьо́м, штирма́ (no area named); ЕУМ um173 (Наддністрянський говір) lists «шти́ри» among its numerals and um174 (Надсянський) prints «штири кап’с’ц’і»: both name an area, the Вікісловник does not, so none is claimed. штери and штирі: the owner's words, kind P. штири and штирі are also VESUM noun forms (штир): ambiguous, VESUM wins.
+  { id: 'VF-SHTYRY', mm: 'MM-62', head: 'чотири', cls: ['pron'], title: 'чотири ~ штири, штери (штирьох, штирьом, штирма), діалектні форми', members: [
+    { form: 'штири', role: 'dialect', ambiguous: true, cite: W('штири', 'шти́ри • numeral, «four (4)», tags: dialectal; forms: штирьо́х, штирьо́м, штирма́', 'en.wiktionary / kaikki uk, стаття «штири» (num): позначка dialectal, діалект не названо; ЕУМ um173 (NDN) «шти́ри» у переліку числівників, um174 (SYAN) «штири кап’с’ц’і»') },
+    ...['штирьох', 'штирьом', 'штирма'].map((form): VMember => ({ form, role: 'dialect', cite: W('штири', 'forms of шти́ри: штирьо́х, штирьо́м, штирма́', 'en.wiktionary / kaikki uk, стаття «штири» (num), declension: позначка dialectal, діалект не названо') })),
+    ...['штери', 'штирі'].map((form): VMember => ({ form, role: 'dialect', ambiguous: form === 'штирі', owner: OWNER_SHTYRY })),
+  ] },
   { id: 'VF-TILKY', mm: 'MM-33', head: 'тільки', cls: ['adv'], title: 'тільки ~ тілько, тилько (тілько-що …)', tails: true,
     feature: { label: 'західноукраїнська вимова [т’ільки] (м’який т), діалектна [тіки]', cite: W('тільки', "(Western Ukraine) т'і́льки; (dialectal) ті́ки", 'en.wiktionary, стаття «тільки», Pronunciation. Джерело називає цю вимову для написання ТІЛЬКИ; про написання тілько / тилько воно нічого не каже') },
     members: [
