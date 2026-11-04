@@ -159,7 +159,7 @@ describe('SE-15 the CR-1 hook: one-word glosses of word-level rows', () => {
 })
 
 import { SLA_DICT, SLA_LAT_YEAR, SLA_SLOV_YEAR, foldLatin, latinWord, onSpine, parseLatinPages, parseSlovPages, slaGlossRows, slaSlovRows } from '../core/slavynetsky-parse.ts'
-describe('SE-15 Славинецький (public-domain text of 1642 / 1650; the editors\' notes are not stored)', () => {
+describe('SE-15 Славинецький (public-domain text of 1642 / 1650; the notes of the 1973 edition are not stored)', () => {
   const LAT = COLS(['balaustiu(m). цвѣ(т) шн(ш)ка, шн(п)ка,', 'balneum. баня, мы(л)ня,', 'balsamum. ва(л)са(м)ъ.', '', ' К I правильно тільки редакторська примітка.', 'balzzzz. не береться'].join('\n'), ['baptes. пру(д), бу(р)шти(н),', 'barba. брада,'].join('\n'))
   it('Latin part: head in ASCII, the letters in parentheses belong to the word, the glosses are Cyrillic; every column is cut at its first footnote line (the notes are ©)', () => {
     const e = parseLatinPages([{ text: LAT, no: 70 }])
