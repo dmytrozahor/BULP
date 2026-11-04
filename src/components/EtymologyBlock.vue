@@ -18,7 +18,7 @@ const STATUS_UK = { proposed: 'запропонована', accepted: 'прий�
 </script>
 
 <template>
-  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? clipWords(entry.text || entry.chain?.[0]?.text || entry.uk?.t || 'є запис у словниках', 130) : 'завантаження…'"
+  <Panel id="h-ety" :open="false" title="Етимологія · Etymology" :empty="done && !entry" :summary="entry ? clipWords(entry.text || entry.chain?.[0]?.text || entry.uk?.t || (entry.sources[0]?.source === 'ESUM' && entry.sources[0].kind === 'D' ? entry.sources[0].locator + ' — лише вказівка на сторінку друкованого тому' : 'є запис у словниках'), 130) : 'завантаження…'"
     :info="entry ? `Вікісловник — ${file?.attribution.licence ?? 'CC BY-SA 4.0'}; витяг Wiktextract/kaikki.org. ЕСУМ цитується коротко, повний текст — на goroh.pp.ua.` : undefined">
 
     <template v-if="entry">

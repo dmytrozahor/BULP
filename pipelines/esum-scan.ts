@@ -34,7 +34,7 @@ export function runEsum(ocr: string, outFile: string, status?: string, known: (h
   for (const vol of Object.keys(ESUM_VOLS).map(Number)) {
     const new16 = complete16(ocr16, vol), l = loadEsumPages(new16 ? ocr16 : ocr, vol); if (!l.pages.length) continue
     srcSizes[`esum${vol}${new16 ? 'c' : ''}`] = l.size
-    const r = new16 ? parseEsum16(l.pages, vol) : parseEsum(l.pages, vol)
+    const r = new16 ? parseEsum16(l.pages, vol, known) : parseEsum(l.pages, vol)
     for (const x of r.rows) {
       cands.add(x.head)
       const prev = entries[x.head]

@@ -323,7 +323,9 @@ export function gradeExcerpt(body: string): { t: string; kind: Statement['kind']
   return { t: t.length > ESUM_MAX ? t.slice(0, ESUM_MAX - 1).replace(/\s+\S*$/, '') + '…' : t, kind: s.kind, grade: s.cut || td.changed || weak || t !== s.t ? 'b' : 'a' }
 }
 export interface Esum16Row { head: string; vol: number; page: number; grade: EsumGrade; t?: string; kind?: Statement['kind']; seq?: boolean; n?: number }
-export function parseEsum16(pages: EsumPage[], vol: number): { rows: Esum16Row[]; stats: Esum16Stats } {
+/** a closing bracket «|» the OCR read as «і» / «ї» («букашка|» → «букашкаї»): the headword without it is the lemma when it is a known word and the headword with it is not */
+export const trailingBar = (h: string, known: (w: string) => boolean): string => (/[^аеєиіїоуюя][аеєиоуюя]?[іїl]$/u.test(h) && h.length > 4 && !known(h) && known(h.slice(0, -1)) ? h.slice(0, -1) : h)
+export function parseEsum16(pages: EsumPage[], vol: number, known: (w: string) => boolean = () => false): { rows: Esum16Row[]; stats: Esum16Stats } {
   const st = newEsum16Stats(), off = pageOffset16(pages), rows: Esum16Row[] = []
   for (const a of splitEsum16(pages, off, st)) {
     if (a.bracket) { st.bracketed++; continue }
@@ -331,7 +333,8 @@ export function parseEsum16(pages: EsumPage[], vol: number): { rows: Esum16Row[]
     if (!inPageRange(a.head, a.lo, a.hi)) { st.outOfRange++; continue }
     const ex = gradeExcerpt(a.body)
     if (!ex && !a.gloss && !SIGNAL.test(a.body.slice(0, 500))) { st.noSignal++; continue }
-    rows.push(ex ? { head: a.head, vol, page: a.page, grade: ex.grade, t: ex.t, kind: ex.kind } : { head: a.head, vol, page: a.page, grade: 'c' })
+    const head = trailingBar(a.head, known)
+    rows.push(ex ? { head, vol, page: a.page, grade: ex.grade, t: ex.t, kind: ex.kind } : { head, vol, page: a.page, grade: 'c' })
   }
   const probe = rows as unknown as EsumRow[], sp = { seqDropped: 0 } as EsumStats
   markEsumSequence(probe, sp); st.seqDropped = sp.seqDropped

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { NAN_LABEL, NAN_PLACE, nanRows16, parseNanRecall, parseSettlements, repairStarHeads, type NanRow } from '../core/nan-parse.ts'
-import { ESUM_MAX, gradeExcerpt, pageHead16, pageOffset16, parseEsum16, splitEsum16, newEsum16Stats, suspiciousToken, tidyExcerpt } from '../core/esum-parse.ts'
+import { ESUM_MAX, trailingBar, gradeExcerpt, pageHead16, pageOffset16, parseEsum16, splitEsum16, newEsum16Stats, suspiciousToken, tidyExcerpt } from '../core/esum-parse.ts'
 import { buildEtymology, esumScanEvidence } from '../core/etymology.ts'
 import { sumLabelHit } from '../core/labels.ts'
 import { complete16 } from '../pipelines/esum-scan.ts'
@@ -125,6 +125,10 @@ describe('SE-16 ЕСУМ: column-aware pages, paragraph articles, graded rows', 
     const merged = ', р. вага, бр. вага, п. waga, ч. váha, слц. váha, болг. вага, схв. вага, слн. vága; — Фасмер I 5; Brückner 7. — Див. ще інше. запозичення з польської мови; п. waga «тс.» утворене з чогось іншого, ніж вага.'
     expect(gradeExcerpt(merged)).toBeUndefined()
     expect(gradeExcerpt(', р. вага; — запозичення з польської мови; п. waga «тс.» утворене з чогось іншого, ніж вага. — Фасмер I 5; Brückner 7.')!.grade).toBe('a')
+  })
+  it('a closing bracket read as «і» is dropped only when the shorter word is known and the longer is not', () => {
+    const known = (w: string) => ['букашка', 'вага'].includes(w)
+    expect(trailingBar('букашкаї', known)).toBe('букашка'); expect(trailingBar('вага', known)).toBe('вага'); expect(trailingBar('голубці', known)).toBe('голубці')
   })
   it('the panel: an excerpt is a Q-evidence, a pointer is a D-evidence with the volume and page and no text; a lemma with only a pointer still gets the source', () => {
     const q = esumScanEvidence({ t: 'запозичення з французької мови; фр. abat-jour «тс.»', v: 1, p: 10, g: 'a' }, 'абажур')
