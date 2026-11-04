@@ -38,5 +38,5 @@ describe('R2U-2 dump ingestion', () => {
       const w = r2uWitness(UNITS_R2U.find(u => u.id === d.unitId)!, d.id, s.rows)
       expect(w.noFreq).toBe(true); expect(w.tokens.length).toBeGreaterThan(100)
     }
-  })
+  }, 300_000)   // the dump keeps growing: the whole-dump read took 115 s under the parallel run on the worker
 })
