@@ -140,3 +140,20 @@ describe('SE-15 gates', () => {
     for (const id of ['onyshkevych', 'sabadosh', 'bukovyna', 'hutsul', 'lysenko']) { expect(dictById(id)).toBeTruthy(); expect(SOURCES[id.toUpperCase()]).toBeTruthy(); expect(HIST_BY_ID[id]!.m2).toBe(true) }
   })
 })
+
+import { corrRowsOf } from '../pipelines/se15-scan.ts'
+import { dialectLexPairs } from '../core/corr-src.ts'
+describe('SE-15 the CR-1 hook: one-word glosses of word-level rows', () => {
+  it('only a word-level, verified row with ONE standard word as its gloss becomes a LexRow; the pair passes dialectLexPairs with the area codes of the book', () => {
+    const rows = [
+      ...dialRows('hutsul', { head: 'агрис', vol: 1, page: 17, senses: [{ n: 1, labels: [], gloss: 'агрус' }], ev: 3, wl: true, seq: true }),
+      ...dialRows('hutsul', { head: 'газда', vol: 1, page: 17, senses: [{ n: 1, labels: [], gloss: 'господар' }], ev: 3, wl: false, seq: true }),   // a standard word: place-only, no correspondence
+      ...dialRows('hutsul', { head: 'ґрунь', vol: 1, page: 18, senses: [{ n: 1, labels: [], gloss: 'гора з пологими схилами' }], ev: 3, wl: true, seq: true }),   // a multi-word gloss
+      ...dialRows('hutsul', { head: 'зуфік', vol: 1, page: 18, senses: [{ n: 1, labels: [], gloss: 'шматок' }], ev: 3, wl: true, seq: false }),   // off the spine (unv)
+    ]
+    const c = corrRowsOf('hutsul', rows); expect(c).toHaveLength(1); expect(c[0]).toMatchObject({ w: ['агрис'], gloss: 'агрус', codes: ['HUT'], loc: 'с.17' }); expect(c[0]!.q.length).toBeLessThanOrEqual(200)
+    const rej: Record<string, number> = {}, pairs = dialectLexPairs(c, w => (w === 'агрус' ? new Set(['noun']) : undefined), rej)
+    expect(pairs).toHaveLength(1); expect(pairs[0]).toMatchObject({ a: 'агрус', b: 'агрис', pos: 'noun', src: 'dialect-lex' }); expect(pairs[0]!.areaB![0]).toMatchObject({ code: 'HUT', grade: 'dict' })
+    expect(corrRowsOf('lysenko', dialRows('lysenko', { head: 'вить', vol: 1, page: 3, senses: [{ n: 1, labels: [], gloss: 'плести' }], ev: 3, wl: true, seq: true }))[0]!.codes).toEqual(['MPL', 'CHN'])
+  })
+})

@@ -7,7 +7,7 @@
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { BUK_DICT, HUT_DICT, ONY_DICT, SAB_DICT, POL_DICT, dialPassRate, dialRows, parseBukovyna, parseHutsul, parseOnyPlaces, parseOnyshkevych, parsePolissia, parsePolPlaces, parseSabadosh, type DialPage, type DialRow, type DialStats } from '../core/se15-parse.ts'
+import { BUK_DICT, BUK_LABEL, HUT_DICT, HUT_LABEL, ONY_DICT, ONY_LABEL, ONY_SHORT, POL_LABEL, SAB_DICT, SAB_LABEL, SAB_SHORT, POL_DICT, dialPassRate, dialRows, parseBukovyna, parseHutsul, parseOnyPlaces, parseOnyshkevych, parsePolissia, parsePolPlaces, parseSabadosh, type DialPage, type DialRow, type DialStats } from '../core/se15-parse.ts'
 import type { SeRow } from '../core/se.ts'
 import { writeJsonAtomic } from './robust.ts'
 
@@ -41,6 +41,29 @@ export function loadPages(dir: string, v: VolSpec): { pages: DialPage[]; front: 
   return { pages, front, size }
 }
 
+/**
+ * CR-1 hook (core/corr-src.ts dialectLexPairs, read by pipelines/build-corr.ts from data/work/corr-extra/*.json as {"rows": LexRow[]}): a WORD-LEVEL row (the headword is no standard word, so it is a dialect word of the
+ * book's area) whose gloss is ONE word. A place-only row (a standard headword) is never a correspondence. The areas are the dialect codes the book's area has in the project map (Лисенко: the preface names the
+ * middle- and east-Polissian speech = MPL + CHN); Буковина has no code, so the area is named as a village-level label.
+ */
+export const CORR_AREA: Record<string, { codes: string[]; village?: string; src: string; word: string }> = {
+  onyshkevych: { codes: ['BOY'], src: ONY_SHORT, word: ONY_LABEL }, sabadosh: { codes: ['ZAK'], village: 'Сокирниця', src: SAB_SHORT, word: SAB_LABEL },
+  bukovyna: { codes: [], village: 'Буковина (Чернівецька обл.)', src: 'Словник буковинських говірок (2005)', word: BUK_LABEL }, hutsul: { codes: ['HUT'], src: 'Гуцульські говірки. Короткий словник (1997)', word: HUT_LABEL },
+  lysenko: { codes: ['MPL', 'CHN'], src: 'Лисенко, Словник поліських говорів (1974)', word: POL_LABEL }, chabanenko: { codes: ['STP'], src: 'Чабаненко, Словник говірок Нижньої Наддніпрянщини (1992)', word: 'ниж.-наддн.' },
+}
+export interface CorrLexRow { w: string[]; gloss: string; codes: string[]; src: string; loc: string; q: string; village?: string }
+export function corrRowsOf(dict: string, rows: [string, SeRow][]): CorrLexRow[] {
+  const c = CORR_AREA[dict]; if (!c) return []
+  const out: CorrLexRow[] = [], seen = new Set<string>()
+  for (const [h, r] of rows) {
+    if (r.unv || r.lb?.[0] !== c.word || !r.g || r.oq) continue
+    const g = r.g.replace(/…$/, '').trim().toLowerCase()
+    if (!/^[а-яіїєґ]+(?:['’-][а-яіїєґ]+)*$/u.test(g) || g.length < 3 || g === h || seen.has(h + '|' + g)) continue
+    seen.add(h + '|' + g)
+    out.push({ w: [h], gloss: g, codes: c.codes, src: c.src, loc: r.l ?? '', q: (h + ' — ' + g).slice(0, 200), ...(c.village ? { village: c.village } : {}) })
+  }
+  return out
+}
 export interface Se15Run { dict: string; cands: Set<string>; rows: [string, SeRow][]; stats: Record<string, DialStats & { passRate: number }>; heads: number }
 export function runSe15(ocr: string, out: string, status?: string, known?: (h: string) => boolean, only?: string[]): Se15Run[] {
   const st = (o: object) => { if (status) writeJsonAtomic(status, JSON.stringify({ at: new Date().toISOString(), ...o })) }
@@ -65,8 +88,9 @@ export function runSe15(ocr: string, out: string, status?: string, known?: (h: s
       stats[l.v.dir] = { ...r.stats, passRate: dialPassRate(r.stats) }
       st({ step: `${l.v.dir} done`, stats })
     }
-    mkdirSync(out, { recursive: true })
+    mkdirSync(out, { recursive: true }); mkdirSync(resolve(out, '..', 'corr-extra'), { recursive: true })
     writeJsonAtomic(resolve(out, `${dict}.json`), JSON.stringify({ id: dict, dict, kind: 'dialect-licensed', full: false, srcSizes: sizes, places: places?.size ?? polPlaces?.size ?? 0, stats, rows }))
+    writeJsonAtomic(resolve(out, '..', 'corr-extra', `se15-${dict}.json`), JSON.stringify({ rows: corrRowsOf(dict, rows) }))   // CR-1 hook
     res.push({ dict, cands, rows, stats, heads: heads.size })
     st({ step: `done ${dict}`, headwords: heads.size, rows: rows.length, stats })
   }
@@ -87,4 +111,6 @@ if (process.argv[1] && /se15-scan\.ts$/.test(process.argv[1].replaceAll(String.f
   const rs = runSe15(ocr, outDir, resolve(a[2] ?? 'data/work/se15-status.json'), known)
   for (const r of rs) console.log(`${r.dict}: ${r.heads} headwords, ${r.rows.length} sense rows`, JSON.stringify(Object.fromEntries(Object.entries(r.stats).map(([k, s]) => [k, [s.entries, s.cardOk, s.passRate]]))))
   if (!rs.length) console.log(`se15-scan: ${ocr} has no volume, skipped`)
+  const nan = resolve(outDir, 'chabanenko.json')   // SE-14's Чабаненко rows feed the same CR-1 hook (its one-word glosses)
+  if (existsSync(nan)) { try { const j = JSON.parse(readFileSync(nan, 'utf8')) as { rows: [string, SeRow][] }; mkdirSync(resolve(outDir, '..', 'corr-extra'), { recursive: true }); writeJsonAtomic(resolve(outDir, '..', 'corr-extra', 'se15-chabanenko.json'), JSON.stringify({ rows: corrRowsOf('chabanenko', j.rows) })) } catch { /* torn: skipped (RS-1) */ } }
 }
