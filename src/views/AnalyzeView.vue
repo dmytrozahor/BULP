@@ -4,7 +4,7 @@
  * Evidence-safe gating: "If the word is neither in lexindex nor in the lexicon the normative VESUM check is unavailable offline, so
  * absence-based dialect/suffix rules are gated" (src/lib/analyze.ts). Weight-0 rules are hypotheses without source → listed separately (P-1.3, P-3.1).
  */
-import { computed, ref, shallowRef, watch } from 'vue'
+import { computed, ref, shallowRef, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ruleById } from '../../core/phonology.ts'
 import { key } from '../../core/text.ts'
@@ -38,7 +38,8 @@ import { formTo } from '../lib/nav.ts'
 import { loadArchEntry } from '../lib/torotData.ts'
 import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
-void loadVesumBloom()
+// MM-53: the 4.7 MiB filter is fetched ONLY by the /analyze page itself (never by the embedded fallback on search / word cards: search budget, PF-2)
+onMounted(() => { if (props.embed === undefined) void loadVesumBloom() })
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -106,7 +107,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
           <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
           <FormBadge v-else-if="isAtt(c.form)" kind="attested" :form="c.form" :label="'засвідчено: ' + att.get(c.form)!.text" />
-          <FormBadge v-else kind="derived" :form="c.form" :label="grade(c)?.label ?? 'реконструкція (гіпотеза)'" />
+          <FormBadge v-else-if="grade(c)?.label" kind="derived" :form="c.form" :label="grade(c)!.label!" />
+          <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
           <RouterLink :to="to(c.form)" class="small sans"> {{ linkLabel(c.form) }}</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>

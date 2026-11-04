@@ -73,3 +73,20 @@ describe('MM-53 VESUM membership oracle (the orange banner)', () => {
     expect(present.oracle).toBe('present'); expect(present.gated.length).toBe(ALL_RULES.filter(r => r.axis === 'dialect' || GATED_IDS.has(r.id)).length)
   })
 })
+
+import { readFileSync, existsSync } from 'node:fs'
+import { execSync } from 'node:child_process'
+describe('MM-53 vesum.bloom reaches production and is fetched only by /analyze', () => {
+  it('the file is committed (tracked, not git-ignored), so `git checkout -- public/data` keeps it and the Pages build serves it', () => {
+    expect(existsSync('public/data/vesum.bloom')).toBe(true)
+    expect(execSync('git ls-files public/data/vesum.bloom').toString().trim()).toBe('public/data/vesum.bloom')
+    expect(execSync('git check-ignore public/data/vesum.bloom || true').toString().trim()).toBe('')
+  })
+  it('only AnalyzeView calls the loader, only on mount of the page (not when embedded)', () => {
+    const v = readFileSync('src/views/AnalyzeView.vue', 'utf8')
+    expect(v).toMatch(/onMounted\(\(\) => \{ if \(props\.embed === undefined\) void loadVesumBloom\(\) \}\)/)
+    expect(v).not.toMatch(/^void loadVesumBloom/m)
+    const users = execSync('git grep -l "loadVesumBloom" -- src').toString().trim().split(/\r?\n/).sort()
+    expect(users).toEqual(['src/lib/vesumBloom.ts', 'src/views/AnalyzeView.vue'])
+  })
+})

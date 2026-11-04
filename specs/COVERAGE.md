@@ -1266,3 +1266,4 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › «Родина варіантів» is collapsed by default: title + count in the summary, no member rendered yet |
 | CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › opening it (the remembered state, localStorage "1") shows the family; a throwing localStorage just starts closed |
 | CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › the generic block (used by HypLinks) collapses with its count and shows the items once open |
+| CP-12 | tests/cp12-se-everywhere.test.ts › CP-12 «Значення за епохами» on every card |

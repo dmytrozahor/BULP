@@ -7,15 +7,17 @@
  */
 import { computed } from 'vue'
 import { epochById } from '../../core/epochs.ts'
-import { atOf, dictById, timeline, typeName, UNTYPED, type SeEntry, type SeRow, type TlItem } from '../../core/se.ts'
+import { atOf, dictById, SE_EPOCH_IDS, timeline, typeName, UNTYPED, type SeEntry, type SeRow, type TlItem } from '../../core/se.ts'
 import { seLoaded, seOf } from '../lib/seData.ts'
 import Panel from './Panel.vue'
 import RuBadge from './RuBadge.vue'
 import { ruOfDict } from '../../core/ru-source.ts'
-const props = defineProps<{ word: string; /** card kind, for the test id and the host's layout */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu'; open?: boolean; entry?: SeEntry; /** SPEC 63 OV-11: one line per epoch (gloss + dictionary sources), inline, no panel; the full timeline stays in «Значення» */ compact?: boolean }>()
-const data = computed(() => props.entry ?? seOf(props.word))
-const loaded = computed(() => !!props.entry || seLoaded(props.word))
-const cells = computed(() => (data.value ? timeline(data.value) : []))
+const props = defineProps<{ word: string; /** card kind, for the test id and the host's layout */ kind?: 'full' | 'light' | 'dict' | 'orv' | 'arch' | 'mu' | 'hyp'; /** CP-12: a hypothetical form (CP-11 page) has no senses by definition: no fetch, every epoch «немає даних (гіпотетична форма)» */ hypothesis?: boolean; open?: boolean; entry?: SeEntry; /** SPEC 63 OV-11: one line per epoch (gloss + dictionary sources), inline, no panel; the full timeline stays in «Значення» */ compact?: boolean }>()
+const data = computed(() => (props.hypothesis ? undefined : props.entry ?? seOf(props.word)))
+const loaded = computed(() => !!props.hypothesis || !!props.entry || seLoaded(props.word))
+/** CP-12: the six epochs are ALWAYS listed; with no data every one is a gap («немає даних»), never an empty block */
+const cells = computed(() => (data.value ? timeline(data.value) : SE_EPOCH_IDS.map(epoch => ({ epoch, items: [] as TlItem[], gap: true, unassigned: 0 }))))
+const noData = computed(() => (props.hypothesis ? 'немає даних (гіпотетична форма)' : 'немає даних'))
 const nSenses = computed(() => data.value?.groups.length ?? 0)
 const years = (a: number | null | undefined, b: number | null | undefined) => (a == null ? '' : a === b ? String(a) : `${a}–${b}`)
 const ep = (id: string) => epochById[id]
@@ -43,24 +45,25 @@ const confMark = (it: TlItem) => (it.span || it.conf === 'low' ? ' ?' : '')
 
 <template>
   <div v-if="compact" class="se sans" :data-testid="`se-${kind ?? 'card'}-compact`">
-    <ol v-if="data && cells.some(c => !c.gap)" class="se-compact small">
-      <li v-for="c in cells.filter(c => !c.gap).slice(0, 5)" :key="c.epoch"><strong>{{ epName(c.epoch) }}</strong> <span class="muted">{{ epYears(c.epoch) }}</span>:
+    <ol v-if="loaded" class="se-compact small">
+      <li v-for="c in cells" :key="c.epoch" :data-epoch="c.epoch" :class="{ gap: c.gap }"><strong>{{ epName(c.epoch) }}</strong> <span class="muted">{{ epYears(c.epoch) }}</span>:
+        <span v-if="c.gap" class="muted">{{ noData }}</span>
         <template v-for="(it, k) in c.items.slice(0, 2)" :key="it.group"><template v-if="k">; </template>{{ glossOrNone(it.group) }} <span class="muted">({{ [...new Set(rowsOf(it).map(x => dictById(x.r.d)?.short ?? x.r.d))].slice(0, 3).join(', ') }})</span></template></li>
     </ol>
-    <p v-else class="small muted">{{ loaded ? 'немає даних про значення' : 'завантаження…' }}</p>
+    <p v-else class="small muted">завантаження…</p>
   </div>
-  <Panel v-else :id="`se-${kind ?? 'card'}`" :open="open ?? false" title="Значення за епохами · Sense evolution" :summary="data ? `${nSenses} значень у словниках` : (loaded ? 'немає даних' : 'розгорніть, щоб завантажити')" :empty="loaded && !data" empty-text="немає даних про значення"
+  <Panel v-else :id="`se-${kind ?? 'card'}`" :open="open ?? false" title="Значення за епохами · Sense evolution" :summary="data ? `${nSenses} значень у словниках` : (loaded ? 'немає даних' : 'розгорніть, щоб завантажити')"
     info="Послідовність значень за епохами Шевельова. Кожне значення — зі словника з його періодом охоплення (історичний словник описує давнішу мову, ніж рік друку); дата цитати переважає період. Перехід між значеннями має тип лише тоді, коли його називає джерело; інакше «зміна значення (тип не вказано джерелом)». Епоха без свідчень — прогалина, не заповнюється.">
     <div class="se sans" :data-testid="`se-${kind ?? 'card'}`">
-      <template v-if="data">
+      <template v-if="loaded">
         <ol class="se-tl">
           <li v-for="c in cells" :key="c.epoch" class="se-ep" :class="{ gap: c.gap }" :data-epoch="c.epoch">
             <h3 class="small"><strong>{{ epName(c.epoch) }}</strong> <span class="muted">{{ epYears(c.epoch) }}</span></h3>
-            <p v-if="c.gap" class="small muted se-gap">немає даних<template v-if="c.unassigned"> · {{ c.unassigned }} контекстів корпусу без прив’язки до значення</template></p>
+            <p v-if="c.gap" class="small muted se-gap">{{ noData }}<template v-if="c.unassigned"> · {{ c.unassigned }} контекстів корпусу без прив’язки до значення</template></p>
             <template v-else>
               <div v-for="it in c.items" :key="it.group" class="se-sense">
                 <p style="margin:.1rem 0"><span class="se-gloss">{{ glossOrNone(it.group) }}</span><span class="muted small">{{ confMark(it) }}</span>
-                  <span v-if="data.groups[it.group]!.rows.length > 1 && data.groups[it.group]!.sc !== null" class="small muted"> · зіставлено, збіг {{ data.groups[it.group]!.sc }} · {{ data.groups[it.group]!.link === 'xref' ? 'за відсилкою словника' : 'виведено (inferred)' }}</span></p>
+                  <span v-if="data!.groups[it.group]!.rows.length > 1 && data!.groups[it.group]!.sc !== null" class="small muted"> · зіставлено, збіг {{ data!.groups[it.group]!.sc }} · {{ data!.groups[it.group]!.link === 'xref' ? 'за відсилкою словника' : 'виведено (inferred)' }}</span></p>
                 <ul class="small" style="margin:.1rem 0 .1rem 1rem;padding:0">
                   <li v-for="x in rowsOf(it)" :key="x.i"><strong>{{ dictById(x.r.d)?.short ?? x.r.d }}</strong><template v-if="ruOfDict(x.r.d)"> <RuBadge :flag="ruOfDict(x.r.d)" /></template><template v-if="x.r.u"> <a class="se-art small" data-testid="se-article" :href="x.r.u" target="_blank" rel="noopener noreferrer" title="стаття на офіційному сайті словника">стаття ↗</a></template> <span class="muted">({{ edition(x.r.d) }}) · {{ rowAt(x.r) }}</span>
                     <template v-if="x.r.n"> №{{ x.r.n }}</template><template v-if="x.r.g && x.r.g !== glossOrNone(it.group)"> — {{ x.r.g }}</template><span v-if="x.r.m === 'd'" class="muted"> · за правилами виведення від «{{ x.r.l }}»</span><span v-if="x.r.s" class="muted"> · {{ x.r.s }}</span><span v-if="x.r.ru" class="muted"> · <span class="flag-ru">рос.</span> відповідник: {{ x.r.ru }}</span><template v-if="x.r.t?.length"> · <em>{{ x.r.t.map(t => typeName(t[0])).join(', ') }}</em></template>
@@ -75,7 +78,7 @@ const confMark = (it: TlItem) => (it.span || it.conf === 'low' ? ' ?' : '')
         </ol>
         <p class="small muted">Періоди охоплення словників, а не роки друку; прогалини — немає свідчень у джерелах проєкту (SPEC 63 SE).</p>
       </template>
-      <p v-else class="small muted">{{ loaded ? 'немає даних про значення' : 'завантаження…' }}</p>
+      <p v-else class="small muted">завантаження…</p>
     </div>
   </Panel>
 </template>

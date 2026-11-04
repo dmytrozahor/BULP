@@ -9,6 +9,7 @@ import { HYP_BADGE, HYP_GRADE } from '../../core/hypothesis.ts'
 import type { Hypothesis, Relation } from '../lib/hypothesis.ts'
 import EvidencePopover from './EvidencePopover.vue'
 import HypNotes from './HypNotes.vue'
+import SenseEpochs from './SenseEpochs.vue'
 const props = defineProps<{ hyp: Hypothesis }>()
 const ROLE: Record<Relation['role'], string> = { plural: 'множина (засвідчена)', singular: 'однина', variant: 'варіант', swap: 'варіант з и/і', attested: 'засвідчений варіант', derived: 'похідне', base: 'похідне від' }
 const rels = computed(() => props.hyp.relations)
@@ -31,5 +32,7 @@ const rels = computed(() => props.hyp.relations)
         <span class="muted"> · {{ r.rule.pattern }}</span>
       </li>
     </ul>
+    <h2 class="sans" id="hyp-h-se">Значення за епохами</h2>   <!-- CP-12: on every card, also here; a hypothesis has no senses -->
+    <SenseEpochs :word="hyp.word" kind="hyp" hypothesis compact />
   </article>
 </template>
