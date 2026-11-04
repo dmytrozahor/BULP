@@ -133,7 +133,7 @@ describe('SE-17 Говірки Західної Полтавщини (©): trans
   it('RG-1: poltavshchyna is a quote source (≤ 200 characters)', () => { expect(RIGHTS.poltavshchyna!.license).toBe('quote'); expect(maxChars('poltavshchyna')).toBe(200) })
 })
 
-describe('SE-17 dialect rows with the authors\' own quotations', () => {
+describe("SE-17 dialect rows with the authors' own quotations", () => {
   it('every row is cited (source, locator, quote ≤ the evidence backstop) and fires on its own example', () => {
     expect(SE17_ROWS.length).toBeGreaterThanOrEqual(13)
     for (const r of SE17_ROWS) {
