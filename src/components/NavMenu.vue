@@ -6,7 +6,7 @@
  */
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { NAV_GROUPS, groupOf, nextIndex } from '../lib/navMenu.ts'
+import { NAV_GROUPS, groupOf, isLinkClick, leavesNav, nextIndex } from '../lib/navMenu.ts'
 const route = useRoute()
 const open = ref<string | null>(null), sheet = ref(false)
 const root = ref<HTMLElement>()
@@ -23,15 +23,16 @@ function onKey(e: KeyboardEvent, id: string) {
 function onBtnKey(e: KeyboardEvent, id: string) {
   if (e.key === 'ArrowDown' && open.value !== id) { e.preventDefault(); toggle(id) }
 }
-const onDoc = (e: Event) => { if (root.value && !root.value.contains(e.target as Node)) close() }
-const onFocusOut = (e: FocusEvent) => { if (open.value && root.value && !root.value.contains(e.relatedTarget as Node | null) && e.relatedTarget) close() }
+const onDoc = (e: Event) => { if (leavesNav(!!root.value?.contains(e.target as Node), !!e.target)) close() }
+const onFocusOut = (e: FocusEvent) => { if (open.value && leavesNav(!!root.value?.contains(e.relatedTarget as Node | null), !!e.relatedTarget)) close() }
+const onNavClick = (e: MouseEvent) => { if (isLinkClick(e.target as Element)) { open.value = null; sheet.value = false } }
 onMounted(() => document.addEventListener('click', onDoc))
 onBeforeUnmount(() => document.removeEventListener('click', onDoc))
 watch(() => route.fullPath, () => { open.value = null; sheet.value = false })
 </script>
 
 <template>
-  <div ref="root" class="navmenu" data-testid="navmenu" @focusout="onFocusOut">
+  <div ref="root" class="navmenu" data-testid="navmenu" @focusout="onFocusOut" @click="onNavClick">
     <button type="button" class="nm-sheetbtn" :aria-expanded="sheet" aria-controls="nm-groups" @click="sheet = !sheet">
       <span aria-hidden="true">{{ sheet ? '✕' : '☰' }}</span> Меню
     </button>

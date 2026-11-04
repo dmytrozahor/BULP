@@ -44,3 +44,7 @@ export function nextIndex(key: string, i: number, n: number): number | undefined
   if (key === 'End') return n - 1
   return undefined
 }
+/** SPEC 63 NAV-1: should a focusout / document click close the open menu? Only when focus or the click goes to a known place OUTSIDE the nav; a null target (Safari / Firefox-mac never focus a clicked link) never closes, so mousedown cannot unmount the link before the click lands. */
+export const leavesNav = (insideNav: boolean, hasTarget: boolean): boolean => hasTarget && !insideNav
+/** SPEC 63 NAV-1: a click on a link inside the nav closes menu and phone sheet itself: when the link points at the CURRENT route the router does nothing (no fullPath change), so the route watcher never fires and the menu would stay open over an apparently dead click */
+export const isLinkClick = (el: { closest?: (s: string) => unknown } | null | undefined): boolean => !!el?.closest?.('a[href]')

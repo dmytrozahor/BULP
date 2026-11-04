@@ -15,13 +15,16 @@ export function rowRef(r: Row): string | undefined {
   return x.startsWith('l:') ? `/lw/${id}` : x.startsWith('w:') ? `/w/${id}` : undefined
 }
 
+/** SPEC 63 NAV-1: null = the text does not exist (404 / not the expected shape); THROWS on a network error / 5xx so a view can say «не вдалося завантажити» and offer a retry instead of the false «тексту ще немає» */
+export async function fetchTokens(id: string): Promise<Tok[] | null> {
+  const r = await fetch(dataUrl(`./data/texts/${encodeURIComponent(id)}.json`))
+  if (r.status === 404 || r.status === 410) return null
+  if (!r.ok) throw new Error(`texts/${id}: HTTP ${r.status}`)
+  const j = await r.json()
+  return Array.isArray(j?.tokens) ? j.tokens : null
+}
 export async function loadTokens(id: string): Promise<Tok[] | null> {
-  try {
-    const r = await fetch(dataUrl(`./data/texts/${encodeURIComponent(id)}.json`))
-    if (!r.ok) return null
-    const j = await r.json()
-    return Array.isArray(j?.tokens) ? j.tokens : null
-  } catch { return null }
+  try { return await fetchTokens(id) } catch { return null }
 }
 
 export function rowsOf(toks: Tok[], from: number, to: number, data: AnnotateData): Row[] {

@@ -11,7 +11,7 @@ import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import { settled } from '../lib/parts.ts'
 import { useRoute, useRouter } from 'vue-router'
 import { isKnown } from '../../core/evidence.ts'
-import { findLoc, loadTokens, rowRef, rowsOf, type Row, type Tok } from '../lib/witnessText.ts'
+import { findLoc, fetchTokens, rowRef, rowsOf, type Row, type Tok } from '../lib/witnessText.ts'
 import { epochTo, personTo, witnessTo, wordTo }  from '../lib/nav.ts'
 import { mentionsOf, personTipOf } from '../lib/personsData.ts'
 import { epochShort, fmtDate, fmtNum, LANG_UK } from '../lib/format.ts'
@@ -27,7 +27,10 @@ import { usePage } from '../composables/usePage.ts'
 const PAGE_SIZE = 200
 const route = useRoute(), router = useRouter()
 const { corpus, loaded, annData, witnessById, ensureCorpus } = useData()
-ensureCorpus()   // PF: the witness list is the whole corpus.json, fetched by the pages that list witnesses
+/** SPEC 63 NAV-1: the witness list is the whole corpus.json (fetched after boot.json). Until it arrives the page shows a skeleton, not an empty «0 із 0»; if it failed, a retry button (ensureCorpus forgets the failed promise) */
+const listState = ref<'loading' | 'ok' | 'failed'>('loading')
+const loadList = () => { listState.value = 'loading'; return ensureCorpus().then(() => { listState.value = corpus.value?.witnesses?.length ? 'ok' : 'failed' }) }
+loadList()
 const ep = ref(''), au = ref(''), rg = ref('')
 const epochOf = (w: NonNullable<typeof corpus.value>['witnesses'][number]) => (isKnown(w.epochShev) ? w.epochShev.value.epochs[0]! : 'unknown')
 const all = computed(() => corpus.value?.witnesses ?? [])
@@ -47,12 +50,14 @@ const isHit = (loc: string) => !!locQ.value && (loc === locQ.value || loc.starts
 const open = (id: string) => router.push({ path: '/texts', query: { w: id } })
 const turn = (p: number) => router.push({ path: '/texts', query: { w: cur.value!.id, p: String(p) } })
 
-const toks = ref<Tok[] | null | 'loading'>(null)
-watch(() => cur.value?.id, async id => {
+const toks = ref<Tok[] | null | 'loading' | 'error'>(null), tokTry = ref(0)
+/** the id check drops a stale answer (a slow fetch of the previous witness never overwrites the current one); a failed fetch is a visible state with a retry, never a blank view */
+watch([() => cur.value?.id, tokTry], async ([id]) => {
   toks.value = null; if (!id) return
   toks.value = 'loading'
-  const t = await loadTokens(id); if (id === cur.value?.id) toks.value = t
+  try { const t = await fetchTokens(id); if (id === cur.value?.id) toks.value = t } catch { if (id === cur.value?.id) toks.value = 'error' }
 }, { immediate: true })
+const reloadApp = () => { try { location.reload() } catch { /* no window */ } }
 const total = computed(() => (Array.isArray(toks.value) ? toks.value.length : 0))
 /** SPEC 63 PS-8: build-time person mentions of this witness that start at this token (same locator and first word) */
 const startsAt = (t: { raw: string; loc: string }) => (cur.value ? mentionsOf(cur.value.id).filter(m => m.loc === t.loc && m.f.split(' ')[0] === t.raw) : [])
@@ -77,7 +82,11 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
 
 <template>
   <h1>Тексти корпусу</h1>
-  <div v-if="!loaded"><div class="skeleton" v-for="i in 4" :key="i" /></div>
+  <div v-if="!loaded || (!cur && listState === 'loading')"><div class="skeleton" v-for="i in 4" :key="i" /></div>
+  <div v-else-if="!cur && listState === 'failed'" class="card" role="alert" data-testid="texts-list-failed">
+    <p>Не вдалося завантажити список пам’яток. Якщо сайт щойно оновлювали, перезавантажте сторінку.</p>
+    <p><button type="button" class="chip" @click="loadList">Спробувати ще раз</button> <button type="button" class="chip" @click="reloadApp">Перезавантажити сторінку</button></p>
+  </div>
   <template v-else-if="!cur">
     <p class="muted">Усі пам’ятки корпусу. Відкрийте пам’ятку, щоб прочитати її текст з анотацією (кожне слово веде до картки леми).</p>
     <div class="row sans small" role="group" aria-label="Фільтри">
@@ -103,6 +112,10 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
     <p v-if="locQ" class="small sans muted" role="status">Локатор: {{ locQ }}<template v-if="locIdx < 0 && Array.isArray(toks)"> — у тексті такого локатора немає, показано початок.</template></p>
     <p v-if="cur.licenceNote" class="small sans muted licence-note" role="note">{{ cur.licenceNote }}</p>
     <div v-if="toks === 'loading'" class="skeleton" style="height:8rem" />
+    <div v-else-if="toks === 'error'" class="card" role="alert" data-testid="texts-text-failed">
+      <p>Не вдалося завантажити текст цієї пам’ятки. Якщо сайт щойно оновлювали, перезавантажте сторінку.</p>
+      <p><button type="button" class="chip" @click="tokTry++">Спробувати ще раз</button> <button type="button" class="chip" @click="reloadApp">Перезавантажити сторінку</button></p>
+    </div>
     <div v-else-if="!toks" class="card" role="status">
       <p>Тексту цієї пам’ятки ще немає в даних: <code>public/data/texts/{{ cur.id }}.json</code> (<code>{ tokens: [raw, loc, s][] }</code>) створює збірка корпусу. Читач відкриє його без змін у коді.</p>
       <p class="muted small">Тим часом дивіться <RouterLink :to="witnessTo(cur.id)">картку пам’ятки</RouterLink>, приклади вживання зі слів цієї пам’ятки дивіться в картках лем (розділ «Приклади»), а оригінал — за посиланням «відкрити джерело».</p>
