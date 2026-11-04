@@ -15,7 +15,7 @@ const rows = computed(() => {
 <template>
   <details v-if="rows.length" class="small sans arms-src" data-testid="arms-sources">
     <summary>Джерела гербів ({{ rows.length }})</summary>
-    <ul><li v-for="r in rows" :key="r.id"><a :href="r.page" target="_blank" rel="noopener">{{ r.file }} ↗</a> — автор: {{ r.author }}; ліцензія: {{ r.licence }}<template v-if="r.licenceUrl"> (<a :href="r.licenceUrl" target="_blank" rel="noopener">текст</a>)</template>. Wikimedia Commons.</li></ul>
+    <ul><li v-for="r in rows" :key="r.id"><a :href="r.page" target="_blank" rel="noopener">{{ r.file }} ↗</a> — автор: {{ r.author }}; ліцензія: {{ r.licence }}<template v-if="r.licenceUrl"> (<a :href="r.licenceUrl" target="_blank" rel="noopener">текст ↗</a>)</template>. Wikimedia Commons.</li></ul>
     <p class="muted">Герб області показано для історичного регіону лише там, де регіон збігається з областю; інакше — простий позначник без герба.</p>
   </details>
 </template>
