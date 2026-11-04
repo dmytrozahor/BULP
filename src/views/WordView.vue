@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import DialectBadge from '../components/DialectBadge.vue'
+import SubcardTop from '../components/SubcardTop.vue'
+import { useSubcard } from '../lib/useSubcard.ts'
 import { lemmaChipKeys } from '../lib/contactLayer.ts'
 import { featureMarks } from '../lib/featureMarks.ts'
 /**
@@ -120,6 +122,9 @@ const lemmaOrigins = computed(() => {
 const vctx = computed(() => ({ ...ctxOfTags(card.value?.paradigm[0]?.tags), positions: full.value?.stress?.[0]?.positions as number[] | undefined, origins: lemmaOrigins.value, attInitI: attInitI.value,
   attested: dialect.value && card.value ? attestedFormOf(card.value.lemma, dialect.value, reflexes.value) : undefined, noteOrigin: true }))
 const modernOf = (raw: string) => card.value?.forms.find(f => f.raw === raw)?.modern ?? raw
+/** SPEC 63 DB-3: the dialect subcard (state in the URL: ?sub / ?std / ?from) */
+const subShown = () => (card.value ? show(card.value.lemma, dialect.value, '2019', vctx.value) : undefined)
+const sub = useSubcard(() => props.lemma, subShown, f => byLemma.value.has(f), () => !!card.value)
 const lemmaAttest = computed(() => (dialect.value && card.value && full.value ? attestOf(show(card.value.lemma, dialect.value, '2019', vctx.value).text, full.value.forms.map(f => ({ raw: f.raw, byW: f.byW, kwic: f.kwic })), dialect.value, id => witnessById.value.get(id)) : undefined))
 const lastYear = computed(() => { const ys = (full.value?.forms ?? []).filter(f => !f.ocrOnly && f.date?.[1]).map(f => f.date[1]); return ys.length ? Math.max(...ys) : undefined })
 const showKwic = (raw: string) => { active.value = raw; ui.kw = true; openPanel('h-kw'); nextTick(() => document.getElementById('h-kw')?.scrollIntoView({ block: 'start' })) }
@@ -234,6 +239,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
   </template>
   <template v-else>
     <ZakNote :target="card.lemma" />
+    <SubcardTop :lemma="card.lemma" :sub="sub" :forms="full?.forms" :paradigm="card.paradigm" :ctx="vctx" :from="String($route.query.from ?? '')" />
     <header class="wordhead headline compact">
       <div class="hwrow"><h1 :class="['lemma', { old: isOldForm(card.lemma) }]"><Spell :w="card.lemma" :ctx="vctx" :attest="lemmaAttest" /></h1><DialectBadge :lemma="card.lemma" /></div>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>

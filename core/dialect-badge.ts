@@ -69,7 +69,10 @@ export interface BadgeChip {
   /** the sentence of the popover: what it rests on */ basis: string
   /** the evidence behind it (Q of the dictionary, D/P of the signal) */ evidence: Evidence[]
   /** hyp only: the claim (kind P) */ claim?: Claim<string>
-  /** hyp: the signal that produced it */ signal?: 'corpus' | 'spelling' | 'cr1'
+  /** hyp: the signal that produced it */ signal?: 'corpus' | 'spelling' | 'cr1' | 'first'
+  /** DB-2: `main` = the region of the earliest reliable attestation, `secondary` = another region by its own earliest date */ role?: 'main' | 'secondary'
+  /** DB-2: the year(s) of that attestation and the witness it links to (/witness/<id>) */ year?: string; witness?: string; href?: string
+  /** DB-2: the chips of one main row are equals when several regions share the first year */ simul?: true
 }
 export interface FiredIn { id: string; code: string; feature?: string; cite: Evidence }
 export interface BadgeInput {
@@ -82,7 +85,7 @@ export interface BadgeInput {
 
 const SHARE = (f: number, F: number) => `${Math.round((f / Math.max(1, F)) * 100)} %`
 const marksOfArea = (a: string): string[] => { const k = markKeyOf(a); return k ? [k] : [] }
-const hyp = (name: string, code: string | undefined, marks: string[], basis: string, evidence: Evidence[], signal: NonNullable<BadgeChip['signal']>, lemma: string): BadgeChip => {
+export const hyp = (name: string, code: string | undefined, marks: string[], basis: string, evidence: Evidence[], signal: NonNullable<BadgeChip['signal']>, lemma: string): BadgeChip => {
   const text = `гіпотеза: ${name}`
   // the claim is of kind P (a paraphrase of our own derivation): the original quotes stay in `evidence`
   const p = P('BULP-DB1', `DB-1 ${signal}: ${lemma}`, basis.slice(0, 280))

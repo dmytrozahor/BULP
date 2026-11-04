@@ -124,3 +124,19 @@
 .am-ring { fill: var(--surface); fill-opacity: .88; stroke: var(--dc); stroke-width: 1.6; } .am-ring.am-hyp { stroke-dasharray: 3.5 2.5; fill-opacity: .6; }
 .am-plain { fill: var(--dc); stroke: var(--surface); stroke-width: .8; } .arms-mark:focus-visible .am-ring { stroke-width: 3; }
 .arms-src { margin: .4rem 0; } .arms-src li { margin: .15rem 0; overflow-wrap: anywhere; }
+/* DB-2: the main chip (earliest reliable attestation) is the largest; secondary chips are smaller; the witness link sits beside the chip */
+.dwrap { display: inline-flex; align-items: center; gap: .25rem; max-width: 100%; flex-wrap: wrap; }
+.dwrap.r-main .dchip { font-size: .92rem; padding-block: .18rem; box-shadow: 0 1px 0 color-mix(in srgb, var(--dc) 40%, transparent); }
+.dwrap.r-secondary .dchip { font-size: .78rem; font-weight: 500; }
+.dlink { font: 500 .76rem var(--sans); color: var(--accent); text-decoration: none; border-bottom: 1px dotted currentColor; white-space: nowrap; } .dlink:hover { border-bottom-style: solid; }
+.frchip { display: inline-flex; align-items: center; gap: .3rem; min-height: 1.35rem; min-width: 8rem; font: 500 .78rem var(--sans); color: var(--muted); } .frchip.ph { opacity: .0; }
+.frchip .fr-dot { width: .7rem; height: .85rem; flex: none; } .frchip .fr-dot path { fill: var(--dc); stroke: var(--dc); stroke-width: 1.5; stroke-linejoin: round; } .frchip.thin .fr-dot path { fill: none; stroke-dasharray: 3 2.2; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .frchip { --dc: var(--dd); } } :root[data-theme="dark"] .frchip { --dc: var(--dd); } .frchip { --dc: var(--dl); }
+.frchip .fr-t { color: var(--ink); } .frchip.thin .fr-t { font-style: italic; }
+.arms-mark[data-primary="1"] .am-ring { stroke-width: 2.6; fill-opacity: .95; } .arms-mark[data-primary="0"] { opacity: .85; }
+/* DB-3: the dialect subcard on top of a lemma page */
+.subcard { border: 1px solid var(--line); border-left: 4px solid var(--m-dialect); border-radius: var(--r); background: var(--surface); padding: .6rem .9rem .8rem; margin: 0 0 1rem; min-width: 0; }
+.subcard h1.lemma { margin: .3rem 0 .2rem; overflow-wrap: anywhere; } .subcard h2 { margin: .7rem 0 .2rem; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.subback { display: inline-block; font: 500 .9rem var(--sans); text-decoration: none; padding: .15rem 0; margin-bottom: .2rem; } .subback:hover { text-decoration: underline; }
+.subderived { border-color: var(--warn); border-style: dashed; background: var(--warn-soft); } .subex { margin: .2rem 0; padding: .2rem .6rem; border-left: 3px solid var(--line); overflow-wrap: anywhere; }
+.subpairs { overflow-wrap: anywhere; line-height: 1.7; }

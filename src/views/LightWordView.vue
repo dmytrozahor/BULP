@@ -6,6 +6,10 @@
  * The detail blocks are the lexicon card's own components (ThinCard).
  */
 import DialectBadge from '../components/DialectBadge.vue'
+import SubcardTop from '../components/SubcardTop.vue'
+import { useSubcard } from '../lib/useSubcard.ts'
+import { dialect as dialectSwitch, show as showView } from '../lib/views.ts'
+import { ctxOfTags } from '../lib/dialectView.ts'
 import { computed, ref, watch } from 'vue'
 import { lightRow } from '../lib/torotData.ts'
 import { ixPrefix } from '../lib/parts.ts'
@@ -43,6 +47,9 @@ const row = computed(() => found.value.value)
 const done = computed(() => cvDone.value && found.value.ready)
 const word = computed(() => row.value?.[0] ?? cv.value?.[0] ?? props.lemma)
 const tags = computed(() => row.value?.[1] ?? cv.value?.[1] ?? '')
+/** SPEC 63 DB-3: the dialect subcard (state in the URL); a light card has no spelling forms, only the respelled word and the CR-1 group */
+const subCtx = computed(() => ctxOfTags(tags.value))
+const sub = useSubcard(() => props.lemma, () => (done.value ? showView(word.value, dialectSwitch.value, '2019', subCtx.value) : undefined), f => byLemma.value.has(f), () => !!row.value || !!cv.value)
 /** GZ-4: the stem relative that proves the о/е > і alternation (покірність ~ покора) */
 const base = ref<string[]>([])
 watch(row, async r => { base.value = r ? await ikavismBaseRemote(r[0], async pre => (await ixPrefix(pre)).map(e => e[0]).sort()) : [] }, { immediate: true })
@@ -82,6 +89,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
     <ZakNote :target="lemma" />
+    <SubcardTop :lemma="word" :sub="sub" :paradigm="[]" :ctx="subCtx" :from="String($route.query.from ?? '')" />
     <div class="hwrow"><h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1><DialectBadge :lemma="lemma" /></div>
     <p v-if="dict" class="sans small" data-testid="dict-only">
       <span class="badge">{{ dict.status }}</span>

@@ -3,6 +3,7 @@
  * Instant search over lemmas AND every historical spelling / paradigm form (stress- and case-insensitive via core/text.ts key();
  * Old letters ѣ ъ ы ѧ accepted). Results: lemma, first-attestation year + author, dots barometer. Unknown → /analyze.
  */
+import FirstChip from '../components/FirstChip.vue'
 import { computed, ref, shallowRef, watch } from 'vue'
 import Pagination from '../components/Pagination.vue'
 import { usePage } from '../composables/usePage.ts'
@@ -99,6 +100,7 @@ watch(q, async v => {
     <li v-for="r in pgR.slice(rows)" :key="r.lemma">
       <RouterLink :to="`/w/${encodeURIComponent(r.lemma)}`">
         <span class="lem">{{ r.lemma }}</span>
+        <FirstChip :lemma="r.lemma" />   <!-- SPEC 63 DB-2: the main chip, loaded lazily after the row renders -->
         <template v-if="info(r).c"><span class="muted small sans">{{ info(r).c!.pos }}</span></template>
         <span v-if="r.matched !== r.lemma" class="small sans">знайдено: «{{ r.matched }}» ({{ viaUk[r.via] }})</span>
         <template v-if="info(r).c">

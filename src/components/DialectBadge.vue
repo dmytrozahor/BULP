@@ -11,10 +11,13 @@ import { MAX_CHIPS, GRADE_HELP, GRADE_WORD, hueOf, type BadgeChip } from '../../
 import { markByKey } from '../../core/coats.ts'
 import { useBadge } from '../lib/badge.ts'
 import { afterPaint, armsSrc, loadCoatIndex } from '../lib/coatsData.ts'
+import { useData } from '../composables/useData.ts'
 import EvidencePopover from './EvidencePopover.vue'
 const props = defineProps<{ lemma: string; /** test hook: chips instead of the lazy data */ chipsIn?: BadgeChip[] }>()
 const { chips: lazy, loading } = useBadge(() => props.lemma)
 const chips = computed(() => props.chipsIn ?? lazy.value)
+const { witnessById } = useData()
+const witTitle = (c: BadgeChip): string => (c.witness ? witnessById.value.get(c.witness)?.title ?? c.witness : '')
 const all = ref(false), painted = ref(false)
 onMounted(() => afterPaint(() => { painted.value = true; loadCoatIndex() }))
 const shown = computed(() => (all.value ? chips.value : chips.value.slice(0, MAX_CHIPS)))
@@ -35,7 +38,7 @@ const label = (c: BadgeChip) => `${GRADE_WORD[c.grade]}: ${c.text}`
   <span class="dbadge sans" data-testid="dialect-badge" role="group" aria-label="Діалект або регіон слова">
     <span v-if="loading && !chipsIn" class="dchip dph" data-testid="dchip-loading" aria-hidden="true"><span class="dshield" /><span class="dtxt">&nbsp;</span></span>
     <template v-else>
-      <template v-for="(c, i) in shown" :key="c.text + i">
+      <span v-for="(c, i) in shown" :key="c.text + i" :class="['dwrap', c.role ? 'r-' + c.role : '']" :data-role="c.role" :data-testid="c.role === 'main' ? 'dchip-main' : undefined">
         <EvidencePopover v-if="c.evidence.length" :evidence="c.evidence" :heading="c.text" :meta="`${GRADE_WORD[c.grade]} · ${c.basis}`" :label="label(c)">
           <span :class="['dchip', 'g-' + c.grade]" :style="vars(c)" :data-grade="c.grade" :data-testid="'dchip-' + c.grade">
             <span class="dshield" aria-hidden="true">
@@ -49,7 +52,8 @@ const label = (c: BadgeChip) => `${GRADE_WORD[c.grade]}: ${c.text}`
           <span class="dshield" aria-hidden="true"><svg viewBox="0 0 20 24" width="18" height="22" focusable="false"><path d="M2 2h16v10c0 5.5-4 8.5-8 10.5C6 20.5 2 17.5 2 12z" /></svg></span>
           <span class="dtxt">{{ c.text }}</span>
         </span>
-      </template>
+        <RouterLink v-if="c.href" :to="c.href" class="dlink" :title="`пам’ятка: ${witTitle(c)}, ${c.year}`" :aria-label="`пам’ятка першої фіксації: ${witTitle(c)}, ${c.year}`" data-testid="dchip-link">{{ c.role === 'main' ? 'пам’ятка →' : '→' }}</RouterLink>
+      </span>
       <button v-if="more && !all" type="button" class="dmore" data-testid="dchip-more" :aria-label="`ще ${more}`" @click="all = true">ще {{ more }}</button>
     </template>
   </span>
