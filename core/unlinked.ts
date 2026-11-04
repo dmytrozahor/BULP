@@ -13,7 +13,7 @@ export const UNLINKED_SHARDS = 64
 export const UNLINKED_MAX_WITNESSES = 3
 /** size budget of the whole directory (raw bytes), checked by the build and by tests/unlinked.test.ts. The 10 M-token corpus' 4.25 M spellings are ≈ 364 MB;
  *  the budget leaves headroom without dropping any spelling (NV-5; the GitHub Pages site limit is 1 GB). */
-export const UNLINKED_BUDGET_BYTES = 512 * 1024 * 1024
+export const UNLINKED_BUDGET_BYTES = 512 * 1024 * 1024   // NV-6: the compact format (≈ 50 % of the legacy raw size) leaves ≈ 100 % headroom; the budget stays
 /** per-leaf gzip target (like IX_GZ_MAX) and hard limit (a leaf that cannot be split further may exceed the target but never this); leaf prefix length range; manifest limit */
 export const UNL_GZ_MAX = 30 * 1024, UNL_GZ_HARD = 128 * 1024
 export const UNL_MIN = 2, UNL_MAX = 12, UNL_SPLIT_MIN_KEYS = 2
@@ -61,18 +61,45 @@ export function unlinkedLeaf(k: string, leaves: ReadonlySet<string>): string | u
   for (let n = UNL_MIN; n <= UNL_MAX; n++) { const p = unlPad(k, n); if (leaves.has(p)) return p }
   return undefined
 }
-export const leafShard = (m: Map<string, UnlinkedEntry>, keys: string[]): Record<string, UnlinkedEntry> => { const o: Record<string, UnlinkedEntry> = {}; for (const k of keys.slice().sort()) o[k] = m.get(k)!; return o }
+/**
+ * NV-6 compact leaf (format 2): { format: 2, rows: { key: [raw, count, nWitnesses, w1, i1, …] } } where a witness id is its number in unlinked/ids.json (one table per build) and raw is
+ * '' when it equals the key. The long witness ids (hv_ia_halyckiji_prypovidky_i_zahadky_ilkevych_1841) were 36 % of the raw bytes of a leaf and the raw spelling repeated the key in 3 of 4 rows;
+ * every token stays resolvable (the same information, nothing dropped). The legacy plain map { key: entry } is still read.
+ */
+export const UNL_IDS = 'ids'
+export type PackedEntry = [raw: string, count: number, nWitnesses: number, ...occ: number[]]
+export interface PackedLeaf { format: 2; rows: Record<string, PackedEntry> }
+/** the witness ids of the accumulator in a stable order (sorted), id → number */
+export const idTable = (m: Map<string, UnlinkedEntry>): { ids: string[]; num: Map<string, number> } => {
+  const s = new Set<string>(); for (const e of m.values()) for (let j = 3; j < e.length; j += 2) s.add(String(e[j]))
+  const ids = [...s].sort(), num = new Map(ids.map((w, i) => [w, i])); return { ids, num }
+}
+export const packEntry = (k: string, e: UnlinkedEntry, num: ReadonlyMap<string, number>): PackedEntry => {
+  const o: (string | number)[] = [e[0] === k ? '' : e[0], e[1] as number, e[2] as number]
+  for (let j = 3; j + 1 < e.length; j += 2) o.push(num.get(String(e[j]))!, e[j + 1] as number)
+  return o as PackedEntry
+}
+export const unpackEntry = (k: string, p: readonly (string | number)[], ids: readonly string[]): UnlinkedEntry => {
+  const o: (string | number)[] = [p[0] === '' ? k : String(p[0]), p[1]!, p[2]!]
+  for (let j = 3; j + 1 < p.length; j += 2) o.push(ids[p[j] as number] ?? '', p[j + 1]!)
+  return o as UnlinkedEntry
+}
+export const leafShard = (m: Map<string, UnlinkedEntry>, keys: string[], num?: ReadonlyMap<string, number>): Record<string, UnlinkedEntry> | PackedLeaf => {
+  if (!num) { const o: Record<string, UnlinkedEntry> = {}; for (const k of keys.slice().sort()) o[k] = m.get(k)!; return o }
+  const rows: Record<string, PackedEntry> = {}; for (const k of keys.slice().sort()) rows[k] = packEntry(k, m.get(k)!, num)
+  return { format: 2, rows }
+}
 /**
  * Plan the leaves: split by prefix until every leaf's gzip size (`gzSize` of its JSON text) is ≤ gzMax, or it cannot be split / reached UNL_MAX.
  * A leaf whose raw JSON is already ≤ gzMax is never compressed. Every key lands in exactly one leaf; nothing is dropped. Result: prefix → keys.
  */
-export function planUnlinked(m: Map<string, UnlinkedEntry>, gzSize: (json: string) => number, gzMax = UNL_GZ_MAX): Map<string, string[]> {
+export function planUnlinked(m: Map<string, UnlinkedEntry>, gzSize: (json: string) => number, gzMax = UNL_GZ_MAX, num?: ReadonlyMap<string, number>): Map<string, string[]> {
   const leaves = new Map<string, string[]>()
   const group = (ks: string[], n: number) => { const by = new Map<string, string[]>(); for (const k of ks) { const q = unlPad(k, n); (by.get(q) ?? by.set(q, []).get(q)!).push(k) } return by }
   const go = (p: string, ks: string[], n: number) => {
     if (n < UNL_MAX && ks.length >= UNL_SPLIT_MIN_KEYS) {
       // a group this large is certainly over the target: split without serialising it (the top groups are ~100 MB)
-      const big = ks.length > UNL_FORCE_SPLIT, t = big ? '' : JSON.stringify(leafShard(m, ks))
+      const big = ks.length > UNL_FORCE_SPLIT, t = big ? '' : JSON.stringify(leafShard(m, ks, num))
       if (big || (t.length > gzMax && gzSize(t) > gzMax)) { const by = group(ks, n + 1); if (by.size > 1) { for (const [q, sub] of by) go(q, sub, n + 1); return } }
     }
     leaves.set(p, ks)

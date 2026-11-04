@@ -4,7 +4,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs'
 import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
-import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, unlinkedTop, newAccumulator, occurrencesOf, planUnlinked, unlinkedLeaf, unlinkedName, type UnlinkedManifest } from '../core/unlinked.ts'
+import { UNL_IDS, idTable, packEntry, unpackEntry, UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, unlinkedTop, newAccumulator, occurrencesOf, planUnlinked, unlinkedLeaf, unlinkedName, type UnlinkedManifest } from '../core/unlinked.ts'
 import { analyzeLink } from '../src/lib/analyze-links.ts'
 import { buildIndex } from '../src/lib/search.ts'
 import { kwicAt, lookupUnlinked } from '../src/lib/unlinked.ts'
@@ -50,6 +50,35 @@ describe('NV-3 unlinked-spelling index', () => {
     const get = async (n: string) => files.get(n) ?? null
     const e = await lookupUnlinked('Призвичкою', get)
     expect(e?.[0]).toBe('призвичкою'); expect(await lookupUnlinked('нема', get)).toBeUndefined(); expect(await lookupUnlinked('призвичкою', async () => null)).toBeUndefined()
+  })
+})
+
+describe('NV-6 compact leaves: witness ids by number, raw omitted when it equals the key', () => {
+  const build = () => {
+    const a = newAccumulator()
+    a.add('призвичкою', 'hv_ia_long_witness_id_1841', 7); a.add('Призвичкою', 'gr15_17', 3); a.add('призвичкою', 'hv_ia_long_witness_id_1841', 9); a.add('сьвіт́', 'gr15_17', 1)
+    return a
+  }
+  it('pack / unpack is lossless for every entry; the packed row holds numbers, not ids, and drops raw when it equals the key', () => {
+    const a = build(), { ids, num } = idTable(a.m)
+    expect(ids).toEqual([...ids].sort())
+    for (const [k, e] of a.m) { const p = packEntry(k, e, num); expect(unpackEntry(k, p, ids)).toEqual(e); expect(p.slice(3).filter((_, i) => i % 2 === 0).every(x => typeof x === 'number')).toBe(true) }
+    expect(packEntry('призвичкою', a.m.get('призвичкою')!, num)[0]).toBe(a.m.get('призвичкою')![0] === 'призвичкою' ? '' : a.m.get('призвичкою')![0])
+  })
+  it('the lookup reads a format 2 leaf with the ids table, and still a legacy plain leaf; nothing is resolvable without the table', async () => {
+    const a = build(), { ids, num } = idTable(a.m), leaves = planUnlinked(a.m, t => t.length, undefined, num)
+    const files = new Map<string, unknown>([...manifestsOf(leaves)].map(([t, m]) => [unlinkedManifestName(t), m]))
+    for (const [p, ks] of leaves) files.set(unlinkedName(p), leafShard(a.m, ks, num))
+    files.set(UNL_IDS, ids)
+    const get = async (n: string) => files.get(n) ?? null
+    const e = await lookupUnlinked('Призвичкою', get)
+    expect(e).toEqual(a.m.get(key('призвичкою'))); expect(occurrencesOf(e!).map(o => o.w)).toEqual(['hv_ia_long_witness_id_1841', 'gr15_17'])
+    files.delete(UNL_IDS); expect(await lookupUnlinked('призвичкою', get)).toBeUndefined()
+  })
+  it('the packed leaf is at most 60 % of the legacy one for realistic witness ids', () => {
+    const a = newAccumulator(); for (let i = 0; i < 400; i++) a.add('слово' + i, 'hv_ia_halyckiji_prypovidky_i_zahadky_ilkevych_' + (i % 20), i)
+    const { num } = idTable(a.m), ks = [...a.m.keys()]
+    expect(JSON.stringify(leafShard(a.m, ks, num)).length).toBeLessThan(JSON.stringify(leafShard(a.m, ks)).length * 0.6)
   })
 })
 

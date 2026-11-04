@@ -58,7 +58,7 @@ async function sample(): Promise<Item[]> {
     if (un.length >= N) break
     const m = await cdn(`unlinked/${unlinkedManifestName(unlinkedTop(top))}`) as { leaves?: [string, number][] } | null; const leaf = m?.leaves?.[Math.floor(R() * (m.leaves.length || 1))]?.[0]
     const sh = leaf ? await cdn(`unlinked/${unlinkedName(leaf)}`) as Record<string, unknown> | null : null
-    if (sh) un.push(...pick(Object.keys(sh), 2))
+    if (sh) un.push(...pick(Object.keys((sh['format'] === 2 ? sh['rows'] : sh) as Record<string, unknown>), 2))   // NV-6: format 2 keeps the rows under .rows
   }
   add('unlinked', pick(un, N), s => `/f/${enc(s)}`)
   // owner examples: resolve the card route by the data (lexicon lemma, else light / dictionary-only / archaic card, else a form)

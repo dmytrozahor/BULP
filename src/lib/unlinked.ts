@@ -1,6 +1,6 @@
 /** SPEC 63 NV-3 runtime: look a spelling up in the unlinked-spelling index (core/unlinked.ts) and cut KWIC lines from the text shards. */
 import { key } from '../../core/text.ts'
-import { occurrencesOf, unlinkedLeaf, unlinkedManifestName, unlinkedName, unlinkedTop, type UnlinkedEntry, type UnlinkedManifest, type UnlinkedOcc } from '../../core/unlinked.ts'
+import { UNL_IDS, occurrencesOf, unpackEntry, unlinkedLeaf, unlinkedManifestName, unlinkedName, unlinkedTop, type UnlinkedEntry, type UnlinkedManifest, type UnlinkedOcc } from '../../core/unlinked.ts'
 import { fetchJson } from './fetchJson.ts'
 import { loadTokens, type Tok } from './witnessText.ts'
 
@@ -18,7 +18,12 @@ export async function lookupUnlinked(form: string, get: ShardFetch = fetchShard)
   const m = (await get(unlinkedManifestName(unlinkedTop(k)))) as UnlinkedManifest | null; if (!m?.leaves) return undefined
   let leaves = leafSets.get(m); if (!leaves) leafSets.set(m, leaves = new Set(m.leaves.map(l => l[0])))
   const leaf = unlinkedLeaf(k, leaves); if (!leaf) return undefined
-  return ((await get(unlinkedName(leaf))) as Record<string, UnlinkedEntry> | null)?.[k]
+  const lf = (await get(unlinkedName(leaf))) as Record<string, unknown> | null; if (!lf) return undefined
+  if (lf['format'] === 2) {   // NV-6: compact leaf, witness ids by number (unlinked/ids.json, fetched once)
+    const row = (lf['rows'] as Record<string, (string | number)[]> | undefined)?.[k]; if (!row) return undefined
+    const ids = (await get(UNL_IDS)) as string[] | null; return ids ? unpackEntry(k, row, ids) : undefined
+  }
+  return lf[k] as UnlinkedEntry | undefined
 }
 
 export interface UnlinkedKwic { w: string; loc: string; left: string; node: string; right: string }

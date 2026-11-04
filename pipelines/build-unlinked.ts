@@ -9,7 +9,7 @@ import { unpackCore } from '../core/pack.ts'
 import { key } from '../core/text.ts'
 import { gzipSync } from 'node:zlib'
 import { createHash } from 'node:crypto'
-import { UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
+import { UNL_IDS, idTable, UNLINKED_BUDGET_BYTES, UNL_GZ_HARD, UNL_GZ_MAX, UNL_MANIFEST_GZ_MAX, isWordToken, leafShard, manifestsOf, unlinkedManifestName, newAccumulator, planUnlinked, unlinkedName } from '../core/unlinked.ts'
 import { UV_P_MAX_BYTES, UV_SHARDS, UvScan, planUvPrefixes, uvLeafFile, uvShard, uvSplitOf, type UvGroup, type UvPrefixShard } from '../core/uv.ts'
 import { cardMap, type CardIndexFile } from '../core/cv.ts'
 import { foldSpelling } from '../core/phrasemes.ts'
@@ -60,9 +60,11 @@ const dir = resolve(pub, 'unlinked'); rmSync(dir, { recursive: true, force: true
 // NV-5: prefix-sharded leaves (like ix/ and dx/), nothing dropped; budgets: total raw, worst leaf gz, manifest gz
 let bytes = 0, worst = 0, gzTotal = 0
 const gzLen = (t: string) => gzipSync(t, { level: 6 }).length
-const leaves = planUnlinked(acc.m, gzLen)
+const { ids, num } = idTable(acc.m)   // NV-6: witness ids by number, one table per build
+const leaves = planUnlinked(acc.m, gzLen, undefined, num)
+{ const t = JSON.stringify(ids); writeFileSync(resolve(dir, `${UNL_IDS}.json`), t); bytes += Buffer.byteLength(t); gzTotal += gzLen(t) }
 for (const [p, ks] of leaves) {
-  const t = JSON.stringify(leafShard(acc.m, ks)), g = gzLen(t); bytes += Buffer.byteLength(t); gzTotal += g; worst = Math.max(worst, g)
+  const t = JSON.stringify(leafShard(acc.m, ks, num)), g = gzLen(t); bytes += Buffer.byteLength(t); gzTotal += g; worst = Math.max(worst, g)
   writeFileSync(resolve(dir, `${unlinkedName(p)}.json`), t)
 }
 let manGz = 0, nMan = 0
