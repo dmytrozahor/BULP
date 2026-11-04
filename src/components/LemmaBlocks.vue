@@ -17,7 +17,6 @@ import LoanAdaptBlock from './LoanAdaptBlock.vue'
 import IpaRow from './IpaRow.vue'
 import DerivativesBlock from './DerivativesBlock.vue'
 import DimLine from './DimLine.vue'
-import VariantFamilyLine from './VariantFamilyLine.vue'
 import CardRules from './CardRules.vue'
 import DialectVariants from './DialectVariants.vue'
 import DeicticStructure from './DeicticStructure.vue'
@@ -50,7 +49,6 @@ const on = (t: TabId) => !props.tab || props.tab === t
       <IpaRow :variants="variants" :lemma="w" />
     </Panel>
     <DimLine v-if="on('forms')" :lemma="w" />
-    <VariantFamilyLine v-if="on('forms')" :lemma="w" />
     <CardRules v-if="on('forms')" :lemma="lemma" :spelling="spelling" :skip-features="kind === 'form'" />   <!-- CP-8: MM-16 chips, MM-29..35 pairs / variants, MM-36 contact form-type -->
     <DerivativesBlock v-if="on('forms')" panel :lemma="w" />
     <DialectVariants v-if="on('spread')" :lemma="w" />

@@ -18,6 +18,7 @@ import { cardMap } from '../core/cv.ts'
 import { DIALECTS } from '../core/rules.ts'
 import { archId, type ArchEntry } from '../core/archaic.ts'
 import { featureOf } from '../core/form-class.ts'
+import { packCg, plain, type CorrGroup } from '../core/corr.ts'
 import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, seBucket, xrBucket, synBucket, phrBucket, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 import { vocabTotals } from './vocab-n.ts'
@@ -222,6 +223,16 @@ function writeLm() {
       fresh('lm/se'); let worst = 0
       for (const [b, p] of parts) { worst = Math.max(worst, gz(p)); out(`lm/se/${b}.json`, p) }
       log.push(`se ${parts.size} (worst ${(worst / 1024).toFixed(1)} KB gz)`)
+    }
+  }
+  {   // SPEC 63 CR-1: data/work/corr.json (pipelines/build-corr.ts, not committed) -> lm/cg/<bucket>.json: lemma -> the correspondence groups it is in (lazy, never in the core cards)
+    const cp = process.env.CORR_FILE ?? 'data/work/corr.json'
+    if (existsSync(cp)) {
+      const C = JSON.parse(readFileSync(cp, 'utf8')) as { groups: CorrGroup[] }, parts = new Map<number, Record<string, CorrGroup[]>>()
+      for (const g of C.groups) for (const m of g.members) { const k = plain(m.form), b = lmBucket(k), part = parts.get(b) ?? parts.set(b, {}).get(b)!; (part[k] ??= []).push(g) }
+      fresh('lm/cg'); let worst = 0
+      for (const [b, p] of parts) { const sh = packCg(p); worst = Math.max(worst, gz(sh)); out(`lm/cg/${b}.json`, sh) }
+      log.push(`cg ${parts.size} (worst ${(worst / 1024).toFixed(1)} KB gz)`)
     }
   }
   {   // SPEC 63 GG-18: data/work/xr.json (pipelines/build-xref.ts, not committed) -> lm/xr/<bucket>.json, keyed by lk(headword)

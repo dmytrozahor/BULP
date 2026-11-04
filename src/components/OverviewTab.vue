@@ -20,6 +20,7 @@ import Paradigm from './Paradigm.vue'
 import { stOf } from '../lib/stressSrc.ts'
 const SynAntBlock = defineAsyncComponent(() => import('./SynAntBlock.vue'))   // GG-12: lazy, outside the first load
 const PhraseologyBlock = defineAsyncComponent(() => import('./PhraseologyBlock.vue'))   // GG-13: lazy
+const CorrBlock = defineAsyncComponent(() => import('./CorrBlock.vue'))   // CR-1: lazy (shard lm/cg), replaces «Родина варіантів»
 const XrefLine = defineAsyncComponent(() => import('./XrefLine.vue'))   // GG-18: lazy, keeps the first load of a card unchanged
 // MM-27: an absent Boolean prop is `false` in Vue (boolean casting): every thin card (ORV, name, light, dictionary) read «наголос: завантаження…» for ever; undefined = nothing is loading
 const props = withDefaults(defineProps<{
@@ -48,6 +49,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
 
 <template>
   <div class="ov" data-testid="overview">
+    <CorrBlock v-if="lemma ?? spelling" :lemma="lemma ?? spelling" />   <!-- SPEC 63 CR-1 «Відповідники»: the correspondence groups (variants, dialect words), near the top -->
     <section class="ov-sec ov-pron-sec" data-testid="ov-pronunciation" aria-labelledby="ov-h-pr">
       <h3 id="ov-h-pr" class="small sans">Вимова</h3>
       <OvPronunciation :word="pronWord ?? lemma ?? spelling" :stress="stress" :positions="stressPositions" :loaded="stressLoaded" :historical="seKind === 'orv' || seKind === 'arch' || seKind === 'mu'" />

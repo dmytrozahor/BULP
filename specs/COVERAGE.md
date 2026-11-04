@@ -1263,7 +1263,27 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › two swaps work too, and a nonsense word with no real word within two swaps has no page |
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › кит and кіт are both real: /w/кит is its own card, never a swap hypothesis; neither card links to the other |
 | CP-11 | tests/cp11f-iswap.test.ts › CP-11f pages › a real card lists only ATTESTED variants of its own lemma, with their cites: a corpus spelling, an old-dictionary row; unattested swaps stay out |
-| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › «Родина варіантів» is collapsed by default: title + count in the summary, no member rendered yet |
-| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › opening it (the remembered state, localStorage "1") shows the family; a throwing localStorage just starts closed |
+| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › «Відповідники» (the former «Родина варіантів») is collapsed by default: title + count in the summary, no member rendered yet |
+| CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › opening it (the remembered state, localStorage "1") shows the group; a throwing localStorage just starts closed |
 | CP-11 | tests/cp11g-collapsible.test.ts › CP-11g collapsible blocks › the generic block (used by HypLinks) collapses with its count and shows the items once open |
 | CP-12 | tests/cp12-se-everywhere.test.ts › CP-12 «Значення за епохами» on every card |
+| CR-1 | tests/cr1.test.ts › кит and кіт are different words: an и/і swap is never a pair |
+| CR-1 | tests/cr1.test.ts › single words only, the same POS, a known POS |
+| CR-1 | tests/cr1.test.ts › a multi-word gloss of a dialect dictionary is not a correspondence; a single-word gloss is |
+| CR-1 | tests/cr1.test.ts › a dictionary «Те саме, що» pointer: a spelling variant is one sense, another word with several meanings is «значення не уточнено» |
+| CR-1 | tests/cr1.test.ts › uk.wiktionary synonyms are used only when both pages list each other |
+| CR-1 | tests/cr1.test.ts › every pair carries evidence, and a member without evidence is a build error |
+| CR-1 | tests/cr1.test.ts › a merge that would exceed the cap is skipped (a polysemous bridge), not silently chained |
+| CR-1 | tests/cr1.test.ts › one group holds the owner-named set, with the sources that were found |
+| CR-1 | tests/cr1.test.ts › the card of each member shows ALL the others (щоб, коби, жеби), itself highlighted, the area and the first fixation rendered |
+| CR-1 | tests/cr1.test.ts › сє is an owner-grade Галичина and a hedged Тернопільщина, shown on both cards |
+| CR-1 | tests/cr1.test.ts › each member card shows every other member, for generated groups of every size and for the stored seed groups |
+| CR-1 | tests/cr1.test.ts › a corpus distribution needs ≥ 30 tokens in ≥ 3 witnesses and a 60 % share, and says what it is |
+| CR-1 | tests/cr1.test.ts › a corpus-only member never prints a dialect name as a fact |
+| CR-1 | tests/cr1.test.ts › the first fixation is the first in OUR corpus |
+| CR-1 | tests/cr1.test.ts › the «Говір» switch only reorders and marks the members of that dialect |
+| CR-1 | tests/cr1.test.ts › at most 5 chips, the rest behind «ще N» |
+| CR-1 | tests/cr1.test.ts › кит and кіт share no group, in the seed groups or by the guards |
+| CR-1 | tests/cr1.test.ts › «Відповідники · N» is collapsed by default |
+| CR-1 | tests/cr1.test.ts › PF-2: the sidecar is lm/cg (lazy) |
+| CR-1 | tests/cr1.test.ts › the old «Родина варіантів» block is gone from every card |

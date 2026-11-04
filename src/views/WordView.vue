@@ -79,7 +79,6 @@ import IpaRow from '../components/IpaRow.vue'
 import IkavismChain from '../components/IkavismChain.vue'
 const DerivativesBlock = defineAsyncComponent(() => import('../components/DerivativesBlock.vue'))   // PF-2: the derivation block loads when the card shows it, not in the deep-link critical path
 import DimLine from '../components/DimLine.vue'
-import VariantFamilyLine from '../components/VariantFamilyLine.vue'
 import CardRules from '../components/CardRules.vue'
 const WitnessBlock = defineAsyncComponent(() => import('../components/WitnessBlock.vue'))   // PF-2: rendered only once the detail shard is in (v-if=full); its chunk (WitnessPanel + graph) is off the deep-link critical path
 import DialectBlock from '../components/DialectBlock.vue'
@@ -247,7 +246,6 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
         <template v-if="ipa1"><span class="muted sans">·</span><span class="sans" :title="'IPA виведено за правилами (P-1.7), не словникова вимова'">{{ ipa1 }}</span></template></p>
       <p v-for="fc in headFeatures" :key="fc.rule" class="hl-line sans small" data-testid="lemma-feature"><span class="badge" :title="fc.cite.quote">{{ fc.feature }}</span> {{ fc.text }} <span class="muted">· {{ fc.rule }}</span></p>
       <DimLine :lemma="card.lemma" />
-      <VariantFamilyLine :lemma="card.lemma" />   <!-- MM-30..34 -->
       <p class="hl-line sans"><span class="muted">Перша фіксація: </span>
         <ClaimBadge v-if="first" :claim="(full ?? card).first" :text="`${fmtDate(first.date)} · ${firstWho}`" />
         <ClaimBadge v-else :claim="card.first" /><template v-if="firstRu"> <RuBadge :flag="firstRu" /> <span class="small muted" data-testid="ru-first-note">перша фіксація з російського видання: {{ RU_TIP }}</span></template></p>

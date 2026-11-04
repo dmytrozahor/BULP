@@ -18,7 +18,7 @@ export const BLOCK_TAB: Record<string, TabId> = {
   chips: 'meanings', kwic: 'sources', witnesses: 'sources', epochs: 'forms', derivation: 'history', dialect: 'spread', map: 'spread', stats: 'spread',
   stress: 'forms', etymology: 'history', senses: 'meanings', phrasemes: 'meanings', loan: 'history', derivatives: 'forms', ipa: 'forms', senseTimeline: 'meanings', labels: 'meanings',
   // CP-8
-  overview: 'overview', pronunciation: 'overview', origin: 'overview', switches: 'overview', paradigm: 'forms', featureChips: 'forms', variantFamily: 'forms', contactForm: 'forms', regions: 'spread', ruFlag: 'sources',
+  overview: 'overview', pronunciation: 'overview', origin: 'overview', switches: 'overview', paradigm: 'forms', featureChips: 'forms', variantFamily: 'overview', contactForm: 'forms', regions: 'spread', ruFlag: 'sources',
   // GG-12 / GG-13: both sections are in the Огляд tab
   synonyms: 'overview', wiktPhraseology: 'overview',
 }

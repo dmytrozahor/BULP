@@ -34,7 +34,7 @@ export const BLOCKS = {
   regions: ['RegionBars'],                        // «За регіонами»: ipm per region (sidebar)
   ruFlag: ['RuBadge', 'SourceCite', '<Kwic', 'WitnessPanel'], // RF «рос. видання / джерело» on every cited line
   featureChips: ['CardRules', 'lemma-feature', 'form-feature'],  // MM-16 cited feature chips of the spelling
-  variantFamily: ['VariantFamilyLine'],           // MM-29..35 variant family line
+  variantFamily: ['CorrBlock'],                   // MM-29..35 variant families, CR-1: the «Відповідники» block (groups; the families are one source)
   contactForm: ['CardRules', 'contactClaims'],    // MM-36 contact form-type (суржик / язичіє / ЦС-книжна), a label of a FORM (MM-9)
   // GG-12 / GG-13 (2026-10-29): open-source relations and Wiktionary phraseology, lazy components mounted by the Огляд tab of every kind
   synonyms: ['SynAntBlock'],                      // GG-12 «Синоніми й антоніми»: uk/en Вікісловник, джерело й значення на кожному зв’язку
