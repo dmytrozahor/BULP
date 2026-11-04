@@ -130,7 +130,7 @@ describe('GG-5 ingest parameters are configurable; N and the vocab-only count ar
     const env = rd('ops/worker/env.sh'), ing = rd('ops/worker/ingest.sh')
     expect(env).toContain('BULP_WIKI_STRIDE="${BULP_WIKI_STRIDE:-1}"'); expect(env).toContain('BULP_HPLT_LIMIT="${BULP_HPLT_LIMIT:-0}"')
     expect(ing).toContain('--wiki-stride "$BULP_WIKI_STRIDE"'); expect(ing).toContain('--limit "$BULP_HPLT_LIMIT"'); expect(ing).not.toContain('--wiki-stride 100'); expect(ing).not.toContain('--limit 40')
-    expect(ing).toContain('echo "$*" > $D/$s'); expect(ing).toContain('[ "$(cat $D/$s)" = "$*" ]')
+    expect(ing).toContain('local sig="$* idx='); expect(ing).toContain('echo "$sig" > $D/$s'); expect(ing).toContain('[ "$(cat $D/$s)" = "$sig" ]')   // the marker = the parameters ($*) + the harvest index size (next.sh incremental ingest)
   })
   it('GG-5 nVocab sums the vocab-only tokens of data/work/harvest-vocab, leaves out the other language family, and is 0 without the folder', () => {
     const work = mkdtempSync(join(tmpdir(), 'gg-')); mkdirSync(join(work, 'harvest-vocab'))
