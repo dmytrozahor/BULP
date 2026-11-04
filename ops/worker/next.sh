@@ -8,6 +8,7 @@ trap 'rm -f ~/.no-idle-stop' EXIT
 touch ~/.no-idle-stop
 . ~/BULP/ops/worker/env.sh
 cd ~/BULP || fail "no ~/BULP"
+bulp_check_ocr || fail "OCR dirs missing (ops/worker/env.sh: NAN_OCR ESUM_OCR ESUM16_OCR SE15_OCR SE17_OCR)"
 git checkout -- analysis public/data 2>/dev/null
 OLD=$(git rev-parse HEAD)
 git fetch -q origin mvp && git merge --ff-only origin/mvp >> $L 2>&1 || fail "git fast-forward"

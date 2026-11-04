@@ -105,7 +105,7 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
     return bin
   }
   it('RS-3 a failing step stops the run with its tails in status; --from resumes the same run without redoing finished steps; outputs are never overwritten', () => {
-    const b = box(), bin = stubs(b), env = { PATH: `${bin}:${process.env['PATH']}`, STUB_FAIL: 'vitest' }
+    const b = box(), bin = stubs(b), env = { BULP_REQUIRE_OCR: "0", PATH: `${bin}:${process.env['PATH']}`, STUB_FAIL: 'vitest' }
     const r1 = b.sh(`bash ${W}/chain.sh --no-publish`, env); expect(r1.rc, r1.out).toBe(7)
     const run = readdirSync(`${b.logs}/runs`)[0]!, R = `${b.logs}/runs/${run}`
     expect(readFileSync(`${R}/status`, 'utf8')).toMatch(/FAILED vitest rc=7[\s\S]*boom/); expect(existsSync(`${R}/done/build`)).toBe(true); expect(existsSync(`${R}/done/vitest`)).toBe(false)
@@ -119,7 +119,7 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
     expect(calls.some(c => c.includes('data-cdn'))).toBe(false)           // --no-publish never uploads
   })
   it('GG-18 the reparse step reruns sum-scan / parse-se-dicts that build:data does not run: only when the signature changed, never when the scans are absent', () => {
-    const b = box(), bin = stubs(b), env = { PATH: `${bin}:${process.env['PATH']}`, BOOKS: `${b.home}/books`, SE_HARVEST: 'data/raw/harvest/se-dicts' }
+    const b = box(), bin = stubs(b), env = { BULP_REQUIRE_OCR: "0", PATH: `${bin}:${process.env['PATH']}`, BOOKS: `${b.home}/books`, SE_HARVEST: 'data/raw/harvest/se-dicts' }
     for (const f of ['core/sum-article.ts', 'core/sum11-parse.ts', 'core/xref.ts', 'pipelines/sum-scan.ts', 'pipelines/sum-import.ts', 'core/sum-import.ts']) { mkdirSync(dirname(`${b.repo}/${f}`), { recursive: true }); writeFileSync(`${b.repo}/${f}`, 'x') }
     mkdirSync(`${b.home}/books/sum11`, { recursive: true }); writeFileSync(`${b.home}/books/sum11/sum11_t01.djvu`, 'abc')
     mkdirSync(`${b.repo}/data/raw/harvest/se-dicts`, { recursive: true }); writeFileSync(`${b.repo}/data/raw/harvest/se-dicts/index.jsonl`, '')
@@ -136,7 +136,7 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
     expect(readFileSync(`${W}/chain.sh`, 'utf8')).toContain('STEPS=(ff reparse build ')
   })
   it('RS-3 publish mode: the upload starts a fresh build id (--new); the commit refuses a pointer that is not the last completed upload', () => {
-    const b = box(), bin = stubs(b), env = { PATH: `${bin}:${process.env['PATH']}` }
+    const b = box(), bin = stubs(b), env = { BULP_REQUIRE_OCR: "0", PATH: `${bin}:${process.env['PATH']}` }
     const r = b.sh(`bash ${W}/chain.sh --from upload`, env)   // no earlier run: starts a new one at upload; B1 is the completed upload and nothing changed, rebase/push go to the local origin
     expect(readFileSync(`${b.home}/calls.log`, 'utf8')).toContain('data-cdn.ts upload --new')
     expect(r.rc, r.out).toBe(0)
@@ -148,6 +148,15 @@ d('RS-3 chain.sh is resumable, per-run, stops at the first failure', () => {
 })
 
 d('RS-3 the scripts are consistent', () => {
+  it('RS-3 env.sh declares every dictionary OCR dir and requires them; the worker build checks them; a missing dir throws under BULP_REQUIRE_OCR=1 and only logs without it', async () => {
+    const env = readFileSync('ops/worker/env.sh', 'utf8'), nx = readFileSync('ops/worker/next.sh', 'utf8'), ch = readFileSync('ops/worker/chain.sh', 'utf8')
+    for (const v of ['NAN_OCR', 'ESUM_OCR', 'ESUM16_OCR', 'SE15_OCR', 'SE17_OCR']) expect(env.split('\n').some(l => l.startsWith(`export ${v}="$` + `{${v}:-$HOME/work/se1`)), v).toBe(true)
+    expect(env).toContain('BULP_REQUIRE_OCR="${BULP_REQUIRE_OCR:-1}"'); expect(nx).toContain('bulp_check_ocr || fail'); expect(ch).toContain('st_build() { bulp_check_ocr || return 1')
+    expect(ch.split('\n').some(l => l.startsWith('st_vitest() {') && l.includes('find public/data') && l.includes('vite build'))).toBe(true)   // a stale dist is rebuilt before the budget tests
+    const { ocrMissing } = await import('../pipelines/ocr-required.ts'), was = process.env['BULP_REQUIRE_OCR']
+    try { process.env['BULP_REQUIRE_OCR'] = '1'; expect(() => ocrMissing('x absent')).toThrow(/BULP_REQUIRE_OCR=1/); delete process.env['BULP_REQUIRE_OCR']; expect(ocrMissing('x absent')).toBeUndefined() }
+    finally { if (was === undefined) delete process.env['BULP_REQUIRE_OCR']; else process.env['BULP_REQUIRE_OCR'] = was }
+  })
   it('RS-3 next.sh runs the incremental ingest before the build, and the ingest markers track the harvest index size (new harvested items are not skipped)', () => {
     const nx = readFileSync('ops/worker/next.sh', 'utf8'), ing = readFileSync('ops/worker/ingest.sh', 'utf8')
     expect(nx.indexOf('ops/worker/ingest.sh')).toBeGreaterThan(0)

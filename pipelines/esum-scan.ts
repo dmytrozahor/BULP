@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node
 import { dirname, resolve } from 'node:path'
 import { ESUM_VOLS, esumPassRate, parseEsum, parseEsum16, type EsumPage, type EsumStats, type Esum16Stats } from '../core/esum-parse.ts'
 import { writeJsonAtomic } from './robust.ts'
+import { ocrMissing } from './ocr-required.ts'
 
 export interface EsumScanEntry { t?: string; v: number; p: number; k?: 'bor' | 'proto' | 'other'; n?: number; g?: 'a' | 'b' | 'c' }
 export interface EsumScan { v: 1 | 2; srcSizes: Record<string, number>; stats: Record<string, (EsumStats | Esum16Stats) & { passRate: number }>; known: number; entries: Record<string, EsumScanEntry> }
@@ -26,7 +27,7 @@ export const complete16 = (ocr16: string, vol: number): boolean => existsSync(re
 export const ESUM_PAGES: Record<number, number> = { 1: 634, 2: 573, 3: 553, 4: 657, 5: 705, 6: 569 }
 
 export function runEsum(ocr: string, outFile: string, status?: string, known: (h: string) => boolean = () => false, ocr16 = resolve(process.env.ESUM16_OCR ?? 'data/raw/se16-ocr')): (EsumScan & { cands: Set<string> }) | undefined {
-  if (!existsSync(resolve(ocr, 'esum1')) && !existsSync(resolve(ocr16, 'esum1'))) { console.log(`esum-scan: ${ocr}/esum1 absent, skipped`); return undefined }
+  if (!existsSync(resolve(ocr, 'esum1')) && !existsSync(resolve(ocr16, 'esum1'))) return ocrMissing(`esum-scan: ${ocr}/esum1 and ${ocr16}/esum1 absent`)
   const st = (o: object) => { if (status) writeJsonAtomic(status, JSON.stringify({ at: new Date().toISOString(), ...o })) }
   st({ step: 'start' })
   const entries: Record<string, EsumScanEntry> = {}, stats: EsumScan['stats'] = {}, srcSizes: Record<string, number> = {}, cands = new Set<string>()

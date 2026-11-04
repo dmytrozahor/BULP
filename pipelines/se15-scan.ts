@@ -12,6 +12,7 @@ import type { SeRow } from '../core/se.ts'
 import { maxChars } from '../core/rights.ts'
 import { SLA_DICT, foldLatin, foldSlav, onSpine, parseLatinPages, parseSlovPages, slaGlossRows, slaSlovRows, type SlaPage, type SlaStats } from '../core/slavynetsky-parse.ts'
 import { writeJsonAtomic } from './robust.ts'
+import { ocrMissing } from './ocr-required.ts'
 
 /** per volume: the scan index of the first body page and of the last (the index / contents pages are not body), printed page = scan index − offset (checked against the printed numbers of the OCR) */
 export interface VolSpec { dir: string; dict: string; vol: number; first: number; last?: number; offset: number }
@@ -69,7 +70,7 @@ export function corrRowsOf(dict: string, rows: [string, SeRow][]): CorrLexRow[] 
 /** Славинецький (public-domain text of 1642 / 1650; core/slavynetsky-parse.ts): scan pages 62–419 = Лексикон латинський, 423–541 = Лексикон словено-латинський; printed page = scan index */
 export const SLA_LATIN = { first: 62, last: 419 }, SLA_SLOV = { first: 423, last: 541 }
 export function runSlavynetsky(ocr: string, out: string): { latin: number; slov: number; gloss: number; stats: { latin: SlaStats; slov: SlaStats } } | undefined {
-  const d = resolve(ocr, 'slavynetsky'); if (!existsSync(d)) { console.log(`se15-scan: ${d} absent, slavynetsky skipped`); return undefined }
+  const d = resolve(ocr, 'slavynetsky'); if (!existsSync(d)) return ocrMissing(`se15-scan: ${d} absent (slavynetsky)`)
   const pagesOf = (a: number, b: number): SlaPage[] => { const o: SlaPage[] = []; for (let i = a; i <= b; i++) { const t = rd(resolve(d, `page_${String(i).padStart(4, '0')}.txt`)); if (t) o.push({ text: t, no: i }) } return o }
   const stL: SlaStats = { pages: 0, candidates: 0, kept: 0, keyed: 0, badGloss: 0, footnoteCuts: 0 }, stS = { ...stL }
   const lat0 = parseLatinPages(pagesOf(SLA_LATIN.first, SLA_LATIN.last), stL), slov0 = parseSlovPages(pagesOf(SLA_SLOV.first, SLA_SLOV.last), stS)
@@ -87,7 +88,7 @@ export function runSe15(ocr: string, out: string, status?: string, known?: (h: s
   const dicts = [...new Set(SE15_VOLS.map(v => v.dict))].filter(d => !only || only.includes(d))
   for (const dict of dicts) {
     const vols = SE15_VOLS.filter(v => v.dict === dict && existsSync(resolve(ocr, v.dir)))
-    if (!vols.length) { console.log(`se15-scan: ${dict}: no OCR dir under ${ocr}, skipped`); continue }
+    if (!vols.length) { ocrMissing(`se15-scan: ${dict}: no OCR dir under ${ocr}`); continue }
     st({ step: `start ${dict}` })
     const rows: [string, SeRow][] = [], stats: Se15Run['stats'] = {}, sizes: Record<string, number> = {}, cands = new Set<string>(), heads = new Set<string>()
     const loaded = vols.map(v => ({ v, ...loadPages(ocr, v) }))
@@ -126,7 +127,7 @@ if (process.argv[1] && /se15-scan\.ts$/.test(process.argv[1].replaceAll(String.f
   }
   const rs = runSe15(ocr, outDir, resolve(a[2] ?? 'data/work/se15-status.json'), known)
   for (const r of rs) console.log(`${r.dict}: ${r.heads} headwords, ${r.rows.length} sense rows`, JSON.stringify(Object.fromEntries(Object.entries(r.stats).map(([k, s]) => [k, [s.entries, s.cardOk, s.passRate]]))))
-  if (!rs.length) console.log(`se15-scan: ${ocr} has no volume, skipped`)
+  if (!rs.length) ocrMissing(`se15-scan: ${ocr} has no volume`)
   const sla = runSlavynetsky(ocr, outDir); if (sla) console.log(`slavynetsky: ${sla.latin} Latin entries, ${sla.slov} word-pair entries, ${sla.gloss} keyed gloss rows`, JSON.stringify(sla.stats))
   const nan = resolve(outDir, 'chabanenko.json')   // SE-14's Чабаненко rows feed the same CR-1 hook (its one-word glosses)
   if (existsSync(nan)) { try { const j = JSON.parse(readFileSync(nan, 'utf8')) as { rows: [string, SeRow][] }; mkdirSync(resolve(outDir, '..', 'corr-extra'), { recursive: true }); writeJsonAtomic(resolve(outDir, '..', 'corr-extra', 'se15-chabanenko.json'), JSON.stringify({ rows: corrRowsOf('chabanenko', j.rows) })) } catch { /* torn: skipped (RS-1) */ } }

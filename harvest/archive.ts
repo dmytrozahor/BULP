@@ -11,7 +11,7 @@
  */
 import { readFileSync, existsSync } from 'node:fs'
 import { Harvest, type IndexItem } from './lib.ts'
-import { IA_UA, curlGet, resolveTextFile, retryCandidates, retry5xxCandidates } from './ia-text.ts'
+import { IA_UA, MAX_TEXT_BYTES, STATUS_STALLED, STATUS_TOO_BIG, curlGet, resolveTextFile, retryCandidates, retry5xxCandidates, retrySkippedCandidates } from './ia-text.ts'
 
 const PD = 'date:[1000-01-01 TO 1925-12-31]'
 /** CQ-1 fix 5: the Galician Sejm series (Kadencja ..., Alegata do Sprawozdań Stenograficznych; 6,839 ids of the first 10,000) is Latin-script Polish: not fetched */
@@ -43,31 +43,38 @@ export function docItem(d: SearchDoc, cfg: { region?: string; licence: string },
   }
 }
 
+let stalls = 0
 const H = { 'user-agent': IA_UA }
 const textUrl = (id: string, file: string) => `https://archive.org/download/${encodeURIComponent(id)}/${encodeURIComponent(file)}`
 
 /** fetch one item's text via /metadata: payload stored + index line with iaFile; no text file at all stays 404 (index-only line, no refetch) */
-async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licence: string }, retry: boolean | 'retried5xx'): Promise<void> {
-  const { status: ms, file } = await resolveTextFile(h, d.identifier)
-  const mark = retry === 'retried5xx' ? { retried5xx: true } : retry ? { retried404: true } : {}
+async function fetchItem(h: Harvest, d: SearchDoc, cfg: { region?: string; licence: string }, retry: boolean | 'retried5xx' | 'retriedSkip'): Promise<void> {
+  const { status: ms, file, size } = await resolveTextFile(h, d.identifier)
+  const mark = retry === 'retried5xx' ? { retried5xx: true } : retry === 'retriedSkip' ? { retriedSkip: true } : retry ? { retried404: true } : {}
   if (ms !== 200 || !file) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, ms === 200 ? 404 : ms), iaFile: '', ...mark }]); return }
-  const r = await curlGet(h, textUrl(d.identifier, file))
-  if (r.status === 0) return   // transient: no index line, retried on the next run
+  if (size && size > MAX_TEXT_BYTES) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, STATUS_TOO_BIG), iaFile: file, skip: 'size', size, ...mark }]); h.log(`${d.identifier}: ${(size / 1e6).toFixed(0)} MB > ${(MAX_TEXT_BYTES / 1e6).toFixed(0)} MB, skipped (status 413, --retry-skipped later)`); return }
+  const r = await curlGet(h, textUrl(d.identifier, file), 1500, size)
+  if (r.status === 0) {   // stalled / failed download: recorded (598) so the run goes on; --retry-skipped tries it again; 25 in a row = the network is down, the chain retries the step
+    h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, STATUS_STALLED), iaFile: file, skip: 'stall', ...(size ? { size } : {}), ...mark }])
+    if (++stalls >= 25) h.stop('network failure: 25 downloads in a row stalled')
+    return
+  }
+  stalls = 0
   if (r.status !== 200) { h.put(`${d.identifier}.none`, '', [{ ...docItem(d, cfg, 0, r.status), iaFile: file, ...mark }]); return }
   h.put(d.identifier, r.buf, [{ ...docItem(d, cfg, r.buf.length, 200), iaFile: file }])
 }
 
 /** «retry 404s»: only ids whose latest stored status is 404; the old index line supplies title/author/date/language */
-async function retry404(h: Harvest, cfg: { region?: string; licence: string }, mode: { all404?: boolean; fivexx?: boolean } = {}) {
+async function retry404(h: Harvest, cfg: { region?: string; licence: string }, mode: { all404?: boolean; fivexx?: boolean; skipped?: boolean } = {}) {
   const lines = existsSync(h.indexPath) ? readFileSync(h.indexPath, 'utf8').split('\n') : []
-  const todo = mode.fivexx ? retry5xxCandidates(lines) : retryCandidates(lines, mode.all404)
-  h.log(`${mode.fivexx ? 'retry-5xx' : 'retry-404'}: ${todo.length} items`)
+  const todo = mode.skipped ? retrySkippedCandidates(lines, MAX_TEXT_BYTES > 60_000_000) : mode.fivexx ? retry5xxCandidates(lines) : retryCandidates(lines, mode.all404)
+  h.log(`${mode.skipped ? 'retry-skipped' : mode.fivexx ? 'retry-5xx' : 'retry-404'}: ${todo.length} items`)
   const limit = Number(process.env.RETRY_LIMIT ?? 0)
   let n = 0
   for (const { id, line } of todo) {
     if (limit && n++ >= limit) break
     const d: SearchDoc = { identifier: id, title: line.title as string, creator: line.author as string | undefined, date: (line.date as string | null) ?? undefined, language: line.language as string }
-    await fetchItem(h, d, cfg, mode.fivexx ? 'retried5xx' : true)
+    await fetchItem(h, d, cfg, mode.skipped ? 'retriedSkip' : mode.fivexx ? 'retried5xx' : true)
   }
   h.finish()
 }
@@ -105,9 +112,10 @@ async function main() {
   const name = process.argv[2] ?? ''
   const cfg = ARCHIVE_PRESETS[name]
   if (!cfg) { console.error(`preset? ${Object.keys(ARCHIVE_PRESETS).join(' | ')}`); process.exit(1) }
-  const fast = ['--scrape', '--retry-5xx', '--retry-404'].some(f => process.argv.includes(f))
+  const fast = ['--scrape', '--retry-5xx', '--retry-404', '--retry-skipped'].some(f => process.argv.includes(f))
   const h = new Harvest(name, { delayMs: fast ? 1000 : 2000, logEvery: 25, capBytes: Number(process.env.HARVEST_CAP ?? 8e9) })   // >= 1 s between requests
   if (process.argv.includes('--retry-5xx')) await retry404(h, cfg, { fivexx: true })
+  if (process.argv.includes('--retry-skipped')) await retry404(h, cfg, { skipped: true })
   if (process.argv.includes('--retry-404')) await retry404(h, cfg, { all404: process.argv.includes('--all') })
   if (process.argv.includes('--scrape')) await scrape(h, cfg)
   let st = h.state<{ page: number; finished?: boolean }>({ page: 1 })

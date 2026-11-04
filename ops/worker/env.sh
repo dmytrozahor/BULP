@@ -19,3 +19,12 @@ mkdir -p "$BULP_LOGS/runs" "$BULP_LOGS/done" 2>/dev/null
 # GG-18: signature of a СУМ dictionary's parser input (scan sizes + OCR text sizes + parser code); shared by ingest.sh and reparse.sh so both keep ONE done-marker $BULP_LOGS/done/<dict>
 export BOOKS="${BOOKS:-$HOME/work/books}"
 sumsig() { { find "$BOOKS/$1" -maxdepth 1 -name "$1_t*" ! -name '*.up' -printf '%f=%s '; find "$HOME/work/ocr-sum" -maxdepth 1 -name "$1_t*.txt" -printf '%f=%s '; cat core/sum-article.ts core/$1-parse.ts core/xref.ts pipelines/sum-scan.ts pipelines/sum-import.ts core/sum-import.ts core/rights.ts | cksum; } 2>/dev/null; }
+# The owner-supplied dictionary OCR (SE-14/15/16/17), one durable default each: a worker build must find them, so a missing dir stops the build (BULP_REQUIRE_OCR=1, pipelines/ocr-required.ts)
+# instead of a quiet «skipped» (next6..next9 ran without them because the variables lived only in the caller's shell). Local runs leave BULP_REQUIRE_OCR unset and may skip.
+export NAN_OCR="${NAN_OCR:-$HOME/work/se14-ocr}"        # nan1..nan4/ (Чабаненко, SE-14)
+export ESUM_OCR="${ESUM_OCR:-$HOME/work/se14-ocr}"      # esum1..esum6/ (ЕСУМ, plain OCR)
+export ESUM16_OCR="${ESUM16_OCR:-$HOME/work/se16-ocr}"  # esum1..esum6/ (SE-16 column-aware OCR, preferred when complete)
+export SE15_OCR="${SE15_OCR:-$HOME/work/se15-ocr}"      # onysh1/2, sabadosh, bukovyna, hutsul, polissia, slavynetsky
+export SE17_OCR="${SE17_OCR:-$HOME/work/se17-ocr}"      # e1..e4 (SE-17)
+export BULP_REQUIRE_OCR="${BULP_REQUIRE_OCR:-1}"
+bulp_check_ocr() { [ "$BULP_REQUIRE_OCR" = 1 ] || return 0; local v d bad=; for v in NAN_OCR ESUM_OCR ESUM16_OCR SE15_OCR SE17_OCR; do d=${!v}; [ -d "$d" ] || bad="$bad $v=$d"; done; [ -z "$bad" ] || { echo "OCR dirs missing:$bad" >&2; return 1; }; }

@@ -10,6 +10,7 @@ import { resolve } from 'node:path'
 import { NAN_DICT, nanRows16, parseNanRecall, parseSettlements, type NanPage, type NanStats16 } from '../core/nan-parse.ts'
 import type { SeRow } from '../core/se.ts'
 import { writeJsonAtomic } from './robust.ts'
+import { ocrMissing } from './ocr-required.ts'
 
 export const NAN_VOLS = [1, 2, 3, 4]
 /** printed page = scan index − 1 in т. 1 (title + preface), = scan index in т. 2–4 (checked against the printed numbers of the text layer); т. 1 body starts at scan page 48 */
@@ -37,7 +38,7 @@ export function loadNanPages(dir: string, vol: number): { pages: NanPage[]; tl: 
 
 export interface NanRun { cands: Set<string>; rows: [string, SeRow][]; stats: Record<string, NanStats16 & { passRate: number }>; settlements: { modern: number; old: number } }
 export function runNan(ocr: string, out: string, status?: string, known?: (h: string) => boolean, wordKnown?: (w: string) => boolean): NanRun | undefined {
-  if (!existsSync(resolve(ocr, 'nan1'))) { console.log(`nan-scan: ${ocr}/nan1 absent, skipped`); return undefined }
+  if (!existsSync(resolve(ocr, 'nan1'))) return ocrMissing(`nan-scan: ${ocr}/nan1 absent`)
   const st = (o: object) => { if (status) writeJsonAtomic(status, JSON.stringify({ at: new Date().toISOString(), ...o })) }
   st({ step: 'start' })
   const rows: [string, SeRow][] = [], stats: NanRun['stats'] = {}, sizes: Record<string, number> = {}, cands = new Set<string>()

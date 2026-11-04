@@ -19,23 +19,29 @@ export function pickTextFile(files: IaFile[]): string | null {
   return big(files.filter(f => f.format === 'Text' && /\.txt$/i.test(f.name) && !/_meta\.txt$/i.test(f.name)))
 }
 
-/** resolve the text file name of an item: {status of /metadata, file or null} */
-export async function resolveTextFile(h: Harvest, id: string): Promise<{ status: number; file: string | null }> {
+/** CQ-1: an item whose text file is larger than this is not downloaded now (recorded as status 413 + `skip`, retried by `--retry-skipped` with a higher IA_MAX_BYTES); a download that stalls is recorded as 598 */
+export const MAX_TEXT_BYTES = Number(process.env['IA_MAX_BYTES'] ?? 60_000_000)
+export const STATUS_TOO_BIG = 413, STATUS_STALLED = 598
+/** curl timeouts for a file of `size` bytes: a dead data node must cost ~1 min, not 3 x 600 s (the Svoboda items stalled on dn760106 for 130 s each, 210 times); 40 KB/s is the floor */
+export const curlTimeouts = (size?: number): string[] => ['--connect-timeout', '20', '--speed-limit', '2048', '--speed-time', '40', '--max-time', String(Math.min(900, 60 + Math.ceil((size ?? 2_000_000) / 40_000))), '--retry', '1', '--retry-delay', '10']
+/** resolve the text file name of an item: {status of /metadata, file or null, its size} */
+export async function resolveTextFile(h: Harvest, id: string): Promise<{ status: number; file: string | null; size?: number }> {
   const meta = await h.get(`https://archive.org/metadata/${encodeURIComponent(id)}`, { headers: { 'user-agent': IA_UA } })
   if (meta.status !== 200) { meta.res.body?.cancel().catch(() => {}); return { status: meta.status, file: null } }
   const j = (await meta.res.json()) as { files?: IaFile[] }
-  return { status: 200, file: pickTextFile(j.files ?? []) }
+  const file = pickTextFile(j.files ?? [])
+  return { status: 200, file, size: file ? Number((j.files ?? []).find(f => f.name === file)?.size ?? 0) || undefined : undefined }
 }
 
 /** polite `curl -4` download, >= minDelayMs after the previous call; 403/429 stop; 503 backs off (60 s, 120 s, 240 s) then stops; other failure = status 0 (retried on the next run) */
-export async function curlGet(h: Harvest, url: string, minDelayMs = 1500): Promise<{ status: number; buf: Buffer }> {
+export async function curlGet(h: Harvest, url: string, minDelayMs = 1500, size?: number): Promise<{ status: number; buf: Buffer }> {
   const tmp = `${tmpdir()}/ia-${process.pid}.dl`
   try {
     for (let k = 0; ; k++) {
       await sleep(Math.max(minDelayMs, 1000))
       let status = 0
       try {
-        const code = execFileSync('curl', ['-4', '-sL', '--max-time', '600', '--retry', '3', '--retry-delay', '20', '-A', IA_UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
+        const code = execFileSync('curl', ['-4', '-sL', ...curlTimeouts(size), '-A', IA_UA, '-o', tmp, '-w', '%{http_code}', url], { encoding: 'utf8' }).trim()
         status = Number(code)
       } catch (e) { h.log(`curl failed (${(e as Error).message.slice(0, 100)}) for ${url}; the item is retried on the next run`); return { status: 0, buf: Buffer.alloc(0) } }
       if (status === 403 || status === 429) h.stop(`HTTP ${status} for ${url}`)
@@ -58,6 +64,12 @@ export function latestById<T extends { id: string }>(lines: string[]): Map<strin
 export function retryCandidates(lines: string[], all404 = false): { id: string; line: Record<string, unknown> }[] {
   const out: { id: string; line: Record<string, unknown> }[] = []
   for (const [id, it] of latestById<{ id: string; status: number; retried404?: boolean }>(lines)) if (it.status === 404 && (all404 || !it.retried404)) out.push({ id, line: it as unknown as Record<string, unknown> })
+  return out
+}
+/** CQ-1: ids whose latest line is a skip (413 too big / 598 stalled) and was not retried yet (retriedSkip) */
+export function retrySkippedCandidates(lines: string[], includeBig = false): { id: string; line: Record<string, unknown> }[] {
+  const out: { id: string; line: Record<string, unknown> }[] = []
+  for (const [id, it] of latestById<{ id: string; status: number; retriedSkip?: boolean }>(lines)) if ((it.status === STATUS_STALLED || (includeBig && it.status === STATUS_TOO_BIG)) && !it.retriedSkip) out.push({ id, line: it as unknown as Record<string, unknown> })
   return out
 }
 /** CQ-1 fix 4: ids whose latest line is a 5xx and was not retried yet (retried5xx), except the Sejm Kadencja series (Polish, never wanted) */

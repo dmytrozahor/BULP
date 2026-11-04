@@ -57,9 +57,10 @@ st_ff() {
 }
 # GG-18 fix: parsers outside build:data (СУМ scans, OCR dictionaries) are rerun when their code/inputs changed (reparse.sh; a no-op when nothing changed)
 st_reparse() { bash "$here/reparse.sh"; }
-st_build() { if [ -n "$BULP_FULL" ]; then npm run build:data -- --no-cache; else npm run build:data; fi; }
+st_build() { bulp_check_ocr || return 1; if [ -n "$BULP_FULL" ]; then npm run build:data -- --no-cache; else npm run build:data; fi; }
 st_unlinked() { [ -z "$BULP_FULL" ] || rm -rf data/work/unlinked-cache; npm run data:unlinked; }
-st_vitest() { npx vitest run --maxWorkers="${VITEST_WORKERS:-16}"; }
+# the budget tests read dist/: rebuild it when public/data (or the code) is newer, so a run resumed at `build` never tests a stale dist (next9: perес shard 35.5 KB from the previous build)
+st_vitest() { if [ ! -f dist/index.html ] || [ -n "$(find public/data src core index.html -newer dist/index.html -print -quit 2>/dev/null)" ]; then npx vite build || return 1; fi; npx vitest run --maxWorkers="${VITEST_WORKERS:-16}"; }
 st_vuetsc() { npx vue-tsc --noEmit; }
 st_vitebuild() { npx vite build; }
 st_budget() { npx tsx pipelines/budget.ts dist; }
@@ -75,7 +76,7 @@ st_commit() {
 st_rebase() { git pull --rebase --autostash origin mvp; }
 st_push() { git push origin HEAD:mvp; }
 
-export -f pointer_id st_ff st_reparse st_build st_unlinked st_vitest st_vuetsc st_vitebuild st_budget st_upload st_commit st_rebase st_push
+export -f bulp_check_ocr pointer_id st_ff st_reparse st_build st_unlinked st_vitest st_vuetsc st_vitebuild st_budget st_upload st_commit st_rebase st_push
 export here run publish BULP_REPO BULP_LOGS BULP_FULL
 t_start=$(date +%s)
 for s in "${STEPS[@]}"; do

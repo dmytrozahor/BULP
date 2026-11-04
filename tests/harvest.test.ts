@@ -339,3 +339,15 @@ describe('HV-6b place of recording from the volume own text: village-signed song
     expect(hv6.footerVillages('Зап. в серпні, 1897, у Невідомому від Марії.', 1910)).toEqual(['Невідомому'])
   })
 })
+
+describe('CQ-1 archive harvest: a dead data node costs a minute, big or stalled items are recorded and retried later', () => {
+  it('curl timeouts scale with the size (connect 20 s, stall abort, 1 retry); skip candidates are the latest 598 lines not retried yet', async () => {
+    const { curlTimeouts, retrySkippedCandidates, STATUS_STALLED, STATUS_TOO_BIG } = await import('../harvest/ia-text.ts')
+    const t = curlTimeouts(), at = (k: string, a = t) => a[a.indexOf(k) + 1]
+    expect(at('--connect-timeout')).toBe('20'); expect(at('--retry')).toBe('1'); expect(Number(at('--max-time'))).toBeLessThanOrEqual(900)
+    expect(Number(at('--max-time', curlTimeouts(100_000_000)))).toBe(900); expect(Number(at('--max-time', curlTimeouts(400_000)))).toBeLessThan(100)
+    const L = (o: object) => JSON.stringify(o)
+    const lines = [L({ id: 'a', status: STATUS_STALLED }), L({ id: 'b', status: STATUS_STALLED }), L({ id: 'b', status: 200 }), L({ id: 'c', status: STATUS_STALLED, retriedSkip: true }), L({ id: 'd', status: STATUS_TOO_BIG })]
+    expect(retrySkippedCandidates(lines).map(x => x.id)).toEqual(['a']); expect(retrySkippedCandidates(lines, true).map(x => x.id)).toEqual(['a', 'd'])
+  })
+})
