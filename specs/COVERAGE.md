@@ -1224,6 +1224,7 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-16 | tests/se16.test.ts › the wrong-lemma gates stay: a headword outside the running-head range, off the alphabetical spine or not strict gives no row |
 | SE-16 | tests/se16.test.ts › tidy: a lone mangled token becomes «[…]», a run of them cuts the excerpt with «…», a lone digit before […] is «з» |
 | SE-16 | tests/se16.test.ts › the statement may follow the cognate list («; — від лат. …»); no marker at all → a pointer (undefined excerpt) |
+| SE-16 | tests/se16.test.ts › an article whose own start the OCR lost is appended to the previous one: its statement is NOT taken |
 | SE-16 | tests/se16.test.ts › the panel: an excerpt is a Q-evidence, a pointer is a D-evidence with the volume and page and no text; a lemma with only a pointer still gets the source |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |

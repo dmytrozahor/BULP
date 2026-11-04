@@ -121,6 +121,11 @@ describe('SE-16 ЕСУМ: column-aware pages, paragraph articles, graded rows', 
     expect(g.t).toMatch(/^від лат\. abortus/); expect(g.grade).toBe('a')
     expect(gradeExcerpt('просто щось без жодного маркера, лише кілька слів')).toBeUndefined()
   })
+  it('an article whose own start the OCR lost is appended to the previous one: its statement is NOT taken (only the text before the first literature line is its own)', () => {
+    const merged = ', р. вага, бр. вага, п. waga, ч. váha, слц. váha, болг. вага, схв. вага, слн. vága; — Фасмер I 5; Brückner 7. — Див. ще інше. запозичення з польської мови; п. waga «тс.» утворене з чогось іншого, ніж вага.'
+    expect(gradeExcerpt(merged)).toBeUndefined()
+    expect(gradeExcerpt(', р. вага; — запозичення з польської мови; п. waga «тс.» утворене з чогось іншого, ніж вага. — Фасмер I 5; Brückner 7.')!.grade).toBe('a')
+  })
   it('the panel: an excerpt is a Q-evidence, a pointer is a D-evidence with the volume and page and no text; a lemma with only a pointer still gets the source', () => {
     const q = esumScanEvidence({ t: 'запозичення з французької мови; фр. abat-jour «тс.»', v: 1, p: 10, g: 'a' }, 'абажур')
     expect(q).toMatchObject({ kind: 'Q', locator: 'ЕСУМ, т. 1, с. 10' })

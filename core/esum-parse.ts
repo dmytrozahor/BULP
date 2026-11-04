@@ -235,6 +235,8 @@ export interface Esum16Article { head: string; bracket: boolean; body: string; p
 const START16 = /^([\[|(ІЇl]?)([а-яіїєґ][а-яіїєґ'’ʼ-]{2,})[0-9¹²³]?[\]|]?(?=\s*[,;«(\[|—–-]|\s)/u
 /** an article that follows a «— Див. ще X.» / «— Пор. X.» line inside the same paragraph (the OCR lost the blank line) */
 const MID = /(?<=(?:Пор|Див|Зіст)\.[^.]{1,70}\.)\s+(?=[\[|]?[а-яіїєґ]{3,}[0-9¹²³]?[\]|]?\s*(?:[,;«(]|\s[(«]))/u
+/** the last line of an article is a pointer («— Див. ще жити, об, оба,»): the OCR often loses its full stop */
+const REF_END = /(?:Див|Пор|Зіст)\.?\s*(?:ще|me)?\s+[^.«»]{0,70}[,\s.—–-]*$/u
 const TERM_END = /[.»)\]!?]["'”’]?\s*$/u
 export interface Esum16Stats { pages: number; bodyPages: number; paragraphs: number; starts: number; notStart: number; badHead: number; bracketed: number; outOfRange: number; noSignal: number; offSpine: number; seqDropped: number; duplicates: number; entries: number; a: number; b: number; c: number; clipped: number; withBorrowing: number; withProto: number }
 export const newEsum16Stats = (): Esum16Stats => ({ pages: 0, bodyPages: 0, paragraphs: 0, starts: 0, notStart: 0, badHead: 0, bracketed: 0, outOfRange: 0, noSignal: 0, offSpine: 0, seqDropped: 0, duplicates: 0, entries: 0, a: 0, b: 0, c: 0, clipped: 0, withBorrowing: 0, withProto: 0 })
@@ -258,7 +260,7 @@ export function splitEsum16(pages: EsumPage[], off: number, st: Esum16Stats): Es
         cur = { head: m[2]!.replace(/[’ʼ]/g, "'"), bracket: /^[\[|]/.test(m[1]!), body: t.slice(m[0].length), page: p.idx - off, ...(h.lo ? { lo: h.lo } : {}), ...(h.hi ? { hi: h.hi } : {}), gloss: /^\s*[,;]?\s*(?:\([^()]{1,18}\)\s*)?«/u.test(t.slice(m[0].length)) }
         out.push(cur)
       } else if (cur) { cur.body = joined ? cur.body.slice(0, -1) + t : cur.body + ' ' + t; if (m) st.notStart++ }   // a blank line inside an article is a continuation
-      prevTerm = TERM_END.test(t)
+      prevTerm = TERM_END.test(t) || REF_END.test(t)
     }
   }
   return out
@@ -305,7 +307,9 @@ export function tidyExcerpt(t: string): { t: string; changed: boolean } | undefi
 }
 /** the excerpt of an article with its grade; a statement the OCR garbled is cut back to its longest clean prefix, else the row is a pointer only */
 export function gradeExcerpt(body: string): { t: string; kind: Statement['kind']; grade: 'a' | 'b' } | undefined {
-  const s = statementOf(body, ESUM_MAX, true); if (!s) return undefined
+  // an article whose own start the OCR lost (a garbled headword) is appended to the previous one: only the text before the first literature line belongs to this article
+  const lit = BIBL.exec(body), own = lit && lit.index > 60 ? body.slice(0, lit.index) : body
+  const s = statementOf(own, ESUM_MAX, true); if (!s) return undefined
   const flat = body.replace(/\s+/g, ' '), weak = !STRONG.test(flat) && WEAK.test(flat)
   let t = s.t
   if (!excerptClean(t)) {   // cut at the last «;» / «,» that leaves a clean prefix of at least 25 characters
