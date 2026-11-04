@@ -19,6 +19,7 @@ import { DIALECTS } from '../core/rules.ts'
 import { archId, type ArchEntry } from '../core/archaic.ts'
 import { featureOf } from '../core/form-class.ts'
 import { packCg, plain, type CorrGroup } from '../core/corr.ts'
+import { slimAuthors, authorsEvidence } from '../core/authors-boot.ts'
 import { BUDGET, IX_GZ_MAX, IX_MAX, IX_MIN, IX_SPLIT_MIN_KEYS, LEMMA_PAGE, LM_BUCKETS, LM_NAMES, TC_BUCKETS, seBucket, xrBucket, synBucket, phrBucket, WIT_BUCKETS, tcBucket, ixName, ixPad, lmBucket, witBucket, type BootFile, type DxShard, type IxHit, type IxManifest, type IxRow, type IxShard, type LmName } from '../core/parts.ts'
 import type { CoreCard, CorpusMeta, LexIndex } from '../core/types.ts'
 import { vocabTotals } from './vocab-n.ts'
@@ -371,8 +372,9 @@ function writeCorpusParts(corpus: CorpusMeta, cards: CoreCard[], ci?: Parameters
   const boot: BootFile = {
     format: 1, generated: corpus.generated, N: corpus.N, linked: corpus.linked, unresolved: corpus.unresolved, nLemmas: cards.length, ...coverageCounts(cards.length, ci), ...uvAttCount(DATA), nWitnesses: corpus.witnesses.length, lemmaPage: LEMMA_PAGE,
     ...vocabCounts(process.env['PARTS_WORK'] ?? 'data/work'),
-    epochSizes: corpus.epochSizes, centurySizes: corpus.centurySizes, rusynStatus: corpus.rusynStatus, regions: corpus.regions, authors: corpus.authors,
+    epochSizes: corpus.epochSizes, centurySizes: corpus.centurySizes, rusynStatus: corpus.rusynStatus, regions: corpus.regions, authors: slimAuthors(corpus.authors),
   }
+  out('authors.json', authorsEvidence(corpus.authors))   // the evidence the slim boot records leave out (PF-2: 1263 vetting records were 72 KB gz of every first load)
   boot.nEntries = bootEntries(boot)
   out('boot.json', boot)
   console.log(`wit: ${corpus.witnesses.length} witnesses, worst shard ${(worst / 1024).toFixed(1)} KB gz; boot.json ${(gz(boot) / 1024).toFixed(1)} KB gz`)

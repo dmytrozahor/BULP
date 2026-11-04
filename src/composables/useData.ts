@@ -11,6 +11,7 @@ import { unpackCore } from '../../core/pack.ts'
 import { bucketOf, isFull, loadShardWith, mergeCard } from '../../core/shard.ts'
 import { SOURCES } from '../../core/sources.ts'
 import type { BootFile } from '../../core/parts.ts'
+import { fullAuthor, type AuthorEvidenceFile } from '../../core/authors-boot.ts'
 import type { SearchIndex } from '../lib/search.ts'
 import type { AnnotateData } from '../lib/annotate.ts'
 import { dataUrl } from '../lib/dataUrl.ts'
@@ -83,12 +84,20 @@ const witnessById = computed(() => ({ get: (id: string): WitnessMeta | undefined
 const annData = computed<AnnotateData>(() => ({ search: searchIdx.value, cards: cardMapView, lexindex: ixLexIndex, paradigmMap: ixParadigm, ru: ruLookups }))   // MM-36: the Russian-headword index (lm/ru) feeds the shared classifier
 const corpus = computed<BootCorpus | undefined>(() => (fullCorpus.value && state.corpus ? { ...state.corpus, ...fullCorpus.value, full: true } : state.corpus))
 
-export interface AuthorInfo { id: string; name: string; label?: Author['label']; status?: Author['status']; evidence: Author['evidence']; life?: string; known: boolean }
+/** PF-2: boot.json's vetting records carry no evidence (core/authors-boot.ts); authors.json is fetched the first time a popover / the author page asks for it */
+const authorEv = shallowRef<AuthorEvidenceFile>()
+let authorEvStarted = false
+export function loadAuthorEvidence(): void {
+  if (authorEvStarted) return
+  authorEvStarted = true
+  get('authors').then(j => { const f = j as AuthorEvidenceFile; if (f?.format === 1) authorEv.value = f }).catch(() => { authorEvStarted = false })
+}
+export interface AuthorInfo { id: string; name: string; label?: Author['label']; status?: Author['status']; evidence: Author['evidence']; life?: string; known: boolean; /** the record has evidence that has not arrived yet */ pending?: boolean }
 /** Resolve an author id (or name) to the vetting record; falls back to the witness's own self-reference evidence. */
 export function authorInfo(idOrName: string, w?: WitnessMeta): AuthorInfo {
   const list = state.corpus?.authors ?? [], a = list.find(x => x.id === idOrName) ?? list.find(x => x.name === idOrName)
-  const ev = [...(a?.evidence ?? []), ...(w?.authorEvidence ?? [])]
-  return a ? { id: a.id, name: a.name, label: a.label, status: a.status, evidence: ev, life: a.life, known: true }
+  const full = a ? fullAuthor(a, authorEv.value) : undefined, ev = [...(full?.evidence ?? []), ...(w?.authorEvidence ?? [])]
+  return a ? { id: a.id, name: a.name, label: a.label, status: a.status, evidence: ev, life: a.life, known: true, pending: !!a.lazyEv && !authorEv.value }
     : { id: idOrName, name: idOrName, evidence: ev, known: false }
 }
 

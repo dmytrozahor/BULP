@@ -26,6 +26,8 @@ export type AuthorStatus = 'vetted' | 'provisional' | 'unverified' | 'excluded'
 export interface Author {
   id: string; name: string; life: string; label: AuthorLabel; status: AuthorStatus
   confidence: 'explicit' | 'implicit' | 'disputed'; region?: string; evidence: Evidence[]; note?: string
+  /** boot.json only (core/authors-boot.ts): the evidence and the note live in authors.json and are fetched when a popover / the author page needs them */
+  lazyEv?: true
 }
 
 const IZ = (path: string) => `http://izbornyk.org.ua/${path}`

@@ -70,7 +70,7 @@ describe('BL-8 modern verb paradigm: робити', () => {
     const c = readFull().find(x => x.lemma === 'робити')!
     const ids = buildGrids(c.paradigm).map(x => x.id)
     for (const id of ['inf', 'pres', 'futr', 'past', 'impr', 'impers']) expect(ids).toContain(id)
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })
 
 describe('BL-8 verb decoders', () => {
@@ -142,5 +142,5 @@ describe.skipIf(!hasData())('BL-8 built data: TOROT verbs placed per epoch', () 
     }
     const aor = count('ректи').cells.filter(c => c.key.startsWith('aor.') || c.key.startsWith('impf.'))
     expect(aor.length).toBeGreaterThan(0)
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })

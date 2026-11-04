@@ -129,7 +129,7 @@ describe('MM-2 хомѣки: two rule-based paths (R09 → variant хомік, R
     const all = readFull(), c = all.find(x => x.lemma === "хом'як"); if (!c) return
     expect(c.forms.map(f => f.raw)).toContain('хомѣки')
     expect(all.filter(x => x.lemma === 'Хомік').flatMap(x => x.forms.map(f => f.raw))).not.toContain('хомѣки')
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })
 
 describe('MM-3 пілки (dim. of пола) is not полки (pl. of полк «regiment»)', () => {

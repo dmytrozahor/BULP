@@ -92,8 +92,8 @@ export async function measureKeystroke(dist: string, query: string, rows = 10): 
     const r = await searchRemote(query, queryKeys)
     for (const x of r.lemmas.slice(0, rows)) { coreOf(x.lemma) }   // the rows on screen read their core cards (reactive peek starts the fetch)
     await new Promise(res => setTimeout(res, 50))
-    const sociolect = join(dist, 'data', 'sociolect.json')   // plastSearch() reads it on the first keystroke
-    if (existsSync(sociolect)) seen.set(sociolect, gz(sociolect))
+    const plast = join(dist, 'data', existsSync(join(dist, 'data', 'plast.json')) ? 'plast.json' : 'sociolect.json')   // plastSearch() reads it on the first keystroke (plast.json: the entries only)
+    if (existsSync(plast)) seen.set(plast, gz(plast))
     const files = [...seen].map(([file, g]) => ({ file, gz: g })).sort((a, b) => b.gz - a.gz)
     return { bytes: files.reduce((n, f) => n + f.gz, 0), files, results: r.lemmas.length }
   } finally { globalThis.fetch = real }

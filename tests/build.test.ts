@@ -251,7 +251,7 @@ describe.skipIf(!hasData())('B-5 size budget over the built data (EP-1.1, EP-1.5
     expect(withEp.length).toBeGreaterThan(1000)
     for (const c of withEp.slice(0, 200)) { expect(c.epochs!.paradigms.length).toBeGreaterThan(0); for (const p of c.epochs!.paradigms) expect(p.epoch).toMatch(/^shev\./) }
     for (const c of withEp.slice(0, 50)) { const { core, detail } = splitCard(c); expect(mergeCard(core, detail)).toEqual(c) }
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })
 describe('lexicon packing (core/pack)', () => {
   const e = Q('S', 'loc', 'quote')

@@ -5,7 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import Pagination from '../components/Pagination.vue'
 import { plastLabel } from '../../core/sociolect.ts'
 import { usePage } from '../composables/usePage.ts'
-import { plastAll, plastSearch, sociolectFile } from '../lib/sociolectData.ts'
+import { plastAll, plastData, plastSearch } from '../lib/sociolectData.ts'
 import { useData } from '../composables/useData.ts'
 import { wordCardTo } from '../lib/cardIndex.ts'
 import { ixCards } from '../lib/parts.ts'
@@ -13,14 +13,14 @@ const { searchIdx } = useData()
 const route = useRoute(), router = useRouter()
 const q = ref(String(route.query.q ?? ''))
 watch(q, v => { const query: Record<string, unknown> = { ...route.query, q: v || undefined }; delete query.p; router.replace({ path: route.path, query: query as typeof route.query }) })
-const rows = computed(() => { void sociolectFile.value; return q.value.trim() ? plastSearch(q.value, 10_000) : plastAll() })
+const rows = computed(() => { void plastData.value; return q.value.trim() ? plastSearch(q.value, 10_000) : plastAll() })
 const pg = usePage(computed(() => rows.value.length))
 </script>
 
 <template>
   <section class="card">
     <h1>Пластова лексика</h1>
-    <p class="muted small sans" v-if="sociolectFile">Джерела: {{ sociolectFile.plast.compiler }} та інші словники Пласту; цитати ≤ 160 знаків із локатором, повні тексти не зберігаються.</p>
+    <p class="muted small sans" v-if="plastData">Джерела: {{ plastData.plast.compiler }} та інші словники Пласту; цитати ≤ 160 знаків із локатором, повні тексти не зберігаються.</p>
     <input v-model="q" type="search" placeholder="Фільтр: вишкіл, табір, ВПР…" aria-label="Фільтр пластової лексики" autocomplete="off" spellcheck="false" />
     <p class="small muted sans">{{ rows.length }} записів</p>
     <ul class="results">

@@ -67,7 +67,7 @@ describe('PF-1 no whole-file downloads of the sharded data', () => {
     for (const n of FORBIDDEN) expect(whole, `src fetches ${n}.json whole`).not.toContain(n)
   })
   it('the remaining whole files are the boot file and list pages (corpus, phrases, songs, sophia, places, small sets)', () => {
-    const ALLOWED = new Set(['boot', 'corpus', 'phrases', 'songs', 'sophia', 'places', 'sociolect', 'modern'])
+    const ALLOWED = new Set(['boot', 'corpus', 'phrases', 'songs', 'sophia', 'places', 'sociolect', 'plast', 'modern', 'authors'])
     const extra = [...new Set(whole)].filter(n => !ALLOWED.has(n))
     expect(extra).toEqual([])
   })

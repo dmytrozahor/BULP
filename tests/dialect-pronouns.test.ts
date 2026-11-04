@@ -32,7 +32,7 @@ describe('DP-1 research: every variant is backed by a source quote with locator;
     if (!hasData()) return
     const c = readFull().find(x => x.lemma === 'тамтой')!
     expect(Math.min(...c.forms.map(f => f.date[0]))).toBeLessThan(1800)
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })
 
 describe('DP-2 derivation: rule-generated paradigms linked to the standard lemma', () => {
@@ -55,7 +55,7 @@ describe('DP-2 derivation: rule-generated paradigms linked to the standard lemma
       const have = new Set(deriveVariant(variantById(v)!, s.paradigm).map(f => f.form))
       for (const p of own.paradigm) expect(have.has(p.form), `${v}: ${p.form}`).toBe(true)
     }
-  })
+  }, 300_000)   // the real-data tests read the whole built lexicon: ~100 s on the worker under 16 parallel files (corpus 68M tokens)
 })
 
 describe('DP-3 labels come from the AC gazetteer or the source\'s own named говір, never a free assignment', () => {

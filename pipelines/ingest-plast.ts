@@ -16,7 +16,7 @@ import { lchEntries, LCH_ID } from './plast-lch.ts'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 export const PLAST_URL = 'https://plastseattle.org/plast-101/dictionary/'
-const LCH_RAW = resolve(ROOT, 'data/raw/plast/lch-ocr.txt'), OUT = resolve(ROOT, 'public/data/sociolect.json')
+const LCH_RAW = resolve(ROOT, 'data/raw/plast/lch-ocr.txt'), OUT = resolve(ROOT, 'public/data/sociolect.json'), PLAST_OUT = resolve(ROOT, 'public/data/plast.json')
 const RAW = resolve(ROOT, 'data/raw/plast/plastseattle-dictionary.html'), VESUM = resolve(ROOT, 'data/raw/vesum/dict_corp_vis.txt')
 /** SL-1 words (user list) — checked against VESUM whatever their process. */
 export const SL1_WORDS = ['всм', 'екстремітет', 'екстреміті', 'аплікейбіліті', 'аплікабіліті']
@@ -103,5 +103,6 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     processes: PROCESSES, dialect: kroki.dialect, literary,
   }
   writeAtomic(OUT, JSON.stringify(f))
+  writeAtomic(PLAST_OUT, JSON.stringify({ format: 1, generated: f.generated, plast: f.plast }))   // PF-2: the search reads only this (src/lib/sociolectData.ts loadPlast)
   console.log(`plast entries ${entries.length} (abbr ${entries.filter(e => e.k === 'abbr').length}); VESUM present ${literary.filter(l => l.vesum).length}/${literary.length}`)
 }
