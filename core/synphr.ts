@@ -9,7 +9,9 @@ export type RelKind = 's' | 'a' | 'h' | 'o' | 'c'
 /** edition of the source page: u = uk.wiktionary, e = en.wiktionary (kaikki) */
 export type Edition = 'u' | 'e'
 /** t target (no stress mark) · r relation · d edition · n item number of the uk.wiktionary list = sense number in «Значення» · g gloss of that sense · q qualifiers as printed · u 1 = no lemma / card of ours behind the target */
-export interface SynRow { t: string; r: RelKind; d: Edition; n?: number; g?: string; q?: string[]; u?: 1 }
+/** SE-17: d = 'k' is a word-to-word link of Караванський (2000; option b of the owner: ≤ 5 per headword, no labels or examples), l = the printed spread «с. 10–11» */
+export type SynEdition = Edition | 'k'
+export interface SynRow { t: string; r: RelKind; d: SynEdition; n?: number; g?: string; q?: string[]; u?: 1; l?: string }
 /** f established expression / phraseological unit (uk section) · p proverb / saying (uk section) · w multi-word headword of en.wiktionary (phrase, proverb, prep_phrase); x = 1: the page is that of a word INSIDE the phrase */
 export type PhrKind = 'f' | 'p' | 'w'
 /** GG-19: n = Номис 1864, f = Франко (Етнографічний збірник) — public-domain printed collections read from the archive.org OCR; u / e = Wiktionary */
@@ -22,7 +24,7 @@ export interface PhrRow { p: string; k: PhrKind; d: PhrEdition; v?: string[]; g?
 
 export const REL_NAME: Record<RelKind, string> = { s: 'Синоніми', a: 'Антоніми', h: 'Ширші поняття (гіпероніми)', o: 'Вужчі поняття (гіпоніми)', c: 'Співрядні поняття' }
 export const REL_ORDER: RelKind[] = ['s', 'a', 'h', 'o', 'c']
-export const ED_NAME: Record<PhrEdition, string> = { u: 'uk.Вікісловник', e: 'en.Вікісловник (kaikki)', n: 'Номис, 1864 (archive.org, OCR)', f: 'Франко, Етнографічний збірник (archive.org, OCR)' }
+export const ED_NAME: Record<PhrEdition | 'k', string> = { k: 'Караванський, Практичний словник синонімів української мови (Київ: Українська книга, 2000)', u: 'uk.Вікісловник', e: 'en.Вікісловник (kaikki)', n: 'Номис, 1864 (archive.org, OCR)', f: 'Франко, Етнографічний збірник (archive.org, OCR)' }
 export const wiktUrl = (d: Edition, page: string) => `https://${d === 'u' ? 'uk' : 'en'}.wiktionary.org/wiki/${encodeURIComponent(page)}`
 export const LICENCE = 'CC BY-SA 4.0'
 /** what the «немає даних (перевірено: …)» line names */
@@ -233,7 +235,8 @@ export const PROV_SOURCE: Record<'n' | 'f', string> = { n: 'NOMIS1864', f: 'FRAN
 /** a relation row as a claim: locator = the source page URL (+ the sense), quote = the statement the page makes */
 export function synClaim(head: string, r: SynRow): Claim<string> {
   const sense = r.g ? ` [${r.g}]` : r.n ? ` [п.${r.n}]` : ''
-  return claim(r.t, D(SRC_NAME[r.d], wiktUrl(r.d, head), `${head}${sense} — ${REL_NAME[r.r].toLowerCase()}: ${r.t}`, LICENCE))
+  if (r.d === 'k') return claim(r.t, D('Караванський, Практичний словник синонімів української мови (2000)', r.l ?? '', `${head} — ${r.t}`, 'SE-17: зв’язок слово до слова за сторінкою словника; ряд, ремарки, позначки й приклади не відтворюються'))
+  return claim(r.t, D(SRC_NAME[r.d as Edition], wiktUrl(r.d as Edition, head), `${head}${sense} — ${REL_NAME[r.r].toLowerCase()}: ${r.t}`, LICENCE))
 }
 export function phrClaim(head: string, r: PhrRow): Claim<string> {
   // GG-19: a printed-collection row: locator = volume / page / number of the print, quote = the OCR slice (verbatim)

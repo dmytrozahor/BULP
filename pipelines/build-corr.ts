@@ -15,7 +15,7 @@ import { resolve } from 'node:path'
 import { assemble, checkGroup, corpusArea, plain, type CorrFirst, type CorrGroup, type CorrMember, type CorrPair } from '../core/corr.ts'
 import { hypothesisPairs, ownerTsvPairs } from '../core/corr-src.ts'
 import { parseOwnerTsv, withoutRejected, type DvLink } from '../core/dialect-variants.ts'
-import { dialectLexPairs, dialectLexRows, familyPairs, kaikkiIndexAdd, kaikkiPairs, ownerPairs, ukWiktPairs, xrPairs, KK_POS, type KkEntry, type KkIndex, type LexRow, type PosOf, type Rejects } from '../core/corr-src.ts'
+import { dialectLexPairs, dialectLexRows, familyPairs, karavanskyPairs, type KarLinkRow, kaikkiIndexAdd, kaikkiPairs, ownerPairs, ukWiktPairs, xrPairs, KK_POS, type KkEntry, type KkIndex, type LexRow, type PosOf, type Rejects } from '../core/corr-src.ts'
 import { vesumClass } from '../core/pos-gate.ts'
 import { unpackCore } from '../core/pack.ts'
 import { bucketOf } from '../core/shard.ts'
@@ -38,7 +38,7 @@ const sizeKey = (p: string) => `${statSync(p).size}`
 // ── stage vesum ─────────────────────────────────────────────────────────────────────────────────
 export interface PosInfo { cls: Set<string>; nonNorm: boolean }
 const NONNORM = new Set(['arch', 'bad', 'subst', 'slang', 'vulg', 'obsc', 'alt', 'rare', 'dial'])
-async function stageVesum(): Promise<Map<string, PosInfo> | undefined> {
+export async function stageVesum(): Promise<Map<string, PosInfo> | undefined> {
   const f = raw('vesum/dict_corp_vis.txt'); if (!existsSync(f)) return undefined
   const cache = work('corr-stage-vesum.json')
   if (existsSync(cache)) { try { const c = readJson<{ bytes: string; rows: Record<string, [string, number]> }>(cache); if (c.bytes === sizeKey(f)) return new Map(Object.entries(c.rows).map(([k, [cl, nn]]) => [k, { cls: new Set(cl.split(',')), nonNorm: !!nn }])) } catch { /* torn: rebuilt */ } }
@@ -169,6 +169,9 @@ export async function buildCorr(): Promise<CorrFile> {
     if (xr) pairs.push(...xrPairs(xr, posOf, rej, senseN))
     if (kkStage) { const ix = kkIndexOf(kkStage); for (const e of kkStage.entries) pairs.push(...kaikkiPairs(e, ix, posOf, rej)) }
     if (syn) pairs.push(...ukWiktPairs(syn, posOf, rej))
+    // SE-17: Караванський word-to-word links (owner's option b); absent file or publish=false gives nothing
+    const kl = work('karavansky-links.json')
+    if (existsSync(kl) && process.env.KARAVANSKY_PUBLISH !== '0') { try { const j = readJson<{ publish: boolean; links: KarLinkRow[] }>(kl); if (j.publish) pairs.push(...karavanskyPairs(j.links, posOf, rej)) } catch { rej['karavansky: links file unreadable'] = 1 } }
     const ed = work('corr-extra')
     if (existsSync(ed)) for (const f of readdirSync(ed).filter(x => x.endsWith('.json')).sort()) { try { pairs.push(...dialectLexPairs(readJson<{ rows: LexRow[] }>(resolve(ed, f)).rows, posOf, rej, 'extra', senseN)) } catch { rej[`extra: ${f} unreadable`] = 1 } }
   }

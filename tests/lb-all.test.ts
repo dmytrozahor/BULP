@@ -183,8 +183,8 @@ describe('LB-15 prefaces of the r2u dictionaries: a class only on a quoted state
     expect(tailClass(undefined, undefined, cv([], 128 | 8192).facts, false).c).toBe('epoch')
     expect(tailClass(undefined, undefined, { ...cv([], 128).facts, vesum: true }, true).sub).toBe('vesum')
   })
-  it('LB-15 dictionaries whose prefaces were read but name no base or norm stay out: Ізюмов, Голоскевич, Якубські, Закревський, Пластові словники', () => {
-    for (const id of ['r2u_izyumov', 'r2u_holoskevych', 'r2u_yakubski', 'zakrevsky']) { expect(baseOf(id)).toBeUndefined(); expect(normOf(id)).toBeUndefined(); expect(histOf(id)).toBeUndefined() }
+  it('LB-15 dictionaries whose prefaces were read but name no base or norm stay out: Ізюмов, Голоскевич, Якубські, Пластові словники (Закревський: SE-17 read his preface, see tests/se17.test.ts)', () => {
+    for (const id of ['r2u_izyumov', 'r2u_holoskevych', 'r2u_yakubski']) { expect(baseOf(id)).toBeUndefined(); expect(normOf(id)).toBeUndefined(); expect(histOf(id)).toBeUndefined() }
   })
   it('LB-15 the card and the methods page show the norm quotes', async () => {
     expect(rd('src/components/LabelsBlock.vue')).toContain('data-testid="lb-norm"')

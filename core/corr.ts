@@ -94,7 +94,7 @@ export interface CorrPair {
   meaning?: string
 }
 /** source order: the first sources win when a group would exceed the cap */
-export const SRC_PRIORITY = ['family', 'owner', 'extra', 'dialect-lex', 'xr', 'wikt-alt', 'wikt-syn-uk', 'wikt-syn-en'] as const
+export const SRC_PRIORITY = ['family', 'owner', 'extra', 'dialect-lex', 'xr', 'wikt-alt', 'wikt-syn-uk', 'wikt-syn-en', 'karavansky'] as const
 export const GROUP_CAP = 12
 const prio = (s: string) => { const i = (SRC_PRIORITY as readonly string[]).indexOf(s); return i < 0 ? SRC_PRIORITY.length : i }
 

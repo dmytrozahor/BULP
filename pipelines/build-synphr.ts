@@ -102,8 +102,9 @@ function cached(path: string, bytes: number): Stage | undefined {
 }
 
 export interface SynPhrStats {
-  inputs: { ukwikt?: { bytes: number; pages: number }; kaikki?: { bytes: number; pages: number }; proverbs?: { bytes: number; pages: number } }
+  inputs: { karavansky?: { bytes: number; pages: number }; ukwikt?: { bytes: number; pages: number }; kaikki?: { bytes: number; pages: number }; proverbs?: { bytes: number; pages: number } }
   synHeads: number; synPairs: number; synByRel: Record<string, number>; synByEd: Record<string, number>; synLinked: number; synUnlinked: number; groups: number
+  /** SE-17: synonym components WITHOUT the Караванський links (the unit is a connected component of the s-relation over headwords and targets, as `groups`), and the links themselves (rows, d = k) */ groupsOpen?: number; karLinks?: number
   phrHeads: number; phrRows: number; phrByKind: Record<string, number>; phrDistinct: number
   /** GG-19: the proverb collections (Номис, Франко): rows after the per-headword cap, headwords, headwords that had NO Wiktionary phraseology row before, and the stage's own counts */
   prov?: { rows: number; heads: number; newHeads: number; withWikt: number; capped: number; stage: ProvStats }
@@ -116,23 +117,26 @@ export function combine(stages: Stage[], known: (key: string) => boolean): { syn
     for (const [k, l] of Object.entries(st.phr)) for (const r of l) add(phr, k, r, samePhr)
   }
   const stats: SynPhrStats = { inputs: {}, synHeads: 0, synPairs: 0, synByRel: {}, synByEd: {}, synLinked: 0, synUnlinked: 0, groups: 0, phrHeads: 0, phrRows: 0, phrByKind: {}, phrDistinct: 0 }
-  for (const st of stages) stats.inputs[st.src as 'ukwikt' | 'kaikki' | 'proverbs'] = { bytes: st.bytes, pages: st.pages }
+  for (const st of stages) stats.inputs[st.src as 'ukwikt' | 'kaikki' | 'proverbs' | 'karavansky'] = { bytes: st.bytes, pages: st.pages }
   // union-find over synonym pairs (measurement only: «groups» = connected components of the s-relation)
-  const parent = new Map<string, string>()
+  const parent = new Map<string, string>(), parentOpen = new Map<string, string>()
+  const findIn = (m: Map<string, string>, x: string): string => { let r = x; while (m.get(r) !== undefined && m.get(r) !== r) r = m.get(r)!; m.set(x, r); return r }
   const find = (x: string): string => { let r = x; while (parent.get(r) !== undefined && parent.get(r) !== r) r = parent.get(r)!; parent.set(x, r); return r }
   for (const k of Object.keys(syn).sort()) {
     const l = syn[k]!
     for (const r of l) { if (!r.t.includes(' ') && known(lk(r.t))) delete r.u; else r.u = 1 }
     // order: the sense order of the source (uk items 1..n), then en rows; stable
-    l.sort((a, b) => (a.d === b.d ? (a.n ?? 99) - (b.n ?? 99) : a.d === 'u' ? -1 : 1))
+    const edRank = { u: 0, e: 1, k: 2 }
+    l.sort((a, b) => (a.d === b.d ? (a.n ?? 99) - (b.n ?? 99) : edRank[a.d] - edRank[b.d]))
     syn[k] = l.slice(0, CAP_SYN)
     stats.synHeads++
     for (const r of syn[k]!) {
       stats.synPairs++; stats.synByRel[r.r] = (stats.synByRel[r.r] ?? 0) + 1; stats.synByEd[r.d] = (stats.synByEd[r.d] ?? 0) + 1; r.u ? stats.synUnlinked++ : stats.synLinked++
-      if (r.r === 's') { const a = find(k), b = find(lk(r.t)); if (a !== b) parent.set(a, b) }
+      if (r.r === 's') { const a = find(k), b = find(lk(r.t)); if (a !== b) parent.set(a, b); if (r.d !== 'k') { const a2 = findIn(parentOpen, k), b2 = findIn(parentOpen, lk(r.t)); if (a2 !== b2) parentOpen.set(a2, b2) } }
     }
   }
   const comps = new Set<string>(); for (const x of parent.keys()) comps.add(find(x)); stats.groups = comps.size
+  const compsOpen = new Set<string>(); for (const x of parentOpen.keys()) compsOpen.add(findIn(parentOpen, x)); stats.groupsOpen = compsOpen.size; stats.karLinks = stats.synByEd.k ?? 0
   const distinct = new Set<string>(), prov = { rows: 0, heads: 0, newHeads: 0, withWikt: 0, capped: 0 }
   for (const k of Object.keys(phr).sort()) {
     const isProv = (r: PhrRow) => r.d === 'n' || r.d === 'f'
@@ -164,6 +168,12 @@ export async function writeSynPhr(raw: string, work: string, known: (key: string
     const c = resolve(work, 'data/work/synphr-kaikki.json'); let s = cached(c, statSync(kk).size)
     if (!s) { s = await stageKaikki(kk); writeJsonAtomic(c, JSON.stringify(s)) }
     stages.push(s)
+  }
+  // SE-17: Караванський (©), option b of the owner: word-to-word links only (pipelines/se17-scan.ts → data/work/karavansky-links.json); absent file or publish=false → nothing
+  const kl = resolve(work, 'data/work/karavansky-links.json')
+  if (existsSync(kl) && process.env.KARAVANSKY_PUBLISH !== '0') {
+    const j = readJson<{ publish: boolean; links: { h: string; t: string; page: string }[] }>(kl)
+    if (j.publish && j.links.length) { const syn: Rows<SynRow> = {}; for (const x of j.links) add(syn, lk(x.h), { t: x.t, r: 's', d: 'k', l: x.page }, sameSyn); stages.push({ v: 1, src: 'karavansky', bytes: statSync(kl).size, pages: j.links.length, syn, phr: {} }) }
   }
   const hd = process.env.HARVEST_DIR ?? resolve(raw, 'data/raw/harvest'), vesum = resolve(raw, 'data/raw/vesum/dict_corp_vis.txt')   // GG-19: proverb collections (harvest/proverbs.ts), lemma links from VESUM
   const pv = loadProverbInputs(hd)

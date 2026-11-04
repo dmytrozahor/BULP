@@ -139,7 +139,24 @@ export function ukWiktPairs(syn: Record<string, SynRow[]>, posOf: PosOf, rej: Re
   return out
 }
 
-// ── 4 dictionary cross-references ───────────────────────────────────────────────────────────────
+// ── 3c Караванський (SE-17, © — word-to-word links only, owner's option b) ──────────────────────
+/** the published links of pipelines/se17-scan.ts (≤ 5 per headword, VESUM lemmas of one POS); each pair is evidence of the kind D = a pointer to the printed spread, never a quoted row. The CR-1 mutual-listing guard applies where
+ *  both ends are nest words of the dictionary (`n`): a one-sided link between two nest words is dropped. The series of a nest holds several senses, so a pair is never attached to one sense (`unspec`). */
+export interface KarLinkRow { h: string; t: string; page: string; m?: 1; n?: 1 }
+export function karavanskyPairs(links: readonly KarLinkRow[], posOf: PosOf, rej: Rejects): CorrPair[] {
+  const out: CorrPair[] = [], seen = new Set<string>()
+  for (const l of links) {
+    const a = plain(l.h), b = plain(l.t), c = checkPair(a, b, posOf(a), posOf(b)); if (!c.ok) { bump(rej, `karavansky: ${c.why}`); continue }
+    if (l.n && !l.m) { bump(rej, 'karavansky: one-sided between two nest words'); continue }
+    const k = a < b ? `${a}|${b}` : `${b}|${a}`; if (seen.has(k)) continue; seen.add(k)
+    const pos = [...posOf(a)!].find(p => posOf(b)!.has(p))!
+    out.push({ a, b, pos, rel: 'lexical', src: 'karavansky', sense: 'unspec',
+      ev: D('Караванський, Практичний словник синонімів української мови (Київ: Українська книга, 2000)', l.page, `${a} — ${b}`, 'SE-17: сторінка словника, на якій заголовне слово має це слово у синонімічному ряду; слова обрано за ВЕСУМ (одна частина мови), ряд, позначки й приклади не відтворюються') })
+  }
+  return out
+}
+
+// ── 4 dictionary cross-references───────────────────────────────────────────────────────────────
 export const DICT_NAME: Record<string, string> = { sum11: 'СУМ-11', sum20: 'СУМ-20', hrinchenko: 'Грінченко', zheleh: 'Желехівський' }
 /** `xr` = data/work/xr.json (lk(head) → pointer rows); only «Те саме, що» (kind `same`). A spelling variant (a few letters apart) is the same word; any other target may be a polysemous word: `unspec`. */
 export function xrPairs(xr: Record<string, Omit<Ptr, 'h'>[]>, posOf: PosOf, rej: Rejects, senseN?: SenseN): CorrPair[] {
