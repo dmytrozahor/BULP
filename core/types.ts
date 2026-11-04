@@ -40,6 +40,8 @@ export interface WitnessOut {
   authorEvidence?: Evidence[]   // self-reference found in the witness itself (e.g. Kyiv Chronicle)
   /** R2U-1: attestation-only witness (r2u dictionary lookups): its tokens date and attest spellings of lemmas the corpus already keeps, but are no running text — they add nothing to N, f, ipm, dispersion, collocations or the keep rule */
   noFreq?: boolean
+  /** SPEC 63 CQ-2: the date of this witness is not reliable (a modern-spelling translation or reprint under the year of the original, or a composite volume whose issue is unknown): counted in N, but never a first attestation, an oldest form or an epoch claim; the text card prints «дата невірогідна: why» */
+  dateUncertain?: { why: string }
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
   /** SPEC 60 MV-1 / NW-7: the witness's media (a song's YouTube video; Sophia IIIF image). `id` = video id for youtube. Inherited by WitnessMeta. */
   media?: WitnessMedia

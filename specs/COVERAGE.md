@@ -1435,3 +1435,20 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-17 | tests/se17.test.ts › SE-17 Говірки Західної Полтавщини (©): transcription → spelling for lookup › RG-1: poltavshchyna is a quote source (≤ 200 characters) |'
 | SE-17 | tests/se17.test.ts › SE-17 dialect rows with the authors' own quotations › every row is cited (source, locator, quote ≤ the evidence backstop) and fires on its own example |'
 | SE-17 | tests/se17.test.ts › SE-17 dialect rows with the authors' own quotations › respelling: Lemko меджа, даколи; Poltava хамут, улиця — each with the quotation of its own detector row |'
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 1: work files of items the gates skip are removed (tombstone = the skipped manifest entry) › an archive work file that no manifest refers to is removed with its .nlp.json; referenced and foreign-prefix files stay |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 1: work files of items the gates skip are removed (tombstone = the skipped manifest entry) › nothing is removed while a needed source has no manifest (a source never ingested has no orphans), or when a manifest is torn |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 1: work files of items the gates skip are removed (tombstone = the skipped manifest entry) › the ingest runs the sweep after the archive sources, never in a --limit run |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 2: ITEM_PARAMS is part of every item source marker › ingest.sh keeps the gate parameters and the metadata line count in the done-marker signature; the parameters changed to gate3-cq2 |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 2: ITEM_PARAMS is part of every item source marker › the manifest params of an archive source also carry the metadata count (a new sidecar line re-reads the source) |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › heuristic: dated before 1890, >= 2000 tokens, no ъ ѣ, і ї є ґ over a quarter of the tokens; a text with ъ ѣ or a later date is not touched |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › stated years: only publisher / imprint / notes / description count, not the creator life years; one later year = the edition, the own year = confirmed, none = flag |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › an OCR witness with modern spelling under an old date and no stated edition is written with dateUncertain; counted (tokens kept), date untouched |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › the edition year stated in the metadata replaces the date (cited), clears the flag and warns that the PD-by-date rule does not apply after 1925 |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › known wrong dates after the heuristic cut (Kapital vol. 2-3, dated 1893 / 1894) are resolved the same way; a confirmed or allow-listed item is not flagged |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › only OCR sources are judged: a hand-transcribed wikisource page with the same text keeps its date unflagged |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 3: dateUncertain › build: a dateUncertain witness is excluded from first attestation and epoch statistics (exc), still counted; the cards say why |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 4: composite volumes and issue years › «(1914-1918)» with the metadata date 1914 gives the range and the flag (issue unknown); other titles are untouched |
+| CQ-2 | tests/cq2.test.ts › CQ-2 fix 4: composite volumes and issue years › an issue that states its year in the title while the metadata date is a wide range gets that year (cited); a narrow date is not touched |
+| CQ-2 | tests/cq2.test.ts › CQ-2 harvester: the metadata sidecar › metaLine keeps the fields that can state an edition, strips HTML, cuts long text; a 404 is a missing line (not fetched again) |
+| CQ-2 | tests/cq2.test.ts › CQ-2 harvester: the metadata sidecar › archive.ts has the --meta mode, paced like the other fast modes, and the ingest lists the flagged items without metadata |
+| CQ-2 | tests/cq2.test.ts › CQ-2 harvester: the metadata sidecar › textTokens is unchanged by CQ-2: Ukrainian lines keep their tokens |

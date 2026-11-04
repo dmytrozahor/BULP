@@ -101,6 +101,33 @@ export class Incr {
     return 'take'
   }
   private dirty = new Set<string>()
+  /**
+   * SPEC 63 CQ-2: remove work files that no manifest refers to. A changed ITEM_PARAMS makes a source read everything again and drops its old manifest, so the work file of an item that the new gates SKIP
+   * stayed on disk (next10: 870 files, 948,704 tokens, read by the build). The witness ids still referenced by a manifest are kept; the removal is the tombstone (the manifest keeps the item as skipped with its reason).
+   * Only files whose name starts with one of `prefixes` are touched, and nothing is removed unless the manifests of ALL `need` sources exist (a source never ingested has no manifest: its files are not orphans).
+   * Returns the removed ids.
+   */
+  sweepOrphans(prefixes: string[], need: string[]): string[] {
+    if (!existsSync(this.dir) || !existsSync(this.out)) return []
+    const refs = new Set<string>()
+    for (const n of need) { if (!existsSync(`${this.dir}/${n}.json`)) { this.log(`[ingest] orphan sweep skipped: no manifest for ${n}`); return [] } }
+    for (const f of readdirSync(this.dir)) {
+      if (!f.endsWith('.json') || f.endsWith('.sig.json')) continue
+      const live = this.man.get(f.slice(0, -5))
+      let m = live
+      if (!m) { try { m = JSON.parse(readFileSync(`${this.dir}/${f}`, 'utf8')) as SrcManifest } catch { return [] } }   // a torn manifest: remove nothing
+      for (const r of Object.values(m.items)) if (r.wid) refs.add(r.wid)
+    }
+    const gone: string[] = []
+    for (const f of readdirSync(this.out)) {
+      if (!f.endsWith('.json') || f.endsWith('.nlp.json') || !prefixes.some(p => f.startsWith(p))) continue
+      const id = f.slice(0, -5)
+      if (refs.has(id)) continue
+      rmSync(`${this.out}/${f}`, { force: true }); rmSync(`${this.out}/${id}.nlp.json`, { force: true }); gone.push(id)
+    }
+    this.log(`[ingest] orphan sweep (${prefixes.join(', ')}): ${gone.length} work files without a manifest entry removed`)
+    return gone
+  }
   /** end of a source run: items that are no longer in the index are DELETED (their work files removed), then the manifest is written. `partial`: a --limit run saw only part of the index, nothing is deleted */
   finish(src: string, partial = false) {
     const m = this.manifest(src), seen = this.seen.get(src)!

@@ -26,6 +26,7 @@ import { decodeIzbornyk } from '../core/text.ts'
 import { pageParagraphs } from './ingest-izbornyk-pages.ts'
 import { MARKER } from './ingest-izbornyk.ts'
 import { E_LETTER, foreignLine, isBilingualDictionary, isRussianDoc, lineForeign, oldUkrRate, polishLookalike, stopProfile, ukDominant, RU_ONLY } from './lang-gate.ts'
+import { DATE_SUSPECT, DATE_VERIFIED, modernForDate, resolveDate, titleRange, titleYear, type IaMeta } from './date-gate.ts'
 import { Incr, itemSig, recordSource, sourceUnchanged, vocabSig } from './incr-manifest.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
@@ -100,7 +101,7 @@ export function mergeHarvestAuthors(out: string) {
 }
 
 // ── builders ─────────────────────────────────────────────────────────────────────────────────────────
-export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; /** CQ-1 gate 3: pre-1925 Ukrainian-dominant text uses the oldOrth line gate (ъ ѣ are letters there) */ autoOldOrth?: boolean; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
+export function witnessFrom(src: string, it: Idx, id: string, text: string, opts: { lang: WitnessOut['lang']; witnessType: string; edition: string; authorId: string; loc: string; dateQuote: string; oldOrth?: boolean; /** CQ-1 gate 3: pre-1925 Ukrainian-dominant text uses the oldOrth line gate (ъ ѣ are letters there) */ autoOldOrth?: boolean; /** CQ-2: the archive.org /metadata fields of the item (sidecar ia-meta.jsonl), when harvested */ meta?: IaMeta; orth?: string; school?: WitnessOut['school'] }): WitnessOut | { skip: string } {
   const date = yearRange(it.date)
   if (!date) return { skip: 'undated' }
   const prof = stopProfile(text)
@@ -114,8 +115,25 @@ export function witnessFrom(src: string, it: Idx, id: string, text: string, opts
   // CQ-1b: a bilingual dictionary is not running text (its content reaches the cards through the dictionary pipelines); a Russian-tested document with old-Ukrainian marker words is kept
   const dict = ocr && isBilingualDictionary(it.title)
   const ruLine = ocr && !dict && isRussianDoc(prof) && !(t.tokens.length >= 200 && oldUkrRate(t.tokens.map(k => k.raw)) >= 0.01) ? text.split('\n').find(l => l.toLowerCase().split(/[^\p{L}]+/u).some(w => RU_ONLY.has(w)))?.replace(/\s+/g, ' ').trim().slice(0, 200) : undefined
+  // CQ-2: date plausibility (pipelines/date-gate.ts). Order: the range / year stated in the title, then the edition year stated in the archive.org metadata, then the allow-list, then the flag.
+  let dOut: [number, number] = date, dCite = Q(it.url, `harvest/${src}/index.jsonl`, opts.dateQuote.slice(0, 300), 'дата з index.jsonl харвестера (джерело вказує її саме так)')
+  let dateUncertain: { why: string } | undefined, licenceNote: string | undefined
+  if (ocr) {
+    const tr = titleRange(it.title, date), ty = tr ? null : titleYear(it.title, date)
+    if (tr) { dOut = tr; dateUncertain = { why: `складений том ${tr[0]}–${tr[1]} (діапазон з назви); у метаданих архіву лише ${date[0]}, номер випуску невідомий` } }
+    else if (ty) { dOut = [ty, ty]; dCite = Q(it.url, `harvest/${src}: назва в index.jsonl`, it.title.slice(0, 200), `рік з назви; у метаданих архіву діапазон ${date[0]}–${date[1]}`) }
+    if (!dateUncertain && !DATE_VERIFIED[id] && (DATE_SUSPECT.some(r => r.test(id)) || modernForDate(dOut, t.tokens.map(k => k.raw.toLowerCase())))) {
+      const v = resolveDate(dOut, opts.meta)
+      if (v.kind === 'edition') {
+        dCite = Q(it.url, `archive.org /metadata: publisher / description`, v.quote.slice(0, 300), `рік видання, названий у метаданих; дата в полі date (${date[0]}) — рік оригіналу`)
+        dOut = [v.year, v.year]
+        if (v.year > 1925) licenceNote = `видання ${v.year}: правило «публічне надбання за датою ≤ 1925» до нього не застосовується, статус прав не з'ясовано`
+      } else if (v.kind === 'none') dateUncertain = { why: `текст сучасної орфографії при даті ${dOut[0]}; рік видання не названо в метаданих архіву (переклад чи передрук оригіналу?)` }
+    }
+  }
   return {
-    id, unit: id, title: it.title, author: opts.authorId, url: it.url, date, dateCite: Q(it.url, `harvest/${src}/index.jsonl`, opts.dateQuote.slice(0, 300), 'дата з index.jsonl харвестера (джерело вказує її саме так)'),
+    id, unit: id, title: it.title, author: opts.authorId, url: it.url, date: dOut, dateCite: dCite,
+    ...(dateUncertain ? { dateUncertain } : {}), ...(licenceNote ? { licenceNote } : {}),
     lang: opts.lang, ...(it.region ? { region: it.region } : {}), witnessType: opts.witnessType, edition: opts.edition, ...(opts.orth ? { orth: opts.orth } : {}), ...(opts.school ? { school: opts.school } : {}), license: it.licence,
     dropped: { unmapped: t.unmapped, apparatus: t.apparatus }, tokens: t.tokens,
     ...(dict ? { excludeReason: { why: 'двомовний словник — не суцільний текст; його зміст іде в картки через словникові конвеєри, не через корпус (CQ-1b)', evidence: [Q(it.url, `harvest/${src}: назва в index.jsonl`, it.title.slice(0, 200))] } } : {}),
@@ -142,7 +160,7 @@ export function countText(text: string): Record<string, number> {
 const htmlText = (h: string) => h.replace(/<(script|style)[\s\S]*?<\/\1>/gi, ' ').replace(/<\/(p|div|li|h\d|tr)>|<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#(\d+);/g, (_m, n) => String.fromCodePoint(+n)).replace(/[ \t]+/g, ' ')
 
 // ── per-source runs ──────────────────────────────────────────────────────────────────────────────────
-export interface Ctx { /** IN-1: per-source content manifests + cross-source dedupe */ inc: Incr; out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string>; /** HV-6: archive.org ids whose whole-volume OCR is replaced by per-record witnesses with regions */ hv6Ia?: Set<string> }
+export interface Ctx { /** CQ-2: archive items flagged dateUncertain that have no metadata sidecar line yet: written to <out>/date-flagged.json for harvest/archive.ts --meta */ dateFlagged?: { src: string; id: string }[]; /** IN-1: per-source content manifests + cross-source dedupe */ inc: Incr; out: string; limit: number; stride: number; manifestIa: Set<string>; manifestWs: Set<string>; manifestUrls: Set<string>; /** HV-6: archive.org ids whose whole-volume OCR is replaced by per-record witnesses with regions */ hv6Ia?: Set<string> }
 interface Sum { source: string; items: number; witnesses: number; tokens: number; skipped: Record<string, number> }
 const bump = (s: Sum, k: string) => { s.skipped[k] = (s.skipped[k] ?? 0) + 1 }
 const save = (ctx: Ctx, w: WitnessOut) => writeAtomic(`${ctx.out}/${w.id}.json`, JSON.stringify(w))
@@ -180,8 +198,16 @@ function runWikisource(ctx: Ctx): Sum {
   return s
 }
 
+/** CQ-2: the archive.org /metadata sidecar written by harvest/archive.ts --meta (one JSON line per item id) */
+export function readIaMeta(src: string): Map<string, IaMeta> {
+  const p = `${HARVEST}/${src}/ia-meta.jsonl`, m = new Map<string, IaMeta>()
+  if (!existsSync(p)) return m
+  for (const l of readFileSync(p, 'utf8').split('\n')) { if (!l) continue; try { const j = JSON.parse(l) as IaMeta; m.set(j.id, j) } catch { /* torn line */ } }
+  return m
+}
 function runArchive(ctx: Ctx, src: string): Sum {
   const s: Sum = { source: src, items: 0, witnesses: 0, tokens: 0, skipped: {} }
+  const iaMeta = readIaMeta(src)
   for (const it of readIndex(src)) {
     if (ctx.limit && s.items >= ctx.limit) break
     if (it.status !== 200 || !it.file) continue
@@ -191,8 +217,10 @@ function runArchive(ctx: Ctx, src: string): Sum {
     const buf = readItem(src, it.file); if (!buf) continue
     const authorId = authorFor(it.author, src, it.url, it.author ? `creator: ${it.author}` : it.title, it.region)
     const rusyn = src === 'archive-rusyn'
-    const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}`, autoOldOrth: true })
+    const meta = iaMeta.get(it.id)
+    const w = witnessFrom(src, it, `hv_ia_${slug(it.id)}`, buf.toString('utf8'), { lang: rusyn ? 'undetermined' : 'uk', witnessType: 'ocr', edition: 'OCR archive.org, не вичитано', authorId, loc: `${it.title} (OCR)`, dateQuote: `date: ${it.date}`, autoOldOrth: true, ...(meta ? { meta } : {}) })
     if ('skip' in w) { bump(s, w.skip); ctx.inc.skip(src, it.id, itemSig(it), w.skip); continue }
+    if (w.dateUncertain) { s.skipped['date-uncertain (written)'] = (s.skipped['date-uncertain (written)'] ?? 0) + 1; if (!meta) (ctx.dateFlagged ??= []).push({ src, id: it.id }) }
     commit(ctx, s, src, it.id, itemSig(it), w)
   }
   return s
@@ -385,7 +413,7 @@ const VOCAB: Record<string, string> = { 'wikipedia-uk': 'uk', 'wikipedia-rue': '
 const ARCHIVE = ['archive-ukr', 'archive-rusyn', 'archive-kuban', 'archive-novhorod-siversk', 'archive-hrushevsky', 'archive-hv5-authors']
 
 /** bump when the OCR / language-gate rules above change: every item-level source is then read again */
-const ITEM_PARAMS = 'gate2-cq1'
+const ITEM_PARAMS = 'gate3-cq2'
 export async function main(argv: string[]) {
   const arg = (k: string) => { const i = argv.indexOf(k); return i >= 0 ? argv[i + 1] : undefined }
   const full = argv.includes('--full')
@@ -405,7 +433,7 @@ export async function main(argv: string[]) {
   const sums: Sum[] = []
   const want = (n: string) => !only || only === n
   // IN-1: item-level sources run through the content manifest (only new/changed items are read; vanished items are removed; overlaps with other sources are skipped)
-  const inc = (name: string, fn: () => Sum) => { ctx.inc.begin(name, ITEM_PARAMS); const r = fn(); ctx.inc.finish(name, ctx.limit > 0); return r }
+  const inc = (name: string, fn: () => Sum) => { ctx.inc.begin(name, ITEM_PARAMS + (ARCHIVE.includes(name) ? `|meta=${readIaMeta(name).size}` : '')); const r = fn(); ctx.inc.finish(name, ctx.limit > 0); return r }
   if (want('wikisource-uk')) sums.push(inc('wikisource-uk', () => runWikisource(ctx)))
   for (const a of ARCHIVE) if (want(a)) sums.push(inc(a, () => runArchive(ctx, a)))
   if (want('hrushevsky')) sums.push(runHrushevsky(ctx))
@@ -420,6 +448,9 @@ export async function main(argv: string[]) {
     sums.push(runVocab(ctx, v, fam)); recordSource(ctx.out, v, sig)
   }
   mergeHarvestAuthors(ctx.out)
+  // CQ-2: orphan work files of the archive sets (an item the gates skip now) go; archive items with a date flag and no metadata yet are listed for harvest/archive.ts --meta
+  if (!ctx.limit && (!only || ARCHIVE.includes(only) || only === 'linguists')) ctx.inc.sweepOrphans(['hv_ia_', 'hv_ling_'], [...ARCHIVE, 'linguists'])
+  if (ctx.dateFlagged?.length) { writeAtomic(`${ctx.out}/date-flagged.json`, JSON.stringify(ctx.dateFlagged)); console.log(`[ingest] ${ctx.dateFlagged.length} archive witnesses are dateUncertain without archive.org metadata: <out>/date-flagged.json (run harvest/archive.ts <preset> --meta <file>)`) }
   for (const s of sums) console.log(`${s.source}: ${s.items} items → ${s.witnesses} witnesses, ${s.tokens} tokens${Object.keys(s.skipped).length ? ', skipped ' + JSON.stringify(s.skipped) : ''}`)
 }
 if (process.argv[1]?.replace(/\\/g, '/').endsWith('pipelines/ingest-harvest.ts')) await main(process.argv.slice(2))

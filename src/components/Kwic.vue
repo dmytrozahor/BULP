@@ -22,6 +22,7 @@ import { phraseTo } from '../lib/nav.ts'
 const { witnessById } = useData()
 const songs = useSongs()   // lazy songs.json: a witness that is a song links to /songs/:id
 const wm = (w: string) => witnessById.value.get(w) as { media?: WitnessMedia; licenceNote?: string } | undefined
+const dateUncertainOf = (w: string) => (witnessById.value.get(w) as { dateUncertain?: { why: string } } | undefined)?.dateUncertain
 const oqOf = (w: string) => (witnessById.value.get(w) as { oq?: { score: number; band: string; preferred?: string[] } } | undefined)?.oq
 const mediaOpen = ref<number>(), media = ref<WitnessMedia>(), mediaErr = ref(false)   // MV-1: «переглянути» opens the media panel under the row
 const showMedia = async (i: number, w: string) => {
@@ -59,6 +60,7 @@ const view = computed(() => (all.value ? pageSlice(shown.value, Math.min(kp.valu
       <span :class="['l', { old: isOldForm(k.left, k.date[1]) }]"><span><MentionText :text="k.left" :witness="k.w" /></span></span>{{ ' ' }}<span v-if="plain" :class="['n', { old: isOldForm(k.node, k.date[1]) }]">{{ k.node }}</span><RouterLink v-else :class="['n', { old: isOldForm(k.node, k.date[1]) }]" :to="formTo(k)" :title="`сторінка форми «${k.node}»`">{{ k.node }}</RouterLink>{{ ' ' }}<span :class="['r', { old: isOldForm(k.right, k.date[1]) }]"><MentionText :text="k.right" :witness="k.w" /></span>
       <span class="cite"><SourceCite :w="k.w" :loc="k.loc" :date="k.date" :kwic="k" />
         <template v-if="oqOf(k.w)"> · <span class="badge" data-testid="oq-badge" :title="`невичитаний OCR archive.org, якість S = ${oqOf(k.w)!.score}; не є першою фіксацією й не дає епохи (SPEC 63 OQ)` + (oqOf(k.w)!.preferred ? '; є вичитане видання: ' + oqOf(k.w)!.preferred!.join(', ') : '')">OCR низької якості</span></template>
+        <template v-if="dateUncertainOf(k.w)"> · <span class="badge" data-testid="date-uncertain-badge" :title="`дата невірогідна: ${dateUncertainOf(k.w)!.why}; не є першою фіксацією й не дає епохи (SPEC 63 CQ-2)`">дата невірогідна</span></template>
         <template v-if="phraseOf(k)"> · <RouterLink class="small" :to="phraseTo(phraseOf(k)!.id!)">сталий зворот →</RouterLink></template>
         <template v-if="songOfWitness(songs, k.w)"> · <RouterLink class="small" :to="`/songs/${songOfWitness(songs, k.w)!.id}`">пісня ♪</RouterLink></template>
         <template v-if="hasMedia(k.w, wm(k.w))"> · <button type="button" class="chip small" :aria-expanded="mediaOpen === i" @click="showMedia(i, k.w)">переглянути</button></template></span>

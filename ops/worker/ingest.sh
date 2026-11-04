@@ -13,7 +13,9 @@ run() { # src extra-args...
   local s=$1; shift
   # GG-5: the marker keeps the parameters; a source finished with other parameters (e.g. another --wiki-stride) is read again
   # the marker also keeps the size of the harvest index: a harvester that added items since the last ingest makes the marker miss (the incremental manifest then reads only the delta)
-  local sig="$* idx=$(wc -l < data/raw/harvest/$s/index.jsonl 2>/dev/null || echo 0)"
+  # SPEC 63 CQ-2: the gate parameters of pipelines/ingest-harvest.ts (ITEM_PARAMS) and the archive.org metadata sidecar are part of the marker: a changed rule reads EVERY item source again (next10 skipped five archive sets and left their old-gate witnesses in N)
+  local gp="$(grep -o "ITEM_PARAMS = .[^']*" pipelines/ingest-harvest.ts | head -1)" mp="$(wc -l < data/raw/harvest/$s/ia-meta.jsonl 2>/dev/null || echo 0)"
+  local sig="$* idx=$(wc -l < data/raw/harvest/$s/index.jsonl 2>/dev/null || echo 0) $gp meta=$mp"
   [ -z "$FULL" ] && [ -f $D/$s ] && [ "$(cat $D/$s)" = "$sig" ] && { echo "skip $s"; return; }
   echo "ingest $s $(date +%T)" > ~/import-step
   /usr/bin/time -v npx tsx pipelines/ingest-harvest.ts --only $s $FULL "$@" > $BULP_LOGS/ingest-$s.out 2> $BULP_LOGS/ingest-$s.time

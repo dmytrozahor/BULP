@@ -325,7 +325,7 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
   })
   { const g = [...oq.values()]; lap(`OQ: ${g.length} OCR witnesses, ${g.filter(r => r.excluded).length} excluded from first attestation / epochs (${g.filter(r => r.band === 'low').length} low, ${g.filter(r => r.band === 'garbage').length} garbage, ${g.filter(r => r.preferred).length} with a proofread edition)`) }
   adm.forEach(({ w, nlp }, wi) => {
-    const oqx = oq.get(w.id), exc = !!oqx?.excluded, garbage = oqx?.band === 'garbage'   // OQ
+    const oqx = oq.get(w.id), exc = !!oqx?.excluded || !!w.dateUncertain, garbage = oqx?.band === 'garbage'   // OQ; CQ-2: a witness with an unreliable date is counted but never a first attestation, an oldest form or an epoch claim
     const m = meta[wi]!, ids = new Int32Array(w.tokens.length).fill(-1), seg = Int32Array.from(w.tokens.map(t => t.s))
     const rt = routes[w.id] = {} as Record<string, number>
     const nf = !!w.noFreq   // R2U-1: attests spellings (date, first attestation, one KWIC line) but counts nowhere

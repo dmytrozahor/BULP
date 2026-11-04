@@ -130,7 +130,7 @@ const wTitle = (id: string) => witnessById.value.get(id)?.title ?? id
       <h1 :class="['lemma', { old: isOldForm(pick.raw, fc?.date?.[1]) }]"><Spell :w="fc?.modern ?? pick.raw" :raw="pick.raw" /></h1>
       <SociolectBadges :word="pick.raw" /><ModernBadges :word="pick.raw" /><LoanAdaptBlock :word="pick.raw" />
       <p class="hl-line sans"><span class="muted">написання леми </span><RouterLink :to="`/w/${pick.lemma}`">{{ pick.lemma }}</RouterLink>
-        <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}<span v-if="fc.ocrOnly" class="muted"> (лише OCR низької якості, не свідчення)</span></template>
+        <template v-if="fc"><span class="muted"> · найраніше: </span>{{ fmtDate(fc.date) }}<span v-if="fc.ocrOnly" class="muted"> (лише ненадійні свідчення: OCR низької якості або невірогідна дата; не свідчення)</span></template>
         <template v-if="link"><span class="muted"> · зв’язок: </span>{{ link.route }}<template v-if="link.form !== pick.lemma"> → {{ link.form }}</template></template></p>
       <p v-for="c in featChips" :key="c.rule" class="hl-line sans small" data-testid="form-feature"><span class="badge" :title="c.cite.quote">{{ c.feature }}</span> {{ c.text }} <span class="muted">· {{ c.rule }} · <a :href="c.cite.source" target="_blank" rel="noopener">джерело правила ↗</a></span></p>
       <p v-if="Object.keys(contactClaims).length" class="hl-line sans small" data-testid="form-contact"><span class="badge">контактне / суржик</span> <ClaimSet :claims="contactClaims" /></p>

@@ -3,13 +3,15 @@
  * The text file name is resolved from `https://archive.org/metadata/<id>` (ia-text.ts; `<id>_djvu.txt` is often wrong: 8 672 of 10 000 archive-ukr items were 404), recorded as `iaFile`.
  * SPEC 63 CQ-1 (audit analysis/archive-funnel.md): `--retry-5xx` re-visits ids whose latest line is a 5xx (not the Sejm Kadencja series); `--retry-404 --all` also re-visits 404s that were already retried once;
  *   `--scrape` lists the preset query through the archive.org Scraping API (cursor; https://archive.org/help/aboutsearch.htm) instead of advancedsearch, which cannot go past the first 10,000 hits; state.scrapeCursor makes it resumable, ids already in index.jsonl are skipped.
+ * SPEC 63 CQ-2: `--meta <ids.json>` fetches https://archive.org/metadata/<id> for the listed items (the <out>/date-flagged.json of the ingest, or a list of ids) and appends the fields that can state an edition
+ *   (date, year, publisher, imprint, notes, description) to <source>/ia-meta.jsonl; resumable, one request per id, >= 1 s.
  * Usage: tsx harvest/archive.ts <preset> [--retry-404]   --retry-404 re-visits only items whose latest index line is status 404 (append-only, a second 404 is marked `retried404`, so a re-run skips it).
  * Neutral User-Agent without an e-mail address, `curl -4`, >= 1.5 s between requests, 403/429 stop, 503 backs off.
  *   (old usage:) tsx harvest/archive.ts <preset>   presets: archive-ukr | archive-rusyn | archive-kuban | archive-novhorod-siversk
  * archive.org robots.txt: only /control/ and /report/ are disallowed; pacing 2 s. PD rule (heuristic, the owner may tighten): publication year ≤ 1925.
  * Index `date` = the item's own year/date; `ocr: true` tells ingest to apply the ia-ocr rules (Cyrillic-only tokens, Russian-letter lines dropped).
  */
-import { readFileSync, existsSync } from 'node:fs'
+import { readFileSync, existsSync, appendFileSync } from 'node:fs'
 import { Harvest, type IndexItem } from './lib.ts'
 import { IA_UA, MAX_TEXT_BYTES, STATUS_STALLED, STATUS_TOO_BIG, curlGet, resolveTextFile, retryCandidates, retry5xxCandidates, retrySkippedCandidates } from './ia-text.ts'
 
@@ -79,6 +81,28 @@ async function retry404(h: Harvest, cfg: { region?: string; licence: string }, m
   h.finish()
 }
 
+/** CQ-2: the sidecar line of one item: the metadata fields that can state an edition year, HTML stripped, long text cut */
+export function metaLine(id: string, m: Record<string, unknown> | undefined): Record<string, unknown> {
+  if (!m) return { id, missing: true }
+  const txt = (v: unknown, n: number) => (Array.isArray(v) ? v.join(' ') : String(v ?? '')).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, n)
+  const o: Record<string, unknown> = { id }
+  for (const [k, n] of [['date', 40], ['year', 8], ['publisher', 200], ['imprint', 200], ['notes', 400], ['description', 800]] as const) { const t = txt(m[k], n); if (t) o[k] = t }
+  return o
+}
+async function metaMode(h: Harvest, file: string) {
+  const ids = (JSON.parse(readFileSync(file, 'utf8')) as (string | { id: string })[]).map(x => (typeof x === 'string' ? x : x.id))
+  const p = `${h.dir}/ia-meta.jsonl`, have = new Set<string>()
+  if (existsSync(p)) for (const l of readFileSync(p, 'utf8').split('\n')) { try { have.add((JSON.parse(l) as { id: string }).id) } catch { /* torn line */ } }
+  const todo = [...new Set(ids)].filter(i => !have.has(i))
+  h.log(`meta: ${ids.length} listed, ${todo.length} to fetch`)
+  for (const id of todo) {
+    const { status, res } = await h.get(`https://archive.org/metadata/${encodeURIComponent(id)}`, { headers: H })
+    if (status === 200) { const j = (await res.json()) as { metadata?: Record<string, unknown> }; appendFileSync(p, JSON.stringify(metaLine(id, j.metadata)) + '\n') }
+    else { res.body?.cancel().catch(() => {}); if (status === 404) appendFileSync(p, JSON.stringify(metaLine(id, undefined)) + '\n') }
+  }
+  h.finish()
+}
+
 /** Scraping API page URL: fields comma-separated, count 100-10000, cursor from the previous page */
 export function scrapeUrl(q: string, cursor: string | null, count = 1000): string {
   return `https://archive.org/services/search/v1/scrape?q=${encodeURIComponent(q)}&fields=${['identifier', 'title', 'creator', 'date', 'year', 'language'].join(',')}&count=${count}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`
@@ -112,8 +136,9 @@ async function main() {
   const name = process.argv[2] ?? ''
   const cfg = ARCHIVE_PRESETS[name]
   if (!cfg) { console.error(`preset? ${Object.keys(ARCHIVE_PRESETS).join(' | ')}`); process.exit(1) }
-  const fast = ['--scrape', '--retry-5xx', '--retry-404', '--retry-skipped'].some(f => process.argv.includes(f))
+  const fast = ['--scrape', '--retry-5xx', '--retry-404', '--retry-skipped', '--meta'].some(f => process.argv.includes(f))
   const h = new Harvest(name, { delayMs: fast ? 1000 : 2000, logEvery: 25, capBytes: Number(process.env.HARVEST_CAP ?? 8e9) })   // >= 1 s between requests
+  if (process.argv.includes('--meta')) await metaMode(h, process.argv[process.argv.indexOf('--meta') + 1]!)
   if (process.argv.includes('--retry-5xx')) await retry404(h, cfg, { fivexx: true })
   if (process.argv.includes('--retry-skipped')) await retry404(h, cfg, { skipped: true })
   if (process.argv.includes('--retry-404')) await retry404(h, cfg, { all404: process.argv.includes('--all') })
