@@ -28,7 +28,7 @@ export type Route = 'torot-lemma' | 'stanza-lemma' | 'token' | 'direct'
 export const ROUTE_RANK: Record<Route, number> = { 'torot-lemma': 0, 'stanza-lemma': 1, token: 2, direct: 3 }
 
 /** What the linker needs to know about one token type (everything that influences the result). */
-export interface TypeCtx { lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string; past?: boolean; /** MM-52: the next token is a separated reflexive «ся» (старав ся) */ refl?: boolean }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
+export interface TypeCtx { /** MM-61: the model UPOS of a Ukrainian-witness token (gate key U:…) as a SOFT gate: it only drops a model-lemma reading whose POS class contradicts it when another reading agrees */ softGate?: string; lang: 'orv' | 'chu-rus' | 'chu' | 'ruthenian' | 'uk' | 'undetermined'; oldI: boolean; orth?: string; raw: string; lemma?: string; stanza?: string; gate?: string; past?: boolean; /** MM-52: the next token is a separated reflexive «ся» (старав ся) */ refl?: boolean }   // gate = FX-1 POS-gate key of the token's own annotation (core/pos-gate.ts)
 export interface Env {
   hits: ReadonlyMap<string, VesumHit[]>
   derive: (s: string, oldI: boolean) => { norm: string; candidates: Candidate[] }
@@ -256,7 +256,10 @@ function linkOptionsCore(t: TypeCtx, env: Env): { route: Route; opts: Option[] }
   if (t.stanza) {
     // PV-8b: the model lemma of a finite PAST verb is also corroborated by a cited aorist / imperfect ending + matching stem (core/oes-folds.ts oesPast); the tense is recorded as a trace step
     const past = t.past ? oesPast(t.raw, t.stanza) : undefined
-    const opts = viaLemma(t.stanza).flatMap(o => o.ownConfirmed || o.corr?.row.kind === 'cognate' || o.corr?.row.kind === 'cs' ? [o] : past && o.cls === 'verb' ? [{ ...o, own: { ...o.own, trace: [...o.own.trace, past.id], branches: o.own.branches + 1 } }] : [])
+    let lemOpts = viaLemma(t.stanza)
+    // MM-61 (діти noun ≠ діти verb): the model lemma of a plural noun can equal a verb head; the Ukrainian-witness gate is off, so the verb used to win. A soft gate drops the contradicting readings when the string has one that agrees
+    if (t.softGate) { const keep = lemOpts.filter(o => compatible(t.softGate, o.hit.tags)); if (keep.length !== lemOpts.length) { const agrees = (env.hits.get(key(t.raw)) ?? []).some(h => compatible(t.softGate, h.tags)); if (agrees) lemOpts = keep } }
+    const opts = lemOpts.flatMap(o => o.ownConfirmed || o.corr?.row.kind === 'cognate' || o.corr?.row.kind === 'cs' ? [o] : past && o.cls === 'verb' ? [{ ...o, own: { ...o.own, trace: [...o.own.trace, past.id], branches: o.own.branches + 1 } }] : [])
     if (opts.length) return { route: 'stanza-lemma', opts }
   }
   if (t.lang !== 'uk' && !t.lemma && !t.stanza && correspondenceFor(key(t.raw))) {   // un-lemmatised witness (Sophia): the same cited suppletive correspondence applies to the raw form

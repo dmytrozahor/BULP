@@ -203,10 +203,11 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
     w.tokens.forEach((t, i) => {
       const raw = rawKey(t.raw), refl = isReflNext(w.tokens[i + 1]?.raw) || isReflNext(w.tokens[i - 1]?.raw), lemma = t.lemma || undefined, stanza = !lemma ? nlp?.tokens[i]?.lemma || undefined : undefined
       const gate = w.lang === 'uk' ? undefined : gateKey(t.morph, nlp?.tokens[i]?.upos)   // FX-1: the token's own POS (TOROT manual, else Stanza)
+      const softGate = w.lang === 'uk' && !gate && stanza ? gateKey(undefined, nlp?.tokens[i]?.upos) : undefined   // MM-61
       const past = !!stanza && /(^|\|)Tense=Past\b/.test(nlp?.tokens[i]?.feats ?? '') && /VerbForm=Fin/.test(nlp?.tokens[i]?.feats ?? '')   // PV-8b: finite past verb (Stanza ORV feats, model output)
-      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${past ? 'P' : ''}|${refl ? 'R' : ''}|${raw}`
+      const k = `${w.lang}|${w.oldI ? 1 : 0}|${w.orth ?? ''}|${lemma ?? ''}|${stanza ?? ''}|${gate ?? ''}|${past ? 'P' : ''}|${refl ? 'R' : ''}|${softGate ?? ''}|${raw}`
       let x = local.get(k)
-      if (x === undefined) { x = ts.length; local.set(k, x); keys.push(k); ts.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate, ...(past ? { past } : {}), ...(refl ? { refl } : {}) }); counts.push(0) }
+      if (x === undefined) { x = ts.length; local.set(k, x); keys.push(k); ts.push({ lang: w.lang, oldI: !!w.oldI, orth: w.orth, raw, lemma, stanza, gate, ...(past ? { past } : {}), ...(refl ? { refl } : {}), ...(softGate ? { softGate } : {}) }); counts.push(0) }
       counts[x]!++
       idx[i] = x
     })
