@@ -6,7 +6,7 @@
  * > only the е/и merger «мине́—мене́ [mɛ̝ˈnɛ]» is rendered, and only when the stress is known (research/08 A3).
  * Every row that fired is returned with its method: 'quoted' (WP wording) or 'derived' (our reading, never a dictionary fact).
  */
-import { stripStress, unifyApostrophe } from './text.ts'
+import { stripStress, unifyApostrophe, CS_MARKS, showChar } from './text.ts'
 import type { Origin, Origins } from './origin.ts'
 
 export type IpaMethod = 'quoted' | 'derived'
@@ -94,7 +94,7 @@ function decode(s: string, rows: Map<string, IpaRow>, flags: string[], origins?:
     }
     if (c === 'ї') { out.push({ k: 'C', ph: 'j', g: c, idx: i }, { k: 'V', ph: 'i', g: c, idx: i }); apos = false; continue }
     if (c === ' ' || c === '-') { out.push({ k: 'X', ph: c, g: c, idx: i }); apos = false; continue }
-    flags.push(`невідомий знак «${c}» пропущено`)
+    flags.push(`невідомий знак «${showChar(c)}» пропущено`)
   }
   return out
 }
@@ -205,7 +205,7 @@ const render = (u: U) => u.ph + (u.soft && u.ph !== 'u̯' ? 'ʲ' : '') + (u.long
  * @param origins   origin of each letter of the unstressed lower-case form (core/origin.ts originsFor); without it the origin-dependent rows (research/27 V1 V2 V5 V6 V9 V11 G4) cannot fire
  */
 export function toIpa(form: string, positions: number[] | null = null, dialect?: string, origins?: Origins): IpaResult {
-  const s = unifyApostrophe(stripStress(form)).toLowerCase()
+  const s = unifyApostrophe(stripStress(form).replace(CS_MARKS, '')).toLowerCase()
   const rows = new Map<string, IpaRow>(), flags: string[] = []
   const us = decode(s, rows, flags, origins)
   const vowels = us.filter(u => u.k === 'V')

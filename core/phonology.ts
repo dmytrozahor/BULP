@@ -41,6 +41,19 @@ export function havlik(w: string): string {
 }
 
 export const RULES: SoundRule[] = [
+  // MM-53 (owner «ісповна має вести до сповна»): the prefix из-/ис- (Proto-Slavic *jьz-) is з-/с- in modern Ukrainian. Lexical (scope L): the plain branch stays, VESUM decides (исполна > сповна, испытати > спитати).
+  { id: 'R25', name: 'Префікс ис-/из- > с-/з- (исполна > сполна > сповна, испытати > спитати)', date: 'XIV–XVI ст.', scope: 'L',
+    cite: Q('WIKT', 'https://en.wiktionary.org/wiki/из- (Old Church Slavonic)', 'From Proto-Slavic *jьz- prefix, from *jьz.', 'варіант «ис- (is-) (before voiceless consonants)» — той самий вiдповідник; сучасне морфологічне розкладання: uk.wiktionary «сповна» — «Префікс: с-; корінь: -повн-; суфікс: -а»; ДСУ XIV–XV ст., т. 1: «ИСПОЛНА див. СПОЛНА»'),
+    // tightened after a 50-link spot check (MM-53): иск- is a root (искати, искуса), a word ending in -ъ is a noun that modern Ukrainian prefixes with ви- (исходъ > вихід), and a word ending in the participle ӕ/ѧ links to a truncated noun (изнемогаӕ > знемога), исход- and истук- are roots, a short remainder is not a prefix + stem
+    apply: w => (/[ъӕѧ]$/.test(w) || /^[иі]с(?:ход|тук)/.test(w) || w.length < 6 ? w : seq(rx('^[иі]с(?=[птфхцчшщс])', 'с'), rx('^[иі]з(?=[бвгґджзлмнр])', 'з'))(w)) },
+  // MM-53 (owner «слушаєть → слушає і слухає»): 3sg present -еть/-єть of the I–III classes loses -ть (IV class keeps -ить: говорить)
+  { id: 'R26', name: 'Відпадіння -ть у 3 ос. одн. теперішнього часу (-еть, -єть > -е, -є)', date: 'з XI ст.; закріплено в XIV–XVI ст.', scope: 'L',
+    cite: Q('PAVL', 'с. 111 (research/11 MH-24)', 'дієслова І, ІІ, ІІІ класу набули флексії -е, -є на відміну від дієслів ІV класу, які в цій формі зберегли закінчення -ить', 'Шевельов § 14.4: «3 ос. одн. і мн. на -ть або Ø проти ст. ц. сл. -тъ»; -ить (IV клас) не чіпаємо'),
+    apply: rx(`(?<=[^\s]{2}[${C}аяуюіи])([еє])ть(?=${LOST}|$)`, '$1') },
+  // MM-53: слушати ~ слухати — the stem alternation is stated by the dictionaries (Желехівський: «Слуша́ти, v. n. … s. Слу́хати»), the etymology by Wiktionary (*slušati < *sluxěti)
+  { id: 'R27', name: 'ш > х у корені слуш- (слушати ~ слухати)', date: 'праслов’янська пара *slušati / *sluxěti', scope: 'L',
+    cite: Q('WIKT', 'https://en.wiktionary.org/wiki/Reconstruction:Proto-Slavic/slušati', 'From earlier *sluxěti', 'Желехівський 1886 (r2u): «Слуша́ти, v. n. АД. I. 35. s. Слу́хати.» — перехресне посилання словника; ДСУ XIV–XV ст., т. 1: «слушаєть» = «належить» (інше значення, тому лише «зіставлено»)'),
+    apply: rx('(^|[а-яіїєґ]{0,5})слуш(?=[аеиіоуяю])', '$1слух') },
   { id: 'R02', name: 'Деназалізація ѧ > я, ѫ > у', date: 'X ст.', scope: 'G',
     cite: Q('SHEV', S14 + '.2', 'злиття ę з а, oн з u'),
     apply: seq(rx('([жчшщц])ѧ', '$1а'), rx("(^|V|р)([бпвмф])ѧ", "$1$2'я"), rx('ѧ', 'я'), rx('ѫ', 'у')) },

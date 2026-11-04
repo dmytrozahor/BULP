@@ -31,13 +31,18 @@ export function stressPositions(stressed: string): { form: string; positions: nu
 
 /** N02: superscript letters U+2DE0…U+2DFF → base letters, in code-point order. */
 const SUPERSCRIPT = [...'бвгджзклмнопрстхцчшщѳ', 'ст', 'а', 'е', 'ђ', 'у', 'ѣ', 'ю', 'ѧ', 'ѧ', 'у', 'ю']
+/** MM-53: Church Slavonic combining marks (U+0483–U+0489 titlo, psili U+0486, kamora; U+A66F–U+A67D; U+0300 U+0311 U+033E; U+0313 U+0314 U+0342 breathings): stripped before the rules AND before the IPA. */
+export const CS_MARKS = /[҃-҉꙯-꙽̀̑̾̓̔͂]/g
+const codepoint = (c: string) => 'U+' + c.codePointAt(0)!.toString(16).toUpperCase().padStart(4, '0')
+/** MM-53: a character as it is shown in a message: a combining or invisible mark by its code point, never as an empty «» */
+export const showChar = (c: string) => (/[\p{M}\p{Cf}\p{Cc}\s]/u.test(c) ? codepoint(c) : c)
 type Repl = string | ((m: string) => string)
 const sub = (s: string, re: RegExp, to: Repl) => typeof to === 'string' ? s.replace(re, to) : s.replace(re, to)
 const N_TABLE: [RegExp, Repl][] = [
   // N00 (research/27 §3.4 class 10): Galician etymological orthography writes [i] < о / е as о, е with a «дашок» (мôй, жалôбно, ôнъ, матêрью — WP «Ікавізм», «Графіка»): the letter already IS the new і
   [/[оo]̂|ô/g, 'і'], [/[еe]̂|ê/g, 'і'],
   [/[ⷠ-ⷿ]/g, c => SUPERSCRIPT[c.codePointAt(0)! - 0x2DE0] ?? ''],
-  [/[҃-҉꙯-꙽̀̑̾]/g, ''],     // N01 titlo, psili, kamora, accents (after N10)
+  [CS_MARKS, ''],     // N01 titlo, psili, kamora, accents (after N10); MM-53: + U+0313 U+0314 U+0342 (Greek-style breathing marks written over Cyrillic)
   [/ѿ/g, 'от'], [/[ѡѽѻꙩꙫꙭꚙꚛ]/g, 'о'],                           // N03
   [/оу|ѹ|ꙋ|ᲂу|ȣ/g, 'у'],                                      // N04
   [/ꙑ|ъі|ъи/g, 'ы'],                                           // N05

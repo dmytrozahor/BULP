@@ -30,12 +30,15 @@ import HeteronymReadings from '../components/HeteronymReadings.vue'
 import IpaRow from '../components/IpaRow.vue'
 import { analyzeLoan } from '../../core/loanwords.ts'
 import { loanLabels } from '../lib/datasets.ts'
+import { inVesum, loadVesumBloom, vesumBloom } from '../lib/vesumBloom.ts'
+import { candidateGrade } from '../lib/analyze-grade.ts'
 import { analyzeLink } from '../lib/analyze-links.ts'
 import { attestationOf, type Attested } from '../lib/attest.ts'
 import { formTo } from '../lib/nav.ts'
 import { loadArchEntry } from '../lib/torotData.ts'
 import { ixCards } from '../lib/parts.ts'
 import UserHypotheses from '../components/UserHypotheses.vue'
+void loadVesumBloom()
 const route = useRoute(), router = useRouter()
 const { annData, loaded, byLemma, searchIdx, witnessById } = useData()
 /** SPEC 61 UX-7: `embed` = the word to analyse inline (search / word-card fallback for words outside the lexicon); the page chrome (title, form, legend) is then hidden */
@@ -46,7 +49,7 @@ watch(() => props.embed, v => { if (v !== undefined) { q.value = v; word.value =
 const submit = () => { word.value = q.value.trim(); router.replace({ query: word.value ? { q: word.value } : {} }) }
 const y = computed(() => (/^\d{3,4}$/.test(year.value) ? +year.value : undefined))
 const d = computed(() => (word.value ? deriveWithSteps(word.value) : undefined))
-const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, annData.value, y.value) : undefined))
+const a = computed(() => (word.value && loaded.value ? runDetectors(word.value, { ...annData.value, inVesum: vesumBloom.value ? inVesum : undefined }, y.value) : undefined))
 /** MO-2: last step of the old → modern derivation — «сучасний правопис: …», never over a form the lexicon attests */
 const hasForm = computed(() => lexHasBool(annData.value))
 const modOf = (form: string) => (loaded.value ? modernize(form, hasForm.value) : [])
@@ -75,6 +78,7 @@ const to = (form: string) => { const l = analyzeLink(form, ctx()); return l.kind
 /** NV-3/NV-4: «сторінка слова» only when a lemma / light card stands behind the form; a dictionary headword → «картка слова»; else «сторінка написання» */
 const linkLabel = (form: string) => (analyzeLink(form, ctx()).kind === 'word' ? '→ сторінка слова' : att.value.get(form)?.kind === 'card' ? '→ картка слова' : '→ сторінка написання')
 const isAtt = (form: string) => att.value.has(form) && analyzeLink(form, ctx()).kind !== 'word'
+const grade = (c: { form: string; trace: string[] }) => candidateGrade(c.trace, c.form, byLemma.value.has(c.form) || searchIdx.value.map.has(key(c.form)))
 const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).filter(Boolean))
 </script>
 
@@ -102,12 +106,13 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
         <li v-for="c in d.candidates" :key="c.form" style="margin:.5rem 0">
           <FormBadge v-if="byLemma.has(c.form) || searchIdx.map.has(key(c.form))" kind="attested" :form="c.form" label="є в словнику" />
           <FormBadge v-else-if="isAtt(c.form)" kind="attested" :form="c.form" :label="'засвідчено: ' + att.get(c.form)!.text" />
-          <FormBadge v-else kind="derived" :form="c.form" label="реконструкція (гіпотеза)" />
+          <FormBadge v-else kind="derived" :form="c.form" :label="grade(c)?.label ?? 'реконструкція (гіпотеза)'" />
           <RouterLink :to="to(c.form)" class="small sans"> {{ linkLabel(c.form) }}</RouterLink>
           <span v-if="c.branches" class="muted small sans"> · гілок з лексичними винятками: {{ c.branches }}</span>
           <div v-if="c.steps.length" class="trace"><button v-for="(s, i) in c.steps" :key="i" type="button" :aria-expanded="open === c.form + i" @click="open = open === c.form + i ? null : c.form + i">{{ s.from }} → {{ s.to }} · <strong>{{ s.rule }}</strong> {{ ruleById[s.rule]?.name }}</button></div>
           <div v-if="c.steps.length" class="small sans chain-links">ланцюг: <template v-for="(s, i) in c.steps" :key="'cl' + i"><RouterLink v-if="i === 0" :to="to(s.from)" class="lang">{{ s.from }}</RouterLink> → <RouterLink :to="to(s.to)" class="lang">{{ s.to }}</RouterLink> </template></div>
           <div v-else class="small muted sans">без змін (форма вже сучасна за цими правилами)</div>
+          <div v-if="grade(c)" class="small muted sans" data-testid="cand-grade">{{ grade(c)!.note }}</div>
           <ModernForms :mods="modOf(c.form)" />
           <template v-for="(s, i) in c.steps" :key="'e' + i"><div v-if="open === c.form + i" class="card" style="margin:.3rem 0"><EvidenceList :evidence="[ruleById[s.rule]!.cite]" /></div></template>
         </li>
@@ -129,8 +134,8 @@ const gatedRules = computed(() => (a.value?.gated ?? []).map(id => ruleOf(id)!).
     </section>
 
     <section class="card"><h2><span>Ознаки з доказами</span></h2>
-      <div v-if="!a.known" class="card" style="background:var(--warn-soft);border-color:var(--warn)" role="note">
-        <strong>Нормативну перевірку ВЕСУМ недоступно офлайн.</strong> Слова «{{ word }}» немає ні в lexindex (ВЕСУМ-нестандартні + LanguageTool), ні в словнику, тому правила,
+      <div v-if="!a.known && !a.oracle" class="card" style="background:var(--warn-soft);border-color:var(--warn)" role="note">
+        <strong>Нормативну перевірку ВЕСУМ ще не завантажено (vesum.bloom).</strong> Слова «{{ word }}» немає ні в lexindex (ВЕСУМ-нестандартні + LanguageTool), ні в словнику, тому правила,
         що спрацьовують лише через <em>відсутність</em> у ВЕСУМ (усі діалектні та суфіксні/префіксні:
         <code v-for="r in gatedRules.slice(0, 8)" :key="r.id" :title="r.note">{{ r.id }} </code><template v-if="gatedRules.length > 8">…</template>), вимкнено, щоб не ставити мітку без доказів. Нижче лише те, що спрацювало.
       </div>

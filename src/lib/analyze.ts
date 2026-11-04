@@ -19,7 +19,8 @@ const isGated = (r: Rule) => r.axis === 'dialect' || GATED_IDS.has(r.id)
 
 /** SPEC 63 PF-3: a Map in tests / fixtures, the shard-backed facade (src/lib/parts.ts ixParadigm) in the app: no global paradigm map */
 export interface ParadigmLookup { get(k: string): VesumHit[] | undefined; has(k: string): boolean }
-export interface LexData { lexindex?: LexIndex; paradigmMap: ParadigmLookup }
+/** `inVesum`: MM-53 membership oracle for the whole normative VESUM list (core/bloom.ts); undefined or returning undefined = not available */
+export interface LexData { lexindex?: LexIndex; paradigmMap: ParadigmLookup; inVesum?: (form: string) => boolean | undefined }
 export const emptyLex = (): LexData & { paradigmMap: Map<string, VesumHit[]> } => ({ paradigmMap: new Map() })
 
 export const hitsOf = (d: LexData, form: string): VesumHit[] => {
@@ -30,6 +31,8 @@ export const hitsOf = (d: LexData, form: string): VesumHit[] => {
 export interface Analysis {
   word: string; known: boolean; vesum: VesumHit[]; lt?: [string, string]
   claims: Record<string, Claim<true>>; hints: { rule: string; label: string }[]; gated: string[]
+  /** MM-53: 'absent' = VESUM certainly lacks the word (absence rules run); 'present' = a normative VESUM form with no lexicon card (absence rules stay off); undefined = no oracle (offline banner) */
+  oracle?: 'absent' | 'present'
 }
 
 /** Run all detector tables over one word. `year` undefined = contemporary text (core/detect.ts Ctx.year). */
@@ -42,9 +45,11 @@ export function runDetectors(word: string, d: LexData, year?: number): Analysis 
     lt: lt ? { file: lt[0], suggest: lt[1] } : undefined,
     inLexicon: f => hitsOf(d, f), derive: w => derive(w).candidates.map(c => c.form),
   }
-  const rules = known ? ALL_RULES : ALL_RULES.filter(r => !isGated(r))
+  const o = known ? undefined : d.inVesum?.(form), oracle = o === undefined ? undefined : o ? 'present' as const : 'absent' as const
+  const open = known || oracle === 'absent'
+  const rules = open ? ALL_RULES : ALL_RULES.filter(r => !isGated(r))
   const { claims, hints } = detect(rules, ctx)
-  return { word, known, vesum, lt, claims, hints, gated: known ? [] : ALL_RULES.filter(isGated).map(r => r.id) }
+  return { word, known, vesum, lt, claims, hints, gated: open ? [] : ALL_RULES.filter(isGated).map(r => r.id), ...(oracle ? { oracle } : {}) }
 }
 
 // ── label classification (marker colours of the annotator, filters) ────────────────────────────
