@@ -14,6 +14,7 @@ import { DIALECTS } from './rules.ts'
 import { stripStress, unifyApostrophe } from './text.ts'
 import { P, Q, type Evidence } from './evidence.ts'
 import type { Origin, Origins } from './origin.ts'
+import { IA_ALT_STEMS } from './ia-alt.ts'
 import { REFL_RULES, reflSplit } from './respell-refl.ts'
 import { NORTH_RULES } from './respell-north.ts'
 import { SW_RULES, STANDARD_RULES } from './respell-sw.ts'
@@ -50,7 +51,14 @@ const all = (re: RegExp, to: (m: RegExpExecArray) => string, g = 0): ((w: string
 const VOWELS = 'аеиіоуяюєїы'
 const DEVOICE: Record<string, string> = { б: 'п', д: 'т', г: 'х', ґ: 'к', ж: 'ш', з: 'с' }
 
+const IA_RE = new RegExp('^(?:багато|най|щонай|якнай|щоякнай)?(?:' + IA_ALT_STEMS.join('|') + ')')
 export const SPELL_RULES: SpellRule[] = [
+  // first: it reads the STANDARD stem (діалект), which SW-KJ-GJ (д before і → ґ) would change below
+  // MM-63 (owner: «до галицкого теж варіянт замість варіант»): іншомовне -іа- → -ія- (варіянт, діялект, матеріял, соціяльний). NDN, kind P (owner). The WORD SET is data: the stems of the lemmas for which VESUM itself lists an :alt spelling that differs only by іа → ія
+  // (core/ia-alt.ts, 139 stems / 153 lemma pairs), so no word is guessed by analogy; the 1928 rule quoted by core/orth1928.ts covers only the word-FINAL -іа → -ія (Азія), a medial one is stated by no source in the repo.
+  { id: 'GAL-IA-IJA', codes: { NDN: 'OWNER-IA' }, example: ['варіант', 'варіянт'],
+    own: { NDN: P('OWNER', 'повідомлення власника, 2026-11-04', '«до галицкого теж варіянт замість варіант»', 'за свідченням носія; слова — лише ті, для яких ВЕСУМ сам подає написання -ія- як :alt (153 пари лем); ЕУМ / Харківський правопис 1928 називають лише кінцеве -іа → -ія (Азія), медіального правила джерела не дають') },
+    edits: w => { const m = IA_RE.exec(w); if (!m) return []; const out: Edit[] = []; for (let i = 0; i < m[0].length - 1; i++) if (w[m.index + i] === 'і' && w[m.index + i + 1] === 'а') out.push([m.index + i + 1, m.index + i + 2, 'я'] as Edit); return out } },
   // SE-17: Верхратський 1902 (Лемківщина) and the preface of «Говірки Західної Полтавщини» (2012): each rule names the detector row (core/rules-se17.ts) that carries the author's own quotation; the words are the ones the source names
   { id: 'LEM-DZH-R', codes: { LEM: 'LEM-DZH' }, skip: /^(?!(?:пряжа|одежа|межа|чужий|чужа|чужі)$)/, example: ['межа', 'меджа'], edits: w => [...w.matchAll(/ж/g)].map(m => [m.index!, m.index! + 1, 'дж'] as Edit) },
   { id: 'LEM-DA-R', codes: { LEM: 'LEM-DA-V' }, skip: /^(?!(?:дехто|дечий|деколи)$)/, example: ['деколи', 'даколи'], edits: w => [[0, 2, 'да'] as Edit] },

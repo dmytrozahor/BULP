@@ -47,7 +47,7 @@ const lemmaOf = (w: string, d: AnnotateData) => annotate(w, d, 1900)[0]!.lemma
 describe('MM-60 family: який ~ єкий (link, annotator, search key, CR-1); VESUM wins', () => {
   const f = VARIANT_FAMILIES.find(x => x.id === 'VF-JAKYJ')!
   it('members, owner evidence kind P with the verbatim quote, valid claim', () => {
-    expect(f.head).toBe('який'); expect(f.members.map(m => m.form)).toEqual(['єкий', 'єка', 'єке', 'єкі', 'єкого', 'єкому', 'єким', 'єкою', 'єкої', 'єку', 'єких', 'єкими', 'єкій'])
+    expect(f.head).toBe('який'); expect(f.members.slice(0, 13).map(m => m.form)).toEqual(['єкий', 'єка', 'єке', 'єкі', 'єкого', 'єкому', 'єким', 'єкою', 'єкої', 'єку', 'єких', 'єкими', 'єкій']); expect(f.members.length).toBe(39)
     for (const m of f.members) expect(() => claim(m.form, memberEvidence(f, m))).not.toThrow()
     expect(memberEvidence(f, f.members[0]!).quote).toContain('єкий для галицкого діалекту на який'); expect(familyMember('якось')).toBeUndefined()
   })

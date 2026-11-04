@@ -84,3 +84,13 @@ export function reflJoins(host: string): string[] {
 }
 /** «сє» (and no other spelling) is the Galician counterpart of ся: the standalone token links to the word ся */
 export const toSya = (w: string): string => (w === 'сє' ? 'ся' : w)
+
+/**
+ * MM-60b: under NDN / PKB the paradigm of який is shown as єкий (main), with йкий and їкий as variants (owner: «який теж за галицкою рисою має бути йкий їкий єкий»; kind P). The forms come from the owner only.
+ */
+const JAKYJ = /^я(кий|ка|ке|кі|кого|кому|ким|кою|кої|ку|ких|кими|кій)$/
+export function jakyjForms(w: string, code: string): { main: string; variants: ReflVariant[] } | undefined {
+  const m = JAKYJ.exec(w.toLowerCase()); if (!m || (code !== 'NDN' && code !== 'PKB')) return undefined
+  const cite = P('OWNER', 'повідомлення власника, 2026-11-04', '«який теж за галицкою рисою має бути йкий їкий єкий»', 'за свідченням носія; джерела не знайдено (ЕУМ um175 PKB: а > е після й лише в одній групі говірок)')
+  return { main: 'є' + w.slice(1), variants: ['й', 'ї'].map(c => ({ text: c + w.slice(1), grade: 'P' as const, why: c + '-', cite: [cite] })) }
+}
