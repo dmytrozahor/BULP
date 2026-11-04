@@ -7,6 +7,7 @@
  * The ET-3 flag is a REVIEW PROMPT: interval logic only (ours.to < theirs.from), vernacular Ukrainian attestations only, copy date of the witness, never «Ukrainian is older».
  */
 import { D, type Evidence } from './evidence.ts'
+import { maxChars } from './rights.ts'
 
 export type CogLang = 'pl' | 'be' | 'ru' | 'zlw-opl' | 'zle-ort' | 'orv'
 export const COG_LANGS: CogLang[] = ['pl', 'zlw-opl', 'be', 'zle-ort', 'ru', 'orv']
@@ -33,7 +34,7 @@ export interface CognateFile {
 export const stripAccent = (s: string) => s.normalize('NFD').replace(/́/g, '').normalize('NFC').toLowerCase()
 export const wiktPsl = (pivot: string) => `https://en.wiktionary.org/wiki/Reconstruction:Proto-Slavic/${encodeURIComponent(pivot.replace(/^\*/, ''))}`
 export const cogEvidence = (pivot: string, quote: string, extracted: string): Evidence =>
-  D('KAIKKI', wiktPsl(pivot), quote.slice(0, 300), `Wiktionary (en), CC BY-SA 4.0, дерево нащадків Proto-Slavic; витяг Wiktextract/kaikki.org ${extracted}`)
+  D('KAIKKI', wiktPsl(pivot), quote.slice(0, maxChars('KAIKKI', 300)), `Wiktionary (en), CC BY-SA 4.0, дерево нащадків Proto-Slavic; витяг Wiktextract/kaikki.org ${extracted}`)
 
 // ── dating of a cognate ───────────────────────────────────────────────────────────────────────────
 const NUM = '(\\d{3,4})(?:\\s*[‒–\\-]\\s*(\\d{3,4}))?'

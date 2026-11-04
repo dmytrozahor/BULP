@@ -57,7 +57,7 @@ runcmd pum14 "$(cat data/seed/pum14/*.json data/seed/pum15/*.json data/seed/vol1
 runcmd rib "$(ocrsig)" npx tsx pipelines/ingest-rib.ts --ocr "$OCR_DIR"
 runcmd kvitka "$(ocrsig)" npx tsx pipelines/ingest-kvitka.ts --ocr "$OCR_DIR"
 # SPEC 63 GG-7: the owner's СУМ-11 (DjVu) / СУМ-20 (PDF) scans under $BOOKS/sum11, $BOOKS/sum20 (typeset, not OCR). pipelines/sum-scan.ts parses them (resumable per volume, text never stored) into
-# data/work/<dict>-parsed/ and imports the policy fields (headword, stress, POS, sense numbers, labels, gloss ≤ 200 characters, volume/page; FULL_SENSES_* = 0) to data/work/se-parsed/<dict>.json.
+# data/work/<dict>-parsed/ and imports the policy fields (headword, stress, POS, sense numbers, labels, gloss ≤ 200 characters, volume/page; full text only through a `granted` entry of core/rights.ts) to data/work/se-parsed/<dict>.json.
 # The signature = the file sizes + the parser code, so a changed parser or a new volume reads the scans again.
 # sumsig / BOOKS: env.sh (shared with reparse.sh, the chain step that reruns the parsers before the build)
 for s in sum11 sum20; do

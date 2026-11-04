@@ -11,9 +11,10 @@
  * and the excerpt is word-like (the Cyrillic part passes the OCR score, almost no stray symbols).
  */
 import { headwordOk, ocrScore, wordish } from './se-parse.ts'
+import { maxChars } from './rights.ts'
 import { inPageRange } from './sum-article.ts'
 
-export const ESUM_MAX = 200
+export const ESUM_MAX = maxChars('ESUM')   // RG-1: derived from core/rights.ts (a `granted` entry lifts it)
 export const ESUM_VOLS: Record<number, { title: string; letters: string; year: number }> = {
   1: { title: 'А–Г', letters: 'А–Г', year: 1982 }, 2: { title: 'Д–Копці', letters: 'Д–Копці', year: 1985 }, 3: { title: 'Кора–М', letters: 'Кора–М', year: 1989 },
   4: { title: 'Н–П', letters: 'Н–П', year: 2003 }, 5: { title: 'Р–Т', letters: 'Р–Т', year: 2006 }, 6: { title: 'У–Я', letters: 'У–Я', year: 2012 },

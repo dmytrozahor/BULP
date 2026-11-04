@@ -15,6 +15,7 @@
  */
 import { Q, type Evidence } from './evidence.ts'
 import { key } from './text.ts'
+import { maxChars } from './rights.ts'
 
 export type RuKind = 'surzhyk' | 'yazychie' | 'cs' | 'ambiguous'
 export const RU_KIND_UK: Record<RuKind, string> = {
@@ -57,7 +58,7 @@ export function classifyRu(word: string, ctx: RuCtx, look: RuLookups): RuClass |
   const rk = ruKey(word), hits = look.ruHead(rk)
   if (!hits.length || look.isUkrainian(rk)) return undefined
   const standard = hits.flatMap(h => h.equivalents.map(lemma => ({ lemma, dict: h.dict, locator: h.locator }))).filter((s, i, a) => a.findIndex(x => x.lemma === s.lemma) === i)
-  const evidence: Evidence[] = hits.slice(0, 3).map(h => Q(h.dict, h.locator, h.quote.slice(0, 300), `російське слово «${rk}»: українські відповідники статті`))
+  const evidence: Evidence[] = hits.slice(0, 3).map(h => Q(h.dict, h.locator, h.quote.slice(0, maxChars('R2U', 300)), `російське слово «${rk}»: українські відповідники статті`))
   const y = ctx.year
   let kind: RuKind, possible: RuKind[]
   if (y === undefined) { kind = 'surzhyk'; possible = ['surzhyk', 'yazychie', 'cs'] }   // no year = a contemporary text / user input (core/detect.ts `modern`); the other types stay listed as possible

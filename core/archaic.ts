@@ -8,6 +8,7 @@
  * abbreviation, the marks in brackets and the gloss are the dictionary's own header line, quoted with its locator (the ingester keeps only that line, license in the witness).
  * Corpus tokens link to an archaic lemma only through an exact spelling or a derive()/MU candidate that equals a dictionary variant.
  */
+import { maxChars } from './rights.ts'
 
 export interface HeadLine { variants: string[]; pos?: string; count?: number; marks: string[]; text: string; rowRef: string }
 /** Locator of the ingester: «т.N ряд. L: <header line>» → the line without the locator and a leading «. */
@@ -128,7 +129,7 @@ export function attachHist(entries: ArchEntry[], rowsOf: (head: string) => { d: 
     const hist: HistAttest[] = [], modern: HistModern[] = [], seen = new Set<string>()
     for (const r of rows) {
       const k = r.d + '|' + (r.l ?? '') + '|' + r.g; if (seen.has(k)) continue; seen.add(k)
-      hist.push({ d: r.d, loc: r.l ?? '', g: r.oq ? '' : r.g.slice(0, 200), date: r.e ?? coverOf(r.d) })
+      hist.push({ d: r.d, loc: r.l ?? '', g: r.oq ? '' : r.g.slice(0, maxChars(r.d)), date: r.e ?? coverOf(r.d) })
       if (!r.oq) for (const w of glossWords(r.g)) if (known(w) && !heads.some(h => lkA(h) === lkA(w)) && !modern.some(m => m.form === w)) modern.push({ form: w, d: r.d, loc: r.l ?? '', grade: 'зіставлено', via: 'gloss' })
     }
     for (const h of heads) for (const p of ptrs(h)) if (known(p.t) && !modern.some(m => m.form === lkA(p.t))) modern.push({ form: lkA(p.t), d: p.d, loc: p.l ?? '', grade: 'зіставлено', via: 'xr' })

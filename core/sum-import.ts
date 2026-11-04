@@ -5,14 +5,13 @@
  * `gloss` is the short gloss, `full` the full definition, `quote` an illustration. Without permission (flag FULL_SENSES_<DICT> off, the default) only the fields of the owner's
  * policy are kept: headword, stress, POS, sense numbers, labels, volume/page, link, a gloss of at most 200 characters; `full` and `quote` are DROPPED, never truncated into the row.
  */
-import { GLOSS_MAX } from './se-parse.ts'
+import { clipTo, isFullText, maxChars, SIZE_BUDGET } from './rights.ts'
 import { typeLabels, type SeRow } from './se.ts'
 
 export const SUM_DICTS = ['sum11', 'sum20'] as const
 export type SumDict = (typeof SUM_DICTS)[number]
-/** the config flag of a dictionary: FULL_SENSES_SUM11, FULL_SENSES_SUM20 (default false; true only with written permission) */
-export const fullSensesFlag = (d: SumDict): string => `FULL_SENSES_${d.toUpperCase()}`
-export const fullSensesOn = (d: SumDict, env: Record<string, string | undefined>): boolean => /^(1|true|yes)$/i.test(env[fullSensesFlag(d)] ?? '')
+/** RG-1: the full definition and the quotation are kept only when core/rights.ts holds a `granted` entry of the dictionary without a character cap (written permission). The former FULL_SENSES_<DICT> environment flags are gone: one registry, one switch. */
+export const fullSensesOn = (d: SumDict): boolean => isFullText(d)
 
 export interface SumSenseIn { n?: number; labels?: string[]; gloss?: string; full?: string; quote?: string }
 export interface SumArticleIn { head?: string; stress?: string; pos?: string; vol?: number | string; page?: number | string; url?: string; senses?: SumSenseIn[] }
@@ -22,11 +21,7 @@ export interface SumStats { lines: number; bad: number; articles: number; senses
 const labelOk = (s: string): boolean => /^[\p{L}.\-’' ]{2,24}$/u.test(s)
 const plain = (s: string): string => s.normalize('NFC').replace(/[́]/g, '').replace(/\s+/g, ' ').trim()
 /** at most `max` characters, cut at a word boundary and marked with «…» */
-export function clip(s: string, max = GLOSS_MAX): string {
-  if (s.length <= max) return s
-  const cut = s.slice(0, max - 1), sp = cut.lastIndexOf(' ')
-  return (sp > max * 0.6 ? cut.slice(0, sp) : cut).replace(/[\s,;:–-]+$/, '') + '…'
-}
+export function clip(s: string, max = SIZE_BUDGET): string { return clipTo(s, max) }   // RG-1: the algorithm lives in core/rights.ts
 /** the official site only: a link elsewhere is dropped */
 export const officialUrl = (d: SumDict, u: string | undefined): string | undefined => {
   if (!u) return undefined
@@ -48,7 +43,7 @@ export function importSum(dict: SumDict, jsonl: string, full = false): { rows: [
     a.senses.forEach((s, i) => {
       const lb = (s.labels ?? []).map(plain).filter(labelOk)
       let g = plain(full && s.full ? s.full : s.gloss ?? '')
-      if (!full) { if (s.full || s.quote) st.droppedFull++; if (g.length > GLOSS_MAX) { g = clip(g); st.clipped++ } }
+      if (!full) { if (s.full || s.quote) st.droppedFull++; if (g.length > maxChars(dict)) { g = clipTo(g, maxChars(dict)); st.clipped++ } }
       const t = typeLabels(`${g} ${lb.join(' ')}`)
       st.senses++
       const row: SeRow = { d: dict, g, ...(a.pos ? { p: plain(a.pos) } : {}), n: s.n || i + 1, ...(loc ? { l: loc } : {}), ...(url ? { u: url } : {}), ...(stress && stress !== head ? { a: stress } : {}), ...(lb.length ? { lb } : {}), ...(t.length ? { t } : {}), ...(full && s.quote ? { q: plain(s.quote) } : {}) }

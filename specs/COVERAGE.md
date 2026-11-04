@@ -784,7 +784,6 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | GG-6 | tests/gg.test.ts › GG-3 DICT_HIST=0 switch and the loader are wired in build.ts; the report script exists |
 | GG-7 | tests/se-ui.test.ts › GG-7 a row with a source article link shows «стаття ↗» next to the dictionary name, on every card kind; a row without a link shows none; the RU badge stays |
 | GG-7 | tests/sum-import.test.ts › GG-7 default: gloss ≤ 200, full definition and quotation dropped, labels/POS/stress/volume-page/link kept, bad lines counted |
-| GG-7 | tests/sum-import.test.ts › GG-7 FULL_SENSES_<dict> defaults to false, reads 1/true, and only then the full definition and quote are kept |
 | GG-7 | tests/sum-import.test.ts › GG-7 clip cuts at a word boundary; the link must point to the official site of the dictionary |
 | GG-7 | tests/sum-import.test.ts › GG-7 one СУМ dictionary alone makes a card (typeset, no corroboration), merges into a dictionary-only card, names the dictionary |
 | GG-7 | tests/sum-import.test.ts › GG-7 SE periods: СУМ-11 = 1970–80, СУМ-20 = contemporary, both own-time; rows written by the pipeline are read back by the GG loader |
@@ -1365,3 +1364,15 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CQ-1 | tests/cq1b.test.ts › CQ-1b an old-Ukrainian allowance for the Russian-language test › a Russian-tested text with >= 1 % marker words and >= 200 tokens is kept, the same text without markers is excluded |
 | CQ-1 | tests/cq1b.test.ts › CQ-1b bilingual dictionaries are not running-text N › title rule: a dictionary word plus a language pair; monolingual and non-dictionary titles are not caught |
 | CQ-1 | tests/cq1b.test.ts › CQ-1b bilingual dictionaries are not running-text N › an OCR dictionary is written with excludeReason (admit() refuses it), a wikisource page of the same title is not touched |
+| RG-1 | tests/rights.test.ts › every source of core/sources.ts and every dictionary of core/se.ts has a rights entry |
+| RG-1 | tests/rights.test.ts › every entry is well formed: quote has fields and a positive limit within the evidence backstop, links has a positive maxLinks, pd states why |
+| RG-1 | tests/rights.test.ts › a granted entry needs non-empty evidence, date and scope |
+| RG-1 | tests/rights.test.ts › NO source is granted now (there is no written permission); changing this list is a deliberate edit |
+| RG-1 | tests/rights.test.ts › the pinned licence of the sources that matter: in-copyright dictionaries are quote, Караванський is links (5), the PD dictionaries are pd |
+| RG-1 | tests/rights.test.ts › the sources whose status is not established sit in `quote` and are listed (UNCERTAIN) |
+| RG-1 | tests/rights.test.ts › maxChars / clip: the limits the parsers read are the ones they had; a grant would lift them |
+| RG-1 | tests/rights.test.ts › no hand-written copy of a limit survives: ESUM_MAX is derived, GLOSS_MAX and MAX_QUOTE are gone |
+| RG-1 | tests/rights.test.ts › evidence backstop: a quote is cut at EVIDENCE_CAP while the source is not granted |
+| RG-1 | tests/rights.test.ts › build output: no text stored for a `quote` source exceeds its limit; a `links` source stores no text and at most maxLinks per headword (when the build output is present) |
+| RG-1 | tests/rights.test.ts › the OCR directories (third-party scans) stay git-ignored |
+| GG-7 | tests/sum-import.test.ts › GG-7 / RG-1 full text is off while core/rights.ts holds no `granted` entry, and only then the full definition and quote are kept |

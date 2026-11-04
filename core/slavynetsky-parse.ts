@@ -8,9 +8,8 @@
  * Layout (looked at on real pages): two columns (the page file = LEFT + «<<COL>>» + RIGHT). Latin part: «latin, gloss, gloss.» — the Latin headword in ASCII, the church-slavonic glosses in Cyrillic with the editor's
  * completions of abbreviated letters in parentheses («шн(ш)ка», «ва(л)са(м)ная»: the letter in the parentheses belongs to the word). Word-pair part: «Закалатель. Lanio. Carnifex.» — the Slavonic headword, the Latin words.
  */
-import { GLOSS_MAX } from './se-parse.ts'
 import type { SeRow } from './se.ts'
-import { clip } from './sum-import.ts'
+import { clip } from './rights.ts'
 
 export const SLA_DICT = 'slavynetsky'
 export const SLA_LAT_YEAR: [number, number] = [1642, 1642], SLA_SLOV_YEAR: [number, number] = [1650, 1650]
@@ -117,7 +116,7 @@ export const SLA_STOP = new Set(['тожъ', 'тожде', 'ела', 'рады',
 export function slaGlossRows(entries: SlaLatinEntry[], st?: SlaStats): [string, SeRow][] {
   const rows: [string, SeRow][] = []
   for (const e of entries) {
-    const shown = clip(`лат. «${e.head}» = ${e.gloss.join(', ')}`, GLOSS_MAX)
+    const shown = clip('slavynetsky', `лат. «${e.head}» = ${e.gloss.join(', ')}`)
     for (const g of e.gloss) {
       if (g.includes(' ') || SLA_STOP.has(g.toLowerCase())) continue
       rows.push([g.toLowerCase(), { d: SLA_DICT, g: shown, e: SLA_LAT_YEAR, l: `${SLA_LAT_LOC}, с. ${e.page}` }])
@@ -128,5 +127,5 @@ export function slaGlossRows(entries: SlaLatinEntry[], st?: SlaStats): [string, 
 }
 /** word-pair part → SE rows keyed by the Slavonic headword; the gloss is the Latin words */
 export function slaSlovRows(entries: SlaSlovEntry[], st?: SlaStats): [string, SeRow][] {
-  return entries.map(e => { if (st) st.keyed++; return [e.head, { d: SLA_DICT, g: clip('лат. ' + e.latin.join(', '), GLOSS_MAX), e: SLA_SLOV_YEAR, l: `${SLA_SLOV_LOC}, с. ${e.page}` } as SeRow] as [string, SeRow] })
+  return entries.map(e => { if (st) st.keyed++; return [e.head, { d: SLA_DICT, g: clip('slavynetsky', 'лат. ' + e.latin.join(', ')), e: SLA_SLOV_YEAR, l: `${SLA_SLOV_LOC}, с. ${e.page}` } as SeRow] as [string, SeRow] })
 }

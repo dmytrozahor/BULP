@@ -15,6 +15,7 @@
  * Pure: the rows come from data/work/r2u-rows.json (pipelines/ingest-r2u.ts), the lemma filter from the caller.
  */
 import type { Evidence } from './evidence.ts'
+import { maxChars } from './rights.ts'
 
 export type OaOrth = 'kul' | 'zhel'
 export interface OaCite { /** the headword as the dictionary prints it (stress marks removed, lower case) */ form: string; /** SE-13: the modern lemma the spelling belongs to (the edit modern -> form is replayed on its forms) */ mod?: string; ev: Evidence }
@@ -51,7 +52,7 @@ export function attestedInitI(rows: Iterable<OaRow>, have: (lemma: string) => bo
       if (['s. ', 'см. ', 'vgl. '].some(p => { const i = t.indexOf(p + mod); return i >= 0 && !/\p{L}/u.test(t[i + p.length + mod.length] ?? ' ') })) continue
       const e = out[mod] ??= {}
       if (e[d.orth]) continue
-      const ev: Evidence = { source: 'R2U', quote: r.text.slice(0, 300), locator: `${d.page} · ${d.short}, s?w=${r.q}#${r.dict}_${r.rowId}`, kind: 'Q', note: NOTE[d.orth] }
+      const ev: Evidence = { source: 'R2U', quote: r.text.slice(0, maxChars('R2U', 300)), locator: `${d.page} · ${d.short}, s?w=${r.q}#${r.dict}_${r.rowId}`, kind: 'Q', note: NOTE[d.orth] }
       e[d.orth] = { form: h, mod, ev }
     }
   }
@@ -83,7 +84,7 @@ export function attestedFromZhel(arts: Iterable<OaZhelIn>, have: (lemma: string)
   const out: Record<string, OaEntry> = {}
   for (const a of arts) {
     const mod = strip(a.lm).replace(/[’ʼ]/g, "'"); if (!mod || !have(mod) || out[mod]?.zhel) continue
-    const ev: Evidence = { source: 'ZHEL1886', quote: a.q.slice(0, 300), locator: `${ZHEL_IA(a.v, a.lf)} · Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, kind: 'Q', note: 'Заголовне слово друку 1886 р. (желехівка); цитата — OCR archive.org, не вичитаний; сучасна лема підтверджена ВЕСУМ через зворотні правила желехівки.' }
+    const ev: Evidence = { source: 'ZHEL1886', quote: a.q.slice(0, maxChars('ZHEL1886', 300)), locator: `${ZHEL_IA(a.v, a.lf)} · Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, kind: 'Q', note: 'Заголовне слово друку 1886 р. (желехівка); цитата — OCR archive.org, не вичитаний; сучасна лема підтверджена ВЕСУМ через зворотні правила желехівки.' }
     ;(out[mod] ??= {}).zhel = { form: a.h, mod, ev }
   }
   return out

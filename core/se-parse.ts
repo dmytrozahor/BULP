@@ -13,6 +13,7 @@
  * Copyright (SE-9): for a © dictionary `keepQuotes` is false: the row carries the headword, the sense number, a gloss ≤ 200 characters, the quotation dates and the sigla, no quotation text.
  */
 import { epochsOf, type SeRow } from './se.ts'
+import { maxChars } from './rights.ts'
 import { pointerOf, type Ptr } from './xref.ts'
 
 export type ParseKind = 'timchenko' | 'sum16' | 'materials' | 'shevchenko' | 'bn' | 'zakrevsky'
@@ -25,7 +26,6 @@ export const PARSE_SPECS: Record<ParseKind, ParseSpec> = {
   materials: { kind: 'materials', dict: 'timchenko-materials', keepQuotes: false, minScore: 0.72, lang: 'uk' },
   shevchenko: { kind: 'shevchenko', dict: 'shevchenko', keepQuotes: false, minScore: 0.72, lang: 'uk' },
 }
-export const GLOSS_MAX = 200
 
 // ── OCR quality (SE-11b) ─────────────────────────────────────────────────────────────────────────
 const CYR = 'А-Яа-яІіЇїЄєҐґЪъЬьЫыЭэЁёѢѣѲѳѴѵ'
@@ -176,8 +176,8 @@ function senseOf(spec: ParseSpec, n: number, text: string, siglaYears: Map<strin
   }
   if (spec.kind === 'materials') { const y = yearIn(t, 1800); if (y) dates.push([y, y]) }   // «Луцьк. 1567, л.57»; bn / zakrevsky quote no dated source: the coverage period applies
   for (const s of sigla) { const y = siglaYears.get(s); if (y && !dates.length) dates.push([y, y]) }
-  gloss = trimTo(gloss.replace(/\s+/g, ' ').replace(ETYM, '').replace(/^[\s,.;:–—-]+/, '').replace(/[\s,;:.]+$/, ''), GLOSS_MAX)
-  return { n, gloss, dates, sigla, ...(spec.keepQuotes && quote ? { quote: trimTo(quote, 120) } : {}), period: !dates.length }
+  gloss = trimTo(gloss.replace(/\s+/g, ' ').replace(ETYM, '').replace(/^[\s,.;:–—-]+/, '').replace(/[\s,;:.]+$/, ''), maxChars(spec.dict))
+  return { n, gloss, dates, sigla, ...(spec.keepQuotes && quote ? { quote: trimTo(quote, maxChars(spec.dict, 120)) } : {}), period: !dates.length }
 }
 
 /** parse one article (headword + body); undefined = below the quality gate (the caller counts it as skipped) */

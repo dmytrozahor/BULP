@@ -3,7 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { clip, fullSensesFlag, fullSensesOn, importSum, officialUrl } from '../core/sum-import.ts'
+import { clip, fullSensesOn, importSum, officialUrl } from '../core/sum-import.ts'
+import { RIGHTS } from '../core/rights.ts'
 import { HIST_BY_ID } from '../core/dx-src.ts'
 import { groupHist, selectHist } from '../core/dx-hist.ts'
 import { dictById } from '../core/se.ts'
@@ -29,12 +30,10 @@ describe('GG-7 licensed СУМ dump: only the policy fields without permission',
     expect(b.g.length).toBeLessThanOrEqual(200); expect(b.g.endsWith('…')).toBe(true); expect(b.t?.[0]?.[0]).toBe('figurative')
     expect(stats).toMatchObject({ articles: 1, senses: 2, clipped: 1, droppedFull: 1, bad: 2 })
   })
-  it('GG-7 FULL_SENSES_<dict> defaults to false, reads 1/true, and only then the full definition and quote are kept', () => {
-    expect(fullSensesFlag('sum20')).toBe('FULL_SENSES_SUM20')
-    expect(fullSensesOn('sum11', {})).toBe(false); expect(fullSensesOn('sum11', { FULL_SENSES_SUM11: '0' })).toBe(false); expect(fullSensesOn('sum11', { FULL_SENSES_SUM11: '1' })).toBe(true)
-    expect(fullSensesOn('sum20', { FULL_SENSES_SUM11: '1' })).toBe(false)
+  it('GG-7 / RG-1 full text is off while core/rights.ts holds no `granted` entry, and only then the full definition and quote are kept', () => {
+    expect(fullSensesOn('sum11')).toBe(false); expect(fullSensesOn('sum20')).toBe(false); expect(RIGHTS.sum11!.license).toBe('quote'); expect(RIGHTS.sum20!.license).toBe('quote')
     const r = importSum('sum11', dump, true).rows[0]![1]; expect(r.g).toBe(LONG); expect(r.q).toBe('Моя хата скраю.')
-    const env = readFileSync('ops/worker/env.sh', 'utf8'); expect(env).toContain('FULL_SENSES_SUM11="${FULL_SENSES_SUM11:-0}"'); expect(env).toContain('FULL_SENSES_SUM20="${FULL_SENSES_SUM20:-0}"')
+    expect(readFileSync('ops/worker/env.sh', 'utf8')).not.toContain('FULL_SENSES')   // RG-1: the environment flags are gone
   })
   it('GG-7 clip cuts at a word boundary; the link must point to the official site of the dictionary', () => {
     expect(clip('слово '.repeat(60)).length).toBeLessThanOrEqual(200)
@@ -54,8 +53,8 @@ describe('GG-7 integration: a SUM headword is a strong source, the SE block know
   it('GG-7 SE periods: СУМ-11 = 1970–80, СУМ-20 = contemporary, both own-time; rows written by the pipeline are read back by the GG loader', () => {
     expect(dictById('sum11')).toMatchObject({ cover: [1970, 1980], basis: 'own-time' }); expect(dictById('sum20')!.cover![0]).toBe(2010)
     const dir = mkdtempSync(join(tmpdir(), 'sum-')), f = join(dir, 'd.jsonl'); writeFileSync(f, dump)
-    const out = runSumImport('sum11', f, join(dir, 'se-parsed'), {}); const before = readFileSync(out, 'utf8')
-    runSumImport('sum11', f, join(dir, 'se-parsed'), {}); expect(readFileSync(out, 'utf8')).toBe(before)   // idempotent
+    const out = runSumImport('sum11', f, join(dir, 'se-parsed')); const before = readFileSync(out, 'utf8')
+    runSumImport('sum11', f, join(dir, 'se-parsed')); expect(readFileSync(out, 'utf8')).toBe(before)   // idempotent
     expect(seHeads('', join(dir, 'se-parsed'))).toEqual([{ word: 'хата', src: 'sum11' }])
   })
 })

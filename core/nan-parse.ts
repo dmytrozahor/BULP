@@ -9,8 +9,8 @@
  * `**` = both old and new records. The book is a differential dictionary; its register also holds words that differ from the literary ones only in sound, meaning or form (preface items 2-10).
  * The text comes from two readings of the scan: Tesseract (`-l ukr`, the page text: letters are good) and the broken-encoding text layer (`tl_NNNN.txt`: the lists of abbreviations and the printed page numbers are clean).
  */
-import { GLOSS_MAX, glossClean, headwordOk, ocrScore } from './se-parse.ts'
-import { clip } from './sum-import.ts'
+import { glossClean, headwordOk, ocrScore } from './se-parse.ts'
+import { clip } from './rights.ts'
 import { textLayerGlossOk, tokensOf } from './text-layer.ts'
 
 export const NAN_DICT = 'chabanenko'
@@ -253,7 +253,7 @@ function readSide(pages: NanPage[], vol: number, settlements: Settlements, tl: b
       let gloss = slashToParen(fs.gloss).replace(/\s*\([А-ЯІЇЄҐ][\p{L}]{0,4}[,.\s]*\d[^)]*\)/gu, '').replace(/\s*\((?:[\p{Lu}][\p{L}]{0,6}\.?[,\s]*)+\)?\s*\.?$/u, '').replace(/\s*\(\s*$/, '').replace(/[\s,;:.]+$/, '')   // a trailing «(НІвО, Ом.)» is the settlements, not the gloss; a source citation «(ЯСл,64 - Кпл.)» inside the gloss is not a gloss
       if (!gloss) continue
       if (!glossShape(gloss)) { cnt('badGloss'); senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }
-      gloss = clip(gloss, GLOSS_MAX)
+      gloss = clip('chabanenko', gloss)
       if (!nanGlossClean(gloss.replace(/…$/, ''))) { cnt('badGloss'); senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }
       senses.push({ n: s.n, labels: lb.labels, gloss })
     }
@@ -397,7 +397,7 @@ function readSide16(pages: NanPage[], vol: number, settlements: Settlements, tl:
         let gloss = slashToParen(fs.gloss).replace(/\s*\([А-ЯІЇЄҐ][\p{L}]{0,4}[,.\s]*\d[^)]*\)/gu, '').replace(/\s*\((?:[\p{Lu}][\p{L}]{0,6}\.?[,\s]*)+\)?\s*\.?$/u, '').replace(/\s*\(\s*$/, '').replace(/[\s,;:.]+$/, '')
         if (!gloss) continue
         if (!glossShape(gloss) || !/^[А-ЯІЇЄҐ«(]/u.test(gloss) || abbrShare(gloss, settlements) >= 0.5) { senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }   // the book capitalises every gloss; a run of settlement abbreviations is no gloss
-        gloss = clip(gloss, GLOSS_MAX)
+        gloss = clip('chabanenko', gloss)
         if (!nanGlossClean(gloss.replace(/…$/, ''))) { senses.push({ n: s.n, labels: lb.labels, gloss: '', oq: 1 }); continue }
         senses.push({ n: s.n, labels: lb.labels, gloss })
       }

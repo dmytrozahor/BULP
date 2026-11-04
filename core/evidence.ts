@@ -7,6 +7,7 @@
  *
  * A `Claim<T>` cannot exist without evidence; the single escape hatch is `unknown()`.
  */
+import { EVIDENCE_CAP, maxChars, RIGHTS } from './rights.ts'
 
 /** Q = verbatim quote, P = paraphrase (shown with a badge), D = data record (VESUM line, attestation in context). */
 export type EvidenceKind = 'Q' | 'P' | 'D'
@@ -26,6 +27,9 @@ export interface Claim<T> { value: T | Unknown; evidence: Evidence[]; score?: nu
 
 export class EvidenceError extends Error {}
 
+/** RG-1: the backstop of a quote is EVIDENCE_CAP; a `granted` source (core/rights.ts) carries its own limit (or none) */
+const quoteCap = (source: string): number => (RIGHTS[source]?.license === 'granted' ? maxChars(source) : EVIDENCE_CAP)
+
 const valid = (e: Evidence) => !!(e.source && e.quote?.trim() && e.locator?.trim() && 'QPD'.includes(e.kind))
 
 /** P-1.1/P-1.2: the only way to assert a value. Throws on missing or malformed evidence. */
@@ -34,7 +38,7 @@ export function claim<T>(value: T, evidence: Evidence | Evidence[], extra: Pick<
   if (!ev.length) throw new EvidenceError(`claim(${String(value)}) without evidence`)
   const bad = ev.find(e => !valid(e))
   if (bad) throw new EvidenceError(`malformed evidence for ${String(value)}: ${JSON.stringify(bad)}`)
-  return { value, evidence: ev.map(e => ({ ...e, quote: e.quote.slice(0, 300) })), ...extra }
+  return { value, evidence: ev.map(e => ({ ...e, quote: e.quote.slice(0, quoteCap(e.source)) })), ...extra }
 }
 
 /** P-3.1: unknown is a first-class answer and needs no evidence. */

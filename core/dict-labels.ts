@@ -14,6 +14,7 @@
  */
 import { COUNTIES, COUNTY_RU, GOV_RU } from './dict-counties.ts'
 import { gazetteerRows, type GazRow } from './autolabel.ts'
+import { maxChars } from './rights.ts'
 
 /** historical / ethnographic areas the dictionaries name. `uk` is shown on the card; the dialect group, if any, comes from the AC-2 gazetteer by that name. */
 export const AREAS: Record<string, string> = {
@@ -520,7 +521,7 @@ export function wireHit(table: DTable, h: ArticleHit, url: string): DictHit {
   const r = h.row, rs = h.resolved
   const v = r.kind === 'area' ? (rs.area ?? '') : r.kind === 'type' ? r.typ! : r.reg ?? ''
   return {
-    t: table.id, a: h.variant ? h.row.abbr : r.abbr, kind: r.kind, v, q: h.quote.slice(0, 200), u: url,
+    t: table.id, a: h.variant ? h.row.abbr : r.abbr, kind: r.kind, v, q: h.quote.slice(0, maxChars(table.id)), u: url,
     ...(r.kind === 'area' && rs.places[0] && (r.county || r.place) ? { place: rs.places[0] } : {}),
     ...(rs.gov ? { gq: rs.gov.quote } : {}),
     ...(r.scope === 'place' ? { p: true as const } : {}),

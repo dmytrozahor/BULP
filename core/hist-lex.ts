@@ -12,6 +12,7 @@
  */
 import { headwordOk, ocrScore, wordish } from './se-parse.ts'
 import { isTypedDict, type SeRow } from './se.ts'
+import { maxChars } from './rights.ts'
 
 export interface HistLexSpec { id: string; dict: string; year: number; short: string; minScore: number }
 export const HIST_LEX_SPECS: Record<string, HistLexSpec> = {
@@ -82,14 +83,14 @@ export function parsePages(pages: { page: number; text: string }[], spec: HistLe
 
 /** (b) the Church Slavonic headword row: its «простою мовою» equivalents are the gloss; dated by the print year */
 export const headRows = (a: LexArticle[], spec: HistLexSpec): [string, SeRow][] =>
-  a.map(x => [x.head, { d: spec.dict, g: `проста мова: ${x.glosses.join(', ')}`.slice(0, 200), e: [spec.year, spec.year], l: `${spec.short}, скан ${x.page}` } as SeRow])
+  a.map(x => [x.head, { d: spec.dict, g: `проста мова: ${x.glosses.join(', ')}`.slice(0, maxChars(spec.dict)), e: [spec.year, spec.year], l: `${spec.short}, скан ${x.page}` } as SeRow])
 
 /**
  * (a) the sense of the GLOSS word: one row per single-word equivalent, keyed by the gloss word (the build attaches it to the modern lemma through exact key, then the fold candidates of the word);
  * `g` names the Church Slavonic headword it translated and the other equivalents of the article; dated by the dictionary's print year.
  */
 export const glossRows = (a: LexArticle[], spec: HistLexSpec): [string, SeRow][] =>
-  a.flatMap(x => x.glosses.filter(g => !g.includes(' ')).map(g => [g, { d: spec.dict, g: `ц.-сл. «${x.head}»${x.glosses.length > 1 ? ` = ${x.glosses.filter(y => y !== g).join(', ')}` : ''}`.slice(0, 200), e: [spec.year, spec.year], l: `${spec.short}, скан ${x.page}` } as SeRow] as [string, SeRow]))
+  a.flatMap(x => x.glosses.filter(g => !g.includes(' ')).map(g => [g, { d: spec.dict, g: `ц.-сл. «${x.head}»${x.glosses.length > 1 ? ` = ${x.glosses.filter(y => y !== g).join(', ')}` : ''}`.slice(0, maxChars(spec.dict)), e: [spec.year, spec.year], l: `${spec.short}, скан ${x.page}` } as SeRow] as [string, SeRow]))
 
 // ── the PROOFREAD Лексис: В. В. Німчук's typed transcription on litopys.org.ua (SRC-28) ──────────────────────────────────────────────
 /**

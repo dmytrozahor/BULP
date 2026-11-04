@@ -13,6 +13,7 @@
  */
 import { nimchukText, type LexArticle, type LexStats } from './hist-lex.ts'
 import type { SeRow } from './se.ts'
+import { maxChars } from './rights.ts'
 
 export interface TypedLexSpec {
   id: string; dict: string; short: string
@@ -63,7 +64,7 @@ export function parseTypedLexicon(html: string, spec: TypedLexSpec): { articles:
 const loc = (spec: TypedLexSpec) => `${spec.short}, Німчук 1964, ${TYPED_BASE}${spec.pages[0]}`
 /** (b) the old headword row: its East Slavic equivalents are the gloss, dated by the manuscript/print (a range when only the period is known) */
 export const typedHeadRows = (a: LexArticle[], spec: TypedLexSpec): [string, SeRow][] =>
-  a.map(x => [x.head, { d: spec.dict, g: `${spec.lead}: ${x.glosses.join(', ')}`.slice(0, 200), e: spec.years, l: loc(spec) } as SeRow])
+  a.map(x => [x.head, { d: spec.dict, g: `${spec.lead}: ${x.glosses.join(', ')}`.slice(0, maxChars(spec.dict)), e: spec.years, l: loc(spec) } as SeRow])
 /** (a) the sense of a one-word gloss, keyed by the gloss word (a modern lemma through the folds); words of fewer than 4 letters are not keyed (function words, debris) */
 export const typedGlossRows = (a: LexArticle[], spec: TypedLexSpec): [string, SeRow][] =>
-  spec.rev ? [] : a.flatMap(x => x.glosses.filter(g => !g.includes(' ') && g.length >= 4).map(g => [g, { d: spec.dict, g: `${spec.tag} «${x.head}»${x.glosses.length > 1 ? ` = ${x.glosses.filter(y => y !== g).join(', ')}` : ''}`.slice(0, 200), e: spec.years, l: loc(spec) } as SeRow] as [string, SeRow]))
+  spec.rev ? [] : a.flatMap(x => x.glosses.filter(g => !g.includes(' ') && g.length >= 4).map(g => [g, { d: spec.dict, g: `${spec.tag} «${x.head}»${x.glosses.length > 1 ? ` = ${x.glosses.filter(y => y !== g).join(', ')}` : ''}`.slice(0, maxChars(spec.dict)), e: spec.years, l: loc(spec) } as SeRow] as [string, SeRow]))

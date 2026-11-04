@@ -7,6 +7,7 @@
 import type { RuHit } from './ru-contact.ts'
 import { ruKey } from './ru-contact.ts'
 import { key } from './text.ts'
+import { maxChars } from './rights.ts'
 
 /** [dictionary short name, locator, equivalents (key()ed), quote] */
 export type RuHeadRow = [string, string, string[], string]
@@ -24,7 +25,7 @@ export function buildRuHeadEntries(rows: readonly (readonly [number, number, str
       const k = ruKey(h); if (!k || /\s/.test(k)) continue
       const list = entries[k] ??= []
       if (list.length >= RU_HEAD_MAX || list.some(x => x[0] === d.short && x[1].endsWith(`#${r[0]}_${r[1]}`))) continue
-      list.push([d.short, `r2u ${d.short} · s?w=${r[2]}#${r[0]}_${r[1]}`, eq, r[6].slice(0, 200)])
+      list.push([d.short, `r2u ${d.short} · s?w=${r[2]}#${r[0]}_${r[1]}`, eq, r[6].slice(0, maxChars('R2U'))])
     }
   }
   return entries

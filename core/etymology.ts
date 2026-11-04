@@ -10,6 +10,7 @@
  * The conflict flag is a prompt for review: it corrects nothing and is never shown as a dictionary fact.
  */
 import { D, Q, type Evidence } from './evidence.ts'
+import { maxChars } from './rights.ts'
 import { ukEtymEvidence, type UkEtym } from './etymuk.ts'
 
 export interface EtymHypothesis { author: string; text: string; status: 'proposed' | 'accepted' | 'rejected'; evidence: Evidence[]; date: string }
@@ -52,9 +53,9 @@ export const wiktEvidence = (lemma: string, text: string, extracted: string): Ev
 export interface EsumScanEntry { t?: string; v: number; p: number; k?: 'bor' | 'proto' | 'other'; n?: number; g?: 'a' | 'b' | 'c' }
 export const esumScanEvidence = (e: EsumScanEntry, lemma = ''): Evidence =>
   !e.t ? D('ESUM', `ЕСУМ, т. ${e.v}, с. ${e.p}`, `Стаття про слово${lemma ? ` «${lemma}»` : ''} у друкованому томі, т. ${e.v}, с. ${e.p}`, 'ЕСУМ, друкований том (скан наданий власником проєкту): лише вказівка на сторінку — етимологічне твердження не вдалося надійно прочитати; текст — у виданні') :
-  Q('ESUM', `ЕСУМ, т. ${e.v}, с. ${e.p}`, e.t.slice(0, 201), 'ЕСУМ, друкований том (скан наданий власником проєкту): уривок до 200 знаків від етимологічного твердження; розпізнавання тексту автоматичне, «[…]» — форма, яку не вдалося прочитати; повний текст — у виданні')
+  Q('ESUM', `ЕСУМ, т. ${e.v}, с. ${e.p}`, e.t.slice(0, maxChars('ESUM') + 1), 'ЕСУМ, друкований том (скан наданий власником проєкту): уривок до 200 знаків від етимологічного твердження; розпізнавання тексту автоматичне, «[…]» — форма, яку не вдалося прочитати; повний текст — у виданні')
 export const esumEvidence = (lemma: string, quote: string): Evidence =>
-  Q('ESUM', goroh(lemma), clip(quote), 'ЕСУМ за дзеркалом goroh.pp.ua; коротка цитата, повний текст — за посиланням; том і сторінку друкованого видання goroh не показує')
+  Q('ESUM', goroh(lemma), clip(quote, maxChars('ESUM-GOROH', 300)), 'ЕСУМ за дзеркалом goroh.pp.ua; коротка цитата, повний текст — за посиланням; том і сторінку друкованого видання goroh не показує')
 
 // ── dictionary dating (ET-3) ─────────────────────────────────────────────────────────────────────
 export interface Dating { kind: 'attested' | 'borrowed'; from: number; to: number; quote: string }

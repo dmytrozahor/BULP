@@ -11,6 +11,7 @@
 import { assignEpoch, EPOCHS } from './epochs.ts'
 import { articleStart, glossOf, stripMarks, type DictDir } from './sn.ts'
 import { key } from './text.ts'
+import { maxChars } from './rights.ts'
 
 // ── SE-1: dictionaries and their coverage periods ─────────────────────────────────────────────────
 export type GlossLang = 'ru' | 'uk' | 'de' | 'en' | 'none'
@@ -102,7 +103,7 @@ export interface SeRow {
   /** the Russian headword of a ru→uk article in which the lemma is the Ukrainian equivalent: a labelled cross-language note, NEVER the meaning of the Ukrainian word */ ru?: string
 }
 export interface SeAt { a: number | null; b: number | null; basis: 'quote' | CoverBasis }
-export const MAX_ROWS = 30, MAX_QUOTE = 200
+export const MAX_ROWS = 30   // RG-1: the quotation limit of a row is maxChars(dict) of core/rights.ts
 
 /** SE-1: the date of a row: its own dated quotation, else the dictionary's coverage period (never the print year of a historical dictionary). */
 export function atOf(r: SeRow): SeAt {
@@ -161,7 +162,7 @@ export function rowOfLine(wid: string, loc: string, raw: string, word: string, w
   else if (c.dir === 'uk-de') g = deGloss(text, word)
   else g = glossOf(loc, word, c.dir) ?? ''
   const row: SeRow = { d: c.id, g }
-  const q = text.slice(0, MAX_QUOTE); if (q) row.q = q
+  const q = text.slice(0, maxChars(c.id)); if (q) row.q = q
   const l = /(?:#|^)((?:т\.\d+ ряд\. \d+)|(?:\d+_\d+))(?::|$)/.exec(loc)?.[1] ?? /#([^:]+):/.exec(loc)?.[1]; if (l) row.l = l
   if (ru) row.ru = ru
   if (c.quoteDates && witnessDate && isQuoteDated(wid)) row.e = witnessDate

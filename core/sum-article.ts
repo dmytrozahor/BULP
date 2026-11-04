@@ -3,8 +3,9 @@
  * © policy (НАН, in copyright): the output keeps ONLY the headword, stress, POS/grammar, sense numbers, per-sense labels, a gloss of at most 200 characters (the first characters of the
  * definition, cut at a word boundary and closed with «…» when longer; the definition's illustrative quotations are never taken) and the volume/page. No `full`, no quotation field exists here.
  */
-import { GLOSS_MAX, glossOk, ocrScore } from './se-parse.ts'
-import { clip, type SumArticleIn } from './sum-import.ts'
+import { glossOk, ocrScore } from './se-parse.ts'
+import { clipTo, maxChars } from './rights.ts'
+import type { SumArticleIn } from './sum-import.ts'
 import { pairPointers, pointerOf, type PtrCore } from './xref.ts'
 
 /** usage labels as printed in СУМ-11 / СУМ-20 (closed on purpose: an unknown abbreviation stays in the gloss) */
@@ -77,6 +78,8 @@ export function splitNumbered(body: string): { n: number; text: string }[] {
 }
 
 /** labels and valence («кого, що.») at the start of a sense, then the definition up to the first quotation or «//»; the quotation is NEVER taken. A long definition keeps its first ≤ 200 characters + «…» */
+/** this scanner reads both СУМ dictionaries (text layers of sum11 and sum20): the stricter limit of the two */
+const SUM_GLOSS_MAX = Math.min(maxChars('sum11'), maxChars('sum20'))
 export function senseOf(text: string): { labels: string[]; gloss: string } {
   let t = text.replace(/\s+/g, ' ').replace(/^[\s,;.\\]+/, '')
   // plural/singular notes and degree notes in front of the definition: «(одн. вакуоля, і, ж.), біол. …», «; вищ. ст. важчий. 1. …»
@@ -91,7 +94,7 @@ export function senseOf(text: string): { labels: string[]; gloss: string } {
   }
   const cut = t.search(/\s\/\/\s|(?<=[\p{Ll}\d)\]])\.\s+(?=[\p{Lu}«"(|\[—–-])|:\s+(?=[\p{Lu}«"|\[—–-])|\s[|\[]\p{Lu}/u)
   const def = (cut < 0 ? t : t.slice(0, cut)).replace(/^[\s,.;:–—-]+/, '').replace(/[\s,;:.]+$/, '')
-  return { labels, gloss: clip(def, GLOSS_MAX) }
+  return { labels, gloss: clipTo(def, SUM_GLOSS_MAX) }
 }
 
 /** a headword printed in CAPITALS inside the running text («МАСЛЕЧКО, а, с.»); the grammar block must follow */

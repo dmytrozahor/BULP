@@ -5,6 +5,7 @@
  * No morphological fallback rule is in this module: no source quoting the suffixes -еньк-, -есеньк-, -ісіньк-, -езн-, -ущ- was available when it was written (no cite, no rule).
  * Pure (no node imports).
  */
+import { maxChars } from './rights.ts'
 export type DimRel = 'dim' | 'dim-aff' | 'aff' | 'aug' | 'int'
 /** label on the derivative's card: «зменшено-пестливе до тонкий» */
 export const DIM_REL_UK: Record<DimRel, string> = { dim: 'зменшене', 'dim-aff': 'зменшено-пестливе', aff: 'пестливе', aug: 'збільшене', int: 'підсилене' }
@@ -46,7 +47,7 @@ export function addDim(into: Map<string, DimEntry>, derivative: string, base: st
   const d = into.get(derivative) ?? into.set(derivative, {}).get(derivative)!
   const of = d.of ?? (d.of = [])
   if (of.some(x => x[0] === base && x[2] === src)) return false
-  of.push([base, rel, src, quote.slice(0, 200), loc])
+  of.push([base, rel, src, quote.slice(0, maxChars(src)), loc])
   const b = into.get(base) ?? into.set(base, {}).get(base)!
   const ds = b.ds ?? (b.ds = [])
   if (!ds.some(x => x[0] === derivative)) ds.push([derivative, rel, src])

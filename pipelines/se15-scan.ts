@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node
 import { resolve } from 'node:path'
 import { BUK_DICT, BUK_LABEL, HUT_DICT, HUT_LABEL, ONY_DICT, ONY_LABEL, ONY_SHORT, POL_LABEL, SAB_DICT, SAB_LABEL, SAB_SHORT, POL_DICT, dialPassRate, dialRows, parseBukovyna, parseHutsul, parseOnyPlaces, parseOnyshkevych, parsePolissia, parsePolPlaces, parseSabadosh, type DialPage, type DialRow, type DialStats } from '../core/se15-parse.ts'
 import type { SeRow } from '../core/se.ts'
+import { maxChars } from '../core/rights.ts'
 import { SLA_DICT, foldLatin, foldSlav, onSpine, parseLatinPages, parseSlovPages, slaGlossRows, slaSlovRows, type SlaPage, type SlaStats } from '../core/slavynetsky-parse.ts'
 import { writeJsonAtomic } from './robust.ts'
 
@@ -61,7 +62,7 @@ export function corrRowsOf(dict: string, rows: [string, SeRow][]): CorrLexRow[] 
     const g = r.g.replace(/…$/, '').trim().toLowerCase()
     if (!/^[а-яіїєґ]+(?:['’-][а-яіїєґ]+)*$/u.test(g) || g.length < 3 || g === h || seen.has(h + '|' + g)) continue
     seen.add(h + '|' + g)
-    out.push({ w: [h], gloss: g, codes: c.codes, src: c.src, loc: r.l ?? '', q: (h + ' — ' + g).slice(0, 200), ...(c.village ? { village: c.village } : {}) })
+    out.push({ w: [h], gloss: g, codes: c.codes, src: c.src, loc: r.l ?? '', q: (h + ' — ' + g).slice(0, maxChars(dict)), ...(c.village ? { village: c.village } : {}) })
   }
   return out
 }

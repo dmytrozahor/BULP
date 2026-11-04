@@ -10,6 +10,7 @@ import { createReadStream, existsSync, readdirSync, readFileSync } from 'node:fs
 import { resolve } from 'node:path'
 import { createInterface } from 'node:readline'
 import { lk } from '../core/cv.ts'
+import { maxChars } from '../core/rights.ts'
 import { glossClean, isXrefGloss } from '../core/se-parse.ts'
 import { cleanGloss, textLayerGlossOk, tokensOf, volSource } from '../core/text-layer.ts'
 import { buildEntry, dictOfWitness, isTypedDict, rowOfLine, typeLabels, type SeEntry, type SeKwicIn, type SeRow } from '../core/se.ts'
@@ -44,7 +45,7 @@ export function wiktRows(root: string, lemmas: Iterable<string>, into: Map<strin
   for (const [lemma, senses] of Object.entries(c.out)) {
     const list = into.get(lk(lemma)) ?? into.set(lk(lemma), []).get(lk(lemma))!
     for (const s of senses.slice(0, PER_SOURCE)) {
-      const row: SeRow = { d: 'wikt.uk', g: s.gloss.slice(0, 160), l: s.source }
+      const row: SeRow = { d: 'wikt.uk', g: s.gloss.slice(0, maxChars('wikt.uk', 160)), l: s.source }
       if (s.pos) row.p = s.pos
       const t = typeLabels(s.gloss); if (t.length) row.t = t
       list.push(row); n++
@@ -69,8 +70,8 @@ export async function kaikkiRows(root: string, wanted: (k: string) => boolean, i
     for (const s of e.senses ?? []) {
       const tags = s.tags ?? [], g = (s.glosses?.[0] ?? '').trim()
       if (!g || tags.includes('form-of') || tags.includes('alt-of') || own >= PER_SOURCE) continue
-      if (list.some(r => r.d === 'wikt.en' && r.g === g.slice(0, 160))) continue
-      const row: SeRow = { d: 'wikt.en', g: g.slice(0, 160), l: 'kaikki.org' }
+      if (list.some(r => r.d === 'wikt.en' && r.g === g.slice(0, maxChars('wikt.en', 160)))) continue
+      const row: SeRow = { d: 'wikt.en', g: g.slice(0, maxChars('wikt.en', 160)), l: 'kaikki.org' }
       if (e.pos) row.p = e.pos
       const t = typeLabels(`${tags.join(' ')} ${g}`); if (t.length) row.t = t
       list.push(row); own++; n++
@@ -134,7 +135,7 @@ export function zhelRows(root: string, wanted: (k: string) => boolean, into: Map
     const k = lk(a.lm); if (!a.lm || !wanted(k)) continue
     const list = into.get(k) ?? into.set(k, []).get(k)!
     if (list.some(r => r.d === 'r2u_zheleh' || r.d === 'zhelekhivsky')) { skippedR2u++; continue }
-    const row: SeRow = { d: 'zhelekhivsky', g: a.g, a: a.a, q: a.q.slice(0, 200), l: `Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, u: `https://archive.org/details/zhelekhivsk${a.v}/page/n${a.lf}` }
+    const row: SeRow = { d: 'zhelekhivsky', g: a.g, a: a.a, q: a.q.slice(0, maxChars('zhelekhivsky')), l: `Желехівський–Недільський 1886, т. ${a.v}${a.p ? ', с. ' + a.p : ''}`, u: `https://archive.org/details/zhelekhivsk${a.v}/page/n${a.lf}` }
     if (!a.g) row.oq = 1; else withGloss++
     if (ZHEL_POS[a.ps]) row.p = ZHEL_POS[a.ps]
     list.push(row); rows++

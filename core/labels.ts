@@ -16,6 +16,7 @@
  *  Surzhyk is a property of a FORM (MM-9), never of a lemma: the block says so instead of a value.
  */
 import { ARKUSHYN_LABELS, NAN_LABELS, ONY_LABELS, SAB_LABELS, BUK_LABELS, HUT_LABELS, POL_LABELS, DICT_LABEL_TABLES, EXTRA_LABEL_TABLES, KAIKKI_REGION, SUM11_LABELS, SUM20_LABELS, WIKTUK_REGION, AREAS, extraRow, groupsOfArea, tableById, type DictHit } from './dict-labels.ts'
+import { maxChars } from './rights.ts'
 
 // ── thresholds (LB-1; every one is printed on the methods page) ───────────────────────────────────────
 export const TH = {
@@ -415,7 +416,7 @@ export function wiktRegionHit(src: string, detail: string, lemma?: string): Dict
   if (src === 'k') {
     const [tag, gloss] = detail.split('\t'), row = extraRow(KAIKKI_REGION, tag ?? '')
     if (row?.kind !== 'area') return undefined
-    return { t: KAIKKI_REGION.id, a: row.abbr, kind: 'area', v: row.area!, q: `[${tag}] ${gloss ?? ''}`.trim().slice(0, 200), u: lemma ? enWiki(lemma) : KAIKKI_REGION.list }
+    return { t: KAIKKI_REGION.id, a: row.abbr, kind: 'area', v: row.area!, q: `[${tag}] ${gloss ?? ''}`.trim().slice(0, maxChars('KAIKKI')), u: lemma ? enWiki(lemma) : KAIKKI_REGION.list }
   }
   if (src === 'w') {
     const row = extraRow(WIKTUK_REGION, detail)
@@ -428,7 +429,7 @@ export function wiktRegionHit(src: string, detail: string, lemma?: string): Dict
 export function sumLabelHit(d: string, lb: string, gloss?: string, url?: string, place?: string): DictHit | undefined {
   const t = SUM_TABLES[d as keyof typeof SUM_TABLES]; if (!t) return undefined
   const row = extraRow(t, lb.trim().toLowerCase()); if (!row) return undefined
-  const q = `${row.abbr} ${gloss ?? ''}`.trim().slice(0, 200)
+  const q = `${row.abbr} ${gloss ?? ''}`.trim().slice(0, maxChars('KAIKKI'))
   return row.kind === 'area' ? { t: t.id, a: row.abbr, kind: 'area', v: row.area!, q, u: url ?? t.list, ...(place ? { place } : {}), ...(TABLE_GROUP.has(t) ? { g: TABLE_GROUP.get(t)! } : {}), ...(row.scope === 'place' ? { p: true as const } : {}) } : { t: t.id, a: row.abbr, kind: 'dialectal', v: row.reg ?? 'dial', q, u: url ?? t.list }
 }
 

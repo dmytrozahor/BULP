@@ -9,8 +9,8 @@
  * · village numbers (the first = the village of the illustration; «усі н. пп.» / «у багатьох н. пп.» = the word is general). OCR of the scan: quotation marks, brackets and the stress are unreliable,
  * so a quote mark is only a hint; every headword passes the quality gates (capitals form, `headwordOk`, the page's running-head range, `ocrScore` of the gloss) and nothing garbled gets in.
  */
-import { GLOSS_MAX, headwordOk, ocrScore } from './se-parse.ts'
-import { clip } from './sum-import.ts'
+import { headwordOk, ocrScore } from './se-parse.ts'
+import { clip } from './rights.ts'
 import { inPageRange } from './sum-article.ts'
 
 export const ARK_DICT = 'arkushyn'
@@ -158,7 +158,7 @@ function senseOf(text: string): { labels: string[]; gloss: string; tail: string 
   const parts = gloss.split(/;\s*/), keep: string[] = []
   for (const p of parts) { if (ocrScore(p) >= 0.8 && !/[А-ЯІЇЄҐ]{3,}/.test(p.replace(/[А-ЯІЇЄҐ]{3,}(?=[\s,]|$)/g, '')) || /^(?:те,? що|тс,? що|те саме)/iu.test(p)) keep.push(p); else break }
   gloss = keep.filter(p => !/^[А-ЯІЇЄҐ][а-яіїєґ]+ [а-яіїєґ]+(?: [А-ЯІЇЄҐ]\.?)?$/u.test(p)).join('; ').replace(/^[^(]*\)\s*/u, m => (m.includes('(') ? m : '')).replace(/\s+[ІI]$/u, '')
-  return { labels, gloss: clip(gloss, GLOSS_MAX), tail: t.slice(end) }
+  return { labels, gloss: clip('arkushyn', gloss), tail: t.slice(end) }
 }
 
 const glossClean = (g: string): boolean => g.length >= 3 && /\p{L}{2}/u.test(g) && ocrScore(g.replace(/\([^)]{0,40}\)/g, ' ').replace(/[А-ЯІЇЄҐ]{3,}/g, ' ')) >= 0.8 && !/\d/.test(g.replace(/\([^)]*\)/g, ''))

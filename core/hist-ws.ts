@@ -10,6 +10,7 @@
  * Pure (no node imports).
  */
 import type { SeRow } from './se.ts'
+import { maxChars } from './rights.ts'
 
 export interface WsSpec { id: string; dict: string; short: string; year: number; layout: 'flow' | 'table'; titles: string[]; license: string }
 export const WS_API = 'https://uk.wikisource.org/w/api.php'
@@ -71,4 +72,4 @@ function finish(raw: { head: string; gloss: string; section: number }[]): { arti
   return { articles, stats: st }
 }
 export const wsRows = (a: WsArticle[], spec: WsSpec, rev: string): [string, SeRow][] =>
-  a.map(x => [x.head, { d: spec.dict, g: x.gloss.slice(0, 200), e: [spec.year, spec.year], l: `${spec.short}; ${spec.license}${rev ? `; ред. ${rev}` : ''}`.slice(0, 260) } as SeRow])
+  a.map(x => [x.head, { d: spec.dict, g: x.gloss.slice(0, maxChars(spec.dict)), e: [spec.year, spec.year], l: `${spec.short}; ${spec.license}${rev ? `; ред. ${rev}` : ''}`.slice(0, 260) } as SeRow])

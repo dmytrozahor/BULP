@@ -9,9 +9,9 @@
  * Recall design (SE-14 reached ≈ 25 %): an article is NOT dropped for a garbled gloss (the row keeps the headword with `oq`), and not for an off-spine headword (the row is kept for labelling an existing lemma with
  * `unv`; only `unv`-free rows may make dictionary-only cards).
  */
-import { GLOSS_MAX, headwordOk, ocrScore } from './se-parse.ts'
+import { headwordOk, ocrScore } from './se-parse.ts'
 import type { SeRow } from './se.ts'
-import { clip } from './sum-import.ts'
+import { clip } from './rights.ts'
 
 export const ONY_DICT = 'onyshkevych', SAB_DICT = 'sabadosh', BUK_DICT = 'bukovyna', HUT_DICT = 'hutsul'
 export const BUK_LABEL = 'букович.', BUK_PLACE = 'букович. (місце запису)', HUT_LABEL = 'гуцул.', HUT_PLACE = 'гуцул. (місце запису)'
@@ -174,7 +174,7 @@ function glossOfSegment(seg: string): { gloss: string; labels: string[] } {
   s = trimQ(s.replace(/^[\s,.;:]*\d\s*[.,]\s*/, ''))
   s = s.replace(/\s+/g, ' ').replace(/\s*[`'"‘’“”«»]\s*/g, m => (m.trim() ? ' ' : ' ')).replace(/\s+/g, ' ').trim()
   s = s.replace(/,\s*$/, '')
-  return { gloss: s ? clip(s, GLOSS_MAX) : '', labels }
+  return { gloss: s ? clip(ONY_DICT, s) : '', labels }
 }
 
 export function parseOnyshkevych(pages: DialPage[], vol: number, places: Map<string, string>, known: (h: string) => boolean = () => false): { rows: DialRow[]; stats: DialStats; cands: Set<string> } {
@@ -320,7 +320,7 @@ export function parseCaps(pages: DialPage[], cfg: CapsCfg, vol = 1, known: (h: s
         g = g.replace(/\s+(?:Див|Пор)\.\s.*$/u, '').replace(/^[^\p{L}(«]+/u, '').replace(/[\s,;:]+$/, '')
         if (cfg.places) { const pl = cfg.places(t); for (const n of pl.names) if (!placeNames.includes(n)) placeNames.push(n); if (pl.all) all = true }
         if (!g) continue
-        const gl = clip(g, GLOSS_MAX), ok = dialGlossOk(gl)
+        const gl = clip(cfg.dict, g), ok = dialGlossOk(gl)
         senses.push(ok ? { n: Math.max(s.n, 1), labels, gloss: gl } : { n: Math.max(s.n, 1), labels, gloss: '', oq: 1 })
       }
     }
@@ -400,7 +400,7 @@ export function parseHutsul(pages: DialPage[], known: (h: string) => boolean = (
         let g = t.split(/\s:|:\s?[А-ЯІЇЄҐA-Z]|\s\([А-ЯІЇЄҐ][а-яіїєґ]{1,3}\)/u)[0]!.replace(/;\s*$/, '').split(/\s\/\/?\s/)[0]!.replace(/^[\s,;.]+|[\s,;:]+$/g, '')
         g = g.split(/\s(?=\(\p{Lu}[a-zA-Z]{3,})/u)[0]!.split(/;\s*(?:пор|лор)\./u)[0]!.replace(/[\s;,]+$/, '')
         if (!g) continue
-        const gl = clip(g, GLOSS_MAX), ok = dialGlossOk(gl)
+        const gl = clip(HUT_DICT, g), ok = dialGlossOk(gl)
         senses.push(ok ? { n: Math.max(s.n, 1), labels, gloss: gl } : { n: Math.max(s.n, 1), labels, gloss: '', oq: 1 })
       }
     }
