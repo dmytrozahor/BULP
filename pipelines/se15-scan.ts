@@ -52,6 +52,7 @@ export function loadPages(dir: string, v: VolSpec): { pages: DialPage[]; front: 
 export const CORR_AREA: Record<string, { codes: string[]; village?: string; src: string; word: string }> = {
   onyshkevych: { codes: ['BOY'], src: ONY_SHORT, word: ONY_LABEL }, sabadosh: { codes: ['ZAK'], village: 'Сокирниця', src: SAB_SHORT, word: SAB_LABEL },
   bukovyna: { codes: [], village: 'Буковина (Чернівецька обл.)', src: 'Словник буковинських говірок (2005)', word: BUK_LABEL }, hutsul: { codes: ['HUT'], src: 'Гуцульські говірки. Короткий словник (1997)', word: HUT_LABEL },
+  verkhratsky: { codes: ['LEM'], src: 'Верхратський, Говор галицких Лемків (1902)', word: 'лемк.' },
   lysenko: { codes: ['MPL', 'CHN'], src: 'Лисенко, Словник поліських говорів (1974)', word: POL_LABEL }, chabanenko: { codes: ['STP'], src: 'Чабаненко, Словник говірок Нижньої Наддніпрянщини (1992)', word: 'ниж.-наддн.' },
 }
 export interface CorrLexRow { w: string[]; gloss: string; codes: string[]; src: string; loc: string; q: string; village?: string }

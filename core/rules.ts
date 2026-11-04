@@ -8,6 +8,7 @@ import { TAG, normative, modern, detect, type Ctx, type Rule, type Detection } f
 import { DIALECT_LEX } from './dialect-lex.ts'
 import { contactCorr, ICHESK_CITE } from './contact-corr.ts'
 import { AUM_ROWS, AUM_VOL2 } from './atlas-rules.ts'
+import { SE17_ROWS } from './rules-se17.ts'
 
 const vline = (c: Ctx, t: string) => { const h = TAG(c, t); return h ? D('VESUM', 'dict_corp_vis.txt v6.8.6', `${c.form} ${h.tags} (лема: ${h.lemma})`) : null }
 const match = (re: RegExp, s?: string) => (s && re.test(s) ? s : null)
@@ -169,6 +170,11 @@ const diaB = (id: string, code: string, re: RegExp, weight: number, src: string,
   return r
 }
 
+/**
+ * SPEC 63 SE-17: the rows whose cite is the author's OWN statement (Верхратський 1902, public domain; the preface of «Говірки Західної Полтавщини», quotation only); data in core/rules-se17.ts.
+ * Quotes are given with the OCR debris corrected against the scan page and the brackets of the transcription restored; the page is the printed one.
+ */
+export const DIALECT_SE17_RULES: Rule[] = SE17_ROWS.map(r => diaB(r.id, r.code, r.re, r.weight, r.src, r.loc, r.quote, r.note))
 export const DIALECT_BOOK_RULES: Rule[] = [
   // ─ SPEC 63 AT-3: «Атлас української мови» т. 2 (core/atlas-rules.ts, data/atlas/aum2-maps.json); umbrella SW, weak: the settlement list is not readable from the OCR ─
   ...AUM_ROWS.map(r => diaB(r.id, 'SW', r.re, 0.2, 'AUM', `${AUM_VOL2}, карта ${r.map} (коментар)`,
@@ -357,7 +363,7 @@ export const DIALECT_RULES: Rule[] = [
   ...dia('CHN-PREP', ['CHN'], /^(помеж|л'а|л'е|заза|наў|ік|дак)$/, 0.7, 'EPL', 'к(ік)+дав. в. "до" (к бра́ту, ік сталý); л\'а (л\'е)+ род. в. "біля" (л\'а ха́ти, л\'е ріечки)'),
   ...dia('MPL-YON', ['MPL'], /^(йон|юн)$/, 0.7, 'MPL', 'приставний звук й у займеннику йон, юн (він)'),
   ...dia('ZAK-Y-VELAR', ['ZAK'], /[кгґх]ы/, 0.6, 'ZAK', '[ы] зберігається й після задньоязикових приголосних (гынути, ломаґы «ломаки» …)'),
-  ...DIALECT_BOOK_RULES, ...DIALECT_LEX_RULES,
+  ...DIALECT_BOOK_RULES, ...DIALECT_SE17_RULES, ...DIALECT_LEX_RULES,
 ]
 
 /** Dialect code → display names (research/04 §1 codes). */

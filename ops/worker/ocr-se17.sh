@@ -4,6 +4,7 @@
 # Resumable (one page_NNNN.txt per page, a page that exists is skipped), nice 19, OMP_THREAD_LIMIT=4, at most 4 parallel pages.
 # Usage: nohup ops/worker/ocr-se17.sh [vols...] > ~/logs/se17-ocr.out 2>&1 &    (default: e3 e4 e1 e2; PDFs in ~/work/nb4, output in $SE17=~/work/se17-ocr)
 set -uo pipefail
+source "$(dirname "${BASH_SOURCE[0]}")/env.sh" 2>/dev/null || true
 SE17=${SE17:-$HOME/work/se17-ocr}; SRC=${SRC:-$HOME/work/nb4}; mkdir -p "$SE17"; cd "$SE17"
 export TESSDATA_PREFIX=${TESSDATA_PREFIX:-$HOME/work/se14-ocr/tessdata}
 export OMP_THREAD_LIMIT=4

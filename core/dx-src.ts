@@ -62,6 +62,8 @@ export const HIST_SRC: HistSrc[] = [
   Z('sabadosh', 4, 'Сабадош, Словник закарпатської говірки села Сокирниця', 'друк 2008', 20),
   Z('bukovyna', 8, 'Словник буковинських говірок', 'друк 2005', 20),
   Z('lysenko', 32, 'Лисенко, Словник поліських говорів', '1947–1963; друк 1974', 20),
+  // SE-17: Верхратський 1902 (public domain; the headwords that passed the gates make cards, the OCR rows `unv` do not)
+  Z('verkhratsky', 64, 'Верхратський, Говор галицких Лемків (словарець)', 'друк 1902', 20, true),
   Z('hutsul', 16, 'Гуцульські говірки. Короткий словник', 'друк 1997', 20),
 ]
 /** the dictionaries of the first / the second mask */

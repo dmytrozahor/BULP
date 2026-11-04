@@ -167,6 +167,7 @@ export const RIGHTS: Record<SourceId, Rights> = {
   ...Object.fromEntries(R2U_DICTS.map(id => [id, SOURCE_RIGHTS.R2U!])),
   // SOURCES keys that name the same book as a dictionary id share its entry
   CHABANENKO: DICTS.chabanenko!, ONYSHKEVYCH: DICTS.onyshkevych!, ONYSH: DICTS.onyshkevych!, SABADOSH: DICTS.sabadosh!, BUKOVYNA: DICTS.bukovyna!,
+  VERKH: DICTS.verkhratsky!, POLT: DICTS.poltavshchyna!, KARAV: DICTS.karavansky!,
   HUTSUL: DICTS.hutsul!, ZAKREV: DICTS.hutsul!, SLAVYNETSKY: DICTS.slavynetsky!, ARKUSHYN: DICTS.arkushyn!, LYSENKO: DICTS.lysenko!, PYRTEY: { license: 'quote', maxChars: SIZE_BUDGET, fields: GLOSS_FIELDS, uncertain: 'Пиртей 2001: статус не встановлено' },
 }
 

@@ -51,6 +51,11 @@ const VOWELS = 'аеиіоуяюєїы'
 const DEVOICE: Record<string, string> = { б: 'п', д: 'т', г: 'х', ґ: 'к', ж: 'ш', з: 'с' }
 
 export const SPELL_RULES: SpellRule[] = [
+  // SE-17: Верхратський 1902 (Лемківщина) and the preface of «Говірки Західної Полтавщини» (2012): each rule names the detector row (core/rules-se17.ts) that carries the author's own quotation; the words are the ones the source names
+  { id: 'LEM-DZH-R', codes: { LEM: 'LEM-DZH' }, skip: /^(?!(?:пряжа|одежа|межа|чужий|чужа|чужі)$)/, example: ['межа', 'меджа'], edits: w => [...w.matchAll(/ж/g)].map(m => [m.index!, m.index! + 1, 'дж'] as Edit) },
+  { id: 'LEM-DA-R', codes: { LEM: 'LEM-DA-V' }, skip: /^(?!(?:дехто|дечий|деколи)$)/, example: ['деколи', 'даколи'], edits: w => [[0, 2, 'да'] as Edit] },
+  { id: 'POLT-HAMUT-R', codes: { MDN: 'POLT-HAMUT' }, skip: /^(?!хомут)/, example: ['хомут', 'хамут'], edits: w => [[1, 2, 'а'] as Edit] },
+  { id: 'POLT-NO-PROTH-V-R', codes: { MDN: 'POLT-NO-PROTH-V' }, skip: /^(?!(?:вухо|вузький|вузька|вузьке|вулиця|вуж)$)/, example: ['вулиця', 'улиця'], edits: w => [[0, 1, ''] as Edit] },
   ...SW_RULES,   // first: MDN о kept (порог) must precede the ukanye rule, which reads the stressed і that is not there any more
   // neuter nouns lose the long soft consonant: NDN / SYAN -є (житє, знанє, бажанє), POD / VOL -я (житя, зіля)
   { id: 'SW-NO-LENGTH', codes: { NDN: 'SW-NO-LENGTH', SYAN: 'SW-NO-LENGTH' }, needs: 'neuter', example: ['бажання', 'бажанє'],

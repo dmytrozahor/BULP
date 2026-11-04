@@ -116,7 +116,7 @@ describe('RG-1 rights registry', () => {
   })
 
   it('the OCR directories (third-party scans) stay git-ignored', () => {
-    const dirs = ['data/raw/se14-ocr', 'data/raw/se15-ocr', 'data/raw/se16-ocr', 'data/raw/nan-ocr', 'data/raw/sum-ocr', 'data/raw/ocr', 'data/raw/owner-ocr', 'data/raw/hist-lex-ocr', 'data/raw/ia-ocr', 'data/raw/arkushyn']
+    const dirs = ['data/raw/se14-ocr', 'data/raw/se15-ocr', 'data/raw/se16-ocr', 'data/raw/se17-ocr', 'data/raw/nan-ocr', 'data/raw/sum-ocr', 'data/raw/ocr', 'data/raw/owner-ocr', 'data/raw/hist-lex-ocr', 'data/raw/ia-ocr', 'data/raw/arkushyn']
     const raw = resolve(root, 'data/raw'); if (existsSync(raw)) for (const n of readdirSync(raw)) if (/ocr/i.test(n) && !dirs.includes('data/raw/' + n)) dirs.push('data/raw/' + n)
     for (const d of dirs) {
       let ignored = true

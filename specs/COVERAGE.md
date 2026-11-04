@@ -1387,3 +1387,23 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | DV-5 | tests/dv1.test.ts › DV-5 hypotheses in CR-1 › numerals get a POS from a one-class gloss (штири ~ чотири) |
 | DV-6 | tests/dv1.test.ts › DV-6 numeral map › coverage counts (lemma, column) cells by the strongest grade; an empty numeral is «немає даних» |
 | DV-6 | tests/dv1.test.ts › DV-6 numeral map › forward respelling uses only a cited dictionary form or the owner’s, never a hypothesis |
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › the printed spread of a scan page: printed = 2i − 2 and 2i − 1 |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › a pointer nest («див.») is no series; a running head and a phrase heading are no rows |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › labelled words (д., р., сов.), diminutives after «&», remarks and the «п-к» derived nest are not synonyms of the headword |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › words after a remark are context-bound (cx), the first plain words are not |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › links: ≤ 5 per headword, VESUM lemmas of one POS, mutual first, the printed order is not reproduced, page cited, no text |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › CR-1 adapter: a one-sided link between two nest words is dropped; pairs are never attached to one sense; evidence is a D page pointer |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › the GG-12 row is a claim of kind D with the page, quoting only the two words |'
+| SE-17 | tests/se17.test.ts › SE-17 Караванський (©): parser and word-to-word links › RG-1: karavansky is registered as links (max 5, no text) |'
+| SE-17 | tests/se17.test.ts › SE-17 Закревський (public domain): the scan of 1861 › printed page = scan + 244; a headword off the alphabetical spine is kept with unv, a garbled gloss with oq (never dropped) |'
+| SE-17 | tests/se17.test.ts › SE-17 Закревський (public domain): the scan of 1861 › cleanGloss drops the Polish / Latin debris and keeps the Russian words |'
+| SE-17 | tests/se17.test.ts › SE-17 Закревський (public domain): the scan of 1861 › the preface is read: class 6 with the author's own quotation and place (LB-15 left 63 entries «невизначено» for the want of it) |'
+| SE-17 | tests/se17.test.ts › SE-17 Верхратський (public domain): «Словарець лемківских виразів» of 1902 › printed page = scan − 2, the author's village abbreviations decode, OCR 1 → і in the headword |'
+| SE-17 | tests/se17.test.ts › SE-17 Верхратський (public domain): «Словарець лемківских виразів» of 1902 › the SeRow: word-level label for a non-standard word, place-only label otherwise; a garbled gloss is oq, an off-spine headword unv |'
+| SE-17 | tests/se17.test.ts › SE-17 Верхратський (public domain): «Словарець лемківских виразів» of 1902 › is registered: DICT_COVER and RG-1 (public domain) |'
+| SE-17 | tests/se17.test.ts › SE-17 Говірки Західної Полтавщини (©): transcription → spelling for lookup › soft marks, й-vowels, ї and the bar noise are normalised; a stress bar is kept on the recorded form |'
+| SE-17 | tests/se17.test.ts › SE-17 Говірки Західної Полтавщини (©): transcription → spelling for lookup › lookup candidates undo the recorded reflexes one at a time (типер → тепер, бул'о → було) |'
+| SE-17 | tests/se17.test.ts › SE-17 Говірки Західної Полтавщини (©): transcription → spelling for lookup › the texts are read village by village; the quotation is a short window (≤ 200 characters) at word boundaries |'
+| SE-17 | tests/se17.test.ts › SE-17 Говірки Західної Полтавщини (©): transcription → spelling for lookup › RG-1: poltavshchyna is a quote source (≤ 200 characters) |'
+| SE-17 | tests/se17.test.ts › SE-17 dialect rows with the authors' own quotations › every row is cited (source, locator, quote ≤ the evidence backstop) and fires on its own example |'
+| SE-17 | tests/se17.test.ts › SE-17 dialect rows with the authors' own quotations › respelling: Lemko меджа, даколи; Poltava хамут, улиця — each with the quotation of its own detector row |'

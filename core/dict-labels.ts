@@ -344,7 +344,20 @@ export const POL_LABELS: DTable = {
     R('полісс. (місце запису)', 'Словник поліських говорів — стандартне слово (є у ВЕСУМ), записане в поліських говірках із значенням або формою, яку дає словник (передмова: «загальновідомі слова, що в місцевих говірках виступають з іншим значенням»); позначає лише місце запису', 'area', { area: 'polissia_ce', scope: 'place' }),
   ],
 }
-export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, NAN_LABELS, ONY_LABELS, SAB_LABELS, BUK_LABELS, HUT_LABELS, POL_LABELS, HRINCH_SOURCES]
+export const VERKH_LABELS: DTable = {
+  id: 'verkh-labels', dicts: [], short: 'Верхратський, Говор галицких Лемків (1902)', source: 'VERKH', list: 'Верхратський І. Говор галицких Лемків (Львів, 1902), «Обясненє скорочений» (с. 21–22: Св. = Святкова, Рхв. = Рыхвалд, Ту. = Туриньско …)', attach: 'sense',
+  rows: [
+    R('лемк.', 'Верхратський, Словарець лемківских виразів — слово не є стандартним (немає у ВЕСУМ) і записане автором у лемківських селах (скорочення сіл за його списком)', 'area', { area: 'lemko' }),
+    R('лемк. (місце запису)', 'Верхратський, Словарець лемківских виразів — стандартне слово (є у ВЕСУМ), записане в лемківських селах із значенням або формою, яку дає словарець; позначає лише місце запису', 'area', { area: 'lemko', scope: 'place' }),
+  ],
+}
+export const POLT_LABELS_17: DTable = {
+  id: 'polt-labels', dicts: [], short: 'Говірки Західної Полтавщини (2012)', source: 'POLT', list: 'Говірки Західної Полтавщини: збірник діалектних текстів (Черкаси, 2012), список сіл і тексти записів 2001 р.', attach: 'sense',
+  rows: [
+    R('зах.-полт. (місце запису)', 'Говірки Західної Полтавщини — форма слова записана в мовленні інформантів села (тексти у фонетичній транскрипції, 2001 р.; ВЕСУМ підтверджує слово після переведення в правопис); позначає лише місце запису, не розповсюдження', 'area', { area: 'poltavshchyna', scope: 'place' }),
+  ],
+}
+export const EXTRA_LABEL_TABLES: DTable[] = [SUM11_LABELS, SUM20_LABELS, KAIKKI_REGION, WIKTUK_REGION, ARKUSHYN_LABELS, NAN_LABELS, ONY_LABELS, SAB_LABELS, BUK_LABELS, HUT_LABELS, VERKH_LABELS, POLT_LABELS_17, POL_LABELS, HRINCH_SOURCES]
 /** the row of a table for a label as the source prints it (a trailing «/uk» of a uk.wiktionary category is ignored) */
 export const extraRow = (t: DTable, label: string): DRow | undefined => t.rows.find(r => r.abbr === label.replace(/\/uk$/, ''))
 export const tableOfDict = (dict: number): DTable | undefined => DICT_LABEL_TABLES.find(t => t.dicts.includes(dict))

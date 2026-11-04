@@ -39,6 +39,8 @@ export function parseAll(harvestDir: string, outDir: string): { parsed: Parsed[]
   mkdirSync(outDir, { recursive: true })
   const parsed: Parsed[] = [], reused: string[] = []
   for (const [id, text] of readPayloads(harvestDir)) {
+    // SE-17: the owner's scan of the same book (Закревський, bandurista3) has the better OCR and its own parser (pipelines/se17-scan.ts → zakrevsky-scan.json): the archive.org parse is not made twice
+    if (id === 'bandurista3' && existsSync(resolve(process.env.SE17_OCR ?? 'data/raw/se17-ocr', 'e1'))) continue
     const kind = PARSE_IDS[id]!, spec = PARSE_SPECS[kind], file = resolve(outDir, id.replace(/[^\w.-]/g, '_') + '.json'), srcBytes = Buffer.byteLength(text)
     if (existsSync(file)) { try { const j = JSON.parse(readFileSync(file, 'utf8')) as Parsed; if (j.srcBytes === srcBytes && j.ptrs) { parsed.push(j); reused.push(id); continue } } catch { /* torn: reparse */ } }
     const siglaYears = kind === 'timchenko' || kind === 'materials' ? siglaDates(text) : new Map<string, number>()

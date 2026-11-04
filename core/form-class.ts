@@ -11,14 +11,14 @@
  * DX-3 `dxClass` / `dxLiterary`: the same table for deictic compounds (base + affixes), and their literary counterpart.
  */
 import { Q, type Claim, type Evidence } from './evidence.ts'
-import { DIALECTS, DIALECT_BOOK_RULES, DIALECT_LEX_RULES, DIALECT_RULES } from './rules.ts'
+import { DIALECTS, DIALECT_BOOK_RULES, DIALECT_LEX_RULES, DIALECT_RULES, DIALECT_SE17_RULES } from './rules.ts'
 import type { Rule } from './detect.ts'
 import { variantClaims, variantById, type StdEntry, type VariantForm } from './pronoun-variants.ts'
 import { DX_ATTESTED, DX_PARTS, bestSegmentation, segment, type DxSegmentation } from './deictics.ts'
 import { key } from './text.ts'
 
 // ── FD-1 / FD-3 ──────────────────────────────────────────────────────────────────────────────────────
-export const ALL_DIALECT_RULES: Rule[] = [...DIALECT_RULES, ...DIALECT_BOOK_RULES, ...DIALECT_LEX_RULES]
+export const ALL_DIALECT_RULES: Rule[] = [...DIALECT_RULES, ...DIALECT_BOOK_RULES, ...DIALECT_SE17_RULES, ...DIALECT_LEX_RULES]
 const RULE_BY_ID = new Map(ALL_DIALECT_RULES.map(r => [r.id, r]))
 export const dialectRule = (id: string) => RULE_BY_ID.get(id)
 /** rule id → the feature id shared by its per-group rows (`SW-LABIAL-J:BOY` → `SW-LABIAL-J`) */

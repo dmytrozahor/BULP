@@ -12,7 +12,7 @@ import { sumLabelHit } from '../core/labels.ts'
 import type { SeRow } from '../core/se.ts'
 import { writeJsonAtomic } from './robust.ts'
 
-export const SE15_DICTS = ['chabanenko', 'onyshkevych', 'sabadosh', 'bukovyna', 'hutsul', 'lysenko']
+export const SE15_DICTS = ['chabanenko', 'onyshkevych', 'sabadosh', 'bukovyna', 'hutsul', 'lysenko', 'verkhratsky', 'poltavshchyna']
 export function se15Hits(dir = resolve(process.env.SE15_PARSED ?? 'data/work/se-parsed'), dicts: string[] = SE15_DICTS): { hits: Record<string, DictHit[]>; cards: Record<string, string[]> } {
   const hits: Record<string, DictHit[]> = {}, cards: Record<string, Set<string>> = {}
   for (const d of dicts) {
