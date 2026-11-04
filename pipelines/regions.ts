@@ -31,7 +31,13 @@ const OBLAST_ROWS: Region[] = [
 ]
 /** Places outside Ukraine are not a Ukrainian region: no oblast (nothing is drawn on the map), but each city is a region of its own for dispersion. */
 export const ABROAD_PREFIX = 'abroad-'
-const ABROAD_ROWS: Region[] = PLACE_RULES.filter(r => !PLACE_FACTS[r.id]?.oblast).map(r => ({ code: ABROAD_PREFIX + r.id, name: `еміграція / поза Україною (${r.uk})`, oblasts: [], match: NEVER }))
+/**
+ * SPEC 63 DB-1d (owner: Перемишль → Надсяння, Берестя → Берестейщина): a city that today lies abroad but in a Ukrainian ETHNOGRAPHIC territory of core/territories.ts is a witness of THAT territory,
+ * not of «еміграція / поза Україною». It is still only the place of PUBLICATION: the region stays a distribution (SPEC 20 B-3.6), nothing here says the text is in that dialect.
+ * Воронеж is not moved: the city (51.7° пн. ш.) lies north of the ethnographic area the source gives for Воронежчина («the southern part of the oblast, including Valuiky, Ostrohozke, Rossosh, Bohuchar»).
+ */
+export const PLACE_TERRITORY: Record<string, string> = { przemysl: 'nadsiannia', brest: 'berestia' }
+const ABROAD_ROWS: Region[] = PLACE_RULES.filter(r => !PLACE_FACTS[r.id]?.oblast && !PLACE_TERRITORY[r.id]).map(r => ({ code: ABROAD_PREFIX + r.id, name: `еміграція / поза Україною (${r.uk})`, oblasts: [], match: NEVER }))
 
 export const REGIONS: Region[] = [
   { code: 'kyiv', name: 'Київ і Київщина', oblasts: ['UA-30', 'UA-32'], match: /^Київ(щина)?( \(імовірно\)| \/ Переяслав)?$/ },
@@ -55,7 +61,7 @@ export const REGIONS: Region[] = [
 const ONLY = REGIONS.filter(r => r.oblasts.length && !r.oblasts[0]!.startsWith('HT-'))
 export const regionOfOblast = (iso: string): string | undefined => ONLY.filter(r => r.oblasts.includes(iso)).sort((a, b) => a.oblasts.length - b.oblasts.length)[0]?.code
 /** SPEC 63 LB-10: the region of a place (core/witness-place.ts): its oblast's row inside Ukraine, «еміграція / поза Україною (<місто>)» outside */
-export const regionOfPlaceId = (id: string): string | undefined => { const o = PLACE_FACTS[id]?.oblast; return o ? regionOfOblast(o.iso) : placeById[id] ? ABROAD_PREFIX + id : undefined }
+export const regionOfPlaceId = (id: string): string | undefined => { if (PLACE_TERRITORY[id]) return PLACE_TERRITORY[id]; const o = PLACE_FACTS[id]?.oblast; return o ? regionOfOblast(o.iso) : placeById[id] ? ABROAD_PREFIX + id : undefined }
 
 /** Region code of a witness's free-text region (a historic region name, or — LB-10 — the ONE place it names), or undefined (unknown stays unknown, P-3.1). */
 export const regionOf = (region?: string) => {

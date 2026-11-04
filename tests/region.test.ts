@@ -65,3 +65,22 @@ describe('LB-10 archive.org metadata', () => {
     expect(fillWitnessRegions([kept], f).filled).toBe(0); expect(kept.region).toBe('Київ')
   })
 })
+
+describe('DB-1d places abroad that lie in a Ukrainian ethnographic territory', () => {
+  it('Перемишль is Надсяння and Берестя is Берестейщина (rows exist, no abroad row is left for them), by every spelling the rules know', () => {
+    for (const s of ['Перемишль', 'Перемышль', 'Przemyśl', 'Przemysl']) expect(regionOf(s), s).toBe('nadsiannia')
+    for (const s of ['Берестя', 'Берестє', 'Berestie']) expect(regionOf(s), s).toBe('berestia')
+    expect(REGIONS.find(r => r.code === 'nadsiannia')).toMatchObject({ oblasts: ['HT-nadsiannia'] }); expect(REGIONS.find(r => r.code === 'berestia')).toMatchObject({ oblasts: ['HT-berestia'] })
+    expect(REGIONS.some(r => r.code === 'abroad-przemysl' || r.code === 'abroad-brest')).toBe(false)
+    expect(regionOfPlaceId('przemysl')).toBe('nadsiannia'); expect(regionOfPlaceId('brest')).toBe('berestia'); expect(new Set(REGIONS.map(r => r.code)).size).toBe(REGIONS.length)
+  })
+  it('Воронеж stays abroad (the city is outside the source\'s Воронежчина); other abroad places are unchanged; Холм / Хелм have no place rule, so they stay unresolved', () => {
+    expect(regionOf('Воронеж')).toBe('abroad-voronezh'); expect(regionOf('Страсбург')).toBe('abroad-strasbourg')
+    for (const s of ['Холм', 'Хелм', 'Chełm']) expect(regionOf(s), s).toBeUndefined()
+  })
+  it('a territory is a distribution of witnesses, never a dialect claim: Надсяння maps to a mark but a corpus chip says «у корпусі переважно»', async () => {
+    const { badgeChips } = await import('../core/dialect-badge.ts')
+    const cs = badgeChips({ d: { c: 'corpus', corp: { f: 20, nReg: 3, att: 3, dp: 0.7, rows: [{ code: 'nadsiannia', f: 18, N: 50000 }, { code: 'halychyna', f: 1, N: 172081 }, { code: 'kyiv', f: 1, N: 435607 }], top: { code: 'nadsiannia', f: 18, N: 50000, g2: 50, lr: 4, p: 1e-9 } } }, regionName: c => (c === 'nadsiannia' ? 'Надсяння' : c), lemma: 'тест' })
+    expect(cs[0]!.grade).toBe('corpus'); expect(cs[0]!.text).toBe('у корпусі переважно: Надсяння')
+  })
+})
