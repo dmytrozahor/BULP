@@ -25,6 +25,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/phrases', component: () => import('./views/PhrasesView.vue') },
   { path: '/p/:id', component: () => import('./views/PhraseView.vue'), props: true },
   { path: '/sophia', component: () => import('./views/SophiaView.vue') },
+  { path: '/numerals', component: () => import('./views/NumeralsView.vue') },   // SPEC 63 DV-1b
   { path: '/atlas', component: () => import('./views/AtlasView.vue') },
   { path: '/map', component: () => import('./views/MapView.vue') },
   { path: '/corpus', component: () => import('./views/CorpusView.vue') },

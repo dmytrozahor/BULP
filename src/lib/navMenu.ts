@@ -12,6 +12,7 @@ export const NAV_GROUPS: NavGroup[] = [
     { to: '/analyze', label: 'Аналіз слова', hint: 'розбір довільного написання' },
     { to: '/derive', label: 'Деривація', hint: 'покрокове виведення старої форми в сучасну' },
     { to: '/phrases', label: 'Сполучення', hint: 'фразеологія й сталі сполучення' },
+    { to: '/numerals', label: 'Числівники', hint: 'числівники за говорами' },
   ] },
   { id: 'texts', label: 'Тексти', items: [
     { to: '/texts', label: 'Тексти корпусу', hint: 'читати пам’ятки з розміткою' },

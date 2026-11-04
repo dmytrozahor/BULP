@@ -15,7 +15,7 @@
 import { claim, type Evidence } from './evidence.ts'
 
 export type Relation = 'phonetic' | 'morph' | 'lexical' | 'historical' | 'loan'
-export type Grade = 'dict' | 'corpus' | 'owner'
+export type Grade = 'dict' | 'corpus' | 'owner' | 'hyp'
 export interface CorrArea {
   /** the area as the source (or the corpus) names it */ dialect: string
   grade: Grade; ev: Evidence
@@ -46,7 +46,7 @@ export interface CgShard { format: 1; ev: Evidence[]; g: Record<string, unknown[
 
 // ── labels (UI strings are Ukrainian) ───────────────────────────────────────────────────────────
 export const REL_UK: Record<Relation, string> = { phonetic: 'та сама лексема', morph: 'та сама лексема', lexical: 'інше слово', historical: 'історична', loan: 'запозичення' }
-export const GRADE_UK: Record<Grade, string> = { dict: 'за словником', corpus: 'за розподілом у корпусі', owner: 'за свідченням носія' }
+export const GRADE_UK: Record<Grade, string> = { dict: 'за словником', corpus: 'за розподілом у корпусі', owner: 'за свідченням носія', hyp: 'гіпотеза' }
 export const NO_AREA = 'говір не встановлено'
 export const UNSPEC = 'значення не уточнено'
 export const POS_UK: Record<string, string> = {
@@ -202,6 +202,7 @@ export function corpusArea(byWitness: Record<string, number>, regionOf: (id: str
 export function areaText(a: CorrArea): string {
   if (a.grade === 'corpus') return `у корпусі переважно: ${a.dialect} (${Math.round((a.share ?? 0) * 100)} %)`
   if (a.grade === 'owner') return `за свідченням носія: ${a.dialect}`
+  if (a.grade === 'hyp') return `гіпотеза: ${a.dialect}`   // DV-1: a correspondence the data shows, no dictionary; never a fact
   return a.dialect
 }
 /** short area for a chip: dictionary / owner areas by name; a corpus distribution never becomes a chip label of a dialect (only «корп.: Галичина») */

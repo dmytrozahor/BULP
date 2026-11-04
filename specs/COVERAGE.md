@@ -1379,3 +1379,11 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | RG-1 | tests/rights.test.ts › build output: no text stored for a `quote` source exceeds its limit; a `links` source stores no text and at most maxLinks per headword (when the build output is present) |
 | RG-1 | tests/rights.test.ts › the OCR directories (third-party scans) stay git-ignored |
 | GG-7 | tests/sum-import.test.ts › GG-7 / RG-1 full text is off while core/rights.ts holds no `granted` entry, and only then the full definition and quote are kept |
+| DV-5 | tests/dv1.test.ts › DV-5 the correspondences › only rules at the hand-checked precision are shipped; the explored ones never are |
+| DV-5 | tests/dv1.test.ts › DV-5 the correspondences › a hypothesis is refused for a VESUM-known form, a non-normative target, an и/і swap, a rare form, a rule below the bar |
+| DV-5 | tests/dv1.test.ts › DV-5 the correspondences › the shipped rules produce the owner-named and the attested forms |
+| DV-5 | tests/dv1.test.ts › DV-5 owner files › a rejected line never reappears; a confirmed line is owner evidence of kind P |
+| DV-5 | tests/dv1.test.ts › DV-5 hypotheses in CR-1 › a hypothesis pair is graded «гіпотеза», unspec (never bridges groups) and never redirects a VESUM form |
+| DV-5 | tests/dv1.test.ts › DV-5 hypotheses in CR-1 › numerals get a POS from a one-class gloss (штири ~ чотири) |
+| DV-6 | tests/dv1.test.ts › DV-6 numeral map › coverage counts (lemma, column) cells by the strongest grade; an empty numeral is «немає даних» |
+| DV-6 | tests/dv1.test.ts › DV-6 numeral map › forward respelling uses only a cited dictionary form or the owner’s, never a hypothesis |

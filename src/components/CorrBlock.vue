@@ -4,10 +4,13 @@ import { computed } from 'vue'
 import { corrOf } from '../lib/corrData.ts'
 import { dialect } from '../lib/views.ts'
 import CorrView from './CorrView.vue'
+import NumeralMatrix from './NumeralMatrix.vue'
+import { isNumeralLemma } from '../lib/numeralData.ts'
 const props = defineProps<{ lemma: string }>()
 const groups = computed(() => corrOf(props.lemma) ?? [])
 </script>
 
 <template>
   <CorrView v-if="groups.length" :lemma="lemma" :groups="groups" :dialect="dialect" />
+  <NumeralMatrix v-if="isNumeralLemma(lemma)" :lemma="lemma" />
 </template>

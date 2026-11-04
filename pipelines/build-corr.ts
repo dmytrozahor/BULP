@@ -13,6 +13,8 @@ import { createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, sta
 import { createInterface } from 'node:readline'
 import { resolve } from 'node:path'
 import { assemble, checkGroup, corpusArea, plain, type CorrFirst, type CorrGroup, type CorrMember, type CorrPair } from '../core/corr.ts'
+import { hypothesisPairs, ownerTsvPairs } from '../core/corr-src.ts'
+import { parseOwnerTsv, withoutRejected, type DvLink } from '../core/dialect-variants.ts'
 import { dialectLexPairs, dialectLexRows, familyPairs, kaikkiIndexAdd, kaikkiPairs, ownerPairs, ukWiktPairs, xrPairs, KK_POS, type KkEntry, type KkIndex, type LexRow, type PosOf, type Rejects } from '../core/corr-src.ts'
 import { vesumClass } from '../core/pos-gate.ts'
 import { unpackCore } from '../core/pack.ts'
@@ -157,6 +159,13 @@ export async function buildCorr(): Promise<CorrFile> {
   const pairs: CorrPair[] = [...familyPairs(), ...ownerPairs()]
   if (vesum) {
     pairs.push(...dialectLexPairs(dialectLexRows(), posOf, rej, 'dialect-lex', senseN))
+    // DV-1: owner-confirmed variants (kind P), then the hypotheses of the shipped correspondences minus the lines the owner rejected
+    const ownF = resolve(ROOT, 'data/owner/variants-confirmed.tsv'), rejF = resolve(ROOT, 'data/owner/variants-rejected.tsv'), hypF = resolve(ROOT, 'data/dv/hypotheses.json')
+    const rejected = existsSync(rejF) ? parseOwnerTsv(readFileSync(rejF, 'utf8')) : []
+    if (existsSync(ownF)) pairs.push(...ownerTsvPairs(withoutRejected(parseOwnerTsv(readFileSync(ownF, 'utf8')), rejected), posOf, rej))
+    if (existsSync(hypF)) pairs.push(...hypothesisPairs(withoutRejected(readJson<{ rows: DvLink[] }>(hypF).rows, rejected), posOf, rej))
+    const placeF = resolve(ROOT, 'data/dv/placeonly.json')
+    if (existsSync(placeF)) pairs.push(...dialectLexPairs(readJson<{ rows: LexRow[] }>(placeF).rows, posOf, rej, 'dialect-place', senseN))
     if (xr) pairs.push(...xrPairs(xr, posOf, rej, senseN))
     if (kkStage) { const ix = kkIndexOf(kkStage); for (const e of kkStage.entries) pairs.push(...kaikkiPairs(e, ix, posOf, rej)) }
     if (syn) pairs.push(...ukWiktPairs(syn, posOf, rej))
@@ -176,7 +185,7 @@ export async function buildCorr(): Promise<CorrFile> {
   for (const g of groups) for (const m of g.members) {
     const n = nums.get(plain(m.form)); if (n) { const { areas, ...rest } = n; Object.assign(m, rest); if (areas) m.areas = [...m.areas, ...areas] }
     if (m.first) withFirst++; if (m.areas.length) withArea++
-    m.areas.sort((a, b) => ({ dict: 0, owner: 1, corpus: 2 })[a.grade] - ({ dict: 0, owner: 1, corpus: 2 })[b.grade])
+    m.areas.sort((a, b) => ({ dict: 0, owner: 1, corpus: 2, hyp: 3 })[a.grade] - ({ dict: 0, owner: 1, corpus: 2, hyp: 3 })[b.grade])
   }
   for (const g of groups) checkGroup(g)
   const bySrc: Record<string, number> = {}, grp: Record<string, number> = {}

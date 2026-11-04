@@ -169,7 +169,8 @@ export function dialectLexPairs(rows: readonly LexRow[], posOf: PosOf, rej: Reje
       const a = plain(w)
       if (!isSingleWord(a) || a === g) { bump(rej, `${srcId}: not a single word`); continue }
       if (swapKey(a) === swapKey(g)) { bump(rej, `${srcId}: и/і swap`); continue }   // spot-check: «стрыйко» for «стрийко» is a spelling, not a dialect word
-      const sh = shapeOf(a), pos = [...gp].find(p => p === sh)
+      // DV-1b: a numeral / adverb / pronoun gloss (штири ~ чотири) has no noun-adj-verb shape; one class of the gloss and a head that is not verb-shaped fix the POS
+      const sh = shapeOf(a), pos = [...gp].find(p => p === sh) ?? (gp.size === 1 && NONSHAPE.has([...gp][0]!) && sh !== 'verb' ? [...gp][0] : undefined)
       if (!pos) { bump(rej, `${srcId}: POS shape differs`); continue }
       if (posOf(a)?.size && ![...posOf(a)!].includes(pos)) { bump(rej, `${srcId}: POS differs`); continue }
       const ev = Q(r.src === 'ENC' ? 'ЕУМ (litopys.org.ua)' : r.src, r.loc, r.q, `слово «${a}» ← «${g}»`)
@@ -179,4 +180,34 @@ export function dialectLexPairs(rows: readonly LexRow[], posOf: PosOf, rej: Reje
   }
   return out
 }
+const NONSHAPE: ReadonlySet<string> = new Set(['numr', 'adv', 'pron', 'prep', 'conj', 'part'])
 export const dialectLexRows = (): LexRow[] => DIALECT_LEX as LexRow[]
+
+// ── 7 DV-1: owner confirmations and hypotheses ───────────────────────────────────────────────────────────────────
+import { ownerEvidence, DV_HYP_NOTE, type OwnerRow, type DvLink } from './dialect-variants.ts'
+/** data/owner/variants-confirmed.tsv: each confirmed line is an owner-graded pair (evidence kind P); the target must be a VESUM word of one class and the form must not be an и/і swap of it */
+export function ownerTsvPairs(rows: readonly OwnerRow[], posOf: PosOf, rej: Rejects): CorrPair[] {
+  const out: CorrPair[] = []
+  for (const r of rows) {
+    const a = plain(r.target), b = plain(r.form), c = checkPair(a, b, posOf(a), posOf(b) ?? posOf(a))
+    if (!c.ok && c.why !== 'POS unknown') { bump(rej, `owner-tsv: ${c.why}`); continue }
+    const pos = [...(posOf(a) ?? [])][0]; if (!pos) { bump(rej, 'owner-tsv: target not in VESUM'); continue }
+    const ev = ownerEvidence(r)
+    out.push({ a, b, pos, rel: 'phonetic', src: 'owner', ev, sense: 'one', norm: 'a', areaB: [{ dialect: r.area || 'говір не названо', grade: 'owner', ev }] })
+  }
+  return out
+}
+/** hypotheses of data/work/dv1: a pair of the shipped correspondences, graded «гіпотеза»; sense 'unspec' keeps it a two-member group of its own, so a hypothesis never bridges two groups */
+export function hypothesisPairs(rows: readonly DvLink[], posOf: PosOf, rej: Rejects): CorrPair[] {
+  const out: CorrPair[] = []
+  for (const r of rows) {
+    if (r.method !== 'hypothesis') continue
+    const a = plain(r.target), b = plain(r.form), pa = posOf(a)
+    if (!pa?.size || posOf(b)?.size || swapKey(a) === swapKey(b)) { bump(rej, 'dv1-hyp: guard'); continue }   // VESUM knows the form: never redirected
+    const pos = r.pos && pa.has(r.pos) ? r.pos : [...pa][0]!
+    const reg = (r.regions ?? []).slice(0, 2).map(([n, t]) => `${n}: ${t}`).join('; ')
+    const ev = D('гіпотеза DV-1', `pipelines/dv1-scan.ts ${r.via}`, `${b} → ${a} (${r.f} вживань у ${r.nW} пам’ятках${reg ? '; ' + reg : ''})`, DV_HYP_NOTE)
+    out.push({ a, b, pos, rel: 'phonetic', src: 'dv1-hyp', ev, sense: 'unspec', norm: 'a', areaB: [{ dialect: `за відповідником ${r.via}`, grade: 'hyp', ev }] })
+  }
+  return out
+}

@@ -1,0 +1,403 @@
+{
+ "format": 1,
+ "explained": {
+  "dict": {
+   "types": 1686,
+   "tokens": 50219,
+   "share": "0.30 %"
+  },
+  "rule": {
+   "types": 16216,
+   "tokens": 100245,
+   "share": "0.60 %"
+  },
+  "hypothesis": {
+   "types": 181,
+   "tokens": 16785,
+   "share": "0.10 %"
+  },
+  "hypothesisAllRulesIncludingNotShipped": {
+   "types": 2935,
+   "tokens": 119938,
+   "share": "0.71 %"
+  }
+ },
+ "spotCheck": {
+  "method1": {
+   "perSource": {
+    "Буковина": [
+     50,
+     2
+    ],
+    "Онишкевич": [
+     50,
+     3
+    ],
+    "Гуцульські": [
+     50,
+     2
+    ],
+    "Чабаненко": [
+     50,
+     2
+    ],
+    "Сабадош": [
+     50,
+     2
+    ],
+    "місце запису (ВЕСУМ arch / slang)": [
+     50,
+     2
+    ]
+   },
+   "note": "[checked, doubtful]; plausibility judged by reading, not against the scans"
+  },
+  "method2": {
+   "sample": 200,
+   "wrong": 9,
+   "note": "restricted fold set; ORTH-1928-* (≈70 % wrong), ORTH-DAT-OVI (≈40 %), ORTH-GAL-I-E removed"
+  }
+ },
+ "tokens": 16830544,
+ "types": 5745035,
+ "byClass": {
+  "garbage": {
+   "tokens": 2668519,
+   "types": 497316
+  },
+  "latin": {
+   "tokens": 39,
+   "types": 33
+  },
+  "non-word-shape": {
+   "tokens": 152251,
+   "types": 83311
+  },
+  "clean": {
+   "tokens": 12997928,
+   "types": 4314575
+  },
+  "ocr-only": {
+   "tokens": 1011807,
+   "types": 849800
+  },
+  "vesum-known": {
+   "tokens": 1558767,
+   "types": 133840
+  }
+ },
+ "m1": {
+  "all": {
+   "tokens": 50219,
+   "types": 1686
+  },
+  "Гуцульські говірки. Короткий словник (1997)": {
+   "tokens": 4972,
+   "types": 236
+  },
+  "Словник буковинських говірок (2005)": {
+   "tokens": 19695,
+   "types": 616
+  },
+  "Сабадош, Словник закарпатської говірки села Сокирниця (2008)": {
+   "tokens": 8411,
+   "types": 244
+  },
+  "Онишкевич, Словник бойківських говірок (1984)": {
+   "tokens": 8451,
+   "types": 342
+  },
+  "LYSENKO": {
+   "tokens": 17,
+   "types": 2
+  },
+  "Чабаненко, Словник говірок Нижньої Наддніпрянщини (1992)": {
+   "tokens": 6138,
+   "types": 142
+  },
+  "Лисенко, Словник поліських говорів (1974)": {
+   "tokens": 785,
+   "types": 42
+  },
+  "Сабадош, Словник закарпатської говірки (Сокирниця)": {
+   "tokens": 684,
+   "types": 40
+  },
+  "PYRTEY": {
+   "tokens": 3,
+   "types": 3
+  },
+  "Вікісловник (en)": {
+   "tokens": 900,
+   "types": 4
+  },
+  "ЕУМ (litopys.org.ua)": {
+   "tokens": 156,
+   "types": 12
+  },
+  "KOLYBA": {
+   "tokens": 1,
+   "types": 1
+  },
+  "ONYSH": {
+   "tokens": 2,
+   "types": 1
+  },
+  "ARKUSHYN": {
+   "tokens": 4,
+   "types": 1
+  }
+ },
+ "m2": {
+  "all": {
+   "tokens": 100700,
+   "types": 16257
+  },
+  "ORTH-GAL-UNCONTR": {
+   "tokens": 9644,
+   "types": 3059
+  },
+  "ORTH-ZHEL-SKY": {
+   "tokens": 40205,
+   "types": 3321
+  },
+  "ORTH-GAL-LONG-INF": {
+   "tokens": 1363,
+   "types": 594
+  },
+  "ORTH-GAL-LOC-OH-A": {
+   "tokens": 757,
+   "types": 303
+  },
+  "ORTH-GAL-C-DEPAL": {
+   "tokens": 1269,
+   "types": 167
+  },
+  "ORTH-ADJ-IISH": {
+   "tokens": 5692,
+   "types": 1948
+  },
+  "ORTH-GAL-C-FINAL": {
+   "tokens": 749,
+   "types": 70
+  },
+  "ORTH-GAL-APOS": {
+   "tokens": 4874,
+   "types": 1084
+  },
+  "ORTH-VERB-OVATI": {
+   "tokens": 1780,
+   "types": 493
+  },
+  "ORTH-GAL-GENPL-IY-INF": {
+   "tokens": 68,
+   "types": 19
+  },
+  "ORTH-GAL-3T": {
+   "tokens": 12617,
+   "types": 1364
+  },
+  "ORTH-GAL-3T-E": {
+   "tokens": 99,
+   "types": 48
+  },
+  "ORTH-GAL-A-SOFT": {
+   "tokens": 734,
+   "types": 289
+  },
+  "ORTH-GAL-E-Y": {
+   "tokens": 22,
+   "types": 17
+  },
+  "ORTH-GAL-SK": {
+   "tokens": 1002,
+   "types": 121
+  },
+  "ORTH-GAL-GEM": {
+   "tokens": 2066,
+   "types": 1049
+  },
+  "ORTH-ZHEL-JE": {
+   "tokens": 349,
+   "types": 260
+  },
+  "ORTH-TSYA-PHON": {
+   "tokens": 1229,
+   "types": 668
+  },
+  "ORTH-ZHEL-SOFT": {
+   "tokens": 14561,
+   "types": 1125
+  },
+  "ORTH-GAL-LOC-OH-JA": {
+   "tokens": 377,
+   "types": 66
+  },
+  "ORTH-GAL-E-I": {
+   "tokens": 22,
+   "types": 10
+  },
+  "ORTH-ZHEL-JE-OBL": {
+   "tokens": 523,
+   "types": 119
+  },
+  "ORTH-GAL-S-FINAL": {
+   "tokens": 16,
+   "types": 11
+  },
+  "ORTH-GAL-I-E": {
+   "tokens": 455,
+   "types": 41
+  },
+  "ORTH-GAL-REM": {
+   "tokens": 2,
+   "types": 2
+  },
+  "ORTH-RDC": {
+   "tokens": 225,
+   "types": 9
+  }
+ },
+ "hyp": {
+  "types": 2935,
+  "tokens": 119938,
+  "shippedTypes": 181,
+  "shippedTokens": 16785,
+  "byRule": {
+   "DV-L-LJ": {
+    "types": 353,
+    "tokens": 13449,
+    "shipped": 0
+   },
+   "DV-V-U": {
+    "types": 541,
+    "tokens": 13502,
+    "shipped": 0
+   },
+   "DV-DZ-Z": {
+    "types": 56,
+    "tokens": 1845,
+    "shipped": 0
+   },
+   "DV-JA-JE": {
+    "types": 934,
+    "tokens": 30381,
+    "shipped": 0
+   },
+   "DV-JE-I": {
+    "types": 149,
+    "tokens": 4812,
+    "shipped": 0
+   },
+   "DV-T-TJ": {
+    "types": 360,
+    "tokens": 25872,
+    "shipped": 0
+   },
+   "DV-JE-JA": {
+    "types": 167,
+    "tokens": 6042,
+    "shipped": 0
+   },
+   "DV-JE-JA-END": {
+    "types": 133,
+    "tokens": 2162,
+    "shipped": 133
+   },
+   "DV-SHCH": {
+    "types": 36,
+    "tokens": 14346,
+    "shipped": 36
+   },
+   "DV-JE-O": {
+    "types": 179,
+    "tokens": 7008,
+    "shipped": 0
+   },
+   "DV-JE-T": {
+    "types": 2,
+    "tokens": 27,
+    "shipped": 0
+   },
+   "DV-CHOT-SHT": {
+    "types": 2,
+    "tokens": 43,
+    "shipped": 2
+   },
+   "DV-JE-O-INIT": {
+    "types": 9,
+    "tokens": 168,
+    "shipped": 0
+   },
+   "DV-JE-JA-INIT": {
+    "types": 14,
+    "tokens": 281,
+    "shipped": 10
+   }
+  }
+ },
+ "precision": {
+  "DV-SHCH": {
+   "n": 36,
+   "c": 35
+  },
+  "DV-JE-JA-END": {
+   "n": 50,
+   "c": 50
+  },
+  "DV-JE-JA-INIT": {
+   "n": 10,
+   "c": 10
+  },
+  "DV-CHOT-SHT": {
+   "n": 2,
+   "c": 2
+  },
+  "DV-JE-JA": {
+   "n": 35,
+   "c": 24
+  },
+  "DV-JE-O": {
+   "n": 35,
+   "c": 4
+  },
+  "DV-JE-O-INIT": {
+   "n": 9,
+   "c": 2
+  },
+  "DV-JE-T": {
+   "n": 2,
+   "c": 0
+  },
+  "DV-JE-I": {
+   "n": 35,
+   "c": 14
+  },
+  "DV-DZ-Z": {
+   "n": 30,
+   "c": 12
+  },
+  "DV-T-TJ": {
+   "n": 30,
+   "c": 2
+  },
+  "DV-L-LJ": {
+   "n": 30,
+   "c": 14
+  },
+  "DV-JA-JE": {
+   "n": 30,
+   "c": 2
+  },
+  "DV-V-U": {
+   "n": 30,
+   "c": 0
+  }
+ },
+ "shipped": [
+  "DV-SHCH",
+  "DV-JE-JA-END",
+  "DV-JE-JA-INIT",
+  "DV-CHOT-SHT"
+ ]
+}
