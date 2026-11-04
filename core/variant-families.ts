@@ -37,6 +37,7 @@ const WIKT = (w: string) => `https://en.wiktionary.org/wiki/${encodeURIComponent
 const W = (word: string, quote: string, note: string): VCite => ({ source: 'Вікісловник (en)', url: WIKT(word), quote, note })
 const ALT_V = 'Alternative forms: вві, ві, во, ув, уві (rare)'
 
+const OWNER_ODYN = { quote: 'один єден теж галицка риса', relation: 'єден = один (галицька лексична форма; Галичина, ступінь: за свідченням носія; джерела не знайдено)' }
 const OWNER_KURVOI = { quote: 'Курвої це прийменник від курва, редукований', relation: 'присвійний прикметник від курва, редукована форма мовця (курвиної → курвої); власник написав «прийменник», маючи на увазі прикметник' }
 export const VARIANT_FAMILIES: VFamily[] = [
   // MM-43 (owner remark 2026-10-29: «ну коли редукцію робить мовець»): the speaker's own colloquial reduction, recorded in direct speech / dialect and folk texts. Corpus counts (BULP data/work shards, 2026-10-29):
@@ -71,6 +72,10 @@ export const VARIANT_FAMILIES: VFamily[] = [
     ...['уся', 'усе', 'усі', 'усього', 'усьому', 'усім', 'усіх', 'усю', 'усіма', 'усією'].map((f): VMember => ({ form: f, role: 'prothetic', quiet: true, ambiguous: true,
       cite: W('увесь', 'Declension: усе́, уся́, усі́; усього́; усьому́; усі́м; усіх; усю́; усіма́', 'en.wiktionary, таблиця відмінювання «увесь»: ті самі форми з у- замість в- (всього, всьому, всім, всіх, всю, всіма)') })),
   ] },
+  // MM-59 (owner: «один єден теж галицка риса»): єден (єдна, єдно, єдного …) is a LEXICAL Galician form of один, not a sound rule (no о → є is generalised). No ЕУМ page and no dictionary text we hold gives it (Желехівський / Грінченко are not in the repo as text):
+  // kind P, «за свідченням носія», area Галичина = the owner's word. VESUM lists every one of these spellings as an ARCHAIC numeral (єден numr:arch), so each is ambiguous: the VESUM reading wins, the family is shown beside it.
+  { id: 'VF-ODYN', mm: 'MM-59', head: 'один', cls: ['pron'], title: 'один ~ єден (єдна, єдно, єдного …), галицька форма', members:
+    ['єден', 'єдна', 'єдно', 'єдного', 'єдному', 'єдним', 'єдній', 'єдну', 'єдної', 'єдною', 'єдні', 'єдних', 'єдними'].map((form): VMember => ({ form, role: 'dialect', ambiguous: true, owner: OWNER_ODYN })) },
   { id: 'VF-TILKY', mm: 'MM-33', head: 'тільки', cls: ['adv'], title: 'тільки ~ тілько, тилько (тілько-що …)', tails: true,
     feature: { label: 'західноукраїнська вимова [т’ільки] (м’який т), діалектна [тіки]', cite: W('тільки', "(Western Ukraine) т'і́льки; (dialectal) ті́ки", 'en.wiktionary, стаття «тільки», Pronunciation. Джерело називає цю вимову для написання ТІЛЬКИ; про написання тілько / тилько воно нічого не каже') },
     members: [
