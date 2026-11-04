@@ -9,6 +9,7 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync } from 'node
 import { resolve } from 'node:path'
 import { BUK_DICT, BUK_LABEL, HUT_DICT, HUT_LABEL, ONY_DICT, ONY_LABEL, ONY_SHORT, POL_LABEL, SAB_DICT, SAB_LABEL, SAB_SHORT, POL_DICT, dialPassRate, dialRows, parseBukovyna, parseHutsul, parseOnyPlaces, parseOnyshkevych, parsePolissia, parsePolPlaces, parseSabadosh, type DialPage, type DialRow, type DialStats } from '../core/se15-parse.ts'
 import type { SeRow } from '../core/se.ts'
+import { SLA_DICT, foldLatin, foldSlav, onSpine, parseLatinPages, parseSlovPages, slaGlossRows, slaSlovRows, type SlaPage, type SlaStats } from '../core/slavynetsky-parse.ts'
 import { writeJsonAtomic } from './robust.ts'
 
 /** per volume: the scan index of the first body page and of the last (the index / contents pages are not body), printed page = scan index − offset (checked against the printed numbers of the OCR) */
@@ -64,6 +65,20 @@ export function corrRowsOf(dict: string, rows: [string, SeRow][]): CorrLexRow[] 
   }
   return out
 }
+/** Славинецький (public-domain text of 1642 / 1650; core/slavynetsky-parse.ts): scan pages 62–419 = Лексикон латинський, 423–541 = Лексикон словено-латинський; printed page = scan index */
+export const SLA_LATIN = { first: 62, last: 419 }, SLA_SLOV = { first: 423, last: 541 }
+export function runSlavynetsky(ocr: string, out: string): { latin: number; slov: number; gloss: number; stats: { latin: SlaStats; slov: SlaStats } } | undefined {
+  const d = resolve(ocr, 'slavynetsky'); if (!existsSync(d)) { console.log(`se15-scan: ${d} absent, slavynetsky skipped`); return undefined }
+  const pagesOf = (a: number, b: number): SlaPage[] => { const o: SlaPage[] = []; for (let i = a; i <= b; i++) { const t = rd(resolve(d, `page_${String(i).padStart(4, '0')}.txt`)); if (t) o.push({ text: t, no: i }) } return o }
+  const stL: SlaStats = { pages: 0, candidates: 0, kept: 0, keyed: 0, badGloss: 0, footnoteCuts: 0 }, stS = { ...stL }
+  const lat0 = parseLatinPages(pagesOf(SLA_LATIN.first, SLA_LATIN.last), stL), slov0 = parseSlovPages(pagesOf(SLA_SLOV.first, SLA_SLOV.last), stS)
+  const lat = onSpine(lat0, foldLatin), slov = onSpine(slov0, foldSlav); stL.spineDropped = lat0.length - lat.length; stS.spineDropped = slov0.length - slov.length
+  const gloss = slaGlossRows(lat, stL), heads = slaSlovRows(slov, stS)
+  mkdirSync(out, { recursive: true })
+  writeJsonAtomic(resolve(out, 'slavynetsky-gloss.json'), JSON.stringify({ id: 'slavynetsky-gloss', dict: SLA_DICT, kind: 'hist-gloss', full: true, stats: stL, rows: gloss }))
+  writeJsonAtomic(resolve(out, 'slavynetsky.json'), JSON.stringify({ id: 'slavynetsky', dict: SLA_DICT, kind: 'heads', full: true, stats: stS, rows: heads }))
+  return { latin: lat.length, slov: slov.length, gloss: gloss.length, stats: { latin: stL, slov: stS } }
+}
 export interface Se15Run { dict: string; cands: Set<string>; rows: [string, SeRow][]; stats: Record<string, DialStats & { passRate: number }>; heads: number }
 export function runSe15(ocr: string, out: string, status?: string, known?: (h: string) => boolean, only?: string[]): Se15Run[] {
   const st = (o: object) => { if (status) writeJsonAtomic(status, JSON.stringify({ at: new Date().toISOString(), ...o })) }
@@ -111,6 +126,7 @@ if (process.argv[1] && /se15-scan\.ts$/.test(process.argv[1].replaceAll(String.f
   const rs = runSe15(ocr, outDir, resolve(a[2] ?? 'data/work/se15-status.json'), known)
   for (const r of rs) console.log(`${r.dict}: ${r.heads} headwords, ${r.rows.length} sense rows`, JSON.stringify(Object.fromEntries(Object.entries(r.stats).map(([k, s]) => [k, [s.entries, s.cardOk, s.passRate]]))))
   if (!rs.length) console.log(`se15-scan: ${ocr} has no volume, skipped`)
+  const sla = runSlavynetsky(ocr, outDir); if (sla) console.log(`slavynetsky: ${sla.latin} Latin entries, ${sla.slov} word-pair entries, ${sla.gloss} keyed gloss rows`, JSON.stringify(sla.stats))
   const nan = resolve(outDir, 'chabanenko.json')   // SE-14's Чабаненко rows feed the same CR-1 hook (its one-word glosses)
   if (existsSync(nan)) { try { const j = JSON.parse(readFileSync(nan, 'utf8')) as { rows: [string, SeRow][] }; mkdirSync(resolve(outDir, '..', 'corr-extra'), { recursive: true }); writeJsonAtomic(resolve(outDir, '..', 'corr-extra', 'se15-chabanenko.json'), JSON.stringify({ rows: corrRowsOf('chabanenko', j.rows) })) } catch { /* torn: skipped (RS-1) */ } }
 }

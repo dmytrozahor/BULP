@@ -157,3 +157,26 @@ describe('SE-15 the CR-1 hook: one-word glosses of word-level rows', () => {
     expect(corrRowsOf('lysenko', dialRows('lysenko', { head: 'вить', vol: 1, page: 3, senses: [{ n: 1, labels: [], gloss: 'плести' }], ev: 3, wl: true, seq: true }))[0]!.codes).toEqual(['MPL', 'CHN'])
   })
 })
+
+import { SLA_DICT, SLA_LAT_YEAR, SLA_SLOV_YEAR, foldLatin, latinWord, onSpine, parseLatinPages, parseSlovPages, slaGlossRows, slaSlovRows } from '../core/slavynetsky-parse.ts'
+describe('SE-15 Славинецький (public-domain text of 1642 / 1650; the editors\' notes are not stored)', () => {
+  const LAT = COLS(['balaustiu(m). цвѣ(т) шн(ш)ка, шн(п)ка,', 'balneum. баня, мы(л)ня,', 'balsamum. ва(л)са(м)ъ.', '', ' К I правильно тільки редакторська примітка.', 'balzzzz. не береться'].join('\n'), ['baptes. пру(д), бу(р)шти(н),', 'barba. брада,'].join('\n'))
+  it('Latin part: head in ASCII, the letters in parentheses belong to the word, the glosses are Cyrillic; every column is cut at its first footnote line (the notes are ©)', () => {
+    const e = parseLatinPages([{ text: LAT, no: 70 }])
+    expect(e.map(x => x.head)).toEqual(['balaustium', 'balneum', 'balsamum', 'baptes', 'barba'])
+    expect(e[1]).toMatchObject({ gloss: ['баня', 'мылня'], page: 70 }); expect(e[0]!.gloss).toEqual(['цвѣт шншка', 'шнпка'].map(x => x))   // «цвѣт шншка»: both words keep the completions
+    expect(JSON.stringify(e)).not.toMatch(/редакторська|береться/); expect(e[4]!.gloss).toEqual(['брада'])
+  })
+  it('word-pair part: the Slavonic head, the Latin words (a garbled Latin word is not kept)', () => {
+    const e = parseSlovPages([{ text: COLS('Закалатель. Lanio. Carnifex.\nЗакалателный. Lanignus. Xz9q#.\nЗаклады. Pignus, hypotheca.', ''), no: 450 }])
+    expect(e.map(x => [x.head, x.latin])).toEqual([['закалатель', ['lanio', 'carnifex']], ['закалателный', ['lanignus']], ['заклады', ['pignus', 'hypotheca']]])
+    expect(latinWord('lanio')).toBe(true); expect(latinWord('xz9q')).toBe(false); expect(latinWord('strnghts')).toBe(false)
+  })
+  it('rows: dated by the manuscript (1642 / 1650), keyed by the single-word gloss; a multi-word gloss and a stop word are no key; the alphabetical spine drops a misread head', () => {
+    const g = slaGlossRows([{ head: 'balneum', gloss: ['баня', 'мыльня', 'прилипки на сапогах', 'тожъ'], page: 70 }])
+    expect(g.map(x => x[0])).toEqual(['баня', 'мыльня']); expect(g[0]![1]).toMatchObject({ d: SLA_DICT, e: SLA_LAT_YEAR, l: expect.stringContaining('с. 70') }); expect(g[0]![1].g).toBe('лат. «balneum» = баня, мыльня, прилипки на сапогах, тожъ')
+    const s = slaSlovRows([{ head: 'закалатель', latin: ['lanio'], page: 450 }]); expect(s[0]![1]).toMatchObject({ d: SLA_DICT, e: SLA_SLOV_YEAR, g: 'лат. lanio' }); expect(SLA_LAT_YEAR).toEqual([1642, 1642]); expect(SLA_SLOV_YEAR).toEqual([1650, 1650])
+    expect(onSpine(['aa', 'bb', 'zz', 'cc', 'dd'].map(head => ({ head })), foldLatin).map(x => x.head)).toEqual(['aa', 'bb', 'cc', 'dd'])
+    expect(dictById('slavynetsky')).toMatchObject({ typed: true, quoteDates: true, cover: [1642, 1650] }); expect(SOURCES.SLAVYNETSKY!.title).toMatch(/Славинецький/)
+  })
+})

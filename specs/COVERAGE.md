@@ -1211,6 +1211,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | SE-15 | tests/se15.test.ts › SE-15 gates › the alphabetical spine: a misread headword is off the spine and gets no card (unv) |
 | SE-15 | tests/se15.test.ts › SE-15 gates › all the new dictionaries are registered with a source, a coverage row and the SPEC 63 label table |
 | SE-15 | tests/se15.test.ts › SE-15 the CR-1 hook: one-word glosses of word-level rows › only a word-level, verified row with ONE standard word as its gloss becomes a LexRow |
+| SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the editors' notes are not stored) › Latin part: head in ASCII, the letters in parentheses belong to the word, the glosses are Cyrillic |
+| SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the editors' notes are not stored) › word-pair part: the Slavonic head, the Latin words |
+| SE-15 | tests/se15.test.ts › SE-15 Славинецький (public-domain text of 1642 / 1650; the editors' notes are not stored) › rows: dated by the manuscript (1642 / 1650), keyed by the single-word gloss |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › prints the stress of the spelling with its source when lm/st has the form |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › falls back to the lemma stress, labelled as the lemma’s |
 | CP-10 | tests/form-stress.test.ts › CP-10.5 FormStress › says «наголос не встановлено (перевірено: …)» when nothing prints it |
