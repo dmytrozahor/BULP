@@ -1354,3 +1354,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CQ-1 | tests/cq1.test.ts › CQ-1 fixes 4 and 5: the harvester › retry-404 --all also visits the 404s that were retried once; the default still skips them |
 | CQ-1 | tests/cq1.test.ts › CQ-1 fixes 4 and 5: the harvester › the Scraping API: cursor pages, count in range, same fields as the search; the last page has no cursor |
 | CQ-1 | tests/cq1.test.ts › CQ-1 fixes 4 and 5: the harvester › the archive-ukr query leaves the Kadencja / Sprawozdanie series out and keeps the date and language limits; other presets are unchanged |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b the recovery drops lines with э Э › in auto oldOrth mode a line with Э is apparatus; the plain oldOrth mode (HV-5 Ruthenian pages) is unchanged |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b the recovery drops lines with э Э › a pre-1925 Ukrainian-dominant OCR item is read in auto mode: the э line goes, the ъ lines stay |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b an old-Ukrainian allowance for the Russian-language test › the marker rate counts old-Ukrainian words |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b an old-Ukrainian allowance for the Russian-language test › a Russian-tested text with >= 1 % marker words and >= 200 tokens is kept, the same text without markers is excluded |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b bilingual dictionaries are not running-text N › title rule: a dictionary word plus a language pair; monolingual and non-dictionary titles are not caught |
+| CQ-1 | tests/cq1b.test.ts › CQ-1b bilingual dictionaries are not running-text N › an OCR dictionary is written with excludeReason (admit() refuses it), a wikisource page of the same title is not touched |

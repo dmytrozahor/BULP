@@ -5,6 +5,22 @@
  *  2. Russian-language document test: ≥ 20 Russian-only function words and more than twice the Ukrainian-only ones → excludeReason.
  *  3. oldOrth for pre-1925 Ukrainian-dominant items (ъ ѣ are normal letters there; only Russian function words mark a line as apparatus).
  */
+/** CQ-1b: э Э are Russian letters; the oldOrth line rule of the recovery drops a line that has one */
+export const E_LETTER = /[эЭ]/
+/** CQ-1b: marker words of old Ukrainian / Ruthenian text; a Russian-tested document with >= 1 % of them is kept (measured: 13.8 per mille in the one wrongly excluded medical text, 5.0 at most in the other 157) */
+export const OLD_UKR_MARKERS = new Set('тогды тоды теды такьже такъже єсть єго єй єст'.split(' '))
+export function oldUkrRate(tokens: string[]): number {
+  if (!tokens.length) return 0
+  let n = 0
+  for (const t of tokens) if (OLD_UKR_MARKERS.has(t.toLowerCase())) n++
+  return n / tokens.length
+}
+/** CQ-1b: a bilingual dictionary by its title: a dictionary word plus a language pair joined by a hyphen (русско-украинский, Ukrainian-English, українсько-московський), or a pocket dictionary */
+const LANG = 'рос|мос|рус|укр|мал|англ|нім|франц|польс|ukr|rus|anhl|engl|polsk|nimec'
+const DICT_WORD = /словар|словник|dictionar|slovar|slovnyk|wörterbuch|wörter|лексикон|vocabular|kyshenk|кишенк/i
+const LANG_PAIR = new RegExp(`(?:${LANG})[^\\n]{0,25}?[-–](?:${LANG})`, 'iu')
+export const isBilingualDictionary = (title: string) => DICT_WORD.test(title) && LANG_PAIR.test(title)
+
 export const CYR_WORD = /^[\p{Script=Cyrillic}\p{M}'’ʼ]+$/u
 const WORD = /[\p{L}\p{M}\p{N}'’ʼ]+/gu
 
