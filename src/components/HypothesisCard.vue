@@ -4,6 +4,7 @@
  * It is marked as a hypothesis at the top («гіпотеза, без доказів»), grades itself «гіпотетична форма: у жодному джерелі не засвідчена», names the rule that produced it with the
  * rule's cite (or kind P «джерела не знайдено»), and links to the real pages it is derived from.
  */
+import DialectBadge from './DialectBadge.vue'
 import { computed } from 'vue'
 import { HYP_BADGE, HYP_GRADE } from '../../core/hypothesis.ts'
 import type { Hypothesis, Relation } from '../lib/hypothesis.ts'
@@ -17,7 +18,7 @@ const rels = computed(() => props.hyp.relations)
 
 <template>
   <article class="card hyp" data-testid="hyp-card" role="status">
-    <h1 class="lemma"><span class="hyp-word">{{ hyp.word }}</span> <span class="badge hyp-badge" data-testid="hyp-badge">{{ HYP_BADGE }}</span> <HypNotes :notes="hyp.notes" /></h1>
+    <div class="hwrow"><h1 class="lemma"><span class="hyp-word">{{ hyp.word }}</span> <span class="badge hyp-badge" data-testid="hyp-badge">{{ HYP_BADGE }}</span> <HypNotes :notes="hyp.notes" /></h1><DialectBadge :lemma="hyp.word" /></div>
     <p class="sans small" data-testid="hyp-grade"><b>Оцінка:</b> {{ HYP_GRADE }}. Це не слово словника й не засвідчена форма: сторінка існує, щоб початкова форма не була «дірою» у групі споріднених слів.</p>
     <h2 class="sans">Звідки гіпотеза</h2>
     <ul class="sans small" data-testid="hyp-rules">

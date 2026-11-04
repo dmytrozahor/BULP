@@ -10,8 +10,11 @@ import type { LemmaCard } from '../../core/types.ts'
 import { useData } from '../composables/useData.ts'
 import { fmtNum } from '../lib/format.ts'
 import { FULL, loadGeo, loadHistorical, panBy, pathOf, regionRows, stepOf, VIEW, zoomAt, zoomOf, type Geo, type HistGeo, type ViewBox } from '../lib/geo.ts'
+import ArmsMarks from './ArmsMarks.vue'
+import ArmsSources from './ArmsSources.vue'
 import { TERRITORIES, TERRITORIES_NOT_DRAWN, territoryGaz, territoryGroupEvidence } from '../../core/territories.ts'
-const props = defineProps<{ card?: LemmaCard; by?: LemmaCard['stats']['byRegion']; /** SPEC 63 OV-11: small map for the «Огляд» tab */ compact?: boolean }>()
+const props = defineProps<{ card?: LemmaCard; by?: LemmaCard['stats']['byRegion']; /** SPEC 63 OV-11: small map for the «Огляд» tab */ compact?: boolean; /** SPEC 63 DB-1: the lemma whose badge areas are marked with arms */ lemma?: string }>()
+const armsLemma = computed(() => props.lemma ?? props.card?.lemma)
 const { corpus } = useData()
 const geo = ref<Geo>(), hgeo = ref<HistGeo>(), err = ref(''), hot = ref<string | null>(null)
 onMounted(() => { loadGeo().then(g => (geo.value = g), e => (err.value = String(e.message ?? e))); loadHistorical().then(g => (hgeo.value = g), () => { /* historical layer is optional: the modern map stays */ }) })
@@ -74,6 +77,7 @@ const hdescribe = (x: (typeof terr.value)[number]) => `${x.t.name}: істори
           :aria-label="hdescribe(s)" @mouseenter="hot = hdescribe(s)" @focus="hot = hdescribe(s)" @mouseleave="hot = null" @blur="hot = null"><title>{{ hdescribe(s) }}</title></path>
         <path v-for="s in shapes" :key="s.code" :d="s.d" :class="['rm-o', 'rm-s' + step(s.r)]" :fill="step(s.r) < 0 ? 'url(#rm-hatch)' : undefined" tabindex="0"
           :aria-label="describe(s)" @mouseenter="hot = describe(s)" @focus="hot = describe(s)" @mouseleave="hot = null" @blur="hot = null"><title>{{ describe(s) }}</title></path>
+        <ArmsMarks v-if="armsLemma" :lemma="armsLemma" />   <!-- SPEC 63 DB-1: arms / plain markers of the places the word is said to come from -->
       </svg>
       <div class="rm-ctl" role="group" aria-label="Масштаб карти">
         <button type="button" class="rm-btn" aria-label="Збільшити" @click="zoomBtn(1.4)">+</button>
@@ -108,6 +112,7 @@ const hdescribe = (x: (typeof terr.value)[number]) => `${x.t.name}: істори
       </ul>
       <p class="muted">Не показано: <template v-for="(n, i) in TERRITORIES_NOT_DRAWN" :key="n.name">{{ i ? '; ' : '' }}{{ n.name }} — {{ n.why }}</template>. Контури: Natural Earth (public domain), адміністративні одиниці, що лише наближають описаний у джерелі обсяг [P].</p>
     </details>
+    <ArmsSources v-if="armsLemma" :lemma="armsLemma" />
     <p class="small muted sans" style="margin-bottom:0">Штрихування — у корпусі немає пам’яток цього регіону (невідомо, не нуль). Крим і Севастополь показано як частину України (ISO 3166-2:UA). Межі: Natural Earth (public domain), спрощено.</p>
   </div>
 </template>

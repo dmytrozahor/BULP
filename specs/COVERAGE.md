@@ -1287,3 +1287,19 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CR-1 | tests/cr1.test.ts › «Відповідники · N» is collapsed by default |
 | CR-1 | tests/cr1.test.ts › PF-2: the sidecar is lm/cg (lazy) |
 | CR-1 | tests/cr1.test.ts › the old «Родина варіантів» block is gone from every card |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a dict-grade word renders a SOLID chip with the dialect name |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a place-only record is «зафіксовано: …», never a dialect claim |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a corpus-only word never states the dialect as fact: «у корпусі переважно: <регіон пам’яток>» |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a hypothesis chip says «гіпотеза», states its basis, is dashed, and passes claim() with kind P |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a spelling feature gives a hypothesis with the rule as basis; no signal at all gives «говір не встановлено» |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › a general word has NO dialect chip, only a neutral «загальновживане» |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › at most 3 chips are shown, the rest behind «ще N» |
+| DB-1 | tests/db1.test.ts › DB-1 the badge: one chip per signal, graded in words and in shape › the palette: solid text is readable (≥ 4.5) in both themes, the border is visible (≥ 3) on both surfaces |
+| DB-1 | tests/db1.test.ts › DB-1 the map: arms at the smallest level the evidence supports, with the grade › levels: a city has arms of its own, a region equal to an oblast uses the oblast arms and says so, a region without arms has a plain marker |
+| DB-1 | tests/db1.test.ts › DB-1 the map: arms at the smallest level the evidence supports, with the grade › a dict chip puts a plain marker on a region without arms; a hypothesis ring is dashed and the tooltip says «гіпотеза» |
+| DB-1 | tests/db1.test.ts › DB-1 the map: arms at the smallest level the evidence supports, with the grade › the marker of a region equal to an oblast is flagged as such (its tooltip names the oblast arms only when they are drawn) |
+| DB-1 | tests/db1.test.ts › DB-1 the arms files: every one has a source row with a free licence; the total is small › each svg has an ok row with a free licence, author and Commons page |
+| DB-1 | tests/db1.test.ts › DB-1 the arms files: every one has a source row with a free licence; the total is small › no svg carries a script or an external reference; each file is small |
+| DB-1 | tests/db1.test.ts › DB-1 the arms files: every one has a source row with a free licence; the total is small › every mark with a coat id has a target; the badge adds nothing to the core cards (no coats in the boot files) |
+| DB-1 | tests/db1.test.ts › DB-1b «За регіонами»: nothing overflows, low-N regions are marked and never set the scale › 67 190,4 is shortened to fit, the label is allowed to wrap, the number has its own column |
+| DB-1 | tests/db1.test.ts › DB-1b «За регіонами»: nothing overflows, low-N regions are marked and never set the scale › a region with a small denominator is greyed, says «мала вибірка: N слів», and the bar scale ignores it |

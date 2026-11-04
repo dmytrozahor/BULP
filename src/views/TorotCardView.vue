@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DialectBadge from '../components/DialectBadge.vue'
 import { MODEL_NOTE, posShown } from '../../core/torot.ts'
 /**
  * SPEC 63 PV-3 /name/:id and PV-5 /orv/:id — in-site card of a TOROT lemma that has no (VESUM-linked) modern lemma: a proper name (POS Ne) or an ORV-only lemma.
@@ -37,7 +38,7 @@ const asOrv = computed(() => (props.kind === 'orv' ? (card.value as OrvCard | un
   <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!card" class="muted sans">Картки «{{ id }}» немає в TOROT-даних.</p>
   <template v-else>
-    <h1><ThinTitle :word="card.lemma" historical /> <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1>
+    <div class="hwrow"><h1><ThinTitle :word="card.lemma" historical /> <small class="muted sans">{{ kind === 'name' ? 'власна назва' : 'давньоруська лема без сучасного відповідника' }}</small></h1><DialectBadge :lemma="card.lemma" /></div>
     <p v-if="asName?.basis" class="sans small">Підстава (SPEC 63 MU-3): слово з великої літери всередині абзацу, не розпізнане (форми немає у VESUM навіть після правил MU) і ніде в корпусі не вжите з малої; анотації TOROT тут немає · {{ card.n }} вжив.</p>
     <p v-else-if="card.model" class="sans small" data-testid="model-tag"><span class="badge" title="прогноз моделі Stanza ORV, а не золота розмітка TOROT">{{ MODEL_NOTE }}</span> <code>{{ posShown(card) }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>
     <p v-else class="sans small">TOROT: <code>{{ card.pos }}</code> <code v-if="card.morph">{{ card.morph }}</code> · {{ card.n }} вжив.</p>

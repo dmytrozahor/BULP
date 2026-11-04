@@ -50,3 +50,6 @@ export function regionRows(regions: CorpusMeta['regions'] | undefined, by: Lemma
 }
 /** Five-step sequential classes by ipm relative to the maximum (0 = none attested). */
 export const stepOf = (ipm: number | undefined, max: number) => (ipm === undefined ? -1 : ipm <= 0 || max <= 0 ? 0 : Math.min(4, 1 + Math.floor((ipm / max) * 4 - 1e-9)))
+
+/** SPEC 63 DB-1: view-box coordinates of a [lon, lat] point (the marker layer of the map) */
+export const projectLL = (lon: number, lat: number): { x: number; y: number } => ({ x: ((lon - LON0) / (LON1 - LON0)) * VIEW.w, y: ((LAT1 - lat) / (LAT1 - LAT0)) * VIEW.h })

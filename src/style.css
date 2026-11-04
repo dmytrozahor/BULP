@@ -256,5 +256,11 @@ textarea.src { width: 100%; min-height: 9rem; font-family: var(--serif); font-si
 .statside { margin-top: 1rem; }
 @media (min-width: 1000px) { .card-layout { display: grid; grid-template-columns: minmax(0, 1fr) 19rem; gap: 1.2rem; align-items: start; } .statside { margin-top: 0; position: sticky; top: .6rem; max-height: calc(100vh - 1.2rem); overflow-y: auto; scrollbar-width: none; overscroll-behavior: contain; } .statside::-webkit-scrollbar { display: none; } }
 .freqcurve svg { width: 100%; max-width: 30rem; height: auto; display: block; } .freqcurve text { fill: var(--muted); font-size: 9px; } .freqcurve .grid { stroke: var(--line); stroke-width: .5; stroke-dasharray: 2 2; } .freqcurve .axis { stroke: var(--muted); stroke-width: .6; }
-.regbars { list-style: none; margin: .2rem 0; padding: 0; } .regbars li { display: grid; grid-template-columns: 7rem 1fr 3rem; gap: .4rem; align-items: center; margin: .15rem 0; } .rb-n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .rb-bar { background: var(--surface-2, var(--line)); height: .6rem; border-radius: 3px; overflow: hidden; } .rb-bar i { display: block; height: 100%; background: var(--accent); } .rb-v { text-align: right; color: var(--muted); }
+.regbars { list-style: none; margin: .2rem 0; padding: 0; min-width: 0; } .regbars li { display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(1rem, 1fr) auto; gap: .2rem .4rem; align-items: center; margin: .25rem 0; min-width: 0; }
+.rb-n { min-width: 0; overflow-wrap: anywhere; line-height: 1.25; } .rb-low { display: block; font-style: normal; font-size: .72rem; color: var(--muted); }
+.rb-bar { background: var(--surface-2, var(--line)); height: .6rem; border-radius: 3px; overflow: hidden; min-width: 0; } .rb-bar i { display: block; height: 100%; max-width: 100%; background: var(--accent); }
+.rb-v { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.regbars li.low { opacity: .75; } .regbars li.low .rb-bar i { background: repeating-linear-gradient(135deg, var(--muted) 0 3px, transparent 3px 6px); } .regbars li.low .rb-v { font-style: italic; }
+.regbars li.rb-rule { display: block; font-size: .72rem; line-height: 1.35; margin-top: .4rem; }
+.statside { overflow-x: hidden; }
 .sidecounts { display: grid; grid-template-columns: auto 1fr; gap: .1rem .6rem; margin: .3rem 0; } .sidecounts dt { color: var(--muted); } .sidecounts dd { margin: 0; }

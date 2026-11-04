@@ -94,3 +94,33 @@
   .top .brand small { display: none; }
   .top .viewbar { width: 100%; } .top .viewbar label { flex: 1 1 100%; } .top .viewbar select { flex: 1 1 auto; min-width: 0; }
 }
+
+/* ── SPEC 63 DB-1: the dialect badge beside the headword (a small heraldic element; grade = shape + words, colour is only the hue) ── */
+.dbadge { display: inline-flex; flex-wrap: wrap; gap: .3rem .4rem; align-items: center; vertical-align: middle; margin-left: .6rem; max-width: 100%; font-weight: 400; min-height: 1.75rem; }
+.dchip { --dc: var(--dl); --don: var(--dol); display: inline-flex; align-items: center; gap: .4rem; box-sizing: border-box; max-width: 100%; padding: .1rem .65rem .1rem .3rem; border: 1.5px solid var(--dc); border-radius: 999px; font: 600 .84rem/1.2 var(--sans); color: var(--ink); background: transparent; letter-spacing: .01em; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dchip { --dc: var(--dd); --don: var(--dod); } }
+:root[data-theme="dark"] .dchip { --dc: var(--dd); --don: var(--dod); }
+.dshield { flex: none; display: inline-grid; place-items: center; width: 1.15rem; height: 1.4rem; }
+.dshield svg { width: 100%; height: 100%; fill: var(--dc); stroke: var(--dc); stroke-width: 1.5; stroke-linejoin: round; }
+.dshield img { width: 100%; height: 100%; object-fit: contain; border-radius: 2px; filter: drop-shadow(0 0 1px rgba(0,0,0,.35)); }
+.dtxt { min-width: 0; overflow-wrap: anywhere; }
+.dchip.g-dict { background: var(--dc); color: var(--don); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--don) 45%, transparent); }
+.dchip.g-dict .dshield svg { fill: var(--don); stroke: var(--don); }
+.dchip.g-place { background: var(--surface); border-style: solid; }
+.dchip.g-place .dshield svg { fill: none; }
+.dchip.g-corpus { background: color-mix(in srgb, var(--dc) 15%, var(--surface)); border-color: color-mix(in srgb, var(--dc) 50%, var(--surface)); font-weight: 500; }
+.dchip.g-corpus .dshield svg { fill: color-mix(in srgb, var(--dc) 35%, var(--surface)); }
+.dchip.g-hyp { border-style: dashed; background: transparent; font-weight: 500; font-style: italic; }
+.dchip.g-hyp .dshield svg { fill: none; stroke-dasharray: 3 2.2; }
+.dchip.g-hyp .dshield img { outline: 1.5px dashed var(--dc); outline-offset: 1px; }
+.dchip.g-general, .dchip.g-none { --dc: var(--muted); background: var(--surface-2); border-color: var(--line); color: var(--ink); font-weight: 500; }
+.dchip.g-none { font-style: italic; color: var(--muted); } .dchip.g-general .dshield svg, .dchip.g-none .dshield svg { fill: none; stroke: var(--muted); }
+.dchip.dph { border-color: var(--line); background: var(--surface-2); min-width: 7rem; } .dchip.dph .dshield { background: var(--line); border-radius: 3px; opacity: .6; }
+.dmore { font: 500 .8rem var(--sans); background: none; border: 1px dashed var(--line); border-radius: 999px; padding: .1rem .55rem; color: var(--ink); cursor: pointer; min-height: 1.6rem; }
+@media (max-width: 480px) { .dbadge { margin-left: 0; display: flex; margin-top: .3rem; } .dchip { font-size: .8rem; } }
+.hwrow { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .4rem; min-width: 0; } .hwrow > h1 { margin-block: .3rem; min-width: 0; overflow-wrap: anywhere; } .hwrow > .dbadge { margin-left: .3rem; }
+/* DB-1 map markers: ring (dashed = hypothesis) around the arms, or a plain uncharged shield in the dialect colour */
+.arms-mark { --dc: var(--dl); cursor: help; } @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .arms-mark { --dc: var(--dd); } } :root[data-theme="dark"] .arms-mark { --dc: var(--dd); }
+.am-ring { fill: var(--surface); fill-opacity: .88; stroke: var(--dc); stroke-width: 1.6; } .am-ring.am-hyp { stroke-dasharray: 3.5 2.5; fill-opacity: .6; }
+.am-plain { fill: var(--dc); stroke: var(--surface); stroke-width: .8; } .arms-mark:focus-visible .am-ring { stroke-width: 3; }
+.arms-src { margin: .4rem 0; } .arms-src li { margin: .15rem 0; overflow-wrap: anywhere; }

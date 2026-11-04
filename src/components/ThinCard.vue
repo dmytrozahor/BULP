@@ -69,7 +69,7 @@ const ipm = computed(() => (props.f && corpus.value?.N ? (props.f / corpus.value
         <Panel id="t-dia" :open="true" title="Діалект · Dialect" summary="ознаки, клас форм, літературний відповідник"><DialectBlock :spelling="spelling" :lemma="lemma" /></Panel>
         <Panel id="t-reg" :open="false" :count="nRegions" title="Карта · регіон пам’ятки" :summary="`${nRegions} регіонів`" :empty="!nRegions" :empty-text="dictOnly ? 'немає засвідчень у корпусі' : 'регіон пам’яток не визначено'"
           info="Регіон пам’ятки, а не діалектна мітка (SPEC 20 B-3.6).">
-          <RegionMap :by="byRegion" />
+          <RegionMap :by="byRegion" :lemma="lemma" />
         </Panel>
         <LemmaBlocks :lemma="lemma" :spelling="spelling" :stress="stress" tab="spread" />
       </template>

@@ -5,6 +5,7 @@
  * CV-5: ALL VESUM analyses of the attested spelling are listed (риночку = риночок m v_mis / риночка f v_zna); the context rule (на / в / у + locative) only marks the preferred one.
  * The detail blocks are the lexicon card's own components (ThinCard).
  */
+import DialectBadge from '../components/DialectBadge.vue'
 import { computed, ref, watch } from 'vue'
 import { lightRow } from '../lib/torotData.ts'
 import { ixPrefix } from '../lib/parts.ts'
@@ -81,7 +82,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
     <ZakNote :target="lemma" />
-    <h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1>
+    <div class="hwrow"><h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1><DialectBadge :lemma="lemma" /></div>
     <p v-if="dict" class="sans small" data-testid="dict-only">
       <span class="badge">{{ dict.status }}</span>
       Джерела: <b>{{ dict.sources.join(' · ') }}</b>. Вжив. у корпусі: f = {{ dict.f }}. Найраніше: — <span class="muted">(роки словників нижче — дати словників, а не перша фіксація слова)</span>

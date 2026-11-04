@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import DialectBadge from '../components/DialectBadge.vue'
 import { lemmaChipKeys } from '../lib/contactLayer.ts'
 import { featureMarks } from '../lib/featureMarks.ts'
 /**
@@ -234,7 +235,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
   <template v-else>
     <ZakNote :target="card.lemma" />
     <header class="wordhead headline compact">
-      <h1 :class="['lemma', { old: isOldForm(card.lemma) }]"><Spell :w="card.lemma" :ctx="vctx" :attest="lemmaAttest" /></h1>
+      <div class="hwrow"><h1 :class="['lemma', { old: isOldForm(card.lemma) }]"><Spell :w="card.lemma" :ctx="vctx" :attest="lemmaAttest" /></h1><DialectBadge :lemma="card.lemma" /></div>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>
         <template v-if="stress1"><span class="muted sans">·</span>
           <template v-for="(sv, i) in full!.stress" :key="i"><span v-if="i" class="muted sans">/</span>

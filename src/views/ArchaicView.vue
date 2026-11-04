@@ -3,6 +3,7 @@
  * SPEC 63 AR-1/AR-2 /ar/:id — card of an archaic lemma: a headword of the historical dictionary (BL-11) that VESUM does not know, or an `unverified` recurring unresolved cluster.
  * Everything shown is the dictionary's own header line (quote + locator) and the corpus lines; what no source states is «невідомо».
  */
+import DialectBadge from '../components/DialectBadge.vue'
 import { computed, ref, watch } from 'vue'
 import type { Kwic } from '../../core/types.ts'
 import type { ArchDict, ArchEntry } from '../../core/archaic.ts'
@@ -44,7 +45,7 @@ const wits = computed(() => Object.entries(e.value?.witnesses ?? {}).sort((a, b)
   <div v-else-if="!found.ready" class="skeleton" style="height:4rem" />
   <p v-else-if="!e" class="muted sans">Архаїчної картки «{{ id }}» немає.</p>
   <template v-else>
-    <h1><ThinTitle :word="e.head" historical /> <small class="muted sans">{{ badge }}</small></h1>
+    <div class="hwrow"><h1><ThinTitle :word="e.head" historical /> <small class="muted sans">{{ badge }}</small></h1><DialectBadge :lemma="e.head" /></div>
     <p v-if="e.status === 'unverified' && !hist.length" class="sans small"><b>Неперевірено:</b> повторюване нерозпізнане слово середньоукраїнського тексту (≥ 3 вживань); словникового запису для нього не знайдено, значення та частина мови — невідомо.</p>
     <template v-else-if="e.status === 'unverified'">
       <p class="sans small" data-testid="ar-hist"><b>Засвідчено в історичному словнику:</b> слово має статтю, тож «словникового запису не знайдено» тут не діє; частина мови — за статтею (повного тексту в базі немає).</p>

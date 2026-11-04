@@ -63,7 +63,7 @@ const onMap = (e: MouseEvent) => { if (!(e.target as Element).closest('button, a
     <section class="ov-sec" data-testid="ov-regions" aria-labelledby="ov-h-reg">
       <h3 id="ov-h-reg" class="small sans">Регіони пам’яток і діалект</h3>
       <template v-if="hasRegions">
-        <div class="ov-map" @click="onMap"><RegionMap :by="byRegion" compact /></div>
+        <div class="ov-map" @click="onMap"><RegionMap :by="byRegion" :lemma="lemma ?? spelling" compact /></div>
         <p class="small sans"><button type="button" class="chip small" @click="openPanel(mapPanel)">усі регіони й повна карта у «Поширення» →</button></p>
       </template>
       <p v-else class="small sans muted" data-testid="ov-noregion">регіон пам’яток невідомий (немає даних; перевірено: регіони пам’яток, у яких це слово засвідчене)</p>
