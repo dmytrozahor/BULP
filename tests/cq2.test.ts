@@ -8,7 +8,7 @@ import { DATE_VERIFIED, modernForDate, resolveDate, statedYears, titleRange, tit
 import { Incr } from '../pipelines/incr-manifest.ts'
 import { metaLine } from '../harvest/archive.ts'
 
-const ARCH = { id: 'x', url: 'https://archive.org/details/x', licence: 'PD', bytes: 1, status: 200, title: 'Книга' }
+const ARCH = { id: 'x', url: 'https://archive.org/details/x', licence: 'PD (publication year ≤ 1925, archive.org OCR)', bytes: 1, status: 200, title: 'Книга' }
 const OPTS = { lang: 'uk' as const, witnessType: 'ocr', edition: 'e', authorId: 'a', loc: 'l', dateQuote: 'q', autoOldOrth: true }
 const wf = (src: string, id: string, title: string, date: string, text: string, extra: object = {}) => witnessFrom(src, { ...ARCH, title, date }, id, text, { ...OPTS, ...extra })
 // modern-spelling Ukrainian (і ї є ґ above a quarter of the tokens, no ъ ѣ), as in the Soviet translations of Marx

@@ -28,6 +28,7 @@ import { packCore } from '../core/pack.ts'
 import { bucketOf, packShard, splitCard, splitDetail } from '../core/shard.ts'
 import { AUTHORS, authorById } from './authors.ts'
 import { ocrQuality, oqFlag, spellingDateStep, type OqResult } from '../core/ocr-quality.ts'
+import { clipKwic } from '../core/rights.ts'
 import { writeDim } from './build-dim.ts'
 import { attachDictModern } from './build-orvdict.ts'
 import { loadPointers, writeXref } from './build-xref.ts'
@@ -584,7 +585,9 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
       let a = r.ti, b = r.ti
       while (a > 0 && r.ti - a < 6 && w.tokens[a - 1]!.s === t.s) a--
       while (b + 1 < w.tokens.length && b - r.ti < 6 && w.tokens[b + 1]!.s === t.s) b++
-      return { w: w.id, loc: t.loc, left: w.tokens.slice(a, r.ti).map(x => x.raw).join(' '), node: t.raw, right: w.tokens.slice(r.ti + 1, b + 1).map(x => x.raw).join(' '), date: w.date }
+      const left = w.tokens.slice(a, r.ti).map(x => x.raw).join(' '), right = w.tokens.slice(r.ti + 1, b + 1).map(x => x.raw).join(' ')
+      const c = w.textRestricted ? clipKwic(left, t.raw, right) : { left, right }   // CQ-3: a restricted witness gives short quotes only
+      return { w: w.id, loc: t.loc, left: c.left, node: t.raw, right: c.right, date: w.date }
     }
     const kline = (r: Ref) => { const k = kwicOf(r); return `${k.left} [${k.node}] ${k.right}`.trim() }
 
@@ -689,7 +692,9 @@ async function buildImpl(opts: BuildOpts, sc: StageCache) {
       let a = ti, b = ti + n - 1
       while (a > 0 && ti - a < 6 && w.tokens[a - 1]!.s === t.s) a--
       while (b + 1 < w.tokens.length && b - (ti + n - 1) < 6 && w.tokens[b + 1]!.s === t.s) b++
-      return { w: w.id, loc: t.loc, left: w.tokens.slice(a, ti).map(x => x.raw).join(' '), node: w.tokens.slice(ti, ti + n).map(x => x.raw).join(' '), right: w.tokens.slice(ti + n, b + 1).map(x => x.raw).join(' '), date: w.date }
+      const left = w.tokens.slice(a, ti).map(x => x.raw).join(' '), node = w.tokens.slice(ti, ti + n).map(x => x.raw).join(' '), right = w.tokens.slice(ti + n, b + 1).map(x => x.raw).join(' ')
+      const c = w.textRestricted ? clipKwic(left, node, right) : { left, right }   // CQ-3
+      return { w: w.id, loc: t.loc, left: c.left, node, right: c.right, date: w.date }
     }
     const evidence = collectEvidence(phraseDocs, listed, phKwic)
     return { cands, frames, evidence }

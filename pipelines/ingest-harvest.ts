@@ -26,7 +26,7 @@ import { decodeIzbornyk } from '../core/text.ts'
 import { pageParagraphs } from './ingest-izbornyk-pages.ts'
 import { MARKER } from './ingest-izbornyk.ts'
 import { E_LETTER, foreignLine, isBilingualDictionary, isRussianDoc, lineForeign, oldUkrRate, polishLookalike, stopProfile, ukDominant, RU_ONLY } from './lang-gate.ts'
-import { DATE_SUSPECT, DATE_VERIFIED, modernForDate, resolveDate, titleRange, titleYear, type IaMeta } from './date-gate.ts'
+import { modernForDate, resolveWitnessDate, type IaMeta } from './date-gate.ts'
 import { Incr, itemSig, recordSource, sourceUnchanged, vocabSig } from './incr-manifest.ts'
 
 export const HARVEST = process.env.HARVEST_DIR ?? 'data/raw/harvest'
@@ -115,24 +115,17 @@ export function witnessFrom(src: string, it: Idx, id: string, text: string, opts
   // CQ-1b: a bilingual dictionary is not running text (its content reaches the cards through the dictionary pipelines); a Russian-tested document with old-Ukrainian marker words is kept
   const dict = ocr && isBilingualDictionary(it.title)
   const ruLine = ocr && !dict && isRussianDoc(prof) && !(t.tokens.length >= 200 && oldUkrRate(t.tokens.map(k => k.raw)) >= 0.01) ? text.split('\n').find(l => l.toLowerCase().split(/[^\p{L}]+/u).some(w => RU_ONLY.has(w)))?.replace(/\s+/g, ' ').trim().slice(0, 200) : undefined
-  // CQ-2: date plausibility (pipelines/date-gate.ts). Order: the range / year stated in the title, then the edition year stated in the archive.org metadata, then the allow-list, then the flag.
+  // CQ-2 / CQ-3: date plausibility and the PD cut (pipelines/date-gate.ts resolveWitnessDate): title range / year, publication year stated in the archive.org metadata, the flag, the restriction of text after 1925
   let dOut: [number, number] = date, dCite = Q(it.url, `harvest/${src}/index.jsonl`, opts.dateQuote.slice(0, 300), 'дата з index.jsonl харвестера (джерело вказує її саме так)')
-  let dateUncertain: { why: string } | undefined, licenceNote: string | undefined
+  let dateUncertain: { why: string } | undefined, licenceNote: string | undefined, textRestricted: { why: string } | undefined
   if (ocr) {
-    const tr = titleRange(it.title, date), ty = tr ? null : titleYear(it.title, date)
-    if (tr) { dOut = tr; dateUncertain = { why: `складений том ${tr[0]}–${tr[1]} (діапазон з назви); у метаданих архіву лише ${date[0]}, номер випуску невідомий` } }
-    else if (ty) { dOut = [ty, ty]; dCite = Q(it.url, `harvest/${src}: назва в index.jsonl`, it.title.slice(0, 200), `рік з назви; у метаданих архіву діапазон ${date[0]}–${date[1]}`) }
-    if (!dateUncertain && !DATE_VERIFIED[id] && (DATE_SUSPECT.some(r => r.test(id)) || modernForDate(dOut, t.tokens.map(k => k.raw.toLowerCase())))) {
-      const v = resolveDate(dOut, opts.meta)
-      if (v.kind === 'edition') {
-        dCite = Q(it.url, `archive.org /metadata: publisher / description`, v.quote.slice(0, 300), `рік видання, названий у метаданих; дата в полі date (${date[0]}) — рік оригіналу`)
-        dOut = [v.year, v.year]
-        if (v.year > 1925) licenceNote = `видання ${v.year}: правило «публічне надбання за датою ≤ 1925» до нього не застосовується, статус прав не з'ясовано`
-      } else if (v.kind === 'none') dateUncertain = { why: `текст сучасної орфографії при даті ${dOut[0]}; рік видання не названо в метаданих архіву (переклад чи передрук оригіналу?)` }
-    }
+    const d = resolveWitnessDate({ id, title: it.title, date, pdLast: /≤\s*1925/.test(String(it.licence)) ? 1925 : Infinity, ...(opts.meta ? { meta: opts.meta } : {}), modern: () => modernForDate(date, t.tokens.map(k => k.raw.toLowerCase())) })
+    dOut = d.date; dateUncertain = d.dateUncertain; licenceNote = d.licenceNote; textRestricted = d.textRestricted
+    if (d.cite) dCite = Q(it.url, d.cite.locator === 'назва в index.jsonl' ? `harvest/${src}: назва в index.jsonl` : d.cite.locator, d.cite.quote, d.cite.note)
   }
   return {
     id, unit: id, title: it.title, author: opts.authorId, url: it.url, date: dOut, dateCite: dCite,
+    ...(textRestricted ? { textRestricted } : {}),
     ...(dateUncertain ? { dateUncertain } : {}), ...(licenceNote ? { licenceNote } : {}),
     lang: opts.lang, ...(it.region ? { region: it.region } : {}), witnessType: opts.witnessType, edition: opts.edition, ...(opts.orth ? { orth: opts.orth } : {}), ...(opts.school ? { school: opts.school } : {}), license: it.licence,
     dropped: { unmapped: t.unmapped, apparatus: t.apparatus }, tokens: t.tokens,

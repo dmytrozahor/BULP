@@ -42,6 +42,8 @@ export interface WitnessOut {
   noFreq?: boolean
   /** SPEC 63 CQ-2: the date of this witness is not reliable (a modern-spelling translation or reprint under the year of the original, or a composite volume whose issue is unknown): counted in N, but never a first attestation, an oldest form or an epoch claim; the text card prints «дата невірогідна: why» */
   dateUncertain?: { why: string }
+  /** SPEC 63 CQ-3: the date is after the PD cut (publication year > 1925) or the status of the text is not established: counted in N and lemma statistics (word counts are facts, like the vocabulary-only sources), but build writes NO running-text shard, the reader says so, and concordance lines are clipped to <= 200 characters (core/rights.ts RESTRICTED_QUOTE_MAX) */
+  textRestricted?: { why: string }
   excludeReason?: { why: string; evidence: Evidence[] }   // set by the ingester when the text is not in the lexicon's language (e.g. Shevchenko's Russian-language poems); build admit() refuses it and REPORT §1 lists it
   /** SPEC 60 MV-1 / NW-7: the witness's media (a song's YouTube video; Sophia IIIF image). `id` = video id for youtube. Inherited by WitnessMeta. */
   media?: WitnessMedia

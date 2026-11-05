@@ -89,6 +89,22 @@ export function metaLine(id: string, m: Record<string, unknown> | undefined): Re
   for (const [k, n] of [['date', 40], ['year', 8], ['publisher', 200], ['imprint', 200], ['notes', 400], ['description', 800]] as const) { const t = txt(m[k], n); if (t) o[k] = t }
   return o
 }
+/** CQ-3: the metadata sidecar of a whole preset in a few requests: the Scraping API returns publisher / imprint / notes / description with the listing (one page = up to 1000 items), no per-item /metadata call */
+async function metaScrapeMode(h: Harvest, cfg: { q: string }) {
+  const p = `${h.dir}/ia-meta.jsonl`, have = new Set<string>()
+  if (existsSync(p)) for (const l of readFileSync(p, 'utf8').split('\n')) { try { have.add((JSON.parse(l) as { id: string }).id) } catch { /* torn line */ } }
+  let cursor: string | null = null, listed = 0, wrote = 0
+  for (;;) {
+    const { status, text } = await h.getText(scrapeUrl(cfg.q, cursor, 500, ['identifier', 'date', 'year', 'publisher', 'imprint', 'notes', 'description']), { headers: H })
+    let j: { items?: Record<string, unknown>[]; cursor?: string }
+    try { j = JSON.parse(text) } catch { return h.stop(`non-JSON scrape answer (HTTP ${status})`) }
+    for (const it of j.items ?? []) { listed++; const id = String(it.identifier); if (have.has(id)) continue; appendFileSync(p, JSON.stringify(metaLine(id, it)) + '\n'); have.add(id); wrote++ }
+    h.log(`meta-scrape: ${listed} listed, ${wrote} written`)
+    cursor = j.cursor ?? null
+    if (!cursor || !(j.items ?? []).length) break
+  }
+  h.finish()
+}
 async function metaMode(h: Harvest, file: string) {
   const ids = (JSON.parse(readFileSync(file, 'utf8')) as (string | { id: string })[]).map(x => (typeof x === 'string' ? x : x.id))
   const p = `${h.dir}/ia-meta.jsonl`, have = new Set<string>()
@@ -104,8 +120,8 @@ async function metaMode(h: Harvest, file: string) {
 }
 
 /** Scraping API page URL: fields comma-separated, count 100-10000, cursor from the previous page */
-export function scrapeUrl(q: string, cursor: string | null, count = 1000): string {
-  return `https://archive.org/services/search/v1/scrape?q=${encodeURIComponent(q)}&fields=${['identifier', 'title', 'creator', 'date', 'year', 'language'].join(',')}&count=${count}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`
+export function scrapeUrl(q: string, cursor: string | null, count = 1000, fields: string[] = ['identifier', 'title', 'creator', 'date', 'year', 'language']): string {
+  return `https://archive.org/services/search/v1/scrape?q=${encodeURIComponent(q)}&fields=${fields.join(',')}&count=${count}${cursor ? `&cursor=${encodeURIComponent(cursor)}` : ''}`
 }
 /** {docs, cursor, total} of a scrape answer; cursor is null on the last page; null when the answer is not a scrape answer */
 export function parseScrape(text: string): { docs: SearchDoc[]; cursor: string | null; total: number } | null {
@@ -136,8 +152,9 @@ async function main() {
   const name = process.argv[2] ?? ''
   const cfg = ARCHIVE_PRESETS[name]
   if (!cfg) { console.error(`preset? ${Object.keys(ARCHIVE_PRESETS).join(' | ')}`); process.exit(1) }
-  const fast = ['--scrape', '--retry-5xx', '--retry-404', '--retry-skipped', '--meta'].some(f => process.argv.includes(f))
+  const fast = ['--scrape', '--retry-5xx', '--retry-404', '--retry-skipped', '--meta', '--meta-scrape'].some(f => process.argv.includes(f))
   const h = new Harvest(name, { delayMs: fast ? 1000 : 2000, logEvery: 25, capBytes: Number(process.env.HARVEST_CAP ?? 8e9) })   // >= 1 s between requests
+  if (process.argv.includes('--meta-scrape')) await metaScrapeMode(h, cfg)
   if (process.argv.includes('--meta')) await metaMode(h, process.argv[process.argv.indexOf('--meta') + 1]!)
   if (process.argv.includes('--retry-5xx')) await retry404(h, cfg, { fivexx: true })
   if (process.argv.includes('--retry-skipped')) await retry404(h, cfg, { skipped: true })

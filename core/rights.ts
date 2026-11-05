@@ -43,6 +43,16 @@ export type SourceId = string
 
 /** shard-size budget of a gloss/quotation of a pd/open source (was GLOSS_MAX, MAX_QUOTE): a budget, not a right */
 export const SIZE_BUDGET = 200
+/** SPEC 63 CQ-3: a corpus witness whose text is in copyright or of unknown status (WitnessOut.textRestricted) is counted but never shown as running text; a concordance line from it is a short quote */
+export const RESTRICTED_QUOTE_MAX = 200
+/** clip a concordance line (left / node / right) to at most `max` characters: the node stays whole, the context is cut from the outer ends, alternately */
+export function clipKwic(left: string, node: string, right: string, max = RESTRICTED_QUOTE_MAX): { left: string; right: string } {
+  let l = left, r = right
+  while (l.length + node.length + r.length + 2 > max && (l || r)) {
+    if (l.length >= r.length) l = l.replace(/^\S*\s*/, ''); else r = r.replace(/\s*\S*$/, '')
+  }
+  return { left: l, right: r }
+}
 /** the backstop of core/evidence.ts for the quote of any evidence record */
 export const EVIDENCE_CAP = 300
 

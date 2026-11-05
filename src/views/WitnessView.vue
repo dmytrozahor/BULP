@@ -49,6 +49,7 @@ const title = computed(() => w.value?.title ?? (item.value ? `Графіті ${i
       <li><span class="muted">видання: </span>{{ w.edition }}<template v-if="w.license"> ({{ w.license }})</template> · {{ fmtNum(w.n) }} слів</li>
     </ul>
     <p v-if="w?.licenceNote" class="small sans muted licence-note" role="note">{{ w.licenceNote }}</p>
+    <p v-if="w?.textRestricted" class="small sans" role="note" data-testid="text-restricted">Текст не публікується: {{ w.textRestricted.why }}. Слова враховано в лічильниках; приклади — короткі цитати (до 200 знаків).</p>
     <p v-if="w?.dateUncertain" class="small sans date-uncertain" role="note" data-testid="date-uncertain">дата невірогідна: {{ w.dateUncertain.why }}. Слова цього тексту враховано в обсязі корпусу, але вони не дають першої фіксації й не належать до жодної епохи.</p>
     <section v-if="item" class="card sans small">
       <strong>Графіті № {{ item.title }}</strong> · {{ item.type }} · {{ item.from === item.to ? item.from : `${item.from}–${item.to}` }} · панель {{ item.panel }}

@@ -101,6 +101,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
         <div class="small sans"><AuthorBadge :author="w.author" :witness="w.id" /> · {{ fmtDate(w.date) }} · <RouterLink :to="epochTo(epochOf(w))">{{ epochShort(epochOf(w)) }}</RouterLink><template v-if="w.region"> · {{ w.region }}</template> · {{ LANG_UK[w.lang] }} · {{ fmtNum(w.n) }} слів
           · <a :href="w.url" target="_blank" rel="noopener">оригінал ↗</a></div>
         <div v-if="w.licenceNote" class="small sans muted" role="note">{{ w.licenceNote }}</div>
+        <div v-if="w.textRestricted" class="small sans" role="note" data-testid="text-restricted">Текст не публікується: {{ w.textRestricted.why }}</div>
         <div v-if="w.dateUncertain" class="small sans date-uncertain" role="note" data-testid="date-uncertain">дата невірогідна: {{ w.dateUncertain.why }}</div>
       </li>
     </ul>
@@ -112,6 +113,7 @@ const locLink = (loc: string, raw: string) => sourceLink(cur.value, loc, { node:
     <p class="small sans"><AuthorBadge :author="cur.author" :witness="cur.id" /> · {{ fmtDate(cur.date) }} · {{ cur.edition }}<template v-if="cur.license"> ({{ cur.license }})</template> · <RouterLink :to="witnessTo(cur.id)">картка пам’ятки →</RouterLink> · <a :href="cur.url" target="_blank" rel="noopener">оригінал ↗</a></p>
     <p v-if="locQ" class="small sans muted" role="status">Локатор: {{ locQ }}<template v-if="locIdx < 0 && Array.isArray(toks)"> — у тексті такого локатора немає, показано початок.</template></p>
     <p v-if="cur.licenceNote" class="small sans muted licence-note" role="note">{{ cur.licenceNote }}</p>
+    <p v-if="cur.textRestricted" class="small sans" role="note" data-testid="text-restricted">Текст не публікується: {{ cur.textRestricted.why }}. Слова враховано в лічильниках; приклади — короткі цитати (до 200 знаків).</p>
     <p v-if="cur.dateUncertain" class="small sans date-uncertain" role="note" data-testid="date-uncertain">дата невірогідна: {{ cur.dateUncertain.why }}</p>
     <div v-if="toks === 'loading'" class="skeleton" style="height:8rem" />
     <div v-else-if="toks === 'error'" class="card" role="alert" data-testid="texts-text-failed">
