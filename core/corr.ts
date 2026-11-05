@@ -217,7 +217,7 @@ export function firstText(f: CorrFirst | undefined, m?: CorrMember): string {
   return parts.join('; ')
 }
 const TOP_MAX = 5
-export interface ChipView { form: string; area?: string; year?: number; norm: boolean; self: boolean; dialectHit: boolean; unspec: boolean }
+export interface ChipView { /** DB-3b: the dialect code of the member's printed area (not a corpus distribution) and its relation: a chip of a same-lexeme dialect form opens the variant card */ code?: string; relation?: Relation; form: string; area?: string; year?: number; norm: boolean; self: boolean; dialectHit: boolean; unspec: boolean }
 /**
  * The compact line of a card: a chip per OTHER member, at most TOP_MAX, the rest behind «ще N». Members whose sense is not determined are kept out. If a dialect is selected in the «Говір» switch (`code`),
  * the members of that dialect come first and are marked. Returns undefined when there is nothing to show.
@@ -230,7 +230,7 @@ export function topLine(g: CorrGroup, lemma: string, dialectCode = ''): { chips:
   const sorted = [...all].sort((x, y) => +hit(y) - +hit(x))   // stable: the group's own order (norm first) otherwise
   const view = (m: CorrMember): ChipView => {
     const a = m.areas.find(x => x.grade !== 'corpus') ?? m.areas[0], yr = m.first?.year
-    return { form: m.form, area: a ? areaChip(a) : undefined, year: yr, norm: m.norm, self: false, dialectHit: hit(m), unspec: false }
+    return { ...(a && a.grade !== 'corpus' && a.code ? { code: a.code } : {}), relation: m.relation, form: m.form, area: a ? areaChip(a) : undefined, year: yr, norm: m.norm, self: false, dialectHit: hit(m), unspec: false }
   }
   return { chips: sorted.slice(0, TOP_MAX).map(view), more: Math.max(0, sorted.length - TOP_MAX) }
 }

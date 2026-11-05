@@ -89,7 +89,7 @@ const dict = computed(() => (row.value ? undefined : dictInfo(cv.value)))
   <p v-else-if="!row && !cv" class="muted sans">Легкої картки «{{ lemma }}» немає.</p>
   <template v-else>
     <ZakNote :target="lemma" />
-    <SubcardTop :lemma="word" :sub="sub" :paradigm="[]" :ctx="subCtx" :from="String($route.query.from ?? '')" />
+    <SubcardTop :sub="sub" :from="String($route.query.from ?? '')" />
     <div class="hwrow"><h1><ThinTitle :word="word" /> <small class="muted sans">коротка картка</small></h1><DialectBadge :lemma="lemma" /></div>
     <p v-if="dict" class="sans small" data-testid="dict-only">
       <span class="badge">{{ dict.status }}</span>

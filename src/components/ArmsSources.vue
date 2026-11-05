@@ -4,10 +4,11 @@ import { computed } from 'vue'
 import { markByKey } from '../../core/coats.ts'
 import { useBadge } from '../lib/badge.ts'
 import { coatIndex } from '../lib/coatsData.ts'
-const props = defineProps<{ lemma: string }>()
+import type { BadgeChip } from '../../core/dialect-badge.ts'
+const props = defineProps<{ lemma: string; /** ready-made chips (a variant card) */ chipsIn?: BadgeChip[] }>()
 const { chips } = useBadge(() => props.lemma)
 const rows = computed(() => {
-  const ids = new Set<string>(); for (const c of chips.value.slice(0, 3)) for (const k of c.marks) { const id = markByKey[k]?.coat; if (id && coatIndex.value?.[id]?.ok) ids.add(id) }
+  const ids = new Set<string>(); for (const c of (props.chipsIn ?? chips.value).slice(0, 3)) for (const k of c.marks) { const id = markByKey[k]?.coat; if (id && coatIndex.value?.[id]?.ok) ids.add(id) }
   return [...ids].map(id => coatIndex.value![id]!)
 })
 </script>

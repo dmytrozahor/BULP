@@ -3,6 +3,9 @@
  * Instant search over lemmas AND every historical spelling / paradigm form (stress- and case-insensitive via core/text.ts key();
  * Old letters ѣ ъ ы ѧ accepted). Results: lemma, first-attestation year + author, dots barometer. Unknown → /analyze.
  */
+import { corrOf } from '../lib/corrData.ts'
+import { variantFormHits, variantTo } from '../../core/subcard.ts'
+import { DIALECTS } from '../../core/rules.ts'
 import FirstChip from '../components/FirstChip.vue'
 import { computed, ref, shallowRef, watch } from 'vue'
 import Pagination from '../components/Pagination.vue'
@@ -73,6 +76,11 @@ const lemmaChips = computed(() => lemmaPage(pgL.page.value) ?? [])
 const uvHits = ref<UvHit[]>([])
 watch(q, async v => { const x = v; const r = await uvSearch(x).catch(() => []); if (x === q.value) uvHits.value = r }, { immediate: true })
 const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []))   // first 3 shown here, the rest on /plast
+/** SPEC 63 DB-3b: a query that is a DIALECT FORM of a correspondence group (CR-1) offers the variant's own card, below the real lemmas; the lm/cg shard is read lazily, after the query has settled (350 ms), never on the keystroke path */
+const settledQ = ref('')
+watch(q, v => { const t = v.trim(), n = ++vseq; settledQ.value = ''; if ([...t].length < 3 || /s/.test(t)) return; setTimeout(() => { if (n === vseq) settledQ.value = t }, 350) }, { immediate: true })
+let vseq = 0
+const variantHits = computed(() => (settledQ.value ? variantFormHits(settledQ.value, corrOf(settledQ.value) ?? []) : []))
 /** CP-11: a hypothetical form (original / derived, no source attests it) is the LAST tier, after Plast terms; debounced so a keystroke costs nothing extra while typing, and only for a query that no real page answers */
 const hypHit = shallowRef<Hypothesis>(), hseq = ref(0)
 watch(q, async v => {
@@ -179,6 +187,13 @@ watch(q, async v => {
       </li>
     </ul>
     <p v-if="plast.length > 3" class="small sans"><RouterLink :to="{ path: '/plast', query: { q: q.trim() } }">усі {{ plast.length }} пластові збіги →</RouterLink></p>
+  </section>
+  <section v-if="variantHits.length" class="card" aria-live="polite" data-testid="variant-hits">
+    <h2><span>Варіанти за говорами</span></h2>
+    <ul class="results">
+      <li v-for="v in variantHits" :key="v.code + v.form + v.of"><RouterLink :to="variantTo(v.code, v.form, v.of)"><span class="lem">{{ v.form }}</span><span class="badge dialect">{{ DIALECTS[v.code] }}</span>
+        <span class="small sans">варіант леми «{{ v.of }}» · {{ v.grade === 'dict' ? 'за словником' : 'за свідченням носія' }}</span></RouterLink></li>
+    </ul>
   </section>
   <section v-if="hypHit" class="card" aria-live="polite" data-testid="hyp-hits">
     <h2><span>Гіпотетичні форми</span></h2>

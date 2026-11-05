@@ -239,7 +239,7 @@ const epEmpty = computed(() => !epLoading.value && (!epochKinds.value || !epochs
   </template>
   <template v-else>
     <ZakNote :target="card.lemma" />
-    <SubcardTop :lemma="card.lemma" :sub="sub" :forms="full?.forms" :paradigm="card.paradigm" :ctx="vctx" :from="String($route.query.from ?? '')" />
+    <SubcardTop :sub="sub" :from="String($route.query.from ?? '')" />
     <header class="wordhead headline compact">
       <div class="hwrow"><h1 :class="['lemma', { old: isOldForm(card.lemma) }]"><Spell :w="card.lemma" :ctx="vctx" :attest="lemmaAttest" /></h1><DialectBadge :lemma="card.lemma" /></div>
       <p class="hl-line row"><span class="muted sans">{{ card.pos }}</span>

@@ -6,6 +6,7 @@
  * Honest grades: an area from a dictionary is named, a corpus distribution is printed as «у корпусі переважно: …» with its minimum, an owner's statement is «за свідченням носія»; no evidence = «говір не встановлено».
  * The chosen «Говір» only reorders and marks the members of that dialect; the word in the card header is not changed. Nothing is shown for a word without a group. Lazy: the shard is read when this mounts.
  */
+import { variantTo } from '../../core/subcard.ts'
 import { computed } from 'vue'
 import { CORPUS_RULE, GRADE_UK, UNSPEC, groupsForCard, otherCount, tableRows, topLine, type CorrGroup } from '../../core/corr.ts'
 import Collapsible from './Collapsible.vue'
@@ -14,6 +15,8 @@ const props = defineProps<{ lemma: string; /** the groups the lemma is in (alrea
 const groups = computed<CorrGroup[]>(() => groupsForCard(props.groups, props.lemma))
 const n = computed(() => otherCount(groups.value, props.lemma))
 const wl = (l: string) => '/w/' + encodeURIComponent(l)
+/** DB-3b: a chip of a same-lexeme dialect form (phonetic / morphological variant with a printed dialect area) opens the variant's own card; a lexical member or a form with no dialect keeps its lemma card */
+const chipTo = (c: { form: string; code?: string; relation?: string }) => (c.code && (c.relation === 'phonetic' || c.relation === 'morph') ? variantTo(c.code, c.form, props.lemma) : wl(c.form))
 const lines = computed(() => groups.value.filter(g => !g.members.every(m => m.unspec)).map(g => ({ g, top: topLine(g, props.lemma, (props.dialect ?? '')), rows: tableRows(g, props.lemma, (props.dialect ?? '')) })))
 /** the pairs whose sense is not determined, ONE table for all of them (a word with many one-sided synonyms must not print a table per pair) */
 const loose = computed(() => { const seen = new Set<string>(), rows = groups.value.filter(g => g.members.every(m => m.unspec)).flatMap(g => tableRows(g, props.lemma, (props.dialect ?? '')).filter(r => !r.self)); return rows.filter(r => !seen.has(r.form) && !!seen.add(r.form)) })
@@ -25,7 +28,7 @@ const tables = computed(() => [...lines.value.map(l => ({ key: l.g.id, title: l.
     <p v-for="l in lines.filter(x => x.top)" :key="l.g.id" class="corr-line" data-testid="corr-line">
       <span class="muted">У говорах і варіантах<template v-if="groups.length > 1"> ({{ l.g.meaning }})</template>: </span>
       <template v-for="(c, i) in l.top!.chips" :key="c.form"><span v-if="i" class="muted"> · </span>
-        <RouterLink :to="wl(c.form)" :class="['chip', { 'corr-hit': c.dialectHit }]" data-testid="corr-chip">{{ c.form }}</RouterLink><span v-if="c.area || c.year" class="muted"> ({{ [c.area, c.year].filter(Boolean).join(', ') }})</span><span v-if="c.dialectHit" class="badge" title="збігається з обраним говором">ваш говір</span></template>
+        <RouterLink :to="chipTo(c)" :class="['chip', { 'corr-hit': c.dialectHit }]" data-testid="corr-chip">{{ c.form }}</RouterLink><span v-if="c.area || c.year" class="muted"> ({{ [c.area, c.year].filter(Boolean).join(', ') }})</span><span v-if="c.dialectHit" class="badge" title="збігається з обраним говором">ваш говір</span></template>
       <span v-if="l.top!.more" class="muted"> · ще {{ l.top!.more }}</span>
     </p>
     <Collapsible id="corr" title="Відповідники" :count="n" testid="corr-table">

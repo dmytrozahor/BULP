@@ -9,6 +9,7 @@ export const routes: RouteRecordRaw[] = [
   { path: '/name/:id', component: () => import('./views/TorotCardView.vue'), props: r => ({ id: r.params.id, kind: 'name' }) },
   { path: '/orv/:id', component: () => import('./views/TorotCardView.vue'), props: r => ({ id: r.params.id, kind: 'orv' }) },
   { path: '/ar/:id', component: () => import('./views/ArchaicView.vue'), props: true },
+  { path: '/v/:dialect/:form', component: () => import('./views/VariantView.vue'), props: true },   // SPEC 63 DB-3b: the card of a dialect variant of a lemma (?of=<lemma>)
   { path: '/lw/:lemma', component: () => import('./views/LightWordView.vue'), props: true },
   { path: '/uv/:id', component: () => import('./views/UnverifiedView.vue'), props: true },
   { path: '/plast', component: () => import('./views/PlastView.vue') },
