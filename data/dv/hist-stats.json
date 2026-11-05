@@ -1,0 +1,143 @@
+{
+ "format": 1,
+ "scan": {
+  "lemmas": 77407,
+  "formsSeen": 511004,
+  "withVariant": 1965,
+  "badRule": 15489,
+  "orthOnly": 2828,
+  "noEdit": 1491,
+  "vesumKnown": 22898,
+  "pureOrth": 32333,
+  "kept": 1965,
+  "byClass": {
+   "vowel-yi": 2877,
+   "geminate": 8429,
+   "vowel-ea": 2129,
+   "cluster": 5193,
+   "vowel-oi": 2581,
+   "vowel-other": 753,
+   "prothesis": 171,
+   "vowel-ie": 325,
+   "palatal": 34,
+   "apostrophe": 15
+  },
+  "skip": {
+   "dictionary": 0,
+   "ocr": 0,
+   "dateUncertain": 0,
+   "noRegion": 0,
+   "abroad": 0,
+   "russian": 0
+  }
+ },
+ "shipped": 1240,
+ "lemmas": 952,
+ "per": {
+  "BOY": {
+   "forms": 1,
+   "dict": 1,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "HUT": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "LEM": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "NDN": {
+   "forms": 1150,
+   "dict": 0,
+   "corpus": 56,
+   "hyp": 1094,
+   "tokens": 11848
+  },
+  "ZAK": {
+   "forms": 2,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 2,
+   "tokens": 4
+  },
+  "POD": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "VOL": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "WPL": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "CHN": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  },
+  "MDN": {
+   "forms": 26,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 26,
+   "tokens": 114
+  },
+  "SLB": {
+   "forms": 139,
+   "dict": 0,
+   "corpus": 2,
+   "hyp": 137,
+   "tokens": 1050
+  },
+  "STP": {
+   "forms": 6,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 6,
+   "tokens": 37
+  },
+  "PKB": {
+   "forms": 2,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 2,
+   "tokens": 4
+  },
+  "SYAN": {
+   "forms": 0,
+   "dict": 0,
+   "corpus": 0,
+   "hyp": 0,
+   "tokens": 0
+  }
+ },
+ "byClass": {
+  "vowel-yi": 235,
+  "vowel-oi": 74,
+  "vowel-ea": 169,
+  "geminate": 761,
+  "vowel-ie": 1
+ }
+}

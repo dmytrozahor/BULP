@@ -92,6 +92,7 @@ export interface CorrPair {
   /** areas of a / b as the source gives them */ areaA?: CorrArea[]; areaB?: CorrArea[]
   /** which side(s) are the standard */ norm?: 'a' | 'b' | 'both'
   meaning?: string
+  /** DV-7: the first fixation of a side that has no card of its own (a historical variant spelling) */ firstA?: CorrFirst; firstB?: CorrFirst
 }
 /** source order: the first sources win when a group would exceed the cap */
 export const SRC_PRIORITY = ['family', 'owner', 'extra', 'dialect-lex', 'xr', 'wikt-alt', 'wikt-syn-uk', 'wikt-syn-en', 'karavansky'] as const
@@ -112,7 +113,7 @@ export function assemble(pairs: CorrPair[], meaningOf?: (pos: string, p: CorrPai
   const meaningFor = meaningOf ?? ((pos: string, p: CorrPair) => known.get(`${pos}|${plain(p.a)}`) ?? known.get(`${pos}|${plain(p.b)}`) ?? POS_UK[pos] ?? pos)
   const st: AssembleStats = { pairs: pairs.length, edgesUsed: 0, capped: 0, unspecGroups: 0, groups: 0, members: 0 }
   const sorted = [...pairs].sort((x, y) => prio(x.src) - prio(y.src) || (x.a + x.b < y.a + y.b ? -1 : 1))
-  type Node = { form: string; norm: boolean; rel: Relation; areas: CorrArea[]; src: Set<string>; ev: Evidence[]; unspec?: boolean }
+  type Node = { form: string; norm: boolean; rel: Relation; areas: CorrArea[]; src: Set<string>; ev: Evidence[]; unspec?: boolean; first?: CorrFirst }
   const key = (pos: string, meaning: string, w: string) => `${pos}\u0001${meaning}\u0001${plain(w)}`
   const parent = new Map<string, string>(), size = new Map<string, number>(), nodes = new Map<string, Node>(), members = new Map<string, Set<string>>(), posOfRoot = new Map<string, string>(), meanOfRoot = new Map<string, string>()
   const find = (k: string): string => { let r = k; while (parent.get(r) !== r) r = parent.get(r)!; return r }
@@ -121,6 +122,7 @@ export function assemble(pairs: CorrPair[], meaningOf?: (pos: string, p: CorrPai
   const note = (n: Node, p: CorrPair, side: 'a' | 'b') => {
     const other = side === 'a' ? p.b : p.a
     n.areas = mergeAreas(n.areas, side === 'a' ? p.areaA : p.areaB); n.src.add(p.src)
+    { const f = side === 'a' ? p.firstA : p.firstB; if (f && (!n.first || f.year < n.first.year)) n.first = f }
     if (!n.ev.some(e => e.locator === p.ev.locator && e.quote === p.ev.quote)) n.ev.push(p.ev)
     if (p.norm === side || p.norm === 'both') n.norm = true
     // the relation of a variant to the standard: the pair's relation is stated of the NON-standard side; a standard side keeps 'lexical' unless it is the only information
@@ -144,7 +146,7 @@ export function assemble(pairs: CorrPair[], meaningOf?: (pos: string, p: CorrPai
     note(na, p, 'a'); note(nb, p, 'b'); st.edgesUsed++
   }
   const groups: CorrGroup[] = []
-  const toMember = (n: Node, unspec?: boolean): CorrMember => ({ form: n.form, norm: n.norm, relation: n.rel, areas: n.areas, src: [...n.src].sort(), evidence: n.ev, ...(unspec ? { unspec: true as const } : {}) })
+  const toMember = (n: Node, unspec?: boolean): CorrMember => ({ form: n.form, norm: n.norm, relation: n.rel, areas: n.areas, src: [...n.src].sort(), evidence: n.ev, ...(n.first ? { first: n.first } : {}), ...(unspec ? { unspec: true as const } : {}) })
   for (const [root, set] of members) {
     if (set.size < 2) continue
     const ms = [...set].map(k => nodes.get(k)!)

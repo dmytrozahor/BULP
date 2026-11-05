@@ -13,7 +13,7 @@ import { createReadStream, existsSync, mkdirSync, readdirSync, readFileSync, sta
 import { createInterface } from 'node:readline'
 import { resolve } from 'node:path'
 import { assemble, checkGroup, corpusArea, plain, type CorrFirst, type CorrGroup, type CorrMember, type CorrPair } from '../core/corr.ts'
-import { hypothesisPairs, ownerTsvPairs } from '../core/corr-src.ts'
+import { histPairs, hypothesisPairs, ownerTsvPairs } from '../core/corr-src.ts'
 import { parseOwnerTsv, withoutRejected, type DvLink } from '../core/dialect-variants.ts'
 import { dialectLexPairs, dialectLexRows, familyPairs, karavanskyPairs, type KarLinkRow, kaikkiIndexAdd, kaikkiPairs, ownerPairs, ukWiktPairs, xrPairs, KK_POS, type KkEntry, type KkIndex, type LexRow, type PosOf, type Rejects } from '../core/corr-src.ts'
 import { vesumClass } from '../core/pos-gate.ts'
@@ -166,6 +166,8 @@ export async function buildCorr(): Promise<CorrFile> {
     if (existsSync(hypF)) pairs.push(...hypothesisPairs(withoutRejected(readJson<{ rows: DvLink[] }>(hypF).rows, rejected), posOf, rej))
     const placeF = resolve(ROOT, 'data/dv/placeonly.json')
     if (existsSync(placeF)) pairs.push(...dialectLexPairs(readJson<{ rows: LexRow[] }>(placeF).rows, posOf, rej, 'dialect-place', senseN))
+    const histF = resolve(ROOT, 'data/dv/hist-forms.json')
+    if (existsSync(histF)) { const nm = new Map(REGIONS.map(r => [r.code, r.name] as const)); pairs.push(...histPairs(withoutRejected(readJson<{ rows: import('../core/dialect-hist.ts').HistRow[] }>(histF).rows.map(r => ({ ...r, form: r.v, target: r.l })), rejected), posOf, rej, c => nm.get(c) ?? c)) }
     if (xr) pairs.push(...xrPairs(xr, posOf, rej, senseN))
     if (kkStage) { const ix = kkIndexOf(kkStage); for (const e of kkStage.entries) pairs.push(...kaikkiPairs(e, ix, posOf, rej)) }
     if (syn) pairs.push(...ukWiktPairs(syn, posOf, rej))

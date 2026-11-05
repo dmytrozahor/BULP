@@ -1,8 +1,19 @@
 /** MM-60c: writes analysis/dialect-question-words.md from core/question-words.ts. usage: node pipelines/build-question-words.ts [out.md] */
+import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
+import { GROUP_NAME, type HistRow } from '../core/dialect-hist.ts'
 import { writeJsonAtomic } from './robust.ts'
 import { QW_CELLS, QW_GROUPS, QW_TO_CONFIRM, QW_WORDS, qwCoverage } from '../core/question-words.ts'
 
+/** DV-7: historical variant spellings of the question words found in the witnesses, per dialect group (grade as in analysis/dialect-historical-forms.md) */
+function histSection(): string {
+  const f = resolve('data/dv/hist-forms.json'); if (!existsSync(f)) return ''
+  const rows = (JSON.parse(readFileSync(f, 'utf8')) as { rows: HistRow[] }).rows.filter(r => ['який', 'як', 'хто', 'що', 'де', 'куди', 'котрий', 'коли', 'чому', 'чого', 'навіщо', 'скільки', 'чий'].includes(r.l))
+  let md = '\n## Історичні форми з корпусу (DV-7)\n\n'
+  if (!rows.length) return md + 'Немає даних: серед надійних свідчень для цих слів не знайдено відмінних форм поза чистою орфографією.\n'
+  for (const r of rows) md += `- **${r.l}**: ${r.v} (${r.areas.map(a => `${GROUP_NAME[a.g]}, ${a.grade === 'dict' ? 'словник' : a.grade === 'corpus' ? 'розподіл у корпусі' : 'гіпотеза'}`).join('; ')}), ${r.n} вжив.\n`
+  return md
+}
 export function questionWordsMd(): string {
   const cov = qwCoverage(), cells = QW_WORDS.flatMap(w => QW_GROUPS.flatMap(g => QW_CELLS[w]?.[g] ?? []))
   const by = (gr: string) => cells.filter(c => c.grade === gr).length
@@ -10,6 +21,7 @@ export function questionWordsMd(): string {
   md += `Покриття: ${QW_WORDS.length} слів × ${QW_GROUPS.length} груп; клітинок із формами: ${Object.values(cov).reduce((a, b) => a + b, 0)}; за ступенем: словник ${by('словник')}, носій ${by('носій')}, гіпотеза ${by('гіпотеза')}.\n\n`
   md += `За групами: ${QW_GROUPS.map(g => `${g} ${cov[g]}`).join('; ')}.\n\n| слово | ${QW_GROUPS.join(' | ')} |\n|---|${QW_GROUPS.map(() => '---').join('|')}|\n`
   for (const w of QW_WORDS) md += `| ${w} | ${QW_GROUPS.map(g => { const cs = QW_CELLS[w]?.[g]; return cs?.length ? cs.map(c => `${c.forms.length ? c.forms.join(', ') : '—'} (${c.grade}: ${c.source})`).join('; ') : 'немає даних' }).join(' | ')} |\n`
+  md += histSection()
   md += '\n## Цитати\n\n'
   for (const w of QW_WORDS) for (const g of QW_GROUPS) for (const c of QW_CELLS[w]?.[g] ?? []) md += `- **${w}**, ${g} — ${c.grade}, ${c.source}: «${c.quote}»\n`
   md += '\n## Для підтвердження власником\n\n' + QW_TO_CONFIRM.map(x => `- ${x}`).join('\n') + '\n'

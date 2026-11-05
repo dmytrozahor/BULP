@@ -14,6 +14,13 @@ export const NUM_COLS: NumCol[] = [
   { id: 'BUK', name: 'Буковина', basis: 'Словник буковинських говірок (2005)' },
   { id: 'POL', name: 'Полісся', basis: 'Лисенко, Словник поліських говорів (1974)' },
   { id: 'NDN', name: 'Нижня Наддніпрянщина', basis: 'Чабаненко, Словник говірок Нижньої Наддніпрянщини (1992)' },
+  { id: 'LEM', name: 'Лемківщина', basis: 'історичні свідчення (DV-7)' },
+  { id: 'VOL', name: 'Волинь', basis: 'історичні свідчення (DV-7)' },
+  { id: 'POD', name: 'Поділля', basis: 'історичні свідчення (DV-7)' },
+  { id: 'CHN', name: 'Чернігівщина', basis: 'історичні свідчення (DV-7)' },
+  { id: 'MDN', name: 'Полтавщина', basis: 'історичні свідчення (DV-7)' },
+  { id: 'SLB', name: 'Слобожанщина', basis: 'історичні свідчення (DV-7)' },
+  { id: 'SYAN', name: 'Надсяння', basis: 'історичні свідчення (DV-7)' },
   { id: 'GAL', name: 'Галичина', basis: 'за свідченням носія (власник)' },
   { id: 'ANY', name: 'діалектне, групу не названо', basis: 'Вікісловник (en), мітка dialectal; ВЕСУМ, мітка arch' },
   { id: 'COR', name: 'корпус (регіон пам’ятки, не говір)', basis: 'форма впізнана за відповідником і засвідчена в корпусі; розподіл за регіонами пам’яток' },
@@ -82,3 +89,6 @@ export function mergeCells(cells: NumCell[]): NumCell[] {
   }
   return [...m.values()]
 }
+
+/** DV-7: a dialect group of core/dialect-hist.ts → the column of the map */
+export const COL_OF_GROUP: Record<string, string> = { BOY: 'BOY', HUT: 'HUT', ZAK: 'ZAK', PKB: 'BUK', WPL: 'POL', STP: 'NDN', NDN: 'GAL', LEM: 'LEM', VOL: 'VOL', POD: 'POD', CHN: 'CHN', MDN: 'MDN', SLB: 'SLB', SYAN: 'SYAN' }

@@ -228,3 +228,29 @@ export function hypothesisPairs(rows: readonly DvLink[], posOf: PosOf, rej: Reje
   }
   return out
 }
+
+// ── 8 DV-7: historical variant spellings of a lemma, per dialect group ──────────────────────────────────────────────────
+import type { HistRow } from './dialect-hist.ts'
+import { CLASS_UK, GROUP_NAME, RULE_UK } from './dialect-hist.ts'
+/** a variant spelling is a member of the lemma's group with its first fixation (the earliest reliable witness, with the region of the witness) and one area per dialect group: dict (a dialect dictionary lists it), corpus (a skew over the thresholds,
+ *  worded as a distribution of the witnesses' regions), hyp (attested in the region by ≥ 2 reliable witnesses). The variant must not be a VESUM word (a known form is never redirected) and the lemma must be one. */
+export function histPairs(rows: readonly HistRow[], posOf: PosOf, rej: Rejects, regionName: (c: string) => string): CorrPair[] {
+  const out: CorrPair[] = []
+  for (const r of rows) {
+    const a = plain(r.l), b = plain(r.v), pa = posOf(a)
+    if (!pa?.size || posOf(b)?.size || swapKey(a) === swapKey(b) || !isSingleWord(b)) { bump(rej, 'dv7: guard'); continue }
+    const pos = [...pa][0]!
+    const rule = r.r.map(x => RULE_UK[x] ?? x).join('; ')
+    const base = `${r.v} → ${r.t}: ${r.n} уживань у ${r.nw} пам’ятках; клас: ${CLASS_UK[r.c]}${rule ? '; правило: ' + rule : ''}`
+    const ev = D('корпус проєкту (DV-7)', `pipelines/dv7-scan.ts: ${r.l}`, base, 'регіон пам’ятки — це місце написання чи друку, а не діалект слова')
+    const areaB: CorrArea[] = r.areas.map(x => {
+      const dialect = GROUP_NAME[x.g]!
+      if (x.grade === 'dict') return { dialect, code: x.g, grade: 'dict' as const, ev: Q(x.dict![1], x.dict![2], x.dict![3], `${r.v} ~ ${r.l}`) }
+      if (x.grade === 'corpus') return { dialect: regionName(x.region!), grade: 'corpus' as const, share: x.share, tokens: x.tokens, witnesses: x.witnesses, ev }
+      return { dialect: `засвідчено в пам’ятках: ${regionName(x.region!)}`, grade: 'hyp' as const, ev }
+    })
+    const firstB = r.first ? { year: r.first.y, witness: r.first.w, href: `/witness/${encodeURIComponent(r.first.w)}`, kind: 'corpus' as const, label: regionName(r.first.region) } : undefined
+    out.push({ a, b, pos, rel: 'phonetic', src: 'dv7-hist', ev, sense: 'one', norm: 'a', areaB, ...(firstB ? { firstB } : {}) })
+  }
+  return out
+}

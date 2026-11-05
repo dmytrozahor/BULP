@@ -1468,3 +1468,9 @@ Sections without dotted ids (M-4, M-6, B-4, B-5, B-6) are listed under their hea
 | CQ-3 | tests/cq3.test.ts › CQ-3 build: counted, never shown as running text, short quotes › a concordance line of a restricted witness is clipped to <= 200 characters, the node stays whole; short lines are untouched |
 | CQ-3 | tests/cq3.test.ts › CQ-3 build: counted, never shown as running text, short quotes › build.ts clips both concordance builders for restricted witnesses; the cards say the text is not published |
 | CQ-3 | tests/cq3.test.ts › CQ-3 harvester: the whole sidecar from the Scraping API listing › archive.ts has --meta-scrape (publisher, imprint, notes, description in the listing, one request per 500 items) |
+| DV-7 | tests/dv7.test.ts › DV-7 orthography is folded out, what remains is classified › classOf names the edit; two or more edits, or an unclassifiable one, give no class |
+| DV-7 | tests/dv7.test.ts › DV-7 orthography is folded out, what remains is classified › a chain made only of spelling rules is orthography; a chain with a form rule is not |
+| DV-7 | tests/dv7.test.ts › DV-7 regions, groups and the skew › a skew needs the tokens, the witnesses, the share AND a share well above the region’s part of the corpus |
+| DV-7 | tests/dv7.test.ts › DV-7 shaping: the gates and the grades › only a direct / TOROT link ships; a lemma by token or by the model does not (4 of 5 wrong in the first check) |
+| DV-7 | tests/dv7.test.ts › DV-7 in CR-1 › the variant is a member of the lemma’s group with its first fixation and a corpus area worded as a distribution |
+| DV-7 | tests/dv7.test.ts › DV-7 the committed data and the report › the spot check: no group with a sample of 20 or more is above 10 % wrong; the report names every group and the thin ones |

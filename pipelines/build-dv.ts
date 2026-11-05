@@ -10,7 +10,7 @@
 import { existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { DV_EXPLORED, DV_PRECISION, DV_RULES, DV_SHIP_PRECISION, hypothesisOk, dvRuleById, parseOwnerTsv, ownerPairKey, type DvLink } from '../core/dialect-variants.ts'
-import { NUM_COLS, colOfArea, coverage, mergeCells, NO_DATA, GRADE_NUM_UK, type NumCell, type NumRow, type NumeralMap } from '../core/numeral-map.ts'
+import { COL_OF_GROUP, NUM_COLS, colOfArea, coverage, mergeCells, NO_DATA, GRADE_NUM_UK, type NumCell, type NumRow, type NumeralMap } from '../core/numeral-map.ts'
 import { VARIANT_FAMILIES } from '../core/variant-families.ts'
 import { readJson, writeJsonAtomic } from './robust.ts'
 
@@ -126,6 +126,12 @@ for (const f of VARIANT_FAMILIES) {
     if (m.owner) push(lemma, { std: lemma, form: m.form, col: /галиц/i.test(m.owner.relation) ? 'GAL' : 'ANY', grade: 'owner', cite: `за свідченням носія: «${m.owner.quote}»` })
     else if (m.cite) push(lemma, { std: lemma, form: m.form, col: 'ANY', grade: 'dict', cite: `${m.cite.source}: ${m.cite.quote}` }); void std
   }
+}
+// DV-7: historical variant spellings of a numeral, in the column of their dialect group, graded as the group row is (dict / корпус → hypothesis-like 'hyp' on this map: a corpus skew is a distribution of witness regions, not a dialect fact)
+const histF = resolve(ROOT, 'data/dv/hist-forms.json')
+if (existsSync(histF)) for (const r of readJson<{ rows: import('../core/dialect-hist.ts').HistRow[] }>(histF).rows) {
+  if (!CARD_LEMMAS.includes(r.l) && !ORD_LEMMAS.includes(r.l)) continue
+  for (const a of r.areas) { const col = COL_OF_GROUP[a.g]; if (!col) continue; push(r.l, { std: r.t, form: r.v, col, grade: a.grade === 'dict' ? 'dict' : 'hyp', cite: a.dict ? `${a.dict[1]}, ${a.dict[2]}: «${a.dict[3]}»` : `історична форма (DV-7): ${r.n} уживань, ${r.nw} пам’яток${r.first ? `; перша фіксація ${r.first.y}` : ''}`, f: a.tokens, nW: a.witnesses }) }
 }
 for (const o of confirmed) if (CARD_LEMMAS.includes(o.target) || ORD_LEMMAS.includes(o.target)) push(o.target, { std: o.target, form: o.form, col: colOfArea(o.area), grade: 'owner', cite: `за свідченням носія (data/owner/variants-confirmed.tsv)${o.remark ? ': «' + o.remark + '»' : ''}` })
 for (const v of num.vesumNon) { const l = v.lemma; if ((CARD_LEMMAS.includes(l) || ORD_LEMMAS.includes(l)) && l !== v.form) push(l, { std: l, form: v.form, col: 'ANY', grade: 'dict', cite: `ВЕСУМ: ${v.tags}` }) }
