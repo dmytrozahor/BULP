@@ -37,7 +37,7 @@ describe('MM-60c question words: forms only with a source; the rest «немає
   })
   it('the matrix: every filled cell has a grade, a source and a quote; coverage per group; the md is generated from it', () => {
     for (const w of QW_WORDS) for (const g of QW_GROUPS) for (const c of QW_CELLS[w]?.[g] ?? []) { expect(['словник', 'носій', 'гіпотеза']).toContain(c.grade); expect(c.source && c.quote).toBeTruthy() }
-    const cov = qwCoverage(); expect(cov['Закарпаття']).toBe(2); expect(cov['Галичина']).toBe(2); expect(cov['Бойківщина']).toBe(0)
+    const cov = qwCoverage(); expect(cov['Закарпаття']).toBe(2); expect(cov['Галичина']).toBe(5); expect(cov['Бойківщина']).toBe(0)
     const md = questionWordsMd(); expect(md).toContain('немає даних'); expect(md).toContain('Для підтвердження власником'); expect(readFileSync(new URL('../analysis/dialect-question-words.md', import.meta.url), 'utf8').replace(/\r\n/g, '\n')).toBe(md)
   })
 })
@@ -54,5 +54,24 @@ describe('MM-63 варіант → варіянт', () => {
   it('reverse: варіянт, діялог, офіціяльний → іа (medial only; the word-final ія of Азія is never touched); VESUM decides', () => {
     expect(cands('варіянт')).toContain('варіант'); expect(cands('діялог')).toContain('діалог'); expect(cands('офіціяльний')).toContain('офіціальний')
     expect(cands('Азія').filter(c => c !== 'Азія')).toEqual([]); expect(cands('Марія').filter(c => c !== 'Марія')).toEqual([])
+  })
+})
+
+describe('MM-60d як ~ єк, йк, їк · скільки ~ кілько · поки ~ заки (owner-confirmed, Галичина)', () => {
+  it('families: head, ambiguity against VESUM readings, owner P / Желехівський cite', () => {
+    const m = (w: string) => familyMember(w)!
+    expect(m('єк').family.head).toBe('як'); expect(m('єк').member.ambiguous).toBe(true); expect(m('йк').family.head).toBe('як'); expect(m('їк').family.head).toBe('як'); expect(m('йк').member.ambiguous).toBeUndefined()
+    expect(m('кілько').family.head).toBe('скільки'); expect(m('кілько').member.ambiguous).toBe(true); expect(m('скілько').member.cite?.quote).toContain('Скі́льки, скі́лько')
+    for (const w of ['заки', 'закиль', 'заким', 'закинь']) expect(m(w).family.head, w).toBe('поки')
+    expect(m('заки').member.ambiguous).toBe(true); expect(m('заки').member.cite?.quote).toContain('während (kurzer Zeit), bis; bevor, ehe'); expect(m('заки').member.cite?.note).toContain('so long as, while; until, before')
+    for (const id of ['VF-JAK', 'VF-KILKO', 'VF-ZAKI']) { const f = VARIANT_FAMILIES.find(x => x.id === id)!; for (const mm of f.members) expect(() => claim(mm.form, memberEvidence(f, mm)), mm.form).not.toThrow() }
+    expect(memberEvidence(VARIANT_FAMILIES.find(x => x.id === 'VF-JAK')!, m('йк').member).quote).toContain('ну галицкого жеж')
+  })
+  it('search keys lead the forms to the heads; no general я- / є- rule (яблуко, яма untouched)', () => {
+    expect(variantKeys('йк')).toContain('як'); expect(variantKeys('їк')).toContain('як'); expect(variantKeys('закиль')).toContain('поки'); expect(variantKeys('кілько')).toContain('скільки')
+    expect(familyMember('єдність')).toBeUndefined(); expect(cands('єблуко').filter(c => c.startsWith('я'))).toEqual([])
+  })
+  it('matrix: Галичина has the confirmed words; the worker dictionaries are listed as not read', () => {
+    const md = questionWordsMd(); expect(md).toContain('заки'); expect(md).toContain('кілько'); expect(md).toContain('ПІДТВЕРДЖЕНО власником'); expect(md).toContain('на воркері, не прочитані')
   })
 })

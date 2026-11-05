@@ -42,6 +42,9 @@ const OWNER_JAKYJ = { quote: 'єкий для галицкого діалект�
 const OWNER_SHTYRY = { quote: 'штери штири теж діалектне', relation: 'форма числівника чотири (діалектна, область не названа; ступінь: за свідченням носія)' }
 const OWNER_JAKYJ2 = { quote: 'який теж за галицкою рисою має бути йкий їкий єкий', relation: 'йкий, їкий = який (галицька форма; Галичина, ступінь: за свідченням носія; джерела не знайдено)' }
 const UM162 = (quote: string): VCite => ({ source: 'ЕУМ', url: 'https://litopys.org.ua/ukrmova/um162.htm', quote: 'Функціонують ' + quote.replace(/^питальні /, 'питальні ') + (quote.includes('що') || quote.includes('хто') ? '' : ''), note: 'ЕУМ «Закарпатський говір», Морфологія: «Функціонують питальні займенники тко, ко «хто», што»' })
+const OWNER_JAK = { quote: '1. tak, 2. ну галицкого жеж 3. так, і є ще заки', relation: 'єк, йк, їк = як (галицькі форми; Галичина, ступінь: за свідченням носія; джерела, крім ВЕСУМ-мітки arch для єк, не знайдено)' }
+const OWNER_KILKO = { quote: '1. tak, 2. ну галицкого жеж 3. так, і є ще заки', relation: 'кілько = скільки (галицька форма; Галичина, ступінь: за свідченням носія); Желехівський подає скілько' }
+const ZHEL = (quote: string, note: string): VCite => ({ source: 'Желехівський, Малорусько-німецький словар (1886), r2u', url: 'https://r2u.org.ua/html/zheleh_details.html', quote, note })
 const OWNER_KURVOI = { quote: 'Курвої це прийменник від курва, редукований', relation: 'присвійний прикметник від курва, редукована форма мовця (курвиної → курвої); власник написав «прийменник», маючи на увазі прикметник' }
 export const VARIANT_FAMILIES: VFamily[] = [
   // MM-43 (owner remark 2026-10-29: «ну коли редукцію робить мовець»): the speaker's own colloquial reduction, recorded in direct speech / dialect and folk texts. Corpus counts (BULP data/work shards, 2026-10-29):
@@ -95,6 +98,16 @@ export const VARIANT_FAMILIES: VFamily[] = [
     ...['штирьох', 'штирьом', 'штирма'].map((form): VMember => ({ form, role: 'dialect', cite: W('штири', 'forms of шти́ри: штирьо́х, штирьо́м, штирма́', 'en.wiktionary / kaikki uk, стаття «штири» (num), declension: позначка dialectal, діалект не названо') })),
     ...['штери', 'штирі'].map((form): VMember => ({ form, role: 'dialect', ambiguous: form === 'штирі', owner: OWNER_SHTYRY })),
   ] },
+  // MM-60d (owner, asked about єк / йк / їк, кілько, the forms of котрий … and заки: «1. tak, 2. ну галицкого жеж 3. так, і є ще заки»). Galician forms, kind P (the owner's confirmation); VESUM lists єк (adv / conj / part, arch), кілько (numr, arch), заки (conj, arch) and кількох (a form of кілька): those are ambiguous, VESUM wins.
+  // Желехівський (r2u, 1886) is a real source for скілько and заки; it does not name an area, the area Галичина is the owner's.
+  { id: 'VF-JAK', mm: 'MM-60d', head: 'як', cls: ['adv', 'conj'], title: 'як ~ єк, йк, їк (галицькі форми)', members: [
+    { form: 'єк', role: 'dialect', ambiguous: true, owner: OWNER_JAK }, { form: 'йк', role: 'dialect', owner: OWNER_JAK }, { form: 'їк', role: 'dialect', owner: OWNER_JAK } ] },
+  { id: 'VF-KILKO', mm: 'MM-60d', head: 'скільки', cls: ['adv', 'pron'], title: 'скільки ~ кілько, скілько (галицькі форми)', members: [
+    { form: 'скілько', role: 'dialect', ambiguous: true, cite: ZHEL('Скі́льки, скі́лько, adv. wie viel? so viel; о скі́лько in wiefern, insofern.', 'Желехівський (1886): скільки й скілько — один заголовок; область словник не називає') },
+    ...['кілько', 'кількох', 'кільком', 'кількома'].map((form): VMember => ({ form, role: 'dialect', ambiguous: true, owner: OWNER_KILKO })) ] },
+  { id: 'VF-ZAKI', mm: 'MM-60d', head: 'поки', cls: ['conj', 'adv'], title: 'поки ~ заки, закиль, заким, закинь (галицька сполучник)', members: [
+    { form: 'заки', role: 'dialect', ambiguous: true, cite: ZHEL('За́ки, за́киль, за́ким, за́кинь, conj. während (kurzer Zeit), bis; bevor, ehe.', 'Желехівський (1886): «während (kurzer Zeit), bis; bevor, ehe» = поки, доки; перш ніж; en.wiktionary (kaikki uk, «заки», dialectal): so long as, while; until, before; synonym поки. Область — Галичина — за свідченням власника, словник її не називає') },
+    ...['закиль', 'заким', 'закинь'].map((form): VMember => ({ form, role: 'dialect', cite: ZHEL('За́ки, за́киль, за́ким, за́кинь, conj. während (kurzer Zeit), bis; bevor, ehe.', 'Желехівський (1886): форма того самого заголовка; область словник не називає') })) ] },
   { id: 'VF-TILKY', mm: 'MM-33', head: 'тільки', cls: ['adv'], title: 'тільки ~ тілько, тилько (тілько-що …)', tails: true,
     feature: { label: 'західноукраїнська вимова [т’ільки] (м’який т), діалектна [тіки]', cite: W('тільки', "(Western Ukraine) т'і́льки; (dialectal) ті́ки", 'en.wiktionary, стаття «тільки», Pronunciation. Джерело називає цю вимову для написання ТІЛЬКИ; про написання тілько / тилько воно нічого не каже') },
     members: [
