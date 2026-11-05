@@ -80,7 +80,12 @@ const plast = computed(() => (q.value.trim() ? plastSearch(q.value, 10_000) : []
 const settledQ = ref('')
 watch(q, v => { const t = v.trim(), n = ++vseq; settledQ.value = ''; if ([...t].length < 3 || /s/.test(t)) return; setTimeout(() => { if (n === vseq) settledQ.value = t }, 350) }, { immediate: true })
 let vseq = 0
-const variantHits = computed(() => (settledQ.value ? variantFormHits(settledQ.value, corrOf(settledQ.value) ?? []) : []))
+const crHits = computed(() => (settledQ.value ? variantFormHits(settledQ.value, corrOf(settledQ.value) ?? []) : []))
+/** SPEC 63 DB-3c: a typed dialect form no real page answers (not in the lexicon) is folded back by the reverse folds (core/variant-search.ts, lazy chunk) and confirmed against the lemma index; «виведено за правилами» */
+const ruleMod = shallowRef<typeof import('../../core/variant-search.ts')>()
+watch(settledQ, async v => { if (v && !ruleMod.value) ruleMod.value = await import('../../core/variant-search.ts') }, { immediate: true })
+const ruleHits = computed(() => (settledQ.value && ruleMod.value && !rows.value.length && !searching.value ? ruleMod.value.ruleVariantHits(settledQ.value, k => searchIdx.value.map.get(k) ?? []).filter(r => !crHits.value.some(c => c.code === r.code && c.of === r.of)) : []))
+const variantHits = computed(() => [...crHits.value.map(c => ({ ...c, rule: '' })), ...ruleHits.value.map(r => ({ ...r, grade: 'rule' as const }))])
 /** CP-11: a hypothetical form (original / derived, no source attests it) is the LAST tier, after Plast terms; debounced so a keystroke costs nothing extra while typing, and only for a query that no real page answers */
 const hypHit = shallowRef<Hypothesis>(), hseq = ref(0)
 watch(q, async v => {
@@ -192,7 +197,7 @@ watch(q, async v => {
     <h2><span>Варіанти за говорами</span></h2>
     <ul class="results">
       <li v-for="v in variantHits" :key="v.code + v.form + v.of"><RouterLink :to="variantTo(v.code, v.form, v.of)"><span class="lem">{{ v.form }}</span><span class="badge dialect">{{ DIALECTS[v.code] }}</span>
-        <span class="small sans">варіант леми «{{ v.of }}» · {{ v.grade === 'dict' ? 'за словником' : 'за свідченням носія' }}</span></RouterLink></li>
+        <span class="small sans">варіант леми «{{ v.of }}» · {{ v.grade === 'dict' ? 'за словником' : v.grade === 'rule' ? 'виведено за правилами (' + v.rule + ')' : 'за свідченням носія' }}</span></RouterLink></li>
     </ul>
   </section>
   <section v-if="hypHit" class="card" aria-live="polite" data-testid="hyp-hits">

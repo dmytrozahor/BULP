@@ -44,12 +44,14 @@ const full = computed(() => fullOf(card.value))
 const groups = computed(() => (of.value ? corrOf(of.value) : []))
 const shown = computed(() => (card.value ? show(card.value.lemma, props.dialect, '2019', ctxOfTags(card.value.paradigm[0]?.tags)) : undefined))
 const forms = computed<VForm[]>(() => (full.value?.forms ?? []).map(f => ({ raw: f.raw, modern: f.modern, f: f.f, date: f.date, ...(f.ocrOnly ? { ocrOnly: true as const } : {}), ...(f.byW ? { byW: f.byW } : {}), kwic: f.kwic })))
+/** the form may be a paradigm form of the lemma (ходит of ходити): the respelling that gives exactly this form decides */
+const shownMatch = computed(() => { const s = shown.value; if (!card.value || !s) return s; if (key(s.text) === key(props.form)) return s; for (const p of card.value.paradigm) { const x = show(p.form, props.dialect, '2019', ctxOfTags(p.tags)); if (x.respelled && key(x.text) === key(props.form)) return x } return s })
 const attestedSpelling = computed(() => forms.value.some(f => key(f.raw) === key(props.form) || (f.modern && key(f.modern) === key(props.form))))
-const plan = computed(() => (card.value && groups.value !== undefined && shown.value ? variantPlan(of.value, props.dialect, props.form, groups.value, shown.value, attestedSpelling.value, f => byLemma.value.has(f)) : undefined))
+const plan = computed(() => (card.value && groups.value !== undefined && shown.value ? variantPlan(of.value, props.dialect, props.form, groups.value, shownMatch.value, attestedSpelling.value, f => byLemma.value.has(f)) : undefined))
 const stats = computed(() => variantStats(forms.value, props.form, key, id => witnessById.value.get(id), corpus.value?.regions, corpus.value?.N, corpus.value?.centurySizes))
 const attested = computed(() => stats.value.f > 0)
 const wait = computed(() => !loaded.value || (!!card.value && (!full.value || groups.value === undefined)))
-const fired = computed(() => (plan.value?.kind === 'rule' ? shown.value?.respelled?.fired ?? [] : []))
+const fired = computed(() => (plan.value?.kind === 'rule' ? shownMatch.value?.respelled?.fired ?? [] : []))
 const paradigm = computed(() => {
   const seen = new Set<string>(), out: { from: string; to: string }[] = []
   for (const p of card.value?.paradigm ?? []) { const to = show(p.form, props.dialect, '2019', ctxOfTags(p.tags)).text; if (to !== p.form && !seen.has(p.form)) { seen.add(p.form); out.push({ from: p.form, to }) } }

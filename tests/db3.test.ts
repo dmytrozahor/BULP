@@ -175,3 +175,30 @@ describe('DB-3b the variant card is reached from the CR-1 chips and from search'
     for (const f of ['src/lib/search.ts', 'src/composables/useData.ts']) expect(readFileSync(f, 'utf8'), f).not.toMatch(/subcard|corrData/)
   })
 })
+
+describe('DB-3c search finds the variant card of a typed dialect form by the reverse folds, as «виведено за правилами»', () => {
+  const IDX: Record<string, { lemma: string }[]> = { тяжко: [{ lemma: 'тяжко' }], ходить: [{ lemma: 'ходити' }], теж: [{ lemma: 'теж' }], ходити: [{ lemma: 'ходити' }] }
+  const look = (k: string) => IDX[k] ?? []
+  it('тєжко -> the variant card of тяжко (NDN / PKB, rule ORTH-GAL-A-SOFT), confirmed against the lemma index and by the forward respelling', async () => {
+    const { ruleVariantHits } = await import('../core/variant-search.ts')
+    const r = ruleVariantHits('тєжко', look); expect(r.map(x => x.code).sort()).toEqual(['NDN', 'PKB']); expect(r.every(x => x.of === 'тяжко' && x.form === 'тєжко' && x.rule === 'ORTH-GAL-A-SOFT')).toBe(true)
+    expect(variantTo(r[0]!.code, r[0]!.form, r[0]!.of).path).toBe('/v/' + r[0]!.code + '/' + encodeURIComponent('тєжко'))
+    expect(variantPlan('тяжко', 'NDN', 'тєжко', [], show('тяжко', 'NDN', '2019', {}), false, () => false)).toMatchObject({ kind: 'rule', grade: 'derived' })
+  })
+  it('ходит -> the variant card of the verb ходити (POD / NDN, the hard -т of the 3rd person), a form of the lemma', async () => {
+    const { ruleVariantHits } = await import('../core/variant-search.ts')
+    const r = ruleVariantHits('ходит', look); expect(r.map(x => x.code).sort()).toEqual(['NDN', 'POD']); expect(r.every(x => x.of === 'ходити' && x.rule === 'ORTH-GAL-3T')).toBe(true)
+    const sh = show('ходить', 'POD', '2019', { pos: 'verb', fin3: true }); expect(sh.text).toBe('ходит')
+    expect(variantPlan('ходити', 'POD', 'ходит', [], sh, false, () => false)).toMatchObject({ kind: 'rule', form: 'ходит' })
+  })
+  it('a word the lexicon knows (теж, ходить) or whose е-reading is itself a form (тєж = теж) gets no offer; a candidate that is not in the lemma index gets none', async () => {
+    const { ruleVariantHits } = await import('../core/variant-search.ts')
+    for (const w of ['теж', 'ходить', 'тяжко', 'тєж']) expect(ruleVariantHits(w, look), w).toEqual([])
+    expect(ruleVariantHits('тєжко', () => [])).toEqual([]); expect(ruleVariantHits('мусєт', look)).toEqual([])
+  })
+  it('lazy and off the keystroke path: the fold module is a dynamic import in the settled step, only when no real result answers; the search library never imports it', () => {
+    const sv = readFileSync('src/views/SearchView.vue', 'utf8'); expect(sv).toMatch(/await import\('\.\.\/\.\.\/core\/variant-search\.ts'\)/); expect(sv).toMatch(/!rows\.value\.length && !searching\.value/); expect(sv).not.toMatch(/^import .*variant-search/m)
+    for (const f of ['src/lib/search.ts', 'src/composables/useData.ts']) expect(readFileSync(f, 'utf8'), f).not.toMatch(/variant-search/)
+    expect(sv).toMatch(/виведено за правилами \(/)
+  })
+})
